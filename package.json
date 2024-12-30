@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "mock": "npx tsx watch ./src/mocks/http.ts"
+    "mock": "npx tsx watch ./src/mocks/http.ts",
+    "dev:mock": "concurrently --kill-others \"NEXT_PUBLIC_API_MOCKING=enable pnpm dev\" \"pnpm mock\""
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -23,6 +24,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "concurrently": "^9.1.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.22",
     "express": "^4.21.2",
