@@ -1,19 +1,19 @@
 'use client';
 
+import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
 import { css } from '@emotion/react';
-import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <span
-        css={css`
-          color: lightblue;
-          font-size: 1.8rem;
-        `}
-      >
-        test
-      </span>
+    <div>
+      <span css={testStyle}>test</span>
+      <Icon icon="TriangleArrow" rotate={180} color={theme.colors.primaryMint} />
     </div>
   );
 }
+
+const testStyle = css`
+  ${theme.fonts.body.R16}
+  color: ${theme.colors.primaryMint};
+`;
