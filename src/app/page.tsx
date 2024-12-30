@@ -1,29 +1,21 @@
-'use client';
-
-import { css } from '@emotion/react';
 import styles from './page.module.css';
-import { useEffect } from 'react';
 
-export default function Home() {
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/test');
-      return await res.json();
-    };
+const BASE_URL =
+  process.env.NEXT_PUBLIC_API_MOCKING === 'enable'
+    ? process.env.NEXT_PUBLIC_MOCK_BASE_URL
+    : process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    fetchData();
-  }, []);
+const getData = async () => {
+  const response = await fetch(`${BASE_URL}/api/test`);
+  return await response.json();
+};
+
+export default async function Home() {
+  const res = await getData();
 
   return (
     <div className={styles.page}>
-      <span
-        css={css`
-          color: lightblue;
-          font-size: 1.8rem;
-        `}
-      >
-        test
-      </span>
+      <span>{res.id}</span>
     </div>
   );
 }

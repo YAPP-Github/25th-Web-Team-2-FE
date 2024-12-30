@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mock": "npx tsx watch ./src/mocks/http.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -17,11 +18,14 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@mswjs/http-middleware": "^0.10.2",
+    "@types/express": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.22",
+    "express": "^4.21.2",
     "husky": "^9.1.7",
     "msw": "^2.7.0",
     "typescript": "^5"
