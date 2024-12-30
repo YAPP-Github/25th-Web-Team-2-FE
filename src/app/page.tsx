@@ -1,21 +1,19 @@
-import styles from './page.module.css';
+'use client';
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_API_MOCKING === 'enable'
-    ? process.env.NEXT_PUBLIC_MOCK_BASE_URL
-    : process.env.NEXT_PUBLIC_API_BASE_URL;
+import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
+import { css } from '@emotion/react';
 
-const getData = async () => {
-  const response = await fetch(`${BASE_URL}/api/test`);
-  return await response.json();
-};
-
-export default async function Home() {
-  const res = await getData();
-
+export default function Home() {
   return (
-    <div className={styles.page}>
-      <span>{res.id}</span>
+    <div>
+      <span css={testStyle}>test</span>
+      <Icon icon="TriangleArrow" rotate={180} color={theme.colors.primaryMint} />
     </div>
   );
 }
+
+const testStyle = css`
+  ${theme.fonts.body.R16}
+  color: ${theme.colors.primaryMint};
+`;

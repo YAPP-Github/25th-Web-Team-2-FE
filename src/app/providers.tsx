@@ -1,8 +1,12 @@
 'use client';
 
 import MSWProvider from '@/mocks/MSWProvider';
+import theme from '@/styles/theme';
+import { Global, ThemeProvider } from '@emotion/react';
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+import global from '@/styles/global';
 
 function makeQueryClient() {
   return new QueryClient();
@@ -25,8 +29,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <MSWProvider>
       <QueryClientProvider client={queryClient}>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ThemeProvider theme={theme}>
+          <Global styles={global} />
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ThemeProvider>
       </QueryClientProvider>
     </MSWProvider>
   );
