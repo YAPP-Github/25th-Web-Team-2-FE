@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+const isMSWEnabled = process.env.NEXT_PUBLIC_API_MOCKING === 'enable';
+
 const MSWProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isMSWReady, setIsMSWReady] = useState(false);
-  const isStartedRef = useRef(false);
+  const [isMSWReady, setIsMSWReady] = useState(!isMSWEnabled);
+  const isStartedRef = useRef(!isMSWEnabled);
 
   useEffect(() => {
     const init = async () => {
