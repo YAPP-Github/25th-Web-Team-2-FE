@@ -15,6 +15,6 @@ export default function Home() {
 }
 
 const testStyle = css`
-  ${theme.fonts.body.R16}
+  ${theme.fonts.body.normal.SB16}
   color: ${theme.colors.primaryMint};
 `;
