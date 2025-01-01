@@ -1,5 +1,6 @@
-import theme from '@/styles/theme';
 import { SVGProps } from 'react';
+
+import theme from '@/styles/theme';
 
 function TriangleArrow(props: SVGProps<SVGSVGElement>) {
   return (

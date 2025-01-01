@@ -1,5 +1,6 @@
-import express from 'express';
 import { createMiddleware } from '@mswjs/http-middleware';
+import express from 'express';
+
 import { handlers } from './handlers';
 
 const app = express();

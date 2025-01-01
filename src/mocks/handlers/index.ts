@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+
 import TEST_DATA from '../data/test.json';
 
 const fetchHandler = () => {

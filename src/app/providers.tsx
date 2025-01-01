@@ -1,12 +1,12 @@
 'use client';
 
-import MSWProvider from '@/mocks/MSWProvider';
-import theme from '@/styles/theme';
 import { Global, ThemeProvider } from '@emotion/react';
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import MSWProvider from '@/mocks/MSWProvider';
 import global from '@/styles/global';
+import theme from '@/styles/theme';
 
 function makeQueryClient() {
   return new QueryClient();

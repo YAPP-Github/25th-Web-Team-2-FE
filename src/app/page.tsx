@@ -1,8 +1,9 @@
 'use client';
 
+import { css } from '@emotion/react';
+
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
-import { css } from '@emotion/react';
 
 export default function Home() {
   return (

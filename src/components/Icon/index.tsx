@@ -1,6 +1,7 @@
+import { CSSProperties } from 'react';
+
 import { containerStyle } from './icon.styled';
 import * as icons from './icons';
-import { CSSProperties } from 'react';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   icon: keyof typeof icons;
