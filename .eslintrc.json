@@ -1,7 +1,7 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "import/namespace": "off",
+    "no-console": "error",
     "import/order": [
       "error",
       {
