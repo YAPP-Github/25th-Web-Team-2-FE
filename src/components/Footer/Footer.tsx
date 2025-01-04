@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+
 import { buttonContainer, footerLayout, textContainer, verticalLine } from './Footer.styles';
 
 const Footer = () => {

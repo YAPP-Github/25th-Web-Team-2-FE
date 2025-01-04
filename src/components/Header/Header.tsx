@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import Logo from '../../assets/images/logo.svg';
 
 import {
   buttonContainer,
@@ -11,6 +10,8 @@ import {
   image,
   loginButton,
 } from './Header.styles';
+import Logo from '../../assets/images/logo.svg';
+
 
 const Header = () => {
   return (
