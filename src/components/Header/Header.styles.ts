@@ -15,7 +15,7 @@ export const headerContainer = css`
 `;
 
 export const image = css`
-  height: 100%;
+  height: auto;
 `;
 
 export const buttonContainer = css`
