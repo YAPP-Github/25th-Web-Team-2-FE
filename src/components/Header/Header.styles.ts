@@ -4,14 +4,7 @@ export const headerLayout = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 2.8rem;
-`;
-
-export const headerContainer = css`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10rem;
+  padding: 2rem 0;
 `;
 
 export const image = css`

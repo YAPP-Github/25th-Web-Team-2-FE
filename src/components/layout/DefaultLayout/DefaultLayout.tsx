@@ -1,16 +1,13 @@
-import React, { PropsWithChildren } from 'react';
-
-import Footer from '../Footer/Footer';
-
+import { PropsWithChildren } from 'react';
 import Header from '@/components/Header/Header';
+import { defaultLayout } from './DefaultLayout.styles';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
   return (
-    <>
+    <div css={defaultLayout}>
       <Header />
       {children}
-      <Footer />
-    </>
+    </div>
   );
 };
 
