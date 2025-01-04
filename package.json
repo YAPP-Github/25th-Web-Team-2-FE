@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "next lint --fix",
     "mock": "npx tsx watch ./src/mocks/http.ts",
-    "dev:mock": "concurrently --kill-others \"NEXT_PUBLIC_API_MOCKING=enable pnpm dev\" \"pnpm mock\""
+    "dev:mock": "concurrently --kill-others \"NEXT_PUBLIC_API_MOCKING=enable pnpm dev\" \"pnpm mock\"",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@tanstack/react-query": "^5.62.11",
     "@tanstack/react-query-devtools": "^5.62.11",
+    "jira-prepare-commit-msg": "^1.7.2",
     "next": "14.2.22",
     "react": "^18",
     "react-dom": "^18"
@@ -36,5 +38,10 @@
     "workerDirectory": [
       "public"
     ]
+  },
+  "jira-prepare-commit-msg": {
+    "messagePattern": "[$J] $M",
+    "allowEmptyCommitMessage": false,
+    "ignoredBranchesPattern": "^(main|develop)$"
   }
 }
