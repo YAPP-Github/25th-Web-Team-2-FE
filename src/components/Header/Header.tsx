@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   buttonContainer,
@@ -12,12 +13,13 @@ import {
 } from './Header.styles';
 import Logo from '../../assets/images/logo.svg';
 
-
 const Header = () => {
   return (
     <div css={headerLayout}>
       <div css={headerContainer}>
-        <Image src={Logo} alt="로고" css={image} />
+        <Link href="/">
+          <Image src={Logo} alt="로고" css={image} />
+        </Link>
         <div css={buttonContainer}>
           <button css={contactButton}>연구 참여자 모집하기</button>
           <button css={loginButton}>로그인</button>
