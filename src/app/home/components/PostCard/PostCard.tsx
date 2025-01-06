@@ -21,7 +21,7 @@ interface PostCardProps {
 
 const PostCard = ({ post }: PostCardProps) => {
   return (
-    <div
+    <li
       css={postCardLayout}
       style={{
         backgroundColor: post.isContacted ? theme.colors.field01 : theme.colors.field01,
@@ -49,7 +49,7 @@ const PostCard = ({ post }: PostCardProps) => {
           <span css={postDate}>{post.testDate}</span>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 

@@ -8,11 +8,11 @@ interface PostCardListProps {
 
 const PostCardList = ({ postList }: PostCardListProps) => {
   return (
-    <section css={postCardListLayout}>
+    <ul css={postCardListLayout}>
       {postList?.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
-    </section>
+    </ul>
   );
 };
 
