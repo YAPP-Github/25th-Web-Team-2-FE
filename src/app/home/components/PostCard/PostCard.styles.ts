@@ -31,7 +31,7 @@ export const postCardHeader = css`
 `;
 
 export const postLocation = (theme: Theme) => css`
-  ${theme.fonts.label.small.M12};
+  ${theme.fonts.label.medium.R13};
   color: ${theme.colors.text03};
 `;
 
@@ -42,7 +42,7 @@ export const postCardRightHeader = css`
 `;
 
 export const postViews = (theme: Theme) => css`
-  ${theme.fonts.label.small.M12};
+  ${theme.fonts.label.medium.R13};
   color: ${theme.colors.text03};
 `;
 
@@ -58,16 +58,16 @@ export const postRewardContainer = css`
 `;
 
 export const announceText = (theme: Theme) => css`
-  ${theme.fonts.label.medium.M14};
+  ${theme.fonts.label.medium.M13};
   color: ${theme.colors.text03};
 `;
 
 export const postReward = (theme: Theme) => css`
-  ${theme.fonts.label.medium.SB14};
+  ${theme.fonts.label.medium.SB13};
   color: ${theme.colors.primaryMint};
 `;
 
 export const postDate = (theme: Theme) => css`
-  ${theme.fonts.label.medium.M14};
+  ${theme.fonts.label.medium.M13};
   color: ${theme.colors.text04};
 `;
