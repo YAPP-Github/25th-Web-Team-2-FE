@@ -51,6 +51,15 @@ export const postTitle = (theme: Theme) => css`
   color: ${theme.colors.text06};
 `;
 
+export const contactedPostTag = (theme: Theme) => css`
+  width: fit-content;
+  padding: 0.6rem 0.85rem;
+  ${theme.fonts.label.small.SB12};
+  color: ${theme.colors.text05};
+  background-color: ${theme.colors.field03};
+  border-radius: 3rem;
+`;
+
 export const postRewardContainer = css`
   display: flex;
   gap: 0.8rem;

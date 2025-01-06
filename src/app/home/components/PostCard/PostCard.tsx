@@ -1,6 +1,7 @@
 import { Post } from '@/types/post';
 import {
   announceText,
+  contactedPostTag,
   postCardHeader,
   postCardLayout,
   postCardRightHeader,
@@ -25,7 +26,6 @@ const PostCard = ({ post }: PostCardProps) => {
       css={postCardLayout}
       style={{
         backgroundColor: post.isContacted ? theme.colors.field01 : theme.colors.field01,
-        opacity: post.isContacted ? 0.6 : 1,
         cursor: post.isContacted ? 'not-allowed' : 'pointer',
       }}
     >
@@ -40,14 +40,22 @@ const PostCard = ({ post }: PostCardProps) => {
         <h3 css={postTitle}>{post.title}</h3>
       </div>
       <div>
-        <div css={postRewardContainer}>
-          <span css={announceText}>보상</span>
-          <span css={postReward}>{post.reward}</span>
-        </div>
-        <div css={postRewardContainer}>
-          <span css={announceText}>일시</span>
-          <span css={postDate}>{post.testDate}</span>
-        </div>
+        {post.isContacted ? (
+          <div css={contactedPostTag}>
+            <span>모집 완료</span>
+          </div>
+        ) : (
+          <>
+            <div css={postRewardContainer}>
+              <span css={announceText}>보상</span>
+              <span css={postReward}>{post.reward}</span>
+            </div>
+            <div css={postRewardContainer}>
+              <span css={announceText}>일시</span>
+              <span css={postDate}>{post.testDate}</span>
+            </div>
+          </>
+        )}
       </div>
     </li>
   );
