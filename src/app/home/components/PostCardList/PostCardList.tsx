@@ -1,10 +1,12 @@
-import usePostListQuery from '@/app/home/hooks/usePostListQuery';
 import { postCardListLayout } from './PostCardList.styles';
 import PostCard from '../PostCard/PostCard';
+import { Post } from '@/types/post';
 
-const PostCardList = () => {
-  const { data: postList } = usePostListQuery();
+interface PostCardListProps {
+  postList: Post[];
+}
 
+const PostCardList = ({ postList }: PostCardListProps) => {
   return (
     <section css={postCardListLayout}>
       {postList?.map((post) => (
