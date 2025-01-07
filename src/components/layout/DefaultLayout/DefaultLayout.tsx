@@ -1,6 +1,10 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
-import Header from '@/components/Header/Header';
+
 import { defaultLayout } from './DefaultLayout.styles';
+
+import Header from '@/components/Header/Header';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
   return (
