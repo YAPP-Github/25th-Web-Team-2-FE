@@ -5,7 +5,9 @@ export const postInfoTableLayout = (theme: Theme) => css`
   margin-top: 2.8rem;
 
   border-collapse: collapse;
-  ${theme.fonts.body.normal.M16}
+  ${theme.fonts.body.normal.M16};
+
+  table-layout: fixed;
 
   th,
   td {
@@ -13,6 +15,8 @@ export const postInfoTableLayout = (theme: Theme) => css`
     text-align: left;
     vertical-align: top;
     height: 2.4rem;
+    overflow: hidden;
+    word-wrap: break-word;
   }
 
   th {
@@ -21,6 +25,11 @@ export const postInfoTableLayout = (theme: Theme) => css`
 
   td {
     color: ${theme.colors.text05};
+    width: 30rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -43,8 +52,25 @@ export const warningMessage = (theme: Theme) => css`
 `;
 
 export const targetRow = css`
-  height: 8.4rem; /* 모집 대상만 큰 높이를 가지도록 설정 */
+  width: 30rem;
+  height: 8.4rem;
+
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 텍스트와 경고 메시지 간격 유지 */
+  justify-content: space-between;
+
+  overflow: visible !important;
+
+  p {
+    width: 30rem;
+    flex-shrink: 0;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: normal;
+  }
 `;

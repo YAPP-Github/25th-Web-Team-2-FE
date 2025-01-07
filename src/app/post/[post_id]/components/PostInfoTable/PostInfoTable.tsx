@@ -17,16 +17,20 @@ function PostInfoTable() {
           <th>진행 방식</th>
           <td>대면</td>
           <th>참여 보상</th>
-          <td>네이버페이 포인트 1만원</td>
+          <td>네이버페이 포인트 1만원 네이버페이 포인트 1만원 네이버페이 포인트 1만원</td>
         </tr>
         <tr>
           <th>소요 시간</th>
           <td>8회 참여 | 약 1시간 30분</td>
           <th>모집 대상</th>
           <td css={targetRow}>
-            만 19~55세, 성별 무관, 교정 시력 1.0 이상 또는
-            <br />
-            실험 동안 렌즈 착용 가능하신 분
+            <p>
+              만 19~55세, 성별 무관, 교정 시력 1.0 이상 또는
+              <br />
+              실험 동안 렌즈 착용 가능하신 분 실험 동안 렌즈 착용 가능하신 분 실험 동안 렌즈 착용
+              가능하신 분 실험 동안 렌즈 착용 가능하신 분
+            </p>
+
             <div css={warningMessage}>
               <Icon icon="Alert" color={colors.textAlert} width={16} height={16} /> 모집 대상을
               꼼꼼히 확인해주세요
@@ -35,7 +39,7 @@ function PostInfoTable() {
         </tr>
         <tr>
           <th>실험 장소</th>
-          <td colSpan={3}>서울시 서대문구 연세대학교 ECC B301</td>
+          <td>서울시 서대문구 연세대학교 ECC B301 ECC B301 ECC B301 </td>
         </tr>
       </tbody>
     </table>
