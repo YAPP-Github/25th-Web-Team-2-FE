@@ -18,7 +18,7 @@ export const buttonContainer = css`
 `;
 
 export const contactButton = (theme: Theme) => css`
-  ${theme.fonts.label.medium.SB14};
+  ${theme.fonts.label.large.SB14};
   background-color: ${theme.colors.primaryTinted};
   color: ${theme.colors.textPrimary};
   padding: 0.6rem 1.4rem;
@@ -26,7 +26,7 @@ export const contactButton = (theme: Theme) => css`
 `;
 
 export const loginButton = (theme: Theme) => css`
-  ${theme.fonts.label.medium.SB14};
+  ${theme.fonts.label.large.SB14};
   background-color: ${theme.colors.primaryMint};
   color: ${theme.colors.text01};
   padding: 0.6rem 1.4rem;
