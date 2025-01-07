@@ -46,3 +46,4 @@ export { default as FilterTwo } from './FilterTwo';
 export { default as FilterThree } from './FilterThree';
 export { default as Chevron } from './Chevron';
 export { default as ArrowSorting } from './ArrowSorting';
+export { default as Alert } from './Alert';
