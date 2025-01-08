@@ -4,9 +4,10 @@ export const postInfoLayout = (theme: Theme) => css`
   margin-top: 3.8rem;
 
   width: 100rem;
+  height: 6rem;
 
   h2 {
-    ${theme.fonts.title.medium.SB20};
+    ${theme.fonts.title.large.SB24};
   }
 `;
 

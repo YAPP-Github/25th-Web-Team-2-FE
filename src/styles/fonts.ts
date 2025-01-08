@@ -61,6 +61,15 @@ export const fonts = {
         letter-spacing: 0;
       `,
     },
+    large: {
+      SB24: css`
+        font-size: 2.4rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 3.2rem;
+        letter-spacing: 0;
+      `,
+    },
   },
 
   // label
