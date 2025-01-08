@@ -12,7 +12,8 @@ export const ageSelectWrapper = css`
   gap: 0.8rem;
 `;
 
-export const popoverTrigger = css`
+export const popoverTrigger = (theme: Theme) => css`
+  ${theme.fonts.label.large.SB14};
   display: flex;
   gap: 0.4rem;
   align-items: center;
