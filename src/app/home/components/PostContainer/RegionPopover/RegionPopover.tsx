@@ -1,10 +1,34 @@
 'use client';
 
 import * as Popover from '@radix-ui/react-popover';
-import { css } from '@emotion/react';
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEY } from '@/constants/queryKey';
+import { fetchPostCount } from '@/apis/post';
+import {
+  areaButton,
+  areaCount,
+  areaListContainer,
+  areaName,
+  checkbox,
+  contentWrapper,
+  footerButtonContainer,
+  footerContainer,
+  placeholderArea,
+  regionContentContainer,
+  resetButton,
+  saveButton,
+  selectedAreaButton,
+  selectedAreaName,
+  selectedSubAreaLabel,
+  subAreaInfo,
+  subAreaItem,
+  subAreaListContainer,
+  triggerWrapper,
+  verticalLine,
+} from './RegionPopover.styles';
 
 type Area =
   | '전국'
@@ -27,7 +51,7 @@ type Area =
   | '제주';
 
 type SeoulArea =
-  | '서울 전체'
+  | '전체'
   | '금천구'
   | '노원구'
   | '도봉구'
@@ -80,9 +104,28 @@ const areas: Region[] = [
   { id: 18, name: '제주', count: 21 },
 ];
 
+const areaMapper = {
+  SEOUL: '서울',
+  GYEONGGI: '경기',
+  INCHEON: '인천',
+  GANGWON: '강원',
+  DAEJEON: '대전',
+  CHUNGNAM: '충남',
+  CHUNGBUK: '충북',
+  BUSAN: '부산',
+  ULSAN: '울산',
+  GYEONGNAM: '경남',
+  GYEONGBUK: '경북',
+  DAEGU: '대구',
+  GWANGJU: '광주',
+  JEONNAM: '전남',
+  JEONBUK: '전북',
+  JEJU: '제주',
+};
+
 const subAreas: Partial<Record<Area, SeoulRegion[]>> = {
   서울: [
-    { id: 1, name: '서울 전체', count: 1234 },
+    { id: 1, name: '전체', count: 1234 },
     { id: 1, name: '금천구', count: 1234 },
     { id: 1, name: '노원구', count: 1234 },
     { id: 1, name: '도봉구', count: 1234 },
@@ -105,8 +148,9 @@ const subAreas: Partial<Record<Area, SeoulRegion[]>> = {
 };
 
 const AreaPopover = () => {
-  const [selectedArea, setSelectedArea] = useState<(typeof areas)[0]['name']>('전국');
+  const [selectedArea, setSelectedArea] = useState<(typeof areas)[0]['name']>('');
   const [checkedSubAreas, setCheckedSubAreas] = useState<Record<string, boolean>>({});
+  const selectedSubArea = Object.keys(checkedSubAreas);
 
   const handleAreaClick = (area: Area) => {
     setSelectedArea(area);
@@ -125,58 +169,93 @@ const AreaPopover = () => {
   return (
     <Popover.Root open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <Popover.Trigger
-        css={triggerStyle}
+        css={triggerWrapper}
         style={{
           color: isSelected ? theme.colors.text01 : theme.colors.text06,
           backgroundColor: isSelected ? theme.colors.field09 : theme.colors.field01,
         }}
       >
-        <span>{isSelected ? `${selectedArea} . ` : '지역'}</span>
+        <span>
+          {isSelected
+            ? `${selectedArea} . ${selectedSubArea[0]} ${
+                selectedSubArea.length >= 2 ? `외 ${selectedSubArea.length - 1}` : ''
+              }`
+            : '지역'}
+        </span>
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content css={popoverStyle}>
+        <Popover.Content css={regionContentContainer}>
           <div css={contentWrapper}>
-            <div css={areaListStyle}>
+            <div css={areaListContainer}>
               {areas.map((area) => (
                 <button
                   key={area.id}
-                  css={[areaButtonStyle, area.name === selectedArea && selectedAreaStyle]}
+                  css={[areaButton, area.name === selectedArea && selectedAreaButton]}
                   onClick={() => handleAreaClick(area.name)}
                 >
-                  {area.name} {area.count}
+                  <span css={[areaName, area.name === selectedArea && selectedAreaName]}>
+                    {area.name}
+                  </span>
+                  <span css={areaCount}>{area.count}</span>
                 </button>
               ))}
             </div>
-            <div css={subAreaListStyle}>
+            <span css={verticalLine} />
+            <div css={subAreaListContainer}>
               {selectedArea ? (
                 subAreas[selectedArea]?.map((subArea) => (
-                  <label key={subArea.id} css={subAreaItemStyle}>
+                  <label
+                    key={subArea.id}
+                    css={[subAreaItem, checkedSubAreas[subArea.name] && selectedSubAreaLabel]}
+                  >
+                    <div css={subAreaInfo}>
+                      <span css={[areaName, checkedSubAreas[subArea.name] && selectedAreaName]}>
+                        {subArea.name}
+                      </span>
+                      <span css={areaCount}>{subArea.count}</span>
+                    </div>
                     <input
                       type="checkbox"
+                      css={checkbox}
                       checked={!!checkedSubAreas[subArea.name]}
                       onChange={() => handleSubAreaCheck(subArea.name)}
                     />
-                    <span>
-                      {subArea.name} {subArea.count}
-                    </span>
+                    {!!checkedSubAreas[subArea.name] ? (
+                      <Icon icon="CheckSquareFill" width={20} height={20} />
+                    ) : (
+                      <Icon icon="CheckSquareEmpty" width={20} height={20} />
+                    )}
                   </label>
                 ))
               ) : (
-                <div css={placeholderStyle}>지역을 먼저 선택해 주세요</div>
+                <div css={placeholderArea}>
+                  <span>지역을 먼저 선택해 주세요</span>
+                </div>
               )}
             </div>
           </div>
-          <div css={footerStyle}>
-            <button
-              css={resetButtonStyle}
-              onClick={() => {
-                setSelectedArea('전국');
-              }}
-            >
-              초기화
-            </button>
-            <button css={saveButtonStyle}>저장</button>
+          <div css={footerContainer}>
+            <div css={footerButtonContainer}>
+              <button
+                css={resetButton}
+                onClick={() => {
+                  setSelectedArea('전국');
+                  setCheckedSubAreas({});
+                }}
+              >
+                초기화
+              </button>
+              <button
+                onClick={() => {
+                  setIsSelected(true);
+                  setIsOpen(false);
+                }}
+                css={saveButton}
+              >
+                저장
+              </button>
+            </div>
           </div>
         </Popover.Content>
       </Popover.Portal>
@@ -185,98 +264,3 @@ const AreaPopover = () => {
 };
 
 export default AreaPopover;
-
-const triggerStyle = css`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 1.4rem;
-  border: 1px solid #e1e1e1;
-  border-radius: 8px;
-  background-color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-const popoverStyle = css`
-  width: 36.4rem;
-  height: 35rem;
-  padding: 16px;
-  background-color: white;
-  border: 1px solid #e1e1e1;
-  border-radius: 8px;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
-  overflow: scroll;
-`;
-
-const contentWrapper = css`
-  display: flex;
-  gap: 16px;
-`;
-
-const areaListStyle = css`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const areaButtonStyle = css`
-  padding: 0.8rem;
-  border: none;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  text-align: left;
-  cursor: pointer;
-`;
-
-const selectedAreaStyle = css`
-  background-color: #e8e8e8;
-  font-weight: bold;
-`;
-
-const subAreaListStyle = css`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const subAreaItemStyle = css`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  input {
-    margin-right: 8px;
-  }
-`;
-
-const placeholderStyle = css`
-  text-align: center;
-  color: #aaa;
-  margin-top: 8px;
-`;
-
-const footerStyle = css`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-`;
-
-const resetButtonStyle = css`
-  padding: 0.8rem 1.2rem;
-  background-color: #f4f4f4;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-`;
-
-const saveButtonStyle = css`
-  padding: 0.8rem 1.2rem;
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-`;
