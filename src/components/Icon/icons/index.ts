@@ -51,3 +51,5 @@ export { default as Information } from './Information';
 export { default as Minimize } from './Minimize';
 export { default as Maximize } from './Maximize';
 export { default as Calendar } from './Calendar';
+export { default as X } from './X';
+export { default as Copy } from './Copy';
