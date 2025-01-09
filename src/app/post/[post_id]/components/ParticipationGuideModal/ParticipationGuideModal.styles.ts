@@ -85,3 +85,40 @@ export const closeButton = css`
   top: 1.2rem;
   right: 1.2rem;
 `;
+
+export const toastLayout = (theme: Theme) => css`
+  color: ${theme.colors.text06};
+
+  height: 5.2rem;
+
+  background-color: ${theme.colors.field01};
+  color: ${theme.colors.text06};
+  box-shadow: 0 4px 8px rgba(0, 22, 54, 0.2);
+
+  border-radius: 8rem;
+
+  padding: 1.4rem 2.4rem;
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+export const toastTitle = (theme: Theme) => css`
+  ${theme.fonts.body.normal.SB16};
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 1rem;
+
+  width: max-content;
+`;
+
+export const toastViewport = css`
+  position: fixed;
+  top: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+`;
