@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   checkButton,
   divider,
@@ -6,8 +8,11 @@ import {
   postOutlineLayout,
   targetRow,
 } from './PostOutline.styles';
+import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
 function PostOutline() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div css={postOutlineLayout}>
       <h3>실험 개요</h3>
@@ -29,7 +34,6 @@ function PostOutline() {
         </tbody>
       </table>
 
-      {/* divider를 테이블 외부로 이동 */}
       <div css={divider} />
 
       <table css={postOutlineContent}>
@@ -54,7 +58,13 @@ function PostOutline() {
           </tr>
         </tbody>
       </table>
-      <button css={checkButton}>참여 방법 확인하기</button>
+
+      <button css={checkButton} onClick={() => setIsModalOpen(true)}>
+        참여 방법 확인하기
+      </button>
+
+      {/* 참여 방법 안내 모달 */}
+      <ParticipationGuideModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }

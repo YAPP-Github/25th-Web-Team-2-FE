@@ -2,7 +2,7 @@ import { css, Theme } from '@emotion/react';
 
 export const postOutlineLayout = (theme: Theme) => css`
   min-width: 34rem;
-  max-width: 40rem;
+  max-width: 44rem;
   height: 49rem;
 
   border-radius: 1.2rem;
