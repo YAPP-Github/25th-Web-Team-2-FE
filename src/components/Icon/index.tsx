@@ -3,7 +3,11 @@ import { CSSProperties } from 'react';
 import { containerStyle } from './icon.styled';
 import * as icons from './icons';
 
-interface IconProps extends React.SVGProps<SVGSVGElement> {
+export interface CustomSVGProps extends React.SVGProps<SVGSVGElement> {
+  subColor?: string;
+}
+
+interface IconProps extends CustomSVGProps {
   icon: keyof typeof icons;
   width?: number;
   height?: number;
@@ -20,6 +24,7 @@ export default function Icon({
   rotate,
   className,
   color,
+  subColor,
   ...props
 }: IconProps) {
   const IconComponent = icons[icon as keyof typeof icons];
@@ -32,6 +37,7 @@ export default function Icon({
         width={width}
         height={height}
         color={color}
+        subColor={subColor}
       />
     </div>
   );

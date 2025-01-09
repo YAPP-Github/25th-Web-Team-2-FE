@@ -47,3 +47,7 @@ export { default as FilterThree } from './FilterThree';
 export { default as Chevron } from './Chevron';
 export { default as ArrowSorting } from './ArrowSorting';
 export { default as Alert } from './Alert';
+export { default as Information } from './Information';
+export { default as Minimize } from './Minimize';
+export { default as Maximize } from './Maximize';
+export { default as Calendar } from './Calendar';
