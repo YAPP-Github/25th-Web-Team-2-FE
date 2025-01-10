@@ -1,36 +1,5 @@
-'use client';
-
-import { css } from '@emotion/react';
-
-import PostDetailContent from './components/PostDetailContent/PostDetailContent';
-import PostInfo from './components/PostInfo/PostInfo';
-import PostOutline from './components/PostOutline/PostOutline';
+import PostContainer from './components/PostContainer/PostContainer';
 
 export default function PostPage() {
-  return (
-    <div css={postLayout}>
-      <PostInfo />
-      <div css={postContentLayout}>
-        <PostDetailContent />
-        <PostOutline />
-      </div>
-    </div>
-  );
+  return <PostContainer />;
 }
-
-const postLayout = css`
-  height: auto;
-  position: relative;
-
-  margin-bottom: 6rem;
-`;
-
-const postContentLayout = css`
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 1.2rem;
-
-  margin-top: 2.4rem;
-
-  border-radius: 1.2rem;
-`;
