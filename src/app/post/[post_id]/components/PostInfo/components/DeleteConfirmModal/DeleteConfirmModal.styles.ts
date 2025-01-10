@@ -13,7 +13,7 @@ export const dialogContent = (theme: Theme) => css`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  box-shadow: 0px 4px 8px 0px rgba(0, 22, 54, 0.31);
+  box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
 
   z-index: ${theme.zIndex.dialogContent};
 `;

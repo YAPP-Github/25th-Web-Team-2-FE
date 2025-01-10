@@ -4,7 +4,7 @@ export const dialogContent = (theme: Theme) => css`
   width: 49rem;
   height: 24rem;
 
-  box-shadow: 0px 4px 8px 0px rgba(0, 22, 54, 0.31);
+  box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
 
   background-color: ${theme.colors.field01};
   border-radius: 1.2rem;
@@ -81,7 +81,7 @@ export const toastLayout = (theme: Theme) => css`
 
   background-color: ${theme.colors.field01};
   color: ${theme.colors.text06};
-  box-shadow: 0 4px 8px rgba(0, 22, 54, 0.2);
+  box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
 
   border-radius: 8rem;
 
