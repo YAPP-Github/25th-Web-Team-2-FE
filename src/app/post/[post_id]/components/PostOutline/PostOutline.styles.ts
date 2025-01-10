@@ -3,7 +3,7 @@ import { css, Theme } from '@emotion/react';
 export const postOutlineLayout = (theme: Theme) => css`
   min-width: 34rem;
   max-width: 44rem;
-  height: 49rem;
+  height: 55.4rem;
 
   border-radius: 1.2rem;
   background-color: ${theme.colors.field01};
@@ -21,7 +21,7 @@ export const postOutlineLayout = (theme: Theme) => css`
     ${theme.fonts.title.small.SB18};
     color: ${theme.colors.text07};
 
-    margin-bottom: 0.8rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -69,7 +69,7 @@ export const targetRow = css`
   }
 `;
 
-export const locationRow = css`
+export const textWrapRow = css`
   height: 4.8rem;
 
   p {
@@ -88,6 +88,22 @@ export const divider = (theme: Theme) => css`
   height: 0.1rem;
   background-color: ${theme.colors.line02};
   margin: 1.2rem 0;
+`;
+
+export const participationCount = (theme: Theme) => css`
+  position: relative;
+  margin-right: 3.2rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 1.6rem);
+    transform: translateY(-50%);
+    width: 0.1rem;
+    height: 0.8rem;
+    background-color: ${theme.colors.line02};
+  }
 `;
 
 export const checkButton = (theme: Theme) => css`

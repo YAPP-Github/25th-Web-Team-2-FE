@@ -3,10 +3,11 @@ import { useState } from 'react';
 import {
   checkButton,
   divider,
-  locationRow,
+  textWrapRow,
   postOutlineContent,
   postOutlineLayout,
   targetRow,
+  participationCount,
 } from './PostOutline.styles';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
@@ -48,12 +49,20 @@ function PostOutline() {
           </tr>
           <tr>
             <th>소요 시간</th>
-            <td>약 1시간 30분</td>
+            <td>
+              <span css={participationCount}>8회 참여</span> 약 1시간 30분
+            </td>
           </tr>
           <tr>
             <th>실험 장소</th>
-            <td css={locationRow}>
+            <td css={textWrapRow}>
               <p>서울시 서대문구 연세대학교 ECC B301 ECC B301 ECCD B301</p>
+            </td>
+          </tr>
+          <tr>
+            <th>연구 책임</th>
+            <td css={textWrapRow}>
+              <p>연세대학교 인지심리학 랩실 김도비</p>
             </td>
           </tr>
         </tbody>
