@@ -6,6 +6,7 @@ export const postContentLayout = css`
   gap: 1.2rem;
 
   margin-top: 2.4rem;
+  margin-bottom: 6rem;
 
   border-radius: 1.2rem;
 `;
