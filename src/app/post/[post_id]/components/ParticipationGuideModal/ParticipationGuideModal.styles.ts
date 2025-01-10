@@ -1,11 +1,5 @@
 import { css, Theme } from '@emotion/react';
 
-export const dialogOverlay = css`
-  background: rgba(0, 22, 54, 0.31);
-  position: fixed;
-  inset: 0;
-`;
-
 export const dialogContent = (theme: Theme) => css`
   width: 49rem;
   height: 24rem;
@@ -76,14 +70,6 @@ export const warning = (theme: Theme) => css`
   flex-flow: row nowrap;
   align-items: center;
   gap: 0.6rem;
-`;
-
-export const closeButton = css`
-  cursor: pointer;
-
-  position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
 `;
 
 export const toastLayout = (theme: Theme) => css`

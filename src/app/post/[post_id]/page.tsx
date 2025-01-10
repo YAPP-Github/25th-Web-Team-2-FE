@@ -21,6 +21,8 @@ export default function PostPage() {
 const postLayout = css`
   height: auto;
   position: relative;
+
+  margin-bottom: 6rem;
 `;
 
 const postContentLayout = css`

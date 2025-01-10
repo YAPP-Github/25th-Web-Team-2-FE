@@ -3,29 +3,24 @@ import * as Toast from '@radix-ui/react-toast';
 import { useState } from 'react';
 
 import {
-  closeButton,
   contactInfo,
   dialogContent,
-  dialogOverlay,
   dialogTitle,
   toastLayout,
   toastTitle,
   toastViewport,
   warning,
 } from './ParticipationGuideModal.styles';
+import { closeButton, dialogOverlay } from '../../styles/common.styles';
+import { CommonModalProps } from '../../types/common';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-interface ParticipationGuideModalProps {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
 /**
  * 참여 방법 안내 모달
  */
-function ParticipationGuideModal({ isOpen, onOpenChange }: ParticipationGuideModalProps) {
+function ParticipationGuideModal({ isOpen, onOpenChange }: CommonModalProps) {
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const handleCopyContent = (text: string) => {
