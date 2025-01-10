@@ -19,6 +19,8 @@ export const dialogContent = (theme: Theme) => css`
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+
+  z-index: ${theme.zIndex.dialogContent};
 `;
 
 export const dialogTitle = (theme: Theme) => css`
@@ -89,6 +91,8 @@ export const toastLayout = (theme: Theme) => css`
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+
+  z-index: ${theme.zIndex.toastContent};
 `;
 
 export const toastTitle = (theme: Theme) => css`
@@ -102,9 +106,11 @@ export const toastTitle = (theme: Theme) => css`
   width: max-content;
 `;
 
-export const toastViewport = css`
+export const toastViewport = (theme: Theme) => css`
   position: fixed;
   top: 6rem;
   left: 50%;
   transform: translateX(-50%);
+
+  z-index: ${theme.zIndex.toastViewport};
 `;

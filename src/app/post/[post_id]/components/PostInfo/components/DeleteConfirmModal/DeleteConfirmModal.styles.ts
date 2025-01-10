@@ -14,6 +14,8 @@ export const dialogContent = (theme: Theme) => css`
   transform: translate(-50%, -50%);
 
   box-shadow: 0px 4px 8px 0px rgba(0, 22, 54, 0.31);
+
+  z-index: ${theme.zIndex.dialogContent};
 `;
 
 export const dialogTitle = (theme: Theme) => css`

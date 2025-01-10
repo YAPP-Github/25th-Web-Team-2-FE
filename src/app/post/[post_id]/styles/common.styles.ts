@@ -1,9 +1,11 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 
-export const dialogOverlay = css`
+export const dialogOverlay = (theme: Theme) => css`
   background: rgba(0, 22, 54, 0.31);
   position: fixed;
   inset: 0;
+
+  z-index: ${theme.zIndex.dialogOverlay};
 `;
 
 export const closeButton = css`
