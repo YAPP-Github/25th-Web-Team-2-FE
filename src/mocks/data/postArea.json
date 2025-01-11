@@ -1,0 +1,22 @@
+{
+  "total": 400,
+  "area": [
+    { "id": 1, "name": "SEOUL", "count": 22 },
+    { "id": 2, "name": "GYEONGGI", "count": 22 },
+    { "id": 3, "name": "INCHEON", "count": 22 },
+    { "id": 4, "name": "GANGWON", "count": 22 },
+    { "id": 5, "name": "DAEJEON", "count": 22 },
+    { "id": 6, "name": "SEJONG", "count": 22 },
+    { "id": 7, "name": "CHUNGNAM", "count": 22 },
+    { "id": 8, "name": "CHUNGBUK", "count": 22 },
+    { "id": 9, "name": "BUSAN", "count": 22 },
+    { "id": 10, "name": "ULSAN", "count": 22 },
+    { "id": 11, "name": "GYEONGNAM", "count": 22 },
+    { "id": 12, "name": "GYEONGBUK", "count": 22 },
+    { "id": 13, "name": "DAEGU", "count": 22 },
+    { "id": 14, "name": "GWANGJU", "count": 22 },
+    { "id": 15, "name": "JEONNAM", "count": 22 },
+    { "id": 16, "name": "JEONBUK", "count": 22 },
+    { "id": 17, "name": "JEJU", "count": 22 }
+  ]
+}
