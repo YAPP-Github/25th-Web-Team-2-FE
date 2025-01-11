@@ -1,8 +1,8 @@
-import { SVGProps } from 'react';
+import { CustomSVGProps } from '..';
 
 import theme from '@/styles/theme';
 
-function ChevronSquare(props: SVGProps<SVGSVGElement>) {
+function ChevronSquare(props: CustomSVGProps) {
   return (
     <svg
       width="24"
@@ -22,7 +22,7 @@ function ChevronSquare(props: SVGProps<SVGSVGElement>) {
       />
       <path
         d="M15.53 14.22C15.72 14.22 15.91 14.15 16.06 14C16.35 13.7 16.35 13.23 16.06 12.94L12.53 9.41C12.24 9.12 11.76 9.12 11.47 9.41L7.94 12.94C7.65 13.23 7.65 13.71 7.94 14C8.23 14.29 8.71 14.29 9 14L12 11L15 14C15.15 14.14 15.34 14.22 15.53 14.22Z"
-        fill="white"
+        fill={props.subcolor || theme.colors.icon01}
       />
     </svg>
   );
