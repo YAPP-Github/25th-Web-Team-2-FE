@@ -11,8 +11,8 @@ import {
   toastViewport,
   warning,
 } from './ParticipationGuideModal.styles';
-import { closeButton, dialogOverlay } from '../../styles/common.styles';
-import { CommonModalProps } from '../../types/common';
+import { closeButton, dialogOverlay } from '../../PostPage.styles';
+import { CommonModalProps } from '../../PostPage.types';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
@@ -78,7 +78,6 @@ const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => 
                 <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
                 개인정보보호에 유의해주세요
               </div>
-              ㄴ
             </div>
           </Dialog.Content>
 

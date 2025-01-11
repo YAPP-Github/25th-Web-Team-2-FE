@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import DeleteConfirmModal from './components/DeleteConfirmModal/DeleteConfirmModal';
 import {
   buttonStyles,
   editButton,
@@ -9,6 +8,7 @@ import {
   postSubInfo,
   viewsContainer,
 } from './PostInfo.styles';
+import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';

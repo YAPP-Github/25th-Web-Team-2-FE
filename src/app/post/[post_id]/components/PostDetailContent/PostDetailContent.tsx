@@ -1,6 +1,10 @@
 import { postContentLayout, postContentWrapper } from './PostDetailContent.styles';
-import { POST_CONTENT } from '../../constants/postContentData';
-import formattedContentText from '../../utils/formattedContentText';
+import formattedContentText from '../../PostPage.utils';
+
+export const POST_CONTENT = {
+  content:
+    '안녕하세요.\\n먼저, 본 연구에 관심을 갖고 참여해 주셔서 진심으로 감사드립니다.\\n\\n본 연구는 만 19세 이상부터 만 29세 이하의 성인을 대상으로 스마트폰 어플리케이션 및 웨어러블 기기를 통해 자해와 관련된 정서, 행동, 사회적 요인들을 살펴보는 ‘자해 위험 요인 예측을 위한 스마트폰 기반 디지털 피노타이핑’ 연구입니다.\\n\\n본격적인 연구 참여에 앞서서 실시하고자 하는 이 질문지는 귀하가 본 연구 참여 대상자에 해당하는지 확인하고자 실시하는 ‘선별 질문지’입니다.\\n만약 귀하가 선별 기준에 부합하는 경우, 연구 참여 일정을 잡아 시작 전 연구 안내 및 설명을 듣고 최종적으로 연구에 참여하게 됩니다.\\n따라서 해당 선별 질문지를 완료한 후 연구 참여 적격 여부(대상자, 비대상자)에 대해 기재해주신 연락처로 안내 드릴 예정입니다.\\n\\n※ 본 질문지는 연구 참여 대상자를 선별하기 위한 질문지로 몇 가지 개인정보 수집을 포함하고 있습니다.\\n응답 자료는 연구 이외의 다른 목적으로 사용되지 않으며, 모든 참여자의 데이터에 ID번호를 부여한 후 참여자를 식별할 수 있는 개인정보가 포함되지 않은 파일을 연구에 사용할 것입니다.\\n또한 연구 종료 후 수집 된 개인정보는 안전한 방법으로 삭제 및 폐기될 것입니다.\\n\\n본 연구에 대해 질문이 있거나 설문 응답 중간에 문제가 발생할 경우 연구 담당자에게 문의 부탁드립니다.\\n\\n연구 담당자\\n안찬영(citizenahn@naver.com/010-2696-6820)\\n이유림(dbfla1@naver.com/010-5482-3645)\\n김지은(kimje130@naver.com/010-7102-3483)\\n\\n연구 책임자\\n이종선(jongsunlee@kangwon.ac.kr/033-250-6853)',
+};
 
 const PostDetailContent = () => {
   return (
