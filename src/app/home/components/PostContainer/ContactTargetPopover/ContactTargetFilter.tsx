@@ -18,14 +18,14 @@ import {
   resetButton,
   saveButton,
   subLabel,
-} from './ContactTargetPopover.styles';
+} from './ContactTargetFilter.styles';
 
 const GENDER = ['전체', '남자', '여자'] as const;
 
 type Gender = (typeof GENDER)[number];
 
 // TODO: gender와 age는 유저 정보에서 가져와 기본값으로 설정
-const ContactTargetPopover = () => {
+const ContactTargetFilter = () => {
   const [gender, setGender] = useState<Gender>('전체');
   const [age, setAge] = useState(20);
   const [isOpen, setIsOpen] = useState(false);
@@ -122,4 +122,4 @@ const ContactTargetPopover = () => {
   );
 };
 
-export default ContactTargetPopover;
+export default ContactTargetFilter;

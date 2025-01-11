@@ -28,7 +28,7 @@ import {
   subAreaListContainer,
   triggerWrapper,
   verticalLine,
-} from './RegionPopover.styles';
+} from './AreaFilter.styles';
 
 type Area =
   | '전국'
@@ -147,8 +147,8 @@ const subAreas: Partial<Record<Area, SeoulRegion[]>> = {
   ],
 };
 
-const AreaPopover = () => {
-  const [selectedArea, setSelectedArea] = useState<(typeof areas)[0]['name']>('');
+const AreaFilter = () => {
+  const [selectedArea, setSelectedArea] = useState<(typeof areas)[0]['name']>('전국');
   const [checkedSubAreas, setCheckedSubAreas] = useState<Record<string, boolean>>({});
   const selectedSubArea = Object.keys(checkedSubAreas);
 
@@ -263,4 +263,4 @@ const AreaPopover = () => {
   );
 };
 
-export default AreaPopover;
+export default AreaFilter;

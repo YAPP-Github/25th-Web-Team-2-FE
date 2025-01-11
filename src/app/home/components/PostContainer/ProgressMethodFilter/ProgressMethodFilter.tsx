@@ -4,9 +4,9 @@ import * as Select from '@radix-ui/react-select';
 import Icon from '@/components/Icon';
 import { useState } from 'react';
 import theme from '@/styles/theme';
-import { contentContainer, selectItem, triggerWrapper } from './ProgressMethod.styles';
+import { contentContainer, selectItem, triggerWrapper } from './ProgressMethodFilter.styles';
 
-const ProgressMethod = () => {
+const ProgressMethodFilter = () => {
   const [value, setValue] = useState('전체');
   const [isOpen, setIsOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
@@ -53,4 +53,4 @@ const ProgressMethod = () => {
   );
 };
 
-export default ProgressMethod;
+export default ProgressMethodFilter;
