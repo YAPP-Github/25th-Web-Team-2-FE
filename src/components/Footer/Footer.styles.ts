@@ -1,13 +1,14 @@
 import { css, Theme } from '@emotion/react';
 
 export const footerLayout = (theme: Theme) => css`
-  background-color: ${theme.colors.field02};
+  background-color: ${theme.colors.field09};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1.6rem;
   padding: 2rem 0;
+  margin-top: 5.6rem;
 `;
 
 export const buttonContainer = (theme: Theme) => css`
@@ -15,8 +16,8 @@ export const buttonContainer = (theme: Theme) => css`
   gap: 1.2rem;
 
   button {
-    ${theme.fonts.label.large.SB14};
-    color: ${theme.colors.text04};
+    ${theme.fonts.label.large.M14};
+    color: ${theme.colors.text02};
   }
 `;
 
@@ -47,4 +48,5 @@ export const verticalLine = (theme: Theme) => css`
 export const textContainer = (theme: Theme) => css`
   ${theme.fonts.label.large.M14};
   color: ${theme.colors.text02};
+  text-align: center;
 `;
