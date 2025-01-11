@@ -1,0 +1,23 @@
+{
+  "total": 400,
+  "district": [
+    { "id": 1, "name": "GEUMCHEONGU", "count": 11 },
+    { "id": 2, "name": "NOWONGU", "count": 11 },
+    { "id": 3, "name": "DOBONGGU", "count": 11 },
+    { "id": 4, "name": "DONGDAEMUNGU", "count": 11 },
+    { "id": 5, "name": "DONGJAKGU", "count": 11 },
+    { "id": 6, "name": "MAPOGU", "count": 11 },
+    { "id": 7, "name": "SEODAEMUNGU", "count": 11 },
+    { "id": 8, "name": "SEOCHOGU", "count": 11 },
+    { "id": 9, "name": "SEONGDONGGU", "count": 11 },
+    { "id": 10, "name": "SEONGBUKGU", "count": 11 },
+    { "id": 11, "name": "SONGPAGU", "count": 11 },
+    { "id": 12, "name": "YANGCHEONGU", "count": 11 },
+    { "id": 13, "name": "YEONGDEUNGPOGU", "count": 11 },
+    { "id": 14, "name": "YONGSANGU", "count": 11 },
+    { "id": 15, "name": "EUNPYEONGGU", "count": 11 },
+    { "id": 16, "name": "JONGNOGU", "count": 11 },
+    { "id": 17, "name": "JUNGGU", "count": 11 },
+    { "id": 18, "name": "JUNGRANGGU", "count": 11 }
+  ]
+}

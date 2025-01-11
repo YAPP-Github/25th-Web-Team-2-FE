@@ -125,6 +125,10 @@ const reset = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  a:link {
+    text-decoration: none;
+  }
 `;
 
 export default reset;

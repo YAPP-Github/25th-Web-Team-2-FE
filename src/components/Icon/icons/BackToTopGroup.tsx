@@ -22,8 +22,8 @@ function BackToTopGroup(props: SVGProps<SVGSVGElement>) {
       <path
         d="M16.2 2H9H1.8"
         stroke={props.color || theme.colors.icon03}
-        stroke-width="2.7"
-        stroke-linecap="round"
+        strokeWidth="2.7"
+        strokeLinecap="round"
       />
     </svg>
   );
