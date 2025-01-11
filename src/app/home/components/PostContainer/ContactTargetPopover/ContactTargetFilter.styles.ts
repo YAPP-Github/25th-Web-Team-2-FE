@@ -23,17 +23,17 @@ export const popoverTrigger = (theme: Theme) => css`
   border-radius: 1.2rem;
 
   &:hover {
-    box-shadow: 0px 4px 16px 0px rgba(53, 59, 61, 0.08);
+    box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
   }
 `;
 
-export const popoverContent = css`
+export const popoverContent = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   padding: 2rem;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 1.2rem;
+  background-color: ${theme.colors.field01};
+  box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
   gap: 1.6rem;
   margin-top: 0.6rem;
 `;
@@ -69,7 +69,7 @@ export const buttonGroup = (theme: Theme) => css`
 
   button.active {
     background-color: ${theme.colors.primaryTinted};
-    outline: 1px solid ${theme.colors.lineTinted};
+    outline: 0.1rem solid ${theme.colors.lineTinted};
     color: ${theme.colors.textPrimary};
   }
 `;
@@ -83,7 +83,7 @@ export const ageInputContainer = (theme: Theme) => css`
     ${theme.fonts.label.large.M14};
     width: 100%;
     padding: 0.6rem 0;
-    border: 1px solid ${theme.colors.line01};
+    border: 0.1rem solid ${theme.colors.line01};
     border-radius: 1.2rem;
     text-align: center;
   }

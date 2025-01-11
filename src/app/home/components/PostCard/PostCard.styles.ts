@@ -13,7 +13,7 @@ export const postCardLayout = css`
   height: 20rem;
 
   &:hover {
-    box-shadow: 0px 4px 16px 0px rgba(53, 59, 61, 0.08);
+    box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.08);
   }
 `;
 

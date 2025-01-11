@@ -11,7 +11,7 @@ export const triggerWrapper = (theme: Theme) => css`
   background-color: ${theme.colors.field01};
 
   &:hover {
-    box-shadow: 0px 4px 16px rgb(53, 59, 61, 0.2);
+    box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
   }
 `;
 
@@ -26,7 +26,7 @@ export const regionContentContainer = (theme: Theme) => css`
   height: 35rem;
   padding: 1.2rem;
   border-radius: 1.2rem;
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
 `;
 
 export const contentWrapper = (theme: Theme) => css`
