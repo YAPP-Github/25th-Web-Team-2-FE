@@ -13,7 +13,7 @@ const Header = () => {
         <Image src={Logo} alt="로고" css={image} />
       </Link>
       <div css={buttonContainer}>
-        <button css={contactButton}>연구 참여자 모집하기</button>
+        <button css={contactButton}>실험 공고 등록</button>
         <button css={loginButton}>로그인</button>
       </div>
     </div>
