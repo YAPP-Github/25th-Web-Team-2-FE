@@ -1,6 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { fetchPostCount, PostSubAreaResponse } from '@/apis/post';
 import { QUERY_KEY } from '@/constants/queryKey';
-import { useQuery } from '@tanstack/react-query';
 
 const useFilterSubAreaQuery = (area?: string) => {
   return useQuery({

@@ -2,8 +2,7 @@
 
 import * as Popover from '@radix-ui/react-popover';
 import { useState } from 'react';
-import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
+
 import {
   areaButton,
   areaCount,
@@ -26,10 +25,13 @@ import {
   triggerWrapper,
   verticalLine,
 } from './AreaFilter.styles';
-import { Area } from '@/app/home/home.types';
+
 import { areaMapper, subAreaMapper } from '@/app/home/home.constants';
+import { Area } from '@/app/home/home.types';
 import useFilterAreaQuery from '@/app/home/hooks/useFilterAreaQuery';
 import useFilterSubAreaQuery from '@/app/home/hooks/useFilterSubAreaQuery';
+import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
 
 const AreaFilter = () => {
   const [selectedArea, setSelectedArea] = useState<Area | ''>('');

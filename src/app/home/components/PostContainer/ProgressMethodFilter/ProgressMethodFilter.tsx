@@ -1,10 +1,13 @@
 'use client';
 
 import * as Select from '@radix-ui/react-select';
-import Icon from '@/components/Icon';
 import { useState } from 'react';
-import theme from '@/styles/theme';
+
 import { contentContainer, selectItem, triggerWrapper } from './ProgressMethodFilter.styles';
+
+import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
+
 
 const ProgressMethodFilter = () => {
   const [value, setValue] = useState('전체');
