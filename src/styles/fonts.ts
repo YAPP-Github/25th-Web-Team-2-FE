@@ -61,6 +61,15 @@ export const fonts = {
         letter-spacing: 0;
       `,
     },
+    large: {
+      SB24: css`
+        font-size: 2.4rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 3.2rem;
+        letter-spacing: 0;
+      `,
+    },
   },
 
   // label
@@ -89,6 +98,29 @@ export const fonts = {
       `,
     },
     medium: {
+      R13: css`
+        font-size: 1.3rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 2rem;
+        letter-spacing: 0;
+      `,
+      M13: css`
+        font-size: 1.3rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 2rem;
+        letter-spacing: 0;
+      `,
+      SB13: css`
+        font-size: 1.3rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 2rem;
+        letter-spacing: 0;
+      `,
+    },
+    large: {
       R14: css`
         font-size: 1.4rem;
         font-style: normal;

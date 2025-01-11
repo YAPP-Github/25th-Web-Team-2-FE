@@ -1,0 +1,7 @@
+export const zIndex = {
+  backToTopButton: 99,
+  dialogOverlay: 99,
+  dialogContent: 999,
+  toastViewport: 99,
+  toastContent: 999,
+};

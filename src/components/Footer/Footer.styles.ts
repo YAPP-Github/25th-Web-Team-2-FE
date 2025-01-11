@@ -15,7 +15,7 @@ export const buttonContainer = (theme: Theme) => css`
   gap: 1.2rem;
 
   button {
-    ${theme.fonts.label.medium.SB14};
+    ${theme.fonts.label.large.SB14};
     color: ${theme.colors.text04};
   }
 `;
@@ -45,6 +45,6 @@ export const verticalLine = (theme: Theme) => css`
 `;
 
 export const textContainer = (theme: Theme) => css`
-  ${theme.fonts.label.medium.M14};
+  ${theme.fonts.label.large.M14};
   color: ${theme.colors.text02};
 `;

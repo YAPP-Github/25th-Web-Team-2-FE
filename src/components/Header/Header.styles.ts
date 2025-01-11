@@ -4,18 +4,11 @@ export const headerLayout = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 2.8rem;
-`;
-
-export const headerContainer = css`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10rem;
+  padding: 2rem 0;
 `;
 
 export const image = css`
-  height: 100%;
+  height: auto;
 `;
 
 export const buttonContainer = css`
@@ -25,7 +18,7 @@ export const buttonContainer = css`
 `;
 
 export const contactButton = (theme: Theme) => css`
-  ${theme.fonts.label.medium.SB14};
+  ${theme.fonts.label.large.SB14};
   background-color: ${theme.colors.primaryTinted};
   color: ${theme.colors.textPrimary};
   padding: 0.6rem 1.4rem;
@@ -33,7 +26,7 @@ export const contactButton = (theme: Theme) => css`
 `;
 
 export const loginButton = (theme: Theme) => css`
-  ${theme.fonts.label.medium.SB14};
+  ${theme.fonts.label.large.SB14};
   background-color: ${theme.colors.primaryMint};
   color: ${theme.colors.text01};
   padding: 0.6rem 1.4rem;
