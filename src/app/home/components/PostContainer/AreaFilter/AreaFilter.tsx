@@ -4,9 +4,6 @@ import * as Popover from '@radix-ui/react-popover';
 import { useState } from 'react';
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/queryKey';
-import { fetchPostCount } from '@/apis/post';
 import {
   areaButton,
   areaCount,
@@ -29,126 +26,11 @@ import {
   triggerWrapper,
   verticalLine,
 } from './AreaFilter.styles';
-
-type Area =
-  | '전국'
-  | '서울'
-  | '경기'
-  | '인천'
-  | '강원'
-  | '대전'
-  | '세종'
-  | '충남'
-  | '충북'
-  | '부산'
-  | '울산'
-  | '경남'
-  | '경북'
-  | '대구'
-  | '광주'
-  | '전남'
-  | '전북'
-  | '제주';
-
-type SeoulArea =
-  | '전체'
-  | '금천구'
-  | '노원구'
-  | '도봉구'
-  | '동대문구'
-  | '동작구'
-  | '마포구'
-  | '서대문구'
-  | '서초구'
-  | '성동구'
-  | '성북구'
-  | '송파구'
-  | '양천구'
-  | '영등포구'
-  | '용산구'
-  | '은평구'
-  | '종로구'
-  | '중구'
-  | '중랑구';
-
-interface Region {
-  id: number;
-  name: Area;
-  count: number;
-}
-
-interface SeoulRegion {
-  id: number;
-  name: SeoulArea;
-  count: number;
-}
-
-const areas: Region[] = [
-  { id: 1, name: '전국', count: 4321 },
-  { id: 2, name: '서울', count: 1234 },
-  { id: 3, name: '경기', count: 134 },
-  { id: 4, name: '인천', count: 134 },
-  { id: 5, name: '강원', count: 134 },
-  { id: 6, name: '대전', count: 134 },
-  { id: 7, name: '세종', count: 13 },
-  { id: 8, name: '충남', count: 124 },
-  { id: 9, name: '충북', count: 43 },
-  { id: 10, name: '부산', count: 21 },
-  { id: 11, name: '울산', count: 21 },
-  { id: 12, name: '경남', count: 21 },
-  { id: 13, name: '경북', count: 21 },
-  { id: 14, name: '대구', count: 21 },
-  { id: 15, name: '광주', count: 21 },
-  { id: 16, name: '전남', count: 21 },
-  { id: 17, name: '전북', count: 21 },
-  { id: 18, name: '제주', count: 21 },
-];
-
-const areaMapper = {
-  SEOUL: '서울',
-  GYEONGGI: '경기',
-  INCHEON: '인천',
-  GANGWON: '강원',
-  DAEJEON: '대전',
-  CHUNGNAM: '충남',
-  CHUNGBUK: '충북',
-  BUSAN: '부산',
-  ULSAN: '울산',
-  GYEONGNAM: '경남',
-  GYEONGBUK: '경북',
-  DAEGU: '대구',
-  GWANGJU: '광주',
-  JEONNAM: '전남',
-  JEONBUK: '전북',
-  JEJU: '제주',
-};
-
-const subAreas: Partial<Record<Area, SeoulRegion[]>> = {
-  서울: [
-    { id: 1, name: '전체', count: 1234 },
-    { id: 1, name: '금천구', count: 1234 },
-    { id: 1, name: '노원구', count: 1234 },
-    { id: 1, name: '도봉구', count: 1234 },
-    { id: 1, name: '동대문구', count: 1234 },
-    { id: 1, name: '동작구', count: 1234 },
-    { id: 2, name: '마포구', count: 234 },
-    { id: 3, name: '서대문구', count: 123 },
-    { id: 4, name: '서초구', count: 23 },
-    { id: 5, name: '성동구', count: 412 },
-    { id: 5, name: '성북구', count: 412 },
-    { id: 5, name: '송파구', count: 412 },
-    { id: 5, name: '양천구', count: 412 },
-    { id: 5, name: '영등포구', count: 412 },
-    { id: 5, name: '용산구', count: 412 },
-    { id: 5, name: '은평구', count: 412 },
-    { id: 5, name: '종로구', count: 412 },
-    { id: 5, name: '중구', count: 412 },
-    { id: 5, name: '중랑구', count: 412 },
-  ],
-};
+import { Area } from '@/app/home/home.types';
+import { areas, subAreas } from '@/app/home/home.constants';
 
 const AreaFilter = () => {
-  const [selectedArea, setSelectedArea] = useState<(typeof areas)[0]['name']>('전국');
+  const [selectedArea, setSelectedArea] = useState<Area>('전국');
   const [checkedSubAreas, setCheckedSubAreas] = useState<Record<string, boolean>>({});
   const selectedSubArea = Object.keys(checkedSubAreas);
 

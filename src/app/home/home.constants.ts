@@ -1,0 +1,46 @@
+import { Area, Region, SeoulRegion } from './home.types';
+
+export const areas: Region[] = [
+  { id: 1, name: '전국', count: 4321 },
+  { id: 2, name: '서울', count: 1234 },
+  { id: 3, name: '경기', count: 134 },
+  { id: 4, name: '인천', count: 134 },
+  { id: 5, name: '강원', count: 134 },
+  { id: 6, name: '대전', count: 134 },
+  { id: 7, name: '세종', count: 13 },
+  { id: 8, name: '충남', count: 124 },
+  { id: 9, name: '충북', count: 43 },
+  { id: 10, name: '부산', count: 21 },
+  { id: 11, name: '울산', count: 21 },
+  { id: 12, name: '경남', count: 21 },
+  { id: 13, name: '경북', count: 21 },
+  { id: 14, name: '대구', count: 21 },
+  { id: 15, name: '광주', count: 21 },
+  { id: 16, name: '전남', count: 21 },
+  { id: 17, name: '전북', count: 21 },
+  { id: 18, name: '제주', count: 21 },
+];
+
+export const subAreas: Partial<Record<Area, SeoulRegion[]>> = {
+  서울: [
+    { id: 1, name: '전체', count: 1234 },
+    { id: 1, name: '금천구', count: 1234 },
+    { id: 1, name: '노원구', count: 1234 },
+    { id: 1, name: '도봉구', count: 1234 },
+    { id: 1, name: '동대문구', count: 1234 },
+    { id: 1, name: '동작구', count: 1234 },
+    { id: 2, name: '마포구', count: 234 },
+    { id: 3, name: '서대문구', count: 123 },
+    { id: 4, name: '서초구', count: 23 },
+    { id: 5, name: '성동구', count: 412 },
+    { id: 5, name: '성북구', count: 412 },
+    { id: 5, name: '송파구', count: 412 },
+    { id: 5, name: '양천구', count: 412 },
+    { id: 5, name: '영등포구', count: 412 },
+    { id: 5, name: '용산구', count: 412 },
+    { id: 5, name: '은평구', count: 412 },
+    { id: 5, name: '종로구', count: 412 },
+    { id: 5, name: '중구', count: 412 },
+    { id: 5, name: '중랑구', count: 412 },
+  ],
+};
