@@ -13,7 +13,7 @@ import {
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-function PostInfo() {
+const PostInfo = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const canEdit = true;
@@ -46,6 +46,6 @@ function PostInfo() {
       <DeleteConfirmModal isOpen={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen} />
     </>
   );
-}
+};
 
 export default PostInfo;

@@ -14,7 +14,7 @@ import { closeButton, dialogOverlay } from '@/app/post/[post_id]/styles/common.s
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-function DeleteConfirmModal({ isOpen, onOpenChange }: CommonModalProps) {
+const DeleteConfirmModal = ({ isOpen, onOpenChange }: CommonModalProps) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -40,6 +40,6 @@ function DeleteConfirmModal({ isOpen, onOpenChange }: CommonModalProps) {
       </Dialog.Portal>
     </Dialog.Root>
   );
-}
+};
 
 export default DeleteConfirmModal;

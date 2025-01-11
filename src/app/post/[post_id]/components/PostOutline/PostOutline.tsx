@@ -11,7 +11,7 @@ import {
 } from './PostOutline.styles';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
-function PostOutline() {
+const PostOutline = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -76,6 +76,6 @@ function PostOutline() {
       <ParticipationGuideModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
-}
+};
 
 export default PostOutline;

@@ -5,7 +5,7 @@ import PostDetailContent from '../PostDetailContent/PostDetailContent';
 import PostInfo from '../PostInfo/PostInfo';
 import PostOutline from '../PostOutline/PostOutline';
 
-function PostContainer() {
+const PostContainer = () => {
   return (
     <>
       <PostInfo />
@@ -15,6 +15,6 @@ function PostContainer() {
       </div>
     </>
   );
-}
+};
 
 export default PostContainer;

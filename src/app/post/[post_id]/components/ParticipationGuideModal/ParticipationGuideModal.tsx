@@ -20,7 +20,7 @@ import { colors } from '@/styles/colors';
 /**
  * 참여 방법 안내 모달
  */
-function ParticipationGuideModal({ isOpen, onOpenChange }: CommonModalProps) {
+const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => {
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const handleCopyContent = (text: string) => {
@@ -74,11 +74,11 @@ function ParticipationGuideModal({ isOpen, onOpenChange }: CommonModalProps) {
                   />
                 </div>
               </div>
-
               <div css={warning}>
                 <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
                 개인정보보호에 유의해주세요
               </div>
+              ㄴ
             </div>
           </Dialog.Content>
 
@@ -101,6 +101,6 @@ function ParticipationGuideModal({ isOpen, onOpenChange }: CommonModalProps) {
       </Dialog.Root>
     </>
   );
-}
+};
 
 export default ParticipationGuideModal;

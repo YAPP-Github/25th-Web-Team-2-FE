@@ -6,7 +6,7 @@ import Icon from '../../Icon';
 /**
  * 페이지 최상단 이동 버튼
  */
-function BackToTopButton() {
+const BackToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
@@ -32,6 +32,6 @@ function BackToTopButton() {
       <Icon icon="BackToTopGroup" />
     </button>
   );
-}
+};
 
 export default BackToTopButton;
