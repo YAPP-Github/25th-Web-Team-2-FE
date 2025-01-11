@@ -27,12 +27,17 @@ import {
   verticalLine,
 } from './AreaFilter.styles';
 import { Area } from '@/app/home/home.types';
-import { areas, subAreas } from '@/app/home/home.constants';
+import { areaMapper, subAreaMapper } from '@/app/home/home.constants';
+import useFilterAreaQuery from '@/app/home/hooks/useFilterAreaQuery';
+import useFilterSubAreaQuery from '@/app/home/hooks/useFilterSubAreaQuery';
 
 const AreaFilter = () => {
-  const [selectedArea, setSelectedArea] = useState<Area>('전국');
+  const [selectedArea, setSelectedArea] = useState<Area | ''>('');
   const [checkedSubAreas, setCheckedSubAreas] = useState<Record<string, boolean>>({});
   const selectedSubArea = Object.keys(checkedSubAreas);
+
+  const { data: postArea } = useFilterAreaQuery();
+  const { data: postSubArea } = useFilterSubAreaQuery(selectedArea);
 
   const handleAreaClick = (area: Area) => {
     setSelectedArea(area);
@@ -59,7 +64,7 @@ const AreaFilter = () => {
       >
         <span>
           {isSelected
-            ? `${selectedArea} . ${selectedSubArea[0]} ${
+            ? `${selectedArea} . ${subAreaMapper[selectedSubArea[0]]} ${
                 selectedSubArea.length >= 2 ? `외 ${selectedSubArea.length - 1}` : ''
               }`
             : '지역'}
@@ -70,14 +75,14 @@ const AreaFilter = () => {
         <Popover.Content css={regionContentContainer}>
           <div css={contentWrapper}>
             <div css={areaListContainer}>
-              {areas.map((area) => (
+              {postArea?.map((area) => (
                 <button
                   key={area.id}
                   css={[areaButton, area.name === selectedArea && selectedAreaButton]}
                   onClick={() => handleAreaClick(area.name)}
                 >
                   <span css={[areaName, area.name === selectedArea && selectedAreaName]}>
-                    {area.name}
+                    {areaMapper[area.name]}
                   </span>
                   <span css={areaCount}>{area.count}</span>
                 </button>
@@ -86,14 +91,14 @@ const AreaFilter = () => {
             <span css={verticalLine} />
             <div css={subAreaListContainer}>
               {selectedArea ? (
-                subAreas[selectedArea]?.map((subArea) => (
+                postSubArea?.map((subArea) => (
                   <label
                     key={subArea.id}
                     css={[subAreaItem, checkedSubAreas[subArea.name] && selectedSubAreaLabel]}
                   >
                     <div css={subAreaInfo}>
                       <span css={[areaName, checkedSubAreas[subArea.name] && selectedAreaName]}>
-                        {subArea.name}
+                        {subAreaMapper[subArea.name]}
                       </span>
                       <span css={areaCount}>{subArea.count}</span>
                     </div>
