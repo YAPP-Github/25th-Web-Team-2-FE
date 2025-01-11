@@ -30,7 +30,6 @@ const PostCard = ({ post }: PostCardProps) => {
         css={postCardLayout}
         style={{
           backgroundColor: post.isContacted ? theme.colors.field01 : theme.colors.field01,
-          cursor: post.isContacted ? 'not-allowed' : 'pointer',
         }}
       >
         <div css={postHeader}>
