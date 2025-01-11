@@ -109,7 +109,12 @@ const AreaFilter = () => {
                       onChange={() => handleSubAreaCheck(subArea.name)}
                     />
                     {!!checkedSubAreas[subArea.name] ? (
-                      <Icon icon="CheckSquareFill" width={20} height={20} />
+                      <Icon
+                        icon="CheckSquareFill"
+                        width={20}
+                        height={20}
+                        color={theme.colors.primaryMint}
+                      />
                     ) : (
                       <Icon icon="CheckSquareEmpty" width={20} height={20} />
                     )}
