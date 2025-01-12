@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Providers from './providers';
 
 import Footer from '@/components/Footer/Footer';
-import pretendard from 'public/fonts/local-font';
+import pretendard from '@/fonts/local-font';
 
 export const metadata: Metadata = {
   title: '그라밋',
