@@ -126,8 +126,9 @@ const reset = css`
     border-spacing: 0;
   }
 
-  a:link {
+  a {
     text-decoration: none;
+    color: inherit;
   }
 `;
 
