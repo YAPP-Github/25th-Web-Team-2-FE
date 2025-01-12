@@ -7,7 +7,7 @@ const global = css`
   ${reset}
 
   :root {
-    --font-family: 'Inter', sans-serif;
+    --font-family: 'Pretendard', 'Inter', sans-serif;
   }
 
   * {
