@@ -14,7 +14,9 @@ const Header = () => {
       </Link>
       <div css={buttonContainer}>
         <button css={contactButton}>실험 공고 등록</button>
-        <button css={loginButton}>로그인</button>
+        <Link href="/login" css={loginButton}>
+          로그인
+        </Link>
       </div>
     </div>
   );
