@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 
 import reset from './reset';
-import theme from './theme';
 
 const global = css`
   ${reset}
@@ -32,7 +31,6 @@ const global = css`
     display: block;
     font-family: var(--font-family);
     position: relative;
-    background-color: ${theme.colors.field02};
   }
 
   main {
