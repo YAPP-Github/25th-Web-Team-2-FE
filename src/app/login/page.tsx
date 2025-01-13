@@ -2,15 +2,15 @@
 
 import Image from 'next/image';
 
-import Logo from '@/assets/images/logo.svg';
-
+import LoginCard from './components/LoginCard';
 import {
   loginCardContainer,
   loginLayout,
   sloganContainer,
   sloganWrapper,
 } from './LoginPage.styles';
-import LoginCard from './components/LoginCard';
+
+import Logo from '@/assets/images/logo.svg';
 
 export default function LoginPage() {
   return (
