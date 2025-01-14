@@ -1,7 +1,8 @@
-import { Post } from '@/types/post';
 import { API } from './config';
-import { API_URL } from '@/constants/url';
+
 import { Area } from '@/app/home/home.types';
+import { API_URL } from '@/constants/url';
+import { Post } from '@/types/post';
 
 interface PostResponse {
   posts: Post[];
