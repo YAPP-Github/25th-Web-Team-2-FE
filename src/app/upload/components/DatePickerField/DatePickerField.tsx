@@ -42,6 +42,8 @@ const DatePickerField = ({
     }
   };
 
+  const bothDatesSelected = startDate !== null && endDate !== null;
+
   return (
     <div css={datePickerWrapper}>
       <div
@@ -49,7 +51,7 @@ const DatePickerField = ({
         onClick={() => setIsOpen((prev) => !prev)}
         role="button"
       >
-        <span css={(theme) => placeholderText(theme, startDate !== null && endDate !== null)}>
+        <span css={(theme) => placeholderText(theme, bothDatesSelected, experimentDateChecked)}>
           {!experimentDateChecked
             ? startDate && endDate
               ? `${startDate.toLocaleDateString()} ~ ${endDate.toLocaleDateString()}`
@@ -112,9 +114,17 @@ const styledDiv = (theme: Theme, experimentDateChecked: boolean, isOpen: boolean
   cursor: ${experimentDateChecked ? 'default' : 'pointer'};
 `;
 
-const placeholderText = (theme: Theme, bothDatesSelected: boolean) => css`
+const placeholderText = (
+  theme: Theme,
+  bothDatesSelected: boolean,
+  experimentDateChecked: boolean,
+) => css`
   ${theme.fonts.label.large.R14};
-  color: ${bothDatesSelected ? theme.colors.text06 : theme.colors.text02};
+  color: ${experimentDateChecked
+    ? theme.colors.text02
+    : bothDatesSelected
+    ? theme.colors.text06
+    : theme.colors.text02};
 
   flex: 1;
 
