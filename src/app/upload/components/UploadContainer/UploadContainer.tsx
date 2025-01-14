@@ -129,6 +129,8 @@ export const input = (theme: Theme) => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;
+  height: 4.8rem;
+
   padding: 10px;
   border: 0.1rem solid ${theme.colors.line01};
   border-radius: 1.2rem;

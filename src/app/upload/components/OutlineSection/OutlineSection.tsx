@@ -5,8 +5,10 @@ import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
-import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import DatePickerField, {
+  NullableDate,
+} from '@/app/upload/components/DatePickerField/DatePickerField';
 
 enum MatchType {
   OFFLINE = 'OFFLINE',
@@ -23,6 +25,18 @@ const OutlineSection = () => {
 
   const handleMatchTypeChange = (method: MatchType) => {
     setSelectedMatchType(method);
+  };
+
+  const [selectedDates, setSelectedDates] = useState<{
+    startDate: NullableDate;
+    endDate: NullableDate;
+  }>({
+    startDate: null,
+    endDate: null,
+  });
+
+  const handleDateChange = (dates: { startDate: NullableDate; endDate: NullableDate }) => {
+    setSelectedDates(dates);
   };
 
   return (
@@ -50,18 +64,11 @@ const OutlineSection = () => {
           <label css={label} htmlFor="experiment-date">
             실험 일시 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <div css={inputWithIcon}>
-            <input
-              css={input}
-              type="text"
-              id="experiment-date"
-              placeholder={experimentDateChecked ? '본문 참고' : '실험 시작일 ~ 실험 종료일'}
-              disabled={experimentDateChecked}
-            />
-            <span css={iconStyle}>
-              <Icon icon="Calendar" width={20} height={20} color={colors.icon03} />
-            </span>
-          </div>
+          <DatePickerField
+            placeholder="실험 시작일 ~ 실험 종료일"
+            onDateChange={handleDateChange}
+            experimentDateChecked={experimentDateChecked}
+          />
           <CheckboxWithIcon
             checked={experimentDateChecked}
             onChange={() => {
@@ -160,17 +167,6 @@ export const outlineFormLayout = css`
   grid-row-gap: 2.8rem;
 
   margin: 0 auto;
-`;
-
-const inputWithIcon = css`
-  display: flex;
-  align-items: center;
-  position: relative;
-`;
-
-const iconStyle = css`
-  position: absolute;
-  right: 1.6rem;
 `;
 
 export const radioGroup = css`

@@ -4,4 +4,5 @@ export const zIndex = {
   dialogContent: 999,
   toastViewport: 99,
   toastContent: 999,
+  datePickerPopup: 99,
 };
