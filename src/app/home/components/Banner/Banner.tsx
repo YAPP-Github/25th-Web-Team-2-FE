@@ -1,6 +1,8 @@
 'use client';
 
 import Image from 'next/image';
+import { useRef, useState } from 'react';
+
 import {
   bannerCarousel,
   bannerImage,
@@ -13,7 +15,6 @@ import {
 
 import BannerImage from '@/assets/images/banner.svg';
 import Icon from '@/components/Icon';
-import { useRef, useState } from 'react';
 
 const BANNER_LENGTH = 3;
 

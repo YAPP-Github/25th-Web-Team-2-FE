@@ -26,6 +26,7 @@ export const contactButton = (theme: Theme) => css`
 `;
 
 export const loginButton = (theme: Theme) => css`
+  display: inline-block;
   ${theme.fonts.label.large.SB14};
   background-color: ${theme.colors.primaryMint};
   color: ${theme.colors.text01};

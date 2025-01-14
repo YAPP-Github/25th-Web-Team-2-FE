@@ -2,8 +2,7 @@
 
 import * as Popover from '@radix-ui/react-popover';
 import { ChangeEvent, useState } from 'react';
-import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
+
 import {
   ageButtonWrapper,
   ageInputContainer,
@@ -19,6 +18,9 @@ import {
   saveButton,
   subLabel,
 } from './ContactTargetFilter.styles';
+
+import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
 
 const GENDER = ['전체', '남자', '여자'] as const;
 
