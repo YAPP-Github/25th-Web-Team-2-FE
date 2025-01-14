@@ -2,6 +2,7 @@ import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import Icon from '@/components/Icon';
@@ -75,38 +76,16 @@ const OutlineSection = () => {
           <label css={label}>
             진행 방식 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <div css={customRadioGroup}>
-            <button
-              type="button"
-              css={(theme) => [
-                customRadioButton(theme),
-                selectedMatchType === MatchType.OFFLINE && activeRadioButton(theme),
-              ]}
-              onClick={() => handleMatchTypeChange(MatchType.OFFLINE)}
-            >
-              대면
-            </button>
-            <button
-              type="button"
-              css={(theme) => [
-                customRadioButton(theme),
-                selectedMatchType === MatchType.ONLINE && activeRadioButton(theme),
-              ]}
-              onClick={() => handleMatchTypeChange(MatchType.ONLINE)}
-            >
-              비대면
-            </button>
-            <button
-              type="button"
-              css={(theme) => [
-                customRadioButton(theme),
-                selectedMatchType === MatchType.HYBRID && activeRadioButton(theme),
-              ]}
-              onClick={() => handleMatchTypeChange(MatchType.HYBRID)}
-            >
-              대면+비대면
-            </button>
-          </div>
+
+          <RadioButtonGroup<MatchType>
+            options={[
+              { value: MatchType.OFFLINE, label: '대면' },
+              { value: MatchType.ONLINE, label: '비대면' },
+              { value: MatchType.HYBRID, label: '대면+비대면' },
+            ]}
+            selectedValue={selectedMatchType}
+            onChange={handleMatchTypeChange}
+          />
         </div>
 
         {/* 참여 보상 */}
@@ -196,13 +175,8 @@ const iconStyle = css`
 
 export const radioGroup = css`
   display: flex;
-  gap: 15px;
-`;
-
-export const radioLabel = css`
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  flex-flow: row nowrap;
+  gap: 0.8rem;
 `;
 
 export const customRadioGroup = css`
