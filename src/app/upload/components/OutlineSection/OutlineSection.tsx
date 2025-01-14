@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
@@ -7,12 +7,22 @@ import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
+enum MatchType {
+  OFFLINE = 'OFFLINE',
+  ONLINE = 'ONLINE',
+  HYBRID = 'HYBRID',
+}
+
 const OutlineSection = () => {
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
-
   const [rewardChecked, setRewardChecked] = useState(false);
-
   const [timeChecked, setTimeChecked] = useState(false);
+
+  const [selectedMatchType, setSelectedMatchType] = useState<MatchType | null>(null);
+
+  const handleMatchTypeChange = (method: MatchType) => {
+    setSelectedMatchType(method);
+  };
 
   return (
     <div css={outlineLayout}>
@@ -65,16 +75,37 @@ const OutlineSection = () => {
           <label css={label}>
             진행 방식 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <div css={radioGroup}>
-            <label css={radioLabel}>
-              <input type="radio" name="method" value="대면" /> 대면
-            </label>
-            <label css={radioLabel}>
-              <input type="radio" name="method" value="비대면" /> 비대면
-            </label>
-            <label css={radioLabel}>
-              <input type="radio" name="method" value="대면+비대면" /> 대면+비대면
-            </label>
+          <div css={customRadioGroup}>
+            <button
+              type="button"
+              css={(theme) => [
+                customRadioButton(theme),
+                selectedMatchType === MatchType.OFFLINE && activeRadioButton(theme),
+              ]}
+              onClick={() => handleMatchTypeChange(MatchType.OFFLINE)}
+            >
+              대면
+            </button>
+            <button
+              type="button"
+              css={(theme) => [
+                customRadioButton(theme),
+                selectedMatchType === MatchType.ONLINE && activeRadioButton(theme),
+              ]}
+              onClick={() => handleMatchTypeChange(MatchType.ONLINE)}
+            >
+              비대면
+            </button>
+            <button
+              type="button"
+              css={(theme) => [
+                customRadioButton(theme),
+                selectedMatchType === MatchType.HYBRID && activeRadioButton(theme),
+              ]}
+              onClick={() => handleMatchTypeChange(MatchType.HYBRID)}
+            >
+              대면+비대면
+            </button>
           </div>
         </div>
 
@@ -172,4 +203,42 @@ export const radioLabel = css`
   display: flex;
   align-items: center;
   gap: 5px;
+`;
+
+export const customRadioGroup = css`
+  display: flex;
+  gap: 1rem;
+`;
+
+export const customRadioButton = (theme: Theme) => css`
+  ${theme.fonts.label.large.M14};
+
+  width: 14.533rem;
+  height: 4.8rem;
+
+  padding: 1rem 2rem;
+
+  border: 0.1rem solid ${theme.colors.line01};
+  border-radius: 1.2rem;
+
+  background-color: ${theme.colors.field01};
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${theme.colors.field02};
+  }
+`;
+
+export const activeRadioButton = (theme: Theme) => css`
+  border: 0.1rem solid ${theme.colors.lineTinted};
+
+  background-color: ${theme.colors.primaryTinted};
+  color: ${theme.colors.textPrimary};
+
+  &:hover {
+    background-color: ${theme.colors.primaryTinted};
+  }
 `;
