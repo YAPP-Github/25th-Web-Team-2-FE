@@ -1,8 +1,10 @@
 import { http, HttpResponse } from 'msw';
-import POST_LIST from '../data/postList.json';
-import { MOCK_API_URL } from '@/constants/url';
-import POST_SUB_AREA from '../data/postSubArea.json';
+
 import POST_AREA from '../data/postArea.json';
+import POST_LIST from '../data/postList.json';
+import POST_SUB_AREA from '../data/postSubArea.json';
+
+import { MOCK_API_URL } from '@/constants/url';
 
 const fetchPostListHandler = () => {
   return HttpResponse.json(POST_LIST);

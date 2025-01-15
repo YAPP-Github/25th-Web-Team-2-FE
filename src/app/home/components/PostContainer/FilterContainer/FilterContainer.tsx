@@ -1,7 +1,7 @@
+import { filterLayout } from './FilterContainer.styles';
 import AreaFilter from '../AreaFilter/AreaFilter';
 import ContactTargetFilter from '../ContactTargetPopover/ContactTargetFilter';
 import ProgressMethodFilter from '../ProgressMethodFilter/ProgressMethodFilter';
-import { filterLayout } from './FilterContainer.styles';
 
 const FilterContainer = () => {
   return (

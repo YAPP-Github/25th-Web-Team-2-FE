@@ -1,5 +1,6 @@
 import { postCardListLayout } from './PostCardList.styles';
 import PostCard from '../PostCard/PostCard';
+
 import { Post } from '@/types/post';
 
 interface PostCardListProps {

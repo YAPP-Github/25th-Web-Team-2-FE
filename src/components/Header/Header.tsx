@@ -16,7 +16,9 @@ const Header = () => {
         <Link href="/upload">
           <button css={contactButton}>실험 공고 등록</button>
         </Link>
-        <button css={loginButton}>로그인</button>
+        <Link href="/login" css={loginButton}>
+          로그인
+        </Link>
       </div>
     </div>
   );

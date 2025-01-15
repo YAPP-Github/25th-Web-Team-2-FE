@@ -1,4 +1,5 @@
-import { Post } from '@/types/post';
+import Link from 'next/link';
+
 import {
   announceText,
   contactedPostTag,
@@ -13,9 +14,11 @@ import {
   postTitle,
   postViews,
 } from './PostCard.styles';
+
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
-import Link from 'next/link';
+import { Post } from '@/types/post';
+
 
 interface PostCardProps {
   post: Post;
