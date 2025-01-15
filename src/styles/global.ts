@@ -1,12 +1,28 @@
 import { css } from '@emotion/react';
 
 import reset from './reset';
+import theme from './theme';
 
 const global = css`
   ${reset}
 
   :root {
     --font-family: 'Pretendard', 'Inter', sans-serif;
+
+    // date-picker
+    --rdp-cell-size: 4rem;
+
+    --rdp-day-height: 4rem;
+    --rdp-day-width: 4rem;
+    --rdp-day_button-height: 4rem;
+    --rdp-day_button-width: 4rem;
+
+    --rdp-accent-color: ${theme.colors.primaryMint};
+    --rdp-background-color: ${theme.colors.primaryTinted};
+    --rdp-accent-background-color: ${theme.colors.primaryTinted};
+
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    --rdp-outline-selected: 0.1rem solid ${theme.colors.primaryTinted};
   }
 
   * {
@@ -48,6 +64,21 @@ const global = css`
     height: 1px;
     margin: -1px;
     position: absolute !important;
+  }
+
+  .rdp-root {
+    --rdp-cell-size: 4rem;
+    --rdp-day-height: 4rem;
+    --rdp-day-width: 4rem;
+    --rdp-day_button-height: 4rem;
+    --rdp-day_button-width: 4rem;
+
+    --rdp-accent-color: ${theme.colors.primaryMint};
+    --rdp-background-color: ${theme.colors.primaryTinted};
+    --rdp-accent-background-color: ${theme.colors.primaryTinted};
+
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    --rdp-outline-selected: 0.1rem solid ${theme.colors.primaryTinted};
   }
 `;
 

@@ -1,5 +1,6 @@
 import { css, Theme } from '@emotion/react';
 import * as Popover from '@radix-ui/react-popover';
+import { ko } from 'date-fns/locale';
 import React, { useState } from 'react';
 import { DayPicker, DateRange } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -66,7 +67,9 @@ const DatePickerField = ({
         <Popover.Portal>
           <Popover.Content sideOffset={5} css={popupWrapper}>
             <DayPicker
+              locale={ko}
               mode="range"
+              captionLayout="dropdown"
               selected={{
                 from: selectedDates.from || undefined,
                 to: selectedDates.to || undefined,
@@ -76,6 +79,7 @@ const DatePickerField = ({
               startMonth={new Date(new Date().getFullYear(), 0)}
               endMonth={new Date(new Date().getFullYear() + 5, 11)}
               required
+              css={datepickerCustom}
             />
             <Popover.Arrow css={popoverArrow} />
           </Popover.Content>
@@ -105,8 +109,8 @@ const styledDiv = (theme: Theme, experimentDateChecked: boolean, isOpen: boolean
     ${experimentDateChecked
       ? theme.colors.line01
       : isOpen
-        ? theme.colors.lineTinted
-        : colors.line01};
+      ? theme.colors.lineTinted
+      : colors.line01};
   border-radius: 1.2rem;
 
   background-color: ${experimentDateChecked ? theme.colors.field02 : colors.field01};
@@ -123,8 +127,8 @@ const placeholderText = (
   color: ${experimentDateChecked
     ? theme.colors.text02
     : bothDatesSelected
-      ? theme.colors.text06
-      : theme.colors.text02};
+    ? theme.colors.text06
+    : theme.colors.text02};
 
   flex: 1;
 
@@ -143,8 +147,101 @@ const popupWrapper = css`
   border-radius: 8px;
   padding: 1rem;
   z-index: 10;
+
+  width: 45.2rem;
 `;
 
 const popoverArrow = css`
   fill: ${colors.field01};
+`;
+
+const datepickerCustom = (theme: Theme) => css`
+  .rdp-root {
+  }
+
+  .rdp-months {
+  }
+
+  .rdp-months {
+    width: 43rem;
+    position: relative;
+  }
+
+  .rdp-month {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  .rdp-nav {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translate(50%);
+  }
+
+  .rdp-month_caption {
+    display: flex;
+    justify-content: center;
+  }
+
+  .rdp-dropdowns {
+    margin: 0 3rem;
+    width: 21.6rem;
+  }
+
+  .rdp-dropdown:focus {
+    outline: none;
+    border: none;
+  }
+
+  .rdp-caption_label {
+    width: 9.4rem;
+    margin-left: 3rem;
+  }
+
+  .rdp-weekdays {
+    ${theme.fonts.label.medium.M13};
+    color: ${theme.colors.text03};
+
+    background-color: ${theme.colors.field02};
+    border-radius: 1.2rem;
+
+    th:first-child {
+      border-top-left-radius: 1.2rem;
+      border-bottom-left-radius: 1.2rem;
+    }
+
+    th:last-child {
+      border-top-right-radius: 1.2rem;
+      border-bottom-right-radius: 1.2rem;
+    }
+  }
+
+  .rdp-day_button {
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 1.2rem;
+    border: none;
+  }
+
+  .rdp-selected .rdp-range_middle {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .rdp-day_button {
+    ${theme.fonts.body.normal.M16};
+  }
+  .rdp-selected {
+    ${theme.fonts.body.normal.M16};
+  }
+
+  .rdp-month_grid {
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+
+  .rdp-month_caption {
+  }
 `;
