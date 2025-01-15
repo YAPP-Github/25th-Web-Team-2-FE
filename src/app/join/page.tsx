@@ -4,7 +4,7 @@ import { css, Theme } from '@emotion/react';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import Checkbox from './Checkbox';
+import JoinCheckbox from './components/JoinCheckbox/JoinCheckbox';
 
 import Logo from '@/assets/images/logo.svg';
 
@@ -67,25 +67,25 @@ export default function JoinPage() {
             </div>
           </div>
           <div css={termContainer}>
-            <Checkbox
+            <JoinCheckbox
               label="이용약관에 모두 동의합니다"
               isChecked={isAllCheck}
               onChange={handleClickAllCheck}
               isAllCheck
             />
-            <Checkbox
+            <JoinCheckbox
               label="서비스 이용약관 동의"
               isChecked={isTermOfService}
               onChange={() => setIsTermOfService((prev) => !prev)}
               isRequired
             />
-            <Checkbox
+            <JoinCheckbox
               label="개인정보 수집 및 이용 동의"
               isChecked={isPrivacy}
               onChange={() => setIsPrivacy((prev) => !prev)}
               isRequired
             />
-            <Checkbox
+            <JoinCheckbox
               label="광고성 정보 이메일/SMS 수신 동의"
               isChecked={isAdvertise}
               onChange={() => setIsAdvertise((prev) => !prev)}
