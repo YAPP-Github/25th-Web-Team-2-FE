@@ -147,6 +147,16 @@ const OutlineSection = () => {
             <input css={input} type="text" id="location" placeholder="대학교 입력" />
             {/* 지역구 선택 */}
             <RegionPopover regionPopoverProps={regionPopoverProps} />
+
+            <div css={detailLocationContainer}>
+              <input
+                css={input}
+                type="text"
+                id="detail-location"
+                placeholder="상세 주소 입력 (선택)"
+              />
+              <p css={detailLocationWords}>0/70</p>
+            </div>
           </div>
         </div>
 
@@ -243,4 +253,16 @@ const inputContainer = css`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.8rem;
+`;
+
+const detailLocationContainer = css`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.4rem;
+`;
+const detailLocationWords = (theme: Theme) => css`
+  ${theme.fonts.label.small.M12};
+  color: ${theme.colors.text02};
+
+  text-align: right;
 `;

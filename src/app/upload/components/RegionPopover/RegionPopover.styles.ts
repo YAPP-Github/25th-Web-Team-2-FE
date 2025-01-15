@@ -1,7 +1,7 @@
 import { css, Theme } from '@emotion/react';
 
 export const popoverInput = (theme: Theme, isOpenRegionPopover: boolean) => css`
-  border: 0.1em solid ${isOpenRegionPopover ? theme.colors.lineTinted : theme.colors.line01};
+  border: 0.1em solid ${isOpenRegionPopover ? theme.colors.lineTinted : 'none'};
 `;
 
 export const popoverContent = (theme: Theme) => css`
