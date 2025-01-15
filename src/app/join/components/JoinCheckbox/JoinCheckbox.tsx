@@ -12,7 +12,8 @@ import theme from '@/styles/theme';
 interface JoinCheckboxProps {
   label: string;
   isChecked: boolean;
-  onChange: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange: (e: any) => void;
   isRequired?: boolean;
   isAllCheck?: boolean;
 }
