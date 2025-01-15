@@ -1,14 +1,13 @@
 import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
+import { DateRange } from 'react-day-picker';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
+import DatePickerField from '@/app/upload/components/DatePickerField/DatePickerField';
 import { colors } from '@/styles/colors';
-import DatePickerField, {
-  NullableDate,
-} from '@/app/upload/components/DatePickerField/DatePickerField';
 
 enum MatchType {
   OFFLINE = 'OFFLINE',
@@ -26,16 +25,12 @@ const OutlineSection = () => {
   const handleMatchTypeChange = (method: MatchType) => {
     setSelectedMatchType(method);
   };
-
-  const [selectedDates, setSelectedDates] = useState<{
-    startDate: NullableDate;
-    endDate: NullableDate;
-  }>({
-    startDate: null,
-    endDate: null,
+  const [selectedDates, setSelectedDates] = useState<DateRange>({
+    from: undefined,
+    to: undefined,
   });
 
-  const handleDateChange = (dates: { startDate: NullableDate; endDate: NullableDate }) => {
+  const handleDateChange = (dates: DateRange) => {
     setSelectedDates(dates);
   };
 
