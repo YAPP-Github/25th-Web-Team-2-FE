@@ -156,15 +156,10 @@ const popoverArrow = css`
 `;
 
 const datepickerCustom = (theme: Theme) => css`
-  .rdp-root {
-  }
-
   .rdp-months {
-  }
-
-  .rdp-months {
-    width: 43rem;
+    width: 40rem;
     position: relative;
+    padding-top: 1.2rem;
   }
 
   .rdp-month {
@@ -174,9 +169,18 @@ const datepickerCustom = (theme: Theme) => css`
 
   .rdp-nav {
     position: absolute;
-    top: 0;
+    top: 1.2rem;
     right: 50%;
     transform: translate(50%);
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    gap: 24.8rem;
+  }
+
+  .rdp-chevron {
+    fill: ${theme.colors.icon03};
   }
 
   .rdp-month_caption {
@@ -185,8 +189,11 @@ const datepickerCustom = (theme: Theme) => css`
   }
 
   .rdp-dropdowns {
-    margin: 0 3rem;
+    margin-top: 2.4rem 3rem 0 3rem;
     width: 21.6rem;
+
+    display: flex;
+    flex-flow: row-reverse nowrap;
   }
 
   .rdp-dropdown:focus {
@@ -194,24 +201,45 @@ const datepickerCustom = (theme: Theme) => css`
     border: none;
   }
 
+  .rdp-years_dropdown {
+    width: 11.4rem;
+  }
+
+  .rdp-months_dropdown {
+    width: 9.4rem;
+  }
+
   .rdp-caption_label {
     width: 9.4rem;
-    margin-left: 3rem;
+  }
+
+  .rdp-month_grid {
+    border-collapse: separate !important;
+
+    border-spacing: 0 1.2rem;
+    margin-top: 0.8rem;
+
+    width: 43rem;
+    padding: 0 1.6rem;
   }
 
   .rdp-weekdays {
-    ${theme.fonts.label.medium.M13};
     color: ${theme.colors.text03};
+    height: 3.2rem;
 
     background-color: ${theme.colors.field02};
     border-radius: 1.2rem;
 
-    th:first-child {
+    th {
+      ${theme.fonts.label.medium.M13};
+    }
+
+    th:first-of-type {
       border-top-left-radius: 1.2rem;
       border-bottom-left-radius: 1.2rem;
     }
 
-    th:last-child {
+    th:last-of-type {
       border-top-right-radius: 1.2rem;
       border-bottom-right-radius: 1.2rem;
     }
@@ -223,6 +251,8 @@ const datepickerCustom = (theme: Theme) => css`
 
     border-radius: 1.2rem;
     border: none;
+
+    margin: 0 auto;
   }
 
   .rdp-selected .rdp-range_middle {
@@ -235,13 +265,5 @@ const datepickerCustom = (theme: Theme) => css`
   }
   .rdp-selected {
     ${theme.fonts.body.normal.M16};
-  }
-
-  .rdp-month_grid {
-    border-collapse: collapse;
-    margin-top: 2rem;
-  }
-
-  .rdp-month_caption {
   }
 `;
