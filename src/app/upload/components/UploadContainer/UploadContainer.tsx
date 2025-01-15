@@ -129,6 +129,7 @@ export const input = (theme: Theme) => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;
+  max-width: 45.2rem;
   height: 4.8rem;
 
   padding: 10px;

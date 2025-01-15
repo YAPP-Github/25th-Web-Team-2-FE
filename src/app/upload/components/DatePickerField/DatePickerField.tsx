@@ -65,7 +65,7 @@ const DatePickerField = ({
           </div>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content sideOffset={5} css={popoverLayout}>
+          <Popover.Content sideOffset={6} css={popoverLayout}>
             <DayPicker
               locale={ko}
               mode="range"
@@ -109,7 +109,7 @@ const datePickerField = (theme: Theme, experimentDateChecked: boolean, isOpen: b
       ? theme.colors.line01
       : isOpen
       ? theme.colors.lineTinted
-      : colors.line01};
+      : theme.colors.line01};
   border-radius: 1.2rem;
 
   background-color: ${experimentDateChecked ? theme.colors.field02 : colors.field01};
