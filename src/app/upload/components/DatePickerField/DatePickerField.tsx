@@ -34,11 +34,11 @@ const DatePickerField = ({
   };
 
   return (
-    <div css={datePickerWrapper}>
+    <div css={datePickerFieldContainer}>
       <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
         <Popover.Trigger asChild>
           <div
-            css={(theme) => styledDiv(theme, experimentDateChecked, isOpen)}
+            css={(theme) => datePickerField(theme, experimentDateChecked, isOpen)}
             role="button"
             tabIndex={0}
           >
@@ -65,7 +65,7 @@ const DatePickerField = ({
           </div>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content sideOffset={5} css={popupWrapper}>
+          <Popover.Content sideOffset={5} css={popoverLayout}>
             <DayPicker
               locale={ko}
               mode="range"
@@ -81,7 +81,6 @@ const DatePickerField = ({
               required
               css={datepickerCustom}
             />
-            <Popover.Arrow css={popoverArrow} />
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
@@ -91,11 +90,11 @@ const DatePickerField = ({
 
 export default DatePickerField;
 
-const datePickerWrapper = css`
+const datePickerFieldContainer = css`
   position: relative;
 `;
 
-const styledDiv = (theme: Theme, experimentDateChecked: boolean, isOpen: boolean) => css`
+const datePickerField = (theme: Theme, experimentDateChecked: boolean, isOpen: boolean) => css`
   width: 100%;
   height: 4.8rem;
 
@@ -141,18 +140,16 @@ const iconStyle = css`
   margin-left: 1rem;
 `;
 
-const popupWrapper = css`
+const popoverLayout = (theme: Theme) => css`
   background-color: ${colors.field01};
   border: 0.1rem solid ${colors.line01};
   border-radius: 8px;
   padding: 1rem;
-  z-index: 10;
+  z-index: ${theme.zIndex.datePickerPopup};
 
   width: 45.2rem;
-`;
 
-const popoverArrow = css`
-  fill: ${colors.field01};
+  box-shadow: 0.2rem 0.2rem 2rem 0.2rem rgba(53, 59, 61, 0.2);
 `;
 
 const datepickerCustom = (theme: Theme) => css`
@@ -258,6 +255,18 @@ const datepickerCustom = (theme: Theme) => css`
   .rdp-selected .rdp-range_middle {
     width: 4rem;
     height: 4rem;
+  }
+
+  .rdp-today .rdp-day_button {
+    color: ${theme.colors.text06};
+
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 1.2rem;
+    border: none;
+
+    background-color: ${theme.colors.field02};
   }
 
   .rdp-day_button {
