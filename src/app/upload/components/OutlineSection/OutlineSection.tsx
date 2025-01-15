@@ -8,6 +8,7 @@ import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 import DatePickerField from '@/app/upload/components/DatePickerField/DatePickerField';
 import { colors } from '@/styles/colors';
 import RegionPopover from '../RegionPopover/RegionPopover';
+import DurationSelect from '../DurationSelect/DurationSelect';
 
 enum MatchType {
   OFFLINE = 'OFFLINE',
@@ -60,6 +61,9 @@ const OutlineSection = () => {
     onRegionSelect: handleRegionSelect,
     onSubRegionSelect: handleSubRegionSelect,
   };
+
+  // 소요 시간
+  const [durationValue, setDurationValue] = useState<string | undefined>(undefined); // Select 상태 추가
 
   return (
     <div css={outlineLayout}>
@@ -165,23 +169,26 @@ const OutlineSection = () => {
           <label css={label} htmlFor="time">
             소요 시간 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <div css={radioGroup}>
+
+          <div css={inputContainer}>
             <input css={input} type="text" id="frequency" placeholder="실험 횟수 입력" />
-            <input
+            {/* <input
               css={input}
               type="text"
               id="duration"
               placeholder={timeChecked ? '본문 참고' : '1회당 시간 입력'}
               disabled={timeChecked}
+            /> */}
+            <DurationSelect value={durationValue} onChange={setDurationValue} />
+
+            <CheckboxWithIcon
+              checked={timeChecked}
+              onChange={() => {
+                setTimeChecked((prev) => !prev);
+              }}
+              label="본문 참고"
             />
           </div>
-          <CheckboxWithIcon
-            checked={timeChecked}
-            onChange={() => {
-              setTimeChecked((prev) => !prev);
-            }}
-            label="본문 참고"
-          />
         </div>
       </form>
     </div>
