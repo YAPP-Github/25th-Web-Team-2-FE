@@ -172,15 +172,7 @@ const OutlineSection = () => {
 
           <div css={inputContainer}>
             <input css={input} type="text" id="frequency" placeholder="실험 횟수 입력" />
-            {/* <input
-              css={input}
-              type="text"
-              id="duration"
-              placeholder={timeChecked ? '본문 참고' : '1회당 시간 입력'}
-              disabled={timeChecked}
-            /> */}
             <DurationSelect value={durationValue} onChange={setDurationValue} />
-
             <CheckboxWithIcon
               checked={timeChecked}
               onChange={() => {

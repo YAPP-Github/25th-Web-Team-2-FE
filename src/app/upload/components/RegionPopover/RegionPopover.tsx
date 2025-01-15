@@ -3,7 +3,7 @@ import { css, Theme } from '@emotion/react';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
 import { input } from '../UploadContainer/UploadContainer';
 import {
-  popoverInput,
+  regionField,
   popoverContent,
   popoverLayout,
   regionList,
@@ -11,7 +11,9 @@ import {
   activeRegionButton,
   subRegionList,
   subRegionButton,
+  placeholderText,
 } from './RegionPopover.styles';
+import Icon from '@/components/Icon';
 
 interface RegionPopoverProps {
   regionPopoverProps: {
@@ -41,16 +43,22 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
   return (
     <Popover.Root open={isOpenRegionPopover} onOpenChange={onOpenRegionPopover}>
       <Popover.Trigger asChild>
-        <input
-          css={(theme) => [input, popoverInput(theme, isOpenRegionPopover)]}
-          type="text"
-          id="location"
-          placeholder="지역구 선택"
-          value={
-            selectedRegion && selectedSubRegion ? `${regionData?.label} ${selectedSubRegion}` : ''
-          }
-          readOnly
-        />
+        <div>
+          <div role="button" css={[input, regionField]}>
+            <span
+              css={(theme: Theme) =>
+                placeholderText(theme, !!(selectedRegion && selectedSubRegion))
+              }
+            >
+              {selectedRegion && selectedSubRegion
+                ? `${regionData?.label} ${selectedSubRegion}`
+                : '지역구 선택'}
+            </span>
+            <span style={{ marginLeft: '1rem' }}>
+              <Icon icon="Chevron" width={24} height={24} rotate={isOpenRegionPopover ? 180 : 0} />
+            </span>
+          </div>
+        </div>
       </Popover.Trigger>
 
       <Popover.Portal>

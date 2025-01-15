@@ -1,7 +1,19 @@
 import { css, Theme } from '@emotion/react';
 
-export const popoverInput = (theme: Theme, isOpenRegionPopover: boolean) => css`
-  border: 0.1em solid ${isOpenRegionPopover ? theme.colors.lineTinted : 'none'};
+export const regionField = (theme: Theme) => css`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  &[data-state='open'] {
+    border: 0.1rem solid ${theme.colors.primaryMint};
+  }
+`;
+
+export const placeholderText = (theme: Theme, hasValue: boolean) => css`
+  ${theme.fonts.label.large.R14};
+  color: ${hasValue ? theme.colors.text06 : theme.colors.text02};
 `;
 
 export const popoverContent = (theme: Theme) => css`
