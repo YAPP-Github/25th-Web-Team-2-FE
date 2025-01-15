@@ -75,7 +75,7 @@ export default function JoinPage() {
                 />
               )}
             />
-            {errors.contactEmail && <span>{errors.contactEmail.message}</span>}
+            {errors.contactEmail && <span css={errorMessage}>{errors.contactEmail.message}</span>}
 
             <div css={tipWrapper}>
               <span css={tip}>Tip</span>
@@ -111,7 +111,7 @@ export default function JoinPage() {
                 </div>
               )}
             />
-            {errors.univEmail && <span>{errors.univEmail.message}</span>}
+            {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
           </div>
           <div css={termContainer}>
             <Controller
@@ -271,6 +271,11 @@ export const univAuthButton = (theme: Theme) => css`
   color: ${theme.colors.text01};
   padding: 0.7rem 1.6rem;
   border-radius: 1rem;
+`;
+
+export const errorMessage = (theme: Theme) => css`
+  ${theme.fonts.label.large.R14};
+  color: ${theme.colors.textAlert};
 `;
 
 export const tipWrapper = (theme: Theme) => css`
