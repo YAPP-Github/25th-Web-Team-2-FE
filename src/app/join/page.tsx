@@ -1,17 +1,42 @@
 'use client';
 
 import { css, Theme } from '@emotion/react';
+import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 
 import JoinCheckbox from './components/JoinCheckbox/JoinCheckbox';
 
+import { sendUnivAuthCode, verifyUnivAuthCode } from '@/apis/login';
 import Logo from '@/assets/images/logo.svg';
+import theme from '@/styles/theme';
+import { useState } from 'react';
+
+// TODO: 이미 인증된 메일일 경우 에러 처리
+const useSendUnivAuthCodeMutation = () => {
+  return useMutation({
+    mutationFn: sendUnivAuthCode,
+    onSuccess: () => {
+      // TODO: 토스트 메시지: 인증번호가 발송되었어요
+    },
+  });
+};
+
+const useVerifyUnivAuthCodeMutation = () => {
+  return useMutation({
+    mutationFn: ({ univEmail, inputCode }: { univEmail: string; inputCode: string }) =>
+      verifyUnivAuthCode(univEmail, inputCode),
+    onSuccess: () => {
+      // TODO: 토스트 메시지: 이메일 인증이 완료되었어요
+    },
+  });
+};
 
 interface FormInput {
   socialEmail: string;
   contactEmail: string;
   univEmail: string;
+  authCode: string;
   isAllCheck: boolean;
   isTermOfService: boolean;
   isPrivacy: boolean;
@@ -21,10 +46,15 @@ interface FormInput {
 export default function JoinPage() {
   const socialEmail = sessionStorage.getItem('email') || '';
 
+  const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
+  const { mutate: verifyEmail, isSuccess: isSuccessVerify } = useVerifyUnivAuthCodeMutation();
+
+  const [isEmailSent, setIsEmailSent] = useState(false);
+
   const {
-    handleSubmit,
     control,
     setValue,
+    getValues,
     watch,
     trigger,
     formState: { errors },
@@ -33,6 +63,7 @@ export default function JoinPage() {
       socialEmail,
       contactEmail: '',
       univEmail: '',
+      authCode: '',
       isAllCheck: false,
       isTermOfService: false,
       isPrivacy: false,
@@ -48,17 +79,37 @@ export default function JoinPage() {
     setValue('isAdvertise', isChecked);
   };
 
-  const onSubmit = (data: FormInput) => {
-    console.log('submit', data);
+  // TODO: 인증 번호 타이머 제거
+  const handleClickEdit = () => {
+    setIsEmailSent(false);
   };
 
+  const handleSendUnivAuthCode = async () => {
+    const univEmail = getValues('univEmail');
+    sendEmail(univEmail, { onSuccess: () => setIsEmailSent(true) });
+  };
+
+  const handleVerifyUniv = () => {
+    const univEmail = getValues('univEmail');
+    const authCode = getValues('authCode');
+    verifyEmail({ univEmail, inputCode: authCode });
+  };
+
+  const allValid =
+    watch('contactEmail') &&
+    watch('univEmail') &&
+    isSuccessVerify &&
+    (watch('isAllCheck') || (watch('isTermOfService') && watch('isPrivacy')));
+
   return (
-    <form css={joinLayout} onSubmit={handleSubmit(onSubmit)}>
+    <form css={joinLayout}>
       <Image src={Logo} alt="로고" width={80} height={28} />
       <div css={contentContainer}>
         <div css={titleContainer}>
           <h2 css={joinTitle}>연구자 회원가입</h2>
-          <div>프로그래스바</div>
+          <div css={progressBarContainer}>
+            <div css={progressBarFill(50)} />
+          </div>
         </div>
         <div css={joinContentContainer}>
           <div css={inputContainer}>
@@ -135,16 +186,65 @@ export default function JoinPage() {
                         field.onChange(e);
                         trigger('univEmail');
                       }}
+                      disabled={isEmailSent}
                     />
-                    <button type="button" css={univAuthButton} disabled={isDisabled}>
-                      인증번호 전송
+                    <button
+                      type="button"
+                      css={[univAuthButton, isEmailSent && editButton]}
+                      disabled={!isEmailSent && isDisabled}
+                      onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
+                    >
+                      {isEmailSent ? '수정' : '인증번호 전송'}
                     </button>
                   </div>
                 );
               }}
             />
             {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
+            {sendError && <span css={errorMessage}>{sendError.message}</span>}
+            {isEmailSent && (
+              <Controller
+                name="authCode"
+                control={control}
+                render={({ field }) => {
+                  const isDisabled =
+                    Boolean(errors.authCode) || !watch('authCode') || watch('authCode').length < 6;
+
+                  return (
+                    <div css={authInputContainer}>
+                      <div css={univInputWrapper}>
+                        <input
+                          {...field}
+                          placeholder="인증번호 6자리 입력"
+                          type="number"
+                          disabled={isSuccessVerify}
+                          onChange={(e) => {
+                            if (e.target.value.length <= 6) {
+                              field.onChange(e);
+                            }
+                          }}
+                        />
+                        {!isSuccessVerify && (
+                          <button
+                            type="button"
+                            css={authCodeButton}
+                            disabled={isDisabled}
+                            onClick={handleVerifyUniv}
+                          >
+                            인증
+                          </button>
+                        )}
+                      </div>
+                      <button type="button" css={sendAgainButton}>
+                        인증번호 재전송
+                      </button>
+                    </div>
+                  );
+                }}
+              />
+            )}
           </div>
+
           <div css={termContainer}>
             <Controller
               name="isAllCheck"
@@ -199,14 +299,15 @@ export default function JoinPage() {
           </div>
         </div>
       </div>
-      <button css={nextButton}>다음</button>
+      <button css={nextButton} disabled={!allValid}>
+        다음
+      </button>
     </form>
   );
 }
 
 export const joinLayout = css`
   display: flex;
-  height: calc(100vh - 26.2rem);
   flex-direction: column;
   align-items: center;
   gap: 4rem;
@@ -299,10 +400,50 @@ export const univAuthButton = (theme: Theme) => css`
   position: absolute;
   right: 1.2rem;
   top: 1rem;
-  background-color: ${theme.colors.primaryMint};
-  color: ${theme.colors.text01};
   padding: 0.7rem 1.6rem;
   border-radius: 1rem;
+  color: ${theme.colors.text01};
+  background-color: ${theme.colors.primaryMint};
+  border: none;
+
+  :disabled {
+    color: ${theme.colors.text02};
+    background-color: ${theme.colors.field04};
+  }
+`;
+
+export const editButton = css`
+  color: ${theme.colors.text06};
+  background-color: ${theme.colors.field01};
+  border: 0.1rem solid ${theme.colors.line02};
+`;
+
+export const authCodeButton = (theme: Theme) => css`
+  ${theme.fonts.label.large.SB14};
+  position: absolute;
+  right: 1.2rem;
+  top: 1rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 1rem;
+  background-color: ${theme.colors.primaryMint};
+  color: ${theme.colors.text01};
+
+  :disabled {
+    background-color: ${theme.colors.field04};
+    color: ${theme.colors.text02};
+  }
+`;
+
+export const authInputContainer = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const sendAgainButton = (theme: Theme) => css`
+  ${theme.fonts.label.large.M14};
+  color: ${theme.colors.text03};
+  text-decoration-line: underline;
+  align-self: flex-end;
 `;
 
 export const errorMessage = (theme: Theme) => css`
@@ -329,6 +470,27 @@ export const joinContainer = css`
 export const joinTitle = (theme: Theme) => css`
   ${theme.fonts.title.medium.SB20};
   color: ${theme.colors.text06};
+`;
+
+export const progressBar = (theme: Theme) => css`
+  width: 8rem;
+  height: 0.6rem;
+  background-color: ${theme.colors.field03};
+  border-radius: 3rem;
+`;
+
+const progressBarContainer = (theme: Theme) => css`
+  width: 8rem;
+  height: 0.6rem;
+  background-color: ${theme.colors.field03};
+  border-radius: 0.6rem;
+`;
+
+const progressBarFill = (progress: number) => css`
+  width: ${progress}%;
+  height: 100%;
+  background-color: ${theme.colors.primaryMint};
+  border-radius: 0.6rem;
 `;
 
 export const termContainer = (theme: Theme) => css`
