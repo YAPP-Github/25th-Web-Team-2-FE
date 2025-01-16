@@ -1,0 +1,136 @@
+import { sendUnivAuthCode, verifyUnivAuthCode } from '@/apis/login';
+import { css, Theme } from '@emotion/react';
+import { useMutation } from '@tanstack/react-query';
+import React, { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { inputContainer, required, univInputWrapper } from '../page';
+import {
+  authCodeButton,
+  authInputContainer,
+  editButton,
+  errorMessage,
+  sendAgainButton,
+  univAuthButton,
+} from './UnivAuthInput.styles';
+import { FormInput } from '../Join.types';
+import useSendUnivAuthCodeMutation from '../hooks/useSendUnivAuthCodeMutation';
+
+interface UnivAuthInputProps {
+  isUnivVerify: boolean;
+  handleVerifyUniv: () => void;
+}
+
+const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) => {
+  const {
+    control,
+    watch,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = useFormContext<FormInput>();
+
+  const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
+  const [isEmailSent, setIsEmailSent] = useState(false);
+
+  const handleSendUnivAuthCode = async () => {
+    const univEmail = getValues('univEmail');
+    sendEmail(univEmail, { onSuccess: () => setIsEmailSent(true) });
+  };
+
+  // TODO: 인증 번호 타이머 제거
+  const handleClickEdit = () => {
+    setIsEmailSent(false);
+  };
+
+  return (
+    <div css={inputContainer}>
+      <label>
+        <span>학교 메일 인증</span>
+        <span css={required}>*</span>
+      </label>
+
+      <Controller
+        name="univEmail"
+        control={control}
+        rules={{
+          required: '학교 이메일을 입력해주세요',
+          pattern: {
+            value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
+            message: '이메일 형식이 올바르지 않아요',
+          },
+        }}
+        render={({ field }) => {
+          const isDisabled = Boolean(errors.univEmail) || !watch('univEmail');
+
+          return (
+            <div css={univInputWrapper}>
+              <input
+                {...field}
+                placeholder="학교 메일 입력"
+                aria-invalid={errors.univEmail ? true : false}
+                onChange={(e) => {
+                  field.onChange(e);
+                  trigger('univEmail');
+                }}
+                disabled={isEmailSent}
+              />
+              <button
+                type="button"
+                css={[univAuthButton, isEmailSent && editButton]}
+                disabled={!isEmailSent && isDisabled}
+                onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
+              >
+                {isEmailSent ? '수정' : '인증번호 전송'}
+              </button>
+            </div>
+          );
+        }}
+      />
+      {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
+      {sendError && <span css={errorMessage}>{sendError.message}</span>}
+      {isEmailSent && (
+        <Controller
+          name="authCode"
+          control={control}
+          render={({ field }) => {
+            const isDisabled =
+              Boolean(errors.authCode) || !watch('authCode') || watch('authCode').length < 6;
+
+            return (
+              <div css={authInputContainer}>
+                <div css={univInputWrapper}>
+                  <input
+                    {...field}
+                    placeholder="인증번호 6자리 입력"
+                    type="number"
+                    disabled={isUnivVerify}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 6) {
+                        field.onChange(e);
+                      }
+                    }}
+                  />
+                  {!isUnivVerify && (
+                    <button
+                      type="button"
+                      css={authCodeButton}
+                      disabled={isDisabled}
+                      onClick={handleVerifyUniv}
+                    >
+                      인증
+                    </button>
+                  )}
+                </div>
+                <button type="button" css={sendAgainButton}>
+                  인증번호 재전송
+                </button>
+              </div>
+            );
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+export default UnivAuthInput;

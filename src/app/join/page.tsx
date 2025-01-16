@@ -1,65 +1,24 @@
 'use client';
 
 import { css, Theme } from '@emotion/react';
-import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
-import { Controller, useForm } from 'react-hook-form';
 
-import JoinCheckbox from './components/JoinCheckbox/JoinCheckbox';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { sendUnivAuthCode, verifyUnivAuthCode } from '@/apis/login';
 import Logo from '@/assets/images/logo.svg';
 import theme from '@/styles/theme';
-import { useState } from 'react';
 import JoinInput from './components/JoinInput/JoinInput';
 
-// TODO: 이미 인증된 메일일 경우 에러 처리
-const useSendUnivAuthCodeMutation = () => {
-  return useMutation({
-    mutationFn: sendUnivAuthCode,
-    onSuccess: () => {
-      // TODO: 토스트 메시지: 인증번호가 발송되었어요
-    },
-  });
-};
-
-const useVerifyUnivAuthCodeMutation = () => {
-  return useMutation({
-    mutationFn: ({ univEmail, inputCode }: { univEmail: string; inputCode: string }) =>
-      verifyUnivAuthCode(univEmail, inputCode),
-    onSuccess: () => {
-      // TODO: 토스트 메시지: 이메일 인증이 완료되었어요
-    },
-  });
-};
-
-interface FormInput {
-  socialEmail: string;
-  contactEmail: string;
-  univEmail: string;
-  authCode: string;
-  isAllCheck: boolean;
-  isTermOfService: boolean;
-  isPrivacy: boolean;
-  isAdvertise: boolean;
-}
+import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
+import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
+import { FormInput } from './Join.types';
+import useVerifyUnivAuthCodeMutation from './hooks/useVerifyUnivAuthCodeMutation';
 
 export default function JoinPage() {
   const socialEmail = sessionStorage.getItem('email') || '';
+  const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
 
-  const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
-  const { mutate: verifyEmail, isSuccess: isSuccessVerify } = useVerifyUnivAuthCodeMutation();
-
-  const [isEmailSent, setIsEmailSent] = useState(false);
-
-  const {
-    control,
-    setValue,
-    getValues,
-    watch,
-    trigger,
-    formState: { errors },
-  } = useForm<FormInput>({
+  const methods = useForm<FormInput>({
     defaultValues: {
       socialEmail: socialEmail,
       contactEmail: '',
@@ -74,225 +33,79 @@ export default function JoinPage() {
 
   // TODO: isPrivacy 또는 isAdvertise 중 하나가 false면 isAllCheck도 false
   const handleAllCheck = () => {
-    const isChecked = !watch('isAllCheck');
-    setValue('isAllCheck', isChecked);
-    setValue('isTermOfService', isChecked);
-    setValue('isPrivacy', isChecked);
-    setValue('isAdvertise', isChecked);
-  };
-
-  // TODO: 인증 번호 타이머 제거
-  const handleClickEdit = () => {
-    setIsEmailSent(false);
-  };
-
-  const handleSendUnivAuthCode = async () => {
-    const univEmail = getValues('univEmail');
-    sendEmail(univEmail, { onSuccess: () => setIsEmailSent(true) });
+    const isChecked = !methods.watch('isAllCheck');
+    methods.setValue('isAllCheck', isChecked);
+    methods.setValue('isTermOfService', isChecked);
+    methods.setValue('isPrivacy', isChecked);
+    methods.setValue('isAdvertise', isChecked);
   };
 
   const handleVerifyUniv = () => {
-    const univEmail = getValues('univEmail');
-    const authCode = getValues('authCode');
+    const univEmail = methods.getValues('univEmail');
+    const authCode = methods.getValues('authCode');
     verifyEmail({ univEmail, inputCode: authCode });
   };
 
   const allValid =
-    watch('contactEmail') &&
-    watch('univEmail') &&
-    isSuccessVerify &&
-    (watch('isAllCheck') || (watch('isTermOfService') && watch('isPrivacy')));
+    methods.watch('contactEmail') &&
+    methods.watch('univEmail') &&
+    isUnivVerify &&
+    (methods.watch('isAllCheck') ||
+      (methods.watch('isTermOfService') && methods.watch('isPrivacy')));
 
   return (
-    <form css={joinLayout}>
-      <Image src={Logo} alt="로고" width={80} height={28} />
-      <div css={contentContainer}>
-        <div css={titleContainer}>
-          <h2 css={joinTitle}>연구자 회원가입</h2>
-          <div css={progressBarContainer}>
-            <div css={progressBarFill(50)} />
+    <FormProvider {...methods}>
+      <form css={joinLayout}>
+        <Image src={Logo} alt="로고" width={80} height={28} />
+        <div css={contentContainer}>
+          <div css={titleContainer}>
+            <h2 css={joinTitle}>연구자 회원가입</h2>
+            <div css={progressBarContainer}>
+              <div css={progressBarFill(50)} />
+            </div>
           </div>
-        </div>
-        <div css={joinContentContainer}>
-          <JoinInput
-            name="socialEmail"
-            control={control}
-            label="소셜 로그인 아이디"
-            placeholder="이메일 입력"
-            disabled
-            rules={{
-              required: '이메일을 입력해주세요',
-              pattern: {
-                value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-                message: '이메일 형식이 올바르지 않아요',
-              },
-            }}
-          />
-          <JoinInput
-            name="contactEmail"
-            control={control}
-            label="연락 받을 이메일"
-            placeholder="이메일 입력"
-            required
-            rules={{
-              required: '이메일을 입력해주세요',
-              pattern: {
-                value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-                message: '이메일 형식이 올바르지 않아요',
-              },
-            }}
-            onChange={() => {
-              trigger('contactEmail');
-            }}
-            tip="로그인 아이디와 달라도 괜찮아요"
-          />
-
-          <div css={inputContainer}>
-            <label>
-              <span>학교 메일 인증</span>
-              <span css={required}>*</span>
-            </label>
-
-            <Controller
-              name="univEmail"
-              control={control}
+          <div css={joinContentContainer}>
+            <JoinInput
+              name="socialEmail"
+              control={methods.control}
+              label="소셜 로그인 아이디"
+              placeholder="이메일 입력"
+              disabled
               rules={{
-                required: '학교 이메일을 입력해주세요',
+                required: '이메일을 입력해주세요',
                 pattern: {
                   value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
                   message: '이메일 형식이 올바르지 않아요',
                 },
               }}
-              render={({ field }) => {
-                const isDisabled = Boolean(errors.univEmail) || !watch('univEmail');
-
-                return (
-                  <div css={univInputWrapper}>
-                    <input
-                      {...field}
-                      placeholder="학교 메일 입력"
-                      aria-invalid={errors.univEmail ? true : false}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        trigger('univEmail');
-                      }}
-                      disabled={isEmailSent}
-                    />
-                    <button
-                      type="button"
-                      css={[univAuthButton, isEmailSent && editButton]}
-                      disabled={!isEmailSent && isDisabled}
-                      onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
-                    >
-                      {isEmailSent ? '수정' : '인증번호 전송'}
-                    </button>
-                  </div>
-                );
+            />
+            <JoinInput
+              name="contactEmail"
+              control={methods.control}
+              label="연락 받을 이메일"
+              placeholder="이메일 입력"
+              required
+              rules={{
+                required: '이메일을 입력해주세요',
+                pattern: {
+                  value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
+                  message: '이메일 형식이 올바르지 않아요',
+                },
               }}
+              onChange={() => {
+                methods.trigger('contactEmail');
+              }}
+              tip="로그인 아이디와 달라도 괜찮아요"
             />
-            {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
-            {sendError && <span css={errorMessage}>{sendError.message}</span>}
-            {isEmailSent && (
-              <Controller
-                name="authCode"
-                control={control}
-                render={({ field }) => {
-                  const isDisabled =
-                    Boolean(errors.authCode) || !watch('authCode') || watch('authCode').length < 6;
-
-                  return (
-                    <div css={authInputContainer}>
-                      <div css={univInputWrapper}>
-                        <input
-                          {...field}
-                          placeholder="인증번호 6자리 입력"
-                          type="number"
-                          disabled={isSuccessVerify}
-                          onChange={(e) => {
-                            if (e.target.value.length <= 6) {
-                              field.onChange(e);
-                            }
-                          }}
-                        />
-                        {!isSuccessVerify && (
-                          <button
-                            type="button"
-                            css={authCodeButton}
-                            disabled={isDisabled}
-                            onClick={handleVerifyUniv}
-                          >
-                            인증
-                          </button>
-                        )}
-                      </div>
-                      <button type="button" css={sendAgainButton}>
-                        인증번호 재전송
-                      </button>
-                    </div>
-                  );
-                }}
-              />
-            )}
-          </div>
-
-          <div css={termContainer}>
-            <Controller
-              name="isAllCheck"
-              control={control}
-              render={({ field }) => (
-                <JoinCheckbox
-                  label="이용약관에 모두 동의합니다"
-                  isChecked={field.value}
-                  onChange={handleAllCheck}
-                  isAllCheck
-                />
-              )}
-            />
-
-            <Controller
-              name="isTermOfService"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <JoinCheckbox
-                  label="서비스 이용약관 동의"
-                  isChecked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                  isRequired
-                />
-              )}
-            />
-            <Controller
-              name="isPrivacy"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <JoinCheckbox
-                  label="개인정보 수집 및 이용 동의"
-                  isChecked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                  isRequired
-                />
-              )}
-            />
-            <Controller
-              name="isAdvertise"
-              control={control}
-              render={({ field }) => (
-                <JoinCheckbox
-                  label="광고성 정보 이메일/SMS 수신 동의"
-                  isChecked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                />
-              )}
-            />
+            <UnivAuthInput isUnivVerify={isUnivVerify} handleVerifyUniv={handleVerifyUniv} />
+            <JoinCheckboxContainer handleAllCheck={handleAllCheck} />
           </div>
         </div>
-      </div>
-      <button css={nextButton} disabled={!allValid}>
-        다음
-      </button>
-    </form>
+        <button css={nextButton} disabled={!allValid}>
+          다음
+        </button>
+      </form>
+    </FormProvider>
   );
 }
 
@@ -385,62 +198,6 @@ export const univInputWrapper = (theme: Theme) => css`
   }
 `;
 
-export const univAuthButton = (theme: Theme) => css`
-  ${theme.fonts.label.large.SB14};
-  position: absolute;
-  right: 1.2rem;
-  top: 1rem;
-  padding: 0.7rem 1.6rem;
-  border-radius: 1rem;
-  color: ${theme.colors.text01};
-  background-color: ${theme.colors.primaryMint};
-  border: none;
-
-  :disabled {
-    color: ${theme.colors.text02};
-    background-color: ${theme.colors.field04};
-  }
-`;
-
-export const editButton = css`
-  color: ${theme.colors.text06};
-  background-color: ${theme.colors.field01};
-  border: 0.1rem solid ${theme.colors.line02};
-`;
-
-export const authCodeButton = (theme: Theme) => css`
-  ${theme.fonts.label.large.SB14};
-  position: absolute;
-  right: 1.2rem;
-  top: 1rem;
-  padding: 0.7rem 1.6rem;
-  border-radius: 1rem;
-  background-color: ${theme.colors.primaryMint};
-  color: ${theme.colors.text01};
-
-  :disabled {
-    background-color: ${theme.colors.field04};
-    color: ${theme.colors.text02};
-  }
-`;
-
-export const authInputContainer = css`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const sendAgainButton = (theme: Theme) => css`
-  ${theme.fonts.label.large.M14};
-  color: ${theme.colors.text03};
-  text-decoration-line: underline;
-  align-self: flex-end;
-`;
-
-export const errorMessage = (theme: Theme) => css`
-  ${theme.fonts.label.large.R14};
-  color: ${theme.colors.textAlert};
-`;
-
 export const tipWrapper = (theme: Theme) => css`
   ${theme.fonts.label.large.R14};
   display: flex;
@@ -481,18 +238,6 @@ const progressBarFill = (progress: number) => css`
   height: 100%;
   background-color: ${theme.colors.primaryMint};
   border-radius: 0.6rem;
-`;
-
-export const termContainer = (theme: Theme) => css`
-  ${theme.fonts.body.normal.M16};
-  color: ${theme.colors.text06};
-  background-color: ${theme.colors.field01};
-  border: 0.1rem solid ${theme.colors.line01};
-  border-radius: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  padding: 1.6rem;
-  gap: 1.2rem;
 `;
 
 export const nextButton = (theme: Theme) => css`
