@@ -10,9 +10,6 @@ const useVerifyUnivAuthCodeMutation = () => {
   return useMutation({
     mutationFn: ({ univEmail, inputCode }: VerifyParams) =>
       verifyUnivAuthCode(univEmail, inputCode),
-    onSuccess: () => {
-      // TODO: 토스트 메시지: 이메일 인증이 완료되었어요
-    },
   });
 };
 

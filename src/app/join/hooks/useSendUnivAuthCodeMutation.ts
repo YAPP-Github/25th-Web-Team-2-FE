@@ -5,9 +5,6 @@ import { useMutation } from '@tanstack/react-query';
 const useSendUnivAuthCodeMutation = () => {
   return useMutation({
     mutationFn: sendUnivAuthCode,
-    onSuccess: () => {
-      // TODO: 토스트 메시지: 인증번호가 발송되었어요
-    },
   });
 };
 

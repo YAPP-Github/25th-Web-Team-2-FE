@@ -13,10 +13,13 @@ import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
 import { FormInput } from './Join.types';
 import useVerifyUnivAuthCodeMutation from './hooks/useVerifyUnivAuthCodeMutation';
+import { useState } from 'react';
+import EmailToast from './components/EmailToast/EmailToast';
 
 export default function JoinPage() {
   const socialEmail = sessionStorage.getItem('email') || '';
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
+  const [isToastOpen, setIsToastOpen] = useState(false);
 
   const methods = useForm<FormInput>({
     defaultValues: {
@@ -42,7 +45,14 @@ export default function JoinPage() {
   const handleVerifyUniv = () => {
     const univEmail = methods.getValues('univEmail');
     const authCode = methods.getValues('authCode');
-    verifyEmail({ univEmail, inputCode: authCode });
+    verifyEmail(
+      { univEmail, inputCode: authCode },
+      {
+        onSuccess: () => {
+          setIsToastOpen(true);
+        },
+      },
+    );
   };
 
   const allValid =
@@ -104,6 +114,11 @@ export default function JoinPage() {
           다음
         </button>
       </form>
+      <EmailToast
+        title="이메일 인증이 완료되었어요"
+        isToastOpen={isToastOpen}
+        setIsToastOpen={setIsToastOpen}
+      />
     </FormProvider>
   );
 }
