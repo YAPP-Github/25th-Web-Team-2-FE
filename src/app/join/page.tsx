@@ -7,6 +7,17 @@ import { Controller, useForm } from 'react-hook-form';
 import JoinCheckbox from './components/JoinCheckbox/JoinCheckbox';
 
 import Logo from '@/assets/images/logo.svg';
+
+interface FormInput {
+  socialEmail: string;
+  contactEmail: string;
+  univEmail: string;
+  isAllCheck: boolean;
+  isTermOfService: boolean;
+  isPrivacy: boolean;
+  isAdvertise: boolean;
+}
+
 export default function JoinPage() {
   const socialEmail = sessionStorage.getItem('email') || '';
 
@@ -15,9 +26,11 @@ export default function JoinPage() {
     control,
     setValue,
     watch,
+    trigger,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormInput>({
     defaultValues: {
+      socialEmail,
       contactEmail: '',
       univEmail: '',
       isAllCheck: false,
@@ -35,8 +48,8 @@ export default function JoinPage() {
     setValue('isAdvertise', isChecked);
   };
 
-  const onSubmit = () => {
-    console.log('submit');
+  const onSubmit = (data: FormInput) => {
+    console.log('submit', data);
   };
 
   return (
@@ -50,7 +63,18 @@ export default function JoinPage() {
         <div css={joinContentContainer}>
           <div css={inputContainer}>
             <label>소셜 로그인 아이디</label>
-            <input value={socialEmail} disabled />
+            <Controller
+              name="socialEmail"
+              control={control}
+              rules={{
+                required: '이메일을 입력해주세요',
+                pattern: {
+                  value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
+                  message: '이메일 형식이 올바르지 않아요',
+                },
+              }}
+              render={({ field }) => <input {...field} placeholder="이메일 입력" disabled />}
+            />
           </div>
           <div css={inputContainer}>
             <label>
@@ -98,18 +122,26 @@ export default function JoinPage() {
                   message: '이메일 형식이 올바르지 않아요',
                 },
               }}
-              render={({ field }) => (
-                <div css={univInputWrapper}>
-                  <input
-                    {...field}
-                    placeholder="학교 메일 입력"
-                    aria-invalid={errors.univEmail ? true : false}
-                  />
-                  <button type="button" css={univAuthButton} disabled={!watch('univEmail')}>
-                    인증번호 전송
-                  </button>
-                </div>
-              )}
+              render={({ field }) => {
+                const isDisabled = Boolean(errors.univEmail) || !watch('univEmail');
+
+                return (
+                  <div css={univInputWrapper}>
+                    <input
+                      {...field}
+                      placeholder="학교 메일 입력"
+                      aria-invalid={errors.univEmail ? true : false}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        trigger('univEmail');
+                      }}
+                    />
+                    <button type="button" css={univAuthButton} disabled={isDisabled}>
+                      인증번호 전송
+                    </button>
+                  </div>
+                );
+              }}
             />
             {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
           </div>
@@ -313,9 +345,14 @@ export const termContainer = (theme: Theme) => css`
 
 export const nextButton = (theme: Theme) => css`
   ${theme.fonts.body.normal.SB16};
-  color: ${theme.colors.text02};
-  background-color: ${theme.colors.field04};
+  background-color: ${theme.colors.primaryMint};
+  color: ${theme.colors.text01};
   border-radius: 1.2rem;
   padding: 1.2rem 0;
   width: 20rem;
+
+  :disabled {
+    color: ${theme.colors.text02};
+    background-color: ${theme.colors.field04};
+  }
 `;
