@@ -30,6 +30,7 @@ export const colors = {
   field08: '#8B95A1',
   field09: '#353B3D',
   fieldAlert: '#FFEEEE',
+  fieldToast: '#6D7B82',
 
   // Icon
   icon01: '#FFFFFF',

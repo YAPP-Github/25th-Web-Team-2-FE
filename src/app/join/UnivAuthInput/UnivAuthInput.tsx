@@ -1,6 +1,3 @@
-import { sendUnivAuthCode, verifyUnivAuthCode } from '@/apis/login';
-import { css, Theme } from '@emotion/react';
-import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { inputContainer, required, univInputWrapper } from '../page';
@@ -14,6 +11,8 @@ import {
 } from './UnivAuthInput.styles';
 import { FormInput } from '../Join.types';
 import useSendUnivAuthCodeMutation from '../hooks/useSendUnivAuthCodeMutation';
+
+import EmailToast from '../components/EmailToast/EmailToast';
 
 interface UnivAuthInputProps {
   isUnivVerify: boolean;
@@ -31,10 +30,16 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(true);
 
   const handleSendUnivAuthCode = async () => {
     const univEmail = getValues('univEmail');
-    sendEmail(univEmail, { onSuccess: () => setIsEmailSent(true) });
+    sendEmail(univEmail, {
+      onSuccess: () => {
+        setIsEmailSent(true);
+        setIsToastOpen(true);
+      },
+    });
   };
 
   // TODO: 인증 번호 타이머 제거
@@ -129,6 +134,11 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
           }}
         />
       )}
+      <EmailToast
+        title="인증번호가 발송되었어요"
+        isToastOpen={isToastOpen}
+        setIsToastOpen={setIsToastOpen}
+      />
     </div>
   );
 };
