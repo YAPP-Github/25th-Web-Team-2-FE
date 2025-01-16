@@ -31,7 +31,6 @@ export default function JoinPage() {
     },
   });
 
-  // TODO: isPrivacy 또는 isAdvertise 중 하나가 false면 isAllCheck도 false
   const handleAllCheck = () => {
     const isChecked = !methods.watch('isAllCheck');
     methods.setValue('isAllCheck', isChecked);

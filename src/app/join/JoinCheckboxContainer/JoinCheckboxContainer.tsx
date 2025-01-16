@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control, Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
 import { FormInput } from '../Join.types';
@@ -9,7 +9,7 @@ interface JoinCheckboxContainerProps {
 }
 
 const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) => {
-  const { control } = useFormContext<FormInput>();
+  const { control, setValue } = useFormContext<FormInput>();
 
   return (
     <div css={termContainer}>
@@ -34,7 +34,12 @@ const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) =
           <JoinCheckbox
             label="서비스 이용약관 동의"
             isChecked={field.value}
-            onChange={(e) => field.onChange(e.target.checked)}
+            onChange={(e) => {
+              field.onChange(e.target.checked);
+              if (!e.target.checked) {
+                setValue('isAllCheck', e.target.checked);
+              }
+            }}
             isRequired
           />
         )}
@@ -47,7 +52,12 @@ const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) =
           <JoinCheckbox
             label="개인정보 수집 및 이용 동의"
             isChecked={field.value}
-            onChange={(e) => field.onChange(e.target.checked)}
+            onChange={(e) => {
+              field.onChange(e.target.checked);
+              if (!e.target.checked) {
+                setValue('isAllCheck', e.target.checked);
+              }
+            }}
             isRequired
           />
         )}
@@ -59,7 +69,12 @@ const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) =
           <JoinCheckbox
             label="광고성 정보 이메일/SMS 수신 동의"
             isChecked={field.value}
-            onChange={(e) => field.onChange(e.target.checked)}
+            onChange={(e) => {
+              field.onChange(e.target.checked);
+              if (!e.target.checked) {
+                setValue('isAllCheck', e.target.checked);
+              }
+            }}
           />
         )}
       />
