@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
-import { FormInput } from '../Join.types';
+import { FormInput } from '../../Join.types';
 
 interface JoinCheckboxContainerProps {
   handleAllCheck: () => void;

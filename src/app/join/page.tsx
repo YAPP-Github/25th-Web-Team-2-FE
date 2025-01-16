@@ -9,12 +9,12 @@ import Logo from '@/assets/images/logo.svg';
 import theme from '@/styles/theme';
 import JoinInput from './components/JoinInput/JoinInput';
 
-import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
-import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
+import UnivAuthInput from './components/UnivAuthInput/UnivAuthInput';
 import { FormInput } from './Join.types';
 import useVerifyUnivAuthCodeMutation from './hooks/useVerifyUnivAuthCodeMutation';
 import { useState } from 'react';
 import EmailToast from './components/EmailToast/EmailToast';
+import JoinCheckboxContainer from './components/JoinCheckboxContainer/JoinCheckboxContainer';
 
 export default function JoinPage() {
   const socialEmail = sessionStorage.getItem('email') || '';

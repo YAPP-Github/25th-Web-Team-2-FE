@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { inputContainer, required, univInputWrapper } from '../page';
+import { inputContainer, required, univInputWrapper } from '../../page';
 import {
   authCodeButton,
   authInputContainer,
@@ -9,10 +9,10 @@ import {
   sendAgainButton,
   univAuthButton,
 } from './UnivAuthInput.styles';
-import { FormInput } from '../Join.types';
-import useSendUnivAuthCodeMutation from '../hooks/useSendUnivAuthCodeMutation';
+import { FormInput } from '../../Join.types';
+import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
 
-import EmailToast from '../components/EmailToast/EmailToast';
+import EmailToast from '../EmailToast/EmailToast';
 
 interface UnivAuthInputProps {
   isUnivVerify: boolean;
