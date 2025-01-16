@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { inputContainer, required, univInputWrapper } from '../../page';
 import {
   authCodeButton,
   authInputContainer,
   editButton,
   errorMessage,
+  inputContainer,
+  required,
   sendAgainButton,
   univAuthButton,
+  univInputWrapper,
 } from './UnivAuthInput.styles';
 import { FormInput } from '../../Join.types';
 import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
