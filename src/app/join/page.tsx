@@ -11,6 +11,7 @@ import { sendUnivAuthCode, verifyUnivAuthCode } from '@/apis/login';
 import Logo from '@/assets/images/logo.svg';
 import theme from '@/styles/theme';
 import { useState } from 'react';
+import JoinInput from './components/JoinInput/JoinInput';
 
 // TODO: 이미 인증된 메일일 경우 에러 처리
 const useSendUnivAuthCodeMutation = () => {
@@ -60,7 +61,7 @@ export default function JoinPage() {
     formState: { errors },
   } = useForm<FormInput>({
     defaultValues: {
-      socialEmail,
+      socialEmail: socialEmail,
       contactEmail: '',
       univEmail: '',
       authCode: '',
@@ -71,6 +72,7 @@ export default function JoinPage() {
     },
   });
 
+  // TODO: isPrivacy 또는 isAdvertise 중 하나가 false면 isAllCheck도 false
   const handleAllCheck = () => {
     const isChecked = !watch('isAllCheck');
     setValue('isAllCheck', isChecked);
@@ -112,51 +114,39 @@ export default function JoinPage() {
           </div>
         </div>
         <div css={joinContentContainer}>
-          <div css={inputContainer}>
-            <label>소셜 로그인 아이디</label>
-            <Controller
-              name="socialEmail"
-              control={control}
-              rules={{
-                required: '이메일을 입력해주세요',
-                pattern: {
-                  value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-                  message: '이메일 형식이 올바르지 않아요',
-                },
-              }}
-              render={({ field }) => <input {...field} placeholder="이메일 입력" disabled />}
-            />
-          </div>
-          <div css={inputContainer}>
-            <label>
-              <span>연락 받을 이메일</span>
-              <span css={required}>*</span>
-            </label>
-            <Controller
-              name="contactEmail"
-              control={control}
-              rules={{
-                required: '이메일을 입력해주세요',
-                pattern: {
-                  value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-                  message: '이메일 형식이 올바르지 않아요',
-                },
-              }}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  placeholder="이메일 입력"
-                  aria-invalid={errors.contactEmail ? true : false}
-                />
-              )}
-            />
-            {errors.contactEmail && <span css={errorMessage}>{errors.contactEmail.message}</span>}
+          <JoinInput
+            name="socialEmail"
+            control={control}
+            label="소셜 로그인 아이디"
+            placeholder="이메일 입력"
+            disabled
+            rules={{
+              required: '이메일을 입력해주세요',
+              pattern: {
+                value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
+                message: '이메일 형식이 올바르지 않아요',
+              },
+            }}
+          />
+          <JoinInput
+            name="contactEmail"
+            control={control}
+            label="연락 받을 이메일"
+            placeholder="이메일 입력"
+            required
+            rules={{
+              required: '이메일을 입력해주세요',
+              pattern: {
+                value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
+                message: '이메일 형식이 올바르지 않아요',
+              },
+            }}
+            onChange={() => {
+              trigger('contactEmail');
+            }}
+            tip="로그인 아이디와 달라도 괜찮아요"
+          />
 
-            <div css={tipWrapper}>
-              <span css={tip}>Tip</span>
-              <span>로그인 아이디와 달라도 괜찮아요</span>
-            </div>
-          </div>
           <div css={inputContainer}>
             <label>
               <span>학교 메일 인증</span>
