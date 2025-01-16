@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import DurationSelect from '../DurationSelect/DurationSelect';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
+import RegionPopover from '../RegionPopover/RegionPopover';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
+
 import DatePickerField from '@/app/upload/components/DatePickerField/DatePickerField';
 import { colors } from '@/styles/colors';
-import RegionPopover from '../RegionPopover/RegionPopover';
-import DurationSelect from '../DurationSelect/DurationSelect';
 
 enum MatchType {
   OFFLINE = 'OFFLINE',
