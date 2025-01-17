@@ -24,8 +24,27 @@ interface PostArea {
   count: number;
 }
 
-export const fetchPostList = async () => {
-  const res = await API.get<PostResponse>(API_URL.postList);
+export interface PostListParams {
+  matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
+  gender?: '' | 'MALE' | 'FEMALE' | 'ALL';
+  age?: number;
+  region?: string;
+  areas?: string;
+  recruitDone?: boolean;
+  page?: number;
+  count?: number;
+}
+
+export const fetchPostList = async (params: PostListParams) => {
+  const queryParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      queryParams.append(key, String(value));
+    }
+  });
+
+  const res = await API.get<PostResponse>(API_URL.postList(queryParams.toString()));
 
   return res.data;
 };

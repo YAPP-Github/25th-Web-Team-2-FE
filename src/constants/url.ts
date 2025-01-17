@@ -1,5 +1,5 @@
 export const API_URL = {
-  postList: '/v1/experiment-posts/search',
+  postList: (query: string) => `/v1/experiment-posts/search?${query}`,
   postArea: (area?: string) => `/v1/experiment-posts/counts${area ? `?area=${area}` : ''}`,
   google: (role: string) => `/v1/auth/login/google?role=${role}`,
   send: '/v1/emails/send',
