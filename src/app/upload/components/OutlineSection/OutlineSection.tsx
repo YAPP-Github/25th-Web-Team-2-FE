@@ -21,7 +21,6 @@ enum MatchType {
 
 const OutlineSection = () => {
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
-  const [rewardChecked, setRewardChecked] = useState(false);
   const [durationChecked, setDurationChecked] = useState(false);
 
   const [selectedMatchType, setSelectedMatchType] = useState<MatchType | null>(null);
@@ -39,15 +38,6 @@ const OutlineSection = () => {
 
   const handleDateChange = (dates: DateRange) => {
     setSelectedDates(dates);
-  };
-
-  // 참여 보상
-  const [rewardValue, setRewardValue] = useState('');
-
-  const handleRewardChange = (value: string) => {
-    if (!rewardChecked) {
-      setRewardValue(value);
-    }
   };
 
   // 실험 장소 지역구 선택
@@ -139,22 +129,7 @@ const OutlineSection = () => {
           <label css={label} htmlFor="reward">
             참여 보상 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <input
-            css={input}
-            type="text"
-            id="reward"
-            placeholder={rewardChecked ? '본문 참고' : '예) 현금 10,000원'}
-            disabled={rewardChecked}
-            value={rewardChecked ? '' : rewardValue}
-            onChange={(e) => handleRewardChange(e.target.value)}
-          />
-          <CheckboxWithIcon
-            checked={rewardChecked}
-            onChange={() => {
-              setRewardChecked((prev) => !prev);
-            }}
-            label="본문 참고"
-          />
+          <input css={input} type="text" id="reward" placeholder={'예) 현금 10,000원'} />
         </div>
 
         {/* 실험 장소 */}

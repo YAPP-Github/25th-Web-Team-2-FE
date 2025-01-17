@@ -52,6 +52,7 @@ const textInput = (theme: Theme, status: string) => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;
+  max-width: 45.2rem;
   height: 4.8rem;
   padding: 0.8rem 1.2rem;
   border: 0.1rem solid ${status === 'error' ? theme.colors.textAlert : theme.colors.line01};

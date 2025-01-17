@@ -2,6 +2,7 @@
 
 import { Theme } from '@emotion/react';
 import { css } from '@emotion/react';
+import Link from 'next/link';
 import React from 'react';
 
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
@@ -34,7 +35,12 @@ const UploadContainer = () => {
       </div>
 
       {/* 버튼 */}
-      <div css={buttonContainer}> 버튼</div>
+      <div css={buttonContainer}>
+        <Link href={'/'}>
+          <button css={activeButton}>이전으로</button>
+        </Link>
+        <button css={disabledButton}>공고 등록하기</button>
+      </div>
     </div>
   );
 };
@@ -102,9 +108,32 @@ export const applyMethodLayout = css`
   height: 58.1rem;
 `;
 
-export const buttonContainer = css`
+export const buttonContainer = (theme: Theme) => css`
+  ${theme.fonts.body.normal.B16};
+
+  width: 100%;
   height: 4rem;
-  text-align: center;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+
+  button {
+    background-color: ${theme.colors.field04};
+    border-radius: 1.2rem;
+    padding: 0.8rem 1.6rem;
+  }
+`;
+
+const activeButton = (theme: Theme) => css`
+  color: ${theme.colors.text06};
+`;
+
+const disabledButton = (theme: Theme) => css`
+  color: ${theme.colors.text02};
+  cursor: default;
 `;
 
 export const outlineFormLayout = css`
