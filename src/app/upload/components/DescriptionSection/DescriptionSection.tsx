@@ -39,6 +39,28 @@ const DescriptionSection = () => {
     setPhotos((prevPhotos) => prevPhotos.filter((photo) => photo.id !== id));
   };
 
+  const onDragStart = (e: React.DragEvent<HTMLDivElement>, index: number): void => {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('photoIndex', String(index));
+  };
+
+  const onDragOver = (e: React.DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e: React.DragEvent<HTMLDivElement>, targetIndex: number): void => {
+    e.preventDefault();
+    const sourceIndex = Number(e.dataTransfer.getData('photoIndex'));
+
+    if (sourceIndex === targetIndex) return;
+
+    const updatedPhotos = [...photos];
+    const [movedPhoto] = updatedPhotos.splice(sourceIndex, 1);
+    updatedPhotos.splice(targetIndex, 0, movedPhoto);
+
+    setPhotos(updatedPhotos);
+  };
+
   return (
     <div css={descriptionLayout}>
       <h3>
@@ -62,8 +84,15 @@ const DescriptionSection = () => {
           />
           {photos.length > 0 && (
             <div css={photoGrid}>
-              {photos.map((photo) => (
-                <div css={photoWrapper} key={photo.id}>
+              {photos.map((photo, index) => (
+                <div
+                  css={photoLayout}
+                  key={photo.id}
+                  draggable
+                  onDragStart={(e) => onDragStart(e, index)}
+                  onDragOver={onDragOver}
+                  onDrop={(e) => onDrop(e, index)}
+                >
                   <div css={photoContainer}>
                     <button css={deleteButton} onClick={() => deletePhoto(photo.id)}>
                       <Icon
@@ -211,7 +240,7 @@ const photoGrid = css`
   margin-bottom: 1.4rem;
 `;
 
-const photoWrapper = css`
+const photoLayout = css`
   width: 8rem;
   height: 8rem;
 
