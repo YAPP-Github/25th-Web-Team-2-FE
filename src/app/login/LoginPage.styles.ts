@@ -2,10 +2,9 @@ import { css, Theme } from '@emotion/react';
 
 export const loginLayout = css`
   display: flex;
-  height: calc(100vh - 26.2rem);
   flex-direction: column;
   gap: 6.5rem;
-  margin-top: 8.4rem;
+  padding-top: 8.4rem;
 `;
 
 export const descriptionWrapper = (theme: Theme) => css`

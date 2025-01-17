@@ -42,8 +42,7 @@ const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => 
             </Dialog.Close>
             <Dialog.Title asChild>
               <h3 css={dialogTitle}>
-                아래 연락처로 성함 / 연락처 / 참여 가능 날짜와 함께 시간 (1~3개)를 보내주시길
-                바랍니다.
+                아래 링크로 이름과 1월 18일 9-18시 중 가능한 시간대를 작성해 주세요
               </h3>
             </Dialog.Title>
 
@@ -51,17 +50,17 @@ const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => 
               <div className="info-row">
                 <span className="info-title">링크</span>
                 <div className="info-content">
-                  teamDobby@gmail.com
+                  https://forms.gle/gqtFdsvkVBxyoand8
                   <Icon
                     icon="Copy"
                     width={16}
                     height={16}
                     cursor="pointer"
-                    onClick={() => handleCopyContent('teamDobby@gmail.com')}
+                    onClick={() => handleCopyContent('https://forms.gle/gqtFdsvkVBxyoand8')}
                   />
                 </div>
               </div>
-              <div className="info-row">
+              {/* <div className="info-row">
                 <span className="info-title">연락처</span>
                 <div className="info-content">
                   010-1234-5678
@@ -73,7 +72,7 @@ const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => 
                     onClick={() => handleCopyContent('010-1234-5678')}
                   />
                 </div>
-              </div>
+              </div> */}
               <div css={warning}>
                 <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
                 개인정보보호에 유의해주세요

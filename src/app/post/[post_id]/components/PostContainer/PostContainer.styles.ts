@@ -9,4 +9,6 @@ export const postContentLayout = css`
   margin-bottom: 6rem;
 
   border-radius: 1.2rem;
+
+  position: relative;
 `;

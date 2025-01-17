@@ -8,7 +8,6 @@ export const footerLayout = (theme: Theme) => css`
   justify-content: center;
   gap: 1.6rem;
   padding: 2rem 0;
-  margin-top: 5.6rem;
 `;
 
 export const buttonContainer = (theme: Theme) => css`
