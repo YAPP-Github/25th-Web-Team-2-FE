@@ -4,6 +4,7 @@ import { Theme } from '@emotion/react';
 import { css } from '@emotion/react';
 import React from 'react';
 
+import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
 const UploadContainer = () => {
@@ -19,11 +20,7 @@ const UploadContainer = () => {
         <OutlineSection />
 
         {/* 실험 설명 */}
-        <div css={descriptionLayout}>
-          <h3>
-            <span css={headingIcon}>2</span>어떤 실험인가요?
-          </h3>
-        </div>
+        <DescriptionSection />
 
         {/* 실험 참여 방법 */}
         <div css={applyMethodLayout}>
@@ -99,10 +96,6 @@ export const headingIcon = (theme: Theme) => css`
 
   background-color: ${theme.colors.primaryMint};
   color: ${theme.colors.text01};
-`;
-
-export const descriptionLayout = css`
-  height: 45.4rem;
 `;
 
 export const applyMethodLayout = css`
