@@ -66,6 +66,11 @@ const global = css`
     position: absolute !important;
   }
 
+  input:disabled {
+    background-color: ${theme.colors.field02};
+    cursor: not-allowed;
+  }
+
   .rdp-root {
     --rdp-cell-size: 4rem;
     --rdp-day-height: 4rem;
