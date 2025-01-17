@@ -260,8 +260,8 @@ const photoContainer = css`
 
 const deleteButton = css`
   position: absolute;
-  top: 0.55rem;
-  right: 0.55rem;
+  top: 0.4rem;
+  right: 0.4rem;
   border: none;
   border-radius: 50%;
 `;
