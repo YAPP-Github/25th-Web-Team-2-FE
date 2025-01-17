@@ -21,6 +21,13 @@ export const UPLOAD_REGION = [
       { value: 'JONGNOGU', label: '종로구' },
       { value: 'JUNGGU', label: '중구' },
       { value: 'JUNGRANGGU', label: '중랑구' },
+      { value: 'GANGNAMGU', label: '강남구' },
+      { value: 'GANGBUKGU', label: '강북구' },
+      { value: 'GANGDONGGU', label: '강동구' },
+      { value: 'GWANGJINGU', label: '광진구' },
+      { value: 'GANGSEOGU', label: '강서구' },
+      { value: 'GUROGU', label: '구로구' },
+      { value: 'GWANAKGU', label: '관악구' },
     ],
   },
   {
