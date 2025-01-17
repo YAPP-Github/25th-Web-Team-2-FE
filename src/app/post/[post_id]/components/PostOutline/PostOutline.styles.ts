@@ -3,7 +3,9 @@ import { css, Theme } from '@emotion/react';
 export const postOutlineLayout = (theme: Theme) => css`
   min-width: 34rem;
   max-width: 44rem;
-  height: 60rem;
+
+  height: auto;
+  max-height: 60rem;
 
   border-radius: 1.2rem;
   background-color: ${theme.colors.field01};
@@ -65,7 +67,7 @@ export const otherConditionWrapper = (theme: Theme) => css`
   padding: 1.2rem 1.4rem;
 
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
 `;
 
@@ -143,4 +145,7 @@ export const ButtonContainer = (theme: Theme) => css`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
 `;

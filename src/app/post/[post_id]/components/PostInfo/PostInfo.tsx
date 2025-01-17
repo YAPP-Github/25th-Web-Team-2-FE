@@ -22,7 +22,7 @@ const PostInfo = () => {
     <>
       <div css={postInfoLayout}>
         <div css={postHeaderContainer}>
-          <h2>강남 삼성 서울 병원 연구 참여자를 모집합니다</h2>
+          <h2>야뿌대학교 웹 서비스 행동 실험 참여자를 모집합니다</h2>
           {canEdit && (
             <div>
               <button css={[editButton, buttonStyles]}>수정</button>
@@ -33,11 +33,10 @@ const PostInfo = () => {
           )}
         </div>
         <div css={postSubInfo}>
-          <div>2024.12.29.</div>
-          <div>닉네임</div>
+          <div>2025.01.18.</div>
+          <div>연도비</div>
           <div css={viewsContainer}>
-            <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />
-            100k
+            <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />0
           </div>
         </div>
       </div>
