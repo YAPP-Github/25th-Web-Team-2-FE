@@ -4,7 +4,7 @@ import PostCard from '../PostCard/PostCard';
 import { Post } from '@/types/post';
 
 interface PostCardListProps {
-  postList: Post[];
+  postList?: Post[];
 }
 
 const PostCardList = ({ postList }: PostCardListProps) => {

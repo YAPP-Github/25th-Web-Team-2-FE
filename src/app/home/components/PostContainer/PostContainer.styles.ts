@@ -16,6 +16,7 @@ export const postCardContainer = css`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  min-height: 40rem;
 `;
 
 export const totalPostCount = (theme: Theme) => css`
