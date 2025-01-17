@@ -2,11 +2,11 @@ import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, label } from '../UploadContainer/UploadContainer';
 
 import { colors } from '@/styles/colors';
-import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 
 enum GenderType {
   MALE = 'MALE',
