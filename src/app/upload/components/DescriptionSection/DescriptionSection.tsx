@@ -77,8 +77,8 @@ const descriptionTextarea = (theme: Theme) => css`
   border-top-left-radius: 1.2rem;
   border-top-right-radius: 1.2rem;
 
-  width: 100%;
-  height: 22rem; //
+  width: 93.6rem;
+  height: 22rem;
 
   outline: none;
 

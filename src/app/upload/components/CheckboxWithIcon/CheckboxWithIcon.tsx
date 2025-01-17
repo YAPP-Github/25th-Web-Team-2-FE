@@ -9,6 +9,7 @@ interface CheckboxWithIconProps {
   label?: string;
   align?: 'left' | 'center' | 'right';
   size?: 'small' | 'large';
+  boldStyle?: boolean;
 }
 
 const CheckboxWithIcon = ({
@@ -17,24 +18,25 @@ const CheckboxWithIcon = ({
   label = '본문 참고',
   align = 'right',
   size = 'small',
+  boldStyle = false,
 }: CheckboxWithIconProps) => {
   return (
-    <div css={(theme: Theme) => checkboxLayout(theme, align, size)}>
+    <div css={(theme: Theme) => checkboxLayout(theme, align, size, boldStyle)}>
       <div onClick={onChange} css={checkboxContainer(size)}>
         {checked ? (
           <Icon
             icon="CheckSquareFill"
             color={colors.primaryMint}
-            width={16}
-            height={16}
+            width={boldStyle ? 18 : 16}
+            height={boldStyle ? 18 : 16}
             cursor="pointer"
           />
         ) : (
           <Icon
             icon="CheckSquareEmpty"
-            color={colors.icon02}
-            width={16}
-            height={16}
+            color={boldStyle ? colors.text05 : colors.icon02}
+            width={boldStyle ? 18 : 16}
+            height={boldStyle ? 18 : 16}
             cursor="pointer"
           />
         )}
@@ -50,9 +52,13 @@ export const checkboxLayout = (
   theme: Theme,
   align: 'left' | 'center' | 'right',
   size: 'small' | 'large',
+  boldStyle: boolean,
 ) => css`
   ${size === 'small' ? theme.fonts.label.small.M12 : theme.fonts.label.large.R14};
-  color: ${theme.colors.text04};
+
+  font-weight: ${boldStyle || size === 'small' ? '500' : '400'};
+
+  color: ${boldStyle ? theme.colors.text06 : theme.colors.text04};
 
   margin-top: 0.4rem;
 

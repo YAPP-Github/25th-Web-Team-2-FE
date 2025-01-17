@@ -1,13 +1,30 @@
-import { css } from '@emotion/react';
+import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import { TextInput } from '../TextInput/TextInput';
-import { headingIcon } from '../UploadContainer/UploadContainer';
+import { headingIcon, label } from '../UploadContainer/UploadContainer';
+
+import { colors } from '@/styles/colors';
+import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
+
+enum GenderType {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  ALL = 'ALL',
+}
 
 const ApplyMethodSection = () => {
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
+
+  const [alarmAgree, setAlarmAgree] = useState<boolean>(false);
+
+  const [selectedGenderType, setSelectedGenderType] = useState<GenderType | null>(null);
+
+  const handleGenderTypeChange = (gender: GenderType) => {
+    setSelectedGenderType(gender);
+  };
 
   return (
     <div css={applyMethodLayout}>
@@ -57,15 +74,79 @@ const ApplyMethodSection = () => {
       <h3>
         <span css={headingIcon}>4</span>어떤 사람들을 모집하나요?
       </h3>
+      <div css={targetConditionLayout}>
+        <div css={targetGroupContainer}>
+          {/* 나이 */}
+          <div>
+            <label css={label}>
+              나이 <span style={{ color: `${colors.textAlert}` }}>*</span>
+            </label>
+            <div css={ageInputContainer}>
+              <span css={textStyle}>만</span>
+              <input id={'min-age'} type="number" css={inputStyle} placeholder="00" min="0" />
+              <span css={textStyle}>~</span>
+              <input id={'max-age'} type="number" css={inputStyle} placeholder="00" min="0" />
+              <span css={textStyle}>세</span>
+            </div>
+          </div>
+
+          {/* 성별 */}
+          <div>
+            <label css={label}>
+              성별 <span style={{ color: `${colors.textAlert}` }}>*</span>
+            </label>
+            <RadioButtonGroup<GenderType>
+              options={[
+                {
+                  value: GenderType.MALE,
+                  label: '남성',
+                },
+                {
+                  value: GenderType.FEMALE,
+                  label: '여성',
+                },
+                {
+                  value: GenderType.ALL,
+                  label: '무관',
+                },
+              ]}
+              selectedValue={selectedGenderType}
+              onChange={handleGenderTypeChange}
+            />
+          </div>
+        </div>
+        {/* 기타 조건 */}
+        <div>
+          <label css={label}>기타 조건</label>
+          <div>
+            <TextInput
+              id="other-condition"
+              placeholder="기타 조건을 입력해 주세요 (선택)"
+              maxLength={300}
+              size="full"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 공고 알림 */}
+      <div css={alarmAgreeContainer}>
+        <CheckboxWithIcon
+          checked={alarmAgree}
+          onChange={() => setAlarmAgree((prev) => !prev)}
+          label="조건에 부합하는 참여자에게 해당 공고를 알릴까요?"
+          align="left"
+          size="large"
+          boldStyle
+        />
+      </div>
     </div>
   );
 };
 
 export default ApplyMethodSection;
 
-export const applyMethodLayout = css`
-  height: 58.1rem;
-`;
+export const applyMethodLayout = css``;
 
 const applyMethodContainer = css`
   margin-top: 2rem;
@@ -75,7 +156,6 @@ const applyMethodContainer = css`
 const applyMethodContentLayout = css`
   display: flex;
   flex-flow: column nowrap;
-  gap: 2.4rem;
 `;
 
 const addContactInfoContainer = css`
@@ -83,4 +163,63 @@ const addContactInfoContainer = css`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.8rem;
+`;
+
+const targetConditionLayout = css`
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2.8rem;
+`;
+
+const targetGroupContainer = css`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+`;
+
+const ageInputContainer = (theme: Theme) => css`
+  width: 45.2rem;
+  height: 4.8rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.1rem solid ${theme.colors.line01};
+  border-radius: 1.2rem;
+  padding: 1.3rem 1.6rem;
+`;
+
+const textStyle = (theme: Theme) => css`
+  ${theme.fonts.label.large.M14};
+  color: ${theme.colors.text06};
+`;
+
+const inputStyle = (theme: Theme) => css`
+  ${theme.fonts.label.large.R14};
+
+  width: 17.2rem;
+  height: 2.2rem;
+
+  text-align: center;
+
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: ${theme.colors.text02};
+  }
+`;
+
+const alarmAgreeContainer = (theme: Theme) => css`
+  width: fit-content;
+  height: 3.4rem;
+
+  padding: 0 1rem;
+
+  background-color: ${theme.colors.field02};
+  border-radius: 0.8rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

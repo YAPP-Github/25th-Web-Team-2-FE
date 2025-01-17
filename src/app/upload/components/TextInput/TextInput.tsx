@@ -19,7 +19,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     };
 
     return (
-      <div css={textInputContainer}>
+      <div css={textInputContainer(size)}>
         <input
           ref={ref}
           id={id}
@@ -27,7 +27,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           placeholder={placeholder}
           maxLength={maxLength}
           onChange={handleChange}
-          css={(theme) => textInput(theme, status, size)}
+          css={(theme) => textInput(theme, status)}
         />
         <div css={textSubMessageLayout}>
           {maxLength && (
@@ -44,18 +44,20 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 
 TextInput.displayName = 'TextInput';
 
-const textInputContainer = css`
+const textInputContainer = (size: 'half' | 'full') => css`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   position: relative;
-`;
-
-const textInput = (theme: Theme, status: string, size: 'half' | 'full') => css`
-  ${theme.fonts.label.large.R14};
 
   width: 100%;
   max-width: ${size === 'half' ? '45.2rem' : '93.6rem'};
+`;
+
+const textInput = (theme: Theme, status: string) => css`
+  ${theme.fonts.label.large.R14};
+
+  width: 100%;
   height: 4.8rem;
   padding: 0.8rem 1.2rem;
   border: 0.1rem solid ${status === 'error' ? theme.colors.textAlert : theme.colors.line01};

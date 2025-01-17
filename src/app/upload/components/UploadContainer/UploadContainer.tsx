@@ -33,7 +33,9 @@ const UploadContainer = () => {
         <Link href={'/'}>
           <button css={activeButton}>이전으로</button>
         </Link>
-        <button css={disabledButton}>공고 등록하기</button>
+        <Link href={'/post/12'}>
+          <button css={uploadButton}>공고 등록하기</button>
+        </Link>
       </div>
     </div>
   );
@@ -109,21 +111,20 @@ export const buttonContainer = (theme: Theme) => css`
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
-
-  button {
-    background-color: ${theme.colors.field04};
-    border-radius: 1.2rem;
-    padding: 0.8rem 1.6rem;
-  }
 `;
 
 const activeButton = (theme: Theme) => css`
   color: ${theme.colors.text06};
+  background-color: ${theme.colors.field04};
+  border-radius: 1.2rem;
+  padding: 0.8rem 1.6rem;
 `;
 
-const disabledButton = (theme: Theme) => css`
-  color: ${theme.colors.text02};
-  cursor: default;
+const uploadButton = (theme: Theme) => css`
+  color: ${theme.colors.text01};
+  background-color: ${theme.colors.field09};
+  border-radius: 1.2rem;
+  padding: 0.8rem 1.6rem;
 `;
 
 export const outlineFormLayout = css`
