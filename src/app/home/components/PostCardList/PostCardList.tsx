@@ -11,7 +11,7 @@ const PostCardList = ({ postList }: PostCardListProps) => {
   return (
     <ul css={postCardListLayout}>
       {postList?.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post.postInfo.experimentPostId} post={post} />
       ))}
     </ul>
   );

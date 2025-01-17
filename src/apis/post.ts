@@ -4,9 +4,7 @@ import { Area } from '@/app/home/home.types';
 import { API_URL } from '@/constants/url';
 import { Post } from '@/types/post';
 
-interface PostResponse {
-  posts: Post[];
-}
+type PostResponse = Post[];
 
 export type AreaResponse = PostAreaResponse | PostSubAreaResponse;
 
@@ -29,7 +27,7 @@ interface PostArea {
 export const fetchPostList = async () => {
   const res = await API.get<PostResponse>(API_URL.postList);
 
-  return res.data.posts;
+  return res.data;
 };
 
 export const fetchPostCount = async <T>(area?: string) => {

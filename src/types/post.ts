@@ -1,9 +1,16 @@
 export interface Post {
-  id: number;
-  place: string;
-  isContacted: boolean;
+  postInfo: PostInfo;
+  recruitDone: boolean;
+}
+
+export interface PostInfo {
+  experimentPostId: number;
   title: string;
-  testDate: string;
-  reward: string;
   views: number;
+  univName: string;
+  reward: string;
+  durationInfo: {
+    startDate: string | null;
+    endDate: string | null;
+  };
 }

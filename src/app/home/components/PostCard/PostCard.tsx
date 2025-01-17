@@ -19,7 +19,6 @@ import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
 import { Post } from '@/types/post';
 
-
 interface PostCardProps {
   post: Post;
 }
@@ -28,25 +27,25 @@ const PostCard = ({ post }: PostCardProps) => {
   return (
     <li>
       <Link
-        href={`/post/${post.id}`}
-        key={post.id}
+        href={`/post/${post.postInfo.experimentPostId}`}
+        key={post.postInfo.experimentPostId}
         css={postCardLayout}
         style={{
-          backgroundColor: post.isContacted ? theme.colors.field01 : theme.colors.field01,
+          backgroundColor: post.recruitDone ? theme.colors.field01 : theme.colors.field01,
         }}
       >
         <div css={postHeader}>
           <div css={postCardHeader}>
-            <span css={postLocation}>{post.place}</span>
+            <span css={postLocation}>{post.postInfo.univName}</span>
             <div css={postCardRightHeader}>
               <Icon icon="Eye" width={18} />
-              <span css={postViews}>{post.views}</span>
+              <span css={postViews}>{post.postInfo.views}</span>
             </div>
           </div>
-          <h3 css={postTitle}>{post.title}</h3>
+          <h3 css={postTitle}>{post.postInfo.title}</h3>
         </div>
         <div>
-          {post.isContacted ? (
+          {post.recruitDone ? (
             <div css={contactedPostTag}>
               <span>모집 완료</span>
             </div>
@@ -54,11 +53,11 @@ const PostCard = ({ post }: PostCardProps) => {
             <>
               <div css={postRewardContainer}>
                 <span css={announceText}>보상</span>
-                <span css={postReward}>{post.reward}</span>
+                <span css={postReward}>{post.postInfo.reward}</span>
               </div>
               <div css={postRewardContainer}>
                 <span css={announceText}>일시</span>
-                <span css={postDate}>{post.testDate}</span>
+                <span css={postDate}>{post.postInfo.durationInfo.startDate}</span>
               </div>
             </>
           )}
