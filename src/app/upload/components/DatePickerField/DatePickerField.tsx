@@ -35,7 +35,7 @@ const DatePickerField = ({
 
   return (
     <div css={datePickerFieldContainer}>
-      <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Root open={isOpen && !experimentDateChecked} onOpenChange={setIsOpen}>
         <Popover.Trigger asChild>
           <div
             css={(theme) => datePickerField(theme, experimentDateChecked, isOpen)}
@@ -60,6 +60,13 @@ const DatePickerField = ({
                 width={20}
                 height={20}
                 color={isOpen && !experimentDateChecked ? colors.primaryMint : colors.icon03}
+                subcolor={
+                  isOpen
+                    ? colors.primaryTinted
+                    : experimentDateChecked
+                      ? colors.field02
+                      : colors.field01
+                }
               />
             </span>
           </div>
@@ -69,7 +76,6 @@ const DatePickerField = ({
             <DayPicker
               locale={ko}
               mode="range"
-              captionLayout="dropdown"
               selected={{
                 from: selectedDates.from || undefined,
                 to: selectedDates.to || undefined,
@@ -108,13 +114,13 @@ const datePickerField = (theme: Theme, experimentDateChecked: boolean, isOpen: b
     ${experimentDateChecked
       ? theme.colors.line01
       : isOpen
-      ? theme.colors.lineTinted
-      : theme.colors.line01};
+        ? theme.colors.lineTinted
+        : theme.colors.line01};
   border-radius: 1.2rem;
 
   background-color: ${experimentDateChecked ? theme.colors.field02 : colors.field01};
 
-  cursor: ${experimentDateChecked ? 'default' : 'pointer'};
+  cursor: ${experimentDateChecked ? 'not-allowed' : 'pointer'};
 `;
 
 const placeholderText = (
@@ -126,8 +132,8 @@ const placeholderText = (
   color: ${experimentDateChecked
     ? theme.colors.text02
     : bothDatesSelected
-    ? theme.colors.text06
-    : theme.colors.text02};
+      ? theme.colors.text06
+      : theme.colors.text02};
 
   flex: 1;
 
@@ -149,7 +155,7 @@ const popoverLayout = (theme: Theme) => css`
 
   width: 45.2rem;
 
-  box-shadow: 0.2rem 0.2rem 2rem 0.2rem rgba(53, 59, 61, 0.2);
+  box-shadow: 0rem 0.4rem 1rem rgba(0, 0, 0, 0.1);
 `;
 
 const datepickerCustom = (theme: Theme) => css`
@@ -267,6 +273,11 @@ const datepickerCustom = (theme: Theme) => css`
     border: none;
 
     background-color: ${theme.colors.field02};
+  }
+
+  .rdp-range_start .rdp-day_button {
+    background-color: ${theme.colors.primaryMint};
+    color: ${theme.colors.text01};
   }
 
   .rdp-day_button {

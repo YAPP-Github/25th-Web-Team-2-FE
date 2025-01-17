@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import CountSelect from '../CountSelect/CountSelect';
 import DurationSelect from '../DurationSelect/DurationSelect';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
+import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import DatePickerField from '@/app/upload/components/DatePickerField/DatePickerField';
@@ -20,7 +22,7 @@ enum MatchType {
 const OutlineSection = () => {
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
   const [rewardChecked, setRewardChecked] = useState(false);
-  const [timeChecked, setTimeChecked] = useState(false);
+  const [durationChecked, setDurationChecked] = useState(false);
 
   const [selectedMatchType, setSelectedMatchType] = useState<MatchType | null>(null);
 
@@ -37,6 +39,15 @@ const OutlineSection = () => {
 
   const handleDateChange = (dates: DateRange) => {
     setSelectedDates(dates);
+  };
+
+  // 참여 보상
+  const [rewardValue, setRewardValue] = useState('');
+
+  const handleRewardChange = (value: string) => {
+    if (!rewardChecked) {
+      setRewardValue(value);
+    }
   };
 
   // 실험 장소 지역구 선택
@@ -64,10 +75,11 @@ const OutlineSection = () => {
   };
 
   // 소요 시간
-  const [durationValue, setDurationValue] = useState<string | undefined>(undefined); // Select 상태 추가
+  const [countValue, setCountValue] = useState<string | undefined>(undefined);
+  const [durationValue, setDurationValue] = useState<string | undefined>(undefined);
 
   return (
-    <div css={outlineLayout}>
+    <div>
       <h3>
         <span css={headingIcon}>1</span>실험의 개요를 알려주세요
       </h3>
@@ -133,6 +145,8 @@ const OutlineSection = () => {
             id="reward"
             placeholder={rewardChecked ? '본문 참고' : '예) 현금 10,000원'}
             disabled={rewardChecked}
+            value={rewardChecked ? '' : rewardValue}
+            onChange={(e) => handleRewardChange(e.target.value)}
           />
           <CheckboxWithIcon
             checked={rewardChecked}
@@ -148,37 +162,35 @@ const OutlineSection = () => {
           <label css={label} htmlFor="location">
             실험 장소 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <div css={inputContainer}>
-            <input css={input} type="text" id="location" placeholder="대학교 입력" />
-            {/* 지역구 선택 */}
-            <RegionPopover regionPopoverProps={regionPopoverProps} />
+          {selectedMatchType === MatchType.ONLINE ? (
+            <div css={[input, disabledInput]}>비대면</div>
+          ) : (
+            <div css={inputContainer}>
+              <input css={input} type="text" id="location" placeholder="대학교 입력" />
+              {/* 지역구 선택 */}
+              <RegionPopover regionPopoverProps={regionPopoverProps} />
 
-            <div css={detailLocationContainer}>
-              <input
-                css={input}
-                type="text"
-                id="detail-location"
-                placeholder="상세 주소 입력 (선택)"
-              />
-              <p css={detailLocationWords}>0/70</p>
+              <TextInput id="detail-location" placeholder="상세 주소 입력 (선택)" maxLength={70} />
             </div>
-          </div>
+          )}
         </div>
 
         {/* 소요 시간 */}
         <div>
-          <label css={label} htmlFor="time">
+          <p css={label}>
             소요 시간 <span style={{ color: `${colors.textAlert}` }}>*</span>
-          </label>
+          </p>
 
           <div css={inputContainer}>
-            <input css={input} type="text" id="frequency" placeholder="실험 횟수 입력" />
-            <DurationSelect value={durationValue} onChange={setDurationValue} />
+            <CountSelect value={countValue} onChange={setCountValue} />
+            <DurationSelect
+              value={durationValue}
+              onChange={setDurationValue}
+              referToDetailsChecked={durationChecked}
+            />
             <CheckboxWithIcon
-              checked={timeChecked}
-              onChange={() => {
-                setTimeChecked((prev) => !prev);
-              }}
+              checked={durationChecked}
+              onChange={() => setDurationChecked((prev) => !prev)}
               label="본문 참고"
             />
           </div>
@@ -190,14 +202,10 @@ const OutlineSection = () => {
 
 export default OutlineSection;
 
-export const outlineLayout = css`
-  height: 57.6rem;
-`;
-
 export const outlineFormLayout = css`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 10.2rem 10.2rem 21.4rem;
+  grid-template-rows: 10.2rem 10.2rem auto;
 
   grid-column-gap: 3.2rem;
   grid-row-gap: 2.8rem;
@@ -255,14 +263,7 @@ const inputContainer = css`
   gap: 0.8rem;
 `;
 
-const detailLocationContainer = css`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.4rem;
-`;
-const detailLocationWords = (theme: Theme) => css`
-  ${theme.fonts.label.small.M12};
+export const disabledInput = (theme: Theme) => css`
+  background-color: ${theme.colors.field02};
   color: ${theme.colors.text02};
-
-  text-align: right;
 `;
