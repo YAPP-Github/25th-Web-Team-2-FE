@@ -3,6 +3,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { ko } from 'date-fns/locale';
 import React, { useState } from 'react';
 import { DayPicker, DateRange } from 'react-day-picker';
+
 import 'react-day-picker/dist/style.css';
 
 import Icon from '@/components/Icon';
@@ -64,8 +65,8 @@ const DatePickerField = ({
                   isOpen
                     ? colors.primaryTinted
                     : experimentDateChecked
-                      ? colors.field02
-                      : colors.field01
+                    ? colors.field02
+                    : colors.field01
                 }
               />
             </span>
@@ -86,6 +87,8 @@ const DatePickerField = ({
               endMonth={new Date(new Date().getFullYear() + 5, 11)}
               required
               css={datepickerCustom}
+              captionLayout="dropdown-months"
+              showOutsideDays
             />
           </Popover.Content>
         </Popover.Portal>
@@ -114,8 +117,8 @@ const datePickerField = (theme: Theme, experimentDateChecked: boolean, isOpen: b
     ${experimentDateChecked
       ? theme.colors.line01
       : isOpen
-        ? theme.colors.lineTinted
-        : theme.colors.line01};
+      ? theme.colors.lineTinted
+      : theme.colors.line01};
   border-radius: 1.2rem;
 
   background-color: ${experimentDateChecked ? theme.colors.field02 : colors.field01};
@@ -132,8 +135,8 @@ const placeholderText = (
   color: ${experimentDateChecked
     ? theme.colors.text02
     : bothDatesSelected
-      ? theme.colors.text06
-      : theme.colors.text02};
+    ? theme.colors.text06
+    : theme.colors.text02};
 
   flex: 1;
 
@@ -188,6 +191,7 @@ const datepickerCustom = (theme: Theme) => css`
 
   .rdp-month_caption {
     display: flex;
+    flex-flow: row-reverse nowrap;
     justify-content: center;
   }
 
@@ -210,10 +214,19 @@ const datepickerCustom = (theme: Theme) => css`
 
   .rdp-months_dropdown {
     width: 9.4rem;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .rdp-caption_label {
     width: 9.4rem;
+  }
+  .rdp-caption_label .rdp-chevron {
+    visibility: hidden;
+  }
+
+  .rdp-dropdowns span[role='status']::after {
+    content: '년';
   }
 
   .rdp-month_grid {
