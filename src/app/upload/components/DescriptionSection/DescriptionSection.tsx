@@ -57,12 +57,14 @@ export const fullInput = css`
 `;
 
 const descriptionContentContainer = (theme: Theme) => css`
+  width: 93.6rem;
   height: 27.6rem;
+
+  border: 0.1rem solid ${theme.colors.line01};
+  border-radius: 1.2rem;
 
   :focus-within {
     border: 0.1rem solid ${theme.colors.lineTinted};
-
-    border-radius: 1.2rem;
 
     > div:last-of-type {
       border: none;
@@ -73,11 +75,12 @@ const descriptionContentContainer = (theme: Theme) => css`
 const descriptionTextarea = (theme: Theme) => css`
   ${theme.fonts.label.large.R14};
 
-  border: 0.1rem solid ${theme.colors.line01};
+  border: none;
+  border-bottom: 0.1rem solid ${theme.colors.line01};
   border-top-left-radius: 1.2rem;
   border-top-right-radius: 1.2rem;
 
-  width: 93.6rem;
+  width: 100%;
   height: 22rem;
 
   outline: none;
@@ -93,11 +96,6 @@ const descriptionTextarea = (theme: Theme) => css`
 
 const uploadImagesContainer = (theme: Theme) => css`
   height: 5.6rem;
-
-  border: 0.1rem solid ${theme.colors.line01};
-  border-top: none;
-  border-bottom-left-radius: 1.2rem;
-  border-bottom-right-radius: 1.2rem;
 
   display: flex;
   flex-flow: row nowrap;
