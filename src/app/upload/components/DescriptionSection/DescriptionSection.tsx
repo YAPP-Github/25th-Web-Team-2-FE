@@ -52,7 +52,7 @@ export const descriptionFormLayout = css`
   gap: 1.2rem;
 `;
 
-const fullInput = css`
+export const fullInput = css`
   max-width: 93.6rem;
 `;
 
@@ -83,6 +83,8 @@ const descriptionTextarea = (theme: Theme) => css`
   outline: none;
 
   padding: 1.4rem 1.6rem;
+
+  resize: none;
 
   &::placeholder {
     color: ${theme.colors.text02};

@@ -7,12 +7,20 @@ interface CheckboxWithIconProps {
   checked: boolean;
   onChange: () => void;
   label?: string;
+  align?: 'left' | 'center' | 'right';
+  size?: 'small' | 'large';
 }
 
-const CheckboxWithIcon = ({ checked, onChange, label = '본문 참고' }: CheckboxWithIconProps) => {
+const CheckboxWithIcon = ({
+  checked,
+  onChange,
+  label = '본문 참고',
+  align = 'right',
+  size = 'small',
+}: CheckboxWithIconProps) => {
   return (
-    <div css={checkboxLayout}>
-      <div onClick={onChange} css={checkboxContainer}>
+    <div css={(theme: Theme) => checkboxLayout(theme, align, size)}>
+      <div onClick={onChange} css={checkboxContainer(size)}>
         {checked ? (
           <Icon
             icon="CheckSquareFill"
@@ -38,14 +46,18 @@ const CheckboxWithIcon = ({ checked, onChange, label = '본문 참고' }: Checkb
 
 export default CheckboxWithIcon;
 
-export const checkboxLayout = (theme: Theme) => css`
-  ${theme.fonts.label.small.M12};
+export const checkboxLayout = (
+  theme: Theme,
+  align: 'left' | 'center' | 'right',
+  size: 'small' | 'large',
+) => css`
+  ${size === 'small' ? theme.fonts.label.small.M12 : theme.fonts.label.large.R14};
   color: ${theme.colors.text04};
 
   margin-top: 0.4rem;
 
   display: flex;
-  justify-content: right;
+  justify-content: ${align};
 
   cursor: pointer;
 
@@ -54,12 +66,11 @@ export const checkboxLayout = (theme: Theme) => css`
   }
 `;
 
-export const checkboxContainer = css`
+export const checkboxContainer = (size: 'small' | 'large') => css`
   width: fit-content;
 
   display: flex;
   flex-flow: row nowrap;
-
-  gap: 0.2rem;
+  gap: ${size === 'small' ? '0.2rem' : '0.4rem'};
   align-items: center;
 `;

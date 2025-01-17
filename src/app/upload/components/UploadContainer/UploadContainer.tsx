@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import Link from 'next/link';
 import React from 'react';
 
+import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
@@ -24,14 +25,7 @@ const UploadContainer = () => {
         <DescriptionSection />
 
         {/* 실험 참여 방법 */}
-        <div css={applyMethodLayout}>
-          <h3>
-            <span css={headingIcon}>3</span>실험에 참여려면 어떻게 하면 되나요?
-          </h3>
-          <h3>
-            <span css={headingIcon}>4</span>어떤 사람들을 모집하나요?
-          </h3>
-        </div>
+        <ApplyMethodSection />
       </div>
 
       {/* 버튼 */}
@@ -102,10 +96,6 @@ export const headingIcon = (theme: Theme) => css`
 
   background-color: ${theme.colors.primaryMint};
   color: ${theme.colors.text01};
-`;
-
-export const applyMethodLayout = css`
-  height: 58.1rem;
 `;
 
 export const buttonContainer = (theme: Theme) => css`

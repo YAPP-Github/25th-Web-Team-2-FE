@@ -4,13 +4,14 @@ import { forwardRef, useState } from 'react';
 interface TextInputProps {
   id: string;
   placeholder: string;
-  maxLength: number;
+  maxLength?: number;
   message?: string;
   status?: 'error' | '';
+  size?: 'half' | 'full';
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ id, placeholder, maxLength, message, status = '' }, ref) => {
+  ({ id, placeholder, maxLength, message, status = '', size = 'half' }, ref) => {
     const [textLength, setTextLength] = useState(0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,12 +27,14 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           placeholder={placeholder}
           maxLength={maxLength}
           onChange={handleChange}
-          css={(theme) => textInput(theme, status)}
+          css={(theme) => textInput(theme, status, size)}
         />
         <div css={textSubMessageLayout}>
-          <div css={textCounter}>
-            {textLength}/{maxLength}
-          </div>
+          {maxLength && (
+            <div css={textCounter}>
+              {textLength}/{maxLength}
+            </div>
+          )}
           {status === 'error' && message && <p css={formMessage}>{message}</p>}
         </div>
       </div>
@@ -48,11 +51,11 @@ const textInputContainer = css`
   position: relative;
 `;
 
-const textInput = (theme: Theme, status: string) => css`
+const textInput = (theme: Theme, status: string, size: 'half' | 'full') => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;
-  max-width: 45.2rem;
+  max-width: ${size === 'half' ? '45.2rem' : '93.6rem'};
   height: 4.8rem;
   padding: 0.8rem 1.2rem;
   border: 0.1rem solid ${status === 'error' ? theme.colors.textAlert : theme.colors.line01};
