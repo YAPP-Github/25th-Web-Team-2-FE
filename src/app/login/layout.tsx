@@ -9,7 +9,8 @@ function LoginLayout({ children }: { children: React.ReactNode }) {
 
 const loginLayout = (theme: Theme) => css`
   background-color: ${theme.colors.field01};
-  width: 100rem;
+  min-width: 100rem;
+  height: calc(100vh - 12.2rem);
   margin: 0 auto;
 `;
 
