@@ -1,15 +1,16 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
-import { FormInput } from '../../JoinPage.types';
+import { EmailForm } from '../../JoinPage.types';
 
 interface JoinCheckboxContainerProps {
   handleAllCheck: () => void;
 }
 
 const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) => {
-  const { control, setValue } = useFormContext<FormInput>();
+  const { control, setValue } = useFormContext<EmailForm>();
 
   return (
     <div css={termContainer}>

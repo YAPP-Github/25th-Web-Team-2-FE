@@ -12,7 +12,8 @@ export const inputContainer = (theme: Theme) => css`
     gap: 0.4rem;
   }
 
-  input {
+  input,
+  textarea {
     ${theme.fonts.body.normal.M16};
     color: ${theme.colors.text06};
     border: 0.1rem solid ${theme.colors.line01};
@@ -48,9 +49,16 @@ export const errorMessage = (theme: Theme) => css`
 `;
 
 export const tipWrapper = (theme: Theme) => css`
-  ${theme.fonts.label.large.R14};
+  ${theme.fonts.label.small.M12};
   display: flex;
-  gap: 0.4rem;
+  // justify-content: flex-end;
+  color: ${theme.colors.text02};
+`;
+
+export const textCount = (theme: Theme) => css`
+  ${theme.fonts.label.small.M12};
+  display: flex;
+  justify-content: flex-end;
   color: ${theme.colors.text02};
 `;
 

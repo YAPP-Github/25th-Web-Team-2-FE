@@ -1,7 +1,9 @@
 import * as Toast from '@radix-ui/react-toast';
+
 import { toastLayout, toastTitle, toastViewport } from './EmailToast.styles';
-import theme from '@/styles/theme';
+
 import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
 
 interface EmailToastProps {
   title: string;

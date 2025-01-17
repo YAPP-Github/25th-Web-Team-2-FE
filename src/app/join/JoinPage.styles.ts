@@ -24,7 +24,6 @@ export const titleContainer = css`
 export const joinContentContainer = (theme: Theme) => css`
   background-color: ${theme.colors.field02};
   width: 100%;
-  height: 67.6rem;
   display: flex;
   flex-direction: column;
   gap: 2.8rem;
@@ -128,6 +127,16 @@ export const progressBarFill = (theme: Theme) => css`
   height: 100%;
   background-color: ${theme.colors.primaryMint};
   border-radius: 0.6rem;
+  transition: width 1s;
+`;
+
+export const joinForm = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
 `;
 
 export const nextButton = (theme: Theme) => css`
@@ -137,6 +146,7 @@ export const nextButton = (theme: Theme) => css`
   border-radius: 1.2rem;
   padding: 1.2rem 0;
   width: 20rem;
+  align-items: center;
 
   :disabled {
     color: ${theme.colors.text02};

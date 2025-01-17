@@ -1,29 +1,115 @@
 'use client';
 
-import { FormProvider, useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import { FormInput } from './JoinPage.types';
 import JoinEmailStep from './JoinEmailStep';
+import JoinInfoStep from './JoinInfoStep';
+import {
+  contentContainer,
+  joinForm,
+  joinLayout,
+  joinTitle,
+  progressBarContainer,
+  progressBarFill,
+  titleContainer,
+} from './JoinPage.styles';
+import { JoinParams } from './JoinPage.types';
 
-export default function JoinPage() {
-  const socialEmail = sessionStorage.getItem('email') || '';
+import { API } from '@/apis/config';
+import { join } from '@/apis/login';
+import Logo from '@/assets/images/logo.svg';
+import JoinSuccessStep from './JoinSuccessStep';
 
-  const methods = useForm<FormInput>({
-    defaultValues: {
-      socialEmail: socialEmail,
-      contactEmail: '',
-      univEmail: '',
-      authCode: '',
-      isAllCheck: false,
-      isTermOfService: false,
-      isPrivacy: false,
-      isAdvertise: false,
+type JoinStep = '이메일' | '개인 정보' | '완료';
+
+const getProvider = (email: string): 'GOOGLE' | 'NAVER' => {
+  const domain = email.split('@')[1].toLowerCase();
+
+  if (domain.includes('gmail.com')) {
+    return 'GOOGLE';
+  }
+  return 'NAVER';
+};
+
+export const useJoinMutation = () => {
+  return useMutation({
+    mutationFn: join,
+    onSuccess: ({ accessToken, refreshToken, memberInfo }) => {
+      API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      sessionStorage.setItem('refreshToken', refreshToken);
+      sessionStorage.setItem('role', memberInfo.role);
     },
   });
+};
+
+export default function JoinPage() {
+  const oauthEmail = sessionStorage.getItem('email') || '';
+  const provider = getProvider(oauthEmail);
+  const { mutate: join } = useJoinMutation();
+
+  const [joinUserInfo, setJoinUserInfo] = useState<JoinParams>({
+    oauthEmail: oauthEmail,
+    provider,
+    contactEmail: '',
+    univEmail: '',
+    name: '',
+    univName: '',
+    major: '',
+    labInfo: '',
+  });
+  const [isFinished, setIsFinished] = useState(false);
+
+  const [step, setStep] = useState<JoinStep>('이메일');
+
+  const handleNextStep = (data: Partial<JoinParams>, isLast = false) => {
+    setJoinUserInfo((prev) => ({ ...prev, ...data }));
+
+    if (step === '이메일') {
+      setStep('개인 정보');
+    }
+
+    if (isLast) {
+      setIsFinished(true);
+    }
+  };
+
+  const handleSubmit = () => {
+    join({ ...joinUserInfo }, { onSuccess: () => setStep('완료') });
+  };
+
+  // TODO: 개선 필요.
+  useEffect(() => {
+    if (isFinished) {
+      handleSubmit();
+    }
+  }, [isFinished]);
 
   return (
-    <FormProvider {...methods}>
-      <JoinEmailStep />
-    </FormProvider>
+    <section css={joinLayout}>
+      <Image src={Logo} alt="로고" width={80} height={28} />
+      <div css={contentContainer}>
+        <div css={titleContainer}>
+          <h2 css={joinTitle}>연구자 회원가입</h2>
+          <div css={progressBarContainer}>
+            <div css={progressBarFill} style={{ width: step === '이메일' ? '50%' : '100%' }} />
+          </div>
+        </div>
+        <section css={joinForm} onSubmit={handleSubmit}>
+          {step === '이메일' && <JoinEmailStep onNext={handleNextStep} />}
+          {step === '개인 정보' && (
+            <JoinInfoStep
+              onNext={(data: Partial<JoinParams>) => {
+                handleNextStep(data, true);
+                handleSubmit();
+              }}
+            />
+          )}
+          {step === '완료' && <JoinSuccessStep name={joinUserInfo.name} />}
+        </section>
+      </div>
+    </section>
   );
 }
