@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import {
   authCodeButton,
   authInputContainer,
+  authTimerWrapper,
   editButton,
   errorMessage,
   inputContainer,
@@ -11,10 +12,14 @@ import {
   univAuthButton,
   univInputWrapper,
 } from './UnivAuthInput.styles';
-import { FormInput } from '../../Join.types';
 import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
 
 import EmailToast from '../EmailToast/EmailToast';
+import { FormInput } from '../../JoinPage.types';
+import { formatAuthTimer } from '../../JoinPage.utils';
+
+const TEN_MINUTE_SEC = 600;
+const ONE_SEC = 1000;
 
 interface UnivAuthInputProps {
   isUnivVerify: boolean;
@@ -32,22 +37,55 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const [isToastOpen, setIsToastOpen] = useState(true);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [authTimer, setAuthTimer] = useState(TEN_MINUTE_SEC);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const handleSendUnivAuthCode = async () => {
+  const stopTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+  };
+
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    stopTimer();
+    setAuthTimer(TEN_MINUTE_SEC);
+
+    timerRef.current = setInterval(() => {
+      setAuthTimer((prev) => prev - 1);
+    }, ONE_SEC);
+  };
+
+  const handleSendUnivAuthCode = () => {
     const univEmail = getValues('univEmail');
     sendEmail(univEmail, {
       onSuccess: () => {
         setIsEmailSent(true);
         setIsToastOpen(true);
+        startTimer();
       },
     });
   };
 
-  // TODO: 인증 번호 타이머 제거
   const handleClickEdit = () => {
     setIsEmailSent(false);
+    stopTimer();
   };
+
+  useEffect(() => {
+    if (authTimer <= 0) {
+      stopTimer();
+    }
+  }, [authTimer]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div css={inputContainer}>
@@ -118,14 +156,17 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
                     }}
                   />
                   {!isUnivVerify && (
-                    <button
-                      type="button"
-                      css={authCodeButton}
-                      disabled={isDisabled}
-                      onClick={handleVerifyUniv}
-                    >
-                      인증
-                    </button>
+                    <div css={authTimerWrapper}>
+                      <span>{formatAuthTimer(authTimer)}</span>
+                      <button
+                        type="button"
+                        css={authCodeButton}
+                        disabled={isDisabled}
+                        onClick={handleVerifyUniv}
+                      >
+                        인증
+                      </button>
+                    </div>
                   )}
                 </div>
                 <button type="button" css={sendAgainButton}>
