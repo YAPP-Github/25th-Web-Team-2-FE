@@ -9,6 +9,7 @@ export const API = axios.create({
 });
 
 // TODO: 에러 핸들링 개선 필요
+// TODO: 리프레시 토큰 처리 로직
 API.interceptors.response.use(
   (response) => {
     return response;

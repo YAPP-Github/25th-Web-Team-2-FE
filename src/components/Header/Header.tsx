@@ -3,10 +3,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { buttonContainer, contactButton, headerLayout, image, loginButton } from './Header.styles';
+import {
+  buttonContainer,
+  buttonWrapper,
+  contactButton,
+  headerLayout,
+  image,
+  loginButton,
+} from './Header.styles';
 import Logo from '../../assets/images/logo.svg';
+import Icon from '../Icon';
+import { useResearcherInfoQuery } from '@/app/home/hooks/useResearcherInfoQuery';
 
 const Header = () => {
+  const { data: myData } = useResearcherInfoQuery();
+
   return (
     <div css={headerLayout}>
       <Link href="/">
@@ -14,9 +25,17 @@ const Header = () => {
       </Link>
       <div css={buttonContainer}>
         <button css={contactButton}>실험 공고 등록</button>
-        <Link href="/login" css={loginButton}>
-          로그인
-        </Link>
+
+        {myData ? (
+          <div css={buttonWrapper}>
+            <button>{myData.leadResearcher}</button>
+            <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
+          </div>
+        ) : (
+          <Link href="/login" css={loginButton}>
+            로그인
+          </Link>
+        )}
       </div>
     </div>
   );

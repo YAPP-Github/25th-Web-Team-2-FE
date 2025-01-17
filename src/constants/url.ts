@@ -5,6 +5,8 @@ export const API_URL = {
   send: '/v1/emails/send',
   verify: '/v1/emails/verify',
   join: '/v1/members/signup/researcher',
+  me: (role: string) => `/v1/members/${role}/me`,
+  refresh: '/v1/auth/refresh',
 };
 
 export const MOCK_API_URL = {
@@ -13,4 +15,6 @@ export const MOCK_API_URL = {
   send: '/v1/emails/send',
   verify: '/v1/emails/verify',
   join: '/v1/members/signup/researcher',
+  me: '/v1/members/participants/me',
+  refresh: '/v1/auth/refresh',
 };
