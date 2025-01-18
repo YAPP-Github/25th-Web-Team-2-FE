@@ -31,7 +31,7 @@ const ApplyMethodSection = () => {
       {/* 실험 참여 방법 */}
       <div css={applyMethodContainer}>
         <h3>
-          <span css={headingIcon}>3</span>실험에 참여려면 어떻게 하면 되나요?
+          <span css={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?
         </h3>
 
         <div css={applyMethodContentLayout}>
