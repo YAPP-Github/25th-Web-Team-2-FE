@@ -20,6 +20,7 @@ export const areaMapper: Record<string, string> = {
 } as const;
 
 export const subAreaMapper: Record<string, string> = {
+  SEOUL_ALL: '서울 전체',
   GEUMCHEONGU: '금천구',
   NOWONGU: '노원구',
   DOBONGGU: '도봉구',
@@ -38,4 +39,11 @@ export const subAreaMapper: Record<string, string> = {
   JONGNOGU: '종로구',
   JUNGGU: '중구',
   JUNGRANGGU: '중랑구',
+  GWANGJINGU: '광진구',
+  GANGNAMGU: '강남구',
+  GANGDONGGU: '강동구',
+  GWANAKGU: '관악구',
+  GUROGU: '구로구',
+  GANGBUKGU: '강북구',
+  GANGSEOGU: '강서구',
 };

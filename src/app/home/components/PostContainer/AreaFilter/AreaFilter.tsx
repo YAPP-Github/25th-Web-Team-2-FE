@@ -33,15 +33,19 @@ import useFilterSubAreaQuery from '@/app/home/hooks/useFilterSubAreaQuery';
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
 
-const AreaFilter = () => {
-  const [selectedArea, setSelectedArea] = useState<Area | ''>('');
+interface AreaFilterProps {
+  onChange: (key: string, value: string | number) => void;
+}
+
+const AreaFilter = ({ onChange }: AreaFilterProps) => {
+  const [selectedArea, setSelectedArea] = useState<Area | 'ALL' | ''>('');
   const [checkedSubAreas, setCheckedSubAreas] = useState<Record<string, boolean>>({});
   const selectedSubArea = Object.keys(checkedSubAreas);
 
-  const { data: postArea } = useFilterAreaQuery();
+  const { data: postArea } = useFilterAreaQuery(selectedArea);
   const { data: postSubArea } = useFilterSubAreaQuery(selectedArea);
 
-  const handleAreaClick = (area: Area) => {
+  const handleAreaClick = (area: Area | 'ALL') => {
     setSelectedArea(area);
   };
 
@@ -50,6 +54,14 @@ const AreaFilter = () => {
       ...prev,
       [subArea]: !prev[subArea],
     }));
+  };
+
+  // TODO: subarea 여러개도 되도록 개선
+  const handleClickSave = () => {
+    setIsSelected(true);
+    setIsOpen(false);
+    onChange('region', selectedArea);
+    onChange('areas', selectedSubArea[0]);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +78,7 @@ const AreaFilter = () => {
       >
         <span>
           {isSelected
-            ? `${selectedArea} . ${subAreaMapper[selectedSubArea[0]]} ${
+            ? `${areaMapper[selectedArea]} . ${subAreaMapper[selectedSubArea[0]] ?? ''} ${
                 selectedSubArea.length >= 2 ? `외 ${selectedSubArea.length - 1}` : ''
               }`
             : '지역'}
@@ -77,6 +89,16 @@ const AreaFilter = () => {
         <Popover.Content css={regionContentContainer}>
           <div css={contentWrapper}>
             <div css={areaListContainer}>
+              <button
+                css={[areaButton, selectedArea === 'ALL' && selectedAreaButton]}
+                onClick={() => handleAreaClick('ALL')}
+              >
+                <span css={[areaName, selectedArea === 'ALL' && selectedAreaName]}>
+                  {areaMapper['ALL']}
+                </span>
+                <span css={areaCount}>{postArea?.reduce((acc, cur) => acc + cur.count, 0)}</span>
+              </button>
+
               {postArea?.map((area) => (
                 <button
                   key={area.id}
@@ -134,19 +156,13 @@ const AreaFilter = () => {
               <button
                 css={resetButton}
                 onClick={() => {
-                  setSelectedArea('전국');
+                  setSelectedArea('');
                   setCheckedSubAreas({});
                 }}
               >
                 초기화
               </button>
-              <button
-                onClick={() => {
-                  setIsSelected(true);
-                  setIsOpen(false);
-                }}
-                css={saveButton}
-              >
+              <button onClick={handleClickSave} css={saveButton}>
                 저장
               </button>
             </div>

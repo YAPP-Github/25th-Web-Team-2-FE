@@ -9,7 +9,7 @@ const useFilterSubAreaQuery = (area?: string) => {
     queryFn: () => fetchPostCount<PostSubAreaResponse>(area),
     staleTime: Infinity,
     enabled: !!area,
-    select: (data) => data.district,
+    select: (data) => data.data,
   });
 };
 

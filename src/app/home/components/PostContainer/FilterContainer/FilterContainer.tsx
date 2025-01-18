@@ -12,7 +12,7 @@ const FilterContainer = ({ handleFilterChange }: FilterContainerProps) => {
     <div css={filterLayout}>
       <ProgressMethodFilter onChange={(value) => handleFilterChange('matchType', value)} />
       <ContactTargetFilter onChange={handleFilterChange} />
-      <AreaFilter />
+      <AreaFilter onChange={handleFilterChange} />
     </div>
   );
 };

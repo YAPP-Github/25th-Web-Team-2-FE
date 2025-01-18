@@ -18,6 +18,7 @@ const PostContainer = () => {
   const [filters, setFilters] = useState<Partial<PostListParams>>({
     matchType: 'ALL' as 'ALL' | 'ONLINE' | 'OFFLINE',
     gender: '' as '' | 'ALL' | 'MALE' | 'FEMALE',
+    region: '',
     areas: '',
     age: 20,
     recruitDone: false,
