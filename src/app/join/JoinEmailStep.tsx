@@ -13,6 +13,7 @@ interface JoinEmailStepProps {
   onNext: (data: Partial<JoinParams>) => void;
 }
 
+// TODO: 필수 체크표시 2개 선택 시 isAllCheck: true
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const oauthEmail = sessionStorage.getItem('email') || '';
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
@@ -46,6 +47,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
       {
         onSuccess: () => {
           setIsToastOpen(true);
+          methods.setValue('isEmailVerified', true);
         },
       },
     );
@@ -61,7 +63,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const allValid =
     Boolean(methods.watch('contactEmail')) &&
     Boolean(methods.watch('univEmail')) &&
-    isUnivVerify &&
+    Boolean(methods.watch('isEmailVerified')) &&
     (Boolean(methods.watch('isAllCheck')) ||
       (Boolean(methods.watch('isTermOfService')) && Boolean(methods.watch('isPrivacy'))));
 
@@ -104,7 +106,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         <UnivAuthInput isUnivVerify={isUnivVerify} handleVerifyUniv={handleVerifyUniv} />
         <JoinCheckboxContainer handleAllCheck={handleAllCheck} />
       </div>
-      <button css={nextButton} disabled={allValid} onClick={handleClickNext}>
+      <button css={nextButton} disabled={!allValid} onClick={handleClickNext}>
         다음
       </button>
       <EmailToast

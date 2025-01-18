@@ -11,7 +11,7 @@ import {
 import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
 
 import EmailToast from '../EmailToast/EmailToast';
-import { FormInput } from '../../JoinPage.types';
+import { EmailForm } from '../../JoinPage.types';
 import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 
 const TEN_MINUTE_SEC = 600;
@@ -28,8 +28,9 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
     watch,
     trigger,
     getValues,
+    setValue,
     formState: { errors },
-  } = useFormContext<FormInput>();
+  } = useFormContext<EmailForm>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -55,11 +56,15 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
 
   const handleSendUnivAuthCode = () => {
     const univEmail = getValues('univEmail');
+
     sendEmail(univEmail, {
       onSuccess: () => {
         setIsEmailSent(true);
         setIsToastOpen(true);
         startTimer();
+      },
+      onError: () => {
+        setValue('isEmailVerified', true);
       },
     });
   };

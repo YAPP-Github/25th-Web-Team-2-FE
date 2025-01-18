@@ -2,6 +2,7 @@ export interface EmailForm {
   contactEmail: string;
   univEmail: string;
   authCode: string;
+  isEmailVerified: boolean;
   isAllCheck: boolean;
   isTermOfService: boolean;
   isPrivacy: boolean;

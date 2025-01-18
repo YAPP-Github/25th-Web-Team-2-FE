@@ -5,7 +5,7 @@ import {
   authTimerWrapper,
   sendAgainButton,
 } from './AuthCodeInput.styles';
-import { FormInput } from '@/app/join/JoinPage.types';
+import { EmailForm } from '@/app/join/JoinPage.types';
 import { univInputWrapper } from '@/app/join/JoinPage.styles';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
 
@@ -20,7 +20,7 @@ const AuthCodeInput = ({ isUnivVerify, handleVerifyUniv, authTimer }: AuthCodeIn
     control,
     watch,
     formState: { errors },
-  } = useFormContext<FormInput>();
+  } = useFormContext<EmailForm>();
 
   return (
     <Controller
