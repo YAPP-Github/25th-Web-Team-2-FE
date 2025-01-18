@@ -2,7 +2,6 @@ import { css, Theme } from '@emotion/react';
 
 export const dialogContent = (theme: Theme) => css`
   width: 49rem;
-  height: 24rem;
 
   box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
 
@@ -18,7 +17,7 @@ export const dialogContent = (theme: Theme) => css`
 
   display: flex;
   flex-flow: column nowrap;
-  justify-content: space-between;
+  gap: 2rem;
 
   z-index: ${theme.zIndex.dialogContent};
 `;

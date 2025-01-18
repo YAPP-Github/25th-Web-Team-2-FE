@@ -3,7 +3,9 @@ import { css, Theme } from '@emotion/react';
 export const postOutlineLayout = (theme: Theme) => css`
   min-width: 34rem;
   max-width: 44rem;
-  height: 55.4rem;
+
+  height: auto;
+  max-height: 60rem;
 
   border-radius: 1.2rem;
   background-color: ${theme.colors.field01};
@@ -11,8 +13,7 @@ export const postOutlineLayout = (theme: Theme) => css`
   position: sticky;
   top: 12rem;
 
-  padding: 2.4rem 3rem;
-
+  padding: 2.4rem 3rem 0 3rem;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -55,18 +56,19 @@ export const postOutlineContent = (theme: Theme) => css`
   }
 `;
 
-export const targetRow = css`
-  height: 7.2rem;
+export const otherConditionWrapper = (theme: Theme) => css`
+  ${theme.fonts.label.large.R14};
+  color: ${theme.colors.text05};
+  background-color: ${theme.colors.field02};
 
-  p {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    white-space: normal;
-  }
+  border-radius: 0.8rem;
+  width: 28rem;
+
+  padding: 1.2rem 1.4rem;
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
 `;
 
 export const textWrapRow = css`
@@ -101,20 +103,49 @@ export const participationCount = (theme: Theme) => css`
     left: calc(100% + 1.6rem);
     transform: translateY(-50%);
     width: 0.1rem;
-    height: 0.8rem;
-    background-color: ${theme.colors.line02};
+    height: 1rem;
+    background-color: ${theme.colors.field08};
   }
 `;
 
 export const checkButton = (theme: Theme) => css`
   ${theme.fonts.body.normal.SB16};
 
+  width: 100%;
   height: 4rem;
-  margin-top: 2rem;
 
   border-radius: 1.2rem;
   background-color: ${theme.colors.field09};
   color: ${theme.colors.text01};
 
   cursor: pointer;
+`;
+
+export const scrollableContent = css`
+  overflow-y: auto;
+  flex: 1;
+  position: relative;
+
+  overflow-x: hidden;
+`;
+
+export const ButtonContainer = (theme: Theme) => css`
+  width: 34rem;
+
+  height: 8.8rem;
+
+  position: sticky;
+  bottom: 0;
+
+  padding: 0 3rem;
+  margin-left: -3rem;
+
+  background-color: ${theme.colors.field01};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-bottom-left-radius: 1.2rem;
+  border-bottom-right-radius: 1.2rem;
 `;
