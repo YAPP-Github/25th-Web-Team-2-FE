@@ -19,7 +19,6 @@ export interface PostSubAreaResponse {
 }
 
 interface PostArea {
-  id: number;
   name: Area;
   count: number;
 }

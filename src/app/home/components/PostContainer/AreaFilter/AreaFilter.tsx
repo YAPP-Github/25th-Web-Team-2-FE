@@ -99,9 +99,9 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
                 <span css={areaCount}>{postArea?.reduce((acc, cur) => acc + cur.count, 0)}</span>
               </button>
 
-              {postArea?.map((area) => (
+              {postArea?.map((area, idx) => (
                 <button
-                  key={area.id}
+                  key={idx}
                   css={[areaButton, area.name === selectedArea && selectedAreaButton]}
                   onClick={() => handleAreaClick(area.name)}
                 >
@@ -115,9 +115,9 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
             <span css={verticalLine} />
             <div css={subAreaListContainer}>
               {selectedArea ? (
-                postSubArea?.map((subArea) => (
+                postSubArea?.map((subArea, idx) => (
                   <label
-                    key={subArea.id}
+                    key={idx}
                     css={[subAreaItem, checkedSubAreas[subArea.name] && selectedSubAreaLabel]}
                   >
                     <div css={subAreaInfo}>
