@@ -15,7 +15,7 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 import { PostListParams } from '@/apis/post';
 
 const PostContainer = () => {
-  const [filters, setFilters] = useState<Partial<PostListParams>>({
+  const [filters, setFilters] = useState<PostListParams>({
     matchType: 'ALL' as 'ALL' | 'ONLINE' | 'OFFLINE',
     gender: '' as '' | 'ALL' | 'MALE' | 'FEMALE',
     region: '',
@@ -45,7 +45,7 @@ const PostContainer = () => {
         <FilterContainer handleFilterChange={handleFilterChange} />
         <JoinCheckbox
           label="모집 중인 공고만 보기"
-          isChecked={filters.recruitDone || false}
+          isChecked={filters.recruitDone}
           onChange={handleChange}
           isArrow={false}
         />

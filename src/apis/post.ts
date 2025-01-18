@@ -24,12 +24,12 @@ interface PostArea {
 }
 
 export interface PostListParams {
+  recruitDone: boolean;
   matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
   gender?: '' | 'MALE' | 'FEMALE' | 'ALL';
   age?: number;
   region?: string;
   areas?: string;
-  recruitDone?: boolean;
   page?: number;
   count?: number;
 }

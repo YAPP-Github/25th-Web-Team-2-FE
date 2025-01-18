@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPostList, PostListParams } from '@/apis/post';
 import { QUERY_KEY } from '@/constants/queryKey';
 
-const usePostListQuery = (params: PostListParams = {}) => {
+const usePostListQuery = (params: PostListParams) => {
   const { matchType, gender, age, region, areas, recruitDone } = params;
 
   return useQuery({
