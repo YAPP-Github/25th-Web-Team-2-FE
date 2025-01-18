@@ -33,3 +33,9 @@ export const loginButton = (theme: Theme) => css`
   padding: 0.6rem 1.4rem;
   border-radius: 1.2rem;
 `;
+
+export const buttonWrapper = css`
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+`;

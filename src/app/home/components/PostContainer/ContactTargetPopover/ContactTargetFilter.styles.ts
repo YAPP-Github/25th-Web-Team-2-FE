@@ -65,6 +65,7 @@ export const buttonGroup = (theme: Theme) => css`
     border-radius: 1.2rem;
     outline: 1px solid ${theme.colors.line01};
     transition: color 0.1s, background-color 0.1s, outline 0.1s;
+    width: 10.6rem;
   }
 
   button.active {
@@ -82,10 +83,14 @@ export const ageInputContainer = (theme: Theme) => css`
   input {
     ${theme.fonts.label.large.M14};
     width: 100%;
-    padding: 0.6rem 0;
+    padding: 0.6rem 0 0.6rem 1.6rem;
     border: 0.1rem solid ${theme.colors.line01};
     border-radius: 1.2rem;
-    text-align: center;
+
+    :focus {
+      outline: none;
+      border: 0.1rem solid ${theme.colors.primaryMint};
+    }
   }
 `;
 

@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchPostList } from '@/apis/post';
+import { fetchPostList, PostListParams } from '@/apis/post';
 import { QUERY_KEY } from '@/constants/queryKey';
 
-const usePostListQuery = () => {
+const usePostListQuery = (params: PostListParams) => {
+  const { matchType, gender, age, region, areas, recruitDone } = params;
+
   return useQuery({
-    queryKey: [QUERY_KEY.post],
-    queryFn: fetchPostList,
+    queryKey: [QUERY_KEY.post, matchType, gender, age, region, areas, recruitDone],
+    queryFn: () => fetchPostList(params),
   });
 };
 

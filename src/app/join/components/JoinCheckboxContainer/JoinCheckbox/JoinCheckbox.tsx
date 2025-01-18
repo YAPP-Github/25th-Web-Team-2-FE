@@ -1,0 +1,49 @@
+import {
+  allCheckWrapper,
+  checkbox,
+  checkboxLayout,
+  checkboxWrapper,
+  requiredCheckboxText,
+} from './JoinCheckbox.styles';
+
+import Icon from '@/components/Icon';
+import theme from '@/styles/theme';
+
+interface JoinCheckboxProps {
+  label: string;
+  isChecked: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange: (e: any) => void;
+  isRequired?: boolean;
+  isAllCheck?: boolean;
+  isArrow?: boolean;
+}
+
+const JoinCheckbox = ({
+  label,
+  isChecked,
+  onChange,
+  isRequired = false,
+  isAllCheck = false,
+  isArrow = true,
+}: JoinCheckboxProps) => {
+  return (
+    <div css={[checkboxLayout, isAllCheck && allCheckWrapper]}>
+      <label css={checkboxWrapper}>
+        <input css={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
+        {isChecked ? (
+          <Icon icon="CheckSquareFill" color={theme.colors.primaryMint} />
+        ) : (
+          <Icon icon="CheckSquareEmpty" />
+        )}
+        <div>
+          {isRequired && <span css={requiredCheckboxText}>[필수]</span>}
+          <span>{label}</span>
+        </div>
+      </label>
+      {isArrow && <Icon icon="Chevron" width={20} height={20} />}
+    </div>
+  );
+};
+
+export default JoinCheckbox;

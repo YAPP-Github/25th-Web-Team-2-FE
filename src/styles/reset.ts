@@ -130,6 +130,13 @@ const reset = css`
     text-decoration: none;
     color: inherit;
   }
+
+  textarea {
+    padding: 0;
+    border: none;
+    height: auto;
+    resize: none;
+  }
 `;
 
 export default reset;
