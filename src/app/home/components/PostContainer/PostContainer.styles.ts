@@ -23,3 +23,9 @@ export const totalPostCount = (theme: Theme) => css`
   ${theme.fonts.label.large.R14};
   color: ${theme.colors.text03};
 `;
+
+export const filterWrapper = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

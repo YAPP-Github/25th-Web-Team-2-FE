@@ -16,6 +16,7 @@ interface JoinCheckboxProps {
   onChange: (e: any) => void;
   isRequired?: boolean;
   isAllCheck?: boolean;
+  isArrow?: boolean;
 }
 
 const JoinCheckbox = ({
@@ -24,6 +25,7 @@ const JoinCheckbox = ({
   onChange,
   isRequired = false,
   isAllCheck = false,
+  isArrow = true,
 }: JoinCheckboxProps) => {
   return (
     <div css={[checkboxLayout, isAllCheck && allCheckWrapper]}>
@@ -39,7 +41,7 @@ const JoinCheckbox = ({
           <span>{label}</span>
         </div>
       </label>
-      <Icon icon="Chevron" width={20} height={20} />
+      {isArrow && <Icon icon="Chevron" width={20} height={20} />}
     </div>
   );
 };
