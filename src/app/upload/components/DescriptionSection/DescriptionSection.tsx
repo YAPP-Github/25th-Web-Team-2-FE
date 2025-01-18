@@ -119,7 +119,7 @@ const DescriptionSection = () => {
           <div css={uploadImagesContainer}>
             <label htmlFor="photos" css={addImageContainer}>
               <Icon icon="ImageAdd" width={16} height={16} />
-              <p>사진 추가</p>
+              <p style={{ color: colors.text04, fontWeight: '500' }}>사진 추가</p>
             </label>
             <input
               type="file"
@@ -163,10 +163,6 @@ const descriptionContentContainer = (theme: Theme) =>
 
     :focus-within {
       border: 0.1rem solid ${theme.colors.lineTinted};
-
-      > div:last-of-type {
-        border-bottom: 0.1rem solid ${theme.colors.line01};
-      }
     }
   `;
 
@@ -227,6 +223,10 @@ const addImageContainer = (theme: Theme) => css`
 
   border-radius: 0.8rem;
   cursor: pointer;
+
+  p {
+    ${theme.colors.text04}
+  }
 `;
 
 const photoGrid = css`

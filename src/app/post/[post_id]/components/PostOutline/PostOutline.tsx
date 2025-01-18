@@ -18,8 +18,8 @@ const PostOutline = () => {
 
   return (
     <div css={postOutlineLayout}>
+      <h3>실험 개요</h3>
       <div css={scrollableContent}>
-        <h3>실험 개요</h3>
         <table css={postOutlineContent}>
           <tbody>
             <tr>

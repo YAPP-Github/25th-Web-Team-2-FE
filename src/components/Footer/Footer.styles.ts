@@ -31,7 +31,7 @@ export const verticalLine = (theme: Theme) => css`
   ::after {
     content: '';
     width: 0.1rem;
-    height: 80%;
+    height: 1.2rem;
     position: absolute;
     top: 50%;
     right: 0;
