@@ -22,7 +22,11 @@ export const postOutlineLayout = (theme: Theme) => css`
     ${theme.fonts.title.small.SB18};
     color: ${theme.colors.text07};
 
-    margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    background-color: ${theme.colors.field01};
+
+    padding-bottom: 1.6rem;
   }
 `;
 
@@ -32,6 +36,8 @@ export const postOutlineContent = (theme: Theme) => css`
   border-collapse: separate;
   border-spacing: 1.6rem 1.2rem;
   margin-left: -1.6rem;
+
+  overflow-y: hidden;
 
   th,
   td {
@@ -122,9 +128,9 @@ export const checkButton = (theme: Theme) => css`
 `;
 
 export const scrollableContent = css`
-  overflow-y: auto;
   flex: 1;
   position: relative;
+  overflow-y: auto;
 
   overflow-x: hidden;
 `;
