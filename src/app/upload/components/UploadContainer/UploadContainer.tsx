@@ -33,7 +33,7 @@ const UploadContainer = () => {
         <Link href={'/'}>
           <button css={activeButton}>이전으로</button>
         </Link>
-        <Link href={'/post/12'}>
+        <Link href={'/post/10'}>
           <button css={uploadButton}>공고 등록하기</button>
         </Link>
       </div>
