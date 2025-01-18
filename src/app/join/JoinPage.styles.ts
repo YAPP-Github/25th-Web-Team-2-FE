@@ -153,3 +153,19 @@ export const nextButton = (theme: Theme) => css`
     background-color: ${theme.colors.field04};
   }
 `;
+
+export const joinButton = (theme: Theme) => css`
+  ${theme.fonts.body.normal.SB16};
+  background-color: ${theme.colors.primaryMint};
+  color: ${theme.colors.text01};
+  border-radius: 1.2rem;
+  padding: 1.2rem 0;
+  width: 20rem;
+  align-items: center;
+  margin-bottom: 5.6rem;
+
+  :disabled {
+    color: ${theme.colors.text02};
+    background-color: ${theme.colors.field04};
+  }
+`;

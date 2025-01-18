@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
 import JoinInput from './components/JoinInput/JoinInput';
-import { contentContainer, joinContentContainer, nextButton } from './JoinPage.styles';
+import { contentContainer, joinButton, joinContentContainer } from './JoinPage.styles';
 import { InfoForm, JoinParams } from './JoinPage.types';
 
 interface JoinInfoStepProps {
@@ -56,7 +56,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           />
         </div>
       </div>
-      <button css={nextButton} onClick={handleClickNext}>
+      <button css={joinButton} onClick={handleClickNext}>
         회원가입
       </button>
     </>
