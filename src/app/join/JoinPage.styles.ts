@@ -5,7 +5,8 @@ export const joinLayout = css`
   flex-direction: column;
   align-items: center;
   gap: 4rem;
-  margin-top: 8.4rem;
+  padding-top: 8.4rem;
+  flex-grow: 1;
 `;
 
 export const contentContainer = css`

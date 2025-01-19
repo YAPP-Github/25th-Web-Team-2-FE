@@ -5,8 +5,7 @@ export const joinSuccessLayout = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3.2rem;
-  height: calc(100vh - 12.2rem);
+  gap: 6.4rem;
 `;
 
 export const title = (theme: Theme) => css`

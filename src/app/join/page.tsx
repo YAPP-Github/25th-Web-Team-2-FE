@@ -73,27 +73,31 @@ export default function JoinPage() {
 
   return (
     <section css={joinLayout}>
-      <Image src={Logo} alt="로고" width={80} height={28} />
+      {(step === STEP.email || step === STEP.info) && (
+        <Image src={Logo} alt="로고" width={80} height={28} />
+      )}
+
       <div css={contentContainer}>
-        <div css={titleContainer}>
-          <h2 css={joinTitle}>연구자 회원가입</h2>
-          <div css={progressBarContainer}>
-            <div css={progressBarFill} style={{ width: step === STEP.email ? '50%' : '100%' }} />
+        {(step === STEP.email || step === STEP.info) && (
+          <div css={titleContainer}>
+            <h2 css={joinTitle}>연구자 회원가입</h2>
+            <div css={progressBarContainer}>
+              <div css={progressBarFill} style={{ width: step === STEP.email ? '50%' : '100%' }} />
+            </div>
           </div>
-        </div>
+        )}
         <section css={joinForm}>
           {step === STEP.email && <JoinEmailStep onNext={handleNextStep} />}
           {step === STEP.info && (
             <JoinInfoStep
               onNext={(data: Partial<JoinParams>) => {
                 handleNextStep(data, true);
-                handleSubmit();
               }}
             />
           )}
-          {step === STEP.success && <JoinSuccessStep name={joinUserInfo.name} />}
         </section>
       </div>
+      {step === STEP.success && <JoinSuccessStep name={joinUserInfo.name} />}
     </section>
   );
 }
