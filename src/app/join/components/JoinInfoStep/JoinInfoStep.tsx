@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
 
-import JoinInput from './components/JoinInput/JoinInput';
-import { contentContainer, joinButton, joinContentContainer } from './JoinPage.styles';
-import { InfoForm, JoinParams } from './JoinPage.types';
+import { joinButton } from './JoinInfoStep.styles';
+import { contentContainer, joinContentContainer } from '../../JoinPage.styles';
+import { InfoForm, JoinParams } from '../../JoinPage.types';
+import JoinInput from '../JoinInput/JoinInput';
 
 interface JoinInfoStepProps {
   onNext: (data: Partial<JoinParams>) => void;

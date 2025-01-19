@@ -1,9 +1,8 @@
-'use client';
-
-import { css, Theme } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+
+import { homeLink, image, joinSuccessLayout, title } from './JoinSuccessStep.styles';
 
 import JoinSuccess from '@/assets/images/joinSuccess.svg';
 
@@ -27,30 +26,3 @@ const JoinSuccessStep = ({ name }: JoinSuccessStepProps) => {
 };
 
 export default JoinSuccessStep;
-
-const joinSuccessLayout = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3.2rem;
-  height: calc(100vh - 12.2rem);
-`;
-
-const title = (theme: Theme) => css`
-  ${theme.fonts.title.large.SB24};
-  color: ${theme.colors.text06};
-`;
-
-const image = css`
-  margin: 3.2rem 0;
-`;
-
-const homeLink = (theme: Theme) => css`
-  ${theme.fonts.body.normal.SB16};
-  background-color: ${theme.colors.primaryMint};
-  color: ${theme.colors.text01};
-  border-radius: 1.2rem;
-  padding: 1.2rem 3.35rem;
-  margin-top: 2.6rem;
-`;

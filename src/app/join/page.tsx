@@ -3,9 +3,10 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import JoinEmailStep from './components/JoinEmailStep/JoinEmailStep';
+import JoinInfoStep from './components/JoinInfoStep/JoinInfoStep';
+import JoinSuccessStep from './components/JoinSuccessStep/JoinSuccessStep';
 import useJoinMutation from './hooks/useJoinMutation';
-import JoinEmailStep from './JoinEmailStep';
-import JoinInfoStep from './JoinInfoStep';
 import {
   contentContainer,
   joinForm,
@@ -17,7 +18,6 @@ import {
 } from './JoinPage.styles';
 import { JoinParams } from './JoinPage.types';
 import { getProvider } from './JoinPage.utils';
-import JoinSuccessStep from './JoinSuccessStep';
 
 import Logo from '@/assets/images/logo.svg';
 

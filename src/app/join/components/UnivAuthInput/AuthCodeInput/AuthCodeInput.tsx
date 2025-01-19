@@ -6,8 +6,8 @@ import {
   authTimerWrapper,
   sendAgainButton,
 } from './AuthCodeInput.styles';
+import { univInputWrapper } from '../UnivAuthInput.styles';
 
-import { univInputWrapper } from '@/app/join/JoinPage.styles';
 import { EmailForm } from '@/app/join/JoinPage.types';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
 

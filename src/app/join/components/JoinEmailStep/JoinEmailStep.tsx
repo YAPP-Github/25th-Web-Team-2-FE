@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import EmailToast from './components/EmailToast/EmailToast';
-import JoinCheckboxContainer from './components/JoinCheckboxContainer/JoinCheckboxContainer';
-import JoinInput from './components/JoinInput/JoinInput';
-import UnivAuthInput from './components/UnivAuthInput/UnivAuthInput';
-import useVerifyUnivAuthCodeMutation from './hooks/useVerifyUnivAuthCodeMutation';
-import { joinContentContainer, nextButton } from './JoinPage.styles';
-import { EmailForm, JoinParams } from './JoinPage.types';
+import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
+import useVerifyUnivAuthCodeMutation from '../../hooks/useVerifyUnivAuthCodeMutation';
+import { EmailForm, JoinParams } from '../../JoinPage.types';
+import EmailToast from '../EmailToast/EmailToast';
+import JoinCheckboxContainer from '../JoinCheckboxContainer/JoinCheckboxContainer';
+import JoinInput from '../JoinInput/JoinInput';
+import UnivAuthInput from '../UnivAuthInput/UnivAuthInput';
 
 interface JoinEmailStepProps {
   onNext: (data: Partial<JoinParams>) => void;
