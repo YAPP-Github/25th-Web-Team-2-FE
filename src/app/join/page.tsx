@@ -1,9 +1,9 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import useJoinMutation from './hooks/useJoinMutation';
 import JoinEmailStep from './JoinEmailStep';
 import JoinInfoStep from './JoinInfoStep';
 import {
@@ -16,33 +16,12 @@ import {
   titleContainer,
 } from './JoinPage.styles';
 import { JoinParams } from './JoinPage.types';
+import { getProvider } from './JoinPage.utils';
 import JoinSuccessStep from './JoinSuccessStep';
 
-import { API } from '@/apis/config';
-import { join } from '@/apis/login';
 import Logo from '@/assets/images/logo.svg';
 
 type JoinStep = '이메일' | '개인 정보' | '완료';
-
-const getProvider = (email: string): 'GOOGLE' | 'NAVER' => {
-  const domain = email.split('@')[1].toLowerCase();
-
-  if (domain.includes('gmail.com')) {
-    return 'GOOGLE';
-  }
-  return 'NAVER';
-};
-
-export const useJoinMutation = () => {
-  return useMutation({
-    mutationFn: join,
-    onSuccess: ({ accessToken, refreshToken, memberInfo }) => {
-      API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      sessionStorage.setItem('refreshToken', refreshToken);
-      sessionStorage.setItem('role', memberInfo.role);
-    },
-  });
-};
 
 export default function JoinPage() {
   const oauthEmail = sessionStorage.getItem('email') || '';
