@@ -23,6 +23,12 @@ import Logo from '@/assets/images/logo.svg';
 
 type JoinStep = '이메일' | '개인 정보' | '완료';
 
+const STEP = {
+  email: '이메일',
+  info: '개인 정보',
+  success: '완료',
+} as const;
+
 export default function JoinPage() {
   const oauthEmail = sessionStorage.getItem('email') || '';
   const provider = getProvider(oauthEmail);
@@ -40,13 +46,13 @@ export default function JoinPage() {
   });
   const [isFinished, setIsFinished] = useState(false);
 
-  const [step, setStep] = useState<JoinStep>('이메일');
+  const [step, setStep] = useState<JoinStep>(STEP.email);
 
   const handleNextStep = (data: Partial<JoinParams>, isLast = false) => {
     setJoinUserInfo((prev) => ({ ...prev, ...data }));
 
-    if (step === '이메일') {
-      setStep('개인 정보');
+    if (step === STEP.email) {
+      setStep(STEP.info);
     }
 
     if (isLast) {
@@ -55,7 +61,7 @@ export default function JoinPage() {
   };
 
   const handleSubmit = () => {
-    join({ ...joinUserInfo }, { onSuccess: () => setStep('완료') });
+    join({ ...joinUserInfo }, { onSuccess: () => setStep(STEP.success) });
   };
 
   // TODO: 개선 필요.
@@ -72,12 +78,12 @@ export default function JoinPage() {
         <div css={titleContainer}>
           <h2 css={joinTitle}>연구자 회원가입</h2>
           <div css={progressBarContainer}>
-            <div css={progressBarFill} style={{ width: step === '이메일' ? '50%' : '100%' }} />
+            <div css={progressBarFill} style={{ width: step === STEP.email ? '50%' : '100%' }} />
           </div>
         </div>
         <section css={joinForm}>
-          {step === '이메일' && <JoinEmailStep onNext={handleNextStep} />}
-          {step === '개인 정보' && (
+          {step === STEP.email && <JoinEmailStep onNext={handleNextStep} />}
+          {step === STEP.info && (
             <JoinInfoStep
               onNext={(data: Partial<JoinParams>) => {
                 handleNextStep(data, true);
@@ -85,7 +91,7 @@ export default function JoinPage() {
               }}
             />
           )}
-          {step === '완료' && <JoinSuccessStep name={joinUserInfo.name} />}
+          {step === STEP.success && <JoinSuccessStep name={joinUserInfo.name} />}
         </section>
       </div>
     </section>
