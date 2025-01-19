@@ -10,7 +10,7 @@ export const joinSuccessLayout = css`
 `;
 
 export const title = (theme: Theme) => css`
-  ${theme.fonts.title.large.SB24};
+  ${theme.fonts.title.large.SB28};
   color: ${theme.colors.text06};
 `;
 
