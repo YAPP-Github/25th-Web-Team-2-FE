@@ -1,5 +1,6 @@
-import { getResearcherInfo } from '@/apis/login';
 import { useQuery } from '@tanstack/react-query';
+
+import { getResearcherInfo } from '@/apis/login';
 
 export const useResearcherInfoQuery = () => {
   const role = sessionStorage.getItem('role');
@@ -8,7 +9,7 @@ export const useResearcherInfoQuery = () => {
   return useQuery({
     queryKey: ['researcherInfo'],
     queryFn: getResearcherInfo,
-    enabled: !!role,
+    enabled: !!userRole,
     retry: 1,
   });
 };

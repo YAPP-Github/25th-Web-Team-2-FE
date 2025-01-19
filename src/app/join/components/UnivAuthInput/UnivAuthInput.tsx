@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+
 import {
   editButton,
   errorMessage,
@@ -9,9 +10,8 @@ import {
   univInputWrapper,
 } from './UnivAuthInput.styles';
 import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
-
-import EmailToast from '../EmailToast/EmailToast';
 import { EmailForm } from '../../JoinPage.types';
+import EmailToast from '../EmailToast/EmailToast';
 import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 
 const TEN_MINUTE_SEC = 600;

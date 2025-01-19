@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import usePostListQuery from '../../hooks/usePostListQuery';
 import PostCardList from '../PostCardList/PostCardList';
 import FilterContainer from './FilterContainer/FilterContainer';
@@ -11,8 +12,9 @@ import {
   postContainerTitle,
   totalPostCount,
 } from './PostContainer.styles';
-import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+
 import { PostListParams } from '@/apis/post';
+import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 
 const PostContainer = () => {
   const [filters, setFilters] = useState<PostListParams>({

@@ -1,12 +1,14 @@
 import { Controller, useFormContext } from 'react-hook-form';
+
 import {
   authCodeButton,
   authInputLayout,
   authTimerWrapper,
   sendAgainButton,
 } from './AuthCodeInput.styles';
-import { EmailForm } from '@/app/join/JoinPage.types';
+
 import { univInputWrapper } from '@/app/join/JoinPage.styles';
+import { EmailForm } from '@/app/join/JoinPage.types';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
 
 interface AuthCodeInputProps {

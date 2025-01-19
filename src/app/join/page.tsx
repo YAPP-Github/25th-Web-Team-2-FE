@@ -2,7 +2,6 @@
 
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import JoinEmailStep from './JoinEmailStep';
@@ -17,11 +16,11 @@ import {
   titleContainer,
 } from './JoinPage.styles';
 import { JoinParams } from './JoinPage.types';
+import JoinSuccessStep from './JoinSuccessStep';
 
 import { API } from '@/apis/config';
 import { join } from '@/apis/login';
 import Logo from '@/assets/images/logo.svg';
-import JoinSuccessStep from './JoinSuccessStep';
 
 type JoinStep = '이메일' | '개인 정보' | '완료';
 
@@ -97,7 +96,7 @@ export default function JoinPage() {
             <div css={progressBarFill} style={{ width: step === '이메일' ? '50%' : '100%' }} />
           </div>
         </div>
-        <section css={joinForm} onSubmit={handleSubmit}>
+        <section css={joinForm}>
           {step === '이메일' && <JoinEmailStep onNext={handleNextStep} />}
           {step === '개인 정보' && (
             <JoinInfoStep
