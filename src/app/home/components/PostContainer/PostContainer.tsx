@@ -18,15 +18,10 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 
 const PostContainer = () => {
   const [filters, setFilters] = useState<PostListParams>({
-    matchType: 'ALL' as 'ALL' | 'ONLINE' | 'OFFLINE',
-    gender: '' as '' | 'ALL' | 'MALE' | 'FEMALE',
-    region: '',
-    areas: '',
-    age: 20,
-    recruitDone: false,
+    recruitStatus: 'ALL',
   });
 
-  const { data: postList } = usePostListQuery(filters);
+  const { data } = usePostListQuery(filters);
 
   const handleFilterChange = (key: string, value: string | number | boolean) => {
     setFilters((prev) => ({
@@ -35,9 +30,12 @@ const PostContainer = () => {
     }));
   };
 
+  const isRecruiting = filters.recruitStatus === 'OPEN';
+
   // TODO: 개선 필요.
   const handleChange = () => {
-    handleFilterChange('recruitDone', !filters.recruitDone);
+    const toggleChecked = isRecruiting ? 'ALL' : 'OPEN';
+    handleFilterChange('recruitStatus', toggleChecked);
   };
 
   return (
@@ -47,14 +45,14 @@ const PostContainer = () => {
         <FilterContainer handleFilterChange={handleFilterChange} />
         <JoinCheckbox
           label="모집 중인 공고만 보기"
-          isChecked={filters.recruitDone}
+          isChecked={isRecruiting}
           onChange={handleChange}
           isArrow={false}
         />
       </div>
       <div css={postCardContainer}>
-        <span css={totalPostCount}>총 {postList?.length}개</span>
-        <PostCardList postList={postList} />
+        <span css={totalPostCount}>총 {data?.content.length}개</span>
+        <PostCardList postList={data?.content} />
       </div>
     </div>
   );
