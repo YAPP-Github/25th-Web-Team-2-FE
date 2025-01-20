@@ -1,4 +1,4 @@
-import React from 'react';
+import { ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
@@ -10,7 +10,19 @@ interface JoinCheckboxContainerProps {
 }
 
 const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) => {
-  const { control, setValue } = useFormContext<EmailForm>();
+  const { control, setValue, getValues } = useFormContext<EmailForm>();
+
+  const updateAllCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.checked) {
+      setValue('isAllCheck', e.target.checked);
+    }
+
+    const isAllCheck =
+      getValues('isTermOfService') && getValues('isPrivacy') && getValues('isAdvertise');
+    if (isAllCheck) {
+      setValue('isAllCheck', e.target.checked);
+    }
+  };
 
   return (
     <div css={termContainer}>
@@ -37,9 +49,7 @@ const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) =
             isChecked={field.value}
             onChange={(e) => {
               field.onChange(e.target.checked);
-              if (!e.target.checked) {
-                setValue('isAllCheck', e.target.checked);
-              }
+              updateAllCheckBox(e);
             }}
             isRequired
           />
@@ -55,9 +65,7 @@ const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) =
             isChecked={field.value}
             onChange={(e) => {
               field.onChange(e.target.checked);
-              if (!e.target.checked) {
-                setValue('isAllCheck', e.target.checked);
-              }
+              updateAllCheckBox(e);
             }}
             isRequired
           />
@@ -72,9 +80,7 @@ const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) =
             isChecked={field.value}
             onChange={(e) => {
               field.onChange(e.target.checked);
-              if (!e.target.checked) {
-                setValue('isAllCheck', e.target.checked);
-              }
+              updateAllCheckBox(e);
             }}
           />
         )}
