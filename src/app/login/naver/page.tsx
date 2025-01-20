@@ -18,7 +18,7 @@ export default function NaverLoginPage() {
 
     if (code && stateParams) {
       const [state, role] = stateParams.split('|');
-      naverLogin({ code: encodeURIComponent(code), role, state });
+      naverLogin({ code: encodeURIComponent(code), role, state: encodeURIComponent(state) });
       isSubmitted.current = true;
     }
   }, [code, stateParams, naverLogin]);
