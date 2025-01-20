@@ -49,8 +49,23 @@ export interface ResearcherResponse {
   univName: string;
 }
 
+export interface NaverLoginParams {
+  code: string;
+  role: string;
+  state: string;
+}
+
 export const googleLogin = async (code: string, role: string) => {
   const res = await API.post<LoginResponse>(API_URL.google(role), { authorizationCode: code });
+
+  return res.data;
+};
+
+export const naverLogin = async ({ code, role, state }: NaverLoginParams) => {
+  const res = await API.post<LoginResponse>(API_URL.naver(role), {
+    authorizationCode: code,
+    state,
+  });
 
   return res.data;
 };

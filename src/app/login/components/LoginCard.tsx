@@ -30,8 +30,13 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
   const router = useRouter();
 
   const goToLoginGoogle = () => {
-    const OAuthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${roleMapper[role]}`;
-    router.push(OAuthURL);
+    const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${roleMapper[role]}`;
+    router.push(googleOauthURL);
+  };
+
+  const goToLoginNaver = () => {
+    const naverOauthURL = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${roleMapper[role]}`;
+    router.push(naverOauthURL);
   };
 
   return (
@@ -57,7 +62,7 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
         </div>
       </div>
       <div css={buttonContainer}>
-        <button css={loginButton}>
+        <button css={loginButton} onClick={goToLoginNaver}>
           <Image src={Naver} alt="네이버" width={24} height={24} />
           <span>네이버 계정으로 로그인</span>
         </button>
