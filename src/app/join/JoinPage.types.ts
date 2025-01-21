@@ -8,3 +8,9 @@ export interface JoinParams {
   major: string;
   labInfo: string;
 }
+
+export interface ServiceAgreeCheck {
+  isTermOfService: boolean;
+  isPrivacy: boolean;
+  isAdvertise: boolean;
+}
