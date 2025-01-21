@@ -5,7 +5,16 @@ export const joinSuccessLayout = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 9rem;
+  padding-top: 3.6rem;
+`;
+
+export const joinTitleContainer = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 6.4rem;
+  text-align: center;
 `;
 
 export const title = (theme: Theme) => css`
