@@ -18,6 +18,7 @@ export const nextButton = (theme: Theme) => css`
   padding: 1.2rem 0;
   width: 20rem;
   align-items: center;
+  margin-bottom: 5.6rem;
 
   :disabled {
     color: ${theme.colors.text02};
