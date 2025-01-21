@@ -20,6 +20,7 @@ interface JoinInfoStepProps {
   onNext: () => void;
 }
 
+// TODO: blur 될 때 trigger + 입력값 초기화 안되도록 개선 필요
 const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
   const { control, trigger } = useFormContext<JoinParams>();
 
@@ -59,7 +60,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
                   message: '이름은 최대 10자 이하여야 합니다.',
                 },
               }}
-              onBlur={() => trigger('name')}
             />
             <JoinInput
               name="univName"
@@ -78,7 +78,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
                   message: '학교명은 최대 25자 이하여야 합니다.',
                 },
               }}
-              onBlur={() => trigger('univName')}
             />
             <JoinInput
               name="major"
@@ -97,7 +96,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
                   message: '전공명은 최대 10자 이하여야 합니다.',
                 },
               }}
-              onBlur={() => trigger('major')}
             />
             <JoinInput
               name="labInfo"
