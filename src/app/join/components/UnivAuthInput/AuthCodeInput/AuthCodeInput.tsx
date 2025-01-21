@@ -29,7 +29,7 @@ const AuthCodeInput = ({ authTimer, handleVerifyEmail }: AuthCodeInputProps) => 
   const [authCode, setAuthCode] = useState('');
 
   const handleChangeAuthCode = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 6) {
+    if (e.target.value.length <= AUTH_CODE_VALID_LENGTH) {
       setAuthCode(e.target.value);
     }
   };
