@@ -13,9 +13,9 @@ import {
   titleContainer,
 } from '../../JoinPage.styles';
 import { JoinParams } from '../../JoinPage.types';
-import JoinCheckboxContainer from '../JoinCheckboxContainer/JoinCheckboxContainer';
+import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../JoinInput/JoinInput';
-import UnivAuthInput from '../UnivAuthInput/UnivAuthInput';
+import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 
 import Logo from '@/assets/images/logo.svg';
 

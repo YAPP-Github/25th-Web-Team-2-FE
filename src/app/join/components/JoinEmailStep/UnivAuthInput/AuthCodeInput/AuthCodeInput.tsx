@@ -7,7 +7,7 @@ import {
   authTimerWrapper,
   sendAgainButton,
 } from './AuthCodeInput.styles';
-import EmailToast from '../../EmailToast/EmailToast';
+import EmailToast from '../../../EmailToast/EmailToast';
 import { univInputWrapper } from '../UnivAuthInput.styles';
 
 import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';

@@ -1,4 +1,4 @@
-import { ServiceAgreeCheck } from '../../JoinPage.types';
+import { ServiceAgreeCheck } from '../../../JoinPage.types';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
 

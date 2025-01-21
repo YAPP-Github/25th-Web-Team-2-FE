@@ -9,11 +9,11 @@ import {
   univAuthButton,
   univInputWrapper,
 } from './UnivAuthInput.styles';
-import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
-import { JoinParams } from '../../JoinPage.types';
-import EmailToast from '../EmailToast/EmailToast';
+import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
+import { JoinParams } from '../../../JoinPage.types';
+import EmailToast from '../../EmailToast/EmailToast';
 import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
-import useAuthCodeTimer from '../../hooks/useAuthCodeTimer';
+import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
 
 interface UnivAuthInputProps {
   handleVerifyEmail: () => void;

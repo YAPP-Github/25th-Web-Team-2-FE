@@ -14,7 +14,7 @@ import {
 } from './PostContainer.styles';
 
 import { PostListParams } from '@/apis/post';
-import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+import JoinCheckbox from '@/app/join/components/JoinEmailStep/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 
 const PostContainer = () => {
   const [filters, setFilters] = useState<PostListParams>({
