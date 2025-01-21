@@ -1,89 +1,47 @@
-import { ChangeEvent } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-
+import { ServiceAgreeCheck } from '../../JoinPage.types';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
-import { EmailForm } from '../../JoinPage.types';
 
 interface JoinCheckboxContainerProps {
-  handleAllCheck: () => void;
+  serviceAgreeCheck: ServiceAgreeCheck;
+  handleAllCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
 }
 
-const JoinCheckboxContainer = ({ handleAllCheck }: JoinCheckboxContainerProps) => {
-  const { control, setValue, getValues } = useFormContext<EmailForm>();
+const JoinCheckboxContainer = ({
+  serviceAgreeCheck,
+  handleAllCheck,
+  handleChange,
+}: JoinCheckboxContainerProps) => {
+  const { isTermOfService, isPrivacy, isAdvertise } = serviceAgreeCheck;
 
-  const updateAllCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.checked) {
-      setValue('isAllCheck', e.target.checked);
-    }
-
-    const isAllCheck =
-      getValues('isTermOfService') && getValues('isPrivacy') && getValues('isAdvertise');
-    if (isAllCheck) {
-      setValue('isAllCheck', e.target.checked);
-    }
-  };
+  const isAllCheck = isTermOfService && isPrivacy && isAdvertise;
 
   return (
     <div css={termContainer}>
-      <Controller
-        name="isAllCheck"
-        control={control}
-        render={({ field }) => (
-          <JoinCheckbox
-            label="이용약관에 모두 동의합니다"
-            isChecked={field.value}
-            onChange={handleAllCheck}
-            isAllCheck
-          />
-        )}
+      <JoinCheckbox
+        label="이용약관에 모두 동의합니다"
+        isChecked={isAllCheck}
+        onChange={handleAllCheck}
+        isAllCheck={true}
+      />
+      <JoinCheckbox
+        label="서비스 이용약관 동의"
+        isChecked={isTermOfService}
+        onChange={(e) => handleChange(e, 'isTermOfService')}
+        isRequired
+      />
+      <JoinCheckbox
+        label="개인정보 수집 및 이용 동의"
+        isChecked={isPrivacy}
+        onChange={(e) => handleChange(e, 'isPrivacy')}
+        isRequired
       />
 
-      <Controller
-        name="isTermOfService"
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <JoinCheckbox
-            label="서비스 이용약관 동의"
-            isChecked={field.value}
-            onChange={(e) => {
-              field.onChange(e.target.checked);
-              updateAllCheckBox(e);
-            }}
-            isRequired
-          />
-        )}
-      />
-      <Controller
-        name="isPrivacy"
-        control={control}
-        rules={{ required: true }}
-        render={({ field }) => (
-          <JoinCheckbox
-            label="개인정보 수집 및 이용 동의"
-            isChecked={field.value}
-            onChange={(e) => {
-              field.onChange(e.target.checked);
-              updateAllCheckBox(e);
-            }}
-            isRequired
-          />
-        )}
-      />
-      <Controller
-        name="isAdvertise"
-        control={control}
-        render={({ field }) => (
-          <JoinCheckbox
-            label="광고성 정보 이메일/SMS 수신 동의"
-            isChecked={field.value}
-            onChange={(e) => {
-              field.onChange(e.target.checked);
-              updateAllCheckBox(e);
-            }}
-          />
-        )}
+      <JoinCheckbox
+        label="광고성 정보 이메일/SMS 수신 동의"
+        isChecked={isAdvertise}
+        onChange={(e) => handleChange(e, 'isAdvertise')}
       />
     </div>
   );
