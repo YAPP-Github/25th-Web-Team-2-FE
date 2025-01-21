@@ -32,7 +32,6 @@ const PostContainer = () => {
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
-  // TODO: 개선 필요.
   const handleChange = () => {
     const toggleChecked = isRecruiting ? 'ALL' : 'OPEN';
     handleFilterChange('recruitStatus', toggleChecked);
