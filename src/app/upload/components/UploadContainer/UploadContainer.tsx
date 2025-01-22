@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import useUploadExperimentPost from '../../hooks/useUploadExperiemntPost';
+import useUploadExperimentPost from '../../hooks/useUploadExperimentPost';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
