@@ -8,7 +8,7 @@ import UploadExperimentPostSchema, {
 const useUploadExperimentPost = () => {
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: zodResolver(UploadExperimentPostSchema()),
     defaultValues: {
       leadResearcher: '',

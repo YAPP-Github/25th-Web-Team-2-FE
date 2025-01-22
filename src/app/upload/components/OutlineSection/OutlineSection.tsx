@@ -1,25 +1,27 @@
 import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
-import { DateRange } from 'react-day-picker';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import CountSelect from '../CountSelect/CountSelect';
 import DurationSelect from '../DurationSelect/DurationSelect';
+import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
-import DatePickerField from '@/app/upload/components/DatePickerField/DatePickerField';
+import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
-
-export enum MatchType {
-  OFFLINE = 'OFFLINE',
-  ONLINE = 'ONLINE',
-  HYBRID = 'HYBRID',
-}
+import { MatchType } from '@/types/uploadExperimentPost';
 
 const OutlineSection = () => {
+  const { control, setValue, formState } = useFormContext();
+  const formData = useWatch({ control });
+  console.log('formData >> ', formData);
+  console.log('errors>> ', formState.errors);
+
+  // todo useReducer로 리팩토링
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
   const [durationChecked, setDurationChecked] = useState(false);
 
@@ -27,17 +29,6 @@ const OutlineSection = () => {
 
   const handleMatchTypeChange = (method: MatchType) => {
     setSelectedMatchType(method);
-  };
-
-  // todo react-hook-form 연결 시 controller로 관리할 값
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedDates, setSelectedDates] = useState<DateRange>({
-    from: undefined,
-    to: undefined,
-  });
-
-  const handleDateChange = (dates: DateRange) => {
-    setSelectedDates(dates);
   };
 
   // 실험 장소 지역구 선택
@@ -74,44 +65,84 @@ const OutlineSection = () => {
         <span css={headingIcon}>1</span>실험의 개요를 알려주세요
       </h3>
 
-      <form css={outlineFormLayout}>
+      <div css={outlineFormLayout}>
         {/* 연구 책임자 */}
         <div>
-          <label css={label} htmlFor="researcher">
+          <label css={label} htmlFor="leadResearcher">
             연구 책임자 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <input
-            css={input}
-            type="text"
-            id="researcher"
-            placeholder="OO대학교 OO학과 OO연구실 OOO"
+          <Controller
+            name="leadResearcher"
+            control={control}
+            rules={{ required: '연구 책임자는 필수 항목입니다.' }}
+            render={({ field, fieldState }) => (
+              <>
+                <InputForm
+                  id="leadResearcher"
+                  field={field}
+                  css={input}
+                  type="text"
+                  placeholder="OO대학교 OO학과 OO연구실 OOO"
+                  fieldState={fieldState}
+                />
+              </>
+            )}
           />
         </div>
 
         {/* 실험 일시 */}
         <div>
-          <label css={label} htmlFor="experiment-date">
+          <p css={label}>
             실험 일시 <span style={{ color: `${colors.textAlert}` }}>*</span>
-          </label>
-          <DatePickerField
-            placeholder="실험 시작일 ~ 실험 종료일"
-            onDateChange={handleDateChange}
-            experimentDateChecked={experimentDateChecked}
+          </p>
+
+          {/* 날짜 선택 */}
+          <Controller
+            name="startDate"
+            control={control}
+            render={({ fieldState }) => (
+              <Controller
+                name="endDate"
+                control={control}
+                render={() => (
+                  <>
+                    <DatePickerForm
+                      placeholder="실험 시작일 ~ 실험 종료일"
+                      onDateChange={(dates) => {
+                        setValue('startDate', dates.from || null, { shouldValidate: true });
+                        setValue('endDate', dates.to || null, { shouldValidate: true });
+                      }}
+                      experimentDateChecked={experimentDateChecked}
+                      error={fieldState.error}
+                    />
+                  </>
+                )}
+              />
+            )}
           />
+
+          {/* 본문 참고 체크박스 */}
           <CheckboxWithIcon
             checked={experimentDateChecked}
             onChange={() => {
-              setExperimentDateChecked((prev) => !prev);
+              const newCheckedState = !experimentDateChecked;
+              setExperimentDateChecked(newCheckedState);
+              if (newCheckedState) {
+                setValue('startDate', null);
+                setValue('endDate', null);
+              } else {
+                setValue('startDate', undefined);
+                setValue('endDate', undefined);
+              }
             }}
             label="본문 참고"
           />
         </div>
-
         {/* 진행 방식 */}
         <div>
-          <label css={label}>
+          <p css={label}>
             진행 방식 <span style={{ color: `${colors.textAlert}` }}>*</span>
-          </label>
+          </p>
 
           <RadioButtonGroup<MatchType>
             options={[
@@ -170,7 +201,7 @@ const OutlineSection = () => {
             />
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

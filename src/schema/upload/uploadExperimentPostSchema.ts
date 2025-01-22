@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { MatchType } from '@/app/upload/components/OutlineSection/OutlineSection';
+import { MatchType } from '@/types/uploadExperimentPost';
 
 export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExperimentPostSchema>>;
 
@@ -22,28 +22,10 @@ const UploadExperimentPostSchema = () => {
     // }),
 
     // 실험 시작 날짜
-    startDate: z.union(
-      [
-        z.date({ errorMap: () => ({ message: '' }) }),
-        z.null({ errorMap: () => ({ message: '' }) }),
-      ],
-      {
-        required_error: '',
-        invalid_type_error: '',
-      },
-    ),
+    startDate: z.union([z.string(), z.null()]),
 
     // 실험 종료 날짜
-    endDate: z.union(
-      [
-        z.date({ errorMap: () => ({ message: '' }) }),
-        z.null({ errorMap: () => ({ message: '' }) }),
-      ],
-      {
-        required_error: '',
-        invalid_type_error: '',
-      },
-    ),
+    endDate: z.union([z.string(), z.null()]),
 
     // 진행 방식
     matchType: z.nativeEnum(MatchType),
