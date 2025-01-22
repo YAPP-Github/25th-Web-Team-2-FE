@@ -144,7 +144,7 @@ export const outlineFormLayout = css`
   margin: 0 auto;
 `;
 
-export const input = (theme: Theme) => css`
+export const input = (theme: Theme, isError?: boolean) => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;
@@ -152,7 +152,7 @@ export const input = (theme: Theme) => css`
   height: 4.8rem;
 
   padding: 10px;
-  border: 0.1rem solid ${theme.colors.line01};
+  border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.line01};
   border-radius: 1.2rem;
 
   outline: none;

@@ -23,7 +23,7 @@ const InputForm = ({ field, fieldState, placeholder, type = 'text', id }: InputF
       <input
         {...field}
         id={id}
-        css={input}
+        css={(theme) => input(theme, !!fieldState.error)}
         type={type}
         placeholder={placeholder}
         value={field.value || ''}

@@ -135,6 +135,7 @@ const OutlineSection = () => {
             label="본문 참고"
           />
         </div>
+
         {/* 진행 방식 */}
         <div>
           <p css={label}>
@@ -154,7 +155,7 @@ const OutlineSection = () => {
                 ]}
                 selectedValue={field.value}
                 onChange={(value) => field.onChange(value)}
-                isError={!!fieldState.error} // 에러 상태 전달
+                isError={!!fieldState.error}
               />
             )}
           />
@@ -165,7 +166,19 @@ const OutlineSection = () => {
           <label css={label} htmlFor="reward">
             참여 보상 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
-          <input css={input} type="text" id="reward" placeholder={'예) 현금 10,000원'} />
+          <Controller
+            name="reward"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputForm
+                id="reward"
+                field={field}
+                fieldState={fieldState}
+                placeholder="예) 현금 10,000원"
+                type="text"
+              />
+            )}
+          />
         </div>
 
         {/* 실험 장소 */}

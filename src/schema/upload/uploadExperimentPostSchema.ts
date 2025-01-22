@@ -29,8 +29,10 @@ const UploadExperimentPostSchema = () => {
 
     // 진행 방식
     matchType: z.nativeEnum(MatchType),
+
     // 실험 횟수
     count: z.enum(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']).transform(Number), // 참여 횟수
+
     // 소요 시간
     timeRequired: z.union([
       z.enum([
@@ -60,7 +62,9 @@ const UploadExperimentPostSchema = () => {
     // 상세 주소
     detailedAddress: z.string().optional(),
     // 보상
-    reward: z.string().nonempty('보상 필수'),
+    reward: z
+      .string({ message: '최소 3자 이상으로 입력해 주세요' })
+      .min(3, { message: '최소 3자 이상으로 입력해 주세요' }),
 
     // title: z.string().nonempty('실험 제목 필수'), // 실험 제목
     // content: z.string().nonempty('실험 본문 필수'), // 실험 본문
