@@ -1,7 +1,6 @@
+import { Theme } from '@emotion/react';
 import * as Popover from '@radix-ui/react-popover';
-import { css, Theme } from '@emotion/react';
-import { UPLOAD_REGION } from '@/constants/uploadRegion';
-import { input } from '../UploadContainer/UploadContainer';
+
 import {
   regionField,
   popoverContent,
@@ -12,8 +11,12 @@ import {
   subRegionList,
   subRegionButton,
   placeholderText,
+  regionPopoverContainer,
 } from './RegionPopover.styles';
+import { input } from '../UploadContainer/UploadContainer';
+
 import Icon from '@/components/Icon';
+import { UPLOAD_REGION } from '@/constants/uploadRegion';
 
 interface RegionPopoverProps {
   regionPopoverProps: {
@@ -43,7 +46,16 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
   return (
     <Popover.Root open={isOpenRegionPopover} onOpenChange={onOpenRegionPopover}>
       <Popover.Trigger asChild>
-        <div>
+        <div
+          css={regionPopoverContainer}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === ' ') {
+              e.preventDefault();
+              onOpenRegionPopover(!isOpenRegionPopover);
+            }
+          }}
+        >
           <div role="button" css={[input, regionField]}>
             <span
               css={(theme: Theme) =>

@@ -89,6 +89,10 @@ const selectTrigger = (theme: Theme) => css`
   &[data-state='open'] {
     border: 0.1rem solid ${theme.colors.primaryMint};
   }
+
+  :focus {
+    border: 0.1rem solid ${theme.colors.primaryMint};
+  }
 `;
 
 const selectDisabled = (theme: Theme) => css`

@@ -1,5 +1,15 @@
 import { css, Theme } from '@emotion/react';
 
+export const regionPopoverContainer = (theme: Theme) => css`
+  width: 45.2rem;
+
+  :focus {
+    outline: none;
+    border: 0.1rem solid ${theme.colors.primaryMint};
+    border-radius: 1.2rem;
+  }
+`;
+
 export const regionField = (theme: Theme) => css`
   display: flex;
   flex-flow: row nowrap;

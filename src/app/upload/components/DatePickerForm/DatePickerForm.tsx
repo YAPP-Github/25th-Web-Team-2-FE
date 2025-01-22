@@ -50,7 +50,7 @@ const DatePickerField = ({
       css={datePickerFieldContainer}
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === ' ') {
           e.preventDefault();
           setIsOpen((prev) => !prev);
         }

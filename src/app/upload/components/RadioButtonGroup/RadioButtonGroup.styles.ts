@@ -26,6 +26,10 @@ export const customRadioButton = (theme: Theme) => css`
   &:hover {
     background-color: ${theme.colors.field02};
   }
+
+  :focus {
+    border: 0.1rem solid ${theme.colors.primaryMint};
+  }
 `;
 
 export const activeRadioButton = (theme: Theme) => css`
