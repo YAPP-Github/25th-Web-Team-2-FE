@@ -5,7 +5,8 @@ export const API_URL = {
   naver: (role: string) => `/v1/auth/login/naver?role=${role}`,
   send: '/v1/emails/send',
   verify: '/v1/emails/verify',
-  join: '/v1/members/signup/researcher',
+  joinResearcher: '/v1/members/signup/researcher',
+  joinParticipant: '/v1/members/signup/participant',
   me: (role: string) => `/v1/members/${role}/me`,
   refresh: '/v1/auth/refresh',
 };
