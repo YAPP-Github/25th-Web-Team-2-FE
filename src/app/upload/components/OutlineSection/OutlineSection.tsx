@@ -25,11 +25,8 @@ const OutlineSection = () => {
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
   const [durationChecked, setDurationChecked] = useState(false);
 
-  const [selectedMatchType, setSelectedMatchType] = useState<MatchType | null>(null);
-
-  const handleMatchTypeChange = (method: MatchType) => {
-    setSelectedMatchType(method);
-  };
+  // 대면 방식
+  const selectedMatchType = useWatch({ control, name: 'matchType' });
 
   // 실험 장소 지역구 선택
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -144,14 +141,22 @@ const OutlineSection = () => {
             진행 방식 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </p>
 
-          <RadioButtonGroup<MatchType>
-            options={[
-              { value: MatchType.OFFLINE, label: '대면' },
-              { value: MatchType.ONLINE, label: '비대면' },
-              { value: MatchType.HYBRID, label: '대면+비대면' },
-            ]}
-            selectedValue={selectedMatchType}
-            onChange={handleMatchTypeChange}
+          <Controller
+            name="matchType"
+            control={control}
+            rules={{ required: '진행 방식을 선택해주세요.' }}
+            render={({ field, fieldState }) => (
+              <RadioButtonGroup<MatchType>
+                options={[
+                  { value: MatchType.OFFLINE, label: '대면' },
+                  { value: MatchType.ONLINE, label: '비대면' },
+                  { value: MatchType.HYBRID, label: '대면+비대면' },
+                ]}
+                selectedValue={field.value}
+                onChange={(value) => field.onChange(value)}
+                isError={!!fieldState.error} // 에러 상태 전달
+              />
+            )}
           />
         </div>
 
