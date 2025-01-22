@@ -35,7 +35,7 @@ const JoinInput = ({
   required = false,
   disabled = false,
   tip,
-  value,
+  value = '',
   onChange,
   onBlur,
 }: JoinInputProps) => {
@@ -81,7 +81,7 @@ const JoinInput = ({
               />
             )}
             {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
-            {type === 'textarea' && <span css={textCount}>{field.value.length}/100</span>}
+            {type === 'textarea' && <span css={textCount}>{field.value?.length || 0}/100</span>}
           </>
         )}
       />
