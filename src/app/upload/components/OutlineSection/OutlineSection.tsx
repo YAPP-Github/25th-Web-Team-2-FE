@@ -13,7 +13,7 @@ import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 import DatePickerField from '@/app/upload/components/DatePickerField/DatePickerField';
 import { colors } from '@/styles/colors';
 
-enum MatchType {
+export enum MatchType {
   OFFLINE = 'OFFLINE',
   ONLINE = 'ONLINE',
   HYBRID = 'HYBRID',
