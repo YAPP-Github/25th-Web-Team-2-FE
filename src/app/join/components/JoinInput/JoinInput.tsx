@@ -35,7 +35,7 @@ const JoinInput = ({
   required = false,
   disabled = false,
   tip,
-  value = '',
+  value,
   onChange,
   onBlur,
 }: JoinInputProps) => {
