@@ -13,7 +13,7 @@ export interface ResearcherJoinParams {
 // birthDate: '2025-01-22';
 // region 타입, area 타입
 type Gender = 'MALE' | 'FEMALE' | 'ALL';
-type MatchType = 'MALE' | 'FEMALE' | 'ALL';
+type MatchType = 'ONLINE' | 'OFFLINE' | 'ALL';
 
 export interface ParticipantJoinParams {
   provider: 'NAVER' | 'GOOGLE';
@@ -37,4 +37,5 @@ export interface ServiceAgreeCheck {
   isTermOfService: boolean;
   isPrivacy: boolean;
   isAdvertise: boolean;
+  isRecommend?: boolean;
 }

@@ -2,11 +2,14 @@ import { useState } from 'react';
 
 import { ServiceAgreeCheck } from '../JoinPage.types';
 
-const useServiceAgreeCheck = () => {
+import { ROLE } from '@/constants/config';
+
+const useServiceAgreeCheck = (role: string = ROLE.researcher) => {
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState<ServiceAgreeCheck>({
     isTermOfService: false,
     isPrivacy: false,
     isAdvertise: false,
+    isRecommend: role === ROLE.participant ? false : undefined,
   });
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +17,7 @@ const useServiceAgreeCheck = () => {
 
     setServiceAgreeCheck((prev) => ({
       ...prev,
+      ...(prev.isRecommend !== undefined && { isRecommend: toggleChecked }),
       isTermOfService: toggleChecked,
       isPrivacy: toggleChecked,
       isAdvertise: toggleChecked,
