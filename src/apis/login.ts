@@ -1,6 +1,6 @@
 import { API } from './config';
 
-import { JoinParams } from '@/app/join/JoinPage.types';
+import { ResearcherJoinParams } from '@/app/join/JoinPage.types';
 import { API_URL } from '@/constants/url';
 
 interface UnivAuthCodeResponse {
@@ -82,7 +82,7 @@ export const verifyUnivAuthCode = async (univEmail: string, inputCode: string) =
   return res.data;
 };
 
-export const join = async (params: JoinParams) => {
+export const join = async (params: ResearcherJoinParams) => {
   const res = await API.post<JoinResponse>(API_URL.join, { ...params });
 
   return res.data;

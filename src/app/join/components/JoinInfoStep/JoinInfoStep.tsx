@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { joinButton } from './JoinInfoStep.styles';
 import { joinContentContainer, joinForm } from '../../JoinPage.styles';
-import { JoinParams } from '../../JoinPage.types';
+import { ResearcherJoinParams } from '../../JoinPage.types';
 import JoinInput from '../JoinInput/JoinInput';
 
 interface JoinInfoStepProps {
@@ -11,7 +11,7 @@ interface JoinInfoStepProps {
 
 // TODO: blur 될 때 trigger + 입력값 초기화 안되도록 개선 필요
 const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
-  const { control, trigger } = useFormContext<JoinParams>();
+  const { control, trigger } = useFormContext<ResearcherJoinParams>();
 
   const handleNext = async () => {
     const isStepValid = await trigger(['name', 'univName', 'major']);

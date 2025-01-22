@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
 import useServiceAgreeCheck from '../../hooks/useServiceAgreeCheck';
 import { joinForm } from '../../JoinPage.styles';
-import { JoinParams } from '../../JoinPage.types';
+import { ResearcherJoinParams } from '../../JoinPage.types';
 import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../JoinInput/JoinInput';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
@@ -15,7 +15,7 @@ interface JoinEmailStepProps {
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const oauthEmail = sessionStorage.getItem('email') || '';
-  const { control, trigger } = useFormContext<JoinParams>();
+  const { control, trigger } = useFormContext<ResearcherJoinParams>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
 
   const [isEmailVerified, setIsEmailVerified] = useState(false);

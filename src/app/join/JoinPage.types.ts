@@ -1,4 +1,4 @@
-export interface JoinParams {
+export interface ResearcherJoinParams {
   provider: 'NAVER' | 'GOOGLE';
   oauthEmail: string;
   contactEmail: string;
@@ -7,6 +7,30 @@ export interface JoinParams {
   univName: string;
   major: string;
   labInfo: string;
+}
+
+// TODO: 타입 좁히기
+// birthDate: '2025-01-22';
+// region 타입, area 타입
+type Gender = 'MALE' | 'FEMALE' | 'ALL';
+type MatchType = 'MALE' | 'FEMALE' | 'ALL';
+
+export interface ParticipantJoinParams {
+  provider: 'NAVER' | 'GOOGLE';
+  oauthEmail: string;
+  contactEmail: string;
+  name: string;
+  gender: Gender;
+  birthDate: string;
+  basicAddressInfo: {
+    region: string;
+    area: string;
+  };
+  additionalAddressInfo: {
+    region: string;
+    area: string;
+  };
+  matchType: MatchType;
 }
 
 export interface ServiceAgreeCheck {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
+import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 import {
   editButton,
   errorMessage,
@@ -9,11 +10,10 @@ import {
   univAuthButton,
   univInputWrapper,
 } from './UnivAuthInput.styles';
-import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
-import { JoinParams } from '../../../JoinPage.types';
-import EmailToast from '../../EmailToast/EmailToast';
-import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
+import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
+import { ResearcherJoinParams } from '../../../JoinPage.types';
+import EmailToast from '../../EmailToast/EmailToast';
 
 interface UnivAuthInputProps {
   handleVerifyEmail: () => void;
@@ -24,7 +24,7 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
     control,
     getValues,
     formState: { errors },
-  } = useFormContext<JoinParams>();
+  } = useFormContext<ResearcherJoinParams>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
