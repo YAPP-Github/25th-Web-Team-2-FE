@@ -40,7 +40,7 @@ const CheckboxWithIcon = ({
             cursor="pointer"
           />
         )}
-        <label>{label}</label>
+        <p>{label}</p>
       </div>
     </div>
   );
