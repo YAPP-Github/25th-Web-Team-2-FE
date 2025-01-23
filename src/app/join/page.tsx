@@ -23,6 +23,7 @@ export default function JoinPage() {
   const { mutate: join } = useJoinMutation();
 
   const methods = useForm<JoinParams>({
+    mode: 'onBlur',
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,
