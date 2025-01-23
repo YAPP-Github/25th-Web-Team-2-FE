@@ -5,14 +5,14 @@ export const formatAuthTimer = (time: number) => {
 };
 
 export const getProvider = (email: string): 'GOOGLE' | 'NAVER' => {
-  const GOOGLE_DOMAINS = ['gmail.com', 'googlemail.com'];
-  const NAVER_DOMAINS = ['naver.com', 'nate.com'];
+  const GOOGLE_DOMAINS = 'gmail.com';
+  const NAVER_DOMAINS = 'naver.com';
 
   const targetDomain = email.split('@')[1].toLowerCase();
 
-  if (GOOGLE_DOMAINS.some((domain) => targetDomain.includes(domain))) {
+  if (targetDomain.includes(GOOGLE_DOMAINS)) {
     return 'GOOGLE';
-  } else if (NAVER_DOMAINS.some((domain) => targetDomain.includes(domain))) {
+  } else if (targetDomain.includes(NAVER_DOMAINS)) {
     return 'NAVER';
   }
 
