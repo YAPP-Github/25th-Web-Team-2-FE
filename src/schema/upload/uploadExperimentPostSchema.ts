@@ -51,6 +51,7 @@ const UploadExperimentPostSchema = ({ matchType }: UploadExperimentPostSchemaPro
       ]),
       z.null(),
     ]),
+
     // 연구 책임자
     leadResearcher: z
       .string()

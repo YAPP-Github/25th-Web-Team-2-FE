@@ -53,14 +53,14 @@ const InputForm = ({
         maxLength={maxLength}
       />
 
-      <div css={textSubMessageLayout}>
+      <div css={textSubMessageLayout(!!maxLength)}>
+        {fieldState?.error && showErrorMessage && (
+          <p css={formMessage}>{fieldState.error.message}</p>
+        )}
         {maxLength && (
           <div css={textCounter}>
             {textLength}/{maxLength}
           </div>
-        )}
-        {fieldState?.error && showErrorMessage && (
-          <p css={formMessage}>{fieldState.error.message}</p>
         )}
       </div>
     </div>
@@ -86,9 +86,9 @@ const textCounter = (theme: Theme) => css`
   text-align: right;
 `;
 
-const textSubMessageLayout = css`
+const textSubMessageLayout = (showTextCounter: boolean) => css`
   display: flex;
-  flex-flow: row-reverse nowrap;
+  flex-flow: ${showTextCounter ? 'row-reverse nowrap' : 'row nowrap'};
   justify-content: space-between;
   align-items: center;
 `;

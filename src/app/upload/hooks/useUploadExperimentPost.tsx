@@ -24,6 +24,8 @@ const useUploadExperimentPost = () => {
       detailedAddress: '',
       region: undefined,
       area: undefined,
+      count: undefined,
+      timeRequired: undefined,
     },
   });
 
@@ -32,7 +34,19 @@ const useUploadExperimentPost = () => {
       console.log('공고 등록 form >> ', data);
       // todo region label이 아닌 value로 변경 필요
 
-      await form.reset();
+      await form.reset({
+        leadResearcher: '',
+        startDate: undefined,
+        endDate: undefined,
+        matchType: undefined,
+        reward: '',
+        univName: undefined,
+        detailedAddress: '',
+        region: undefined,
+        area: undefined,
+        count: undefined,
+        timeRequired: undefined,
+      });
     } catch (error) {
       //   console.error('공고 등록 form 저장 중 오류 발생', error);
     }

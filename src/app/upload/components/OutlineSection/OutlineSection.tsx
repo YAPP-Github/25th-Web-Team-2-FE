@@ -56,10 +56,6 @@ const OutlineSection = () => {
     onSubRegionSelect: handleSubRegionSelect,
   };
 
-  // 소요 시간
-  const [countValue, setCountValue] = useState<string | undefined>(undefined);
-  const [durationValue, setDurationValue] = useState<string | undefined>(undefined);
-
   return (
     <div>
       <h3>
@@ -251,12 +247,39 @@ const OutlineSection = () => {
           </p>
 
           <div css={inputContainer}>
-            <CountSelect value={countValue} onChange={setCountValue} />
-            <DurationSelect
-              value={durationValue}
-              onChange={setDurationValue}
-              referToDetailsChecked={durationChecked}
-            />
+            {/* 실험 횟수 */}
+            <div>
+              <Controller
+                name="count"
+                control={control}
+                rules={{ required: '실험 횟수는 필수 값입니다.' }}
+                render={({ field, fieldState }) => (
+                  <CountSelect
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    error={!!fieldState.error}
+                  />
+                )}
+              />
+            </div>
+
+            {/* 소요 시간 */}
+            <div>
+              <Controller
+                name="timeRequired"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <DurationSelect
+                    value={durationChecked ? undefined : field.value || undefined}
+                    onChange={(value) => field.onChange(value || null)}
+                    referToDetailsChecked={durationChecked}
+                    error={!!fieldState.error}
+                  />
+                )}
+              />
+            </div>
+
+            {/* 본문 참고 체크박스 */}
             <CheckboxWithIcon
               checked={durationChecked}
               onChange={() => setDurationChecked((prev) => !prev)}

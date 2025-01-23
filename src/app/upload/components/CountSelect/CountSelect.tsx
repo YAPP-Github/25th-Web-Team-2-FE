@@ -45,16 +45,18 @@ const countSelectOptions = [
 
 interface CountSelectProps {
   value: string | undefined;
-  onChange: (value: string) => void;
+  onChange: (value: string | undefined) => void;
+  error: boolean;
 }
 
-const CountSelect = ({ value, onChange }: CountSelectProps) => {
+const CountSelect = ({ value, onChange, error }: CountSelectProps) => {
   return (
     <SelectInput
       value={value}
       onChange={onChange}
       options={countSelectOptions}
       placeholder="실험 횟수 입력"
+      error={error}
     />
   );
 };
