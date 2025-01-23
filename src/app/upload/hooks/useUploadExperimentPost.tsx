@@ -28,6 +28,9 @@ const useUploadExperimentPost = () => {
       timeRequired: undefined,
       title: '',
       content: '',
+      applyMethodInfo: {
+        content: '',
+      },
     },
   });
 

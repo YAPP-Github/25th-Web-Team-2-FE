@@ -81,6 +81,16 @@ const UploadExperimentPostSchema = ({ matchType }: UploadExperimentPostSchemaPro
       .string()
       .min(200, '최소 200자 이상으로 입력해 주세요')
       .max(5000, '최대 5000자 이하로 입력해 주세요'),
+
+    applyMethodInfo: z.object({
+      // 참여 방법
+      content: z
+        .string()
+        .min(5, '최소 5자 이상으로 입력해 주세요')
+        .max(200, '최대 200자 이하로 입력해 주세요'),
+      //   formUrl: z.string().url().optional(), // 링크
+      //   phoneNum: z.string().optional(), // 연락처
+    }),
     // alarmAgree: z.boolean().default(false), // 알람 동의
   });
 };

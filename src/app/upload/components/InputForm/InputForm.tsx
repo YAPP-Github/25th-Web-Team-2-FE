@@ -57,13 +57,13 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
         />
 
         <div css={textSubMessageLayout(!!maxLength)}>
-          {fieldState?.error && showErrorMessage && (
-            <p css={formMessage}>{fieldState.error.message}</p>
-          )}
           {maxLength && (
             <div css={textCounter}>
               {textLength}/{maxLength}
             </div>
+          )}
+          {fieldState?.error && showErrorMessage && (
+            <p css={formMessage}>{fieldState.error.message}</p>
           )}
         </div>
       </div>
