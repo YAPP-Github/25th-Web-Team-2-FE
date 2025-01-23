@@ -13,6 +13,7 @@ import {
 } from './Header.styles';
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
+
 import { useResearcherInfoQuery } from '@/app/home/hooks/useResearcherInfoQuery';
 
 const Header = () => {

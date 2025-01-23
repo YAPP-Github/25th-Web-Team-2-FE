@@ -1,6 +1,6 @@
 export interface Post {
   postInfo: PostInfo;
-  recruitDone: boolean;
+  recruitStatus: boolean;
 }
 
 export interface PostInfo {

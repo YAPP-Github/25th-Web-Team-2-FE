@@ -1,7 +1,6 @@
+import { Theme } from '@emotion/react';
 import * as Popover from '@radix-ui/react-popover';
-import { css, Theme } from '@emotion/react';
-import { UPLOAD_REGION } from '@/constants/uploadRegion';
-import { input } from '../UploadContainer/UploadContainer';
+
 import {
   regionField,
   popoverContent,
@@ -13,7 +12,10 @@ import {
   subRegionButton,
   placeholderText,
 } from './RegionPopover.styles';
+import { input } from '../UploadContainer/UploadContainer';
+
 import Icon from '@/components/Icon';
+import { UPLOAD_REGION } from '@/constants/uploadRegion';
 
 interface RegionPopoverProps {
   regionPopoverProps: {

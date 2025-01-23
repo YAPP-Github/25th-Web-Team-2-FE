@@ -4,10 +4,10 @@ import { fetchPostList, PostListParams } from '@/apis/post';
 import { QUERY_KEY } from '@/constants/queryKey';
 
 const usePostListQuery = (params: PostListParams) => {
-  const { matchType, gender, age, region, areas, recruitDone } = params;
+  const { matchType, gender, age, region, areas, recruitStatus } = params;
 
   return useQuery({
-    queryKey: [QUERY_KEY.post, matchType, gender, age, region, areas, recruitDone],
+    queryKey: [QUERY_KEY.post, matchType, gender, age, region, areas, recruitStatus],
     queryFn: () => fetchPostList(params),
   });
 };
