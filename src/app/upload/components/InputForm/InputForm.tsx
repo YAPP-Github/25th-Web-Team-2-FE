@@ -1,7 +1,5 @@
 import { css, Theme } from '@emotion/react';
-import { useState } from 'react';
-
-import { input } from '@/app/upload/components/UploadContainer/UploadContainer';
+import React, { forwardRef, useState } from 'react';
 
 interface InputFormProps {
   id: string;
@@ -23,49 +21,57 @@ interface InputFormProps {
   maxLength?: number;
 }
 
-const InputForm = ({
-  field,
-  fieldState,
-  placeholder,
-  type = 'text',
-  id,
-  showErrorMessage = true,
-  size = 'half',
-  maxLength,
-}: InputFormProps) => {
-  const [textLength, setTextLength] = useState(field.value?.length || 0);
+const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
+  (
+    {
+      field,
+      fieldState,
+      placeholder,
+      type = 'text',
+      id,
+      showErrorMessage = true,
+      size = 'half',
+      maxLength,
+    },
+    ref,
+  ) => {
+    const [textLength, setTextLength] = useState(field.value?.length || 0);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    field.onChange(e);
-    setTextLength(e.target.value.length);
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      field.onChange(e);
+      setTextLength(e.target.value.length);
+    };
 
-  return (
-    <div css={textInputContainer(size)}>
-      <input
-        {...field}
-        id={id}
-        css={(theme) => input(theme, !!fieldState.error)}
-        type={type}
-        placeholder={placeholder}
-        value={field.value || ''}
-        onChange={handleChange}
-        maxLength={maxLength}
-      />
+    return (
+      <div css={textInputContainer(size)}>
+        <input
+          {...field}
+          ref={ref} // ref 전달
+          id={id}
+          css={(theme) => textInput(theme, fieldState?.error ? 'error' : '')}
+          type={type}
+          placeholder={placeholder}
+          value={field.value || ''}
+          onChange={handleChange}
+          maxLength={maxLength}
+        />
 
-      <div css={textSubMessageLayout(!!maxLength)}>
-        {fieldState?.error && showErrorMessage && (
-          <p css={formMessage}>{fieldState.error.message}</p>
-        )}
-        {maxLength && (
-          <div css={textCounter}>
-            {textLength}/{maxLength}
-          </div>
-        )}
+        <div css={textSubMessageLayout(!!maxLength)}>
+          {fieldState?.error && showErrorMessage && (
+            <p css={formMessage}>{fieldState.error.message}</p>
+          )}
+          {maxLength && (
+            <div css={textCounter}>
+              {textLength}/{maxLength}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
+
+InputForm.displayName = 'InputForm'; // 컴포넌트 이름 설정
 
 export default InputForm;
 
@@ -97,4 +103,25 @@ const formMessage = (theme: Theme) => css`
   ${theme.fonts.label.small.M12};
   color: ${theme.colors.textAlert};
   margin: 0;
+`;
+
+const textInput = (theme: Theme, status: string) => css`
+  ${theme.fonts.label.large.R14};
+
+  width: 100%;
+  height: 4.8rem;
+  padding: 0.8rem 1.2rem;
+  border: 0.1rem solid ${status === 'error' ? theme.colors.textAlert : theme.colors.line01};
+  border-radius: 1.2rem;
+  color: ${theme.colors.text06};
+
+  &:focus {
+    border-color: ${status === 'error' ? theme.colors.textAlert : theme.colors.lineTinted};
+    outline: none;
+  }
+
+  &::placeholder {
+    color: ${theme.colors.text02};
+    ${theme.fonts.label.large.R14};
+  }
 `;
