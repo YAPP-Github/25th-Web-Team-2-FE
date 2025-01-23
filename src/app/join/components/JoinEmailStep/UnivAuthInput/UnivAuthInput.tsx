@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
+import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 import {
   editButton,
   errorMessage,
@@ -9,11 +10,10 @@ import {
   univAuthButton,
   univInputWrapper,
 } from './UnivAuthInput.styles';
+import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
 import { JoinParams } from '../../../JoinPage.types';
 import EmailToast from '../../EmailToast/EmailToast';
-import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
-import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
 
 interface UnivAuthInputProps {
   handleVerifyEmail: () => void;
@@ -93,7 +93,13 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
       />
       {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
       {sendError && <span css={errorMessage}>{sendError.message}</span>}
-      {isEmailSent && <AuthCodeInput authTimer={authTimer} handleVerifyEmail={handleVerifyEmail} />}
+      {isEmailSent && (
+        <AuthCodeInput
+          authTimer={authTimer}
+          handleVerifyEmail={handleVerifyEmail}
+          handleSendUnivAuthCode={handleSendUnivAuthCode}
+        />
+      )}
       <EmailToast
         title="인증번호가 발송되었어요"
         isToastOpen={isToastOpen}

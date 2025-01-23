@@ -19,9 +19,14 @@ const AUTH_CODE_VALID_LENGTH = 6;
 interface AuthCodeInputProps {
   authTimer: number;
   handleVerifyEmail: () => void;
+  handleSendUnivAuthCode: () => void;
 }
 
-const AuthCodeInput = ({ authTimer, handleVerifyEmail }: AuthCodeInputProps) => {
+const AuthCodeInput = ({
+  authTimer,
+  handleVerifyEmail,
+  handleSendUnivAuthCode,
+}: AuthCodeInputProps) => {
   const { getValues } = useFormContext<JoinParams>();
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
 
@@ -73,7 +78,7 @@ const AuthCodeInput = ({ authTimer, handleVerifyEmail }: AuthCodeInputProps) => 
             </div>
           )}
         </div>
-        <button type="button" css={sendAgainButton}>
+        <button type="button" css={sendAgainButton} onClick={handleSendUnivAuthCode}>
           인증번호 재전송
         </button>
       </div>
