@@ -9,17 +9,28 @@ const useUploadExperimentPost = () => {
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    resolver: zodResolver(UploadExperimentPostSchema()),
+    resolver: async (data, context, options) => {
+      const matchType = data.matchType;
+      const schema = UploadExperimentPostSchema({ matchType });
+      return zodResolver(schema)(data, context, options);
+    },
     defaultValues: {
       leadResearcher: '',
       startDate: undefined,
       endDate: undefined,
+      matchType: undefined,
+      reward: '',
+      univName: undefined,
+      detailedAddress: '',
+      region: undefined,
+      area: undefined,
     },
   });
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
     try {
-      //   console.log('공고 등록 form >> ', data);
+      console.log('공고 등록 form >> ', data);
+      // todo region label이 아닌 value로 변경 필요
 
       await form.reset();
     } catch (error) {

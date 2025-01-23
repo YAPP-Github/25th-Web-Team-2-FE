@@ -8,7 +8,6 @@ import DurationSelect from '../DurationSelect/DurationSelect';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
-import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
@@ -36,11 +35,16 @@ const OutlineSection = () => {
   const handleRegionSelect = (region: string) => {
     setSelectedRegion(region);
     setSelectedSubRegion(null);
+
+    setValue('region', region, { shouldValidate: true });
+    setValue('area', '', { shouldValidate: true });
   };
 
   const handleSubRegionSelect = (subRegion: string) => {
     setSelectedSubRegion(subRegion);
     setIsOpenRegionPopover(false);
+
+    setValue('area', subRegion, { shouldValidate: true });
   };
 
   const regionPopoverProps = {
@@ -71,18 +75,15 @@ const OutlineSection = () => {
           <Controller
             name="leadResearcher"
             control={control}
-            rules={{ required: '연구 책임자는 필수 항목입니다.' }}
             render={({ field, fieldState }) => (
-              <>
-                <InputForm
-                  id="leadResearcher"
-                  field={field}
-                  css={input}
-                  type="text"
-                  placeholder="OO대학교 OO학과 OO연구실 OOO"
-                  fieldState={fieldState}
-                />
-              </>
+              <InputForm
+                id="leadResearcher"
+                field={field}
+                css={input}
+                type="text"
+                placeholder="OO대학교 OO학과 OO연구실 OOO"
+                fieldState={fieldState}
+              />
             )}
           />
         </div>
@@ -145,7 +146,6 @@ const OutlineSection = () => {
           <Controller
             name="matchType"
             control={control}
-            rules={{ required: '진행 방식을 선택해주세요.' }}
             render={({ field, fieldState }) => (
               <RadioButtonGroup<MatchType>
                 options={[
@@ -190,11 +190,56 @@ const OutlineSection = () => {
             <div css={[input, disabledInput]}>비대면</div>
           ) : (
             <div css={inputContainer}>
-              <input css={input} type="text" id="location" placeholder="대학교 입력" />
+              <Controller
+                name="univName"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputForm
+                    id="univName"
+                    field={field}
+                    css={input}
+                    placeholder="대학교 입력"
+                    fieldState={fieldState}
+                    showErrorMessage={false}
+                  />
+                )}
+              />
               {/* 지역구 선택 */}
-              <RegionPopover regionPopoverProps={regionPopoverProps} />
+              <Controller
+                name="region"
+                control={control}
+                rules={{ required: '지역을 선택해 주세요' }}
+                render={({ fieldState }) => (
+                  <Controller
+                    name="area"
+                    control={control}
+                    rules={{ required: '지역구를 선택해 주세요' }}
+                    render={({ fieldState: areaFieldState }) => (
+                      <RegionPopover
+                        regionPopoverProps={{
+                          ...regionPopoverProps,
+                          error: fieldState.error || areaFieldState.error,
+                        }}
+                      />
+                    )}
+                  />
+                )}
+              />
 
-              <TextInput id="detail-location" placeholder="상세 주소 입력 (선택)" maxLength={70} />
+              {/* 상세 주소 입력 */}
+              <Controller
+                name="detailedAddress"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputForm
+                    id="detailedAddress"
+                    field={field}
+                    placeholder="상세 주소 입력 (선택)"
+                    maxLength={70}
+                    fieldState={fieldState}
+                  />
+                )}
+              />
             </div>
           )}
         </div>

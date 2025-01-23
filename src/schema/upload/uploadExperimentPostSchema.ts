@@ -4,7 +4,10 @@ import { MatchType } from '@/types/uploadExperimentPost';
 
 export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExperimentPostSchema>>;
 
-const UploadExperimentPostSchema = () => {
+interface UploadExperimentPostSchemaProps {
+  matchType: MatchType;
+}
+const UploadExperimentPostSchema = ({ matchType }: UploadExperimentPostSchemaProps) => {
   return z.object({
     // targetGroupInfo: z.object({
     //   startAge: z.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
@@ -54,13 +57,14 @@ const UploadExperimentPostSchema = () => {
       .min(10, { message: '최소 10자 이상으로 입력해 주세요' })
       .max(150, { message: '최대 150자 이하로 입력해 주세요' }),
     // 대학교
-    univName: z.string().nonempty('대학교 이름 필수'),
+    univName: z.string({ required_error: '' }),
     // 지역
-    region: z.string().nonempty('지역 필수'),
+    region:
+      matchType === MatchType.ONLINE ? z.string().optional() : z.string({ required_error: '' }),
     // 지역구
-    area: z.string().nonempty('지역구 필수'),
+    area: matchType === MatchType.ONLINE ? z.string().optional() : z.string({ required_error: '' }),
     // 상세 주소
-    detailedAddress: z.string().optional(),
+    detailedAddress: z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' }),
     // 보상
     reward: z
       .string({ message: '최소 3자 이상으로 입력해 주세요' })

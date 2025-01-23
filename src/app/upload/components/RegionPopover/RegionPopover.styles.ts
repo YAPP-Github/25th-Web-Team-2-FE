@@ -1,7 +1,10 @@
 import { css, Theme } from '@emotion/react';
 
-export const regionPopoverContainer = (theme: Theme) => css`
+export const regionPopoverContainer = (theme: Theme, isError?: boolean) => css`
   width: 45.2rem;
+
+  border: 0.1rem solid ${isError ? theme.colors.textAlert : 'none'};
+  border-radius: 1.2rem;
 
   :focus {
     outline: none;

@@ -5,29 +5,44 @@ interface TextInputProps {
   id: string;
   placeholder: string;
   maxLength?: number;
-  message?: string;
-  status?: 'error' | '';
   size?: 'half' | 'full';
+  field?: {
+    name: string;
+    value: string;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur: VoidFunction;
+  };
+  fieldState?: {
+    error?: {
+      message?: string;
+    };
+  };
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ id, placeholder, maxLength, message, status = '', size = 'half' }, ref) => {
+  ({ id, placeholder, maxLength, size = 'half', field, fieldState }, ref) => {
     const [textLength, setTextLength] = useState(0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (field?.onChange) {
+        field.onChange(e);
+      }
+
       setTextLength(e.target.value.length);
     };
 
     return (
       <div css={textInputContainer(size)}>
         <input
+          {...field}
           ref={ref}
           id={id}
           type="text"
           placeholder={placeholder}
           maxLength={maxLength}
           onChange={handleChange}
-          css={(theme) => textInput(theme, status)}
+          value={field?.value || ''}
+          css={(theme) => textInput(theme, fieldState?.error ? 'error' : '')}
         />
         <div css={textSubMessageLayout}>
           {maxLength && (
@@ -35,7 +50,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               {textLength}/{maxLength}
             </div>
           )}
-          {status === 'error' && message && <p css={formMessage}>{message}</p>}
+          {fieldState?.error && <p css={formMessage}>{fieldState.error.message}</p>}
         </div>
       </div>
     );
