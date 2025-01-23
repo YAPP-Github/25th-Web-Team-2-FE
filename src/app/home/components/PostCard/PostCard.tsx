@@ -16,7 +16,6 @@ import {
 } from './PostCard.styles';
 
 import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
 import { Post } from '@/types/post';
 
 interface PostCardProps {
