@@ -15,12 +15,9 @@ import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
 const OutlineSection = () => {
-  const { control, setValue, formState } = useFormContext();
-  const formData = useWatch({ control });
-  console.log('formData >> ', formData);
-  console.log('errors>> ', formState.errors);
+  const { control, setValue } = useFormContext();
 
-  // todo useReducer로 리팩토링
+  // todo useReducer로 리팩토링 -> handleSubmit 이후 reset 추가
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
   const [durationChecked, setDurationChecked] = useState(false);
 

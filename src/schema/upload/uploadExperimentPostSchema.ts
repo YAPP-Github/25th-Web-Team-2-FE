@@ -71,8 +71,16 @@ const UploadExperimentPostSchema = ({ matchType }: UploadExperimentPostSchemaPro
       .string({ message: '최소 3자 이상으로 입력해 주세요' })
       .min(3, { message: '최소 3자 이상으로 입력해 주세요' }),
 
-    // title: z.string().nonempty('실험 제목 필수'), // 실험 제목
-    // content: z.string().nonempty('실험 본문 필수'), // 실험 본문
+    // 실험 제목
+    title: z
+      .string()
+      .min(5, '최소 5자 이상으로 입력해 주세요')
+      .max(70, '최대 70자 이하로 입력해 주세요'),
+    // 실험 본문
+    content: z
+      .string()
+      .min(200, '최소 200자 이상으로 입력해 주세요')
+      .max(5000, '최대 5000자 이하로 입력해 주세요'),
     // alarmAgree: z.boolean().default(false), // 알람 동의
   });
 };

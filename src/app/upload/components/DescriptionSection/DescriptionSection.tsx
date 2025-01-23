@@ -1,10 +1,13 @@
 import { css, Theme } from '@emotion/react';
 import Image from 'next/image';
 import { useState, ChangeEvent } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
+import InputForm from '../InputForm/InputForm';
 import { headingIcon, input } from '../UploadContainer/UploadContainer';
 
 import Icon from '@/components/Icon';
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
 type Photo = {
@@ -14,6 +17,9 @@ type Photo = {
 };
 
 const DescriptionSection = () => {
+  const { control, formState } = useFormContext<UploadExperimentPostSchemaType>();
+  const contentError = formState.errors.content;
+
   const [photos, setPhotos] = useState<Photo[]>([]);
   const MAX_PHOTOS = 3;
 
@@ -68,19 +74,38 @@ const DescriptionSection = () => {
       </h3>
 
       <div css={descriptionFormLayout}>
-        <input
-          css={[input, fullInput]}
-          type="text"
-          id="post-title"
-          placeholder="실험 제목을 입력해 주세요"
+        {/* 실험 제목 */}
+        <Controller
+          name="title"
+          control={control}
+          render={({ field, fieldState }) => (
+            <InputForm
+              {...field}
+              css={[input, fullInput]}
+              type="text"
+              id="title"
+              placeholder="실험 제목을 입력해 주세요"
+              field={field}
+              fieldState={fieldState}
+              size="full"
+            />
+          )}
         />
 
-        <div css={descriptionContentContainer}>
-          <textarea
-            name="description"
-            id="description"
-            css={descriptionTextarea(photos.length > 0 ? 8.5 : 0)}
-            placeholder="본문을 입력해 주세요"
+        <div css={(theme) => descriptionContentContainer(theme, !!contentError)}>
+          <Controller
+            name="content"
+            control={control}
+            render={({ field }) => (
+              <>
+                <textarea
+                  {...field}
+                  id="content"
+                  css={descriptionTextarea(photos.length > 0 ? 8.5 : 0)}
+                  placeholder="본문을 입력해 주세요"
+                />
+              </>
+            )}
           />
           {photos.length > 0 && (
             <div css={photoGrid}>
@@ -133,15 +158,14 @@ const DescriptionSection = () => {
           </div>
         </div>
       </div>
+      {!!contentError && <p css={formMessage}>{contentError.message}</p>}
     </div>
   );
 };
 
 export default DescriptionSection;
 
-export const descriptionLayout = css`
-  height: 45.4rem;
-`;
+export const descriptionLayout = css``;
 
 export const descriptionFormLayout = css`
   width: 100%;
@@ -154,17 +178,15 @@ export const fullInput = css`
   max-width: 93.6rem;
 `;
 
-const descriptionContentContainer = (theme: Theme) =>
-  css`
-    width: 93.6rem;
-    border: 0.1rem solid ${theme.colors.line01};
+const descriptionContentContainer = (theme: Theme, isError: boolean) => css`
+  width: 93.6rem;
+  border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.line01};
+  border-radius: 1.2rem;
 
-    border-radius: 1.2rem;
-
-    :focus-within {
-      border: 0.1rem solid ${theme.colors.lineTinted};
-    }
-  `;
+  :focus-within {
+    border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.lineTinted};
+  }
+`;
 
 const descriptionTextarea = (photoGridHeight: number) => (theme: Theme) =>
   css`
@@ -264,4 +286,11 @@ const deleteButton = css`
   right: 0.4rem;
   border: none;
   border-radius: 50%;
+`;
+
+const formMessage = (theme: Theme) => css`
+  ${theme.fonts.label.small.M12};
+  color: ${theme.colors.textAlert};
+  margin: 0;
+  padding: 0.8rem 1.6rem;
 `;

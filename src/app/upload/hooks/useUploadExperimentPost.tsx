@@ -26,6 +26,8 @@ const useUploadExperimentPost = () => {
       area: undefined,
       count: undefined,
       timeRequired: undefined,
+      title: '',
+      content: '',
     },
   });
 
