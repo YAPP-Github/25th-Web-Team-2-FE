@@ -69,6 +69,13 @@ export const fonts = {
         line-height: 3.2rem;
         letter-spacing: 0;
       `,
+      SB28: css`
+        font-size: 2.8rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 3.8rem;
+        letter-spacing: 0;
+      `,
     },
   },
 

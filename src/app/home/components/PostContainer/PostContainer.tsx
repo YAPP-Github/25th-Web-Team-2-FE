@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+
 import usePostListQuery from '../../hooks/usePostListQuery';
 import PostCardList from '../PostCardList/PostCardList';
 import FilterContainer from './FilterContainer/FilterContainer';
@@ -11,20 +12,16 @@ import {
   postContainerTitle,
   totalPostCount,
 } from './PostContainer.styles';
-import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+
 import { PostListParams } from '@/apis/post';
+import JoinCheckbox from '@/app/join/components/JoinEmailStep/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 
 const PostContainer = () => {
   const [filters, setFilters] = useState<PostListParams>({
-    matchType: 'ALL' as 'ALL' | 'ONLINE' | 'OFFLINE',
-    gender: '' as '' | 'ALL' | 'MALE' | 'FEMALE',
-    region: '',
-    areas: '',
-    age: 20,
-    recruitDone: false,
+    recruitStatus: 'ALL',
   });
 
-  const { data: postList } = usePostListQuery(filters);
+  const { data } = usePostListQuery(filters);
 
   const handleFilterChange = (key: string, value: string | number | boolean) => {
     setFilters((prev) => ({
@@ -33,9 +30,11 @@ const PostContainer = () => {
     }));
   };
 
-  // TODO: 개선 필요.
+  const isRecruiting = filters.recruitStatus === 'OPEN';
+
   const handleChange = () => {
-    handleFilterChange('recruitDone', !filters.recruitDone);
+    const toggleChecked = isRecruiting ? 'ALL' : 'OPEN';
+    handleFilterChange('recruitStatus', toggleChecked);
   };
 
   return (
@@ -45,14 +44,14 @@ const PostContainer = () => {
         <FilterContainer handleFilterChange={handleFilterChange} />
         <JoinCheckbox
           label="모집 중인 공고만 보기"
-          isChecked={filters.recruitDone}
+          isChecked={isRecruiting}
           onChange={handleChange}
           isArrow={false}
         />
       </div>
       <div css={postCardContainer}>
-        <span css={totalPostCount}>총 {postList?.length}개</span>
-        <PostCardList postList={postList} />
+        <span css={totalPostCount}>총 {data?.content.length}개</span>
+        <PostCardList postList={data?.content} />
       </div>
     </div>
   );

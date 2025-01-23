@@ -4,7 +4,13 @@ import { Area } from '@/app/home/home.types';
 import { API_URL } from '@/constants/url';
 import { Post } from '@/types/post';
 
-type PostResponse = Post[];
+interface PostResponse {
+  content: Post[];
+  isLast: boolean;
+  page: number;
+  size: number;
+  totalCount: number;
+}
 
 export type AreaResponse = PostAreaResponse | PostSubAreaResponse;
 
@@ -24,7 +30,7 @@ interface PostArea {
 }
 
 export interface PostListParams {
-  recruitDone: boolean;
+  recruitStatus: 'ALL' | 'OPEN';
   matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
   gender?: '' | 'MALE' | 'FEMALE' | 'ALL';
   age?: number;
@@ -34,7 +40,7 @@ export interface PostListParams {
   count?: number;
 }
 
-export const fetchPostList = async (params: PostListParams) => {
+export const fetchPostList = async (params: PostListParams = { recruitStatus: 'ALL' }) => {
   const queryParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {

@@ -13,7 +13,7 @@ interface JoinInputProps {
   type?: 'input' | 'textarea';
   name: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: any;
+  control?: any;
   rules?: object;
   placeholder?: string;
   label?: string;
@@ -22,6 +22,7 @@ interface JoinInputProps {
   onChange?: () => void;
   tip?: string;
   value?: string;
+  onBlur?: () => void;
 }
 
 const JoinInput = ({
@@ -36,6 +37,7 @@ const JoinInput = ({
   tip,
   value,
   onChange,
+  onBlur,
 }: JoinInputProps) => {
   return (
     <div css={inputContainer}>
@@ -62,6 +64,7 @@ const JoinInput = ({
                   field.onChange(e);
                   if (onChange) onChange();
                 }}
+                onBlur={onBlur}
               />
             ) : (
               <textarea

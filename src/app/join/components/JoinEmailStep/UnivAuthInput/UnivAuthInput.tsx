@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+
+import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 import {
   editButton,
   errorMessage,
@@ -8,51 +10,27 @@ import {
   univAuthButton,
   univInputWrapper,
 } from './UnivAuthInput.styles';
-import useSendUnivAuthCodeMutation from '../../hooks/useSendUnivAuthCodeMutation';
-
-import EmailToast from '../EmailToast/EmailToast';
-import { EmailForm } from '../../JoinPage.types';
-import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
-
-const TEN_MINUTE_SEC = 600;
-const ONE_SEC = 1000;
+import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
+import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
+import { JoinParams } from '../../../JoinPage.types';
+import EmailToast from '../../EmailToast/EmailToast';
 
 interface UnivAuthInputProps {
-  isUnivVerify: boolean;
-  handleVerifyUniv: () => void;
+  handleVerifyEmail: () => void;
 }
 
-const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) => {
+const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
   const {
     control,
-    watch,
-    trigger,
     getValues,
-    setValue,
     formState: { errors },
-  } = useFormContext<EmailForm>();
+  } = useFormContext<JoinParams>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [authTimer, setAuthTimer] = useState(TEN_MINUTE_SEC);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const stopTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-  };
-
-  const startTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    stopTimer();
-    setAuthTimer(TEN_MINUTE_SEC);
-
-    timerRef.current = setInterval(() => {
-      setAuthTimer((prev) => prev - 1);
-    }, ONE_SEC);
-  };
+  const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
 
   const handleSendUnivAuthCode = () => {
     const univEmail = getValues('univEmail');
@@ -64,7 +42,8 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
         startTimer();
       },
       onError: () => {
-        setValue('isEmailVerified', true);
+        // TODO: 이미 인증된 유저인 경우에만 verify
+        handleVerifyEmail();
       },
     });
   };
@@ -73,20 +52,6 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
     setIsEmailSent(false);
     stopTimer();
   };
-
-  useEffect(() => {
-    if (authTimer <= 0) {
-      stopTimer();
-    }
-  }, [authTimer]);
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
 
   return (
     <div css={inputContainer}>
@@ -105,25 +70,19 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
             message: '이메일 형식이 올바르지 않아요',
           },
         }}
-        render={({ field }) => {
-          const isDisabled = Boolean(errors.univEmail) || !watch('univEmail');
-
+        render={({ field, fieldState }) => {
           return (
             <div css={univInputWrapper}>
               <input
                 {...field}
                 placeholder="학교 메일 입력"
-                aria-invalid={errors.univEmail ? true : false}
-                onChange={(e) => {
-                  field.onChange(e);
-                  trigger('univEmail');
-                }}
+                aria-invalid={fieldState.invalid ? true : false}
                 disabled={isEmailSent}
               />
               <button
                 type="button"
                 css={[univAuthButton, isEmailSent && editButton]}
-                disabled={!isEmailSent && isDisabled}
+                disabled={!isEmailSent && !field.value}
                 onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
               >
                 {isEmailSent ? '수정' : '인증번호 전송'}
@@ -136,9 +95,9 @@ const UnivAuthInput = ({ isUnivVerify, handleVerifyUniv }: UnivAuthInputProps) =
       {sendError && <span css={errorMessage}>{sendError.message}</span>}
       {isEmailSent && (
         <AuthCodeInput
-          isUnivVerify={isUnivVerify}
-          handleVerifyUniv={handleVerifyUniv}
           authTimer={authTimer}
+          handleVerifyEmail={handleVerifyEmail}
+          handleSendUnivAuthCode={handleSendUnivAuthCode}
         />
       )}
       <EmailToast
