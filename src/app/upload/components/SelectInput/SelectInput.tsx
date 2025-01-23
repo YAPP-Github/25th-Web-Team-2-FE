@@ -11,6 +11,7 @@ interface SelectInputProps {
   options: { label: string; value: string }[];
   placeholder?: string;
   referToDetailsChecked?: boolean;
+  error?: boolean;
 }
 
 const SelectInput = ({
@@ -19,6 +20,7 @@ const SelectInput = ({
   options,
   placeholder = '선택',
   referToDetailsChecked = false,
+  error = false,
 }: SelectInputProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,7 +32,7 @@ const SelectInput = ({
       disabled={referToDetailsChecked}
     >
       <Select.Trigger
-        css={[selectTrigger, referToDetailsChecked && selectDisabled]}
+        css={[selectTrigger, referToDetailsChecked && selectDisabled, error && selectError]}
         disabled={referToDetailsChecked}
       >
         <Select.Value placeholder={referToDetailsChecked ? '본문 참고' : placeholder} />
@@ -140,4 +142,8 @@ const selectItem = (theme: Theme) => css`
     border: 0.1rem solid ${theme.colors.lineTinted};
     color: ${theme.colors.textPrimary};
   }
+`;
+
+const selectError = (theme: Theme) => css`
+  border: 0.1rem solid ${theme.colors.textAlert};
 `;

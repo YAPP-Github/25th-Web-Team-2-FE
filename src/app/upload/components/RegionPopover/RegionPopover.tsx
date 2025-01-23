@@ -1,5 +1,6 @@
 import { Theme } from '@emotion/react';
 import * as Popover from '@radix-ui/react-popover';
+import { FieldError } from 'react-hook-form';
 
 import {
   regionField,
@@ -26,6 +27,7 @@ interface RegionPopoverProps {
     onOpenRegionPopover: (open: boolean) => void;
     onRegionSelect: (region: string) => void;
     onSubRegionSelect: (subRegion: string) => void;
+    error?: FieldError;
   };
 }
 
@@ -37,6 +39,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
     onSubRegionSelect,
     selectedRegion,
     selectedSubRegion,
+    error,
   } = regionPopoverProps;
 
   const regionData = selectedRegion
@@ -47,7 +50,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
     <Popover.Root open={isOpenRegionPopover} onOpenChange={onOpenRegionPopover}>
       <Popover.Trigger asChild>
         <div
-          css={regionPopoverContainer}
+          css={(theme) => regionPopoverContainer(theme, !!error)}
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === ' ') {

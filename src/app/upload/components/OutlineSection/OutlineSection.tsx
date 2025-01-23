@@ -8,7 +8,6 @@ import DurationSelect from '../DurationSelect/DurationSelect';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
-import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
@@ -16,12 +15,9 @@ import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
 const OutlineSection = () => {
-  const { control, setValue, formState } = useFormContext();
-  const formData = useWatch({ control });
-  console.log('formData >> ', formData);
-  console.log('errors>> ', formState.errors);
+  const { control, setValue } = useFormContext();
 
-  // todo useReducer로 리팩토링
+  // todo useReducer로 리팩토링 -> handleSubmit 이후 reset 추가
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
   const [durationChecked, setDurationChecked] = useState(false);
 
@@ -36,11 +32,16 @@ const OutlineSection = () => {
   const handleRegionSelect = (region: string) => {
     setSelectedRegion(region);
     setSelectedSubRegion(null);
+
+    setValue('region', region, { shouldValidate: true });
+    setValue('area', '', { shouldValidate: true });
   };
 
   const handleSubRegionSelect = (subRegion: string) => {
     setSelectedSubRegion(subRegion);
     setIsOpenRegionPopover(false);
+
+    setValue('area', subRegion, { shouldValidate: true });
   };
 
   const regionPopoverProps = {
@@ -51,10 +52,6 @@ const OutlineSection = () => {
     onRegionSelect: handleRegionSelect,
     onSubRegionSelect: handleSubRegionSelect,
   };
-
-  // 소요 시간
-  const [countValue, setCountValue] = useState<string | undefined>(undefined);
-  const [durationValue, setDurationValue] = useState<string | undefined>(undefined);
 
   return (
     <div>
@@ -71,18 +68,15 @@ const OutlineSection = () => {
           <Controller
             name="leadResearcher"
             control={control}
-            rules={{ required: '연구 책임자는 필수 항목입니다.' }}
             render={({ field, fieldState }) => (
-              <>
-                <InputForm
-                  id="leadResearcher"
-                  field={field}
-                  css={input}
-                  type="text"
-                  placeholder="OO대학교 OO학과 OO연구실 OOO"
-                  fieldState={fieldState}
-                />
-              </>
+              <InputForm
+                id="leadResearcher"
+                field={field}
+                css={input}
+                type="text"
+                placeholder="OO대학교 OO학과 OO연구실 OOO"
+                fieldState={fieldState}
+              />
             )}
           />
         </div>
@@ -145,7 +139,6 @@ const OutlineSection = () => {
           <Controller
             name="matchType"
             control={control}
-            rules={{ required: '진행 방식을 선택해주세요.' }}
             render={({ field, fieldState }) => (
               <RadioButtonGroup<MatchType>
                 options={[
@@ -190,11 +183,56 @@ const OutlineSection = () => {
             <div css={[input, disabledInput]}>비대면</div>
           ) : (
             <div css={inputContainer}>
-              <input css={input} type="text" id="location" placeholder="대학교 입력" />
+              <Controller
+                name="univName"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputForm
+                    id="univName"
+                    field={field}
+                    css={input}
+                    placeholder="대학교 입력"
+                    fieldState={fieldState}
+                    showErrorMessage={false}
+                  />
+                )}
+              />
               {/* 지역구 선택 */}
-              <RegionPopover regionPopoverProps={regionPopoverProps} />
+              <Controller
+                name="region"
+                control={control}
+                rules={{ required: '지역을 선택해 주세요' }}
+                render={({ fieldState }) => (
+                  <Controller
+                    name="area"
+                    control={control}
+                    rules={{ required: '지역구를 선택해 주세요' }}
+                    render={({ fieldState: areaFieldState }) => (
+                      <RegionPopover
+                        regionPopoverProps={{
+                          ...regionPopoverProps,
+                          error: fieldState.error || areaFieldState.error,
+                        }}
+                      />
+                    )}
+                  />
+                )}
+              />
 
-              <TextInput id="detail-location" placeholder="상세 주소 입력 (선택)" maxLength={70} />
+              {/* 상세 주소 입력 */}
+              <Controller
+                name="detailedAddress"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputForm
+                    id="detailedAddress"
+                    field={field}
+                    placeholder="상세 주소 입력 (선택)"
+                    maxLength={70}
+                    fieldState={fieldState}
+                  />
+                )}
+              />
             </div>
           )}
         </div>
@@ -206,12 +244,39 @@ const OutlineSection = () => {
           </p>
 
           <div css={inputContainer}>
-            <CountSelect value={countValue} onChange={setCountValue} />
-            <DurationSelect
-              value={durationValue}
-              onChange={setDurationValue}
-              referToDetailsChecked={durationChecked}
-            />
+            {/* 실험 횟수 */}
+            <div>
+              <Controller
+                name="count"
+                control={control}
+                rules={{ required: '실험 횟수는 필수 값입니다.' }}
+                render={({ field, fieldState }) => (
+                  <CountSelect
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    error={!!fieldState.error}
+                  />
+                )}
+              />
+            </div>
+
+            {/* 소요 시간 */}
+            <div>
+              <Controller
+                name="timeRequired"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <DurationSelect
+                    value={durationChecked ? undefined : field.value || undefined}
+                    onChange={(value) => field.onChange(value || null)}
+                    referToDetailsChecked={durationChecked}
+                    error={!!fieldState.error}
+                  />
+                )}
+              />
+            </div>
+
+            {/* 본문 참고 체크박스 */}
             <CheckboxWithIcon
               checked={durationChecked}
               onChange={() => setDurationChecked((prev) => !prev)}

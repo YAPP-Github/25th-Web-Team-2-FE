@@ -1,11 +1,5 @@
 import SelectInput from '../SelectInput/SelectInput';
 
-interface DurationSelectProps {
-  value: string | undefined;
-  onChange: (value: string | undefined) => void;
-  referToDetailsChecked?: boolean;
-}
-
 export const durationMinutesOptions = [
   { label: '30분 미만', value: 'LESS_30M' },
   { label: '약 30분', value: 'ABOUT_30M' },
@@ -18,7 +12,19 @@ export const durationMinutesOptions = [
   { label: '약 4시간', value: 'ABOUT_4H' },
 ];
 
-const DurationSelect = ({ value, onChange, referToDetailsChecked }: DurationSelectProps) => {
+interface DurationSelectProps {
+  value: string | undefined;
+  onChange: (value: string | undefined) => void;
+  referToDetailsChecked?: boolean;
+  error: boolean;
+}
+
+const DurationSelect = ({
+  value,
+  onChange,
+  referToDetailsChecked = false,
+  error,
+}: DurationSelectProps) => {
   return (
     <SelectInput
       value={value}
@@ -26,6 +32,7 @@ const DurationSelect = ({ value, onChange, referToDetailsChecked }: DurationSele
       options={durationMinutesOptions}
       placeholder="1회당 시간 입력"
       referToDetailsChecked={referToDetailsChecked}
+      error={error}
     />
   );
 };

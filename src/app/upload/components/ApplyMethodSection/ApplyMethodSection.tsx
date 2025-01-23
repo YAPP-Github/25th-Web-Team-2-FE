@@ -7,6 +7,9 @@ import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, label } from '../UploadContainer/UploadContainer';
 
 import { colors } from '@/styles/colors';
+import { Controller, useFormContext } from 'react-hook-form';
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
+import InputForm from '../InputForm/InputForm';
 
 enum GenderType {
   MALE = 'MALE',
@@ -15,6 +18,9 @@ enum GenderType {
 }
 
 const ApplyMethodSection = () => {
+  const { control, formState } = useFormContext<UploadExperimentPostSchemaType>();
+  console.log('formState', formState.errors);
+
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
 
@@ -35,13 +41,22 @@ const ApplyMethodSection = () => {
         </h3>
 
         <div css={applyMethodContentLayout}>
-          <TextInput
-            id="apply-method"
-            placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
-            maxLength={200}
-            size="full"
+          <Controller
+            name="applyMethodInfo.content"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputForm
+                {...field}
+                id="apply-method"
+                placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
+                maxLength={200}
+                size="full"
+                field={field}
+                fieldState={fieldState}
+                showErrorMessage
+              />
+            )}
           />
-
           <div css={addContactInfoContainer}>
             {/* 링크 추가 */}
             <CheckboxWithIcon
