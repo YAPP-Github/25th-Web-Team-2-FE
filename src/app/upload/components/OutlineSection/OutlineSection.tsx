@@ -14,14 +14,13 @@ import { MatchType } from '@/types/uploadExperimentPost';
 import {
   headingIcon,
   label,
-  input,
+  uploadInput,
   outlineFormLayout,
 } from '../UploadContainer/UploadContainer.styles';
-import { inputContainer } from '@/app/join/components/JoinInput/JoinInput.styles';
-import { disabledInput } from './OutlineSection.styles';
+import { disabledInput, uploadInputContainer } from './OutlineSection.styles';
 
 const OutlineSection = () => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, formState } = useFormContext();
 
   // 실험 일시 및 소요시간 본문 참고 여부
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
@@ -104,7 +103,7 @@ const OutlineSection = () => {
               <InputForm
                 id="leadResearcher"
                 field={field}
-                css={input}
+                css={uploadInput}
                 type="text"
                 placeholder="OO대학교 OO학과 OO연구실 OOO"
                 fieldState={fieldState}
@@ -216,9 +215,9 @@ const OutlineSection = () => {
             실험 장소 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </label>
           {selectedMatchType === MatchType.ONLINE ? (
-            <div css={[input, disabledInput]}>비대면</div>
+            <div css={[uploadInput, disabledInput]}>비대면</div>
           ) : (
-            <div css={inputContainer}>
+            <div css={uploadInputContainer}>
               <Controller
                 name="univName"
                 control={control}
@@ -226,7 +225,7 @@ const OutlineSection = () => {
                   <InputForm
                     id="univName"
                     field={field}
-                    css={input}
+                    css={uploadInput}
                     placeholder="대학교 입력"
                     fieldState={fieldState}
                     showErrorMessage={false}
@@ -280,7 +279,7 @@ const OutlineSection = () => {
             소요 시간 <span style={{ color: `${colors.textAlert}` }}>*</span>
           </p>
 
-          <div css={inputContainer}>
+          <div css={uploadInputContainer}>
             {/* 실험 횟수 */}
             <div>
               <Controller

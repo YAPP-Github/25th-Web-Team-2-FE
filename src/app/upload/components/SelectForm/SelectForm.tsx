@@ -44,13 +44,17 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
         <Select.Root
           value={field?.value ?? undefined}
           onValueChange={field?.onChange}
-          onOpenChange={setIsOpen}
+          onOpenChange={(open) => {
+            setIsOpen(open);
+            if (!open) {
+              field.onBlur();
+            }
+          }}
           disabled={disabled}
         >
           <Select.Trigger
             ref={ref}
-            css={(theme) => selectTrigger(theme, disabled, fieldState?.error ? 'error' : '')}
-            onBlur={field?.onBlur}
+            css={(theme) => selectTrigger(theme, disabled, !!fieldState?.error)}
           >
             <Select.Value placeholder={disabled ? '본문 참고' : placeholder} />
             <Select.Icon asChild>

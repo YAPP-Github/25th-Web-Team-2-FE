@@ -7,7 +7,7 @@ import InputForm from '../InputForm/InputForm';
 import Icon from '@/components/Icon';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
-import { headingIcon, input } from '../UploadContainer/UploadContainer.styles';
+import { headingIcon, uploadInput } from '../UploadContainer/UploadContainer.styles';
 import { formMessage } from '../InputForm/InputForm.styles';
 import {
   addImageContainer,
@@ -93,7 +93,7 @@ const DescriptionSection = () => {
           render={({ field, fieldState }) => (
             <InputForm
               {...field}
-              css={[input, fullInput]}
+              css={[uploadInput, fullInput]}
               type="text"
               id="title"
               placeholder="실험 제목을 입력해 주세요"

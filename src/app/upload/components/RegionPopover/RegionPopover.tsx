@@ -17,7 +17,7 @@ import {
 
 import Icon from '@/components/Icon';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
-import { input } from '../UploadContainer/UploadContainer.styles';
+import { uploadInput } from '../UploadContainer/UploadContainer.styles';
 
 interface RegionPopoverProps {
   regionPopoverProps: {
@@ -79,7 +79,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             }
           }}
         >
-          <div role="button" css={(theme) => [input, regionField(theme)]}>
+          <div role="button" css={(theme) => [uploadInput, regionField(theme)]}>
             <span css={(theme) => placeholderText(theme, !!(selectedRegion && selectedSubRegion))}>
               {selectedRegion && selectedSubRegion
                 ? `${regionData?.label} ${selectedSubRegion}`

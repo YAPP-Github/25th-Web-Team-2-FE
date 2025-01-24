@@ -6,14 +6,16 @@ export const selectInputContainer = css`
   gap: 0.4rem;
 `;
 
-export const selectTrigger = (theme: Theme, disabled: boolean, status: string) => css`
+export const selectTrigger = (theme: Theme, disabled: boolean, isError: boolean) => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;
   height: 4.8rem;
   padding: 0.8rem 1.2rem;
-  border: 0.1rem solid ${status === 'error' ? theme.colors.textAlert : theme.colors.line01};
+
+  border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.line01};
   border-radius: 1.2rem;
+
   color: ${disabled ? theme.colors.text02 : theme.colors.text06};
   background-color: ${disabled ? theme.colors.field02 : 'transparent'};
 
@@ -25,8 +27,9 @@ export const selectTrigger = (theme: Theme, disabled: boolean, status: string) =
     color: ${theme.colors.text02};
   }
 
-  &:focus {
-    border-color: ${status === 'error' ? theme.colors.textAlert : theme.colors.lineTinted};
+  &[data-state='open'] {
+    border: 0.1rem solid ${theme.colors.primaryMint};
+    border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.primaryMint};
     outline: none;
   }
 `;

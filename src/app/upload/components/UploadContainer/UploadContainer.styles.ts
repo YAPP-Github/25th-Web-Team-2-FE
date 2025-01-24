@@ -95,7 +95,7 @@ export const outlineFormLayout = css`
   margin: 0 auto;
 `;
 
-export const input = (theme: Theme, isError?: boolean) => css`
+export const uploadInput = (theme: Theme, isError?: boolean) => css`
   ${theme.fonts.label.large.R14};
 
   width: 100%;

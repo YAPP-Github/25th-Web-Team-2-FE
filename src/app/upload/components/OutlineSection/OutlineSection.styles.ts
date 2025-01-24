@@ -55,7 +55,7 @@ export const activeRadioButton = (theme: Theme) => css`
   }
 `;
 
-export const inputContainer = css`
+export const uploadInputContainer = css`
   display: flex;
   flex-flow: column nowrap;
   gap: 0.8rem;

@@ -6,15 +6,10 @@ import { MatchType } from '@/types/uploadExperimentPost';
 export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExperimentPostSchema>>;
 
 interface UploadExperimentPostSchemaProps {
-  matchType: MatchType;
   addLink: boolean;
   addContact: boolean;
 }
-const UploadExperimentPostSchema = ({
-  matchType,
-  addLink,
-  addContact,
-}: UploadExperimentPostSchemaProps) => {
+const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPostSchemaProps) => {
   return z.object({
     // 실험 시작 날짜
     startDate: z.union([z.string(), z.null()]),

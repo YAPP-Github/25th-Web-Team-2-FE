@@ -20,11 +20,7 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    resolver: async (data, context, options) => {
-      const matchType = data.matchType;
-      const schema = UploadExperimentPostSchema({ matchType, addLink, addContact });
-      return zodResolver(schema)(data, context, options);
-    },
+    resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
     defaultValues: {
       leadResearcher: '',
       startDate: undefined,
