@@ -6,13 +6,18 @@ import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
 
-const useUploadExperimentPost = () => {
+interface useUploadExperimentPostProps {
+  addLink: boolean;
+  addContact: boolean;
+}
+
+const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPostProps) => {
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
     resolver: async (data, context, options) => {
       const matchType = data.matchType;
-      const schema = UploadExperimentPostSchema({ matchType });
+      const schema = UploadExperimentPostSchema({ matchType, addLink, addContact });
       return zodResolver(schema)(data, context, options);
     },
     defaultValues: {
@@ -31,6 +36,8 @@ const useUploadExperimentPost = () => {
       content: '',
       applyMethodInfo: {
         content: '',
+        formUrl: null,
+        phoneNum: null,
       },
     },
   });

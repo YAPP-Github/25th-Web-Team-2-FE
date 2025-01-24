@@ -5,7 +5,7 @@ interface InputFormProps {
   id: string;
   field: {
     name: string;
-    value: string;
+    value: string | null;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur: VoidFunction;
   };

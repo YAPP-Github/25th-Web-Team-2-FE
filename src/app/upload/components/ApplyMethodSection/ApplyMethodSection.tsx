@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react';
-import { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
@@ -17,12 +17,22 @@ enum GenderType {
   ALL = 'ALL',
 }
 
-const ApplyMethodSection = () => {
-  const { control } = useFormContext<UploadExperimentPostSchemaType>();
-  // console.log('formState', formState.errors);
+interface ApplyMethodSectionProps {
+  addLink: boolean;
+  setAddLink: Dispatch<SetStateAction<boolean>>;
+  addContact: boolean;
+  setAddContact: Dispatch<SetStateAction<boolean>>;
+}
 
-  const [addLink, setAddLink] = useState<boolean>(false);
-  const [addContact, setAddContact] = useState<boolean>(false);
+const ApplyMethodSection = ({
+  addLink,
+  setAddLink,
+  addContact,
+  setAddContact,
+}: ApplyMethodSectionProps) => {
+  const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
+  const content = useWatch({ control });
+  console.log('content >> ', content);
 
   const [alarmAgree, setAlarmAgree] = useState<boolean>(false);
 
@@ -47,11 +57,11 @@ const ApplyMethodSection = () => {
             render={({ field, fieldState }) => (
               <InputForm
                 {...field}
-                id="apply-method"
+                id="applyMethodInfo.content"
                 placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
                 maxLength={200}
                 size="full"
-                field={field}
+                field={{ ...field, value: field.value ?? '' }}
                 fieldState={fieldState}
                 showErrorMessage
               />
@@ -63,12 +73,30 @@ const ApplyMethodSection = () => {
               checked={addLink}
               onChange={() => {
                 setAddLink((prev) => !prev);
+                setValue('applyMethodInfo.formUrl', null);
               }}
               label="링크를 추가할게요"
               align="left"
               size="large"
             />
-            {addLink && <TextInput id="link" placeholder="https://" maxLength={200} size="full" />}
+            {addLink && (
+              <Controller
+                name="applyMethodInfo.formUrl"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputForm
+                    {...field}
+                    id="applyMethodInfo.formUrl"
+                    placeholder="https://"
+                    maxLength={200}
+                    size="full"
+                    field={field}
+                    fieldState={fieldState}
+                    showErrorMessage={false}
+                  />
+                )}
+              />
+            )}
 
             {/* 연락처 추가 */}
             <CheckboxWithIcon
@@ -80,7 +108,24 @@ const ApplyMethodSection = () => {
               align="left"
               size="large"
             />
-            {addContact && <TextInput id="contact" placeholder="연락처, 이메일 등" size="full" />}
+            {addContact && (
+              <Controller
+                name="applyMethodInfo.phoneNum"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <InputForm
+                    {...field}
+                    id="applyMethodInfo.phoneNum"
+                    placeholder="연락처, 이메일 등"
+                    maxLength={100}
+                    size="full"
+                    field={field}
+                    fieldState={fieldState}
+                    showErrorMessage={false}
+                  />
+                )}
+              />
+            )}
           </div>
         </div>
       </div>

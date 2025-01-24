@@ -3,7 +3,7 @@
 import { Theme } from '@emotion/react';
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import useUploadExperimentPost from '../../hooks/useUploadExperimentPost';
@@ -12,7 +12,10 @@ import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
 const UploadContainer = () => {
-  const { form, handleSubmit } = useUploadExperimentPost();
+  const [addLink, setAddLink] = useState<boolean>(false);
+  const [addContact, setAddContact] = useState<boolean>(false);
+
+  const { form, handleSubmit } = useUploadExperimentPost({ addLink, addContact });
 
   return (
     <FormProvider {...form}>
@@ -30,7 +33,12 @@ const UploadContainer = () => {
           <DescriptionSection />
 
           {/* 실험 참여 방법 */}
-          <ApplyMethodSection />
+          <ApplyMethodSection
+            addLink={addLink}
+            setAddLink={setAddLink}
+            addContact={addContact}
+            setAddContact={setAddContact}
+          />
         </div>
 
         {/* 버튼 */}

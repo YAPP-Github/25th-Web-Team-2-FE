@@ -6,8 +6,14 @@ export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExp
 
 interface UploadExperimentPostSchemaProps {
   matchType: MatchType;
+  addLink: boolean;
+  addContact: boolean;
 }
-const UploadExperimentPostSchema = ({ matchType }: UploadExperimentPostSchemaProps) => {
+const UploadExperimentPostSchema = ({
+  matchType,
+  addLink,
+  addContact,
+}: UploadExperimentPostSchemaProps) => {
   return z.object({
     // targetGroupInfo: z.object({
     //   startAge: z.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
@@ -88,8 +94,17 @@ const UploadExperimentPostSchema = ({ matchType }: UploadExperimentPostSchemaPro
         .string()
         .min(5, '최소 5자 이상으로 입력해 주세요')
         .max(200, '최대 200자 이하로 입력해 주세요'),
-      //   formUrl: z.string().url().optional(), // 링크
-      //   phoneNum: z.string().optional(), // 연락처
+      // 링크
+      formUrl: addLink
+        ? z
+            .string()
+            .max(100, '최대 100자 이하로 입력해 주세요')
+            .url({ message: '링크를 입력해 주세요' }) // addLink가 true일 때 필수값으로 설정
+        : z.string().nullable(),
+      // 연락처
+      phoneNum: addContact
+        ? z.string().max(100, '최대 100자 이하로 입력해 주세요')
+        : z.string().nullable(),
     }),
     // alarmAgree: z.boolean().default(false), // 알람 동의
   });
