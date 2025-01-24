@@ -1,6 +1,6 @@
-import { Theme } from '@emotion/react';
 import * as Popover from '@radix-ui/react-popover';
 import { FieldError } from 'react-hook-form';
+import { useRef } from 'react';
 
 import {
   regionField,
@@ -28,6 +28,9 @@ interface RegionPopoverProps {
     onRegionSelect: (region: string) => void;
     onSubRegionSelect: (subRegion: string) => void;
     error?: FieldError;
+    field?: {
+      onBlur: VoidFunction;
+    };
   };
 }
 
@@ -40,17 +43,34 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
     selectedRegion,
     selectedSubRegion,
     error,
+    field,
   } = regionPopoverProps;
 
   const regionData = selectedRegion
     ? UPLOAD_REGION.find((region) => region.value === selectedRegion) || null
     : UPLOAD_REGION.find((region) => region.value === 'SEOUL') || null;
 
+  const popoverRef = useRef<HTMLDivElement | null>(null);
+
+  const handleSubRegionSelect = (subRegionLabel: string) => {
+    const selectedRegion = UPLOAD_REGION.find((region) =>
+      region.children.some((subRegion) => subRegion.label === subRegionLabel),
+    );
+
+    if (selectedRegion) {
+      onRegionSelect(selectedRegion.value);
+    }
+
+    onSubRegionSelect(subRegionLabel);
+  };
+
   return (
     <Popover.Root open={isOpenRegionPopover} onOpenChange={onOpenRegionPopover}>
       <Popover.Trigger asChild>
         <div
+          ref={popoverRef}
           css={(theme) => regionPopoverContainer(theme, !!error)}
+          className="region-field"
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === ' ') {
@@ -59,12 +79,8 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             }
           }}
         >
-          <div role="button" css={[input, regionField]}>
-            <span
-              css={(theme: Theme) =>
-                placeholderText(theme, !!(selectedRegion && selectedSubRegion))
-              }
-            >
+          <div role="button" css={(theme) => [input, regionField(theme)]}>
+            <span css={(theme) => placeholderText(theme, !!(selectedRegion && selectedSubRegion))}>
               {selectedRegion && selectedSubRegion
                 ? `${regionData?.label} ${selectedSubRegion}`
                 : '지역구 선택'}
@@ -77,7 +93,18 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
       </Popover.Trigger>
 
       <Popover.Portal>
-        <Popover.Content sideOffset={6} css={popoverContent}>
+        <Popover.Content
+          sideOffset={6}
+          css={popoverContent}
+          onFocusOutside={() => {
+            field?.onBlur();
+            onOpenRegionPopover(false);
+          }}
+          onInteractOutside={() => {
+            field?.onBlur();
+            onOpenRegionPopover(false);
+          }}
+        >
           <div css={popoverLayout}>
             {/* 지역 */}
             <div css={regionList}>
@@ -101,7 +128,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
                     subRegionButton,
                     selectedSubRegion === subRegion.label && activeRegionButton,
                   ]}
-                  onClick={() => onSubRegionSelect(subRegion.label)}
+                  onClick={() => handleSubRegionSelect(subRegion.label)}
                 >
                   {subRegion.label}
                 </button>

@@ -232,7 +232,7 @@ const OutlineSection = () => {
                 name="region"
                 control={control}
                 rules={{ required: '지역을 선택해 주세요' }}
-                render={({ fieldState }) => (
+                render={({ fieldState, field }) => (
                   <Controller
                     name="area"
                     control={control}
@@ -242,6 +242,7 @@ const OutlineSection = () => {
                         regionPopoverProps={{
                           ...regionPopoverProps,
                           error: fieldState.error || areaFieldState.error,
+                          field,
                         }}
                       />
                     )}

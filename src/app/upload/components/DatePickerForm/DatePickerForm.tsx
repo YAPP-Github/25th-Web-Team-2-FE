@@ -1,6 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
 import { ko } from 'date-fns/locale';
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { DayPicker, DateRange } from 'react-day-picker';
 import { FieldError } from 'react-hook-form';
 
@@ -45,23 +45,6 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
       setSelectedDates(range);
       onDateChange(formattedRange);
     };
-
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (event.target instanceof HTMLElement) {
-          if (!event.target.closest('.date-picker-field') && isOpen) {
-            field?.onBlur();
-            setIsOpen(false);
-          }
-        }
-      };
-
-      document.addEventListener('click', handleClickOutside);
-
-      return () => {
-        document.removeEventListener('click', handleClickOutside);
-      };
-    }, [isOpen, field?.onBlur, field]);
 
     return (
       <div

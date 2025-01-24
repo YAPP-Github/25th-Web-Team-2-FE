@@ -52,7 +52,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
             css={(theme) => selectTrigger(theme, disabled, fieldState?.error ? 'error' : '')}
             onBlur={field?.onBlur}
           >
-            <Select.Value placeholder={placeholder} />
+            <Select.Value placeholder={disabled ? '본문 참고' : placeholder} />
             <Select.Icon asChild>
               <Icon
                 icon="Chevron"
