@@ -1,20 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { convertLabelToValue } from '../upload.utils';
 
+import useUploadExperimentPostAPI from '@/apis/hooks/useUploadExperimentPostAPI';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
-import useUploadExperimentPostAPI from '@/apis/hooks/useUploadExperimentPostAPI';
 
 interface useUploadExperimentPostProps {
   addLink: boolean;
   addContact: boolean;
+  setOpenToast: Dispatch<SetStateAction<boolean>>;
 }
 
-const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPostProps) => {
+const useUploadExperimentPost = ({
+  addLink,
+  addContact,
+  setOpenToast,
+}: useUploadExperimentPostProps) => {
   const router = useRouter();
 
   const form = useForm<UploadExperimentPostSchemaType>({
@@ -53,7 +59,6 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
     },
   });
 
-  /* 공고 등록 API */
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostAPI();
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
@@ -62,15 +67,16 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
       area: data.area ? convertLabelToValue(data.area) : undefined,
     };
 
-    uploadExperimentPost(updatedData, {
-      onSuccess: (response) => {
-        form.reset();
-        router.push(`/post/${response.postInfo.experimentPostId}`);
-      },
-      onError: (error) => {
-        console.error('공고 등록 form 저장 중 오류 발생', error);
-      },
-    });
+    try {
+      await uploadExperimentPost(updatedData, {
+        onSuccess: (response) => {
+          form.reset();
+          router.push(`/post/${response.postInfo.experimentPostId}`);
+        },
+      });
+    } catch {
+      setOpenToast(true);
+    }
   };
 
   return {
