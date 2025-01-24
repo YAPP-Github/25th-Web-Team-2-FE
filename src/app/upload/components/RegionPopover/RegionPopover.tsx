@@ -14,10 +14,10 @@ import {
   placeholderText,
   regionPopoverContainer,
 } from './RegionPopover.styles';
-import { input } from '../UploadContainer/UploadContainer';
 
 import Icon from '@/components/Icon';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
+import { input } from '../UploadContainer/UploadContainer.styles';
 
 interface RegionPopoverProps {
   regionPopoverProps: {

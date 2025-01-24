@@ -1,4 +1,3 @@
-import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
@@ -8,14 +7,21 @@ import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
-import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
+import {
+  headingIcon,
+  label,
+  input,
+  outlineFormLayout,
+} from '../UploadContainer/UploadContainer.styles';
+import { inputContainer } from '@/app/join/components/JoinInput/JoinInput.styles';
+import { disabledInput } from './OutlineSection.styles';
 
 const OutlineSection = () => {
-  const { control, setValue, formState } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   // 실험 일시 및 소요시간 본문 참고 여부
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
@@ -327,69 +333,3 @@ const OutlineSection = () => {
 };
 
 export default OutlineSection;
-
-export const outlineFormLayout = css`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 10.2rem 10.2rem auto;
-
-  grid-column-gap: 3.2rem;
-  grid-row-gap: 2.8rem;
-
-  margin: 0 auto;
-`;
-
-export const radioGroup = css`
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 0.8rem;
-`;
-
-export const customRadioGroup = css`
-  display: flex;
-  gap: 1rem;
-`;
-
-export const customRadioButton = (theme: Theme) => css`
-  ${theme.fonts.label.large.M14};
-
-  width: 14.533rem;
-  height: 4.8rem;
-
-  padding: 1rem 2rem;
-
-  border: 0.1rem solid ${theme.colors.line01};
-  border-radius: 1.2rem;
-
-  background-color: ${theme.colors.field01};
-
-  cursor: pointer;
-
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: ${theme.colors.field02};
-  }
-`;
-
-export const activeRadioButton = (theme: Theme) => css`
-  border: 0.1rem solid ${theme.colors.lineTinted};
-
-  background-color: ${theme.colors.primaryTinted};
-  color: ${theme.colors.textPrimary};
-
-  &:hover {
-    background-color: ${theme.colors.primaryTinted};
-  }
-`;
-
-const inputContainer = css`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.8rem;
-`;
-
-export const disabledInput = (theme: Theme) => css`
-  background-color: ${theme.colors.field02};
-  color: ${theme.colors.text02};
-`;

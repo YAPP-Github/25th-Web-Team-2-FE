@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 
 import { convertLabelToValue } from '../upload.utils';
 
-import useUploadExperimentPostAPI from '@/apis/useUploadExperimentPostAPI';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
+import useUploadExperimentPostAPI from '@/apis/hooks/useUploadExperimentPostAPI';
 
 interface useUploadExperimentPostProps {
   addLink: boolean;

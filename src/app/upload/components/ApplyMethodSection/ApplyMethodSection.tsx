@@ -6,10 +6,20 @@ import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-import { headingIcon, label } from '../UploadContainer/UploadContainer';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import { headingIcon, label } from '../UploadContainer/UploadContainer.styles';
+import {
+  addContactInfoContainer,
+  ageInputContainer,
+  alarmAgreeContainer,
+  applyMethodContainer,
+  applyMethodContentLayout,
+  targetConditionLayout,
+  targetGroupContainer,
+  textStyle,
+} from './ApplyMethodSection.styles';
 
 export enum GenderType {
   MALE = 'MALE',
@@ -37,7 +47,7 @@ const ApplyMethodSection = ({
   );
 
   return (
-    <div css={applyMethodLayout}>
+    <div>
       {/* 실험 참여 방법 */}
       <div css={applyMethodContainer}>
         <h3>
@@ -236,65 +246,3 @@ const ApplyMethodSection = ({
 };
 
 export default ApplyMethodSection;
-
-export const applyMethodLayout = css``;
-
-const applyMethodContainer = css`
-  margin-top: 2rem;
-  margin-bottom: 4.8rem;
-`;
-
-const applyMethodContentLayout = css`
-  display: flex;
-  flex-flow: column nowrap;
-`;
-
-const addContactInfoContainer = css`
-  width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 0.8rem;
-`;
-
-const targetConditionLayout = css`
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 2.8rem;
-`;
-
-const targetGroupContainer = css`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-`;
-
-const ageInputContainer = (theme: Theme, isError: boolean) => css`
-  width: 45.2rem;
-  height: 4.8rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.line01};
-  border-radius: 1.2rem;
-  padding: 1.3rem 1.6rem;
-`;
-
-const textStyle = (theme: Theme) => css`
-  ${theme.fonts.label.large.M14};
-  color: ${theme.colors.text06};
-`;
-
-const alarmAgreeContainer = (theme: Theme) => css`
-  width: fit-content;
-  height: 3.4rem;
-
-  padding: 0 1rem;
-
-  background-color: ${theme.colors.field02};
-  border-radius: 0.8rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

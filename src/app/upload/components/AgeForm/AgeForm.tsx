@@ -1,5 +1,5 @@
-import { css, Theme } from '@emotion/react';
 import { ChangeEvent, forwardRef } from 'react';
+import { inputStyle, textInputContainer } from './AgeForm.styles';
 
 interface AgeFormProps {
   id: string;
@@ -31,28 +31,3 @@ const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(({ field, placeholder
 AgeForm.displayName = 'AgeForm';
 
 export default AgeForm;
-
-const textInputContainer = () => css`
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  position: relative;
-
-  width: 100%;
-`;
-
-const inputStyle = (theme: Theme) => css`
-  ${theme.fonts.label.large.R14};
-
-  width: 17.2rem;
-  height: 2.2rem;
-
-  text-align: center;
-
-  border: none;
-  outline: none;
-
-  &::placeholder {
-    color: ${theme.colors.text02};
-  }
-`;
