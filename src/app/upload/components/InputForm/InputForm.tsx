@@ -1,12 +1,12 @@
 import { css, Theme } from '@emotion/react';
-import React, { forwardRef, useState } from 'react';
+import React, { ChangeEvent, forwardRef, useState } from 'react';
 
 interface InputFormProps {
   id: string;
   field: {
     name: string;
-    value: string | null;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string | number | null;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur: VoidFunction;
   };
   fieldState: {
@@ -35,9 +35,11 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
     },
     ref,
   ) => {
-    const [textLength, setTextLength] = useState(field.value?.length || 0);
+    const [textLength, setTextLength] = useState(
+      typeof field.value === 'string' ? field.value.length : 0,
+    );
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       field.onChange(e);
       setTextLength(e.target.value.length);
     };
@@ -46,7 +48,7 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
       <div css={textInputContainer(size)}>
         <input
           {...field}
-          ref={ref} // ref 전달
+          ref={ref}
           id={id}
           css={(theme) => textInput(theme, fieldState?.error ? 'error' : '')}
           type={type}
@@ -71,7 +73,7 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
   },
 );
 
-InputForm.displayName = 'InputForm'; // 컴포넌트 이름 설정
+InputForm.displayName = 'InputForm';
 
 export default InputForm;
 

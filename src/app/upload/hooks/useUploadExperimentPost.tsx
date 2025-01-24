@@ -39,6 +39,10 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
         formUrl: null,
         phoneNum: null,
       },
+      targetGroupInfo: {
+        startAge: undefined,
+        endAge: undefined,
+      },
     },
   });
 

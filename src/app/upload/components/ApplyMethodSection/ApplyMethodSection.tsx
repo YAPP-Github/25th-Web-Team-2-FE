@@ -2,6 +2,7 @@ import { css, Theme } from '@emotion/react';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
@@ -11,7 +12,7 @@ import { headingIcon, label } from '../UploadContainer/UploadContainer';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
-enum GenderType {
+export enum GenderType {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   ALL = 'ALL',
@@ -30,9 +31,14 @@ const ApplyMethodSection = ({
   addContact,
   setAddContact,
 }: ApplyMethodSectionProps) => {
-  const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
+  const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
   const content = useWatch({ control });
   console.log('content >> ', content);
+  console.log('error >> ', formState.errors);
+
+  const ageError = !!(
+    formState.errors?.targetGroupInfo?.startAge || formState.errors?.targetGroupInfo?.endAge
+  );
 
   const [alarmAgree, setAlarmAgree] = useState<boolean>(false);
 
@@ -138,18 +144,29 @@ const ApplyMethodSection = ({
         <div css={targetGroupContainer}>
           {/* 나이 */}
           <div>
-            <label css={label}>
+            <p css={label}>
               나이 <span style={{ color: `${colors.textAlert}` }}>*</span>
-            </label>
-            <div css={ageInputContainer}>
+            </p>
+            <div css={(theme) => ageInputContainer(theme, ageError)}>
               <span css={textStyle}>만</span>
-              <input id={'min-age'} type="number" css={inputStyle} placeholder="00" min="0" />
+              <Controller
+                name="targetGroupInfo.startAge"
+                control={control}
+                render={({ field }) => (
+                  <AgeForm {...field} id="startAge" placeholder="00" field={field} />
+                )}
+              />
               <span css={textStyle}>~</span>
-              <input id={'max-age'} type="number" css={inputStyle} placeholder="00" min="0" />
+              <Controller
+                name="targetGroupInfo.endAge"
+                control={control}
+                render={({ field }) => (
+                  <AgeForm {...field} id="endAge" placeholder="00" field={field} />
+                )}
+              />
               <span css={textStyle}>세</span>
             </div>
           </div>
-
           {/* 성별 */}
           <div>
             <label css={label}>
@@ -237,14 +254,14 @@ const targetGroupContainer = css`
   justify-content: space-between;
 `;
 
-const ageInputContainer = (theme: Theme) => css`
+const ageInputContainer = (theme: Theme, isError: boolean) => css`
   width: 45.2rem;
   height: 4.8rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.1rem solid ${theme.colors.line01};
+  border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.line01};
   border-radius: 1.2rem;
   padding: 1.3rem 1.6rem;
 `;
@@ -252,22 +269,6 @@ const ageInputContainer = (theme: Theme) => css`
 const textStyle = (theme: Theme) => css`
   ${theme.fonts.label.large.M14};
   color: ${theme.colors.text06};
-`;
-
-const inputStyle = (theme: Theme) => css`
-  ${theme.fonts.label.large.R14};
-
-  width: 17.2rem;
-  height: 2.2rem;
-
-  text-align: center;
-
-  border: none;
-  outline: none;
-
-  &::placeholder {
-    color: ${theme.colors.text02};
-  }
 `;
 
 const alarmAgreeContainer = (theme: Theme) => css`

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { MatchType } from '@/types/uploadExperimentPost';
 
 export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExperimentPostSchema>>;
@@ -15,17 +16,12 @@ const UploadExperimentPostSchema = ({
   addContact,
 }: UploadExperimentPostSchemaProps) => {
   return z.object({
-    // targetGroupInfo: z.object({
-    //   startAge: z.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
-    //   endAge: z.number().min(0, '0세 이상'), // 참여 가능 나이 (이하)
-    //   genderType: z.nativeEnum(GenderType), // 성별
-    //   otherCondition: z.string().optional(), // 기타조건
-    // }),
-    // applyMethodInfo: z.object({
-    //   content: z.string().nonempty('필수 값'), // 참여 방법
-    //   formUrl: z.string().url().optional(), // 링크
-    //   phoneNum: z.string().optional(), // 연락처
-    // }),
+    targetGroupInfo: z.object({
+      startAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
+      endAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이하)
+      genderType: z.nativeEnum(GenderType), // 성별
+      otherCondition: z.string().optional(), // 기타조건
+    }),
     // imageListInfo: z.object({
     //   images: z.array(z.string()).optional(), // 이미지 목록 (최대 3장)
     // }),
@@ -99,7 +95,7 @@ const UploadExperimentPostSchema = ({
         ? z
             .string()
             .max(100, '최대 100자 이하로 입력해 주세요')
-            .url({ message: '링크를 입력해 주세요' }) // addLink가 true일 때 필수값으로 설정
+            .url({ message: '링크를 입력해 주세요' })
         : z.string().nullable(),
       // 연락처
       phoneNum: addContact
