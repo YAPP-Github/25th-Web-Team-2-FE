@@ -12,7 +12,12 @@ import {
   scrollableContent,
   disabledCheckButton,
 } from './PostOutline.styles';
-import { getGenderLabel } from '../../PostPage.utils';
+import {
+  getAreaLabel,
+  getDurationLabel,
+  getGenderLabel,
+  getRegionLabel,
+} from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
 import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
@@ -75,15 +80,18 @@ const PostOutline = ({ postDetailData }: PostOutlineProps) => {
               <th>소요 시간</th>
               <td>
                 <span css={participationCount}>{summary.count}회 참여</span>{' '}
-                {summary.timeRequired ? summary.timeRequired : '본문 참고'}
+                {summary.timeRequired ? getDurationLabel(summary.timeRequired) : '본문 참고'}
               </td>
             </tr>
             <tr>
               <th>실험 장소</th>
               <td css={textWrapRow}>
                 <p>
-                  {address.univName
-                    ? `${address.region} ${address.area} ${address.univName} ${address.detailedAddress}`
+                  {address.univName && address.region && address.area
+                    ? `${getRegionLabel(address.region)} ${getAreaLabel(
+                        address.region,
+                        address.area,
+                      )} ${address.univName} ${address.detailedAddress}`
                     : '본문 참고'}
                 </p>
               </td>
