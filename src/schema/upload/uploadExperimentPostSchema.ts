@@ -29,8 +29,8 @@ const UploadExperimentPostSchema = ({
     count: z.enum(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']).transform(Number), // 참여 횟수
 
     // 소요 시간
-    timeRequired: z.union([
-      z.enum([
+    timeRequired: z
+      .enum([
         'LESS_30M',
         'ABOUT_30M',
         'ABOUT_1H',
@@ -40,9 +40,8 @@ const UploadExperimentPostSchema = ({
         'ABOUT_3H',
         'ABOUT_3H30M',
         'ABOUT_4H',
-      ]),
-      z.null(),
-    ]),
+      ])
+      .nullable(),
 
     // 연구 책임자
     leadResearcher: z
@@ -50,12 +49,11 @@ const UploadExperimentPostSchema = ({
       .min(10, { message: '최소 10자 이상으로 입력해 주세요' })
       .max(150, { message: '최대 150자 이하로 입력해 주세요' }),
     // 대학교
-    univName: z.string({ required_error: '' }),
+    univName: z.string().min(1, '').nullable(),
     // 지역
-    region:
-      matchType === MatchType.ONLINE ? z.string().optional() : z.string({ required_error: '' }),
+    region: z.string().min(1, '').nullable(),
     // 지역구
-    area: matchType === MatchType.ONLINE ? z.string().optional() : z.string({ required_error: '' }),
+    area: z.string().min(1, '').nullable(),
     // 상세 주소
     detailedAddress: z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' }),
     // 보상

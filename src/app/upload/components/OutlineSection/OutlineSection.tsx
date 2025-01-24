@@ -15,9 +15,9 @@ import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
 const OutlineSection = () => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, formState } = useFormContext();
 
-  // todo useReducer로 리팩토링 -> handleSubmit 이후 reset 추가
+  // 실험 일시 및 소요시간 본문 참고 여부
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
   const [durationChecked, setDurationChecked] = useState(false);
 
@@ -29,6 +29,7 @@ const OutlineSection = () => {
   const [selectedSubRegion, setSelectedSubRegion] = useState<string | null>(null);
   const [isOpenRegionPopover, setIsOpenRegionPopover] = useState(false);
 
+  // 유저 선택에 따라 재검증 및 null 처리
   const handleRegionSelect = (region: string) => {
     setSelectedRegion(region);
     setSelectedSubRegion(null);
@@ -42,6 +43,31 @@ const OutlineSection = () => {
     setIsOpenRegionPopover(false);
 
     setValue('area', subRegion, { shouldValidate: true });
+  };
+
+  const handleMatchTypeChange = (value: MatchType) => {
+    setValue('matchType', value, { shouldValidate: true });
+
+    if (value === MatchType.ONLINE) {
+      setValue('region', null, { shouldValidate: true });
+      setValue('area', null, { shouldValidate: true });
+      setValue('univName', null, { shouldValidate: true });
+    } else {
+      setValue('region', '', { shouldValidate: true });
+      setValue('area', '', { shouldValidate: true });
+      setValue('univName', '', { shouldValidate: true });
+    }
+  };
+
+  const handleDurationCheckboxChange = () => {
+    const newCheckedState = !durationChecked;
+    setDurationChecked(newCheckedState);
+
+    if (newCheckedState) {
+      setValue('timeRequired', null, { shouldValidate: true });
+    } else {
+      setValue('timeRequired', '', { shouldValidate: true });
+    }
   };
 
   const regionPopoverProps = {
@@ -148,7 +174,10 @@ const OutlineSection = () => {
                   { value: MatchType.HYBRID, label: '대면+비대면' },
                 ]}
                 selectedValue={field.value}
-                onChange={(value) => field.onChange(value)}
+                onChange={(value) => {
+                  field.onChange(value);
+                  handleMatchTypeChange(value);
+                }}
                 isError={!!fieldState.error}
               />
             )}
@@ -271,11 +300,7 @@ const OutlineSection = () => {
                   control={control}
                   render={({ field, fieldState }) => (
                     <SelectForm
-                      field={{
-                        ...field,
-                        value: durationChecked ? undefined : field.value || undefined,
-                        onChange: (value) => field.onChange(value || null),
-                      }}
+                      field={field}
                       fieldState={fieldState}
                       options={durationMinutesOptions}
                       placeholder="1회당 시간 입력"
@@ -289,7 +314,7 @@ const OutlineSection = () => {
               {/* 본문 참고 체크박스 */}
               <CheckboxWithIcon
                 checked={durationChecked}
-                onChange={() => setDurationChecked((prev) => !prev)}
+                onChange={handleDurationCheckboxChange}
                 label="본문 참고"
               />
             </>

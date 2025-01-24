@@ -23,9 +23,9 @@ interface UseUploadExperimentPostAPIParams {
     | 'ABOUT_4H'
     | null;
   leadResearcher: string;
-  univName?: string;
-  region?: string | undefined;
-  area?: string | undefined;
+  univName?: string | null;
+  region?: string | null;
+  area?: string | null;
   detailedAddress?: string;
   reward: string;
   title: string;

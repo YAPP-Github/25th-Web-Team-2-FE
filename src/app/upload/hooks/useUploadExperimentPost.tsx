@@ -57,8 +57,6 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
     },
   });
 
-  console.log('error >> ', form.formState.errors);
-
   /* 공고 등록 API */
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostAPI();
 
@@ -72,7 +70,6 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
       onSuccess: (response) => {
         form.reset();
         router.push(`/post/${response.postInfo.experimentPostId}`);
-        console.log('response > ', response);
       },
       onError: (error) => {
         console.error('공고 등록 form 저장 중 오류 발생', error);
