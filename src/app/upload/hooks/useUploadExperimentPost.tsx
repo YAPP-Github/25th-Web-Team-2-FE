@@ -42,7 +42,13 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
       targetGroupInfo: {
         startAge: undefined,
         endAge: undefined,
+        genderType: undefined,
+        otherCondition: '',
       },
+      imageListInfo: {
+        images: [],
+      },
+      alarmAgree: false,
     },
   });
 

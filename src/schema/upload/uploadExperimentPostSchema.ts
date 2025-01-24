@@ -16,16 +16,6 @@ const UploadExperimentPostSchema = ({
   addContact,
 }: UploadExperimentPostSchemaProps) => {
   return z.object({
-    targetGroupInfo: z.object({
-      startAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
-      endAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이하)
-      genderType: z.nativeEnum(GenderType), // 성별
-      otherCondition: z.string().optional(), // 기타조건
-    }),
-    // imageListInfo: z.object({
-    //   images: z.array(z.string()).optional(), // 이미지 목록 (최대 3장)
-    // }),
-
     // 실험 시작 날짜
     startDate: z.union([z.string(), z.null()]),
 
@@ -84,6 +74,10 @@ const UploadExperimentPostSchema = ({
       .min(200, '최소 200자 이상으로 입력해 주세요')
       .max(5000, '최대 5000자 이하로 입력해 주세요'),
 
+    imageListInfo: z.object({
+      images: z.array(z.string()).optional(), // 이미지 목록 (최대 3장)
+    }),
+
     applyMethodInfo: z.object({
       // 참여 방법
       content: z
@@ -102,7 +96,14 @@ const UploadExperimentPostSchema = ({
         ? z.string().max(100, '최대 100자 이하로 입력해 주세요')
         : z.string().nullable(),
     }),
-    // alarmAgree: z.boolean().default(false), // 알람 동의
+    targetGroupInfo: z.object({
+      startAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
+      endAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이하)
+      genderType: z.nativeEnum(GenderType), // 성별
+      otherCondition: z.string().optional(), // 기타조건
+    }),
+
+    alarmAgree: z.boolean().default(false), // 알람 동의
   });
 };
 

@@ -42,12 +42,6 @@ const ApplyMethodSection = ({
 
   const [alarmAgree, setAlarmAgree] = useState<boolean>(false);
 
-  const [selectedGenderType, setSelectedGenderType] = useState<GenderType | null>(null);
-
-  const handleGenderTypeChange = (gender: GenderType) => {
-    setSelectedGenderType(gender);
-  };
-
   return (
     <div css={applyMethodLayout}>
       {/* 실험 참여 방법 */}
@@ -167,28 +161,36 @@ const ApplyMethodSection = ({
               <span css={textStyle}>세</span>
             </div>
           </div>
+
           {/* 성별 */}
           <div>
-            <label css={label}>
+            <p css={label}>
               성별 <span style={{ color: `${colors.textAlert}` }}>*</span>
-            </label>
-            <RadioButtonGroup<GenderType>
-              options={[
-                {
-                  value: GenderType.MALE,
-                  label: '남성',
-                },
-                {
-                  value: GenderType.FEMALE,
-                  label: '여성',
-                },
-                {
-                  value: GenderType.ALL,
-                  label: '무관',
-                },
-              ]}
-              selectedValue={selectedGenderType}
-              onChange={handleGenderTypeChange}
+            </p>
+            <Controller
+              name="targetGroupInfo.genderType"
+              control={control}
+              render={({ field, fieldState }) => (
+                <RadioButtonGroup<GenderType>
+                  options={[
+                    {
+                      value: GenderType.MALE,
+                      label: '남성',
+                    },
+                    {
+                      value: GenderType.FEMALE,
+                      label: '여성',
+                    },
+                    {
+                      value: GenderType.ALL,
+                      label: '무관',
+                    },
+                  ]}
+                  selectedValue={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  isError={!!fieldState.error}
+                />
+              )}
             />
           </div>
         </div>
