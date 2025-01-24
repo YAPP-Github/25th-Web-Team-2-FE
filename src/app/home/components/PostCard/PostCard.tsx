@@ -16,7 +16,6 @@ import {
 } from './PostCard.styles';
 
 import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
 import { Post } from '@/types/post';
 
 interface PostCardProps {
@@ -30,9 +29,6 @@ const PostCard = ({ post }: PostCardProps) => {
         href={`/post/${post.postInfo.experimentPostId}`}
         key={post.postInfo.experimentPostId}
         css={postCardLayout}
-        style={{
-          backgroundColor: post.recruitDone ? theme.colors.field01 : theme.colors.field01,
-        }}
       >
         <div css={postHeader}>
           <div css={postCardHeader}>
@@ -45,7 +41,7 @@ const PostCard = ({ post }: PostCardProps) => {
           <h3 css={postTitle}>{post.postInfo.title}</h3>
         </div>
         <div>
-          {post.recruitDone ? (
+          {post.recruitStatus ? (
             <div css={contactedPostTag}>
               <span>모집 완료</span>
             </div>
