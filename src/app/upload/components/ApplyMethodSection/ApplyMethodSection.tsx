@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react';
 import { Dispatch, SetStateAction } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
@@ -31,9 +31,6 @@ const ApplyMethodSection = ({
   setAddContact,
 }: ApplyMethodSectionProps) => {
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
-  const content = useWatch({ control });
-  console.log('content >> ', content);
-  console.log('error >> ', formState.errors);
 
   const ageError = !!(
     formState.errors?.targetGroupInfo?.startAge || formState.errors?.targetGroupInfo?.endAge

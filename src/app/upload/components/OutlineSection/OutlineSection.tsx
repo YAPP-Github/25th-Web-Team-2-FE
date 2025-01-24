@@ -91,7 +91,7 @@ const OutlineSection = () => {
           <Controller
             name="startDate"
             control={control}
-            render={({ fieldState }) => (
+            render={({ field, fieldState }) => (
               <Controller
                 name="endDate"
                 control={control}
@@ -105,6 +105,7 @@ const OutlineSection = () => {
                       }}
                       experimentDateChecked={experimentDateChecked}
                       error={fieldState.error}
+                      field={field}
                     />
                   </>
                 )}
