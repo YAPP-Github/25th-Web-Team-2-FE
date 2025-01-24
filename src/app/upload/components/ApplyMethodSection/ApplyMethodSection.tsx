@@ -1,5 +1,5 @@
 import { css, Theme } from '@emotion/react';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import AgeForm from '../AgeForm/AgeForm';
@@ -38,8 +38,6 @@ const ApplyMethodSection = ({
   const ageError = !!(
     formState.errors?.targetGroupInfo?.startAge || formState.errors?.targetGroupInfo?.endAge
   );
-
-  const [alarmAgree, setAlarmAgree] = useState<boolean>(false);
 
   return (
     <div css={applyMethodLayout}>
@@ -221,13 +219,19 @@ const ApplyMethodSection = ({
 
       {/* 공고 알림 */}
       <div css={alarmAgreeContainer}>
-        <CheckboxWithIcon
-          checked={alarmAgree}
-          onChange={() => setAlarmAgree((prev) => !prev)}
-          label="조건에 부합하는 참여자에게 해당 공고를 알릴까요?"
-          align="left"
-          size="large"
-          boldStyle
+        <Controller
+          name="alarmAgree"
+          control={control}
+          render={({ field }) => (
+            <CheckboxWithIcon
+              checked={field.value}
+              onChange={() => field.onChange(!field.value)}
+              label="조건에 부합하는 참여자에게 해당 공고를 알릴까요?"
+              align="left"
+              size="large"
+              boldStyle
+            />
+          )}
         />
       </div>
     </div>
