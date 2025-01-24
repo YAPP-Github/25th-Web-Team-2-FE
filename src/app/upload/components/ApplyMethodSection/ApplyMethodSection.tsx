@@ -6,7 +6,6 @@ import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, label } from '../UploadContainer/UploadContainer';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
@@ -196,13 +195,25 @@ const ApplyMethodSection = ({
         </div>
         {/* 기타 조건 */}
         <div>
-          <label css={label}>기타 조건</label>
+          <label css={label} htmlFor="targetGroupInfo.otherCondition">
+            기타 조건
+          </label>
           <div>
-            <TextInput
-              id="other-condition"
-              placeholder="기타 조건을 입력해 주세요 (선택)"
-              maxLength={300}
-              size="full"
+            <Controller
+              name="targetGroupInfo.otherCondition"
+              control={control}
+              render={({ field, fieldState }) => (
+                <InputForm
+                  {...field}
+                  id="targetGroupInfo.otherCondition"
+                  placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
+                  maxLength={300}
+                  size="full"
+                  field={{ ...field, value: field.value ?? '' }}
+                  fieldState={fieldState}
+                  showErrorMessage
+                />
+              )}
             />
           </div>
         </div>

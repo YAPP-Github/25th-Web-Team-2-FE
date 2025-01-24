@@ -100,7 +100,7 @@ const UploadExperimentPostSchema = ({
       startAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이상)
       endAge: z.coerce.number().min(0, '0세 이상'), // 참여 가능 나이 (이하)
       genderType: z.nativeEnum(GenderType), // 성별
-      otherCondition: z.string().optional(), // 기타조건
+      otherCondition: z.string().max(300, '최대 300자 이하로 입력해 주세요').optional(), // 기타조건
     }),
 
     alarmAgree: z.boolean().default(false), // 알람 동의
