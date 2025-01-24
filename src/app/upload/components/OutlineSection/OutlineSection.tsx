@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { disabledInput, uploadInputContainer } from './OutlineSection.styles';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
-
-import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
-import { colors } from '@/styles/colors';
-import { MatchType } from '@/types/uploadExperimentPost';
 import {
   headingIcon,
   label,
   uploadInput,
   outlineFormLayout,
 } from '../UploadContainer/UploadContainer.styles';
-import { disabledInput, uploadInputContainer } from './OutlineSection.styles';
+
+import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
+import { colors } from '@/styles/colors';
+import { MatchType } from '@/types/uploadExperimentPost';
 
 const OutlineSection = () => {
   const { control, setValue } = useFormContext();

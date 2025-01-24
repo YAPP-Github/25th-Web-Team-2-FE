@@ -1,15 +1,6 @@
-import { css, Theme } from '@emotion/react';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import AgeForm from '../AgeForm/AgeForm';
-import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
-import InputForm from '../InputForm/InputForm';
-import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
-import { headingIcon, label } from '../UploadContainer/UploadContainer.styles';
 import {
   addContactInfoContainer,
   ageInputContainer,
@@ -20,6 +11,14 @@ import {
   targetGroupContainer,
   textStyle,
 } from './ApplyMethodSection.styles';
+import AgeForm from '../AgeForm/AgeForm';
+import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import InputForm from '../InputForm/InputForm';
+import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
+import { headingIcon, label } from '../UploadContainer/UploadContainer.styles';
+
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
+import { colors } from '@/styles/colors';
 
 export enum GenderType {
   MALE = 'MALE',

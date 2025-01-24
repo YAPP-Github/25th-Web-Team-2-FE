@@ -4,10 +4,6 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import useUploadExperimentPost from '../../hooks/useUploadExperimentPost';
-import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
-import DescriptionSection from '../DescriptionSection/DescriptionSection';
-import OutlineSection from '../OutlineSection/OutlineSection';
 import {
   activeButton,
   buttonContainer,
@@ -16,6 +12,10 @@ import {
   uploadContentLayout,
   uploadLayout,
 } from './UploadContainer.styles';
+import useUploadExperimentPost from '../../hooks/useUploadExperimentPost';
+import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
+import DescriptionSection from '../DescriptionSection/DescriptionSection';
+import OutlineSection from '../OutlineSection/OutlineSection';
 
 const UploadContainer = () => {
   const [addLink, setAddLink] = useState<boolean>(false);

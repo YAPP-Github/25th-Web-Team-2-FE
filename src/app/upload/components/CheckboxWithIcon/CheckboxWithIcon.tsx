@@ -1,8 +1,9 @@
-import { css, Theme } from '@emotion/react';
+import { Theme } from '@emotion/react';
+
+import { checkboxLayout, checkboxContainer } from './CheckboxWithIcon.styles';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
-import { checkboxLayout, checkboxContainer } from './CheckboxWithIcon.styles';
 
 interface CheckboxWithIconProps {
   checked: boolean;

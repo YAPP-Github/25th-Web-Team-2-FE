@@ -2,13 +2,6 @@ import Image from 'next/image';
 import { useState, ChangeEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import InputForm from '../InputForm/InputForm';
-
-import Icon from '@/components/Icon';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
-import { headingIcon, uploadInput } from '../UploadContainer/UploadContainer.styles';
-import { formMessage } from '../InputForm/InputForm.styles';
 import {
   addImageContainer,
   deleteButton,
@@ -21,6 +14,13 @@ import {
   photoLayout,
   uploadImagesContainer,
 } from './DescriptionSection.styles';
+import InputForm from '../InputForm/InputForm';
+import { formMessage } from '../InputForm/InputForm.styles';
+import { headingIcon, uploadInput } from '../UploadContainer/UploadContainer.styles';
+
+import Icon from '@/components/Icon';
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
+import { colors } from '@/styles/colors';
 
 type Photo = {
   id: string;
