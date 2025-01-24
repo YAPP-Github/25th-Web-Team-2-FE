@@ -1,14 +1,23 @@
 import { css, Theme } from '@emotion/react';
 
+export const regionPopoverContainer = (theme: Theme, isError: boolean) => css`
+  width: 45.2rem;
+  border-radius: 1.2rem;
+  outline: none;
+  border: 0.1rem solid ${isError ? theme.colors.textAlert : 'none'};
+
+  &[data-state='open'] {
+    border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.primaryMint};
+    outline: none;
+  }
+`;
+
 export const regionField = (theme: Theme) => css`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
-  &[data-state='open'] {
-    border: 0.1rem solid ${theme.colors.primaryMint};
-  }
+  border-radius: 1.2rem;
 `;
 
 export const placeholderText = (theme: Theme, hasValue: boolean) => css`

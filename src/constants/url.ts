@@ -8,6 +8,7 @@ export const API_URL = {
   join: '/v1/members/signup/researcher',
   me: (role: string) => `/v1/members/${role}/me`,
   refresh: '/v1/auth/refresh',
+  uploadPost: '/v1/experiment-posts',
   viewExperimentDetails: (postId: number) => `/v1/experiment-posts/${postId}/details`,
 };
 
