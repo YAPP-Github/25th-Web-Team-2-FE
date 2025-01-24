@@ -1,7 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import { convertLabelToValue } from '../upload.utils';
+
+import useUploadExperimentPostAPI from '@/apis/useUploadExperimentPostAPI';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -12,6 +15,8 @@ interface useUploadExperimentPostProps {
 }
 
 const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPostProps) => {
+  const router = useRouter();
+
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -52,27 +57,27 @@ const useUploadExperimentPost = ({ addLink, addContact }: useUploadExperimentPos
     },
   });
 
-  const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
-    try {
-      // console.log('공고 등록 form >> ', data);
-      // todo region label이 아닌 value로 변경 필요
+  console.log('error >> ', form.formState.errors);
 
-      await form.reset({
-        leadResearcher: '',
-        startDate: undefined,
-        endDate: undefined,
-        matchType: undefined,
-        reward: '',
-        univName: undefined,
-        detailedAddress: '',
-        region: undefined,
-        area: undefined,
-        count: undefined,
-        timeRequired: undefined,
-      });
-    } catch (error) {
-      //   console.error('공고 등록 form 저장 중 오류 발생', error);
-    }
+  /* 공고 등록 API */
+  const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostAPI();
+
+  const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
+    const updatedData = {
+      ...data,
+      area: data.area ? convertLabelToValue(data.area) : undefined,
+    };
+
+    uploadExperimentPost(updatedData, {
+      onSuccess: (response) => {
+        form.reset();
+        router.push(`/post/${response.postInfo.experimentPostId}`);
+        console.log('response > ', response);
+      },
+      onError: (error) => {
+        console.error('공고 등록 form 저장 중 오류 발생', error);
+      },
+    });
   };
 
   return {

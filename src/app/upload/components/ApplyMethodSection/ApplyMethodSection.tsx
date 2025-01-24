@@ -201,7 +201,7 @@ const ApplyMethodSection = ({
                 <InputForm
                   {...field}
                   id="targetGroupInfo.otherCondition"
-                  placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
+                  placeholder="기타 조건을 입력해 주세요 (선택)"
                   maxLength={300}
                   size="full"
                   field={{ ...field, value: field.value ?? '' }}
