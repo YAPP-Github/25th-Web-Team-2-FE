@@ -1,4 +1,4 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import AreaTooltip from './AreaTooltip';
 import {
@@ -24,6 +24,9 @@ interface JoinInfoStepProps {
 
 const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
   const { control, watch, setValue } = useFormContext<ParticipantJoinParams>();
+
+  const gender = useWatch({ name: 'gender', control });
+  const matchType = useWatch({ name: 'matchType', control });
 
   const selectedArea = watch('basicAddressInfo.region');
   const selectedSubArea = watch('basicAddressInfo.area');
@@ -59,7 +62,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
             { label: '여성', value: 'FEMALE' },
             { label: '선택 안 함', value: 'ALL' },
           ]}
-          selectedValue={watch('gender')}
+          selectedValue={gender}
           onChange={(value) => setValue('gender', value)}
           required
         />
@@ -148,7 +151,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
             { value: 'OFFLINE', label: '대면' },
             { value: 'ONLINE', label: '비대면' },
           ]}
-          selectedValue={watch('matchType')}
+          selectedValue={matchType}
           onChange={(value) => setValue('matchType', value)}
         />
       </div>

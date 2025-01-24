@@ -15,17 +15,10 @@ interface JoinEmailStepProps {
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const oauthEmail = sessionStorage.getItem('email') || '';
   const role = sessionStorage.getItem('role') || '';
-  const { control, trigger } = useFormContext<ParticipantJoinParams>();
+  const { control } = useFormContext<ParticipantJoinParams>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck(role);
 
   const allValid = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
-
-  const handleNext = async () => {
-    const isStepValid = await trigger(['oauthEmail', 'contactEmail']);
-    if (isStepValid) {
-      onNext();
-    }
-  };
 
   return (
     <section css={joinForm}>
@@ -66,7 +59,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           handleChange={handleChangeCheck}
         />
       </div>
-      <button css={nextButton} onClick={handleNext} disabled={!allValid}>
+      <button css={nextButton} onClick={onNext} disabled={!allValid}>
         다음
       </button>
     </section>
