@@ -7,6 +7,7 @@ import PostDetailContent from '../PostDetailContent/PostDetailContent';
 import PostInfo from '../PostInfo/PostInfo';
 import PostOutline from '../PostOutline/PostOutline';
 
+import useQueryApplyMethodAPI from '@/apis/hooks/useQueryApplyMethodAPI';
 import useQueryExperimentDetailsAPI from '@/apis/hooks/useQueryExperimentDetailsAPI';
 
 const PostContainer = () => {
@@ -23,6 +24,9 @@ const PostContainer = () => {
     isError,
     refetch,
   } = useQueryExperimentDetailsAPI({ postId });
+
+  /* 공고 지원 방법 조회 */
+  const { data: applyMethodData } = useQueryApplyMethodAPI({ postId });
 
   //todo 이후 화면 나오면 처리 (임시)
   if (isNaN(postId)) {
@@ -51,7 +55,7 @@ const PostContainer = () => {
       <PostInfo postDetailData={postDetailData} />
       <div css={postContentLayout}>
         <PostDetailContent postDetailData={postDetailData} />
-        <PostOutline postDetailData={postDetailData} />
+        <PostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
       </div>
     </>
   );

@@ -20,12 +20,14 @@ import {
 } from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
+import { UseQueryApplyMethodAPIResponse } from '@/apis/hooks/useQueryApplyMethodAPI';
 import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
 
 interface PostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
+  applyMethodData: UseQueryApplyMethodAPIResponse;
 }
-const PostOutline = ({ postDetailData }: PostOutlineProps) => {
+const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
   const { address, recruitStatus, summary, targetGroup } = postDetailData;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -119,7 +121,11 @@ const PostOutline = ({ postDetailData }: PostOutlineProps) => {
       </div>
 
       {/* 참여 방법 안내 모달 */}
-      <ParticipationGuideModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
+      <ParticipationGuideModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        applyMethodData={applyMethodData}
+      />
     </div>
   );
 };
