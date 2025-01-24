@@ -44,7 +44,7 @@ const JoinCheckboxContainer = ({
       />
       {isRecommend !== undefined && (
         <JoinCheckbox
-          label="[선택] 개인정보 수집 및 이용 동의-실험 추천•혜택"
+          label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
           isChecked={isRecommend}
           onChange={(e) => handleChange(e, 'isRecommend')}
           isAlert={true}

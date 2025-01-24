@@ -23,6 +23,7 @@ interface JoinInputProps {
   tip?: string;
   value?: string;
   onBlur?: () => void;
+  maxLength?: number;
 }
 
 const JoinInput = ({
@@ -38,6 +39,7 @@ const JoinInput = ({
   value,
   onChange,
   onBlur,
+  maxLength,
 }: JoinInputProps) => {
   return (
     <div css={inputContainer}>
@@ -59,6 +61,7 @@ const JoinInput = ({
                 placeholder={placeholder}
                 disabled={disabled}
                 value={value}
+                maxLength={maxLength}
                 aria-invalid={fieldState.invalid ? true : false}
                 onChange={(e) => {
                   field.onChange(e);

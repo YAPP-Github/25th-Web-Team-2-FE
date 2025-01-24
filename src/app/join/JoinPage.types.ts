@@ -12,8 +12,8 @@ export interface ResearcherJoinParams {
 // TODO: 타입 좁히기
 // birthDate: '2025-01-22';
 // region 타입, area 타입
-type Gender = 'MALE' | 'FEMALE' | 'ALL';
-type MatchType = 'ONLINE' | 'OFFLINE' | 'ALL';
+export type Gender = 'MALE' | 'FEMALE' | 'ALL';
+export type MatchType = 'ONLINE' | 'OFFLINE' | 'ALL';
 
 export interface ParticipantJoinParams {
   provider: 'NAVER' | 'GOOGLE';
@@ -38,4 +38,9 @@ export interface ServiceAgreeCheck {
   isPrivacy: boolean;
   isAdvertise: boolean;
   isRecommend?: boolean;
+}
+
+export interface FilterOption {
+  label: string;
+  value: string;
 }

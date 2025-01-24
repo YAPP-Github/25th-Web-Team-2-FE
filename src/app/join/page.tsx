@@ -50,6 +50,7 @@ export default function JoinPage() {
   });
 
   const participantMethods = useForm<ParticipantJoinParams>({
+    mode: 'onChange',
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,
