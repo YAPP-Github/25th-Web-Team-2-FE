@@ -2,8 +2,8 @@ import { customRadioGroup, customRadioButton, activeRadioButton } from './RadioB
 
 interface RadioButtonGroupProps<T> {
   options: { value: T; label: string }[];
-  selectedValue: T | null;
   onChange: (value: T) => void;
+  selectedValue?: T;
 }
 
 const RadioButtonGroup = <T extends string>({

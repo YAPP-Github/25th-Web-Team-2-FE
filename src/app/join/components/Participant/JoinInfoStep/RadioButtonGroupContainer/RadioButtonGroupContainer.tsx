@@ -1,4 +1,4 @@
-import RadioButtonGroup from './RadioButtonGroup';
+import RadioButtonGroup from './RadioButtonGroup/RadioButtonGroup';
 import {
   labelWrapper,
   radioButtonGroupContainerLayout,
@@ -8,16 +8,16 @@ import {
 interface RadioButtonGroupProps<T> {
   title: string;
   options: { value: T; label: string }[];
-  selectedValue: T | null;
   onChange: (value: T) => void;
+  selectedValue?: T;
   required?: boolean;
 }
 
 const RadioButtonGroupContainer = <T extends string>({
   title,
   options,
-  selectedValue,
   onChange,
+  selectedValue,
   required = false,
 }: RadioButtonGroupProps<T>) => {
   return (
