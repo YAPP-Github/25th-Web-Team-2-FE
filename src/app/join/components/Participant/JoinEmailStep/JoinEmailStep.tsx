@@ -1,12 +1,12 @@
 import { useFormContext } from 'react-hook-form';
 
+import { nextButton } from './JoinEmailStep.styles';
 import JoinCheckboxContainer from '../../JoinEmailStep/JoinCheckboxContainer/JoinCheckboxContainer';
+import JoinInput from '../../JoinInput/JoinInput';
 
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
-import { ParticipantJoinParams } from '@/app/join/JoinPage.types';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.styles';
-import JoinInput from '../../JoinInput/JoinInput';
-import { nextButton } from './JoinEmailStep.styles';
+import { ParticipantJoinParams } from '@/app/join/JoinPage.types';
 
 interface JoinEmailStepProps {
   onNext: () => void;

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import AreaTooltip from './AreaTooltip';
@@ -12,71 +11,24 @@ import {
   requiredStar,
 } from './JoinInfoStep.styles';
 import JoinSelect from './JoinSelect/JoinSelect';
-import RadioButtonGroupContainer from './RadioButtonGroup/RadioButtonGroupContainer';
+import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
 import JoinInput from '../../JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
-import { FilterOption, Gender, MatchType, ParticipantJoinParams } from '@/app/join/JoinPage.types';
+import { Gender, MatchType, ParticipantJoinParams } from '@/app/join/JoinPage.types';
 
 interface JoinInfoStepProps {
   onNext: () => void;
 }
 
 const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
-  const { control } = useFormContext<ParticipantJoinParams>();
+  const { control, watch, setValue } = useFormContext<ParticipantJoinParams>();
 
-  const [selectedGender, setSelectedGender] = useState<Gender | null>(null);
-  const [selectedMatchType, setSelectedMatchType] = useState<MatchType | null>(null);
-
-  const [selectedArea, setSelectedArea] = useState<FilterOption>();
-  const [selectedSubArea, setSelectedSubArea] = useState<FilterOption>();
-  const [selectedAdditionalArea, setSelectedAdditionalArea] = useState<FilterOption>();
-  const [selectedAdditionalSubArea, setSelectedAdditionalSubArea] = useState<FilterOption>();
-
-  const handleChangeArea = (value: string) => {
-    const selectedOption = JOIN_REGION.find((option) => option.value === value);
-
-    if (!selectedOption) return;
-
-    setSelectedArea(selectedOption);
-  };
-
-  const handleChangeSubArea = (value: string) => {
-    const selectedOption = JOIN_SUB_REGION[selectedArea?.value || ''].find(
-      (option) => option.value === value,
-    );
-
-    if (!selectedOption) return;
-
-    setSelectedSubArea(selectedOption);
-  };
-
-  const handleChangeAdditionalArea = (value: string) => {
-    const selectedOption = JOIN_REGION.find((option) => option.value === value);
-
-    if (!selectedOption) return;
-
-    setSelectedAdditionalArea(selectedOption);
-  };
-
-  const handleChangeAdditionalSubArea = (value: string) => {
-    const selectedOption = JOIN_SUB_REGION[selectedAdditionalSubArea?.value || ''].find(
-      (option) => option.value === value,
-    );
-
-    if (!selectedOption) return;
-
-    setSelectedAdditionalSubArea(selectedOption);
-  };
-
-  const handleChangeGender = (value: Gender) => {
-    setSelectedGender(value);
-  };
-
-  const handleChangeMatchType = (value: MatchType) => {
-    setSelectedMatchType(value);
-  };
+  const selectedArea = watch('basicAddressInfo.region');
+  const selectedSubArea = watch('basicAddressInfo.area');
+  const selectedAdditionalArea = watch('additionalAddressInfo.region');
+  const selectedAdditionalSubArea = watch('additionalAddressInfo.area');
 
   return (
     <section css={joinForm}>
@@ -107,8 +59,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
             { label: '여성', value: 'FEMALE' },
             { label: '선택 안 함', value: 'ALL' },
           ]}
-          selectedValue={selectedGender}
-          onChange={handleChangeGender}
+          selectedValue={watch('gender')}
+          onChange={(value) => setValue('gender', value)}
           required
         />
 
@@ -156,36 +108,36 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           </div>
           <div css={joinAreaFilterWrapper}>
             <JoinSelect
-              value={selectedArea?.value}
-              onChange={handleChangeArea}
+              value={selectedArea}
+              onChange={(value) => setValue('basicAddressInfo.region', value)}
               placeholder="시·도"
               options={JOIN_REGION}
             />
             <JoinSelect
-              value={selectedSubArea?.value}
-              onChange={handleChangeSubArea}
+              value={selectedSubArea}
+              onChange={(value) => setValue('basicAddressInfo.area', value)}
               placeholder="시·군·구"
-              options={JOIN_SUB_REGION[selectedArea?.value || '']}
+              options={JOIN_SUB_REGION[selectedArea] || []}
             />
           </div>
         </div>
         <div css={joinAreaFilterContainer}>
           <div css={filterTitleWrapper}>
-            <span css={filterTitle}>선호 활동 지역</span>
+            <span css={filterTitle}>추가 활동 지역</span>
             <AreaTooltip />
           </div>
           <div css={joinAreaFilterWrapper}>
             <JoinSelect
-              value={selectedAdditionalArea?.value}
-              onChange={handleChangeAdditionalArea}
+              value={selectedAdditionalArea}
+              onChange={(value) => setValue('additionalAddressInfo.region', value)}
               placeholder="시·도"
               options={JOIN_REGION}
             />
             <JoinSelect
-              value={selectedAdditionalSubArea?.value}
-              onChange={handleChangeAdditionalSubArea}
+              value={selectedAdditionalSubArea}
+              onChange={(value) => setValue('additionalAddressInfo.area', value)}
               placeholder="시·군·구"
-              options={JOIN_SUB_REGION[selectedArea?.value || '']}
+              options={JOIN_SUB_REGION[selectedAdditionalArea] || []}
             />
           </div>
         </div>
@@ -196,9 +148,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
             { value: 'OFFLINE', label: '대면' },
             { value: 'ONLINE', label: '비대면' },
           ]}
-          selectedValue={selectedMatchType}
-          onChange={handleChangeMatchType}
-          required
+          selectedValue={watch('matchType')}
+          onChange={(value) => setValue('matchType', value)}
         />
       </div>
 
