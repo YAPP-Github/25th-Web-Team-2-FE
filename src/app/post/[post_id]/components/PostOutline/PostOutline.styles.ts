@@ -78,7 +78,8 @@ export const otherConditionWrapper = (theme: Theme) => css`
 `;
 
 export const textWrapRow = css`
-  height: 4.8rem;
+  height: auto;
+  max-height: 4.8rem;
 
   p {
     display: -webkit-box;

@@ -12,6 +12,7 @@ import {
   scrollableContent,
   disabledCheckButton,
 } from './PostOutline.styles';
+import { getGenderLabel } from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
 import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
@@ -33,7 +34,8 @@ const PostOutline = ({ postDetailData }: PostOutlineProps) => {
               <th>모집 대상</th>
               <td>
                 <p>
-                  만 {targetGroup.startAge} ~ {targetGroup.endAge}세, {targetGroup.genderType}
+                  만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
+                  {getGenderLabel(targetGroup.genderType)}
                 </p>
               </td>
             </tr>
@@ -80,7 +82,9 @@ const PostOutline = ({ postDetailData }: PostOutlineProps) => {
               <th>실험 장소</th>
               <td css={textWrapRow}>
                 <p>
-                  {address.region} {address.area} {address.univName} {address.detailedAddress}
+                  {address.univName
+                    ? `${address.region} ${address.area} ${address.univName} ${address.detailedAddress}`
+                    : '본문 참고'}
                 </p>
               </td>
             </tr>

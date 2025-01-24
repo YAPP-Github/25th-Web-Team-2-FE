@@ -1,5 +1,5 @@
 import { postContentLayout, postContentWrapper } from './PostDetailContent.styles';
-import formattedContentText from '../../PostPage.utils';
+import { formattedContentText } from '../../PostPage.utils';
 
 import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
 
