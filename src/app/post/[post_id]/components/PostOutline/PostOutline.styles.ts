@@ -127,6 +127,17 @@ export const checkButton = (theme: Theme) => css`
   cursor: pointer;
 `;
 
+export const disabledCheckButton = (theme: Theme) => css`
+  ${theme.fonts.body.normal.SB16};
+
+  width: 100%;
+  height: 4rem;
+
+  border-radius: 1.2rem;
+  background-color: ${theme.colors.field04};
+  color: ${theme.colors.text03};
+`;
+
 export const scrollableContent = css`
   flex: 1;
   position: relative;

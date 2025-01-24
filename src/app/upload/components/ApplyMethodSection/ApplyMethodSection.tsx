@@ -8,7 +8,7 @@ import { headingIcon, label } from '../UploadContainer/UploadContainer';
 
 import { colors } from '@/styles/colors';
 
-enum GenderType {
+export enum GenderType {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   ALL = 'ALL',

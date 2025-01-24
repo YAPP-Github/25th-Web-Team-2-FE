@@ -10,20 +10,22 @@ import {
 } from './PostInfo.styles';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
+import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-const PostInfo = () => {
+interface PostInfoProps {
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+}
+const PostInfo = ({ postDetailData }: PostInfoProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  const canEdit = true;
 
   return (
     <>
       <div css={postInfoLayout}>
         <div css={postHeaderContainer}>
-          <h2>야뿌대학교 웹 서비스 행동 실험 참여자를 모집합니다</h2>
-          {canEdit && (
+          <h2>{postDetailData.title}</h2>
+          {postDetailData.isAuthor && (
             <div>
               <button css={[editButton, buttonStyles]}>수정</button>
               <button css={buttonStyles} onClick={() => setIsDeleteModalOpen(true)}>
@@ -33,10 +35,11 @@ const PostInfo = () => {
           )}
         </div>
         <div css={postSubInfo}>
-          <div>2025.01.18.</div>
-          <div>연도비</div>
+          <div>{postDetailData.uploadDate}</div>
+          <div>{postDetailData.uploaderName}</div>
           <div css={viewsContainer}>
-            <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />0
+            <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />
+            {postDetailData.views}
           </div>
         </div>
       </div>
