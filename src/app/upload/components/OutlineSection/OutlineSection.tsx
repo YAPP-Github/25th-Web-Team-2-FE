@@ -2,13 +2,12 @@ import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
-import CountSelect, { countSelectOptions } from '../CountSelect/CountSelect';
-import DurationSelect, { durationMinutesOptions } from '../DurationSelect/DurationSelect';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
-import SelectInput from '../SelectInput/SelectInput';
+import SelectForm from '../SelectForm/SelectForm';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
@@ -251,7 +250,7 @@ const OutlineSection = () => {
                 name="count"
                 control={control}
                 render={({ field, fieldState }) => (
-                  <SelectInput
+                  <SelectForm
                     field={field}
                     fieldState={fieldState}
                     options={countSelectOptions}
@@ -270,7 +269,7 @@ const OutlineSection = () => {
                   name="timeRequired"
                   control={control}
                   render={({ field, fieldState }) => (
-                    <SelectInput
+                    <SelectForm
                       field={{
                         ...field,
                         value: durationChecked ? undefined : field.value || undefined,

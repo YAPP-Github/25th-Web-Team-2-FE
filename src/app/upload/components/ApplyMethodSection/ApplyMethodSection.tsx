@@ -1,15 +1,15 @@
 import { css, Theme } from '@emotion/react';
 import { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { TextInput } from '../TextInput/TextInput';
 import { headingIcon, label } from '../UploadContainer/UploadContainer';
 
-import { colors } from '@/styles/colors';
-import { Controller, useFormContext } from 'react-hook-form';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import InputForm from '../InputForm/InputForm';
+import { colors } from '@/styles/colors';
 
 enum GenderType {
   MALE = 'MALE',
@@ -18,8 +18,8 @@ enum GenderType {
 }
 
 const ApplyMethodSection = () => {
-  const { control, formState } = useFormContext<UploadExperimentPostSchemaType>();
-  console.log('formState', formState.errors);
+  const { control } = useFormContext<UploadExperimentPostSchemaType>();
+  // console.log('formState', formState.errors);
 
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);

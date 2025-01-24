@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -36,7 +37,7 @@ const useUploadExperimentPost = () => {
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
     try {
-      console.log('공고 등록 form >> ', data);
+      // console.log('공고 등록 form >> ', data);
       // todo region label이 아닌 value로 변경 필요
 
       await form.reset({
