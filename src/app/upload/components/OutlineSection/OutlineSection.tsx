@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
-import CountSelect from '../CountSelect/CountSelect';
-import DurationSelect from '../DurationSelect/DurationSelect';
+import CountSelect, { countSelectOptions } from '../CountSelect/CountSelect';
+import DurationSelect, { durationMinutesOptions } from '../DurationSelect/DurationSelect';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
+import SelectInput from '../SelectInput/SelectInput';
 import { headingIcon, input, label } from '../UploadContainer/UploadContainer';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
@@ -249,39 +250,49 @@ const OutlineSection = () => {
               <Controller
                 name="count"
                 control={control}
-                rules={{ required: '실험 횟수는 필수 값입니다.' }}
                 render={({ field, fieldState }) => (
-                  <CountSelect
-                    value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    error={!!fieldState.error}
+                  <SelectInput
+                    field={field}
+                    fieldState={fieldState}
+                    options={countSelectOptions}
+                    placeholder="실험 횟수 입력"
+                    disabled={false}
+                    showErrorMessage={false}
                   />
                 )}
               />
             </div>
 
             {/* 소요 시간 */}
-            <div>
-              <Controller
-                name="timeRequired"
-                control={control}
-                render={({ field, fieldState }) => (
-                  <DurationSelect
-                    value={durationChecked ? undefined : field.value || undefined}
-                    onChange={(value) => field.onChange(value || null)}
-                    referToDetailsChecked={durationChecked}
-                    error={!!fieldState.error}
-                  />
-                )}
-              />
-            </div>
+            <>
+              <div>
+                <Controller
+                  name="timeRequired"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <SelectInput
+                      field={{
+                        ...field,
+                        value: durationChecked ? undefined : field.value || undefined,
+                        onChange: (value) => field.onChange(value || null),
+                      }}
+                      fieldState={fieldState}
+                      options={durationMinutesOptions}
+                      placeholder="1회당 시간 입력"
+                      disabled={durationChecked}
+                      showErrorMessage={false}
+                    />
+                  )}
+                />
+              </div>
 
-            {/* 본문 참고 체크박스 */}
-            <CheckboxWithIcon
-              checked={durationChecked}
-              onChange={() => setDurationChecked((prev) => !prev)}
-              label="본문 참고"
-            />
+              {/* 본문 참고 체크박스 */}
+              <CheckboxWithIcon
+                checked={durationChecked}
+                onChange={() => setDurationChecked((prev) => !prev)}
+                label="본문 참고"
+              />
+            </>
           </div>
         </div>
       </div>
