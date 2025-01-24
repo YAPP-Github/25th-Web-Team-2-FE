@@ -30,7 +30,7 @@ export interface ParticipantJoinParams {
     region: string;
     area: string;
   };
-  matchType: MatchType;
+  matchType?: MatchType;
 }
 
 export interface ServiceAgreeCheck {

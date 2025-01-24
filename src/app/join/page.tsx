@@ -66,7 +66,15 @@ export default function JoinPage() {
 
   const handleParticipantSubmit = () => {
     const formData = participantMethods.getValues();
-    joinParticipant(formData, { onSuccess: () => setStep(STEP.success) });
+
+    const formattedData = {
+      ...formData,
+      birthDate: formData.birthDate.replaceAll('.', '-'),
+    };
+
+    joinParticipant(formattedData, {
+      onSuccess: () => setStep(STEP.success),
+    });
   };
 
   if (role === ROLE.researcher) {
