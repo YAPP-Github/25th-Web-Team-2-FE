@@ -5,10 +5,16 @@ export const formatAuthTimer = (time: number) => {
 };
 
 export const getProvider = (email: string): 'GOOGLE' | 'NAVER' => {
-  const domain = email.split('@')[1].toLowerCase();
+  const GOOGLE_DOMAINS = 'gmail.com';
+  const NAVER_DOMAINS = 'naver.com';
 
-  if (domain.includes('gmail.com')) {
+  const targetDomain = email.split('@')[1].toLowerCase();
+
+  if (targetDomain.includes(GOOGLE_DOMAINS)) {
     return 'GOOGLE';
+  } else if (targetDomain.includes(NAVER_DOMAINS)) {
+    return 'NAVER';
   }
-  return 'NAVER';
+
+  throw new Error('지원하지 않는 이메일입니다.');
 };

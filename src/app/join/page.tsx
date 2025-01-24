@@ -37,6 +37,7 @@ export default function JoinPage() {
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 
   const researcherMethods = useForm<ResearcherJoinParams>({
+    mode: 'onBlur',
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,

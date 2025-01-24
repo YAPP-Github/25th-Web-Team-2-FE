@@ -11,14 +11,7 @@ interface JoinInfoStepProps {
 
 // TODO: blur 될 때 trigger + 입력값 초기화 안되도록 개선 필요
 const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
-  const { control, trigger } = useFormContext<ResearcherJoinParams>();
-
-  const handleNext = async () => {
-    const isStepValid = await trigger(['name', 'univName', 'major']);
-    if (isStepValid) {
-      onNext();
-    }
-  };
+  const { control } = useFormContext<ResearcherJoinParams>();
 
   return (
     <section css={joinForm}>
@@ -85,7 +78,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           type="textarea"
         />
       </div>
-      <button css={joinButton} onClick={handleNext}>
+      <button css={joinButton} onClick={onNext}>
         회원가입
       </button>
     </section>

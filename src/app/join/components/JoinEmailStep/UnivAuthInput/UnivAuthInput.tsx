@@ -93,7 +93,13 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
       />
       {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
       {sendError && <span css={errorMessage}>{sendError.message}</span>}
-      {isEmailSent && <AuthCodeInput authTimer={authTimer} handleVerifyEmail={handleVerifyEmail} />}
+      {isEmailSent && (
+        <AuthCodeInput
+          authTimer={authTimer}
+          handleVerifyEmail={handleVerifyEmail}
+          handleSendUnivAuthCode={handleSendUnivAuthCode}
+        />
+      )}
       <EmailToast
         title="인증번호가 발송되었어요"
         isToastOpen={isToastOpen}
