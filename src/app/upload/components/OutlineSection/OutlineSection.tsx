@@ -20,7 +20,7 @@ import {
 import { disabledInput, uploadInputContainer } from './OutlineSection.styles';
 
 const OutlineSection = () => {
-  const { control, setValue, formState } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   // 실험 일시 및 소요시간 본문 참고 여부
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
@@ -87,14 +87,15 @@ const OutlineSection = () => {
   return (
     <div>
       <h3>
-        <span css={headingIcon}>1</span>실험의 개요를 알려주세요
+        <span css={headingIcon}>1</span>실험의 개요를 알려주세요{' '}
+        <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
 
       <div css={outlineFormLayout}>
         {/* 연구 책임자 */}
         <div>
           <label css={label} htmlFor="leadResearcher">
-            연구 책임자 <span style={{ color: `${colors.textAlert}` }}>*</span>
+            연구 책임자
           </label>
           <Controller
             name="leadResearcher"
@@ -114,9 +115,7 @@ const OutlineSection = () => {
 
         {/* 실험 일시 */}
         <div>
-          <p css={label}>
-            실험 일시 <span style={{ color: `${colors.textAlert}` }}>*</span>
-          </p>
+          <p css={label}>실험 일시</p>
 
           {/* 날짜 선택 */}
           <Controller
@@ -164,9 +163,7 @@ const OutlineSection = () => {
 
         {/* 진행 방식 */}
         <div>
-          <p css={label}>
-            진행 방식 <span style={{ color: `${colors.textAlert}` }}>*</span>
-          </p>
+          <p css={label}>진행 방식</p>
 
           <Controller
             name="matchType"
@@ -192,7 +189,7 @@ const OutlineSection = () => {
         {/* 참여 보상 */}
         <div>
           <label css={label} htmlFor="reward">
-            참여 보상 <span style={{ color: `${colors.textAlert}` }}>*</span>
+            참여 보상
           </label>
           <Controller
             name="reward"
@@ -212,7 +209,7 @@ const OutlineSection = () => {
         {/* 실험 장소 */}
         <div>
           <label css={label} htmlFor="location">
-            실험 장소 <span style={{ color: `${colors.textAlert}` }}>*</span>
+            실험 장소
           </label>
           {selectedMatchType === MatchType.ONLINE ? (
             <div css={[uploadInput, disabledInput]}>비대면</div>
@@ -275,9 +272,7 @@ const OutlineSection = () => {
 
         {/* 소요 시간 */}
         <div>
-          <p css={label}>
-            소요 시간 <span style={{ color: `${colors.textAlert}` }}>*</span>
-          </p>
+          <p css={label}>소요 시간</p>
 
           <div css={uploadInputContainer}>
             {/* 실험 횟수 */}

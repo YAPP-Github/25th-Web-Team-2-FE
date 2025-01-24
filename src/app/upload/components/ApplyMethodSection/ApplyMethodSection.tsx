@@ -51,7 +51,8 @@ const ApplyMethodSection = ({
       {/* 실험 참여 방법 */}
       <div css={applyMethodContainer}>
         <h3>
-          <span css={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?
+          <span css={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?{' '}
+          <span style={{ color: `${colors.textAlert}` }}>*</span>
         </h3>
 
         <div css={applyMethodContentLayout}>
@@ -136,15 +137,14 @@ const ApplyMethodSection = ({
 
       {/* 모집 조건 */}
       <h3>
-        <span css={headingIcon}>4</span>어떤 사람들을 모집하나요?
+        <span css={headingIcon}>4</span>어떤 사람들을 모집하나요?{' '}
+        <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
       <div css={targetConditionLayout}>
         <div css={targetGroupContainer}>
           {/* 나이 */}
           <div>
-            <p css={label}>
-              나이 <span style={{ color: `${colors.textAlert}` }}>*</span>
-            </p>
+            <p css={label}>나이</p>
             <div css={(theme) => ageInputContainer(theme, ageError)}>
               <span css={textStyle}>만</span>
               <Controller
@@ -168,9 +168,7 @@ const ApplyMethodSection = ({
 
           {/* 성별 */}
           <div>
-            <p css={label}>
-              성별 <span style={{ color: `${colors.textAlert}` }}>*</span>
-            </p>
+            <p css={label}>성별</p>
             <Controller
               name="targetGroupInfo.genderType"
               control={control}

@@ -82,7 +82,8 @@ const DescriptionSection = () => {
   return (
     <div>
       <h3>
-        <span css={headingIcon}>2</span>어떤 실험인가요?
+        <span css={headingIcon}>2</span>어떤 실험인가요?{' '}
+        <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
 
       <div css={descriptionFormLayout}>
