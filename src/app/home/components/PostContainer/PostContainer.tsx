@@ -15,10 +15,31 @@ import {
 
 import { PostListParams } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinEmailStep/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+import { useUserInfoQuery } from '../../hooks/useUserInfoQuery';
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { isParticipantInfo } from '@/components/Header/Header';
+
+const getParticipantInfo = (data?: ParticipantResponse | ResearcherResponse) => {
+  if (!data) return null;
+
+  if (isParticipantInfo(data)) {
+    return data;
+  }
+
+  throw new Error('유저 정보가 없습니다.');
+};
 
 const PostContainer = () => {
+  const role = sessionStorage.getItem('role') || '';
+  const { data: userInfoData } = useUserInfoQuery(role);
+  const userInfo = getParticipantInfo(userInfoData);
+
   const [filters, setFilters] = useState<PostListParams>({
     recruitStatus: 'ALL',
+    gender: userInfo?.gender,
+    matchType: userInfo?.matchType,
+    region: userInfo?.basicAddressInfo.region,
+    areas: userInfo?.basicAddressInfo.area,
   });
 
   const { data } = usePostListQuery(filters);

@@ -17,11 +17,11 @@ import Icon from '../Icon';
 import { useUserInfoQuery } from '@/app/home/hooks/useUserInfoQuery';
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 
-const isParticipantInfo = (data: Record<string, any>): data is ParticipantResponse => {
+export const isParticipantInfo = (data: Record<string, any>): data is ParticipantResponse => {
   return 'memberInfo' in data;
 };
 
-const isResearcherInfo = (data: any): data is ResearcherResponse => {
+export const isResearcherInfo = (data: Record<string, any>): data is ResearcherResponse => {
   return 'leadResearcher' in data;
 };
 
