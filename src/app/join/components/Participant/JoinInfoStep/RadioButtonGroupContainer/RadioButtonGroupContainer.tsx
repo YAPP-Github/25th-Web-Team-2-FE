@@ -3,6 +3,7 @@ import {
   labelWrapper,
   radioButtonGroupContainerLayout,
   requiredStar,
+  tipWrapper,
 } from './RadioButtonGroupContainer.styles';
 
 interface RadioButtonGroupProps<T> {
@@ -11,6 +12,7 @@ interface RadioButtonGroupProps<T> {
   onChange: (value: T) => void;
   selectedValue?: T;
   required?: boolean;
+  tip?: string;
 }
 
 const RadioButtonGroupContainer = <T extends string>({
@@ -19,6 +21,7 @@ const RadioButtonGroupContainer = <T extends string>({
   onChange,
   selectedValue,
   required = false,
+  tip,
 }: RadioButtonGroupProps<T>) => {
   return (
     <div css={radioButtonGroupContainerLayout}>
@@ -27,6 +30,11 @@ const RadioButtonGroupContainer = <T extends string>({
         {required && <span css={requiredStar}>*</span>}
       </div>
       <RadioButtonGroup<T> options={options} selectedValue={selectedValue} onChange={onChange} />
+      {tip && (
+        <div css={tipWrapper}>
+          <span>{tip}</span>
+        </div>
+      )}
     </div>
   );
 };

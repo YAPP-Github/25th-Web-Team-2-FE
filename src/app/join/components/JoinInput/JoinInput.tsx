@@ -24,6 +24,7 @@ interface JoinInputProps {
   value?: string;
   onBlur?: () => void;
   maxLength?: number;
+  isTip?: boolean;
 }
 
 const JoinInput = ({
@@ -40,6 +41,7 @@ const JoinInput = ({
   onChange,
   onBlur,
   maxLength,
+  isTip = true,
 }: JoinInputProps) => {
   return (
     <div css={inputContainer}>
@@ -90,7 +92,7 @@ const JoinInput = ({
       />
       {tip && (
         <div css={tipWrapper}>
-          <span css={tipAlert}>Tip</span>
+          {isTip && <span css={tipAlert}>Tip</span>}
           <span>{tip}</span>
         </div>
       )}

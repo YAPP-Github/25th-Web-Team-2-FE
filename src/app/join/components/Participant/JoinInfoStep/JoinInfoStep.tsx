@@ -65,6 +65,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           selectedValue={gender}
           onChange={(value) => setValue('gender', value)}
           required
+          tip="나중에 수정할 수 없어요"
         />
 
         <JoinInput
@@ -75,6 +76,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           placeholder="YYYY.MM.DD"
           maxLength={10}
           tip="나중에 수정할 수 없어요"
+          isTip={false}
           rules={{
             validate: (value: string) => {
               if (!/^\d*$/.test(value.replace(/\./g, ''))) {
