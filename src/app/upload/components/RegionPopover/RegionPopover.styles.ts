@@ -4,20 +4,22 @@ export const regionPopoverContainer = (theme: Theme, isError: boolean) => css`
   width: 45.2rem;
   border-radius: 1.2rem;
   outline: none;
-  border: 0.1rem solid ${isError ? theme.colors.textAlert : 'none'};
+
+  border: ${isError ? 'none' : `0.1rem solid ${theme.colors.line01}`};
 
   &[data-state='open'] {
-    border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.primaryMint};
+    border: 0.1rem solid ${isError ? 'transparent' : theme.colors.primaryMint};
     outline: none;
   }
 `;
 
-export const regionField = (theme: Theme) => css`
+export const regionField = (theme: Theme, isError: boolean) => css`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   border-radius: 1.2rem;
+  border: ${isError ? `0.1rem solid ${theme.colors.textAlert}` : 'none'};
 `;
 
 export const placeholderText = (theme: Theme, hasValue: boolean) => css`
