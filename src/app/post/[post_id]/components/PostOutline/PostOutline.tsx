@@ -11,6 +11,7 @@ import {
   ButtonContainer,
   scrollableContent,
   disabledCheckButton,
+  dynamicSpacing,
 } from './PostOutline.styles';
 import {
   getAreaLabel,
@@ -50,8 +51,10 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
         </table>
 
         {/* 기타 조건 */}
-        {targetGroup.otherCondition && (
+        {targetGroup.otherCondition ? (
           <div css={otherConditionWrapper}>{targetGroup.otherCondition}</div>
+        ) : (
+          <div css={dynamicSpacing} />
         )}
 
         <table css={postOutlineContent}>
@@ -70,8 +73,7 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
             <tr>
               <th>실험 일시</th>
               <td>
-                {/* todo statDate와 endDate가 같으면 하루만 */}
-                {summary.startDate
+                {summary.startDate && summary.endDate
                   ? summary.startDate === summary.endDate
                     ? summary.startDate
                     : `${summary.startDate} ~ ${summary.endDate}`

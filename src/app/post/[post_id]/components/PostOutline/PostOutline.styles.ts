@@ -167,3 +167,7 @@ export const ButtonContainer = (theme: Theme) => css`
   border-bottom-left-radius: 1.2rem;
   border-bottom-right-radius: 1.2rem;
 `;
+
+export const dynamicSpacing = css`
+  margin-bottom: -1.6rem;
+`;
