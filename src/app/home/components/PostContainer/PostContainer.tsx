@@ -37,9 +37,9 @@ const PostContainer = () => {
   const [filters, setFilters] = useState<PostListParams>({
     recruitStatus: 'ALL',
     gender: userInfo?.gender,
-    matchType: userInfo?.matchType,
-    region: userInfo?.basicAddressInfo.region,
-    areas: userInfo?.basicAddressInfo.area,
+    matchType: userInfo?.matchType ?? undefined,
+    region: userInfo?.basicAddressInfo.region ?? undefined,
+    areas: userInfo?.basicAddressInfo.area ?? undefined,
   });
 
   const { data } = usePostListQuery(filters);
