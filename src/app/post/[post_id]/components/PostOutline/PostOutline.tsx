@@ -58,7 +58,7 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
           <tbody>
             <tr>
               <th>참여 보상</th>
-              <td>50,000원</td>
+              <td>{summary.reward}</td>
             </tr>
           </tbody>
         </table>
@@ -71,7 +71,11 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
               <th>실험 일시</th>
               <td>
                 {/* todo statDate와 endDate가 같으면 하루만 */}
-                {summary.startDate ? `${summary.startDate} ~ ${summary.endDate}` : '본문 참고'}
+                {summary.startDate
+                  ? summary.startDate === summary.endDate
+                    ? summary.startDate
+                    : `${summary.startDate} ~ ${summary.endDate}`
+                  : '본문 참고'}
               </td>
             </tr>
             <tr>

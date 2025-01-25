@@ -95,10 +95,12 @@ const ParticipationGuideModal = ({
               )}
 
               {/* 개인정보보호 안내 */}
-              <div css={warning}>
-                <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
-                개인정보보호에 유의해주세요
-              </div>
+              {(applyMethodData.formUrl || applyMethodData.phoneNum) && (
+                <div css={warning}>
+                  <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
+                  개인정보보호에 유의해주세요
+                </div>
+              )}
             </div>
           </Dialog.Content>
 
