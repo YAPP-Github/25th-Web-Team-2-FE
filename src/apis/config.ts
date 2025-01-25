@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { CustomAxiosError } from './type';
+import { updateAccessToken } from './login';
 
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -8,17 +9,30 @@ export const API = axios.create({
 });
 
 // TODO: 에러 핸들링 개선 필요
-// TODO: 리프레시 토큰 처리 로직
 API.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error: CustomAxiosError) => {
+  async (error: CustomAxiosError) => {
     if (error.response) {
-      const { data } = error.response;
+      const { data, config } = error.response;
+      const originalRequest = config;
 
       if (data.code === 'VE007') {
         return Promise.reject({ data: { isAuth: true }, message: '이미 인증된 메일입니다.' });
+      } else if (data.code === 'AU0001') {
+        const refreshToken = sessionStorage.getItem('refreshToken');
+
+        if (refreshToken === null) {
+          return Promise.reject({ data: { isAuth: false }, message: '유효한 입력값이 아닙니다.' });
+        }
+
+        const userInfo = await updateAccessToken(refreshToken);
+
+        originalRequest.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+        sessionStorage.setItem('refreshToken', userInfo.refreshToken);
+        sessionStorage.setItem('role', userInfo.memberInfo.role);
+        return axios(originalRequest);
       }
 
       return Promise.reject(error);
