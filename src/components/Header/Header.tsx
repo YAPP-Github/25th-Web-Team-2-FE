@@ -14,10 +14,29 @@ import {
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
 
-import { useResearcherInfoQuery } from '@/app/home/hooks/useResearcherInfoQuery';
+import { useUserInfoQuery } from '@/app/home/hooks/useUserInfoQuery';
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+
+const isParticipantInfo = (data: Record<string, any>): data is ParticipantResponse => {
+  return 'memberInfo' in data;
+};
+
+const isResearcherInfo = (data: any): data is ResearcherResponse => {
+  return 'leadResearcher' in data;
+};
+
+const getHeaderNickname = (data: ParticipantResponse | ResearcherResponse) => {
+  if (isResearcherInfo(data)) {
+    return data.leadResearcher;
+  } else if (isParticipantInfo(data)) {
+    return data.memberInfo.name;
+  }
+  throw new Error('유저 정보가 없습니다.');
+};
 
 const Header = () => {
-  const { data: myData } = useResearcherInfoQuery();
+  const role = sessionStorage.getItem('role') || '';
+  const { data: myData } = useUserInfoQuery(role);
 
   return (
     <div css={headerLayout}>
@@ -31,7 +50,7 @@ const Header = () => {
 
         {myData ? (
           <div css={buttonWrapper}>
-            <button>{myData.leadResearcher}</button>
+            <button>{getHeaderNickname(myData)}</button>
             <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
           </div>
         ) : (
