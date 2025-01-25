@@ -17,6 +17,7 @@ export default function GoogleLoginPage() {
     if (isSubmitted.current) return;
 
     if (code && role) {
+      sessionStorage.setItem('role', role);
       googleLogin({ code: encodeURIComponent(code), role });
       isSubmitted.current = true;
     }
