@@ -68,12 +68,13 @@ const UploadContainer = () => {
             <button css={activeButton}>이전으로</button>
           </Link>
           <button css={uploadButton} onClick={handleSubmit} type="submit">
-            공고 등록하기
+            {form.formState.isSubmitting ? '공고 등록 중' : '공고 등록하기'}
           </button>
         </div>
       </div>
 
       {/* 공고 등록 실패 시 토스트 알림 */}
+      {/* todo 에러 상태에 따라 다르게 토스트 알림 */}
       <Toast.Provider swipeDirection="right">
         <Toast.Root css={toastLayout} open={openToast} onOpenChange={setOpenToast} duration={1500}>
           <Toast.Title css={toastTitle}>

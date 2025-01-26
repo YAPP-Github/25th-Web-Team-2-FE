@@ -26,11 +26,13 @@ import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExper
 
 interface PostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
-  applyMethodData: UseQueryApplyMethodAPIResponse;
+  applyMethodData: UseQueryApplyMethodAPIResponse | undefined;
 }
 const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
   const { address, recruitStatus, summary, targetGroup } = postDetailData;
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!applyMethodData) return null;
 
   return (
     <div css={postOutlineLayout}>

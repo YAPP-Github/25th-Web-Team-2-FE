@@ -29,7 +29,7 @@ const PostContainer = () => {
   const { data: applyMethodData } = useQueryApplyMethodAPI({ postId });
 
   //todo 이후 화면 나오면 처리 (임시)
-  if (isNaN(postId)) {
+  if (Number.isNaN(postId)) {
     return <div style={{ height: 'calc(100vh - 25rem)' }}>Invalid post ID</div>;
   }
 

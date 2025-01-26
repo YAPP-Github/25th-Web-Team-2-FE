@@ -60,7 +60,7 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
           css={(theme) => textInput(theme, fieldState?.error ? 'error' : '')}
           type={type}
           placeholder={placeholder}
-          value={field.value || ''}
+          value={field.value ?? ''}
           onChange={handleChange}
           maxLength={maxLength}
         />
@@ -72,7 +72,9 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
             </div>
           )}
           {fieldState?.error && showErrorMessage && (
-            <p css={formMessage}>{fieldState.error.message}</p>
+            <p css={formMessage} role="alert" aria-live="polite">
+              {fieldState.error.message}
+            </p>
           )}
         </div>
       </div>
