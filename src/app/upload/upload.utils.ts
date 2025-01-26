@@ -12,21 +12,22 @@ const formatRange = (range: DateRange) => {
   };
 };
 
-// area label을 value로 변환하는 함수
+// region value -> label 변환
+const labelValueMap = new Map();
+
+function initializeLabelValueMap() {
+  UPLOAD_REGION.forEach((region) => {
+    labelValueMap.set(region.label, region.value);
+    region.children?.forEach((child) => {
+      labelValueMap.set(child.label, child.value);
+    });
+  });
+}
+
+initializeLabelValueMap();
+
 function convertLabelToValue(labelToConvert: string): string {
-  for (const region of UPLOAD_REGION) {
-    if (region.label === labelToConvert) {
-      return region.value;
-    }
-
-    for (const child of region.children || []) {
-      if (child.label === labelToConvert) {
-        return child.value;
-      }
-    }
-  }
-
-  return labelToConvert;
+  return labelValueMap.get(labelToConvert) || labelToConvert;
 }
 
 export { formatRange, convertLabelToValue };

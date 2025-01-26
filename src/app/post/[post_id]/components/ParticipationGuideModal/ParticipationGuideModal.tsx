@@ -11,16 +11,25 @@ import {
   toastViewport,
   warning,
 } from './ParticipationGuideModal.styles';
+import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { closeButton, dialogOverlay } from '../../PostPage.styles';
 import { CommonModalProps } from '../../PostPage.types';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
+interface ParticipationGuideModalProps extends CommonModalProps {
+  applyMethodData: UseApplyMethodQueryResponse;
+}
+
 /**
  * 참여 방법 안내 모달
  */
-const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => {
+const ParticipationGuideModal = ({
+  isOpen,
+  onOpenChange,
+  applyMethodData,
+}: ParticipationGuideModalProps) => {
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const handleCopyContent = (text: string) => {
@@ -28,6 +37,8 @@ const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => 
       setIsToastOpen(true);
     });
   };
+
+  if (!applyMethodData) return null;
 
   return (
     <>
@@ -41,42 +52,55 @@ const ParticipationGuideModal = ({ isOpen, onOpenChange }: CommonModalProps) => 
               </button>
             </Dialog.Close>
             <Dialog.Title asChild>
-              <h3 css={dialogTitle}>
-                아래 링크로 이름과 1월 18일 9-18시 중 가능한 시간대를 작성해 주세요
-              </h3>
+              <h3 css={dialogTitle}>{applyMethodData.content}</h3>
             </Dialog.Title>
 
             <div css={contactInfo}>
-              <div className="info-row">
-                <span className="info-title">링크</span>
-                <div className="info-content">
-                  https://forms.gle/gqtFdsvkVBxyoand8
-                  <Icon
-                    icon="Copy"
-                    width={16}
-                    height={16}
-                    cursor="pointer"
-                    onClick={() => handleCopyContent('https://forms.gle/gqtFdsvkVBxyoand8')}
-                  />
+              {/* 링크 */}
+              {applyMethodData.formUrl && (
+                <div className="info-row">
+                  <span className="info-title">링크</span>
+                  <div className="info-content">
+                    {applyMethodData.formUrl}
+                    <Icon
+                      icon="Copy"
+                      width={16}
+                      height={16}
+                      cursor="pointer"
+                      onClick={() =>
+                        applyMethodData.formUrl && handleCopyContent(applyMethodData.formUrl)
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-              {/* <div className="info-row">
-                <span className="info-title">연락처</span>
-                <div className="info-content">
-                  010-1234-5678
-                  <Icon
-                    icon="Copy"
-                    width={16}
-                    height={16}
-                    cursor="pointer"
-                    onClick={() => handleCopyContent('010-1234-5678')}
-                  />
+              )}
+
+              {/* 연락처 */}
+              {applyMethodData.phoneNum && (
+                <div className="info-row">
+                  <span className="info-title">연락처</span>
+                  <div className="info-content">
+                    {applyMethodData.phoneNum}
+                    <Icon
+                      icon="Copy"
+                      width={16}
+                      height={16}
+                      cursor="pointer"
+                      onClick={() =>
+                        applyMethodData.phoneNum && handleCopyContent(applyMethodData.phoneNum)
+                      }
+                    />
+                  </div>
                 </div>
-              </div> */}
-              <div css={warning}>
-                <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
-                개인정보보호에 유의해주세요
-              </div>
+              )}
+
+              {/* 개인정보보호 안내 */}
+              {(applyMethodData.formUrl || applyMethodData.phoneNum) && (
+                <div css={warning}>
+                  <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
+                  개인정보보호에 유의해주세요
+                </div>
+              )}
             </div>
           </Dialog.Content>
 

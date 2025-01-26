@@ -28,7 +28,6 @@ export const selectTrigger = (theme: Theme, disabled: boolean, isError: boolean)
   }
 
   &[data-state='open'] {
-    border: 0.1rem solid ${theme.colors.primaryMint};
     border: 0.1rem solid ${isError ? theme.colors.textAlert : theme.colors.primaryMint};
     outline: none;
   }

@@ -44,5 +44,5 @@ export const activeRadioButton = (theme: Theme) => css`
 `;
 
 export const errorRadioButton = (theme: Theme) => css`
-  border-color: ${theme.colors.textAlert} !important;
+  border-color: ${theme.colors.textAlert};
 `;

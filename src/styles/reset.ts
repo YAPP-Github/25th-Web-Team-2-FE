@@ -145,7 +145,7 @@ const reset = css`
     -webkit-text-fill-color: #000;
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     box-shadow: 0 0 0px 1000px #fff inset;
-    transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 0.3s ease-in-out 0s;
   }
 
   input:autofill,

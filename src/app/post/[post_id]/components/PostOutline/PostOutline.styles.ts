@@ -78,7 +78,8 @@ export const otherConditionWrapper = (theme: Theme) => css`
 `;
 
 export const textWrapRow = css`
-  height: 4.8rem;
+  height: auto;
+  max-height: 4.8rem;
 
   p {
     display: -webkit-box;
@@ -127,6 +128,17 @@ export const checkButton = (theme: Theme) => css`
   cursor: pointer;
 `;
 
+export const disabledCheckButton = (theme: Theme) => css`
+  ${theme.fonts.body.normal.SB16};
+
+  width: 100%;
+  height: 4rem;
+
+  border-radius: 1.2rem;
+  background-color: ${theme.colors.field04};
+  color: ${theme.colors.text03};
+`;
+
 export const scrollableContent = css`
   flex: 1;
   position: relative;
@@ -154,4 +166,8 @@ export const ButtonContainer = (theme: Theme) => css`
 
   border-bottom-left-radius: 1.2rem;
   border-bottom-right-radius: 1.2rem;
+`;
+
+export const dynamicSpacing = css`
+  margin-bottom: -1.6rem;
 `;

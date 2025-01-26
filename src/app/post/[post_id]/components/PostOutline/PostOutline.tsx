@@ -10,11 +10,28 @@ import {
   otherConditionWrapper,
   ButtonContainer,
   scrollableContent,
+  disabledCheckButton,
+  dynamicSpacing,
 } from './PostOutline.styles';
+import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
+import {
+  getAreaLabel,
+  getDurationLabel,
+  getGenderLabel,
+  getRegionLabel,
+} from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
-const PostOutline = () => {
+interface PostOutlineProps {
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+  applyMethodData: UseApplyMethodQueryResponse | undefined;
+}
+const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
+  const { address, recruitStatus, summary, targetGroup } = postDetailData;
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!applyMethodData) return null;
 
   return (
     <div css={postOutlineLayout}>
@@ -25,20 +42,27 @@ const PostOutline = () => {
             <tr>
               <th>모집 대상</th>
               <td>
-                <p>만 19~65세, 여성</p>
+                <p>
+                  만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
+                  {getGenderLabel(targetGroup.genderType)}
+                </p>
               </td>
             </tr>
           </tbody>
         </table>
 
         {/* 기타 조건 */}
-        <div css={otherConditionWrapper}>IT 서비스에 관심이 있는 분</div>
+        {targetGroup.otherCondition ? (
+          <div css={otherConditionWrapper}>{targetGroup.otherCondition}</div>
+        ) : (
+          <div css={dynamicSpacing} />
+        )}
 
         <table css={postOutlineContent}>
           <tbody>
             <tr>
               <th>참여 보상</th>
-              <td>50,000원</td>
+              <td>{summary.reward}</td>
             </tr>
           </tbody>
         </table>
@@ -49,7 +73,13 @@ const PostOutline = () => {
           <tbody>
             <tr>
               <th>실험 일시</th>
-              <td>2025. 01. 18.</td>
+              <td>
+                {summary.startDate && summary.endDate
+                  ? summary.startDate === summary.endDate
+                    ? summary.startDate
+                    : `${summary.startDate} ~ ${summary.endDate}`
+                  : '본문 참고'}
+              </td>
             </tr>
             <tr>
               <th>진행 방식</th>
@@ -58,19 +88,27 @@ const PostOutline = () => {
             <tr>
               <th>소요 시간</th>
               <td>
-                <span css={participationCount}>1회 참여</span> 약 30분
+                <span css={participationCount}>{summary.count}회 참여</span>{' '}
+                {summary.timeRequired ? getDurationLabel(summary.timeRequired) : '본문 참고'}
               </td>
             </tr>
             <tr>
               <th>실험 장소</th>
               <td css={textWrapRow}>
-                <p>서울시 마포구 야뿌대학교 공덕창업허브</p>
+                <p>
+                  {address.univName && address.region && address.area
+                    ? `${getRegionLabel(address.region)} ${getAreaLabel(
+                        address.region,
+                        address.area,
+                      )} ${address.univName} ${address.detailedAddress}`
+                    : '본문 참고'}
+                </p>
               </td>
             </tr>
             <tr>
               <th>연구 책임</th>
               <td css={textWrapRow}>
-                <p>야뿌대학교 심리학과 연구원 연도비</p>
+                <p>{summary.leadResearcher}</p>
               </td>
             </tr>
           </tbody>
@@ -78,13 +116,23 @@ const PostOutline = () => {
       </div>
 
       <div css={ButtonContainer}>
-        <button css={checkButton} onClick={() => setIsModalOpen(true)}>
-          참여 방법 확인하기
-        </button>
+        {recruitStatus ? (
+          <button css={checkButton} onClick={() => setIsModalOpen(true)}>
+            참여 방법 확인하기
+          </button>
+        ) : (
+          <button css={disabledCheckButton} disabled>
+            모집이 완료 되었어요
+          </button>
+        )}
       </div>
 
       {/* 참여 방법 안내 모달 */}
-      <ParticipationGuideModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
+      <ParticipationGuideModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        applyMethodData={applyMethodData}
+      />
     </div>
   );
 };

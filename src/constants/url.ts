@@ -10,6 +10,8 @@ export const API_URL = {
   me: (role: string) => `/v1/members/${role}/me`,
   refresh: '/v1/auth/refresh',
   uploadPost: '/v1/experiment-posts',
+  viewExperimentDetails: (postId: number) => `/v1/experiment-posts/${postId}/details`,
+  applyMethod: (postId: number) => `/v1/experiment-posts/${postId}/apply-method`,
 };
 
 export const MOCK_API_URL = {
