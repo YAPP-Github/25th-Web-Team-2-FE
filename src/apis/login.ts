@@ -45,8 +45,11 @@ export interface ParticipantResponse {
 }
 
 export interface ResearcherResponse {
-  leadResearcher: string;
+  memberInfo: Member;
+  univEmail: string;
   univName: string;
+  major: string;
+  labInfo: string;
 }
 
 export interface NaverLoginParams {
