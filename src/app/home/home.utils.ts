@@ -1,3 +1,6 @@
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { isParticipantInfo } from '@/utils/typeGuard';
+
 export const formatPostDate = ({
   startDate,
   endDate,
@@ -30,4 +33,12 @@ export const formatPostDate = ({
   else if (!startDate && endDate) {
     return format(endDate);
   }
+};
+
+export const filterParticipantInfo = (data?: ParticipantResponse | ResearcherResponse) => {
+  if (data && isParticipantInfo(data)) {
+    return data;
+  }
+
+  return null;
 };
