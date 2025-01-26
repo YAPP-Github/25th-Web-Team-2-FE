@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { API } from '@/apis/config';
-import { join } from '@/apis/login';
+import { joinResearcher } from '@/apis/login';
 
-const useJoinMutation = () => {
+const useResearcherJoinMutation = () => {
   return useMutation({
-    mutationFn: join,
+    mutationFn: joinResearcher,
     onSuccess: ({ accessToken, refreshToken, memberInfo }) => {
       API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       sessionStorage.setItem('refreshToken', refreshToken);
@@ -14,4 +14,4 @@ const useJoinMutation = () => {
   });
 };
 
-export default useJoinMutation;
+export default useResearcherJoinMutation;

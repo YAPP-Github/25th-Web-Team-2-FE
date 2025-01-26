@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
-import useServiceAgreeCheck from '../../hooks/useServiceAgreeCheck';
-import { joinForm } from '../../JoinPage.styles';
-import { ResearcherJoinParams } from '../../JoinPage.types';
-import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
-import JoinInput from '../JoinInput/JoinInput';
-import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
+import { nextButton } from './JoinEmailStep.styles';
+import JoinCheckboxContainer from '../../JoinEmailStep/JoinCheckboxContainer/JoinCheckboxContainer';
+import JoinInput from '../../JoinInput/JoinInput';
+
+import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
+import { joinContentContainer, joinForm } from '@/app/join/JoinPage.styles';
+import { ParticipantJoinParams } from '@/app/join/JoinPage.types';
 
 interface JoinEmailStepProps {
   onNext: () => void;
@@ -15,17 +14,11 @@ interface JoinEmailStepProps {
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const oauthEmail = sessionStorage.getItem('email') || '';
-  const { control } = useFormContext<ResearcherJoinParams>();
-  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
+  const role = sessionStorage.getItem('role') || '';
+  const { control } = useFormContext<ParticipantJoinParams>();
+  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck(role);
 
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
-
-  const allValid =
-    isEmailVerified && serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
-
-  const handleVerifyEmail = () => {
-    setIsEmailVerified(true);
-  };
+  const allValid = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
 
   return (
     <section css={joinForm}>
@@ -60,7 +53,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           }}
           tip="로그인 아이디와 달라도 괜찮아요"
         />
-        <UnivAuthInput handleVerifyEmail={handleVerifyEmail} />
         <JoinCheckboxContainer
           serviceAgreeCheck={serviceAgreeCheck}
           handleAllCheck={handleAllCheck}

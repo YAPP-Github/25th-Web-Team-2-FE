@@ -12,7 +12,7 @@ import {
 } from './UnivAuthInput.styles';
 import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
-import { JoinParams } from '../../../JoinPage.types';
+import { ResearcherJoinParams } from '../../../JoinPage.types';
 import EmailToast from '../../EmailToast/EmailToast';
 
 interface UnivAuthInputProps {
@@ -24,7 +24,7 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
     control,
     getValues,
     formState: { errors },
-  } = useFormContext<JoinParams>();
+  } = useFormContext<ResearcherJoinParams>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);

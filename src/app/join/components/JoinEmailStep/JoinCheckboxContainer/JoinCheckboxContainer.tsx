@@ -1,6 +1,6 @@
-import { ServiceAgreeCheck } from '../../../JoinPage.types';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
+import { ServiceAgreeCheck } from '../../../JoinPage.types';
 
 interface JoinCheckboxContainerProps {
   serviceAgreeCheck: ServiceAgreeCheck;
@@ -13,9 +13,9 @@ const JoinCheckboxContainer = ({
   handleAllCheck,
   handleChange,
 }: JoinCheckboxContainerProps) => {
-  const { isTermOfService, isPrivacy, isAdvertise } = serviceAgreeCheck;
+  const { isTermOfService, isPrivacy, isAdvertise, isRecommend } = serviceAgreeCheck;
 
-  const isAllCheck = isTermOfService && isPrivacy && isAdvertise;
+  const isAllCheck = isTermOfService && isPrivacy && isAdvertise && (isRecommend ?? true);
 
   return (
     <div css={termContainer}>
@@ -37,12 +37,19 @@ const JoinCheckboxContainer = ({
         onChange={(e) => handleChange(e, 'isPrivacy')}
         isRequired
       />
-
       <JoinCheckbox
-        label="광고성 정보 이메일/SMS 수신 동의"
+        label="[선택] 광고성 정보 이메일/SMS 수신 동의"
         isChecked={isAdvertise}
         onChange={(e) => handleChange(e, 'isAdvertise')}
       />
+      {isRecommend !== undefined && (
+        <JoinCheckbox
+          label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
+          isChecked={isRecommend}
+          onChange={(e) => handleChange(e, 'isRecommend')}
+          isAlert={true}
+        />
+      )}
     </div>
   );
 };

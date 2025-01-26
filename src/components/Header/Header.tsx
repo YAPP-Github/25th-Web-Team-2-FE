@@ -14,10 +14,11 @@ import {
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
 
-import { useResearcherInfoQuery } from '@/app/home/hooks/useResearcherInfoQuery';
+import { useUserInfoQuery } from '@/app/home/hooks/useUserInfoQuery';
 
 const Header = () => {
-  const { data: myData } = useResearcherInfoQuery();
+  const role = sessionStorage.getItem('role') || '';
+  const { data: myData } = useUserInfoQuery(role);
 
   return (
     <div css={headerLayout}>
@@ -31,7 +32,7 @@ const Header = () => {
 
         {myData ? (
           <div css={buttonWrapper}>
-            <button>{myData.leadResearcher}</button>
+            <button>{myData.memberInfo.name}</button>
             <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
           </div>
         ) : (

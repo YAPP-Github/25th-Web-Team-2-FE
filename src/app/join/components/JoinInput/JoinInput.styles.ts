@@ -51,6 +51,7 @@ export const errorMessage = (theme: Theme) => css`
 export const tipWrapper = (theme: Theme) => css`
   ${theme.fonts.label.small.M12};
   display: flex;
+  gap: 0.4rem;
   color: ${theme.colors.text02};
 `;
 

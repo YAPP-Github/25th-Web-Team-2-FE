@@ -1,6 +1,6 @@
 import { css, Theme } from '@emotion/react';
 
-export const postCardLayout = css`
+export const postCardLayout = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
@@ -11,6 +11,7 @@ export const postCardLayout = css`
   border-radius: 1.2rem;
   justify-content: space-between;
   height: 20rem;
+  background-color: ${theme.colors.field01};
 
   &:hover {
     box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.08);

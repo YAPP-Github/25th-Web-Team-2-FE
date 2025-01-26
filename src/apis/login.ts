@@ -1,6 +1,6 @@
 import { API } from './config';
 
-import { JoinParams } from '@/app/join/JoinPage.types';
+import { ParticipantJoinParams, ResearcherJoinParams } from '@/app/join/JoinPage.types';
 import { API_URL } from '@/constants/url';
 
 interface UnivAuthCodeResponse {
@@ -45,8 +45,11 @@ export interface ParticipantResponse {
 }
 
 export interface ResearcherResponse {
-  leadResearcher: string;
+  memberInfo: Member;
+  univEmail: string;
   univName: string;
+  major: string;
+  labInfo: string;
 }
 
 export interface NaverLoginParams {
@@ -82,8 +85,14 @@ export const verifyUnivAuthCode = async (univEmail: string, inputCode: string) =
   return res.data;
 };
 
-export const join = async (params: JoinParams) => {
-  const res = await API.post<JoinResponse>(API_URL.join, { ...params });
+export const joinResearcher = async (params: ResearcherJoinParams) => {
+  const res = await API.post<JoinResponse>(API_URL.joinResearcher, { ...params });
+
+  return res.data;
+};
+
+export const joinParticipant = async (params: ParticipantJoinParams) => {
+  const res = await API.post<JoinResponse>(API_URL.joinParticipant, { ...params });
 
   return res.data;
 };

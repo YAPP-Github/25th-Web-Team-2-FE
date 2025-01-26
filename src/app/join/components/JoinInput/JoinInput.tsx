@@ -23,6 +23,8 @@ interface JoinInputProps {
   tip?: string;
   value?: string;
   onBlur?: () => void;
+  maxLength?: number;
+  isTip?: boolean;
 }
 
 const JoinInput = ({
@@ -38,6 +40,8 @@ const JoinInput = ({
   value,
   onChange,
   onBlur,
+  maxLength,
+  isTip = true,
 }: JoinInputProps) => {
   return (
     <div css={inputContainer}>
@@ -59,6 +63,7 @@ const JoinInput = ({
                 placeholder={placeholder}
                 disabled={disabled}
                 value={value}
+                maxLength={maxLength}
                 aria-invalid={fieldState.invalid ? true : false}
                 onChange={(e) => {
                   field.onChange(e);
@@ -81,13 +86,13 @@ const JoinInput = ({
               />
             )}
             {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
-            {type === 'textarea' && <span css={textCount}>{field.value.length}/100</span>}
+            {type === 'textarea' && <span css={textCount}>{field.value?.length || 0}/100</span>}
           </>
         )}
       />
       {tip && (
         <div css={tipWrapper}>
-          <span css={tipAlert}>Tip</span>
+          {isTip && <span css={tipAlert}>Tip</span>}
           <span>{tip}</span>
         </div>
       )}

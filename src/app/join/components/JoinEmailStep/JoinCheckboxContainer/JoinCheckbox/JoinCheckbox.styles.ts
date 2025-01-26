@@ -11,11 +11,6 @@ export const checkboxWrapper = css`
   align-items: center;
   gap: 0.8rem;
 
-  div {
-    display: flex;
-    gap: 0.4rem;
-  }
-
   span {
     user-select: none;
   }
@@ -34,4 +29,9 @@ export const checkbox = css`
 
 export const requiredCheckboxText = (theme: Theme) => css`
   color: ${theme.colors.textPrimary};
+`;
+
+export const labelWrapper = css`
+  display: flex;
+  gap: 0.4rem;
 `;

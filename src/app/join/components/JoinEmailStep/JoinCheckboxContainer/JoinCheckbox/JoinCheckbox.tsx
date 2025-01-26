@@ -3,8 +3,10 @@ import {
   checkbox,
   checkboxLayout,
   checkboxWrapper,
+  labelWrapper,
   requiredCheckboxText,
 } from './JoinCheckbox.styles';
+import { tipAlert, tipWrapper } from '../../../JoinInput/JoinInput.styles';
 
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
@@ -17,6 +19,7 @@ interface JoinCheckboxProps {
   isRequired?: boolean;
   isAllCheck?: boolean;
   isArrow?: boolean;
+  isAlert?: boolean;
 }
 
 const JoinCheckbox = ({
@@ -26,6 +29,7 @@ const JoinCheckbox = ({
   isRequired = false,
   isAllCheck = false,
   isArrow = true,
+  isAlert,
 }: JoinCheckboxProps) => {
   return (
     <div css={[checkboxLayout, isAllCheck && allCheckWrapper]}>
@@ -37,10 +41,18 @@ const JoinCheckbox = ({
           <Icon icon="CheckSquareEmpty" />
         )}
         <div>
-          {isRequired && <span css={requiredCheckboxText}>[필수]</span>}
-          <span>{label}</span>
+          <div css={labelWrapper}>
+            {isRequired && <span css={requiredCheckboxText}>[필수]</span>}
+            <span>{label}</span>
+          </div>
+          {isAlert && (
+            <div css={tipWrapper}>
+              <span css={tipAlert}>* 내가 참여할 수 있는 실험 알림을 보내드려요</span>
+            </div>
+          )}
         </div>
       </label>
+
       {isArrow && <Icon icon="Chevron" width={20} height={20} />}
     </div>
   );
