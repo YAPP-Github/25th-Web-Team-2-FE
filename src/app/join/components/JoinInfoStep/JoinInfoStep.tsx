@@ -2,16 +2,17 @@ import { useFormContext } from 'react-hook-form';
 
 import { joinButton } from './JoinInfoStep.styles';
 import { joinContentContainer, joinForm } from '../../JoinPage.styles';
-import { ResearcherJoinParams } from '../../JoinPage.types';
 import JoinInput from '../JoinInput/JoinInput';
 
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+
 interface JoinInfoStepProps {
-  onNext: () => void;
+  handleSubmit: () => void;
 }
 
 // TODO: blur 될 때 trigger + 입력값 초기화 안되도록 개선 필요
-const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
-  const { control } = useFormContext<ResearcherJoinParams>();
+const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
+  const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   return (
     <section css={joinForm}>
@@ -78,7 +79,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           type="textarea"
         />
       </div>
-      <button css={joinButton} onClick={onNext}>
+      <button css={joinButton} onClick={handleSubmit}>
         회원가입
       </button>
     </section>

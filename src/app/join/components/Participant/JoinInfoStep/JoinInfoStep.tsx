@@ -18,13 +18,19 @@ import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { errorMessage } from '../../JoinInput/JoinInput.styles';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const { control, watch, setValue } = useFormContext<ParticipantJoinSchemaType>();
+  const {
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ParticipantJoinSchemaType>();
 
   const gender = useWatch({ name: 'gender', control });
   const matchType = useWatch({ name: 'matchType', control });
@@ -56,6 +62,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           onChange={(value) => setValue('gender', value)}
           required
           tip="나중에 수정할 수 없어요"
+          error={errors.gender?.message}
         />
 
         <JoinInput
@@ -79,14 +86,24 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
               onChange={(value) => setValue('basicAddressInfo.region', value)}
               placeholder="시·도"
               options={JOIN_REGION}
+              isError={
+                Boolean(errors.basicAddressInfo?.message) ||
+                Boolean(errors.basicAddressInfo?.region)
+              }
             />
             <JoinSelect
               value={selectedSubArea}
               onChange={(value) => setValue('basicAddressInfo.area', value)}
               placeholder="시·군·구"
               options={JOIN_SUB_REGION[selectedArea] || []}
+              isError={
+                Boolean(errors.basicAddressInfo?.message) || Boolean(errors.basicAddressInfo?.area)
+              }
             />
           </div>
+          {errors.basicAddressInfo && (
+            <span css={errorMessage}>{errors.basicAddressInfo?.message}</span>
+          )}
         </div>
         <div css={joinAreaFilterContainer}>
           <div css={filterTitleWrapper}>

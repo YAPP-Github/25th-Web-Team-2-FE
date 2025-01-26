@@ -1,3 +1,4 @@
+import { errorMessage } from '../../../JoinInput/JoinInput.styles';
 import RadioButtonGroup from './RadioButtonGroup/RadioButtonGroup';
 import {
   labelWrapper,
@@ -13,6 +14,7 @@ interface RadioButtonGroupProps<T> {
   selectedValue?: T;
   required?: boolean;
   tip?: string;
+  error?: string;
 }
 
 const RadioButtonGroupContainer = <T extends string>({
@@ -22,6 +24,7 @@ const RadioButtonGroupContainer = <T extends string>({
   selectedValue,
   required = false,
   tip,
+  error,
 }: RadioButtonGroupProps<T>) => {
   return (
     <div css={radioButtonGroupContainerLayout}>
@@ -29,7 +32,13 @@ const RadioButtonGroupContainer = <T extends string>({
         <span>{title}</span>
         {required && <span css={requiredStar}>*</span>}
       </div>
-      <RadioButtonGroup<T> options={options} selectedValue={selectedValue} onChange={onChange} />
+      <RadioButtonGroup<T>
+        options={options}
+        selectedValue={selectedValue}
+        onChange={onChange}
+        isError={Boolean(error)}
+      />
+      {error && <span css={errorMessage}>{error}</span>}
       {tip && (
         <div css={tipWrapper}>
           <span>{tip}</span>

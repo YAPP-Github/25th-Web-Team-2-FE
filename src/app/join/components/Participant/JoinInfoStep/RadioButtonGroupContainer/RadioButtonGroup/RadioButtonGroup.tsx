@@ -4,12 +4,14 @@ interface RadioButtonGroupProps<T> {
   options: { value: T; label: string }[];
   onChange: (value: T) => void;
   selectedValue?: T;
+  isError: boolean;
 }
 
 const RadioButtonGroup = <T extends string>({
   options,
   selectedValue,
   onChange,
+  isError,
 }: RadioButtonGroupProps<T>) => {
   return (
     <div css={customRadioGroup}>
@@ -17,6 +19,7 @@ const RadioButtonGroup = <T extends string>({
         <button
           key={option.value}
           type="button"
+          aria-invalid={isError}
           css={(theme) => [
             customRadioButton(theme),
             selectedValue === option.value && activeRadioButton(theme),

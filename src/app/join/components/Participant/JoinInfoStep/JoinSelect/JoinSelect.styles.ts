@@ -1,8 +1,8 @@
 import { css, Theme } from '@emotion/react';
 
 export const triggerWrapper = (theme: Theme) => css`
-  ${theme.fonts.body.normal.M16};
-  color: ${theme.colors.text06};
+  // ${theme.fonts.body.normal.M16};
+  // color: ${theme.colors.text06};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16,6 +16,10 @@ export const triggerWrapper = (theme: Theme) => css`
   &[data-placeholder] {
     ${theme.fonts.body.normal.M16};
     color: ${theme.colors.text02};
+  }
+
+  &[aria-invalid='true'] {
+    outline: 0.1rem solid ${theme.colors.textAlert};
   }
 `;
 
