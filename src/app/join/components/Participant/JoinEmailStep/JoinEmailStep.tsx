@@ -6,7 +6,7 @@ import JoinInput from '../../JoinInput/JoinInput';
 
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.styles';
-import { ParticipantJoinParams } from '@/app/join/JoinPage.types';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinEmailStepProps {
   onNext: () => void;
@@ -15,7 +15,7 @@ interface JoinEmailStepProps {
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const oauthEmail = sessionStorage.getItem('email') || '';
   const role = sessionStorage.getItem('role') || '';
-  const { control } = useFormContext<ParticipantJoinParams>();
+  const { control } = useFormContext<ParticipantJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck(role);
 
   const allValid = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
@@ -30,13 +30,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           value={oauthEmail}
           placeholder="이메일 입력"
           disabled
-          rules={{
-            required: '이메일을 입력해주세요',
-            pattern: {
-              value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-              message: '이메일 형식이 올바르지 않아요',
-            },
-          }}
         />
         <JoinInput
           name="contactEmail"
@@ -44,13 +37,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           label="연락 받을 이메일"
           placeholder="이메일 입력"
           required
-          rules={{
-            required: '연락 받을 이메일을 입력해주세요',
-            pattern: {
-              value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-              message: '이메일 형식이 올바르지 않아요',
-            },
-          }}
           tip="로그인 아이디와 달라도 괜찮아요"
         />
         <JoinCheckboxContainer

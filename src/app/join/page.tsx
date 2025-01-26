@@ -1,5 +1,6 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -17,11 +18,14 @@ import {
   progressBarFill,
   titleContainer,
 } from './JoinPage.styles';
-import { ParticipantJoinParams, ResearcherJoinParams } from './JoinPage.types';
 import { getProvider } from './JoinPage.utils';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
+import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import ParticipantJoinSchema, {
+  ParticipantJoinSchemaType,
+} from '@/schema/join/ParticipantJoinSchema';
 
 const STEP = {
   email: 'email',
@@ -36,21 +40,21 @@ export default function JoinPage() {
   const { mutate: joinResearcher } = useResearcherJoinMutation();
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 
-  const researcherMethods = useForm<ResearcherJoinParams>({
-    mode: 'onBlur',
+  const researcherMethods = useForm<ResearcherJoinSchemaType>({
+    resolver: zodResolver(ResearcherJoinSchema()),
+    mode: 'onChange',
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,
-      contactEmail: '',
       univEmail: '',
       name: '',
       univName: '',
       major: '',
-      labInfo: '',
     },
   });
 
-  const participantMethods = useForm<ParticipantJoinParams>({
+  const participantMethods = useForm<ParticipantJoinSchemaType>({
+    resolver: zodResolver(ParticipantJoinSchema()),
     mode: 'onChange',
     defaultValues: {
       oauthEmail: oauthEmail,
@@ -95,7 +99,9 @@ export default function JoinPage() {
                 <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
               </Funnel.Step>
               <Funnel.Step name={STEP.info}>
-                <Researcher.InfoStep onNext={handleResearcherSubmit} />
+                <Researcher.InfoStep
+                  handleSubmit={() => researcherMethods.handleSubmit(handleResearcherSubmit)}
+                />
               </Funnel.Step>
               <Funnel.Step name={STEP.success}>
                 <JoinSuccessStep name={researcherMethods.getValues('name')} />
@@ -123,7 +129,9 @@ export default function JoinPage() {
               <Participant.EmailStep onNext={() => setStep(STEP.info)} />
             </Funnel.Step>
             <Funnel.Step name={STEP.info}>
-              <Participant.InfoStep onNext={handleParticipantSubmit} />
+              <Participant.InfoStep
+                handleSubmit={participantMethods.handleSubmit(handleParticipantSubmit)}
+              />
             </Funnel.Step>
             <Funnel.Step name={STEP.success}>
               <JoinSuccessStep name={participantMethods.getValues('name')} />

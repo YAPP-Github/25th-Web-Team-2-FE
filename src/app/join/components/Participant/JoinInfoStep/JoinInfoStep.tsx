@@ -16,14 +16,15 @@ import JoinInput from '../../JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
-import { Gender, MatchType, ParticipantJoinParams } from '@/app/join/JoinPage.types';
+import { Gender, MatchType } from '@/app/join/JoinPage.types';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinInfoStepProps {
-  onNext: () => void;
+  handleSubmit: () => void;
 }
 
-const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
-  const { control, watch, setValue } = useFormContext<ParticipantJoinParams>();
+const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
+  const { control, watch, setValue } = useFormContext<ParticipantJoinSchemaType>();
 
   const gender = useWatch({ name: 'gender', control });
   const matchType = useWatch({ name: 'matchType', control });
@@ -42,17 +43,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           label="이름"
           required
           placeholder="이름(실명) 입력"
-          rules={{
-            required: '이름을 입력해주세요.',
-            minLength: {
-              value: 2,
-              message: '이름은 최소 2자 이상이어야 합니다.',
-            },
-            maxLength: {
-              value: 10,
-              message: '이름은 최대 10자 이하여야 합니다.',
-            },
-          }}
         />
 
         <RadioButtonGroupContainer<Gender>
@@ -77,34 +67,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           maxLength={10}
           tip="나중에 수정할 수 없어요"
           isTip={false}
-          rules={{
-            validate: (value: string) => {
-              if (!/^\d*$/.test(value.replace(/\./g, ''))) {
-                return '숫자만 입력 가능합니다.';
-              }
-
-              const regex = /^\d{4}\.\d{2}\.\d{2}$/;
-              if (!regex.test(value)) {
-                return 'YYYY.MM.DD 형식으로 입력해주세요.';
-              }
-
-              const year = Number(value.slice(0, 4));
-              const month = Number(value.slice(5, 7));
-              const day = Number(value.slice(8, 10));
-
-              const date = new Date(year, month - 1, day);
-
-              if (
-                date.getFullYear() !== year ||
-                date.getMonth() + 1 !== month ||
-                date.getDate() !== day
-              ) {
-                return '유효한 날짜를 입력해주세요.';
-              }
-
-              return true;
-            },
-          }}
         />
         <div css={joinAreaFilterContainer}>
           <div css={filterTitleWrapper}>
@@ -158,7 +120,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button css={joinButton} onClick={onNext}>
+      <button css={joinButton} onClick={handleSubmit}>
         회원가입
       </button>
     </section>

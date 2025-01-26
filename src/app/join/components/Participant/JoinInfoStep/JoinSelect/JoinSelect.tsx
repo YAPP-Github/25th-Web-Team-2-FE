@@ -13,7 +13,7 @@ interface JoinSelectProps {
   value?: string;
 }
 
-const JoinSelect = ({ placeholder, value, options, onChange }: JoinSelectProps) => {
+const JoinSelect = ({ placeholder, onChange, options, value }: JoinSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
