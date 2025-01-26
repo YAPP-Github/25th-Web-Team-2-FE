@@ -3,12 +3,11 @@
 import { usePathname } from 'next/navigation';
 
 import { postContentLayout } from './PostContainer.styles';
+import useApplyMethodQuery from '../../hooks/useApplyMethodQuery';
+import useExperimentDetailsQuery from '../../hooks/useExperimentDetailsQuery';
 import PostDetailContent from '../PostDetailContent/PostDetailContent';
 import PostInfo from '../PostInfo/PostInfo';
 import PostOutline from '../PostOutline/PostOutline';
-
-import useQueryApplyMethodAPI from '@/apis/hooks/useQueryApplyMethodAPI';
-import useQueryExperimentDetailsAPI from '@/apis/hooks/useQueryExperimentDetailsAPI';
 
 const PostContainer = () => {
   //todo 이 후에 쿼리 파라미터 형식이든 or postId 타입 변경 요청이든 수정 예정
@@ -23,10 +22,10 @@ const PostContainer = () => {
     isLoading,
     isError,
     refetch,
-  } = useQueryExperimentDetailsAPI({ postId });
+  } = useExperimentDetailsQuery({ postId });
 
   /* 공고 지원 방법 조회 */
-  const { data: applyMethodData } = useQueryApplyMethodAPI({ postId });
+  const { data: applyMethodData } = useApplyMethodQuery({ postId });
 
   //todo 이후 화면 나오면 처리 (임시)
   if (Number.isNaN(postId)) {

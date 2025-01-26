@@ -4,8 +4,8 @@ import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { convertLabelToValue } from '../upload.utils';
+import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 
-import useUploadExperimentPostAPI from '@/apis/hooks/useUploadExperimentPostAPI';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -16,7 +16,7 @@ interface useUploadExperimentPostProps {
   setOpenToast: Dispatch<SetStateAction<boolean>>;
 }
 
-const useUploadExperimentPost = ({
+const useManageExperimentPostForm = ({
   addLink,
   addContact,
   setOpenToast,
@@ -59,7 +59,7 @@ const useUploadExperimentPost = ({
     },
   });
 
-  const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostAPI();
+  const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
     const updatedData = {
@@ -85,4 +85,4 @@ const useUploadExperimentPost = ({
   };
 };
 
-export default useUploadExperimentPost;
+export default useManageExperimentPostForm;

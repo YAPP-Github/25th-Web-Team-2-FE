@@ -13,6 +13,8 @@ import {
   disabledCheckButton,
   dynamicSpacing,
 } from './PostOutline.styles';
+import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import {
   getAreaLabel,
   getDurationLabel,
@@ -21,12 +23,9 @@ import {
 } from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
-import { UseQueryApplyMethodAPIResponse } from '@/apis/hooks/useQueryApplyMethodAPI';
-import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
-
 interface PostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
-  applyMethodData: UseQueryApplyMethodAPIResponse | undefined;
+  applyMethodData: UseApplyMethodQueryResponse | undefined;
 }
 const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
   const { address, recruitStatus, summary, targetGroup } = postDetailData;

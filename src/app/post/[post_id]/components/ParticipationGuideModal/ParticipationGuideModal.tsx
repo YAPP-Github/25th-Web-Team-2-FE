@@ -11,15 +11,15 @@ import {
   toastViewport,
   warning,
 } from './ParticipationGuideModal.styles';
+import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { closeButton, dialogOverlay } from '../../PostPage.styles';
 import { CommonModalProps } from '../../PostPage.types';
 
-import { UseQueryApplyMethodAPIResponse } from '@/apis/hooks/useQueryApplyMethodAPI';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
 interface ParticipationGuideModalProps extends CommonModalProps {
-  applyMethodData: UseQueryApplyMethodAPIResponse;
+  applyMethodData: UseApplyMethodQueryResponse;
 }
 
 /**

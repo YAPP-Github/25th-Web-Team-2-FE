@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { API } from '../config';
-
+import { API } from '@/apis/config';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { API_URL } from '@/constants/url';
 
-interface UseQueryExperimentDetailsAPIParams {
+interface UseExperimentDetailsQueryParams {
   postId: number;
 }
 
@@ -49,7 +48,7 @@ export interface UseQueryExperimentDetailsAPIResponse {
   isAuthor: boolean;
 }
 
-const useQueryExperimentDetailsAPI = ({ postId }: UseQueryExperimentDetailsAPIParams) => {
+const useExperimentDetailsQuery = ({ postId }: UseExperimentDetailsQueryParams) => {
   const queryKey = API_URL.viewExperimentDetails(postId);
   const queryFn = () => API.post(queryKey).then((res) => res.data);
 
@@ -60,4 +59,4 @@ const useQueryExperimentDetailsAPI = ({ postId }: UseQueryExperimentDetailsAPIPa
   });
 };
 
-export default useQueryExperimentDetailsAPI;
+export default useExperimentDetailsQuery;

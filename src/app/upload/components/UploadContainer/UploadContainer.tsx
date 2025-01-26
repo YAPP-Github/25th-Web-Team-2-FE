@@ -13,7 +13,7 @@ import {
   uploadContentLayout,
   uploadLayout,
 } from './UploadContainer.styles';
-import useUploadExperimentPost from '../../hooks/useUploadExperimentPost';
+import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
@@ -32,7 +32,7 @@ const UploadContainer = () => {
 
   const [openToast, setOpenToast] = useState(false);
 
-  const { form, handleSubmit } = useUploadExperimentPost({
+  const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
     addContact,
     setOpenToast,
