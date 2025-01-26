@@ -23,16 +23,17 @@ import JoinCheckbox from '@/app/join/components/JoinEmailStep/JoinCheckboxContai
 // 2. role을 통해 user API 호출
 // 3. 참여자일 경우에만 참여자 정보를 filter에 추가해서 실험 공고 요청
 // 3-1. 참여자가 아닐 경우(연구자, 비회원)에는 자동 적용 필터 X
+// FIXME: 참여자일 경우에는 쿼리를 2번 호출함
 // FIXME: 4. 선택된 filter가 각각 관리되고 있는데, PostContainer의 filters 값으로 같이 관리하기
 const PostContainer = () => {
   const role = sessionStorage.getItem('role') || '';
   const { data: userInfoData } = useUserInfoQuery(role);
   const participantInfo = filterParticipantInfo(userInfoData);
 
-  const [filters, setFilters] = useState<PostListParams>({
+  const [filters, setFilters] = useState<Pick<PostListParams, 'recruitStatus'>>({
     recruitStatus: 'ALL',
   });
-  const { data } = usePostListQuery(filters, Boolean(participantInfo));
+  const { data } = usePostListQuery(filters);
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
