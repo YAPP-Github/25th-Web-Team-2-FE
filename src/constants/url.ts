@@ -9,6 +9,7 @@ export const API_URL = {
   joinParticipant: '/v1/members/signup/participant',
   me: (role: string) => `/v1/members/${role}/me`,
   refresh: '/v1/auth/refresh',
+  uploadPost: '/v1/experiment-posts',
 };
 
 export const MOCK_API_URL = {
