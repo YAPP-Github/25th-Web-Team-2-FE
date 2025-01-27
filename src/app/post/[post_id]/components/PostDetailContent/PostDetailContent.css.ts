@@ -18,7 +18,7 @@ globalStyle(`${postContentLayout} h3`, {
 });
 
 export const postContentWrapper = style({
-  ...fonts.body.normal.B16,
+  ...fonts.body.normal.R16,
   color: colors.text06,
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
