@@ -3,16 +3,18 @@ import * as Toast from '@radix-ui/react-toast';
 import { useState } from 'react';
 
 import {
-  contactInfo,
   dialogContent,
   dialogTitle,
+  infoContent,
+  infoRow,
+  infoTitle,
   toastLayout,
   toastTitle,
   toastViewport,
   warning,
-} from './ParticipationGuideModal.styles';
+} from './ParticipationGuideModal.css';
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
-import { closeButton, dialogOverlay } from '../../PostPage.styles';
+import { closeButton, dialogOverlay } from '../../PostPage.css';
 import { CommonModalProps } from '../../PostPage.types';
 
 import Icon from '@/components/Icon';
@@ -44,23 +46,23 @@ const ParticipationGuideModal = ({
     <>
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
         <Dialog.Portal>
-          <Dialog.Overlay css={dialogOverlay} />
-          <Dialog.Content css={dialogContent} aria-describedby={undefined}>
+          <Dialog.Overlay className={dialogOverlay} />
+          <Dialog.Content className={dialogContent} aria-describedby={undefined}>
             <Dialog.Close asChild>
-              <button css={closeButton} aria-label="모달 닫기">
+              <button className={closeButton} aria-label="모달 닫기">
                 <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
               </button>
             </Dialog.Close>
             <Dialog.Title asChild>
-              <h3 css={dialogTitle}>{applyMethodData.content}</h3>
+              <h3 className={dialogTitle}>{applyMethodData.content}</h3>
             </Dialog.Title>
 
-            <div css={contactInfo}>
+            <div>
               {/* 링크 */}
               {applyMethodData.formUrl && (
-                <div className="info-row">
-                  <span className="info-title">링크</span>
-                  <div className="info-content">
+                <div className={infoRow}>
+                  <span className={infoTitle}>링크</span>
+                  <div className={infoContent}>
                     {applyMethodData.formUrl}
                     <Icon
                       icon="Copy"
@@ -77,9 +79,9 @@ const ParticipationGuideModal = ({
 
               {/* 연락처 */}
               {applyMethodData.phoneNum && (
-                <div className="info-row">
-                  <span className="info-title">연락처</span>
-                  <div className="info-content">
+                <div className={infoRow}>
+                  <span className={infoTitle}>연락처</span>
+                  <div className={infoContent}>
                     {applyMethodData.phoneNum}
                     <Icon
                       icon="Copy"
@@ -96,7 +98,7 @@ const ParticipationGuideModal = ({
 
               {/* 개인정보보호 안내 */}
               {(applyMethodData.formUrl || applyMethodData.phoneNum) && (
-                <div css={warning}>
+                <div className={warning}>
                   <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
                   개인정보보호에 유의해주세요
                 </div>
@@ -107,17 +109,17 @@ const ParticipationGuideModal = ({
           {/* 복사 성공 토스트 알림 */}
           <Toast.Provider swipeDirection="right">
             <Toast.Root
-              css={toastLayout}
+              className={toastLayout}
               open={isToastOpen}
               onOpenChange={setIsToastOpen}
               duration={1500}
             >
-              <Toast.Title css={toastTitle}>
+              <Toast.Title className={toastTitle}>
                 <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
                 <p>복사되었어요</p>
               </Toast.Title>
             </Toast.Root>
-            <Toast.Viewport css={toastViewport} />
+            <Toast.Viewport className={toastViewport} />
           </Toast.Provider>
         </Dialog.Portal>
       </Dialog.Root>

@@ -2,42 +2,42 @@ import { useState } from 'react';
 
 import {
   buttonStyles,
-  editButton,
   postHeaderContainer,
   postInfoLayout,
   postSubInfo,
   viewsContainer,
-} from './PostInfo.styles';
+} from './PostInfo.css';
+import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
-import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
 interface PostInfoProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
 }
+
 const PostInfo = ({ postDetailData }: PostInfoProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
     <>
-      <div css={postInfoLayout}>
-        <div css={postHeaderContainer}>
+      <div className={postInfoLayout}>
+        <div className={postHeaderContainer}>
           <h2>{postDetailData.title}</h2>
           {postDetailData.isAuthor && (
             <div>
-              <button css={[editButton, buttonStyles]}>수정</button>
-              <button css={buttonStyles} onClick={() => setIsDeleteModalOpen(true)}>
+              <button className={buttonStyles({ type: 'edit' })}>수정</button>
+              <button className={buttonStyles()} onClick={() => setIsDeleteModalOpen(true)}>
                 삭제
               </button>
             </div>
           )}
         </div>
-        <div css={postSubInfo}>
+        <div className={postSubInfo}>
           <div>{postDetailData.uploadDate}</div>
           <div>{postDetailData.uploaderName}</div>
-          <div css={viewsContainer}>
+          <div className={viewsContainer}>
             <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />
             {postDetailData.views}
           </div>

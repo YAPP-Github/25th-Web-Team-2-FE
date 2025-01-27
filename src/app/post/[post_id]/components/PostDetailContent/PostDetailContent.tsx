@@ -1,15 +1,16 @@
-import { postContentLayout, postContentWrapper } from './PostDetailContent.styles';
+import { postContentLayout, postContentWrapper } from './PostDetailContent.css';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import { formattedContentText } from '../../PostPage.utils';
 
 interface PostDetailContentProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
 }
+
 const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
   return (
-    <div css={postContentLayout}>
+    <div className={postContentLayout}>
       <h3>실험 안내</h3>
-      <div css={postContentWrapper}>{formattedContentText(postDetailData.content || '')}</div>
+      <div className={postContentWrapper}>{formattedContentText(postDetailData.content || '')}</div>
     </div>
   );
 };

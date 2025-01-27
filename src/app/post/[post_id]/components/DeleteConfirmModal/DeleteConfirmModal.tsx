@@ -7,9 +7,8 @@ import {
   dialogTitle,
   dialogContent,
   modalButtonStyle,
-  dialogOverlay,
-  closeButton,
 } from './DeleteConfirmModal.css';
+import { dialogOverlay, closeButton } from '../../PostPage.css';
 import { CommonModalProps } from '../../PostPage.types';
 
 import Icon from '@/components/Icon';
