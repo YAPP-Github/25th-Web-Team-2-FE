@@ -10,6 +10,7 @@ export const dialogContent = style({
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
   padding: '2rem 3rem 3rem 3.3rem',
+  position: 'fixed',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
