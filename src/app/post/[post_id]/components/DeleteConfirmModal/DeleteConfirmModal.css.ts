@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
-import { bodyNormalSB16, titleMediumSB20 } from '@/styles/fonts.css';
+import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
 export const dialogContent = style({
@@ -19,7 +19,7 @@ export const dialogContent = style({
 });
 
 export const dialogTitle = style({
-  ...titleMediumSB20,
+  ...fonts.title.medium.SB20,
   color: colors.text06,
   textAlign: 'center',
   marginBottom: '3.2rem',
@@ -33,7 +33,7 @@ export const buttonGroup = style({
 });
 
 export const modalButtonStyle = style({
-  ...bodyNormalSB16,
+  ...fonts.body.normal.SB16,
   width: '100%',
   height: '4.8rem',
   borderRadius: '1.2rem',
