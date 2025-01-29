@@ -7,12 +7,12 @@ import {
   authTimerWrapper,
   sendAgainButton,
 } from './AuthCodeInput.styles';
-import EmailToast from '../../../EmailToast/EmailToast';
 import { univInputWrapper } from '../UnivAuthInput.styles';
 
 import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 
 const AUTH_CODE_VALID_LENGTH = 6;
 

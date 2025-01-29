@@ -16,7 +16,7 @@ import { filterParticipantInfo } from '../../home.utils';
 import { useUserInfoQuery } from '../../hooks/useUserInfoQuery';
 
 import { PostListParams } from '@/apis/post';
-import JoinCheckbox from '@/app/join/components/JoinEmailStep/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 
 // TODO: [유저 정보 적용된 필터링 구현]
 // 1. role을 가져옴 (sessionStorage 또는 Context)

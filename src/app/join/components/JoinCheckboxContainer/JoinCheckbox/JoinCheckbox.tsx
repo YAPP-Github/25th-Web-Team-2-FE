@@ -6,10 +6,10 @@ import {
   labelWrapper,
   requiredCheckboxText,
 } from './JoinCheckbox.styles';
-import { tipAlert, tipWrapper } from '../../../JoinInput/JoinInput.styles';
 
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
+import { tipAlert, tipWrapper } from '../../JoinInput/JoinInput.styles';
 
 interface JoinCheckboxProps {
   label: string;

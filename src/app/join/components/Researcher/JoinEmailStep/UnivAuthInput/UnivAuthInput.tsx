@@ -10,11 +10,11 @@ import {
   univAuthButton,
   univInputWrapper,
 } from './UnivAuthInput.styles';
-import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
-import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
-import EmailToast from '../../EmailToast/EmailToast';
 
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
+import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
+import EmailToast from '../../../EmailToast/EmailToast';
 
 interface UnivAuthInputProps {
   handleVerifyEmail: () => void;

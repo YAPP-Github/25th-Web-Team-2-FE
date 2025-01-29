@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
-import useServiceAgreeCheck from '../../hooks/useServiceAgreeCheck';
-import { joinForm } from '../../JoinPage.styles';
-import JoinCheckboxContainer from './JoinCheckboxContainer/JoinCheckboxContainer';
-import JoinInput from '../JoinInput/JoinInput';
+import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
+import { joinForm } from '@/app/join/JoinPage.styles';
+import JoinInput from '../../JoinInput/JoinInput';
 
 interface JoinEmailStepProps {
   onNext: () => void;
