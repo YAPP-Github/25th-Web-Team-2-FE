@@ -2,8 +2,8 @@ import {
   postDetailContentLayout,
   postDetailContentWrapper,
 } from './ExperimentPostDetailContent.css';
+import { formattedContentText } from '../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
-import { formattedContentText } from '../../PostPage.utils';
 
 interface ExperimentPostDetailContentProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;

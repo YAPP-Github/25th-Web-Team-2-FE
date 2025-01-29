@@ -8,8 +8,8 @@ import {
   deleteConfirmContent,
   deleteConfirmButtonWrapper,
 } from './DeleteConfirmModal.css';
-import { dialogOverlay, closeButton } from '../../PostPage.css';
-import { CommonModalProps } from '../../PostPage.types';
+import { closeButton, dialogOverlay } from '../../ExperimentPostPage.css';
+import { CommonModalProps } from '../../ExperimentPostPage.types';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';

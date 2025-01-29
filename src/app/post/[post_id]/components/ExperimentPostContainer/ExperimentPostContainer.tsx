@@ -6,8 +6,8 @@ import { postContentLayout } from './ExperimentPostContainer.css';
 import useApplyMethodQuery from '../../hooks/useApplyMethodQuery';
 import useExperimentDetailsQuery from '../../hooks/useExperimentDetailsQuery';
 import PostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
-import PostInfo from '../ExperimentPostInfo/PostInfo';
-import PostOutline from '../ExperimentPostOutline/PostOutline';
+import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
+import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';
 
 const ExperimentPostContainer = () => {
   //todo 이 후에 쿼리 파라미터 형식이든 or postId 타입 변경 요청이든 수정 예정
@@ -51,10 +51,10 @@ const ExperimentPostContainer = () => {
 
   return (
     <>
-      <PostInfo postDetailData={postDetailData} />
+      <ExperimentPostInfo postDetailData={postDetailData} />
       <div className={postContentLayout}>
         <PostDetailContent postDetailData={postDetailData} />
-        <PostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
+        <ExperimentPostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
       </div>
     </>
   );
