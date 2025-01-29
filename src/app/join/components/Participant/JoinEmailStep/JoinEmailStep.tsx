@@ -1,4 +1,4 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { nextButton } from './JoinEmailStep.styles';
 import JoinCheckboxContainer from '../../JoinEmailStep/JoinCheckboxContainer/JoinCheckboxContainer';
@@ -15,10 +15,19 @@ interface JoinEmailStepProps {
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const oauthEmail = sessionStorage.getItem('email') || '';
   const role = sessionStorage.getItem('role') || '';
-  const { control } = useFormContext<ParticipantJoinSchemaType>();
+  const { control, trigger } = useFormContext<ParticipantJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck(role);
+  const contactEmail = useWatch({ name: 'contactEmail', control });
 
-  const allValid = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
+  const allValid = contactEmail && serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
+
+  const handleNextStep = async () => {
+    const isValid = await trigger(['oauthEmail', 'contactEmail']);
+
+    if (isValid) {
+      onNext();
+    }
+  };
 
   return (
     <section css={joinForm}>
@@ -45,7 +54,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           handleChange={handleChangeCheck}
         />
       </div>
-      <button css={nextButton} onClick={onNext} disabled={!allValid}>
+      <button css={nextButton} onClick={handleNextStep} disabled={!allValid}>
         다음
       </button>
     </section>
