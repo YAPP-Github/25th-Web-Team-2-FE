@@ -5,10 +5,15 @@ export type ParticipantJoinSchemaType = z.infer<ReturnType<typeof ParticipantJoi
 const ParticipantJoinSchema = () => {
   return z.object({
     // 소셜 로그인 아이디: 필수. 유저 수정 불가.
-    oauthEmail: z.string().email({ message: '소셜 로그인 정보가 없습니다' }),
+    oauthEmail: z
+      .string({ required_error: '소셜 로그인 정보가 없습니다' })
+      .email({ message: '이메일 형식이 올바르지 않아요' }),
 
     // 소셜 로그인 도메인
-    provider: z.union([z.literal('GOOGLE'), z.literal('NAVER')]),
+    provider: z.union([
+      z.literal('GOOGLE', { message: '유효한 도메인이 아닙니다' }),
+      z.literal('NAVER'),
+    ]),
 
     // 연락받을 이메일: 필수. 한글X. 이메일 형식.
     contactEmail: z
@@ -19,9 +24,7 @@ const ParticipantJoinSchema = () => {
 
     // 이름: 필수. 2자 이상 10자 이하. 한글, 영문만 입력.
     name: z
-      .string({
-        required_error: '이름을 입력해주세요',
-      })
+      .string({ required_error: '이름을 입력해주세요' })
       .regex(/^[a-zA-Z가-힣]+$/, { message: '한글과 영문만 입력 가능합니다' })
       .min(2, { message: '최소 2자 이상으로 입력해 주세요' })
       .max(10, { message: '최대 10자 이하로 입력해 주세요' }),
