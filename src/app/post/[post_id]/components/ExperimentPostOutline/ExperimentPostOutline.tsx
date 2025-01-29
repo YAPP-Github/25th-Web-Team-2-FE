@@ -12,23 +12,23 @@ import {
   buttonContainer,
   scrollableContent,
   dynamicSpacing,
-} from './PostOutline.css';
+} from './ExperimentPostOutline.css';
+import {
+  getGenderLabel,
+  getDurationLabel,
+  getRegionLabel,
+  getAreaLabel,
+} from '../../ExperimentPostPage.utils';
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
-import {
-  getAreaLabel,
-  getDurationLabel,
-  getGenderLabel,
-  getRegionLabel,
-} from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
-interface PostOutlineProps {
+interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
   applyMethodData: UseApplyMethodQueryResponse | undefined;
 }
 
-const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
+const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPostOutlineProps) => {
   const { address, recruitStatus, summary, targetGroup } = postDetailData;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -136,4 +136,4 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
   );
 };
 
-export default PostOutline;
+export default ExperimentPostOutline;

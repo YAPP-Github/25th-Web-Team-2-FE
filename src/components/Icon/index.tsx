@@ -2,7 +2,7 @@
 
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
-import { containerStyle, dynamicVars, iconDynamicStyle } from './icon.css';
+import { iconContainer, dynamicVars, iconDynamicStyle } from './icon.css';
 import * as icons from './icons';
 
 export interface CustomSVGProps extends React.SVGProps<SVGSVGElement> {
@@ -35,7 +35,7 @@ export default function Icon({
 
   return (
     <div
-      className={containerStyle({
+      className={iconContainer({
         rotate,
         cursor,
       })}

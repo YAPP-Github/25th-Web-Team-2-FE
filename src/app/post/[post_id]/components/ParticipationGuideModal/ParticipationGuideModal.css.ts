@@ -4,7 +4,7 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
-export const dialogContent = style({
+export const participationGuideContent = style({
   width: '49rem',
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
   backgroundColor: colors.field01,
@@ -20,14 +20,14 @@ export const dialogContent = style({
   zIndex: zIndex.dialogContent,
 });
 
-export const dialogTitle = style({
+export const participationModalTitle = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
   marginTop: '1.2rem',
   marginRight: '1.2rem',
 });
 
-export const infoRow = style({
+export const ContactInfoRowContainer = style({
   display: 'flex',
   flexDirection: 'row',
   gap: '2.2rem',
@@ -35,12 +35,12 @@ export const infoRow = style({
   ...fonts.body.normal.M16,
 });
 
-export const infoTitle = style({
+export const ContactInfoTitle = style({
   width: '7.8rem',
   color: colors.text03,
 });
 
-export const infoContent = style({
+export const ContactInfoContent = style({
   color: colors.text06,
   display: 'flex',
   flexDirection: 'row',
@@ -48,7 +48,7 @@ export const infoContent = style({
   gap: '0.6rem',
 });
 
-export const warning = style({
+export const warningMessage = style({
   width: 'fit-content',
   marginTop: '1.6rem',
   padding: '0.4rem 1.2rem',
@@ -62,7 +62,7 @@ export const warning = style({
   ...fonts.label.small.M12,
 });
 
-export const toastLayout = style({
+export const copyToastLayout = style({
   height: '5.2rem',
   backgroundColor: colors.field01,
   color: colors.text06,
@@ -76,7 +76,7 @@ export const toastLayout = style({
   zIndex: zIndex.toastContent,
 });
 
-export const toastTitle = style({
+export const copyToastTitle = style({
   ...fonts.body.normal.SB16,
   display: 'flex',
   flexDirection: 'row',
@@ -85,7 +85,7 @@ export const toastTitle = style({
   width: 'max-content',
 });
 
-export const toastViewport = style({
+export const CopyToastViewport = style({
   position: 'fixed',
   top: '6rem',
   left: '50%',

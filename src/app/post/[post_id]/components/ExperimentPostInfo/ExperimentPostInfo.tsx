@@ -6,18 +6,18 @@ import {
   postInfoLayout,
   postSubInfo,
   viewsContainer,
-} from './PostInfo.css';
+} from './ExperimentPostInfo.css';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-interface PostInfoProps {
+interface ExperimentPostInfoProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
 }
 
-const PostInfo = ({ postDetailData }: PostInfoProps) => {
+const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
@@ -50,4 +50,4 @@ const PostInfo = ({ postDetailData }: PostInfoProps) => {
   );
 };
 
-export default PostInfo;
+export default ExperimentPostInfo;

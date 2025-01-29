@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-export const containerStyle = recipe({
+export const iconContainer = recipe({
   base: {
     display: 'flex',
     justifyContent: 'center',

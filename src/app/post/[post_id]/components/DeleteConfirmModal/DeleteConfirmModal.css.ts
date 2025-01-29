@@ -4,7 +4,7 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
-export const dialogContent = style({
+export const deleteConfirmContent = style({
   width: '49rem',
   height: '16.4rem',
   backgroundColor: colors.field01,
@@ -18,21 +18,21 @@ export const dialogContent = style({
   zIndex: zIndex.dialogContent,
 });
 
-export const dialogTitle = style({
+export const deleteConfirmTitle = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
   textAlign: 'center',
   marginBottom: '3.2rem',
 });
 
-export const buttonGroup = style({
+export const deleteConfirmButtonContainer = style({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
   gap: '0.8rem',
 });
 
-export const modalButtonStyle = style({
+export const deleteConfirmButtonWrapper = style({
   ...fonts.body.normal.SB16,
   width: '100%',
   height: '4.8rem',
