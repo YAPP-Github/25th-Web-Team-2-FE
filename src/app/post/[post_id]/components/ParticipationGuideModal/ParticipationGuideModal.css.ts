@@ -27,7 +27,7 @@ export const participationModalTitle = style({
   marginRight: '1.2rem',
 });
 
-export const ContactInfoRowContainer = style({
+export const contactInfoRowContainer = style({
   display: 'flex',
   flexDirection: 'row',
   gap: '2.2rem',
@@ -35,12 +35,12 @@ export const ContactInfoRowContainer = style({
   ...fonts.body.normal.M16,
 });
 
-export const ContactInfoTitle = style({
+export const contactInfoTitle = style({
   width: '7.8rem',
   color: colors.text03,
 });
 
-export const ContactInfoContent = style({
+export const contactInfoContent = style({
   color: colors.text06,
   display: 'flex',
   flexDirection: 'row',
@@ -85,7 +85,7 @@ export const copyToastTitle = style({
   width: 'max-content',
 });
 
-export const CopyToastViewport = style({
+export const copyToastViewport = style({
   position: 'fixed',
   top: '6rem',
   left: '50%',

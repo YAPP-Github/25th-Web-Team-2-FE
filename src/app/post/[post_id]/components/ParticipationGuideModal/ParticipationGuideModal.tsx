@@ -5,12 +5,12 @@ import { useState } from 'react';
 import {
   participationGuideContent,
   participationModalTitle,
-  ContactInfoContent,
-  ContactInfoRowContainer,
-  ContactInfoTitle,
+  contactInfoContent,
+  contactInfoRowContainer,
+  contactInfoTitle,
   copyToastLayout,
   copyToastTitle,
-  CopyToastViewport,
+  copyToastViewport,
   warningMessage,
 } from './ParticipationGuideModal.css';
 import { closeButton, dialogOverlay } from '../../ExperimentPostPage.css';
@@ -60,9 +60,9 @@ const ParticipationGuideModal = ({
             <div>
               {/* 링크 */}
               {applyMethodData.formUrl && (
-                <div className={ContactInfoRowContainer}>
-                  <span className={ContactInfoTitle}>링크</span>
-                  <div className={ContactInfoContent}>
+                <div className={contactInfoRowContainer}>
+                  <span className={contactInfoTitle}>링크</span>
+                  <div className={contactInfoContent}>
                     {applyMethodData.formUrl}
                     <Icon
                       icon="Copy"
@@ -79,9 +79,9 @@ const ParticipationGuideModal = ({
 
               {/* 연락처 */}
               {applyMethodData.phoneNum && (
-                <div className={ContactInfoRowContainer}>
-                  <span className={ContactInfoTitle}>연락처</span>
-                  <div className={ContactInfoContent}>
+                <div className={contactInfoRowContainer}>
+                  <span className={contactInfoTitle}>연락처</span>
+                  <div className={contactInfoContent}>
                     {applyMethodData.phoneNum}
                     <Icon
                       icon="Copy"
@@ -119,7 +119,7 @@ const ParticipationGuideModal = ({
                 <p>복사되었어요</p>
               </Toast.Title>
             </Toast.Root>
-            <Toast.Viewport className={CopyToastViewport} />
+            <Toast.Viewport className={copyToastViewport} />
           </Toast.Provider>
         </Dialog.Portal>
       </Dialog.Root>

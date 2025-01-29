@@ -19,10 +19,10 @@ import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
 import {
-  toastLayout,
-  toastTitle,
-  toastViewport,
-} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.styles';
+  copyToastLayout,
+  copyToastTitle,
+  copyToastViewport,
+} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
@@ -76,13 +76,18 @@ const UploadContainer = () => {
       {/* 공고 등록 실패 시 토스트 알림 */}
       {/* todo 에러 상태에 따라 다르게 토스트 알림 */}
       <Toast.Provider swipeDirection="right">
-        <Toast.Root css={toastLayout} open={openToast} onOpenChange={setOpenToast} duration={1500}>
-          <Toast.Title css={toastTitle}>
+        <Toast.Root
+          css={copyToastLayout}
+          open={openToast}
+          onOpenChange={setOpenToast}
+          duration={1500}
+        >
+          <Toast.Title css={copyToastTitle}>
             <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
             <p>공고 등록을 실패하였습니다.</p>
           </Toast.Title>
         </Toast.Root>
-        <Toast.Viewport css={toastViewport} />
+        <Toast.Viewport css={copyToastViewport} />
       </Toast.Provider>
     </FormProvider>
   );
