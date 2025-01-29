@@ -1,3 +1,5 @@
+import { Controller } from 'react-hook-form';
+
 import RadioButtonGroup from './RadioButtonGroup/RadioButtonGroup';
 import {
   labelWrapper,
@@ -8,23 +10,23 @@ import {
 import { errorMessage } from '../../../JoinInput/JoinInput.styles';
 
 interface RadioButtonGroupProps<T> {
+  control: any;
+  name: 'gender' | 'matchType';
   title: string;
   options: { value: T; label: string }[];
   onChange: (value: T) => void;
-  selectedValue?: T;
   required?: boolean;
   tip?: string;
-  error?: string;
 }
 
 const RadioButtonGroupContainer = <T extends string>({
+  control,
+  name,
   title,
   options,
   onChange,
-  selectedValue,
   required = false,
   tip,
-  error,
 }: RadioButtonGroupProps<T>) => {
   return (
     <div css={radioButtonGroupContainerLayout}>
@@ -32,13 +34,23 @@ const RadioButtonGroupContainer = <T extends string>({
         <span>{title}</span>
         {required && <span css={requiredStar}>*</span>}
       </div>
-      <RadioButtonGroup<T>
-        options={options}
-        selectedValue={selectedValue}
-        onChange={onChange}
-        isError={Boolean(error)}
+
+      <Controller
+        name={name}
+        control={control}
+        render={({ field, fieldState }) => (
+          <>
+            <RadioButtonGroup<T>
+              options={options}
+              selectedValue={field.value}
+              onChange={onChange}
+              isError={Boolean(fieldState.error)}
+            />
+            {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
+          </>
+        )}
       />
-      {error && <span css={errorMessage}>{error}</span>}
+
       {tip && (
         <div css={tipWrapper}>
           <span>{tip}</span>
