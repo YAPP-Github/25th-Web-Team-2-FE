@@ -1,4 +1,4 @@
-import { useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import AreaTooltip from './AreaTooltip';
 import {
@@ -13,7 +13,7 @@ import {
 import JoinSelect from './JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
 import JoinInput from '../../JoinInput/JoinInput';
-import { errorMessage } from '../../JoinInput/JoinInput.styles';
+import { errorMessage, inputContainer } from '../../JoinInput/JoinInput.styles';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
@@ -25,46 +25,52 @@ interface JoinInfoStepProps {
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const {
-    control,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useFormContext<ParticipantJoinSchemaType>();
+  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
 
-  const gender = useWatch({ name: 'gender', control });
-  const matchType = useWatch({ name: 'matchType', control });
-
-  const selectedArea = watch('basicAddressInfo.region');
-  const selectedSubArea = watch('basicAddressInfo.area');
-  const selectedAdditionalArea = watch('additionalAddressInfo.region');
-  const selectedAdditionalSubArea = watch('additionalAddressInfo.area');
+  const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
+  const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
 
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>
-        <JoinInput
-          name="name"
-          control={control}
-          label="이름"
-          required
-          placeholder="이름(실명) 입력"
-        />
+        {/* 이름 */}
+        <div css={inputContainer}>
+          <label>
+            <span>이름</span>
+            <span css={requiredStar}>*</span>
+          </label>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field, fieldState }) => (
+              <>
+                <input
+                  {...field}
+                  placeholder="이름(실명) 입력"
+                  aria-invalid={fieldState.invalid ? true : false}
+                />
+                {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
+              </>
+            )}
+          />
+        </div>
 
+        {/* 성별 */}
         <RadioButtonGroupContainer<Gender>
+          control={control}
           title="성별"
+          name="gender"
           options={[
             { label: '남성', value: 'MALE' },
             { label: '여성', value: 'FEMALE' },
             { label: '선택 안 함', value: 'ALL' },
           ]}
-          selectedValue={gender}
           onChange={(value) => setValue('gender', value)}
           required
           tip="나중에 수정할 수 없어요"
-          error={errors.gender?.message}
         />
 
+        {/* 생년월일 */}
         <JoinInput
           name="birthDate"
           control={control}
@@ -75,64 +81,93 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           tip="나중에 수정할 수 없어요"
           isTip={false}
         />
+
+        {/* 거주 지역 */}
         <div css={joinAreaFilterContainer}>
           <div css={filterTitleWrapper}>
             <span css={filterTitle}>거주 지역</span>
             <span css={requiredStar}>*</span>
           </div>
           <div css={joinAreaFilterWrapper}>
-            <JoinSelect
-              value={selectedArea}
-              onChange={(value) => setValue('basicAddressInfo.region', value)}
-              placeholder="시·도"
-              options={JOIN_REGION}
-              isError={
-                Boolean(errors.basicAddressInfo?.message) ||
-                Boolean(errors.basicAddressInfo?.region)
-              }
+            <Controller
+              name="basicAddressInfo.region"
+              control={control}
+              render={({ field, fieldState }) => (
+                <JoinSelect
+                  value={field.value}
+                  onChange={(value) => setValue('basicAddressInfo.region', value)}
+                  placeholder="시·도"
+                  options={JOIN_REGION}
+                  isError={Boolean(fieldState.error)}
+                />
+              )}
             />
-            <JoinSelect
-              value={selectedSubArea}
-              onChange={(value) => setValue('basicAddressInfo.area', value)}
-              placeholder="시·군·구"
-              options={JOIN_SUB_REGION[selectedArea] || []}
-              isError={
-                Boolean(errors.basicAddressInfo?.message) || Boolean(errors.basicAddressInfo?.area)
-              }
+
+            <Controller
+              name="basicAddressInfo.area"
+              control={control}
+              render={({ field, fieldState }) => (
+                <JoinSelect
+                  value={field.value}
+                  onChange={(value) => setValue('basicAddressInfo.area', value)}
+                  placeholder="시·군·구"
+                  options={JOIN_SUB_REGION[selectedArea] || []}
+                  isError={Boolean(fieldState.error)}
+                />
+              )}
             />
           </div>
-          {errors.basicAddressInfo && (
-            <span css={errorMessage}>{errors.basicAddressInfo?.message}</span>
-          )}
         </div>
+
+        {/* 추가 활동 지역 */}
         <div css={joinAreaFilterContainer}>
           <div css={filterTitleWrapper}>
             <span css={filterTitle}>추가 활동 지역</span>
             <AreaTooltip />
           </div>
           <div css={joinAreaFilterWrapper}>
-            <JoinSelect
-              value={selectedAdditionalArea}
-              onChange={(value) => setValue('additionalAddressInfo.region', value)}
-              placeholder="시·도"
-              options={JOIN_REGION}
+            <Controller
+              name="additionalAddressInfo.region"
+              control={control}
+              render={({ field, fieldState }) => {
+                return (
+                  <JoinSelect
+                    value={field.value}
+                    onChange={(value) => setValue('additionalAddressInfo.region', value)}
+                    placeholder="시·도"
+                    options={JOIN_REGION}
+                    isError={Boolean(fieldState.error)}
+                  />
+                );
+              }}
             />
-            <JoinSelect
-              value={selectedAdditionalSubArea}
-              onChange={(value) => setValue('additionalAddressInfo.area', value)}
-              placeholder="시·군·구"
-              options={JOIN_SUB_REGION[selectedAdditionalArea] || []}
+
+            <Controller
+              name="additionalAddressInfo.area"
+              control={control}
+              render={({ field, fieldState }) => (
+                <JoinSelect
+                  value={field.value}
+                  onChange={(value) => setValue('additionalAddressInfo.area', value)}
+                  placeholder="시·군·구"
+                  options={JOIN_SUB_REGION[selectedAdditionalArea || ''] || []}
+                  isError={Boolean(fieldState.error)}
+                />
+              )}
             />
           </div>
         </div>
+
+        {/* 선호 실험 진행 방식 */}
         <RadioButtonGroupContainer<MatchType>
+          control={control}
+          name="matchType"
           title="선호 실험 진행 방식"
           options={[
             { value: 'ALL', label: '전체' },
             { value: 'OFFLINE', label: '대면' },
             { value: 'ONLINE', label: '비대면' },
           ]}
-          selectedValue={matchType}
           onChange={(value) => setValue('matchType', value)}
         />
       </div>
