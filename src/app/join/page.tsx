@@ -22,10 +22,10 @@ import { getProvider } from './JoinPage.utils';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
-import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
+import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const STEP = {
   email: 'email',
@@ -42,10 +42,12 @@ export default function JoinPage() {
 
   const researcherMethods = useForm<ResearcherJoinSchemaType>({
     resolver: zodResolver(ResearcherJoinSchema()),
-    mode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,
+      contactEmail: '',
       univEmail: '',
       name: '',
       univName: '',
@@ -55,7 +57,8 @@ export default function JoinPage() {
 
   const participantMethods = useForm<ParticipantJoinSchemaType>({
     resolver: zodResolver(ParticipantJoinSchema()),
-    mode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,
