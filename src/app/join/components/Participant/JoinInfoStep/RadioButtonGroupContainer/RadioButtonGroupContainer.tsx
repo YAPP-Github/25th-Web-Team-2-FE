@@ -1,4 +1,3 @@
-import { errorMessage } from '../../../JoinInput/JoinInput.styles';
 import RadioButtonGroup from './RadioButtonGroup/RadioButtonGroup';
 import {
   labelWrapper,
@@ -6,6 +5,7 @@ import {
   requiredStar,
   tipWrapper,
 } from './RadioButtonGroupContainer.styles';
+import { errorMessage } from '../../../JoinInput/JoinInput.styles';
 
 interface RadioButtonGroupProps<T> {
   title: string;

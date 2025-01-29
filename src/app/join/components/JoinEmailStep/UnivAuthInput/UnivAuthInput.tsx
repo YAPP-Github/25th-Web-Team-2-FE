@@ -12,8 +12,9 @@ import {
 } from './UnivAuthInput.styles';
 import useAuthCodeTimer from '../../../hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '../../../hooks/useSendUnivAuthCodeMutation';
-import { ResearcherJoinParams } from '../../../JoinPage.types';
 import EmailToast from '../../EmailToast/EmailToast';
+
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface UnivAuthInputProps {
   handleVerifyEmail: () => void;
@@ -24,7 +25,7 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
     control,
     getValues,
     formState: { errors },
-  } = useFormContext<ResearcherJoinParams>();
+  } = useFormContext<ResearcherJoinSchemaType>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -63,13 +64,6 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
       <Controller
         name="univEmail"
         control={control}
-        rules={{
-          required: '학교 이메일을 입력해주세요',
-          pattern: {
-            value: /^[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+@[^\s@ㄱ-ㅎㅏ-ㅣ가-힣]+\.[a-zA-Z]{2,}$/,
-            message: '이메일 형식이 올바르지 않아요',
-          },
-        }}
         render={({ field, fieldState }) => {
           return (
             <div css={univInputWrapper}>

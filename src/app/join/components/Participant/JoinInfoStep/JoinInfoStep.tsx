@@ -13,12 +13,12 @@ import {
 import JoinSelect from './JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
 import JoinInput from '../../JoinInput/JoinInput';
+import { errorMessage } from '../../JoinInput/JoinInput.styles';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { errorMessage } from '../../JoinInput/JoinInput.styles';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;
