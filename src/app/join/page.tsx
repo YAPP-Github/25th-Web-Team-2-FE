@@ -62,6 +62,8 @@ export default function JoinPage() {
     defaultValues: {
       oauthEmail: oauthEmail,
       provider,
+      name: '',
+      birthDate: '',
     },
   });
 
@@ -136,6 +138,7 @@ export default function JoinPage() {
                 handleSubmit={participantMethods.handleSubmit(handleParticipantSubmit)}
               />
             </Funnel.Step>
+
             <Funnel.Step name={STEP.success}>
               <JoinSuccessStep name={participantMethods.getValues('name')} />
             </Funnel.Step>
