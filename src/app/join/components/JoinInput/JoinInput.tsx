@@ -19,10 +19,8 @@ interface JoinInputProps {
   label?: string;
   required?: boolean;
   disabled?: boolean;
-  onChange?: () => void;
   tip?: string;
   value?: string;
-  onBlur?: () => void;
   maxLength?: number;
   isTip?: boolean;
 }
@@ -38,8 +36,6 @@ const JoinInput = ({
   disabled = false,
   tip,
   value,
-  onChange,
-  onBlur,
   maxLength,
   isTip = true,
 }: JoinInputProps) => {
@@ -55,6 +51,7 @@ const JoinInput = ({
         name={name}
         control={control}
         rules={rules}
+        defaultValue={value || ''}
         render={({ field, fieldState }) => (
           <>
             {type === 'input' ? (
@@ -62,14 +59,8 @@ const JoinInput = ({
                 {...field}
                 placeholder={placeholder}
                 disabled={disabled}
-                value={value}
                 maxLength={maxLength}
                 aria-invalid={fieldState.invalid ? true : false}
-                onChange={(e) => {
-                  field.onChange(e);
-                  if (onChange) onChange();
-                }}
-                onBlur={onBlur}
               />
             ) : (
               <textarea
@@ -77,10 +68,6 @@ const JoinInput = ({
                 placeholder={placeholder}
                 disabled={disabled}
                 aria-invalid={fieldState.invalid ? true : false}
-                onChange={(e) => {
-                  field.onChange(e);
-                  if (onChange) onChange();
-                }}
                 rows={3}
                 maxLength={100}
               />
