@@ -7,13 +7,13 @@ import { FieldError } from 'react-hook-form';
 import 'react-day-picker/dist/style.css';
 
 import {
-  datepickerCustom,
-  datePickerField,
   datePickerFieldContainer,
-  iconStyle,
+  datePickerField,
   placeholderText,
+  iconStyle,
   popoverLayout,
-} from './DatePickerForm.styles';
+  datepickerCustomClass,
+} from './DatePickerForm.css';
 import { formatRange } from '../../upload.utils';
 
 import Icon from '@/components/Icon';
@@ -48,7 +48,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
 
     return (
       <div
-        css={datePickerFieldContainer}
+        className={datePickerFieldContainer}
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === ' ') {
@@ -60,13 +60,15 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
         <Popover.Root open={isOpen && !experimentDateChecked} onOpenChange={setIsOpen}>
           <Popover.Trigger asChild>
             <div
-              css={(theme) => datePickerField(theme, experimentDateChecked, isOpen, !!error)}
+              className={datePickerField({ experimentDateChecked, isOpen, isError: !!error })}
               aria-label="실험일시 선택"
-              className="date-picker-field"
               ref={ref}
             >
               <span
-                css={(theme) => placeholderText(theme, !!selectedDates.from, experimentDateChecked)}
+                className={placeholderText({
+                  bothDatesSelected: !!selectedDates.from,
+                  experimentDateChecked,
+                })}
               >
                 {!experimentDateChecked
                   ? selectedDates.from
@@ -77,7 +79,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
                     : placeholder
                   : '본문 참고'}
               </span>
-              <span css={iconStyle}>
+              <span className={iconStyle}>
                 <Icon
                   icon="Calendar"
                   width={20}
@@ -97,7 +99,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
           <Popover.Portal>
             <Popover.Content
               sideOffset={6}
-              css={popoverLayout}
+              className={popoverLayout}
               onFocusOutside={() => {
                 field?.onBlur();
                 setIsOpen(false);
@@ -119,7 +121,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
                 startMonth={new Date(new Date().getFullYear(), 0)}
                 endMonth={new Date(new Date().getFullYear() + 5, 11)}
                 required
-                css={datepickerCustom}
+                className={datepickerCustomClass}
                 captionLayout="dropdown-months"
                 showOutsideDays
               />

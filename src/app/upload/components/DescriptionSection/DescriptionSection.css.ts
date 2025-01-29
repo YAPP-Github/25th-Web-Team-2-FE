@@ -4,7 +4,6 @@ import { recipe } from '@vanilla-extract/recipes';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-/** ✅ 설명 폼 레이아웃 */
 export const descriptionFormLayout = style({
   width: '100%',
   display: 'flex',
@@ -12,7 +11,6 @@ export const descriptionFormLayout = style({
   gap: '1.2rem',
 });
 
-/** ✅ 전체 입력 필드 컨테이너 */
 export const descriptionContentContainer = recipe({
   base: {
     width: '93.6rem',
@@ -37,7 +35,6 @@ export const descriptionContentContainer = recipe({
   },
 });
 
-/** ✅ 본문 텍스트 영역 */
 export const descriptionTextarea = recipe({
   base: {
     ...fonts.label.large.R14,
@@ -67,7 +64,6 @@ export const descriptionTextarea = recipe({
   },
 });
 
-/** ✅ 업로드 이미지 컨테이너 */
 export const uploadImagesContainer = style({
   height: '5.6rem',
   display: 'flex',
@@ -78,7 +74,6 @@ export const uploadImagesContainer = style({
   borderTop: `0.1rem solid ${colors.line01}`,
 });
 
-/** ✅ 추가 이미지 버튼 */
 export const addImageContainer = style({
   ...fonts.label.medium.M13,
   color: colors.text04,
@@ -93,7 +88,6 @@ export const addImageContainer = style({
   cursor: 'pointer',
 });
 
-/** ✅ 사진 그리드 */
 export const photoGrid = style({
   display: 'flex',
   gap: '10px',
@@ -104,7 +98,6 @@ export const photoGrid = style({
   marginBottom: '1.4rem',
 });
 
-/** ✅ 개별 사진 레이아웃 */
 export const photoLayout = style({
   width: '8rem',
   height: '8rem',
@@ -116,14 +109,12 @@ export const photoLayout = style({
   justifyContent: 'center',
 });
 
-/** ✅ 개별 사진 컨테이너 */
 export const photoContainer = style({
   position: 'relative',
   width: '8rem',
   height: '8rem',
 });
 
-/** ✅ 사진 삭제 버튼 */
 export const deleteButton = style({
   position: 'absolute',
   top: '0.4rem',
@@ -132,7 +123,6 @@ export const deleteButton = style({
   borderRadius: '50%',
 });
 
-/** ✅ 폼 메시지 */
 export const formMessage = style({
   ...fonts.label.small.M12,
   color: colors.textAlert,
@@ -140,7 +130,6 @@ export const formMessage = style({
   padding: '0.8rem 1.6rem',
 });
 
-/** ✅ 업로드 폼 섹션 제목 */
 export const uploadFormSectionTitle = style({
   ...fonts.title.small.SB18,
   display: 'flex',
@@ -150,7 +139,6 @@ export const uploadFormSectionTitle = style({
   marginBottom: '2rem',
 });
 
-/** ✅ 아이콘 컨테이너 */
 export const headingIcon = style({
   ...fonts.label.small.SB12,
   width: '1.8rem',
@@ -162,7 +150,6 @@ export const headingIcon = style({
   color: colors.text01,
 });
 
-/** ✅ 업로드 입력 필드 */
 export const uploadInput = recipe({
   base: {
     ...fonts.label.large.R14,

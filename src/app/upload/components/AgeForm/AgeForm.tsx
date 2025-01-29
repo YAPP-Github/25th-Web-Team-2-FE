@@ -1,5 +1,6 @@
 import { ChangeEvent, forwardRef } from 'react';
-import { inputStyle, textInputContainer } from './AgeForm.styles';
+
+import { ageInput, ageFormContainer } from './AgeForm.css';
 
 interface AgeFormProps {
   id: string;
@@ -14,13 +15,13 @@ interface AgeFormProps {
 
 const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(({ field, placeholder, id }, ref) => {
   return (
-    <div css={textInputContainer}>
+    <div className={ageFormContainer}>
       <input
         {...field}
         ref={ref}
         id={id}
         type="number"
-        css={inputStyle}
+        className={ageInput}
         placeholder={placeholder}
         value={field.value || ''}
       />
