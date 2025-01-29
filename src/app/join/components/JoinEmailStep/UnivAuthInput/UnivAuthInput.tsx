@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 import {
@@ -21,11 +21,7 @@ interface UnivAuthInputProps {
 }
 
 const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
-  const {
-    control,
-    getValues,
-    formState: { errors },
-  } = useFormContext<ResearcherJoinSchemaType>();
+  const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -33,9 +29,9 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
 
-  const handleSendUnivAuthCode = () => {
-    const univEmail = getValues('univEmail');
+  const univEmail = useWatch({ name: 'univEmail', control });
 
+  const handleSendUnivAuthCode = () => {
     sendEmail(univEmail, {
       onSuccess: () => {
         setIsEmailSent(true);
@@ -66,27 +62,30 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
         control={control}
         render={({ field, fieldState }) => {
           return (
-            <div css={univInputWrapper}>
-              <input
-                {...field}
-                placeholder="학교 메일 입력"
-                aria-invalid={fieldState.invalid ? true : false}
-                disabled={isEmailSent}
-              />
-              <button
-                type="button"
-                css={[univAuthButton, isEmailSent && editButton]}
-                disabled={!isEmailSent && !field.value}
-                onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
-              >
-                {isEmailSent ? '수정' : '인증번호 전송'}
-              </button>
-            </div>
+            <>
+              <div css={univInputWrapper}>
+                <input
+                  {...field}
+                  placeholder="학교 메일 입력"
+                  aria-invalid={fieldState.invalid ? true : false}
+                  disabled={isEmailSent}
+                />
+                <button
+                  type="button"
+                  css={[univAuthButton, isEmailSent && editButton]}
+                  disabled={!isEmailSent && !field.value}
+                  onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
+                >
+                  {isEmailSent ? '수정' : '인증번호 전송'}
+                </button>
+              </div>
+              {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
+              {sendError && <span css={errorMessage}>{sendError.message}</span>}
+            </>
           );
         }}
       />
-      {errors.univEmail && <span css={errorMessage}>{errors.univEmail.message}</span>}
-      {sendError && <span css={errorMessage}>{sendError.message}</span>}
+
       {isEmailSent && (
         <AuthCodeInput
           authTimer={authTimer}
