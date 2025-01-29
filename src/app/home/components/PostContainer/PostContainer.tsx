@@ -13,10 +13,12 @@ import {
   totalPostCount,
 } from './PostContainer.styles';
 import { filterParticipantInfo } from '../../home.utils';
-import { useUserInfoQuery } from '../../hooks/useUserInfoQuery';
+import useParticipantInfoQuery from '../../hooks/useParticipantInfoQuery';
+import useResearcherInfoQuery from '../../hooks/useResearcherInfoQuery';
 
 import { PostListParams } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+import { ROLE } from '@/constants/config';
 
 // TODO: [유저 정보 적용된 필터링 구현]
 // 1. role을 가져옴 (sessionStorage 또는 Context)
@@ -27,7 +29,11 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 // FIXME: 4. 선택된 filter가 각각 관리되고 있는데, PostContainer의 filters 값으로 같이 관리하기
 const PostContainer = () => {
   const role = sessionStorage.getItem('role') || '';
-  const { data: userInfoData } = useUserInfoQuery(role);
+  const participantQuery = useParticipantInfoQuery({ enabled: role === ROLE.participant });
+  const researcherQuery = useResearcherInfoQuery({ enabled: role === ROLE.researcher });
+
+  const userInfoData = role === ROLE.participant ? participantQuery.data : researcherQuery.data;
+
   const participantInfo = filterParticipantInfo(userInfoData);
 
   const [filters, setFilters] = useState<Pick<PostListParams, 'recruitStatus'>>({
