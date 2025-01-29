@@ -8,15 +8,15 @@ import {
   descriptionContentContainer,
   descriptionFormLayout,
   descriptionTextarea,
-  fullInput,
+  formMessage,
+  headingIcon,
   photoContainer,
   photoGrid,
   photoLayout,
+  uploadFormSectionTitle,
   uploadImagesContainer,
-} from './DescriptionSection.styles';
+} from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
-import { formMessage } from '../InputForm/InputForm.styles';
-import { headingIcon, uploadInput } from '../UploadContainer/UploadContainer.styles';
 
 import Icon from '@/components/Icon';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
@@ -81,12 +81,13 @@ const DescriptionSection = () => {
 
   return (
     <div>
-      <h3>
-        <span css={headingIcon}>2</span>어떤 실험인가요?{' '}
-        <span style={{ color: `${colors.textAlert}` }}>*</span>
+      {/* 제목 영역 */}
+      <h3 className={uploadFormSectionTitle}>
+        <span className={headingIcon}>2</span>어떤 실험인가요?{' '}
+        <span style={{ color: colors.textAlert }}>*</span>
       </h3>
 
-      <div css={descriptionFormLayout}>
+      <div className={descriptionFormLayout}>
         {/* 실험 제목 */}
         <Controller
           name="title"
@@ -94,7 +95,6 @@ const DescriptionSection = () => {
           render={({ field, fieldState }) => (
             <InputForm
               {...field}
-              css={[uploadInput, fullInput]}
               type="text"
               id="title"
               placeholder="실험 제목을 입력해 주세요"
@@ -105,7 +105,7 @@ const DescriptionSection = () => {
           )}
         />
 
-        <div css={(theme) => descriptionContentContainer(theme, !!contentError)}>
+        <div className={descriptionContentContainer({ isError: !!contentError })}>
           <Controller
             name="content"
             control={control}
@@ -114,25 +114,27 @@ const DescriptionSection = () => {
                 <textarea
                   {...field}
                   id="content"
-                  css={descriptionTextarea(photos.length > 0 ? 8.5 : 0)}
+                  className={descriptionTextarea({
+                    photoGridHeight: photos.length > 0 ? 'withPhotos' : 'withoutPhotos',
+                  })}
                   placeholder="본문을 입력해 주세요"
                 />
               </>
             )}
           />
           {photos.length > 0 && (
-            <div css={photoGrid}>
+            <div className={photoGrid}>
               {photos.map((photo, index) => (
                 <div
-                  css={photoLayout}
+                  className={photoLayout}
                   key={photo.id}
                   draggable
                   onDragStart={(e) => onDragStart(e, index)}
                   onDragOver={onDragOver}
                   onDrop={(e) => onDrop(e, index)}
                 >
-                  <div css={photoContainer}>
-                    <button css={deleteButton} onClick={() => deletePhoto(photo.id)}>
+                  <div className={photoContainer}>
+                    <button className={deleteButton} onClick={() => deletePhoto(photo.id)}>
                       <Icon
                         icon="CloseRound"
                         width={20}
@@ -154,8 +156,8 @@ const DescriptionSection = () => {
               ))}
             </div>
           )}
-          <div css={uploadImagesContainer}>
-            <label htmlFor="photos" css={addImageContainer}>
+          <div className={uploadImagesContainer}>
+            <label htmlFor="photos" className={addImageContainer}>
               <Icon icon="ImageAdd" width={16} height={16} />
               <p style={{ color: colors.text04, fontWeight: '500' }}>사진 추가</p>
             </label>
@@ -171,7 +173,7 @@ const DescriptionSection = () => {
           </div>
         </div>
       </div>
-      {!!contentError && <p css={formMessage}>{contentError.message}</p>}
+      {!!contentError && <p className={formMessage}>{contentError.message}</p>}
     </div>
   );
 };

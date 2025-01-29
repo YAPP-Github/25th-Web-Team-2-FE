@@ -19,6 +19,17 @@ export const uploadLayout = (theme: Theme) => css`
   }
 `;
 
+export const uploadFormSectionTitle = (theme: Theme) => css`
+  ${theme.fonts.title.small.SB18};
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 0.8rem;
+
+  margin-bottom: 2rem;
+`;
+
 export const headerContainer = (theme: Theme) => css`
   h2 {
     ${theme.fonts.title.large.SB24};

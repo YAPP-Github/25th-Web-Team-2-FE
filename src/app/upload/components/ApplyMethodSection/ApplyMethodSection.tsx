@@ -15,7 +15,11 @@ import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-import { headingIcon, label } from '../UploadContainer/UploadContainer.styles';
+import {
+  headingIcon,
+  label,
+  uploadFormSectionTitle,
+} from '../UploadContainer/UploadContainer.styles';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
@@ -49,7 +53,7 @@ const ApplyMethodSection = ({
     <div>
       {/* 실험 참여 방법 */}
       <div css={applyMethodContainer}>
-        <h3>
+        <h3 css={uploadFormSectionTitle}>
           <span css={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?{' '}
           <span style={{ color: `${colors.textAlert}` }}>*</span>
         </h3>
