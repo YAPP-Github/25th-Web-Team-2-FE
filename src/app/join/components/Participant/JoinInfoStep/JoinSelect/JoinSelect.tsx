@@ -27,17 +27,13 @@ const JoinSelect = ({ placeholder, onChange, isError, options, value }: JoinSele
       </Select.Trigger>
       <Select.Portal>
         <Select.Content css={selectContent} position="popper" sideOffset={4}>
-          <Select.ScrollUpButton />
-          <Select.Viewport>
-            <Select.Group css={selectList}>
-              {options?.map((option) => (
-                <Select.Item key={option.value} value={option.value} css={selectItem}>
-                  <Select.ItemText>{option.label}</Select.ItemText>
-                </Select.Item>
-              ))}
-            </Select.Group>
-          </Select.Viewport>
-          <Select.ScrollDownButton />
+          <Select.Group css={selectList}>
+            {options?.map((option) => (
+              <Select.Item key={option.value} value={option.value} css={selectItem}>
+                <Select.ItemText>{option.label}</Select.ItemText>
+              </Select.Item>
+            ))}
+          </Select.Group>
         </Select.Content>
       </Select.Portal>
     </Select.Root>

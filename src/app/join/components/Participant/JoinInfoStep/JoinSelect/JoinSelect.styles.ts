@@ -34,7 +34,7 @@ export const selectContent = (theme: Theme) => css`
   border-radius: 1.2rem;
 
   box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
-  overflow: hidden;
+  overflow-y: scroll;
 `;
 
 export const selectList = css`
