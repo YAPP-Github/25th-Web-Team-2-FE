@@ -91,7 +91,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
                   onChange={(value) => setValue('basicAddressInfo.region', value)}
                   placeholder="시·도"
                   options={JOIN_REGION}
-                  isError={Boolean(fieldState.error)}
+                  isError={Boolean(fieldState.error) && Boolean(!field.value)}
                 />
               )}
             />
@@ -105,7 +105,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
                   onChange={(value) => setValue('basicAddressInfo.area', value)}
                   placeholder="시·군·구"
                   options={JOIN_SUB_REGION[selectedArea] || []}
-                  isError={Boolean(fieldState.error)}
+                  isError={Boolean(fieldState.error) && Boolean(!field.value)}
                 />
               )}
             />

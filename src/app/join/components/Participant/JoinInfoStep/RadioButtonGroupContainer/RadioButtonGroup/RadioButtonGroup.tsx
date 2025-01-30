@@ -1,4 +1,9 @@
-import { customRadioGroup, customRadioButton, activeRadioButton } from './RadioButtonGroup.styles';
+import {
+  customRadioGroup,
+  customRadioButton,
+  activeRadioButton,
+  errorRadioButton,
+} from './RadioButtonGroup.styles';
 
 interface RadioButtonGroupProps<T> {
   options: { value: T; label: string }[];
@@ -19,10 +24,10 @@ const RadioButtonGroup = <T extends string>({
         <button
           key={option.value}
           type="button"
-          aria-invalid={isError}
-          css={(theme) => [
-            customRadioButton(theme),
-            selectedValue === option.value && activeRadioButton(theme),
+          css={[
+            customRadioButton,
+            selectedValue === option.value && activeRadioButton,
+            isError && errorRadioButton,
           ]}
           onClick={() => onChange(option.value)}
         >

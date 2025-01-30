@@ -7,7 +7,6 @@ import {
   requiredStar,
   tipWrapper,
 } from './RadioButtonGroupContainer.styles';
-import { errorMessage } from '../../../JoinInput/JoinInput.styles';
 
 interface RadioButtonGroupProps<T> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,9 +44,8 @@ const RadioButtonGroupContainer = <T extends string>({
               options={options}
               selectedValue={field.value}
               onChange={onChange}
-              isError={Boolean(fieldState.error)}
+              isError={Boolean(fieldState.error) && Boolean(!field.value)}
             />
-            {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
           </>
         )}
       />
