@@ -14,17 +14,10 @@ import {
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
 
-import useParticipantInfoQuery from '@/app/home/hooks/useParticipantInfoQuery';
-import useResearcherInfoQuery from '@/app/home/hooks/useResearcherInfoQuery';
-import { ROLE } from '@/constants/config';
-import useSessionStorage from '@/hooks/useSessionStorage';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 
 const Header = () => {
-  const role = useSessionStorage('role');
-  const participantQuery = useParticipantInfoQuery({ enabled: role === ROLE.participant });
-  const researcherQuery = useResearcherInfoQuery({ enabled: role === ROLE.researcher });
-
-  const myData = role === ROLE.participant ? participantQuery.data : researcherQuery.data;
+  const { userInfo } = useUserInfo();
 
   return (
     <div css={headerLayout}>
@@ -36,9 +29,9 @@ const Header = () => {
           <button css={contactButton}>실험 공고 등록</button>
         </Link>
 
-        {myData ? (
+        {userInfo ? (
           <div css={buttonWrapper}>
-            <button>{myData.memberInfo.name}</button>
+            <button>{userInfo.memberInfo.name}</button>
             <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
           </div>
         ) : (

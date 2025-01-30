@@ -145,7 +145,7 @@ export default function JoinPage() {
             </Funnel.Step>
             <Funnel.Step name={STEP.info}>
               <Participant.InfoStep
-                handleSubmit={participantMethods.handleSubmit(handleParticipantSubmit)}
+                handleSubmit={() => participantMethods.handleSubmit(handleParticipantSubmit)}
               />
             </Funnel.Step>
 
