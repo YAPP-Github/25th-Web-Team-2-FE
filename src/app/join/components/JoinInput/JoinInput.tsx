@@ -3,11 +3,15 @@ import { Controller } from 'react-hook-form';
 import {
   errorMessage,
   inputContainer,
+  inputResetButton,
+  inputWrapper,
   requiredStar,
   textCount,
   tipAlert,
   tipWrapper,
 } from './JoinInput.styles';
+
+import Icon from '@/components/Icon';
 
 interface JoinInputProps {
   type?: 'input' | 'textarea';
@@ -54,26 +58,45 @@ const JoinInput = ({
         defaultValue={value || ''}
         render={({ field, fieldState }) => (
           <>
-            {type === 'input' ? (
-              <input
-                {...field}
-                placeholder={placeholder}
-                disabled={disabled}
-                maxLength={maxLength}
-                aria-invalid={fieldState.invalid ? true : false}
-              />
-            ) : (
-              <textarea
-                {...field}
-                placeholder={placeholder}
-                disabled={disabled}
-                aria-invalid={fieldState.invalid ? true : false}
-                rows={3}
-                maxLength={100}
-              />
-            )}
+            <div css={inputWrapper}>
+              {type === 'input' ? (
+                <input
+                  {...field}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  maxLength={maxLength}
+                  aria-invalid={fieldState.invalid ? true : false}
+                  style={{ width: '100%' }}
+                />
+              ) : (
+                <textarea
+                  {...field}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  aria-invalid={fieldState.invalid ? true : false}
+                  rows={3}
+                  maxLength={maxLength ?? 0}
+                  style={{ width: '100%' }}
+                />
+              )}
+              {field.value && !disabled && (
+                <button css={inputResetButton}>
+                  <Icon
+                    icon="CloseRound"
+                    width={22}
+                    height={22}
+                    onClick={() => field.onChange('')}
+                    cursor="pointer"
+                  />
+                </button>
+              )}
+            </div>
             {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
-            {type === 'textarea' && <span css={textCount}>{field.value?.length || 0}/100</span>}
+            {type === 'textarea' && (
+              <span css={textCount}>
+                {field.value?.length || 0}/{maxLength}
+              </span>
+            )}
             {tip && Boolean(!fieldState.error) && (
               <div css={tipWrapper}>
                 {isTip && <span css={tipAlert}>Tip</span>}

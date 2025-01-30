@@ -46,6 +46,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           label="소속 연구실 정보"
           placeholder="연구실 정보 입력"
           type="textarea"
+          maxLength={100}
         />
       </div>
       <button css={joinButton} onClick={handleSubmit} disabled={!isAllFilled}>
