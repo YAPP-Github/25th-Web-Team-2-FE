@@ -30,6 +30,13 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
   const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
 
+  const values = useWatch({
+    name: ['name', 'gender', 'birthDate', 'basicAddressInfo.area', 'basicAddressInfo.region'],
+    control,
+  });
+
+  const isAllFilled = values.every((value) => value !== '' && value !== undefined);
+
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>
@@ -172,7 +179,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button css={joinButton} onClick={handleSubmit}>
+      <button css={joinButton} onClick={handleSubmit} disabled={!isAllFilled}>
         회원가입
       </button>
     </section>
