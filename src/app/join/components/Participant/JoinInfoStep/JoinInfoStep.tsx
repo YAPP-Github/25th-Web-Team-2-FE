@@ -13,7 +13,6 @@ import {
 import JoinSelect from './JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
 import JoinInput from '../../JoinInput/JoinInput';
-import { errorMessage, inputContainer } from '../../JoinInput/JoinInput.styles';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
@@ -41,26 +40,13 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
     <section css={joinForm}>
       <div css={joinContentContainer}>
         {/* 이름 */}
-        <div css={inputContainer}>
-          <label>
-            <span>이름</span>
-            <span css={requiredStar}>*</span>
-          </label>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field, fieldState }) => (
-              <>
-                <input
-                  {...field}
-                  placeholder="이름(실명) 입력"
-                  aria-invalid={fieldState.invalid ? true : false}
-                />
-                {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
-              </>
-            )}
-          />
-        </div>
+        <JoinInput
+          name="name"
+          control={control}
+          label="이름"
+          required
+          placeholder="이름(실명) 입력"
+        />
 
         {/* 성별 */}
         <RadioButtonGroupContainer<Gender>
