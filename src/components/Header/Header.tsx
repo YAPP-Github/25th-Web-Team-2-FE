@@ -17,9 +17,10 @@ import Icon from '../Icon';
 import useParticipantInfoQuery from '@/app/home/hooks/useParticipantInfoQuery';
 import useResearcherInfoQuery from '@/app/home/hooks/useResearcherInfoQuery';
 import { ROLE } from '@/constants/config';
+import useSessionStorage from '@/hooks/useSessionStorage';
 
 const Header = () => {
-  const role = sessionStorage.getItem('role') || '';
+  const role = useSessionStorage('role');
   const participantQuery = useParticipantInfoQuery({ enabled: role === ROLE.participant });
   const researcherQuery = useResearcherInfoQuery({ enabled: role === ROLE.researcher });
 

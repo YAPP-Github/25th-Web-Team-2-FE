@@ -13,10 +13,9 @@ interface JoinEmailStepProps {
 }
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
-  const oauthEmail = sessionStorage.getItem('email') || '';
-  const role = sessionStorage.getItem('role') || '';
   const { control, trigger } = useFormContext<ParticipantJoinSchemaType>();
-  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck(role);
+  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
+  const oauthEmail = useWatch({ name: 'oauthEmail', control });
   const contactEmail = useWatch({ name: 'contactEmail', control });
 
   const allValid = contactEmail && serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;

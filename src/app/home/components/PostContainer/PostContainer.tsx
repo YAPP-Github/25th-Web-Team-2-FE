@@ -19,6 +19,7 @@ import useResearcherInfoQuery from '../../hooks/useResearcherInfoQuery';
 import { PostListParams } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import { ROLE } from '@/constants/config';
+import useSessionStorage from '@/hooks/useSessionStorage';
 
 // TODO: [유저 정보 적용된 필터링 구현]
 // 1. role을 가져옴 (sessionStorage 또는 Context)
@@ -28,7 +29,7 @@ import { ROLE } from '@/constants/config';
 // FIXME: 참여자일 경우에는 쿼리를 2번 호출함
 // FIXME: 4. 선택된 filter가 각각 관리되고 있는데, PostContainer의 filters 값으로 같이 관리하기
 const PostContainer = () => {
-  const role = sessionStorage.getItem('role') || '';
+  const role = useSessionStorage('role');
   const participantQuery = useParticipantInfoQuery({ enabled: role === ROLE.participant });
   const researcherQuery = useResearcherInfoQuery({ enabled: role === ROLE.researcher });
 

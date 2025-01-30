@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
@@ -10,15 +10,14 @@ import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import { joinForm } from '@/app/join/JoinPage.styles';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-
 interface JoinEmailStepProps {
   onNext: () => void;
 }
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
-  const oauthEmail = sessionStorage.getItem('email') || '';
   const { control, trigger } = useFormContext<ResearcherJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
+  const oauthEmail = useWatch({ name: 'oauthEmail', control });
 
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
