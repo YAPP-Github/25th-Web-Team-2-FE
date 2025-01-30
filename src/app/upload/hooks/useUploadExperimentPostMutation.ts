@@ -1,12 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '../config';
-
+import { API } from '@/apis/config';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';
 
-interface UseUploadExperimentPostAPIParams {
+interface UseUploadExperimentPostMutationParams {
   startDate?: string | null;
   endDate?: string | null;
   matchType: MatchType;
@@ -59,14 +58,16 @@ interface UploadedPostInfo {
   };
 }
 
-interface UseUploadExperimentPostAPIResponse {
+interface UseUploadExperimentPostMutationResponse {
   postInfo: UploadedPostInfo;
 }
 
-const useUploadExperimentPostAPI = () => {
+const useUploadExperimentPostMutation = () => {
   const mutationKey = API_URL.uploadPost;
-  const mutationFn = async (data: UseUploadExperimentPostAPIParams) =>
-    await API.post<UseUploadExperimentPostAPIResponse>(mutationKey, data).then((res) => res.data);
+  const mutationFn = async (data: UseUploadExperimentPostMutationParams) =>
+    await API.post<UseUploadExperimentPostMutationResponse>(mutationKey, data).then(
+      (res) => res.data,
+    );
 
   return useMutation({
     mutationKey: [mutationKey],
@@ -74,4 +75,4 @@ const useUploadExperimentPostAPI = () => {
   });
 };
 
-export default useUploadExperimentPostAPI;
+export default useUploadExperimentPostMutation;

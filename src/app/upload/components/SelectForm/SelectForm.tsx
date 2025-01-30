@@ -37,7 +37,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
   ) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    if (!options) return null;
+    if (!options?.length) return null;
 
     return (
       <div css={selectInputContainer}>

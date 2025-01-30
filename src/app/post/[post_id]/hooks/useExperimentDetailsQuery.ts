@@ -1,0 +1,62 @@
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+
+import { API } from '@/apis/config';
+import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { API_URL } from '@/constants/url';
+
+interface UseExperimentDetailsQueryParams {
+  postId: number;
+}
+
+interface TargetGroup {
+  startAge: number | null;
+  endAge: number | null;
+  genderType: GenderType;
+  otherCondition: string | null;
+}
+
+interface Summary {
+  startDate: string | null;
+  endDate: string | null;
+  leadResearcher: string;
+  matchType: 'OFFLINE' | 'ONLINE' | 'ALL';
+  reward: string;
+  count: number;
+  timeRequired: string | null;
+}
+
+interface Address {
+  univName: string | null;
+  region: string | null;
+  area: string | null;
+  detailedAddress: string;
+}
+
+export interface UseQueryExperimentDetailsAPIResponse {
+  experimentPostId: number;
+  title: string;
+  uploadDate: string;
+  uploaderName: string;
+  views: number;
+  recruitStatus: boolean;
+  summary: Summary;
+  targetGroup: TargetGroup;
+  address: Address;
+  content: string;
+  imageList: string[];
+  isAuthor: boolean;
+}
+
+const useExperimentDetailsQuery = ({ postId }: UseExperimentDetailsQueryParams) => {
+  const queryKey = API_URL.viewExperimentDetails(postId);
+  const queryFn = () => API.post(queryKey).then((res) => res.data);
+
+  return useQuery<UseQueryExperimentDetailsAPIResponse, AxiosError>({
+    queryKey: [queryKey],
+    queryFn,
+    enabled: !!postId,
+  });
+};
+
+export default useExperimentDetailsQuery;
