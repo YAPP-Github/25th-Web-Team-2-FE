@@ -2,9 +2,14 @@
 
 import { Theme } from '@emotion/react';
 import { css } from '@emotion/react';
+import { Suspense } from 'react';
 
 function JoinLayout({ children }: { children: React.ReactNode }) {
-  return <div css={joinLayout}>{children}</div>;
+  return (
+    <div css={joinLayout}>
+      <Suspense>{children}</Suspense>
+    </div>
+  );
 }
 
 const joinLayout = (theme: Theme) => css`
