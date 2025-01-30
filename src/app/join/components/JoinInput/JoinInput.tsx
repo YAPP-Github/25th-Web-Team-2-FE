@@ -74,15 +74,15 @@ const JoinInput = ({
             )}
             {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
             {type === 'textarea' && <span css={textCount}>{field.value?.length || 0}/100</span>}
+            {tip && Boolean(!fieldState.error) && (
+              <div css={tipWrapper}>
+                {isTip && <span css={tipAlert}>Tip</span>}
+                <span>{tip}</span>
+              </div>
+            )}
           </>
         )}
       />
-      {tip && (
-        <div css={tipWrapper}>
-          {isTip && <span css={tipAlert}>Tip</span>}
-          <span>{tip}</span>
-        </div>
-      )}
     </div>
   );
 };
