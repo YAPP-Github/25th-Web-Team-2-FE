@@ -14,8 +14,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
   const values = useWatch({ name: ['name', 'univName', 'major'], control });
 
-  const isAllFilled = values.every((value) => value !== '' && value !== undefined);
-
+  const isAllFilled = values.every((value) => value.trim() !== '' && value !== undefined);
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>

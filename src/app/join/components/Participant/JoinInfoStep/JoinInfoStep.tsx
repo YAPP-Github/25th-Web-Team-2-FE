@@ -34,7 +34,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
     control,
   });
 
-  const isAllFilled = values.every((value) => value !== '' && value !== undefined);
+  const isAllFilled = values.every((value) => value.trim() !== '' && value !== undefined);
 
   return (
     <section css={joinForm}>
