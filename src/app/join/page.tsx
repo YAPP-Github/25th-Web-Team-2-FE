@@ -94,6 +94,9 @@ export default function JoinPage() {
     }
   }, [oauthEmail, researcherMethods, participantMethods]);
 
+  // TODO: 추후 스켈레톤 처리
+  if (!role) return null;
+
   if (role === ROLE.researcher) {
     return (
       <section css={joinLayout}>
