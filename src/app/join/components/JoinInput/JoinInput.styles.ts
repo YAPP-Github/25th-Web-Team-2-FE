@@ -4,6 +4,7 @@ export const inputContainer = (theme: Theme) => css`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  height: 11.4rem;
 
   label {
     ${theme.fonts.label.large.M14};

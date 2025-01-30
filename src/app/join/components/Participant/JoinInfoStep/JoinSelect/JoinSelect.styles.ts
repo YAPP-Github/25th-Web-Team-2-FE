@@ -1,8 +1,8 @@
 import { css, Theme } from '@emotion/react';
 
 export const triggerWrapper = (theme: Theme) => css`
-  // ${theme.fonts.body.normal.M16};
-  // color: ${theme.colors.text06};
+  ${theme.fonts.body.normal.M16};
+  color: ${theme.colors.text06};
   display: flex;
   align-items: center;
   justify-content: space-between;
