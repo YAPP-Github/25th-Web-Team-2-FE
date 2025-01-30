@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import JoinSuccessStep from './components/JoinSuccessStep/JoinSuccessStep';
@@ -22,6 +23,7 @@ import { getProvider } from './JoinPage.utils';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
+import useSessionStorage from '@/hooks/useSessionStorage';
 import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
@@ -34,9 +36,8 @@ const STEP = {
 } as const;
 
 export default function JoinPage() {
-  const oauthEmail = sessionStorage.getItem('email') || '';
-  const role = sessionStorage.getItem('role') || '';
-  const provider = getProvider(oauthEmail);
+  const oauthEmail = useSessionStorage('email');
+  const role = useSessionStorage('role');
   const { mutate: joinResearcher } = useResearcherJoinMutation();
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 
@@ -45,8 +46,6 @@ export default function JoinPage() {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: {
-      oauthEmail: oauthEmail,
-      provider,
       contactEmail: '',
       univEmail: '',
       name: '',
@@ -60,8 +59,6 @@ export default function JoinPage() {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: {
-      oauthEmail: oauthEmail,
-      provider,
       name: '',
       birthDate: '',
     },
@@ -86,6 +83,16 @@ export default function JoinPage() {
       onSuccess: () => setStep(STEP.success),
     });
   };
+
+  useEffect(() => {
+    if (oauthEmail) {
+      researcherMethods.setValue('oauthEmail', oauthEmail);
+      researcherMethods.setValue('provider', getProvider(oauthEmail));
+
+      participantMethods.setValue('oauthEmail', oauthEmail);
+      participantMethods.setValue('provider', getProvider(oauthEmail));
+    }
+  }, [oauthEmail, researcherMethods, participantMethods]);
 
   if (role === ROLE.researcher) {
     return (
