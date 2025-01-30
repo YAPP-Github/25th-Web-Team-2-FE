@@ -56,4 +56,11 @@ export const selectItem = (theme: Theme) => css`
     background-color: ${theme.colors.field02};
     outline: none;
   }
+
+  &[data-state='checked'] {
+    background-color: ${theme.colors.primaryTinted};
+    color: ${theme.colors.textPrimary};
+
+    border: 0.1rem solid ${theme.colors.textPrimary};
+  }
 `;
