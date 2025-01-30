@@ -12,7 +12,7 @@ export const regionPopoverContainer = (theme: Theme, isError: boolean) => css`
   }
 `;
 
-export const regionField = (theme: Theme) => css`
+export const regionField = css`
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;

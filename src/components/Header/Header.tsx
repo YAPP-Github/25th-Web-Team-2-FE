@@ -14,11 +14,16 @@ import {
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
 
-import { useUserInfoQuery } from '@/app/home/hooks/useUserInfoQuery';
+import useParticipantInfoQuery from '@/app/home/hooks/useParticipantInfoQuery';
+import useResearcherInfoQuery from '@/app/home/hooks/useResearcherInfoQuery';
+import { ROLE } from '@/constants/config';
 
 const Header = () => {
   const role = sessionStorage.getItem('role') || '';
-  const { data: myData } = useUserInfoQuery(role);
+  const participantQuery = useParticipantInfoQuery({ enabled: role === ROLE.participant });
+  const researcherQuery = useResearcherInfoQuery({ enabled: role === ROLE.researcher });
+
+  const myData = role === ROLE.participant ? participantQuery.data : researcherQuery.data;
 
   return (
     <div css={headerLayout}>

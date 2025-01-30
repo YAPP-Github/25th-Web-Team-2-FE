@@ -10,6 +10,7 @@ import {
 import { errorMessage } from '../../../JoinInput/JoinInput.styles';
 
 interface RadioButtonGroupProps<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: any;
   name: 'gender' | 'matchType';
   title: string;

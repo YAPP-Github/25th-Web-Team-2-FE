@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
-import { MatchType } from '@/types/uploadExperimentPost';
-import { API_URL } from '@/constants/url';
 import { API } from '../config';
+
+import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { API_URL } from '@/constants/url';
+import { MatchType } from '@/types/uploadExperimentPost';
 
 interface UseUploadExperimentPostAPIParams {
   startDate?: string | null;

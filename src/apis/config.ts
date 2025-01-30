@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import { CustomAxiosError } from './type';
 import { updateAccessToken } from './login';
+import { CustomAxiosError } from './type';
 
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,

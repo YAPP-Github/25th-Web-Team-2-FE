@@ -79,7 +79,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             }
           }}
         >
-          <div role="button" css={(theme) => [uploadInput, regionField(theme)]}>
+          <div role="button" css={[uploadInput, regionField]}>
             <span css={(theme) => placeholderText(theme, !!(selectedRegion && selectedSubRegion))}>
               {selectedRegion && selectedSubRegion
                 ? `${regionData?.label} ${selectedSubRegion}`
