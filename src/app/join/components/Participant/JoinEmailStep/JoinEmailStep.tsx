@@ -13,12 +13,20 @@ interface JoinEmailStepProps {
 }
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
-  const { control, trigger } = useFormContext<ParticipantJoinSchemaType>();
+  const {
+    control,
+    trigger,
+    formState: { errors },
+  } = useFormContext<ParticipantJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
   const contactEmail = useWatch({ name: 'contactEmail', control });
 
-  const allValid = contactEmail && serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
+  const allValid =
+    contactEmail &&
+    Boolean(!errors.contactEmail) &&
+    serviceAgreeCheck.isTermOfService &&
+    serviceAgreeCheck.isPrivacy;
 
   const handleNextStep = async () => {
     const isValid = await trigger(['oauthEmail', 'contactEmail']);

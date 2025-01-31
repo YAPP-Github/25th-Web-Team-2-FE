@@ -1,6 +1,5 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import AreaTooltip from './AreaTooltip';
 import {
   filterTitle,
   filterTitleWrapper,
@@ -18,13 +17,18 @@ import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import AreaTooltip from './AreaTooltip/AreaTooltip';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ParticipantJoinSchemaType>();
 
   const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
   const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
@@ -34,7 +38,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
     control,
   });
 
-  const isAllFilled = values.every((value) => value.trim() !== '' && value !== undefined);
+  const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
 
   return (
     <section css={joinForm}>
@@ -165,7 +169,11 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button css={joinButton} onClick={handleSubmit} disabled={!isAllFilled}>
+      <button
+        css={joinButton}
+        onClick={handleSubmit}
+        disabled={!(isAllFilled && Object.keys(errors).length === 0)}
+      >
         회원가입
       </button>
     </section>

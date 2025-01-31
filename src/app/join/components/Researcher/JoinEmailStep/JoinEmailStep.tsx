@@ -15,14 +15,18 @@ interface JoinEmailStepProps {
 }
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
-  const { control, trigger } = useFormContext<ResearcherJoinSchemaType>();
+  const {
+    control,
+    trigger,
+    formState: { errors },
+  } = useFormContext<ResearcherJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
 
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const handleNextStep = async () => {
-    const isValid = await trigger(['oauthEmail', 'contactEmail']);
+    const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
 
     if (isValid) {
       onNext();
@@ -30,7 +34,13 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   };
 
   const allValid =
-    isEmailVerified && serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
+    oauthEmail &&
+    Boolean(!errors.contactEmail) &&
+    Boolean(!errors.contactEmail) &&
+    Boolean(!errors.univEmail) &&
+    isEmailVerified &&
+    serviceAgreeCheck.isTermOfService &&
+    serviceAgreeCheck.isPrivacy;
 
   const handleVerifyEmail = () => {
     setIsEmailVerified(true);

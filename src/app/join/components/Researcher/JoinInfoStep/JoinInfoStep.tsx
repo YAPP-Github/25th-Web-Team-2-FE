@@ -11,10 +11,14 @@ interface JoinInfoStepProps {
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const { control } = useFormContext<ResearcherJoinSchemaType>();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<ResearcherJoinSchemaType>();
   const values = useWatch({ name: ['name', 'univName', 'major'], control });
 
-  const isAllFilled = values.every((value) => value.trim() !== '' && value !== undefined);
+  const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
+
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>
@@ -48,7 +52,11 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           maxLength={100}
         />
       </div>
-      <button css={joinButton} onClick={handleSubmit} disabled={!isAllFilled}>
+      <button
+        css={joinButton}
+        onClick={handleSubmit}
+        disabled={!(isAllFilled && Object.keys(errors).length === 0)}
+      >
         회원가입
       </button>
     </section>
