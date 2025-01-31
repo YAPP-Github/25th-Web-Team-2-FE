@@ -1,4 +1,4 @@
-import { Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
   errorMessage,
@@ -13,23 +13,22 @@ import {
 
 import Icon from '@/components/Icon';
 
-interface JoinInputProps {
+interface JoinInputProps<T extends FieldValues> {
   type?: 'input' | 'textarea';
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control?: any;
+  name: Path<T>;
+  control: Control<T>;
   rules?: object;
   placeholder?: string;
   label?: string;
   required?: boolean;
   disabled?: boolean;
   tip?: string;
-  value?: string;
+  value?: PathValue<T, Path<T>>;
   maxLength?: number;
   isTip?: boolean;
 }
 
-const JoinInput = ({
+const JoinInput = <T extends FieldValues>({
   type = 'input',
   name,
   control,
@@ -42,7 +41,7 @@ const JoinInput = ({
   value,
   maxLength,
   isTip = true,
-}: JoinInputProps) => {
+}: JoinInputProps<T>) => {
   return (
     <div css={inputContainer}>
       {label && (
@@ -55,7 +54,7 @@ const JoinInput = ({
         name={name}
         control={control}
         rules={rules}
-        defaultValue={value || ''}
+        defaultValue={value}
         render={({ field, fieldState }) => (
           <>
             <div css={inputWrapper}>

@@ -39,7 +39,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>
-        <JoinInput
+        <JoinInput<ResearcherJoinSchemaType>
           name="oauthEmail"
           control={control}
           label="소셜 로그인 아이디"
@@ -47,7 +47,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           placeholder="이메일 입력"
           disabled
         />
-        <JoinInput
+        <JoinInput<ResearcherJoinSchemaType>
           name="contactEmail"
           control={control}
           label="연락 받을 이메일"

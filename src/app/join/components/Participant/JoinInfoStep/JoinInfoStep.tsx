@@ -40,7 +40,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
     <section css={joinForm}>
       <div css={joinContentContainer}>
         {/* 이름 */}
-        <JoinInput
+        <JoinInput<ParticipantJoinSchemaType>
           name="name"
           control={control}
           label="이름"
@@ -64,7 +64,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
 
         {/* 생년월일 */}
-        <JoinInput
+        <JoinInput<ParticipantJoinSchemaType>
           name="birthDate"
           control={control}
           label="생년월일"

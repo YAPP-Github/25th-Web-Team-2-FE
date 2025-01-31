@@ -18,28 +18,28 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>
-        <JoinInput
+        <JoinInput<ResearcherJoinSchemaType>
           name="name"
           control={control}
           label="이름"
           required
           placeholder="이름(실명) 입력"
         />
-        <JoinInput
+        <JoinInput<ResearcherJoinSchemaType>
           name="univName"
           control={control}
           label="학교명"
           required
           placeholder="학교명 입력"
         />
-        <JoinInput
+        <JoinInput<ResearcherJoinSchemaType>
           name="major"
           control={control}
           label="전공명"
           required
           placeholder="전공명 입력"
         />
-        <JoinInput
+        <JoinInput<ResearcherJoinSchemaType>
           name="labInfo"
           control={control}
           label="소속 연구실 정보"
