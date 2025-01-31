@@ -17,12 +17,7 @@ import {
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
 import useSessionStorage from '@/hooks/useSessionStorage';
-
-const STEP = {
-  email: 'email',
-  info: 'info',
-  success: 'success',
-} as const;
+import { STEP } from './JoinPage.constants';
 
 export default function JoinPage() {
   const role = useSessionStorage('role');
