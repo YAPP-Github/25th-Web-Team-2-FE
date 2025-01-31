@@ -44,7 +44,9 @@ const JoinInput = <T extends FieldValues>({
   isTip = true,
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
-  const resetButtonRef = useRef<HTMLButtonElement | null>(null);
+  const resetButtonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleBlur = (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -56,6 +58,12 @@ const JoinInput = <T extends FieldValues>({
 
     onBlur();
     setIsFocused(false);
+  };
+
+  const handleReset = (onChange: (value: string) => void) => {
+    onChange('');
+    inputRef.current?.focus();
+    textareaRef.current?.focus();
   };
 
   return (
@@ -77,6 +85,7 @@ const JoinInput = <T extends FieldValues>({
               {type === 'input' ? (
                 <input
                   {...field}
+                  ref={inputRef}
                   placeholder={placeholder}
                   disabled={disabled}
                   maxLength={maxLength}
@@ -88,6 +97,7 @@ const JoinInput = <T extends FieldValues>({
               ) : (
                 <textarea
                   {...field}
+                  ref={textareaRef}
                   placeholder={placeholder}
                   disabled={disabled}
                   aria-invalid={fieldState.invalid ? true : false}
@@ -104,7 +114,7 @@ const JoinInput = <T extends FieldValues>({
                     icon="CloseRound"
                     width={22}
                     height={22}
-                    onClick={() => field.onChange('')}
+                    onClick={() => handleReset(field.onChange)}
                     cursor="pointer"
                   />
                 </button>
