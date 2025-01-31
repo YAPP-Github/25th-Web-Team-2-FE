@@ -46,6 +46,7 @@ export default function JoinPage() {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: {
+      oauthEmail: '',
       contactEmail: '',
       univEmail: '',
       name: '',
@@ -59,8 +60,13 @@ export default function JoinPage() {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: {
+      oauthEmail: '',
       name: '',
       birthDate: '',
+      basicAddressInfo: {
+        region: '',
+        area: '',
+      },
     },
   });
 
