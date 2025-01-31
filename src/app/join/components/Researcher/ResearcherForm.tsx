@@ -18,7 +18,7 @@ const ResearcherForm = () => {
 
   const { mutate: joinResearcher } = useResearcherJoinMutation();
 
-  const { Funnel, setStep } = useFunnel(['email', 'info', 'success'] as const);
+  const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
 
   const researcherMethods = useForm<ResearcherJoinSchemaType>({
     resolver: zodResolver(ResearcherJoinSchema()),
@@ -49,17 +49,17 @@ const ResearcherForm = () => {
   return (
     <FormProvider {...researcherMethods}>
       <Funnel>
-        <Funnel.Step name={STEP.email}>
+        <Step name={STEP.email}>
           <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
-        </Funnel.Step>
-        <Funnel.Step name={STEP.info}>
+        </Step>
+        <Step name={STEP.info}>
           <Researcher.InfoStep
             handleSubmit={researcherMethods.handleSubmit(handleResearcherSubmit)}
           />
-        </Funnel.Step>
-        <Funnel.Step name={STEP.success}>
+        </Step>
+        <Step name={STEP.success}>
           <JoinSuccessStep name={researcherMethods.getValues('name')} />
-        </Funnel.Step>
+        </Step>
       </Funnel>
     </FormProvider>
   );

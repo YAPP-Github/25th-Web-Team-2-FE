@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useMemo } from 'react';
 
 const DEFAULT_STEP = 'email';
 
@@ -31,19 +31,25 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
     }
   };
 
-  const Funnel = ({ children }: FunnelProps) => {
-    const targetStep = children.find((childStep) => childStep.props.name === currentStep);
+  const Funnel = useMemo(
+    () =>
+      ({ children }: FunnelProps) => {
+        const targetStep = children.find((childStep) => childStep.props.name === currentStep);
 
-    return <>{targetStep}</>;
-  };
+        return <>{targetStep}</>;
+      },
 
-  const Step = (props: StepProps) => {
-    return <>{props.children}</>;
-  };
+    [currentStep],
+  );
 
-  Funnel.Step = Step;
+  const Step = useMemo(
+    () => (props: StepProps) => {
+      return <>{props.children}</>;
+    },
+    [],
+  );
 
-  return { Funnel, setStep, step: currentStep } as const;
+  return { Funnel, Step, setStep, step: currentStep } as const;
 };
 
 export default useFunnel;

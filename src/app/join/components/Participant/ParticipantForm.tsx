@@ -20,7 +20,7 @@ const ParticipantForm = () => {
 
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 
-  const { Funnel, setStep } = useFunnel(['email', 'info', 'success'] as const);
+  const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
 
   const participantMethods = useForm<ParticipantJoinSchemaType>({
     resolver: zodResolver(ParticipantJoinSchema()),
@@ -61,17 +61,17 @@ const ParticipantForm = () => {
   return (
     <FormProvider {...participantMethods}>
       <Funnel>
-        <Funnel.Step name={STEP.email}>
+        <Step name={STEP.email}>
           <Participant.EmailStep onNext={() => setStep(STEP.info)} />
-        </Funnel.Step>
-        <Funnel.Step name={STEP.info}>
+        </Step>
+        <Step name={STEP.info}>
           <Participant.InfoStep
             handleSubmit={participantMethods.handleSubmit(handleParticipantSubmit)}
           />
-        </Funnel.Step>
-        <Funnel.Step name={STEP.success}>
+        </Step>
+        <Step name={STEP.success}>
           <JoinSuccessStep name={participantMethods.getValues('name')} />
-        </Funnel.Step>
+        </Step>
       </Funnel>
     </FormProvider>
   );
