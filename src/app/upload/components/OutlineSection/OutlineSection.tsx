@@ -14,6 +14,10 @@ import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
+import {
+  uploadFormSectionTitle,
+  uploadSectionLayout,
+} from '../UploadContainer/UploadContainer.css';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
@@ -85,8 +89,8 @@ const OutlineSection = () => {
   };
 
   return (
-    <div>
-      <h3>
+    <div className={uploadSectionLayout}>
+      <h3 className={uploadFormSectionTitle}>
         <span className={headingIcon}>1</span>실험의 개요를 알려주세요{' '}
         <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>

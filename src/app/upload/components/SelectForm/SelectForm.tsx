@@ -7,7 +7,7 @@ import {
   selectInputContainer,
   selectItem,
   selectTrigger,
-} from './SelectForm.styles';
+} from './SelectForm.css';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
@@ -40,7 +40,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
     if (!options?.length) return null;
 
     return (
-      <div css={selectInputContainer}>
+      <div className={selectInputContainer}>
         <Select.Root
           value={field?.value ?? undefined}
           onValueChange={field?.onChange}
@@ -54,7 +54,9 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
         >
           <Select.Trigger
             ref={ref}
-            css={(theme) => selectTrigger(theme, disabled, !!fieldState?.error)}
+            className={`${selectTrigger.default} ${disabled ? selectTrigger.disabled : ''} ${
+              fieldState?.error ? selectTrigger.error : ''
+            }`}
           >
             <Select.Value placeholder={disabled ? '본문 참고' : placeholder} />
             <Select.Icon asChild>
@@ -69,11 +71,11 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
           </Select.Trigger>
           {!disabled && (
             <Select.Portal>
-              <Select.Content css={selectContent} position="popper" sideOffset={4}>
+              <Select.Content className={selectContent} position="popper" sideOffset={4}>
                 <Select.ScrollUpButton />
                 <Select.Viewport>
                   {options?.map((option) => (
-                    <Select.Item key={option.value} value={option.value} css={selectItem}>
+                    <Select.Item key={option.value} value={option.value} className={selectItem}>
                       <Select.ItemText>{option.label}</Select.ItemText>
                     </Select.Item>
                   ))}
@@ -84,7 +86,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
           )}
         </Select.Root>
         {fieldState?.error && showErrorMessage && (
-          <p css={(theme) => formMessage(theme)}>{fieldState.error.message}</p>
+          <p className={formMessage}>{fieldState.error.message}</p>
         )}
       </div>
     );

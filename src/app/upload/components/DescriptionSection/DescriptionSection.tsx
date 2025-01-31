@@ -17,6 +17,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
+import { uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import Icon from '@/components/Icon';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
@@ -80,7 +81,7 @@ const DescriptionSection = () => {
   };
 
   return (
-    <div>
+    <div className={uploadSectionLayout}>
       {/* 제목 영역 */}
       <h3 className={uploadFormSectionTitle}>
         <span className={headingIcon}>2</span>어떤 실험인가요?{' '}
