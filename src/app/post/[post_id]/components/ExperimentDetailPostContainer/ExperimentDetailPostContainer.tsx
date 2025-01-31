@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import useApplyMethodQuery from '../../hooks/useApplyMethodQuery';
 import useExperimentDetailsQuery from '../../hooks/useExperimentDetailsQuery';
 import { postContentLayout } from '../ExperimentPostContainer/ExperimentPostContainer.css';
-import PostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
+import ExperimentPostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';
 
@@ -53,7 +53,7 @@ const ExperimentPostContainer = () => {
     <>
       <ExperimentPostInfo postDetailData={postDetailData} />
       <div className={postContentLayout}>
-        <PostDetailContent postDetailData={postDetailData} />
+        <ExperimentPostDetailContent postDetailData={postDetailData} />
         <ExperimentPostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
       </div>
     </>
