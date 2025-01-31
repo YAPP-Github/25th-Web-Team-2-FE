@@ -22,6 +22,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   } = useFormContext<ResearcherJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
+  const univEmail = useWatch({ name: 'univEmail', control });
 
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
@@ -35,7 +36,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
 
   const allValid =
     oauthEmail &&
-    Boolean(!errors.contactEmail) &&
+    univEmail &&
     Boolean(!errors.contactEmail) &&
     Boolean(!errors.univEmail) &&
     isEmailVerified &&
