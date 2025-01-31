@@ -81,24 +81,6 @@ export const uploadFormSectionTitle = style({
   marginBottom: '2rem',
 });
 
-export const headingIcon = style({
-  ...fonts.label.small.SB12,
-  width: '1.8rem',
-  height: '1.8rem',
-  borderRadius: '50%',
-  textAlign: 'center',
-  padding: '0.2rem',
-  backgroundColor: colors.primaryMint,
-  color: colors.text01,
-});
-
-export const label = style({
-  ...fonts.label.large.M14,
-  color: colors.text05,
-  marginBottom: '0.8rem',
-  display: 'block',
-});
-
 export const ReferToDetailsContainer = style({
   ...fonts.label.small.M12,
   color: colors.text04,

@@ -7,8 +7,6 @@ import {
   alarmAgreeContainer,
   applyMethodContainer,
   applyMethodContentLayout,
-  headingIcon,
-  label,
   targetConditionLayout,
   targetGroupContainer,
   textStyle,
@@ -18,7 +16,7 @@ import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-import { uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
+import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';

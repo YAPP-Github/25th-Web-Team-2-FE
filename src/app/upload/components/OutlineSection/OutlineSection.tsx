@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import {
-  disabledInput,
-  headingIcon,
-  label,
-  outlineFormLayout,
-  uploadInputContainer,
-} from './OutlineSection.css';
+import { disabledInput, outlineFormLayout, uploadInputContainer } from './OutlineSection.css';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
@@ -15,6 +9,8 @@ import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
 import {
+  headingIcon,
+  label,
   uploadFormSectionTitle,
   uploadSectionLayout,
 } from '../UploadContainer/UploadContainer.css';

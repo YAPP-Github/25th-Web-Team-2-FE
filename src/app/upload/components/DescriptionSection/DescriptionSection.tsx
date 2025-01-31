@@ -9,7 +9,6 @@ import {
   descriptionFormLayout,
   descriptionTextarea,
   formMessage,
-  headingIcon,
   photoContainer,
   photoGrid,
   photoLayout,
@@ -17,7 +16,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
-import { uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
+import { headingIcon, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import Icon from '@/components/Icon';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';

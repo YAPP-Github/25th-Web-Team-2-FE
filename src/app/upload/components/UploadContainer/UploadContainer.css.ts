@@ -40,17 +40,6 @@ export const uploadSectionLayout = style({
   padding: '3.2rem 2.8rem',
 });
 
-export const headingIcon = style({
-  ...fonts.label.small.SB12,
-  width: '1.8rem',
-  height: '1.8rem',
-  borderRadius: '50%',
-  textAlign: 'center',
-  padding: '0.2rem',
-  backgroundColor: colors.primaryMint,
-  color: colors.text01,
-});
-
 export const buttonContainer = style({
   ...fonts.body.normal.B16,
   width: '100%',
@@ -86,37 +75,6 @@ export const outlineFormLayout = style({
   margin: '0 auto',
 });
 
-export const uploadInput = styleVariants({
-  default: {
-    ...fonts.label.large.R14,
-    width: '100%',
-    maxWidth: '45.2rem',
-    height: '4.8rem',
-    padding: '10px',
-    borderRadius: '1.2rem',
-    outline: 'none',
-    border: `0.1rem solid ${colors.line01}`,
-    '::placeholder': {
-      color: colors.text02,
-    },
-    ':focus': {
-      outline: `0.1rem solid ${colors.lineTinted}`,
-      outlineOffset: '0',
-      border: 'none',
-    },
-  },
-  error: {
-    border: `0.1rem solid ${colors.textAlert}`,
-  },
-});
-
-export const label = style({
-  ...fonts.label.large.M14,
-  color: colors.text05,
-  marginBottom: '0.8rem',
-  display: 'block',
-});
-
 export const ReferToDetailsContainer = style({
   ...fonts.label.small.M12,
   color: colors.text04,
@@ -125,4 +83,22 @@ export const ReferToDetailsContainer = style({
   alignItems: 'center',
   gap: '0.2rem',
   justifyContent: 'right',
+});
+
+export const headingIcon = style({
+  ...fonts.label.small.SB12,
+  width: '1.8rem',
+  height: '1.8rem',
+  borderRadius: '50%',
+  textAlign: 'center',
+  padding: '0.2rem',
+  backgroundColor: colors.primaryMint,
+  color: colors.text01,
+});
+
+export const label = style({
+  ...fonts.label.large.M14,
+  color: colors.text05,
+  marginBottom: '0.8rem',
+  display: 'block',
 });
