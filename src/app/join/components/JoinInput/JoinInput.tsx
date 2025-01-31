@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
@@ -42,6 +43,21 @@ const JoinInput = <T extends FieldValues>({
   maxLength,
   isTip = true,
 }: JoinInputProps<T>) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const resetButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    onBlur: () => void,
+  ) => {
+    if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
+      return;
+    }
+
+    onBlur();
+    setIsFocused(false);
+  };
+
   return (
     <div css={inputContainer}>
       {label && (
@@ -66,6 +82,8 @@ const JoinInput = <T extends FieldValues>({
                   maxLength={maxLength}
                   aria-invalid={fieldState.invalid ? true : false}
                   style={{ width: '100%' }}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={(e) => handleBlur(e, field.onBlur)}
                 />
               ) : (
                 <textarea
@@ -76,10 +94,12 @@ const JoinInput = <T extends FieldValues>({
                   rows={3}
                   maxLength={maxLength ?? 0}
                   style={{ width: '100%' }}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={(e) => handleBlur(e, field.onBlur)}
                 />
               )}
-              {field.value && !disabled && (
-                <button css={inputResetButton}>
+              {isFocused && field.value && !disabled && (
+                <button css={inputResetButton} ref={resetButtonRef}>
                   <Icon
                     icon="CloseRound"
                     width={22}
