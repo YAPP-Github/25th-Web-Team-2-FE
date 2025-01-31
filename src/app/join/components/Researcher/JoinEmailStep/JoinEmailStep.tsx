@@ -65,7 +65,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           required
           tip="로그인 아이디와 달라도 괜찮아요"
         />
-        <UnivAuthInput handleVerifyEmail={handleVerifyEmail} />
+        <UnivAuthInput isEmailVerified={isEmailVerified} handleVerifyEmail={handleVerifyEmail} />
         <JoinCheckboxContainer
           serviceAgreeCheck={serviceAgreeCheck}
           handleAllCheck={handleAllCheck}

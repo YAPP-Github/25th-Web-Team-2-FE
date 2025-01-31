@@ -16,12 +16,12 @@ import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-
 interface UnivAuthInputProps {
+  isEmailVerified: boolean;
   handleVerifyEmail: () => void;
 }
 
-const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
+const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
@@ -69,12 +69,12 @@ const UnivAuthInput = ({ handleVerifyEmail }: UnivAuthInputProps) => {
                   {...field}
                   placeholder="학교 메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
-                  disabled={isEmailSent}
+                  disabled={isEmailSent || isEmailVerified}
                 />
                 <button
                   type="button"
                   css={[univAuthButton, isEmailSent && editButton]}
-                  disabled={!isEmailSent && !field.value}
+                  disabled={(!isEmailSent && !field.value) || isEmailVerified}
                   onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
                 >
                   {isEmailSent ? '수정' : '인증번호 전송'}
