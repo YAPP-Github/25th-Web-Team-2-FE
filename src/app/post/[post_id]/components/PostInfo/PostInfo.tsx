@@ -8,9 +8,9 @@ import {
   postSubInfo,
   viewsContainer,
 } from './PostInfo.styles';
+import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
-import { UseQueryExperimentDetailsAPIResponse } from '@/apis/hooks/useQueryExperimentDetailsAPI';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 

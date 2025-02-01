@@ -1,7 +1,8 @@
 import * as Tooltip from '@radix-ui/react-tooltip';
 
-import Icon from '@/components/Icon';
 import { tooltipArrow, tooltipContent } from './AreaTooltip.styles';
+
+import Icon from '@/components/Icon';
 
 const AreaTooltip = () => {
   return (

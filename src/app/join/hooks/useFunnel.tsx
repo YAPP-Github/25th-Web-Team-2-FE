@@ -31,23 +31,25 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
     }
   };
 
-  const Funnel = useMemo(
-    () =>
-      ({ children }: FunnelProps) => {
-        const targetStep = children.find((childStep) => childStep.props.name === currentStep);
+  const Funnel = useMemo(() => {
+    const FunnelComponent = ({ children }: FunnelProps) => {
+      const targetStep = children.find((childStep) => childStep.props.name === currentStep);
 
-        return <>{targetStep}</>;
-      },
+      return <>{targetStep}</>;
+    };
 
-    [currentStep],
-  );
+    FunnelComponent.displayName = 'Funnel';
+    return FunnelComponent;
+  }, [currentStep]);
 
-  const Step = useMemo(
-    () => (props: StepProps) => {
+  const Step = useMemo(() => {
+    const StepComponent = (props: StepProps) => {
       return <>{props.children}</>;
-    },
-    [],
-  );
+    };
+
+    StepComponent.displayName = 'Step';
+    return StepComponent;
+  }, []);
 
   return { Funnel, Step, setStep, step: currentStep } as const;
 };

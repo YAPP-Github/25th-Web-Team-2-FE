@@ -4,6 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import useFunnel from '../../hooks/useFunnel';
 import useParticipantJoinMutation from '../../hooks/useParticipantJoinMutation';
+import { STEP } from '../../JoinPage.constants';
 import { getProvider } from '../../JoinPage.utils';
 import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
@@ -13,7 +14,6 @@ import useSessionStorage from '@/hooks/useSessionStorage';
 import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
-import { STEP } from '../../JoinPage.constants';
 
 const ParticipantForm = () => {
   const oauthEmail = useSessionStorage('email');

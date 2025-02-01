@@ -4,6 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import useFunnel from '../../hooks/useFunnel';
 import useResearcherJoinMutation from '../../hooks/useResearcherJoinMutation';
+import { STEP } from '../../JoinPage.constants';
 import { getProvider } from '../../JoinPage.utils';
 import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
@@ -11,7 +12,6 @@ import { Researcher } from '.';
 
 import useSessionStorage from '@/hooks/useSessionStorage';
 import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { STEP } from '../../JoinPage.constants';
 
 const ResearcherForm = () => {
   const oauthEmail = useSessionStorage('email');
