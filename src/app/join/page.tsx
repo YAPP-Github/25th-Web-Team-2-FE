@@ -5,6 +5,7 @@ import Image from 'next/image';
 import ParticipantForm from './components/Participant/ParticipantForm';
 import ResearcherForm from './components/Researcher/ResearcherForm';
 import useFunnel from './hooks/useFunnel';
+import { STEP } from './JoinPage.constants';
 import {
   contentContainer,
   joinLayout,
@@ -17,7 +18,6 @@ import {
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
 import useSessionStorage from '@/hooks/useSessionStorage';
-import { STEP } from './JoinPage.constants';
 
 export default function JoinPage() {
   const role = useSessionStorage('role');

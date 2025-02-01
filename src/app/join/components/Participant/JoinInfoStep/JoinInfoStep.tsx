@@ -1,5 +1,6 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import AreaTooltip from './AreaTooltip/AreaTooltip';
 import {
   filterTitle,
   filterTitleWrapper,
@@ -17,7 +18,6 @@ import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinForm } from '@/app/join/JoinPage.styles';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import AreaTooltip from './AreaTooltip/AreaTooltip';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;
