@@ -8,6 +8,10 @@ export const getProvider = (email: string): 'GOOGLE' | 'NAVER' => {
   const GOOGLE_DOMAINS = 'gmail.com';
   const NAVER_DOMAINS = 'naver.com';
 
+  if (!email || !email.includes('@')) {
+    throw new Error('잘못된 이메일 형식입니다.');
+  }
+
   const targetDomain = email.split('@')[1].toLowerCase();
 
   if (targetDomain.includes(GOOGLE_DOMAINS)) {

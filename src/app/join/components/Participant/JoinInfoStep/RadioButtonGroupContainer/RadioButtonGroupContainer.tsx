@@ -1,3 +1,5 @@
+import { Controller } from 'react-hook-form';
+
 import RadioButtonGroup from './RadioButtonGroup/RadioButtonGroup';
 import {
   labelWrapper,
@@ -7,19 +9,22 @@ import {
 } from './RadioButtonGroupContainer.styles';
 
 interface RadioButtonGroupProps<T> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: any;
+  name: 'gender' | 'matchType';
   title: string;
   options: { value: T; label: string }[];
   onChange: (value: T) => void;
-  selectedValue?: T;
   required?: boolean;
   tip?: string;
 }
 
 const RadioButtonGroupContainer = <T extends string>({
+  control,
+  name,
   title,
   options,
   onChange,
-  selectedValue,
   required = false,
   tip,
 }: RadioButtonGroupProps<T>) => {
@@ -29,7 +34,22 @@ const RadioButtonGroupContainer = <T extends string>({
         <span>{title}</span>
         {required && <span css={requiredStar}>*</span>}
       </div>
-      <RadioButtonGroup<T> options={options} selectedValue={selectedValue} onChange={onChange} />
+
+      <Controller
+        name={name}
+        control={control}
+        render={({ field, fieldState }) => (
+          <>
+            <RadioButtonGroup<T>
+              options={options}
+              selectedValue={field.value}
+              onChange={onChange}
+              isError={Boolean(fieldState.error) && Boolean(!field.value)}
+            />
+          </>
+        )}
+      />
+
       {tip && (
         <div css={tipWrapper}>
           <span>{tip}</span>

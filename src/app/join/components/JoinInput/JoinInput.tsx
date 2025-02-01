@@ -1,33 +1,35 @@
-import { Controller } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
   errorMessage,
   inputContainer,
+  inputResetButton,
+  inputWrapper,
   requiredStar,
   textCount,
   tipAlert,
   tipWrapper,
 } from './JoinInput.styles';
 
-interface JoinInputProps {
+import Icon from '@/components/Icon';
+
+interface JoinInputProps<T extends FieldValues> {
   type?: 'input' | 'textarea';
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control?: any;
+  name: Path<T>;
+  control: Control<T>;
   rules?: object;
   placeholder?: string;
   label?: string;
   required?: boolean;
   disabled?: boolean;
-  onChange?: () => void;
   tip?: string;
-  value?: string;
-  onBlur?: () => void;
+  value?: PathValue<T, Path<T>>;
   maxLength?: number;
   isTip?: boolean;
 }
 
-const JoinInput = ({
+const JoinInput = <T extends FieldValues>({
   type = 'input',
   name,
   control,
@@ -38,11 +40,32 @@ const JoinInput = ({
   disabled = false,
   tip,
   value,
-  onChange,
-  onBlur,
   maxLength,
   isTip = true,
-}: JoinInputProps) => {
+}: JoinInputProps<T>) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const resetButtonRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    onBlur: () => void,
+  ) => {
+    if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
+      return;
+    }
+
+    onBlur();
+    setIsFocused(false);
+  };
+
+  const handleReset = (onChange: (value: string) => void) => {
+    onChange('');
+    inputRef.current?.focus();
+    textareaRef.current?.focus();
+  };
+
   return (
     <div css={inputContainer}>
       {label && (
@@ -55,47 +78,63 @@ const JoinInput = ({
         name={name}
         control={control}
         rules={rules}
+        defaultValue={value}
         render={({ field, fieldState }) => (
           <>
-            {type === 'input' ? (
-              <input
-                {...field}
-                placeholder={placeholder}
-                disabled={disabled}
-                value={value}
-                maxLength={maxLength}
-                aria-invalid={fieldState.invalid ? true : false}
-                onChange={(e) => {
-                  field.onChange(e);
-                  if (onChange) onChange();
-                }}
-                onBlur={onBlur}
-              />
-            ) : (
-              <textarea
-                {...field}
-                placeholder={placeholder}
-                disabled={disabled}
-                aria-invalid={fieldState.invalid ? true : false}
-                onChange={(e) => {
-                  field.onChange(e);
-                  if (onChange) onChange();
-                }}
-                rows={3}
-                maxLength={100}
-              />
-            )}
+            <div css={inputWrapper}>
+              {type === 'input' ? (
+                <input
+                  {...field}
+                  ref={inputRef}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  maxLength={maxLength}
+                  aria-invalid={fieldState.invalid ? true : false}
+                  style={{ width: '100%' }}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={(e) => handleBlur(e, field.onBlur)}
+                />
+              ) : (
+                <textarea
+                  {...field}
+                  ref={textareaRef}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  aria-invalid={fieldState.invalid ? true : false}
+                  rows={3}
+                  maxLength={maxLength ?? 0}
+                  style={{ width: '100%' }}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={(e) => handleBlur(e, field.onBlur)}
+                />
+              )}
+              {isFocused && field.value && !disabled && (
+                <button css={inputResetButton} ref={resetButtonRef}>
+                  <Icon
+                    icon="CloseRound"
+                    width={22}
+                    height={22}
+                    onClick={() => handleReset(field.onChange)}
+                    cursor="pointer"
+                  />
+                </button>
+              )}
+            </div>
             {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
-            {type === 'textarea' && <span css={textCount}>{field.value?.length || 0}/100</span>}
+            {type === 'textarea' && (
+              <span css={textCount}>
+                {field.value?.length || 0}/{maxLength}
+              </span>
+            )}
+            {tip && Boolean(!fieldState.error) && (
+              <div css={tipWrapper}>
+                {isTip && <span css={tipAlert}>Tip</span>}
+                <span>{tip}</span>
+              </div>
+            )}
           </>
         )}
       />
-      {tip && (
-        <div css={tipWrapper}>
-          {isTip && <span css={tipAlert}>Tip</span>}
-          <span>{tip}</span>
-        </div>
-      )}
     </div>
   );
 };

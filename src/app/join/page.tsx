@@ -1,14 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { FormProvider, useForm } from 'react-hook-form';
 
-import JoinSuccessStep from './components/JoinSuccessStep/JoinSuccessStep';
-import { Participant } from './components/Participant';
-import { Researcher } from './components/Researcher';
+import ParticipantForm from './components/Participant/ParticipantForm';
+import ResearcherForm from './components/Researcher/ResearcherForm';
 import useFunnel from './hooks/useFunnel';
-import useParticipantJoinMutation from './hooks/useParticipantJoinMutation';
-import useResearcherJoinMutation from './hooks/useResearcherJoinMutation';
 import {
   contentContainer,
   joinLayout,
@@ -17,119 +13,32 @@ import {
   progressBarFill,
   titleContainer,
 } from './JoinPage.styles';
-import { ParticipantJoinParams, ResearcherJoinParams } from './JoinPage.types';
-import { getProvider } from './JoinPage.utils';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
-
-const STEP = {
-  email: 'email',
-  info: 'info',
-  success: 'success',
-} as const;
+import useSessionStorage from '@/hooks/useSessionStorage';
+import { STEP } from './JoinPage.constants';
 
 export default function JoinPage() {
-  const oauthEmail = sessionStorage.getItem('email') || '';
-  const role = sessionStorage.getItem('role') || '';
-  const provider = getProvider(oauthEmail);
-  const { mutate: joinResearcher } = useResearcherJoinMutation();
-  const { mutate: joinParticipant } = useParticipantJoinMutation();
+  const role = useSessionStorage('role');
+  const { step } = useFunnel(['email', 'info', 'success'] as const);
 
-  const researcherMethods = useForm<ResearcherJoinParams>({
-    mode: 'onBlur',
-    defaultValues: {
-      oauthEmail: oauthEmail,
-      provider,
-      contactEmail: '',
-      univEmail: '',
-      name: '',
-      univName: '',
-      major: '',
-      labInfo: '',
-    },
-  });
-
-  const participantMethods = useForm<ParticipantJoinParams>({
-    mode: 'onChange',
-    defaultValues: {
-      oauthEmail: oauthEmail,
-      provider,
-    },
-  });
-
-  const { Funnel, step, setStep } = useFunnel(['email', 'info', 'success'] as const);
-
-  const handleResearcherSubmit = () => {
-    const formData = researcherMethods.getValues();
-    joinResearcher(formData, { onSuccess: () => setStep(STEP.success) });
-  };
-
-  const handleParticipantSubmit = () => {
-    const formData = participantMethods.getValues();
-
-    const formattedData = {
-      ...formData,
-      birthDate: formData.birthDate.replaceAll('.', '-'),
-    };
-
-    joinParticipant(formattedData, {
-      onSuccess: () => setStep(STEP.success),
-    });
-  };
-
-  if (role === ROLE.researcher) {
-    return (
-      <section css={joinLayout}>
-        <Image src={Logo} alt="로고" width={80} height={28} />
-        <div css={contentContainer}>
-          <div css={titleContainer}>
-            <h2 css={joinTitle}>연구자 회원가입</h2>
-            <div css={progressBarContainer}>
-              <div css={progressBarFill} style={{ width: step === STEP.email ? '50%' : '100%' }} />
-            </div>
-          </div>
-          <FormProvider {...researcherMethods}>
-            <Funnel>
-              <Funnel.Step name={STEP.email}>
-                <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
-              </Funnel.Step>
-              <Funnel.Step name={STEP.info}>
-                <Researcher.InfoStep onNext={handleResearcherSubmit} />
-              </Funnel.Step>
-              <Funnel.Step name={STEP.success}>
-                <JoinSuccessStep name={researcherMethods.getValues('name')} />
-              </Funnel.Step>
-            </Funnel>
-          </FormProvider>
-        </div>
-      </section>
-    );
-  }
+  // TODO: 추후 스켈레톤 처리
+  if (!role) return null;
 
   return (
     <section css={joinLayout}>
       <Image src={Logo} alt="로고" width={80} height={28} />
       <div css={contentContainer}>
         <div css={titleContainer}>
-          <h2 css={joinTitle}>참여자 회원가입</h2>
+          <h2 css={joinTitle}>
+            {role === ROLE.researcher ? '연구자 회원가입' : '참여자 회원가입'}
+          </h2>
           <div css={progressBarContainer}>
             <div css={progressBarFill} style={{ width: step === STEP.email ? '50%' : '100%' }} />
           </div>
         </div>
-        <FormProvider {...participantMethods}>
-          <Funnel>
-            <Funnel.Step name={STEP.email}>
-              <Participant.EmailStep onNext={() => setStep(STEP.info)} />
-            </Funnel.Step>
-            <Funnel.Step name={STEP.info}>
-              <Participant.InfoStep onNext={handleParticipantSubmit} />
-            </Funnel.Step>
-            <Funnel.Step name={STEP.success}>
-              <JoinSuccessStep name={participantMethods.getValues('name')} />
-            </Funnel.Step>
-          </Funnel>
-        </FormProvider>
+        {role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}
       </div>
     </section>
   );

@@ -43,6 +43,17 @@ export const requiredStar = (theme: Theme) => css`
   color: ${theme.colors.textAlert};
 `;
 
+export const inputWrapper = css`
+  position: relative;
+`;
+
+export const inputResetButton = css`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1.7rem;
+`;
+
 export const errorMessage = (theme: Theme) => css`
   ${theme.fonts.label.large.R14};
   color: ${theme.colors.textAlert};

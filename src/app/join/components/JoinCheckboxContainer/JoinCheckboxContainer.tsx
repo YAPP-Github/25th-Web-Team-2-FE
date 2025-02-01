@@ -1,6 +1,6 @@
+import { ServiceAgreeCheck } from '../../JoinPage.types';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.styles';
-import { ServiceAgreeCheck } from '../../../JoinPage.types';
 
 interface JoinCheckboxContainerProps {
   serviceAgreeCheck: ServiceAgreeCheck;

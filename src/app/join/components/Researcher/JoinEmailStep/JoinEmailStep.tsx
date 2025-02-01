@@ -1,12 +1,14 @@
+import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { nextButton } from './JoinEmailStep.styles';
+import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
+import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../JoinInput/JoinInput';
 
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.styles';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { joinForm } from '@/app/join/JoinPage.styles';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinEmailStepProps {
   onNext: () => void;
@@ -17,29 +19,38 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
     control,
     trigger,
     formState: { errors },
-  } = useFormContext<ParticipantJoinSchemaType>();
+  } = useFormContext<ResearcherJoinSchemaType>();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
-  const contactEmail = useWatch({ name: 'contactEmail', control });
+  const univEmail = useWatch({ name: 'univEmail', control });
 
-  const allValid =
-    contactEmail &&
-    Boolean(!errors.contactEmail) &&
-    serviceAgreeCheck.isTermOfService &&
-    serviceAgreeCheck.isPrivacy;
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const handleNextStep = async () => {
-    const isValid = await trigger(['oauthEmail', 'contactEmail']);
+    const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
 
     if (isValid) {
       onNext();
     }
   };
 
+  const allValid =
+    oauthEmail &&
+    univEmail &&
+    Boolean(!errors.contactEmail) &&
+    Boolean(!errors.univEmail) &&
+    isEmailVerified &&
+    serviceAgreeCheck.isTermOfService &&
+    serviceAgreeCheck.isPrivacy;
+
+  const handleVerifyEmail = () => {
+    setIsEmailVerified(true);
+  };
+
   return (
     <section css={joinForm}>
       <div css={joinContentContainer}>
-        <JoinInput<ParticipantJoinSchemaType>
+        <JoinInput<ResearcherJoinSchemaType>
           name="oauthEmail"
           control={control}
           label="소셜 로그인 아이디"
@@ -47,7 +58,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           placeholder="이메일 입력"
           disabled
         />
-        <JoinInput<ParticipantJoinSchemaType>
+        <JoinInput<ResearcherJoinSchemaType>
           name="contactEmail"
           control={control}
           label="연락 받을 이메일"
@@ -55,6 +66,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           required
           tip="로그인 아이디와 달라도 괜찮아요"
         />
+        <UnivAuthInput isEmailVerified={isEmailVerified} handleVerifyEmail={handleVerifyEmail} />
         <JoinCheckboxContainer
           serviceAgreeCheck={serviceAgreeCheck}
           handleAllCheck={handleAllCheck}

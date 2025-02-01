@@ -17,6 +17,10 @@ export const triggerWrapper = (theme: Theme) => css`
     ${theme.fonts.body.normal.M16};
     color: ${theme.colors.text02};
   }
+
+  &[aria-invalid='true'] {
+    outline: 0.1rem solid ${theme.colors.textAlert};
+  }
 `;
 
 export const selectContent = (theme: Theme) => css`
@@ -30,7 +34,7 @@ export const selectContent = (theme: Theme) => css`
   border-radius: 1.2rem;
 
   box-shadow: 0px 4px 16px rgba(53, 59, 61, 0.2);
-  overflow: hidden;
+  overflow-y: scroll;
 `;
 
 export const selectList = css`
@@ -51,5 +55,12 @@ export const selectItem = (theme: Theme) => css`
   &[data-highlighted] {
     background-color: ${theme.colors.field02};
     outline: none;
+  }
+
+  &[data-state='checked'] {
+    background-color: ${theme.colors.primaryTinted};
+    color: ${theme.colors.textPrimary};
+
+    border: 0.1rem solid ${theme.colors.textPrimary};
   }
 `;

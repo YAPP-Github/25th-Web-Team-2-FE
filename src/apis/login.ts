@@ -1,7 +1,8 @@
 import { API } from './config';
 
-import { ParticipantJoinParams, ResearcherJoinParams } from '@/app/join/JoinPage.types';
 import { API_URL } from '@/constants/url';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface UnivAuthCodeResponse {
   isSuccess: boolean;
@@ -85,13 +86,13 @@ export const verifyUnivAuthCode = async (univEmail: string, inputCode: string) =
   return res.data;
 };
 
-export const joinResearcher = async (params: ResearcherJoinParams) => {
+export const joinResearcher = async (params: ResearcherJoinSchemaType) => {
   const res = await API.post<JoinResponse>(API_URL.joinResearcher, { ...params });
 
   return res.data;
 };
 
-export const joinParticipant = async (params: ParticipantJoinParams) => {
+export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
   const res = await API.post<JoinResponse>(API_URL.joinParticipant, { ...params });
 
   return res.data;
