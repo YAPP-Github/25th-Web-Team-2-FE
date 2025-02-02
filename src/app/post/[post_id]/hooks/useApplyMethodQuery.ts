@@ -5,7 +5,7 @@ import { API } from '@/apis/config';
 import { API_URL } from '@/constants/url';
 
 interface UseApplyMethodQueryParams {
-  postId: number;
+  postId: string;
 }
 
 export interface UseApplyMethodQueryResponse {
