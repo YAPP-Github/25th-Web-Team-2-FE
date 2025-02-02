@@ -2,14 +2,14 @@
 
 import { usePathname } from 'next/navigation';
 
-import { postContentLayout } from './PostContainer.styles';
 import useApplyMethodQuery from '../../hooks/useApplyMethodQuery';
 import useExperimentDetailsQuery from '../../hooks/useExperimentDetailsQuery';
-import PostDetailContent from '../PostDetailContent/PostDetailContent';
-import PostInfo from '../PostInfo/PostInfo';
-import PostOutline from '../PostOutline/PostOutline';
+import { postContentLayout } from '../ExperimentPostContainer/ExperimentPostContainer.css';
+import ExperimentPostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
+import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
+import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';
 
-const PostContainer = () => {
+const ExperimentPostContainer = () => {
   //todo 이 후에 쿼리 파라미터 형식이든 or postId 타입 변경 요청이든 수정 예정
   const pathname = usePathname();
   const pathPostId = pathname?.split('/').pop();
@@ -51,13 +51,13 @@ const PostContainer = () => {
 
   return (
     <>
-      <PostInfo postDetailData={postDetailData} />
-      <div css={postContentLayout}>
-        <PostDetailContent postDetailData={postDetailData} />
-        <PostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
+      <ExperimentPostInfo postDetailData={postDetailData} />
+      <div className={postContentLayout}>
+        <ExperimentPostDetailContent postDetailData={postDetailData} />
+        <ExperimentPostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
       </div>
     </>
   );
 };
 
-export default PostContainer;
+export default ExperimentPostContainer;

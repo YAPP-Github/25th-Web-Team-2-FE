@@ -1,5 +1,8 @@
 import { exampleBox, exampleText } from './example.css';
 
+import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
+
 function ExamplePage() {
   return (
     <div>
@@ -11,6 +14,7 @@ function ExamplePage() {
         Secondary Small
       </div>
       <div className={exampleBox({ backgroundColor: 'gray', size: 'large' })}>gray Large</div>
+      <Icon icon="Airplane" width={40} height={40} color={colors.primaryMint} />
     </div>
   );
 }

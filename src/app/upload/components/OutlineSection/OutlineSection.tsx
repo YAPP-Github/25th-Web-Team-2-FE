@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import { disabledInput, uploadInputContainer } from './OutlineSection.styles';
+import { disabledInput, outlineFormLayout, uploadInputContainer } from './OutlineSection.css';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
@@ -11,9 +11,9 @@ import SelectForm from '../SelectForm/SelectForm';
 import {
   headingIcon,
   label,
-  uploadInput,
-  outlineFormLayout,
-} from '../UploadContainer/UploadContainer.styles';
+  uploadFormSectionTitle,
+  uploadSectionLayout,
+} from '../UploadContainer/UploadContainer.css';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
@@ -85,16 +85,16 @@ const OutlineSection = () => {
   };
 
   return (
-    <div>
-      <h3>
-        <span css={headingIcon}>1</span>실험의 개요를 알려주세요{' '}
+    <div className={uploadSectionLayout}>
+      <h3 className={uploadFormSectionTitle}>
+        <span className={headingIcon}>1</span>실험의 개요를 알려주세요{' '}
         <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
 
-      <div css={outlineFormLayout}>
+      <div className={outlineFormLayout}>
         {/* 연구 책임자 */}
         <div>
-          <label css={label} htmlFor="leadResearcher">
+          <label className={label} htmlFor="leadResearcher">
             연구 책임자
           </label>
           <Controller
@@ -104,7 +104,6 @@ const OutlineSection = () => {
               <InputForm
                 id="leadResearcher"
                 field={field}
-                css={uploadInput}
                 type="text"
                 placeholder="OO대학교 OO학과 OO연구실 OOO"
                 fieldState={fieldState}
@@ -115,7 +114,7 @@ const OutlineSection = () => {
 
         {/* 실험 일시 */}
         <div>
-          <p css={label}>실험 일시</p>
+          <p className={label}>실험 일시</p>
 
           {/* 날짜 선택 */}
           <Controller
@@ -163,7 +162,7 @@ const OutlineSection = () => {
 
         {/* 진행 방식 */}
         <div>
-          <p css={label}>진행 방식</p>
+          <p className={label}>진행 방식</p>
 
           <Controller
             name="matchType"
@@ -188,7 +187,7 @@ const OutlineSection = () => {
 
         {/* 참여 보상 */}
         <div>
-          <label css={label} htmlFor="reward">
+          <label className={label} htmlFor="reward">
             참여 보상
           </label>
           <Controller
@@ -208,13 +207,13 @@ const OutlineSection = () => {
 
         {/* 실험 장소 */}
         <div>
-          <label css={label} htmlFor="location">
+          <label className={label} htmlFor="location">
             실험 장소
           </label>
           {selectedMatchType === MatchType.ONLINE ? (
-            <div css={[uploadInput, disabledInput]}>비대면</div>
+            <div className={disabledInput}>비대면</div>
           ) : (
-            <div css={uploadInputContainer}>
+            <div className={uploadInputContainer}>
               <Controller
                 name="univName"
                 control={control}
@@ -222,7 +221,6 @@ const OutlineSection = () => {
                   <InputForm
                     id="univName"
                     field={field}
-                    css={uploadInput}
                     placeholder="대학교 입력"
                     fieldState={fieldState}
                     showErrorMessage={false}
@@ -272,9 +270,9 @@ const OutlineSection = () => {
 
         {/* 소요 시간 */}
         <div>
-          <p css={label}>소요 시간</p>
+          <p className={label}>소요 시간</p>
 
-          <div css={uploadInputContainer}>
+          <div className={uploadInputContainer}>
             {/* 실험 횟수 */}
             <div>
               <Controller

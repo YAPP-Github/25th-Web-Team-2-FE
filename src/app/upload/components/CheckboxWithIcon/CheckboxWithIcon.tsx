@@ -1,6 +1,4 @@
-import { Theme } from '@emotion/react';
-
-import { checkboxLayout, checkboxContainer } from './CheckboxWithIcon.styles';
+import { checkboxLayout, checkboxContainer } from './CheckboxWithIcon.css';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
@@ -23,8 +21,8 @@ const CheckboxWithIcon = ({
   boldStyle = false,
 }: CheckboxWithIconProps) => {
   return (
-    <div css={(theme: Theme) => checkboxLayout(theme, align, size, boldStyle)}>
-      <div onClick={onChange} css={checkboxContainer(size)}>
+    <div className={checkboxLayout({ align, size, boldStyle })}>
+      <div onClick={onChange} className={checkboxContainer({ size })}>
         {checked ? (
           <Icon
             icon="CheckSquareFill"

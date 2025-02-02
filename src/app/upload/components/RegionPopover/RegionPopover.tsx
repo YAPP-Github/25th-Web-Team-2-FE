@@ -3,7 +3,6 @@ import { useRef } from 'react';
 import { FieldError } from 'react-hook-form';
 
 import {
-  regionField,
   popoverContent,
   popoverLayout,
   regionList,
@@ -13,8 +12,8 @@ import {
   subRegionButton,
   placeholderText,
   regionPopoverContainer,
-} from './RegionPopover.styles';
-import { uploadInput } from '../UploadContainer/UploadContainer.styles';
+  uploadInputField,
+} from './RegionPopover.css';
 
 import Icon from '@/components/Icon';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
@@ -69,8 +68,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
       <Popover.Trigger asChild>
         <div
           ref={popoverRef}
-          css={(theme) => regionPopoverContainer(theme, !!error)}
-          className="region-field"
+          className={regionPopoverContainer}
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === ' ') {
@@ -79,8 +77,10 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             }
           }}
         >
-          <div role="button" css={(theme) => [uploadInput, regionField(theme, !!error)]}>
-            <span css={(theme) => placeholderText(theme, !!(selectedRegion && selectedSubRegion))}>
+          <div role="button" className={uploadInputField({ error: !!error })}>
+            <span
+              className={placeholderText({ hasValue: !!(selectedRegion && selectedSubRegion) })}
+            >
               {selectedRegion && selectedSubRegion
                 ? `${regionData?.label} ${selectedSubRegion}`
                 : '지역구 선택'}
@@ -95,7 +95,7 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
       <Popover.Portal>
         <Popover.Content
           sideOffset={6}
-          css={popoverContent}
+          className={popoverContent}
           onFocusOutside={() => {
             field?.onBlur();
             onOpenRegionPopover(false);
@@ -105,13 +105,15 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             onOpenRegionPopover(false);
           }}
         >
-          <div css={popoverLayout}>
+          <div className={popoverLayout}>
             {/* 지역 */}
-            <div css={regionList}>
+            <div className={regionList}>
               {UPLOAD_REGION.map((region) => (
                 <button
                   key={region.value}
-                  css={[regionButton, selectedRegion === region.value && activeRegionButton]}
+                  className={`${regionButton} ${
+                    selectedRegion === region.value ? activeRegionButton : ''
+                  }`}
                   onClick={() => onRegionSelect(region.value)}
                 >
                   {region.label}
@@ -120,14 +122,13 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             </div>
 
             {/* 시 / 구 / 군 */}
-            <div css={subRegionList}>
+            <div className={subRegionList}>
               {regionData?.children.map((subRegion) => (
                 <button
                   key={subRegion.value}
-                  css={[
-                    subRegionButton,
-                    selectedSubRegion === subRegion.label && activeRegionButton,
-                  ]}
+                  className={`${subRegionButton} ${
+                    selectedSubRegion === subRegion.label ? activeRegionButton : ''
+                  }`}
                   onClick={() => handleSubRegionSelect(subRegion.label)}
                 >
                   {subRegion.label}

@@ -6,7 +6,7 @@ import {
   textSubMessageLayout,
   textCounter,
   formMessage,
-} from './InputForm.styles';
+} from './InputForm.css';
 
 interface InputFormProps {
   id: string;
@@ -52,12 +52,12 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
     };
 
     return (
-      <div css={textInputContainer(size)}>
+      <div className={textInputContainer[size]}>
         <input
           {...field}
           ref={ref}
           id={id}
-          css={(theme) => textInput(theme, fieldState?.error ? 'error' : '')}
+          className={`${textInput.default} ${fieldState?.error ? textInput.error : ''}`}
           type={type}
           placeholder={placeholder}
           value={field.value ?? ''}
@@ -65,14 +65,16 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
           maxLength={maxLength}
         />
 
-        <div css={textSubMessageLayout(!!maxLength)}>
+        <div
+          className={maxLength ? textSubMessageLayout.withCounter : textSubMessageLayout.noCounter}
+        >
           {maxLength && (
-            <div css={textCounter}>
+            <div className={textCounter}>
               {textLength}/{maxLength}
             </div>
           )}
           {fieldState?.error && showErrorMessage && (
-            <p css={formMessage} role="alert" aria-live="polite">
+            <p className={formMessage} role="alert" aria-live="polite">
               {fieldState.error.message}
             </p>
           )}

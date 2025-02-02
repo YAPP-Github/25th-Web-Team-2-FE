@@ -10,7 +10,7 @@ import {
   headerLayout,
   image,
   loginButton,
-} from './Header.styles';
+} from './Header.css';
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
 
@@ -20,22 +20,22 @@ const Header = () => {
   const { userInfo } = useUserInfo();
 
   return (
-    <div css={headerLayout}>
+    <div className={headerLayout}>
       <Link href="/">
-        <Image src={Logo} alt="로고" css={image} />
+        <Image src={Logo} alt="로고" className={image} />
       </Link>
-      <div css={buttonContainer}>
+      <div className={buttonContainer}>
         <Link href="/upload">
-          <button css={contactButton}>실험 공고 등록</button>
+          <button className={contactButton}>실험 공고 등록</button>
         </Link>
 
         {userInfo ? (
-          <div css={buttonWrapper}>
+          <div className={buttonWrapper}>
             <button>{userInfo.memberInfo.name}</button>
             <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
           </div>
         ) : (
-          <Link href="/login" css={loginButton}>
+          <Link href="/login" className={loginButton}>
             로그인
           </Link>
         )}

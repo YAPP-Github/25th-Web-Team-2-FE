@@ -6,38 +6,39 @@ import {
   textWrapRow,
   postOutlineContent,
   postOutlineLayout,
+  postOutlineTitle,
   participationCount,
   otherConditionWrapper,
-  ButtonContainer,
+  buttonContainer,
   scrollableContent,
-  disabledCheckButton,
   dynamicSpacing,
-} from './PostOutline.styles';
+} from './ExperimentPostOutline.css';
+import {
+  getGenderLabel,
+  getDurationLabel,
+  getRegionLabel,
+  getAreaLabel,
+} from '../../ExperimentPostPage.utils';
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
-import {
-  getAreaLabel,
-  getDurationLabel,
-  getGenderLabel,
-  getRegionLabel,
-} from '../../PostPage.utils';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
-interface PostOutlineProps {
+interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
   applyMethodData: UseApplyMethodQueryResponse | undefined;
 }
-const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
+
+const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPostOutlineProps) => {
   const { address, recruitStatus, summary, targetGroup } = postDetailData;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!applyMethodData) return null;
 
   return (
-    <div css={postOutlineLayout}>
-      <h3>실험 개요</h3>
-      <div css={scrollableContent}>
-        <table css={postOutlineContent}>
+    <div className={postOutlineLayout}>
+      <h3 className={postOutlineTitle}>실험 개요</h3>
+      <div className={scrollableContent}>
+        <table className={postOutlineContent}>
           <tbody>
             <tr>
               <th>모집 대상</th>
@@ -51,14 +52,13 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
           </tbody>
         </table>
 
-        {/* 기타 조건 */}
         {targetGroup.otherCondition ? (
-          <div css={otherConditionWrapper}>{targetGroup.otherCondition}</div>
+          <div className={otherConditionWrapper}>{targetGroup.otherCondition}</div>
         ) : (
-          <div css={dynamicSpacing} />
+          <div className={dynamicSpacing} />
         )}
 
-        <table css={postOutlineContent}>
+        <table className={postOutlineContent}>
           <tbody>
             <tr>
               <th>참여 보상</th>
@@ -67,9 +67,9 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
           </tbody>
         </table>
 
-        <div css={divider} />
+        <div className={divider} />
 
-        <table css={postOutlineContent}>
+        <table className={postOutlineContent}>
           <tbody>
             <tr>
               <th>실험 일시</th>
@@ -88,13 +88,13 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
             <tr>
               <th>소요 시간</th>
               <td>
-                <span css={participationCount}>{summary.count}회 참여</span>{' '}
+                <span className={participationCount}>{summary.count}회 참여</span>{' '}
                 {summary.timeRequired ? getDurationLabel(summary.timeRequired) : '본문 참고'}
               </td>
             </tr>
             <tr>
               <th>실험 장소</th>
-              <td css={textWrapRow}>
+              <td className={textWrapRow}>
                 <p>
                   {address.univName && address.region && address.area
                     ? `${getRegionLabel(address.region)} ${getAreaLabel(
@@ -107,7 +107,7 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
             </tr>
             <tr>
               <th>연구 책임</th>
-              <td css={textWrapRow}>
+              <td className={textWrapRow}>
                 <p>{summary.leadResearcher}</p>
               </td>
             </tr>
@@ -115,19 +115,18 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
         </table>
       </div>
 
-      <div css={ButtonContainer}>
+      <div className={buttonContainer}>
         {recruitStatus ? (
-          <button css={checkButton} onClick={() => setIsModalOpen(true)}>
+          <button className={checkButton()} onClick={() => setIsModalOpen(true)}>
             참여 방법 확인하기
           </button>
         ) : (
-          <button css={disabledCheckButton} disabled>
+          <button className={checkButton({ disabled: true })} disabled>
             모집이 완료 되었어요
           </button>
         )}
       </div>
 
-      {/* 참여 방법 안내 모달 */}
       <ParticipationGuideModal
         isOpen={isModalOpen}
         onOpenChange={setIsModalOpen}
@@ -137,4 +136,4 @@ const PostOutline = ({ postDetailData, applyMethodData }: PostOutlineProps) => {
   );
 };
 
-export default PostOutline;
+export default ExperimentPostOutline;

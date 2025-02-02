@@ -10,12 +10,13 @@ import {
   targetConditionLayout,
   targetGroupContainer,
   textStyle,
-} from './ApplyMethodSection.styles';
+  uploadFormSectionTitle,
+} from './ApplyMethodSection.css';
 import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-import { headingIcon, label } from '../UploadContainer/UploadContainer.styles';
+import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
@@ -46,15 +47,15 @@ const ApplyMethodSection = ({
   );
 
   return (
-    <div>
+    <div className={uploadSectionLayout}>
       {/* 실험 참여 방법 */}
-      <div css={applyMethodContainer}>
-        <h3>
-          <span css={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?{' '}
-          <span style={{ color: `${colors.textAlert}` }}>*</span>
+      <div className={applyMethodContainer}>
+        <h3 className={uploadFormSectionTitle}>
+          <span className={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?{' '}
+          <span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
-        <div css={applyMethodContentLayout}>
+        <div className={applyMethodContentLayout}>
           <Controller
             name="applyMethodInfo.content"
             control={control}
@@ -71,7 +72,7 @@ const ApplyMethodSection = ({
               />
             )}
           />
-          <div css={addContactInfoContainer}>
+          <div className={addContactInfoContainer}>
             {/* 링크 추가 */}
             <CheckboxWithIcon
               checked={addLink}
@@ -135,17 +136,17 @@ const ApplyMethodSection = ({
       </div>
 
       {/* 모집 조건 */}
-      <h3>
-        <span css={headingIcon}>4</span>어떤 사람들을 모집하나요?{' '}
-        <span style={{ color: `${colors.textAlert}` }}>*</span>
+      <h3 className={uploadFormSectionTitle}>
+        <span className={headingIcon}>4</span>어떤 사람들을 모집하나요?{' '}
+        <span style={{ color: colors.textAlert }}>*</span>
       </h3>
-      <div css={targetConditionLayout}>
-        <div css={targetGroupContainer}>
+      <div className={targetConditionLayout}>
+        <div className={targetGroupContainer}>
           {/* 나이 */}
           <div>
-            <p css={label}>나이</p>
-            <div css={(theme) => ageInputContainer(theme, ageError)}>
-              <span css={textStyle}>만</span>
+            <p className={label}>나이</p>
+            <div className={ageInputContainer({ isError: ageError })}>
+              <span className={textStyle}>만</span>
               <Controller
                 name="targetGroupInfo.startAge"
                 control={control}
@@ -153,7 +154,7 @@ const ApplyMethodSection = ({
                   <AgeForm {...field} id="startAge" placeholder="00" field={field} />
                 )}
               />
-              <span css={textStyle}>~</span>
+              <span className={textStyle}>~</span>
               <Controller
                 name="targetGroupInfo.endAge"
                 control={control}
@@ -161,31 +162,22 @@ const ApplyMethodSection = ({
                   <AgeForm {...field} id="endAge" placeholder="00" field={field} />
                 )}
               />
-              <span css={textStyle}>세</span>
+              <span className={textStyle}>세</span>
             </div>
           </div>
 
           {/* 성별 */}
           <div>
-            <p css={label}>성별</p>
+            <p className={label}>성별</p>
             <Controller
               name="targetGroupInfo.genderType"
               control={control}
               render={({ field, fieldState }) => (
                 <RadioButtonGroup<GenderType>
                   options={[
-                    {
-                      value: GenderType.MALE,
-                      label: '남성',
-                    },
-                    {
-                      value: GenderType.FEMALE,
-                      label: '여성',
-                    },
-                    {
-                      value: GenderType.ALL,
-                      label: '무관',
-                    },
+                    { value: GenderType.MALE, label: '남성' },
+                    { value: GenderType.FEMALE, label: '여성' },
+                    { value: GenderType.ALL, label: '무관' },
                   ]}
                   selectedValue={field.value}
                   onChange={(value) => field.onChange(value)}
@@ -197,7 +189,7 @@ const ApplyMethodSection = ({
         </div>
         {/* 기타 조건 */}
         <div>
-          <label css={label} htmlFor="targetGroupInfo.otherCondition">
+          <label className={label} htmlFor="targetGroupInfo.otherCondition">
             기타 조건
           </label>
           <div>
@@ -222,7 +214,7 @@ const ApplyMethodSection = ({
       </div>
 
       {/* 공고 알림 */}
-      <div css={alarmAgreeContainer}>
+      <div className={alarmAgreeContainer}>
         <Controller
           name="alarmAgree"
           control={control}

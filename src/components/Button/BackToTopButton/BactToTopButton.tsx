@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { backToTopButton } from './BackToTopButton.styles';
+import { backToTopButton } from './BackToTopButton.css';
 import Icon from '../../Icon';
 
 /**
@@ -28,7 +28,11 @@ const BackToTopButton = () => {
   if (!isVisible) return null;
 
   return (
-    <button css={backToTopButton} onClick={handleScrollToTop} aria-label="페이지 상단 이동 버튼">
+    <button
+      className={backToTopButton}
+      onClick={handleScrollToTop}
+      aria-label="페이지 상단 이동 버튼"
+    >
       <Icon icon="BackToTopGroup" />
     </button>
   );
