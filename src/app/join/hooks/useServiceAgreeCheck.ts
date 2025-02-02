@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ServiceAgreeCheck } from '../JoinPage.types';
 
 import { ROLE } from '@/constants/config';
+import useSessionStorage from '@/hooks/useSessionStorage';
 
-const useServiceAgreeCheck = (role: string = ROLE.researcher) => {
+const useServiceAgreeCheck = () => {
+  const role = useSessionStorage('role');
+
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState<ServiceAgreeCheck>({
     isTermOfService: false,
     isPrivacy: false,
     isAdvertise: false,
-    isRecommend: role === ROLE.participant ? false : undefined,
   });
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +32,12 @@ const useServiceAgreeCheck = (role: string = ROLE.researcher) => {
       [name]: e.target.checked,
     }));
   };
+
+  useEffect(() => {
+    if (role && role === ROLE.participant) {
+      setServiceAgreeCheck((prev) => ({ ...prev, isRecommend: false }));
+    }
+  }, [role]);
 
   return { serviceAgreeCheck, handleAllCheck, handleChangeCheck };
 };

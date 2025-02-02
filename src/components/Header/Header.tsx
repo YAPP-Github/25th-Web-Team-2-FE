@@ -14,11 +14,10 @@ import {
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
 
-import { useUserInfoQuery } from '@/app/home/hooks/useUserInfoQuery';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 
 const Header = () => {
-  const role = sessionStorage.getItem('role') || '';
-  const { data: myData } = useUserInfoQuery(role);
+  const { userInfo } = useUserInfo();
 
   return (
     <div className={headerLayout}>
@@ -30,9 +29,9 @@ const Header = () => {
           <button className={contactButton}>실험 공고 등록</button>
         </Link>
 
-        {myData ? (
+        {userInfo ? (
           <div className={buttonWrapper}>
-            <button>{myData.memberInfo.name}</button>
+            <button>{userInfo.memberInfo.name}</button>
             <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
           </div>
         ) : (

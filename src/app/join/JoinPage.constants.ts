@@ -37,3 +37,9 @@ export const JOIN_SUB_REGION = JOIN_REGION.reduce(
   },
   {},
 );
+
+export const STEP = {
+  email: 'email',
+  info: 'info',
+  success: 'success',
+} as const;

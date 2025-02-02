@@ -7,12 +7,12 @@ import {
   authTimerWrapper,
   sendAgainButton,
 } from './AuthCodeInput.styles';
-import EmailToast from '../../../EmailToast/EmailToast';
 import { univInputWrapper } from '../UnivAuthInput.styles';
 
+import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';
-import { ResearcherJoinParams } from '@/app/join/JoinPage.types';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const AUTH_CODE_VALID_LENGTH = 6;
 
@@ -27,7 +27,7 @@ const AuthCodeInput = ({
   handleVerifyEmail,
   handleSendUnivAuthCode,
 }: AuthCodeInputProps) => {
-  const { getValues } = useFormContext<ResearcherJoinParams>();
+  const { getValues } = useFormContext<ResearcherJoinSchemaType>();
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
 
   const [isToastOpen, setIsToastOpen] = useState(false);
