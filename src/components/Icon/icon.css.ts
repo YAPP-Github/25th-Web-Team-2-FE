@@ -13,6 +13,7 @@ export const iconContainer = recipe({
       0: { transform: 'rotate(0deg)' },
       [-90]: { transform: 'rotate(-90deg)' },
       90: { transform: 'rotate(90deg)' },
+      [-180]: { transform: 'rotate(-180deg)' },
       180: { transform: 'rotate(180deg)' },
       270: { transform: 'rotate(270deg)' },
     },

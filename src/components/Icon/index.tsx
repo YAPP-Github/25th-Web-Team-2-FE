@@ -15,7 +15,7 @@ interface IconProps extends CustomSVGProps {
   icon: keyof typeof icons;
   width?: number;
   height?: number;
-  rotate?: 0 | -90 | 90 | 180 | 270;
+  rotate?: 0 | -90 | 90 | -180 | 180 | 270;
   cursor?: Cursor;
   color?: string;
 }
