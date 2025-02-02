@@ -10,11 +10,8 @@ import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';
 
 const ExperimentPostContainer = () => {
-  //todo 이 후에 쿼리 파라미터 형식이든 or postId 타입 변경 요청이든 수정 예정
   const pathname = usePathname();
-  const pathPostId = pathname?.split('/').pop();
-
-  const postId = pathPostId ? Number(pathPostId) : NaN;
+  const postId = pathname?.split('/').pop() || '';
 
   /* 특정 공고 상세 조회 */
   const {
@@ -28,7 +25,7 @@ const ExperimentPostContainer = () => {
   const { data: applyMethodData } = useApplyMethodQuery({ postId });
 
   //todo 이후 화면 나오면 처리 (임시)
-  if (Number.isNaN(postId)) {
+  if (!postId) {
     return <div style={{ height: 'calc(100vh - 25rem)' }}>Invalid post ID</div>;
   }
 
@@ -36,6 +33,7 @@ const ExperimentPostContainer = () => {
     return <div style={{ height: 'calc(100vh - 25rem)' }}>Loading 🔄</div>;
   }
 
+  //todo 예외처리 예정
   if (isError) {
     return (
       <div style={{ height: 'calc(100vh - 25rem)' }}>

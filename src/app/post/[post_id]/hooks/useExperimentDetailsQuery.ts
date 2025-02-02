@@ -6,7 +6,7 @@ import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMeth
 import { API_URL } from '@/constants/url';
 
 interface UseExperimentDetailsQueryParams {
-  postId: number;
+  postId: string;
 }
 
 interface TargetGroup {
