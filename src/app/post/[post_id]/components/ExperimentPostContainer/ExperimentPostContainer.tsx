@@ -11,7 +11,7 @@ import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutlin
 
 const ExperimentPostContainer = () => {
   const pathname = usePathname();
-  const postId = String(pathname?.split('/').pop() || '');
+  const postId = pathname?.split('/').pop() || '';
 
   /* 특정 공고 상세 조회 */
   const {
