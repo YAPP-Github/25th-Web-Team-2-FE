@@ -1,6 +1,6 @@
 import { ServiceAgreeCheck } from '../../JoinPage.types';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
-import { termContainer } from './JoinCheckboxContainer.styles';
+import { termContainer } from './JoinCheckboxContainer.css';
 
 interface JoinCheckboxContainerProps {
   serviceAgreeCheck: ServiceAgreeCheck;
@@ -18,7 +18,7 @@ const JoinCheckboxContainer = ({
   const isAllCheck = isTermOfService && isPrivacy && isAdvertise && (isRecommend ?? true);
 
   return (
-    <div css={termContainer}>
+    <div className={termContainer}>
       <JoinCheckbox
         label="이용약관에 모두 동의합니다"
         isChecked={isAllCheck}

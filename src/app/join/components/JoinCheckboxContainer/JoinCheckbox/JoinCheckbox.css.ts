@@ -13,11 +13,7 @@ export const checkboxWrapper = style({
   display: 'flex',
   alignItems: 'center',
   gap: '0.8rem',
-  selectors: {
-    '&:span': {
-      userSelect: 'none',
-    },
-  },
+  userSelect: 'none',
 });
 
 export const allCheckWrapper = style({
