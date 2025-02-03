@@ -34,7 +34,6 @@ const useUploadImagesMutation = () => {
         }
 
         const uploadedFileUrl = data.preSignedUrl.split('?')[0];
-        console.log('✅ 업로드된 파일 URL:', uploadedFileUrl);
 
         return uploadedFileUrl;
       } catch (error) {

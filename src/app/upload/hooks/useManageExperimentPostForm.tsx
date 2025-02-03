@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { convertLabelToValue } from '../upload.utils';
+import { convertLabelToValue, convertToWebpUrl } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 
@@ -72,8 +72,8 @@ const useManageExperimentPostForm = ({
     if (selectedImages.length > 0) {
       uploadedImageUrls = await Promise.all(
         selectedImages.map(async (image) => {
-          const url = await uploadImageMutation(image);
-          return url;
+          const originalUrl = await uploadImageMutation(image);
+          return convertToWebpUrl(originalUrl); // WebP 경로로 변환
         }),
       );
     }

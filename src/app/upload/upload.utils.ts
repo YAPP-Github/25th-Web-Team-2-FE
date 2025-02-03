@@ -26,8 +26,16 @@ function initializeLabelValueMap() {
 
 initializeLabelValueMap();
 
-function convertLabelToValue(labelToConvert: string): string {
+// label -> value
+const convertLabelToValue = (labelToConvert: string): string => {
   return labelValueMap.get(labelToConvert) || labelToConvert;
-}
+};
 
-export { formatRange, convertLabelToValue };
+// 업로드된 이미지 경로 변경
+const convertToWebpUrl = (originalUrl: string) => {
+  return originalUrl
+    .replace('/images/', '/resized-images/') // 폴더 변경
+    .replace(/\.\w+$/, '.webp'); // 확장자 변경 (jpg, png → webp)
+};
+
+export { formatRange, convertLabelToValue, convertToWebpUrl };
