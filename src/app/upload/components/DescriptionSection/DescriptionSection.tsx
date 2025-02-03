@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import Image from 'next/image';
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, DragEvent } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import {
@@ -8,7 +9,6 @@ import {
   descriptionContentContainer,
   descriptionFormLayout,
   descriptionTextarea,
-  formMessage,
   photoContainer,
   photoGrid,
   photoLayout,
@@ -22,61 +22,57 @@ import Icon from '@/components/Icon';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
-type Photo = {
-  id: string;
-  src: string;
-  file: File;
-};
+interface DescriptionSectionProps {
+  selectedImages: File[];
+  setSelectedImages: (images: File[]) => void;
+}
 
-const DescriptionSection = () => {
+const MAX_PHOTOS = 3;
+
+const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSectionProps) => {
   const { control, formState } = useFormContext<UploadExperimentPostSchemaType>();
   const contentError = formState.errors.content;
-
-  const [photos, setPhotos] = useState<Photo[]>([]);
-  const MAX_PHOTOS = 3;
 
   const uploadPhotos = (e: ChangeEvent<HTMLInputElement>): void => {
     const files = e.target.files;
     if (files) {
-      const newPhotos = Array.from(files).map((file) => ({
-        id: URL.createObjectURL(file),
-        src: URL.createObjectURL(file),
-        file,
-      }));
+      const newPhotos = Array.from(files);
 
-      if (photos.length + newPhotos.length > MAX_PHOTOS) {
-        const allowedPhotos = newPhotos.slice(0, MAX_PHOTOS - photos.length);
-        setPhotos((prevPhotos) => [...prevPhotos, ...allowedPhotos]);
+      if (selectedImages.length + newPhotos.length > MAX_PHOTOS) {
+        const allowedPhotos = newPhotos.slice(0, MAX_PHOTOS - selectedImages.length);
+        setSelectedImages([...selectedImages, ...allowedPhotos]);
       } else {
-        setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
+        setSelectedImages([...selectedImages, ...newPhotos]);
       }
     }
   };
 
-  const deletePhoto = (id: string): void => {
-    setPhotos((prevPhotos) => prevPhotos.filter((photo) => photo.id !== id));
+  // 파일 삭제
+  const deletePhoto = (index: number): void => {
+    setSelectedImages(selectedImages.filter((_, i) => i !== index));
   };
 
-  const onDragStart = (e: React.DragEvent<HTMLDivElement>, index: number): void => {
+  // 드래그 앤 드랍을 위한 핸들러
+  const onDragStart = (e: DragEvent<HTMLDivElement>, index: number): void => {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('photoIndex', String(index));
   };
 
-  const onDragOver = (e: React.DragEvent<HTMLDivElement>): void => {
+  const onDragOver = (e: DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
   };
 
-  const onDrop = (e: React.DragEvent<HTMLDivElement>, targetIndex: number): void => {
+  const onDrop = (e: DragEvent<HTMLDivElement>, targetIndex: number): void => {
     e.preventDefault();
     const sourceIndex = Number(e.dataTransfer.getData('photoIndex'));
 
     if (sourceIndex === targetIndex) return;
 
-    const updatedPhotos = [...photos];
+    const updatedPhotos = [...selectedImages];
     const [movedPhoto] = updatedPhotos.splice(sourceIndex, 1);
     updatedPhotos.splice(targetIndex, 0, movedPhoto);
 
-    setPhotos(updatedPhotos);
+    setSelectedImages(updatedPhotos);
   };
 
   return (
@@ -110,31 +106,30 @@ const DescriptionSection = () => {
             name="content"
             control={control}
             render={({ field }) => (
-              <>
-                <textarea
-                  {...field}
-                  id="content"
-                  className={descriptionTextarea({
-                    photoGridHeight: photos.length > 0 ? 'withPhotos' : 'withoutPhotos',
-                  })}
-                  placeholder="본문을 입력해 주세요"
-                />
-              </>
+              <textarea
+                {...field}
+                id="content"
+                className={descriptionTextarea({
+                  photoGridHeight: selectedImages.length > 0 ? 'withPhotos' : 'withoutPhotos',
+                })}
+                placeholder="본문을 입력해 주세요"
+              />
             )}
           />
-          {photos.length > 0 && (
+
+          {selectedImages.length > 0 && (
             <div className={photoGrid}>
-              {photos.map((photo, index) => (
+              {selectedImages.map((photo, index) => (
                 <div
                   className={photoLayout}
-                  key={photo.id}
+                  key={index}
                   draggable
                   onDragStart={(e) => onDragStart(e, index)}
                   onDragOver={onDragOver}
                   onDrop={(e) => onDrop(e, index)}
                 >
                   <div className={photoContainer}>
-                    <button className={deleteButton} onClick={() => deletePhoto(photo.id)}>
+                    <button className={deleteButton} onClick={() => deletePhoto(index)}>
                       <Icon
                         icon="CloseRound"
                         width={20}
@@ -145,7 +140,7 @@ const DescriptionSection = () => {
                       />
                     </button>
                     <Image
-                      src={photo.src}
+                      src={URL.createObjectURL(photo)}
                       alt="업로드한 이미지 미리보기"
                       width={80}
                       height={80}
@@ -156,6 +151,7 @@ const DescriptionSection = () => {
               ))}
             </div>
           )}
+
           <div className={uploadImagesContainer}>
             <label htmlFor="photos" className={addImageContainer}>
               <Icon icon="ImageAdd" width={16} height={16} />
@@ -173,7 +169,6 @@ const DescriptionSection = () => {
           </div>
         </div>
       </div>
-      {!!contentError && <p className={formMessage}>{contentError.message}</p>}
     </div>
   );
 };
