@@ -14,7 +14,7 @@ import {
   modalOverlay,
   closeButton,
 } from './ExperimentPostDetailContent.css';
-import { formattedContentText } from '../../ExperimentPostPage.utils';
+import { formattedContentText, isValidImageUrl } from '../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 
 import Icon from '@/components/Icon';
@@ -39,7 +39,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
       {/* 이미지 컨테이너 */}
       {imageList.length > 0 && (
         <div className={imageContainer}>
-          {imageList.length === 1 ? (
+          {imageList.length === 1 && isValidImageUrl(imageList[0]) ? (
             <div className={singleImageWrapper}>
               <Image
                 src={imageList[0]}
@@ -54,7 +54,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
             </div>
           ) : (
             <div className={multiImageGrid}>
-              {imageList.map((src, index) => (
+              {imageList.filter(isValidImageUrl).map((src, index) => (
                 <div key={index} className={imageItem}>
                   <Image
                     src={src}
