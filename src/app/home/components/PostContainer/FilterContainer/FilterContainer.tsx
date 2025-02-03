@@ -1,4 +1,4 @@
-import { filterLayout } from './FilterContainer.styles';
+import { filterLayout } from './FilterContainer.css';
 import AreaFilter from '../AreaFilter/AreaFilter';
 import ContactTargetFilter from '../ContactTargetPopover/ContactTargetFilter';
 import ProgressMethodFilter from '../ProgressMethodFilter/ProgressMethodFilter';
@@ -9,7 +9,7 @@ interface FilterContainerProps {
 
 const FilterContainer = ({ handleFilterChange }: FilterContainerProps) => {
   return (
-    <div css={filterLayout}>
+    <div className={filterLayout}>
       <ProgressMethodFilter onChange={(value) => handleFilterChange('matchType', value)} />
       <ContactTargetFilter onChange={handleFilterChange} />
       <AreaFilter onChange={handleFilterChange} />
