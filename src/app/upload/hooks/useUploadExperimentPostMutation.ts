@@ -5,7 +5,7 @@ import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMeth
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';
 
-interface UseUploadExperimentPostMutationParams {
+export interface UseUploadExperimentPostMutationParams {
   startDate?: string | null;
   endDate?: string | null;
   matchType: MatchType;
@@ -46,7 +46,7 @@ interface UseUploadExperimentPostMutationParams {
   alarmAgree: boolean;
 }
 
-interface UploadedPostInfo {
+export interface UploadedPostInfo {
   experimentPostId: number;
   title: string;
   views: number;
@@ -58,7 +58,7 @@ interface UploadedPostInfo {
   };
 }
 
-interface UseUploadExperimentPostMutationResponse {
+export interface UseUploadExperimentPostMutationResponse {
   postInfo: UploadedPostInfo;
 }
 
