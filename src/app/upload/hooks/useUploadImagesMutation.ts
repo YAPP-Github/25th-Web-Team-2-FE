@@ -36,8 +36,7 @@ const useUploadImagesMutation = () => {
         const uploadedFileUrl = data.preSignedUrl.split('?')[0];
 
         return uploadedFileUrl;
-      } catch (error) {
-        console.error('❌ 이미지 업로드 실패:', error);
+      } catch {
         throw new Error('이미지 업로드 중 오류가 발생했습니다.');
       }
     },
