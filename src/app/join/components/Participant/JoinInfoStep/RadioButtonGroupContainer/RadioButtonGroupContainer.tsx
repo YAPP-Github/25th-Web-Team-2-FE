@@ -1,3 +1,5 @@
+'use client';
+
 import { Controller } from 'react-hook-form';
 
 import RadioButtonGroup from './RadioButtonGroup/RadioButtonGroup';
@@ -6,7 +8,7 @@ import {
   radioButtonGroupContainerLayout,
   requiredStar,
   tipWrapper,
-} from './RadioButtonGroupContainer.styles';
+} from './RadioButtonGroupContainer.css';
 
 interface RadioButtonGroupProps<T> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,10 +31,10 @@ const RadioButtonGroupContainer = <T extends string>({
   tip,
 }: RadioButtonGroupProps<T>) => {
   return (
-    <div css={radioButtonGroupContainerLayout}>
-      <div css={labelWrapper}>
+    <div className={radioButtonGroupContainerLayout}>
+      <div className={labelWrapper}>
         <span>{title}</span>
-        {required && <span css={requiredStar}>*</span>}
+        {required && <span className={requiredStar}>*</span>}
       </div>
 
       <Controller
@@ -51,7 +53,7 @@ const RadioButtonGroupContainer = <T extends string>({
       />
 
       {tip && (
-        <div css={tipWrapper}>
+        <div className={tipWrapper}>
           <span>{tip}</span>
         </div>
       )}
