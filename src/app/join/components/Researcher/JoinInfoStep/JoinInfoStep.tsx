@@ -1,9 +1,10 @@
+'use client';
+
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { joinButton } from './JoinInfoStep.styles';
-import { joinContentContainer, joinForm } from '../../../JoinPage.styles';
-import JoinInput from '../../JoinInput/JoinInput';
-
+import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import { joinButton } from '@/app/join/components/Participant/JoinInfoStep/JoinInfoStep.css';
+import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
@@ -15,13 +16,13 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
     control,
     formState: { errors },
   } = useFormContext<ResearcherJoinSchemaType>();
-  const values = useWatch({ name: ['name', 'univName', 'major'], control });
 
+  const values = useWatch({ name: ['name', 'univName', 'major'], control });
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
 
   return (
-    <section css={joinForm}>
-      <div css={joinContentContainer}>
+    <section className={joinForm}>
+      <div className={joinContentContainer}>
         <JoinInput<ResearcherJoinSchemaType>
           name="name"
           control={control}
@@ -53,7 +54,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
       <button
-        css={joinButton}
+        className={joinButton}
         onClick={handleSubmit}
         disabled={!(isAllFilled && Object.keys(errors).length === 0)}
       >
