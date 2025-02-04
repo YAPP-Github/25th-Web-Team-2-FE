@@ -1,9 +1,9 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { emptyLayout } from './NaverLoginPage.styles';
+import { emptyLayout } from './NaverLoginPage.css';
 import useNaverLoginMutation from '../hooks/useNaverLoginMutation';
 
 export default function NaverLoginPage() {
@@ -24,5 +24,5 @@ export default function NaverLoginPage() {
     }
   }, [code, stateParams, naverLogin]);
 
-  return <div css={emptyLayout}></div>;
+  return <div className={emptyLayout}></div>;
 }
