@@ -58,7 +58,7 @@ const ResearcherForm = () => {
           />
         </Step>
         <Step name={STEP.success}>
-          <JoinSuccessStep name={researcherMethods.getValues('name')} />
+          <JoinSuccessStep />
         </Step>
       </Funnel>
     </FormProvider>

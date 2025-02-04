@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import useFunnel from '../../hooks/useFunnel';
@@ -47,7 +47,9 @@ const ParticipantForm = () => {
     };
 
     joinParticipant(formattedData, {
-      onSuccess: () => setStep(STEP.success),
+      onSuccess: () => {
+        setStep(STEP.success);
+      },
     });
   };
 
@@ -70,7 +72,7 @@ const ParticipantForm = () => {
           />
         </Step>
         <Step name={STEP.success}>
-          <JoinSuccessStep name={participantMethods.getValues('name')} />
+          <JoinSuccessStep />
         </Step>
       </Funnel>
     </FormProvider>
