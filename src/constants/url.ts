@@ -12,6 +12,7 @@ export const API_URL = {
   uploadPost: '/v1/experiment-posts',
   viewExperimentDetails: (postId: string) => `/v1/experiment-posts/${postId}/details`,
   applyMethod: (postId: string) => `/v1/experiment-posts/${postId}/apply-method`,
+  uploadImage: '/v1/experiment-posts/image-upload-request',
 };
 
 export const MOCK_API_URL = {

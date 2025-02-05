@@ -7,7 +7,7 @@ import { fonts } from '@/styles/fonts.css';
 export const postOutlineLayout = style({
   minWidth: '34rem',
   maxWidth: '44rem',
-  height: 'auto',
+  height: 'min-content',
   maxHeight: '60rem',
   borderRadius: '1.2rem',
   backgroundColor: colors.field01,

@@ -53,8 +53,8 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     detailedAddress: z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' }),
     // 보상
     reward: z
-      .string({ message: '최소 3자 이상으로 입력해 주세요' })
-      .min(3, { message: '최소 3자 이상으로 입력해 주세요' }),
+      .string({ message: '최소 1자 이상으로 입력해 주세요' })
+      .min(1, { message: '최소 1자 이상으로 입력해 주세요' }),
 
     // 실험 제목
     title: z
@@ -64,7 +64,7 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     // 실험 본문
     content: z
       .string()
-      .min(200, '최소 200자 이상으로 입력해 주세요')
+      .min(10, '최소 10자 이상으로 입력해 주세요')
       .max(5000, '최대 5000자 이하로 입력해 주세요'),
 
     imageListInfo: z.object({
