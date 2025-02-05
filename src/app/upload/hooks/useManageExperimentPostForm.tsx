@@ -3,8 +3,9 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { convertLabelToValue } from '../upload.utils';
+import { convertLabelToValue, convertToWebpUrl } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
+import useUploadImagesMutation from './useUploadImagesMutation';
 
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
@@ -14,12 +15,14 @@ interface useUploadExperimentPostProps {
   addLink: boolean;
   addContact: boolean;
   setOpenToast: Dispatch<SetStateAction<boolean>>;
+  selectedImages: File[];
 }
 
 const useManageExperimentPostForm = ({
   addLink,
   addContact,
   setOpenToast,
+  selectedImages,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
 
@@ -59,24 +62,40 @@ const useManageExperimentPostForm = ({
     },
   });
 
+  const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
+    /* 이미지 등록 먼저 */
+    let uploadedImageUrls: string[] = [];
+
+    if (selectedImages.length > 0) {
+      uploadedImageUrls = await Promise.all(
+        selectedImages.map(async (image) => {
+          const originalUrl = await uploadImageMutation(image);
+          return convertToWebpUrl(originalUrl); // WebP 경로로 변환
+        }),
+      );
+    }
+
     const updatedData = {
       ...data,
       area: data.area ? convertLabelToValue(data.area) : undefined,
+      imageListInfo: {
+        images: uploadedImageUrls,
+      },
     };
 
-    try {
-      await uploadExperimentPost(updatedData, {
-        onSuccess: (response) => {
-          form.reset();
-          router.push(`/post/${response.postInfo.experimentPostId}`);
-        },
-      });
-    } catch {
-      setOpenToast(true);
-    }
+    /* 공고 등록 */
+    uploadExperimentPost(updatedData, {
+      onSuccess: (response) => {
+        form.reset();
+        router.push(`/post/${response.postInfo.experimentPostId}`);
+      },
+      onError: () => {
+        setOpenToast(true);
+      },
+    });
   };
 
   return {

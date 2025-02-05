@@ -7,7 +7,7 @@ export interface PostInfo {
   experimentPostId: number;
   title: string;
   views: number;
-  univName: string;
+  univName: string | null;
   reward: string;
   durationInfo: {
     startDate: string | null;

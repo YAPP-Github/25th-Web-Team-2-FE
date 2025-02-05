@@ -7,6 +7,14 @@ const nextConfig = {
   compiler: {
     emotion: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'dobby-dev-bucket.s3.ap-northeast-2.amazonaws.com',
+      },
+    ],
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       // next server build => ignore msw/browser

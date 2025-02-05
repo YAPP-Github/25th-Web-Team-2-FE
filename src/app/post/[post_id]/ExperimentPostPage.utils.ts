@@ -44,4 +44,17 @@ const getAreaLabel = (region: string, area: string): string => {
   return '';
 };
 
-export { formattedContentText, getGenderLabel, getDurationLabel, getRegionLabel, getAreaLabel };
+// 유효한 이미지 URL인지 확인
+// todo 임시 데이터가 존재할 동안만 유효성 확인 -> 임시 데이터 제거 후 유효성 검사 제거
+const isValidImageUrl = (url: string) => {
+  return typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://'));
+};
+
+export {
+  formattedContentText,
+  getGenderLabel,
+  getDurationLabel,
+  getRegionLabel,
+  getAreaLabel,
+  isValidImageUrl,
+};
