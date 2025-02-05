@@ -47,6 +47,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
                 width={588}
                 height={588}
                 style={{ objectFit: 'cover' }}
+                priority
               />
               <button className={maximizeIcon} onClick={() => setSelectedImage(imageList[0])}>
                 <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
@@ -62,6 +63,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
                     width={286}
                     height={286}
                     style={{ objectFit: 'cover' }}
+                    priority
                   />
                   <button className={maximizeIcon} onClick={() => setSelectedImage(src)}>
                     <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
