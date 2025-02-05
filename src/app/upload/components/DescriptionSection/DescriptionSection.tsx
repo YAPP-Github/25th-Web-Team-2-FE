@@ -52,15 +52,15 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
         setOpenToast(true);
         continue;
       }
+
+      if (selectedImages.length + newPhotos.length >= MAX_PHOTOS) {
+        break;
+      }
+
       newPhotos.push(file);
     }
 
-    if (selectedImages.length + newPhotos.length > MAX_PHOTOS) {
-      const allowedPhotos = newPhotos.slice(0, MAX_PHOTOS - selectedImages.length);
-      setSelectedImages([...selectedImages, ...allowedPhotos]);
-    } else {
-      setSelectedImages([...selectedImages, ...newPhotos]);
-    }
+    setSelectedImages([...selectedImages, ...newPhotos]);
   };
 
   // 파일 삭제
@@ -177,7 +177,7 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
               <input
                 type="file"
                 id="photos"
-                accept="image/png, image/jpeg"
+                accept="image/png, image/jpeg, image/jpg"
                 multiple
                 onChange={uploadPhotos}
                 style={{ display: 'none' }}
