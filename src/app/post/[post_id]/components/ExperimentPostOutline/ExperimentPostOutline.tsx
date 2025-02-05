@@ -18,6 +18,7 @@ import {
   getDurationLabel,
   getRegionLabel,
   getAreaLabel,
+  getMatchTypeText,
 } from '../../ExperimentPostPage.utils';
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
@@ -83,7 +84,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
             </tr>
             <tr>
               <th>진행 방식</th>
-              <td>대면</td>
+              <td>{getMatchTypeText(summary.matchType)}</td>
             </tr>
             <tr>
               <th>소요 시간</th>
