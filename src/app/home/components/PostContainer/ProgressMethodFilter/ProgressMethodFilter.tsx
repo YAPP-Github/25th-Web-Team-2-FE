@@ -16,8 +16,8 @@ interface FilterOption {
 
 const options: FilterOption[] = [
   { label: '전체', value: 'ALL' },
-  { label: '대면', value: 'ONLINE' },
-  { label: '비대면', value: 'OFFLINE' },
+  { label: '대면', value: 'OFFLINE' },
+  { label: '비대면', value: 'ONLINE' },
 ];
 
 interface ProgressMethodFilterProps {
@@ -63,10 +63,10 @@ const ProgressMethodFilter = ({ onChange }: ProgressMethodFilterProps) => {
             <Select.Item value="ALL" className={selectItem}>
               <Select.ItemText>전체</Select.ItemText>
             </Select.Item>
-            <Select.Item value="ONLINE" className={selectItem}>
+            <Select.Item value="OFFLINE" className={selectItem}>
               <Select.ItemText>대면</Select.ItemText>
             </Select.Item>
-            <Select.Item value="OFFLINE" className={selectItem}>
+            <Select.Item value="ONLINE" className={selectItem}>
               <Select.ItemText>비대면</Select.ItemText>
             </Select.Item>
           </Select.Group>
