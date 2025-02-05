@@ -3,6 +3,14 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
+export const joinPageLayout = style({
+  display: 'flex',
+  backgroundColor: colors.field01,
+  width: '56rem',
+  margin: '0 auto',
+  minHeight: 'calc(100vh - 12.2rem)',
+});
+
 export const joinLayout = style({
   display: 'flex',
   flexDirection: 'column',
