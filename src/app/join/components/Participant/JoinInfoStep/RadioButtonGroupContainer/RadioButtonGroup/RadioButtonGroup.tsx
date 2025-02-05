@@ -1,9 +1,11 @@
+'use client';
+
 import {
   customRadioGroup,
   customRadioButton,
   activeRadioButton,
   errorRadioButton,
-} from './RadioButtonGroup.styles';
+} from './RadioButtonGroup.css';
 
 interface RadioButtonGroupProps<T> {
   options: { value: T; label: string }[];
@@ -19,16 +21,16 @@ const RadioButtonGroup = <T extends string>({
   isError,
 }: RadioButtonGroupProps<T>) => {
   return (
-    <div css={customRadioGroup}>
+    <div className={customRadioGroup}>
       {options.map((option) => (
         <button
           key={option.value}
           type="button"
-          css={[
-            customRadioButton,
-            selectedValue === option.value && activeRadioButton,
-            isError && errorRadioButton,
-          ]}
+          className={`
+            ${customRadioButton}
+            ${selectedValue === option.value ? activeRadioButton : ''}
+            ${isError ? errorRadioButton : ''}
+          `}
           onClick={() => onChange(option.value)}
         >
           {option.label}

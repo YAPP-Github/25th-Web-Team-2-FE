@@ -11,7 +11,7 @@ import {
   postContainerLayout,
   postContainerTitle,
   totalPostCount,
-} from './PostContainer.styles';
+} from './PostContainer.css';
 import { filterParticipantInfo } from '../../home.utils';
 import useUserInfo from '../../hooks/useUserInfo';
 
@@ -63,9 +63,9 @@ const PostContainer = () => {
   }, [participantInfo]);
 
   return (
-    <div css={postContainerLayout}>
-      <h2 css={postContainerTitle}>공고를 확인해 보세요</h2>
-      <div css={filterWrapper}>
+    <div className={postContainerLayout}>
+      <h2 className={postContainerTitle}>공고를 확인해 보세요</h2>
+      <div className={filterWrapper}>
         <FilterContainer handleFilterChange={handleFilterChange} />
         <JoinCheckbox
           label="모집 중인 공고만 보기"
@@ -74,8 +74,8 @@ const PostContainer = () => {
           isArrow={false}
         />
       </div>
-      <div css={postCardContainer}>
-        <span css={totalPostCount}>총 {postListData?.content.length}개</span>
+      <div className={postCardContainer}>
+        <span className={totalPostCount}>총 {postListData?.content.length}개</span>
         <PostCardList postList={postListData?.content} />
       </div>
     </div>

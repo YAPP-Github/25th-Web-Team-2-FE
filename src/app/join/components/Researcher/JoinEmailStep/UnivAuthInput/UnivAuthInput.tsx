@@ -1,16 +1,18 @@
+'use client';
+
 import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import AuthCodeInput from './AuthCodeInput/AuthCodeInput';
 import {
-  editButton,
-  errorMessage,
-  inputContainer,
+  univInputWrapper,
   required,
   univAuthButton,
-  univInputWrapper,
-} from './UnivAuthInput.styles';
+  editButton,
+  errorMessage,
+} from './UnivAuthInput.css';
 import EmailToast from '../../../EmailToast/EmailToast';
+import { inputContainer, inputLabel, joinInput } from '../../../JoinInput/JoinInput.css';
 
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
@@ -24,7 +26,12 @@ interface UnivAuthInputProps {
 const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
-  const { mutate: sendEmail, error: sendError } = useSendUnivAuthCodeMutation();
+  const {
+    mutate: sendEmail,
+    error: sendError,
+    isPending: isLoadingSend,
+  } = useSendUnivAuthCodeMutation();
+
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
 
@@ -52,39 +59,39 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
   };
 
   return (
-    <div css={inputContainer}>
-      <label>
+    <div className={inputContainer}>
+      <label className={inputLabel}>
         <span>학교 메일 인증</span>
-        <span css={required}>*</span>
+        <span className={required}>*</span>
       </label>
 
       <Controller
         name="univEmail"
         control={control}
-        render={({ field, fieldState }) => {
-          return (
-            <>
-              <div css={univInputWrapper}>
-                <input
-                  {...field}
-                  placeholder="학교 메일 입력"
-                  aria-invalid={fieldState.invalid ? true : false}
-                  disabled={isEmailSent || isEmailVerified}
-                />
-                <button
-                  type="button"
-                  css={[univAuthButton, isEmailSent && editButton]}
-                  disabled={(!isEmailSent && !field.value) || isEmailVerified}
-                  onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
-                >
-                  {isEmailSent ? '수정' : '인증번호 전송'}
-                </button>
-              </div>
-              {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
-              {sendError && <span css={errorMessage}>{sendError.message}</span>}
-            </>
-          );
-        }}
+        render={({ field, fieldState }) => (
+          <>
+            <div className={univInputWrapper}>
+              <input
+                {...field}
+                style={{ width: '100%' }}
+                className={joinInput}
+                placeholder="학교 메일 입력"
+                aria-invalid={fieldState.invalid ? true : false}
+                disabled={isEmailSent || isEmailVerified}
+              />
+              <button
+                type="button"
+                className={`${univAuthButton} ${isEmailSent ? editButton : ''}`}
+                disabled={(!isEmailSent && !field.value) || isEmailVerified || isLoadingSend}
+                onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
+              >
+                {isLoadingSend ? '전송 중...' : isEmailSent ? '수정' : '인증번호 전송'}
+              </button>
+            </div>
+            {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
+            {sendError && <span className={errorMessage}>{sendError.message}</span>}
+          </>
+        )}
       />
 
       {isEmailSent && (

@@ -1,13 +1,15 @@
+'use client';
+
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { joinContentContainer, nextButton } from './JoinEmailStep.styles';
+import { nextButton } from './JoinEmailStep.css';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../JoinInput/JoinInput';
 
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
-import { joinForm } from '@/app/join/JoinPage.styles';
+import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinEmailStepProps {
@@ -28,7 +30,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
 
   const handleNextStep = async () => {
     const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
-
     if (isValid) {
       onNext();
     }
@@ -37,8 +38,8 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const allValid =
     oauthEmail &&
     univEmail &&
-    Boolean(!errors.contactEmail) &&
-    Boolean(!errors.univEmail) &&
+    !errors.contactEmail &&
+    !errors.univEmail &&
     isEmailVerified &&
     serviceAgreeCheck.isTermOfService &&
     serviceAgreeCheck.isPrivacy;
@@ -48,8 +49,8 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   };
 
   return (
-    <section css={joinForm}>
-      <div css={joinContentContainer}>
+    <section className={joinForm}>
+      <div className={joinContentContainer}>
         <JoinInput<ResearcherJoinSchemaType>
           name="oauthEmail"
           control={control}
@@ -73,7 +74,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           handleChange={handleChangeCheck}
         />
       </div>
-      <button css={nextButton} onClick={handleNextStep} disabled={!allValid}>
+      <button className={nextButton} onClick={handleNextStep} disabled={!allValid}>
         다음
       </button>
     </section>

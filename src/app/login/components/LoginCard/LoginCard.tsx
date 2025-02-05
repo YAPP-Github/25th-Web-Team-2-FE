@@ -1,3 +1,6 @@
+'use client';
+
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -7,8 +10,8 @@ import {
   cardTitleContainer,
   loginButton,
   loginCardLayout,
-} from './LoginCard.styles';
-import { descriptionWrapper } from '../LoginPage.styles';
+} from './LoginCard.css';
+import { descriptionWrapper } from '../../LoginPage.css';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
@@ -40,19 +43,20 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
   };
 
   return (
-    <div css={loginCardLayout}>
-      <div css={cardTitleContainer}>
+    <div className={loginCardLayout}>
+      <div className={cardTitleContainer}>
         <div
-          css={badge}
-          style={{
-            color: role === '연구자' ? theme.colors.secondaryPink : theme.colors.primaryMint,
-            backgroundColor:
+          className={badge}
+          style={assignInlineVars({
+            '--badge-color':
+              role === '연구자' ? theme.colors.secondaryPink : theme.colors.primaryMint,
+            '--badge-bg':
               role === '연구자' ? theme.colors.secondaryTinted : theme.colors.primaryTinted,
-          }}
+          })}
         >
           {role}
         </div>
-        <div css={descriptionWrapper}>
+        <div className={descriptionWrapper}>
           {description.map((text, idx) => (
             <span key={idx}>
               {text}
@@ -61,12 +65,12 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
           ))}
         </div>
       </div>
-      <div css={buttonContainer}>
-        <button css={loginButton} onClick={goToLoginNaver}>
+      <div className={buttonContainer}>
+        <button className={loginButton} onClick={goToLoginNaver}>
           <Image src={Naver} alt="네이버" width={24} height={24} />
           <span>네이버 계정으로 로그인</span>
         </button>
-        <button css={loginButton} onClick={goToLoginGoogle}>
+        <button className={loginButton} onClick={goToLoginGoogle}>
           <Image src={Google} alt="구글" width={24} height={24} />
           <span>구글 계정으로 로그인</span>
         </button>

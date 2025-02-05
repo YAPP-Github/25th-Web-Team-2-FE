@@ -1,11 +1,12 @@
+'use client';
+
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { nextButton } from './JoinEmailStep.styles';
 import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../JoinInput/JoinInput';
 
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.styles';
+import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinEmailStepProps {
@@ -18,27 +19,27 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
     trigger,
     formState: { errors },
   } = useFormContext<ParticipantJoinSchemaType>();
+
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
   const contactEmail = useWatch({ name: 'contactEmail', control });
 
   const allValid =
     contactEmail &&
-    Boolean(!errors.contactEmail) &&
+    !errors.contactEmail &&
     serviceAgreeCheck.isTermOfService &&
     serviceAgreeCheck.isPrivacy;
 
   const handleNextStep = async () => {
     const isValid = await trigger(['oauthEmail', 'contactEmail']);
-
     if (isValid) {
       onNext();
     }
   };
 
   return (
-    <section css={joinForm}>
-      <div css={joinContentContainer}>
+    <section className={joinForm}>
+      <div className={joinContentContainer}>
         <JoinInput<ParticipantJoinSchemaType>
           name="oauthEmail"
           control={control}
@@ -61,7 +62,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           handleChange={handleChangeCheck}
         />
       </div>
-      <button css={nextButton} onClick={handleNextStep} disabled={!allValid}>
+      <button className={nextButton} onClick={handleNextStep} disabled={!allValid}>
         다음
       </button>
     </section>

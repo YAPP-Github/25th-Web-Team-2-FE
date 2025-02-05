@@ -1,24 +1,27 @@
 'use client';
 
 import * as Popover from '@radix-ui/react-popover';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { ChangeEvent, useState } from 'react';
 
 import {
-  ageInputContainer,
-  ageSelectWrapper,
-  buttonGroup,
-  footerButtonContainer,
   genderSelectWrapper,
-  label,
-  labelWrapper,
-  popoverContent,
+  ageSelectWrapper,
   popoverTrigger,
+  popoverContent,
+  labelWrapper,
+  label,
+  ageInputContainer,
+  footerButtonContainer,
   resetButton,
   saveButton,
-} from './ContactTargetFilter.styles';
+  ageInput,
+  genderButton,
+  genderButtonGroup,
+} from './ContactTargetFilter.css';
 
 import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 const isEqualByKeys = (
   obj1: Record<string, string>,
@@ -81,44 +84,48 @@ const ContactTargetFilter = ({ onChange }: ContactTargetFilterProps) => {
   return (
     <Popover.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
       <Popover.Trigger
-        css={popoverTrigger}
-        style={{
-          color: isSelected ? theme.colors.text01 : theme.colors.text06,
-          backgroundColor: isSelected ? theme.colors.field09 : theme.colors.field01,
-        }}
+        className={popoverTrigger}
+        style={assignInlineVars({
+          '--popover-trigger-color': isSelected ? colors.text01 : colors.text06,
+          '--popover-trigger-bg': isSelected ? colors.field09 : colors.field01,
+        })}
       >
         <span>{isSelected ? `${age}세 ${gender.label}` : '모집 대상'}</span>
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content css={popoverContent}>
-          <div css={genderSelectWrapper}>
-            <span css={label}>성별</span>
-            <div css={buttonGroup}>
-              {GENDER.map((gender) => (
+        <Popover.Content className={popoverContent}>
+          <div className={genderSelectWrapper}>
+            <span className={label}>성별</span>
+            <div className={genderButtonGroup}>
+              {GENDER.map((g) => (
                 <button
-                  key={gender.value}
-                  className={gender === filteredGender ? 'active' : ''}
-                  onClick={() => setFilteredGender(gender as Gender)}
+                  key={g.value}
+                  className={`${genderButton} ${g === filteredGender ? 'active' : ''}`}
+                  onClick={() => setFilteredGender(g as Gender)}
                 >
-                  {gender.label}
+                  {g.label}
                 </button>
               ))}
             </div>
           </div>
-          <div css={ageSelectWrapper}>
-            <div css={labelWrapper}>
-              <span css={label}>나이</span>
+          <div className={ageSelectWrapper}>
+            <div className={labelWrapper}>
+              <span className={label}>나이</span>
             </div>
-            <div css={ageInputContainer}>
-              <input onChange={handleChangeFilteredAge} placeholder="만 나이 입력" />
+            <div className={ageInputContainer}>
+              <input
+                className={ageInput}
+                onChange={handleChangeFilteredAge}
+                placeholder="만 나이 입력"
+              />
             </div>
           </div>
-          <div css={footerButtonContainer}>
-            <button onClick={handleReset} css={resetButton}>
+          <div className={footerButtonContainer}>
+            <button onClick={handleReset} className={resetButton}>
               초기화
             </button>
-            <button onClick={handleSave} css={saveButton}>
+            <button onClick={handleSave} className={saveButton}>
               저장
             </button>
           </div>

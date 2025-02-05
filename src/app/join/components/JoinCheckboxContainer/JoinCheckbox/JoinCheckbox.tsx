@@ -1,12 +1,13 @@
 import {
-  allCheckWrapper,
-  checkbox,
   checkboxLayout,
   checkboxWrapper,
-  labelWrapper,
+  allCheckWrapper,
+  checkbox,
   requiredCheckboxText,
-} from './JoinCheckbox.styles';
-import { tipAlert, tipWrapper } from '../../JoinInput/JoinInput.styles';
+  labelWrapper,
+  tipWrapper,
+  tipAlert,
+} from './JoinCheckbox.css';
 
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
@@ -32,27 +33,26 @@ const JoinCheckbox = ({
   isAlert,
 }: JoinCheckboxProps) => {
   return (
-    <div css={[checkboxLayout, isAllCheck && allCheckWrapper]}>
-      <label css={checkboxWrapper}>
-        <input css={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
+    <div className={`${checkboxLayout} ${isAllCheck ? allCheckWrapper : ''}`}>
+      <label className={checkboxWrapper}>
+        <input className={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
         {isChecked ? (
           <Icon icon="CheckSquareFill" color={theme.colors.primaryMint} />
         ) : (
           <Icon icon="CheckSquareEmpty" />
         )}
         <div>
-          <div css={labelWrapper}>
-            {isRequired && <span css={requiredCheckboxText}>[필수]</span>}
+          <div className={labelWrapper}>
+            {isRequired && <span className={requiredCheckboxText}>[필수]</span>}
             <span>{label}</span>
           </div>
           {isAlert && (
-            <div css={tipWrapper}>
-              <span css={tipAlert}>* 내가 참여할 수 있는 실험 알림을 보내드려요</span>
+            <div className={tipWrapper}>
+              <span className={tipAlert}>* 내가 참여할 수 있는 실험 알림을 보내드려요</span>
             </div>
           )}
         </div>
       </label>
-
       {isArrow && <Icon icon="Chevron" width={20} height={20} />}
     </div>
   );

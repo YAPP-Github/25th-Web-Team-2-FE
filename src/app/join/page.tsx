@@ -1,5 +1,6 @@
 'use client';
 
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 
 import ParticipantForm from './components/Participant/ParticipantForm';
@@ -13,7 +14,7 @@ import {
   progressBarContainer,
   progressBarFill,
   titleContainer,
-} from './JoinPage.styles';
+} from './JoinPage.css';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
@@ -26,16 +27,31 @@ export default function JoinPage() {
   // TODO: 추후 스켈레톤 처리
   if (!role) return null;
 
+  if (step === STEP.success) {
+    return (
+      <section className={joinLayout}>
+        <div className={contentContainer}>
+          {role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section css={joinLayout}>
+    <section className={joinLayout}>
       <Image src={Logo} alt="로고" width={80} height={28} />
-      <div css={contentContainer}>
-        <div css={titleContainer}>
-          <h2 css={joinTitle}>
+      <div className={contentContainer}>
+        <div className={titleContainer}>
+          <h2 className={joinTitle}>
             {role === ROLE.researcher ? '연구자 회원가입' : '참여자 회원가입'}
           </h2>
-          <div css={progressBarContainer}>
-            <div css={progressBarFill} style={{ width: step === STEP.email ? '50%' : '100%' }} />
+          <div className={progressBarContainer}>
+            <div
+              className={progressBarFill}
+              style={assignInlineVars({
+                '--progress-width': step === STEP.email ? '50%' : '100%',
+              })}
+            />
           </div>
         </div>
         {role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}

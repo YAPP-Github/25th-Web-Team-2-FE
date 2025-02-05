@@ -1,37 +1,36 @@
 'use client';
 
 import * as Popover from '@radix-ui/react-popover';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
 import {
-  areaButton,
-  areaCount,
+  triggerWrapper,
+  regionContentContainer,
+  contentWrapper,
   areaListContainer,
   areaName,
-  checkbox,
-  contentWrapper,
-  footerButtonContainer,
-  footerContainer,
-  placeholderArea,
-  regionContentContainer,
-  resetButton,
-  saveButton,
-  selectedAreaButton,
   selectedAreaName,
-  selectedSubAreaLabel,
-  subAreaInfo,
-  subAreaItem,
-  subAreaListContainer,
-  triggerWrapper,
+  areaCount,
+  areaButtonRecipe,
   verticalLine,
-} from './AreaFilter.styles';
+  subAreaListContainer,
+  subAreaItem,
+  selectedSubAreaLabel,
+  checkbox,
+  subAreaInfo,
+  placeholderArea,
+  footerContainer,
+  footerButtonContainer,
+  buttonRecipe,
+} from './AreaFilter.css';
 
 import { areaMapper, subAreaMapper } from '@/app/home/home.constants';
 import { Area } from '@/app/home/home.types';
 import useFilterAreaQuery from '@/app/home/hooks/useFilterAreaQuery';
 import useFilterSubAreaQuery from '@/app/home/hooks/useFilterSubAreaQuery';
 import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 interface AreaFilterProps {
   onChange: (key: string, value: string | number) => void;
@@ -68,13 +67,13 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
   const [isSelected, setIsSelected] = useState(false);
 
   return (
-    <Popover.Root open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger
-        css={triggerWrapper}
-        style={{
-          color: isSelected ? theme.colors.text01 : theme.colors.text06,
-          backgroundColor: isSelected ? theme.colors.field09 : theme.colors.field01,
-        }}
+        className={triggerWrapper}
+        style={assignInlineVars({
+          '--trigger-color': isSelected ? colors.text01 : colors.text06,
+          '--trigger-bg': isSelected ? colors.field09 : colors.field01,
+        })}
       >
         <span>
           {isSelected
@@ -86,49 +85,55 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content css={regionContentContainer}>
-          <div css={contentWrapper}>
-            <div css={areaListContainer}>
+        <Popover.Content className={regionContentContainer}>
+          <div className={contentWrapper}>
+            <div className={areaListContainer}>
               <button
-                css={[areaButton, selectedArea === 'ALL' && selectedAreaButton]}
+                className={areaButtonRecipe({ selected: selectedArea === 'ALL' })}
                 onClick={() => handleAreaClick('ALL')}
               >
-                <span css={[areaName, selectedArea === 'ALL' && selectedAreaName]}>
+                <span className={`${areaName} ${selectedArea === 'ALL' && selectedAreaName}`}>
                   {areaMapper['ALL']}
                 </span>
-                <span css={areaCount}>{postArea?.reduce((acc, cur) => acc + cur.count, 0)}</span>
+                <span className={areaCount}>
+                  {postArea?.reduce((acc, cur) => acc + cur.count, 0)}
+                </span>
               </button>
-
               {postArea?.map((area, idx) => (
                 <button
                   key={idx}
-                  css={[areaButton, area.name === selectedArea && selectedAreaButton]}
+                  className={areaButtonRecipe({ selected: area.name === selectedArea })}
                   onClick={() => handleAreaClick(area.name)}
                 >
-                  <span css={[areaName, area.name === selectedArea && selectedAreaName]}>
+                  <span className={`${areaName} ${area.name === selectedArea && selectedAreaName}`}>
                     {areaMapper[area.name]}
                   </span>
-                  <span css={areaCount}>{area.count}</span>
+                  <span className={areaCount}>{area.count}</span>
                 </button>
               ))}
             </div>
-            <span css={verticalLine} />
-            <div css={subAreaListContainer}>
+            <span className={verticalLine} />
+            <div className={subAreaListContainer}>
               {selectedArea ? (
                 postSubArea?.map((subArea, idx) => (
                   <label
                     key={idx}
-                    css={[subAreaItem, checkedSubAreas[subArea.name] && selectedSubAreaLabel]}
+                    className={`${subAreaItem} 
+                      ${checkedSubAreas[subArea.name] && selectedSubAreaLabel}`}
                   >
-                    <div css={subAreaInfo}>
-                      <span css={[areaName, checkedSubAreas[subArea.name] && selectedAreaName]}>
+                    <div className={subAreaInfo}>
+                      <span
+                        className={`${areaName} ${
+                          checkedSubAreas[subArea.name] && selectedAreaName
+                        }`}
+                      >
                         {subAreaMapper[subArea.name]}
                       </span>
-                      <span css={areaCount}>{subArea.count}</span>
+                      <span className={areaCount}>{subArea.count}</span>
                     </div>
                     <input
                       type="checkbox"
-                      css={checkbox}
+                      className={checkbox}
                       checked={!!checkedSubAreas[subArea.name]}
                       onChange={() => handleSubAreaCheck(subArea.name)}
                     />
@@ -137,7 +142,7 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
                         icon="CheckSquareFill"
                         width={20}
                         height={20}
-                        color={theme.colors.primaryMint}
+                        color={colors.primaryMint}
                       />
                     ) : (
                       <Icon icon="CheckSquareEmpty" width={20} height={20} />
@@ -145,16 +150,16 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
                   </label>
                 ))
               ) : (
-                <div css={placeholderArea}>
+                <div className={placeholderArea}>
                   <span>지역을 먼저 선택해 주세요</span>
                 </div>
               )}
             </div>
           </div>
-          <div css={footerContainer}>
-            <div css={footerButtonContainer}>
+          <div className={footerContainer}>
+            <div className={footerButtonContainer}>
               <button
-                css={resetButton}
+                className={buttonRecipe({ type: 'reset' })}
                 onClick={() => {
                   setSelectedArea('');
                   setCheckedSubAreas({});
@@ -162,7 +167,7 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
               >
                 초기화
               </button>
-              <button onClick={handleClickSave} css={saveButton}>
+              <button onClick={handleClickSave} className={buttonRecipe({ type: 'save' })}>
                 저장
               </button>
             </div>

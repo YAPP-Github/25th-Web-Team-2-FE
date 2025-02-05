@@ -1,6 +1,8 @@
+'use client';
+
 import * as Toast from '@radix-ui/react-toast';
 
-import { toastLayout, toastTitle, toastViewport } from './EmailToast.styles';
+import { toastLayout, toastTitle, toastViewport } from './EmailToast.css';
 
 import Icon from '@/components/Icon';
 import theme from '@/styles/theme';
@@ -15,17 +17,17 @@ const EmailToast = ({ title, isToastOpen, setIsToastOpen }: EmailToastProps) => 
   return (
     <Toast.Provider swipeDirection="up">
       <Toast.Root
-        css={toastLayout}
+        className={toastLayout}
         open={isToastOpen}
         onOpenChange={setIsToastOpen}
         duration={1500}
       >
-        <Toast.Title css={toastTitle}>
+        <Toast.Title className={toastTitle}>
           <Icon icon="CheckRound" color={theme.colors.primaryMint} width={24} height={24} />
           <p>{title}</p>
         </Toast.Title>
       </Toast.Root>
-      <Toast.Viewport css={toastViewport} />
+      <Toast.Viewport className={toastViewport} />
     </Toast.Provider>
   );
 };

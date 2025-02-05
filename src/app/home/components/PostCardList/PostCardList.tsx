@@ -1,6 +1,6 @@
-import { postCardListLayout } from './PostCardList.styles';
 import PostCard from '../PostCard/PostCard';
 import EmptyPostCard from './EmptyPostCard/EmptyPostCard';
+import { postCardListLayout } from './PostCardList.css';
 
 import { Post } from '@/types/post';
 
@@ -18,7 +18,7 @@ const PostCardList = ({ postList }: PostCardListProps) => {
   }
 
   return (
-    <ul css={postCardListLayout}>
+    <ul className={postCardListLayout}>
       {postList.map((post) => (
         <PostCard key={post.postInfo.experimentPostId} post={post} />
       ))}

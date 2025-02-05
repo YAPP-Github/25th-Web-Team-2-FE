@@ -1,16 +1,20 @@
+'use client';
+
 import { useRef, useState } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
-  errorMessage,
   inputContainer,
   inputResetButton,
-  inputWrapper,
   requiredStar,
+  errorMessage,
+  tipWrapper,
   textCount,
   tipAlert,
-  tipWrapper,
-} from './JoinInput.styles';
+  joinInput,
+  inputWrapper,
+  inputLabel,
+} from './JoinInput.css';
 
 import Icon from '@/components/Icon';
 
@@ -55,7 +59,6 @@ const JoinInput = <T extends FieldValues>({
     if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
       return;
     }
-
     onBlur();
     setIsFocused(false);
   };
@@ -67,11 +70,11 @@ const JoinInput = <T extends FieldValues>({
   };
 
   return (
-    <div css={inputContainer}>
+    <div className={inputContainer}>
       {label && (
-        <label>
+        <label className={inputLabel}>
           <span>{label}</span>
-          {required && <span css={requiredStar}>*</span>}
+          {required && <span className={requiredStar}>*</span>}
         </label>
       )}
       <Controller
@@ -81,7 +84,7 @@ const JoinInput = <T extends FieldValues>({
         defaultValue={value}
         render={({ field, fieldState }) => (
           <>
-            <div css={inputWrapper}>
+            <div className={inputWrapper}>
               {type === 'input' ? (
                 <input
                   {...field}
@@ -91,6 +94,7 @@ const JoinInput = <T extends FieldValues>({
                   maxLength={maxLength}
                   aria-invalid={fieldState.invalid ? true : false}
                   style={{ width: '100%' }}
+                  className={joinInput}
                   onFocus={() => setIsFocused(true)}
                   onBlur={(e) => handleBlur(e, field.onBlur)}
                 />
@@ -104,12 +108,13 @@ const JoinInput = <T extends FieldValues>({
                   rows={3}
                   maxLength={maxLength ?? 0}
                   style={{ width: '100%' }}
+                  className={joinInput}
                   onFocus={() => setIsFocused(true)}
                   onBlur={(e) => handleBlur(e, field.onBlur)}
                 />
               )}
               {isFocused && field.value && !disabled && (
-                <button css={inputResetButton} ref={resetButtonRef}>
+                <button className={inputResetButton} ref={resetButtonRef}>
                   <Icon
                     icon="CloseRound"
                     width={22}
@@ -120,15 +125,15 @@ const JoinInput = <T extends FieldValues>({
                 </button>
               )}
             </div>
-            {fieldState.error && <span css={errorMessage}>{fieldState.error.message}</span>}
+            {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
             {type === 'textarea' && (
-              <span css={textCount}>
+              <span className={textCount}>
                 {field.value?.length || 0}/{maxLength}
               </span>
             )}
-            {tip && Boolean(!fieldState.error) && (
-              <div css={tipWrapper}>
-                {isTip && <span css={tipAlert}>Tip</span>}
+            {tip && !fieldState.error && (
+              <div className={tipWrapper}>
+                {isTip && <span className={tipAlert}>Tip</span>}
                 <span>{tip}</span>
               </div>
             )}

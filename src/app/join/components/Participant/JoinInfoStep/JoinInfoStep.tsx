@@ -1,21 +1,22 @@
+'use client';
+
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import AreaTooltip from './AreaTooltip/AreaTooltip';
 import {
-  filterTitle,
-  filterTitleWrapper,
-  joinAreaFilterContainer,
-  joinAreaFilterWrapper,
   joinButton,
-  joinContentContainer,
+  joinAreaFilterContainer,
+  filterTitleWrapper,
+  filterTitle,
   requiredStar,
-} from './JoinInfoStep.styles';
+  joinAreaFilterWrapper,
+} from './JoinInfoStep.css';
 import JoinSelect from './JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
 import JoinInput from '../../JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
-import { joinForm } from '@/app/join/JoinPage.styles';
+import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css'; // 이미 vanilla‐extract로 변환된 JoinPage 스타일 파일
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
@@ -41,8 +42,8 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
 
   return (
-    <section css={joinForm}>
-      <div css={joinContentContainer}>
+    <section className={joinForm}>
+      <div className={joinContentContainer}>
         {/* 이름 */}
         <JoinInput<ParticipantJoinSchemaType>
           name="name"
@@ -80,12 +81,12 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
 
         {/* 거주 지역 */}
-        <div css={joinAreaFilterContainer}>
-          <div css={filterTitleWrapper}>
-            <span css={filterTitle}>거주 지역</span>
-            <span css={requiredStar}>*</span>
+        <div className={joinAreaFilterContainer}>
+          <div className={filterTitleWrapper}>
+            <span className={filterTitle}>거주 지역</span>
+            <span className={requiredStar}>*</span>
           </div>
-          <div css={joinAreaFilterWrapper}>
+          <div className={joinAreaFilterWrapper}>
             <Controller
               name="basicAddressInfo.region"
               control={control}
@@ -95,7 +96,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
                   onChange={(value) => setValue('basicAddressInfo.region', value)}
                   placeholder="시·도"
                   options={JOIN_REGION}
-                  isError={Boolean(fieldState.error) && Boolean(!field.value)}
+                  isError={Boolean(fieldState.error) && !field.value}
                 />
               )}
             />
@@ -109,7 +110,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
                   onChange={(value) => setValue('basicAddressInfo.area', value)}
                   placeholder="시·군·구"
                   options={JOIN_SUB_REGION[selectedArea] || []}
-                  isError={Boolean(fieldState.error) && Boolean(!field.value)}
+                  isError={Boolean(fieldState.error) && !field.value}
                 />
               )}
             />
@@ -117,26 +118,24 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         </div>
 
         {/* 추가 활동 지역 */}
-        <div css={joinAreaFilterContainer}>
-          <div css={filterTitleWrapper}>
-            <span css={filterTitle}>추가 활동 지역</span>
+        <div className={joinAreaFilterContainer}>
+          <div className={filterTitleWrapper}>
+            <span className={filterTitle}>추가 활동 지역</span>
             <AreaTooltip />
           </div>
-          <div css={joinAreaFilterWrapper}>
+          <div className={joinAreaFilterWrapper}>
             <Controller
               name="additionalAddressInfo.region"
               control={control}
-              render={({ field, fieldState }) => {
-                return (
-                  <JoinSelect
-                    value={field.value}
-                    onChange={(value) => setValue('additionalAddressInfo.region', value)}
-                    placeholder="시·도"
-                    options={JOIN_REGION}
-                    isError={Boolean(fieldState.error)}
-                  />
-                );
-              }}
+              render={({ field, fieldState }) => (
+                <JoinSelect
+                  value={field.value}
+                  onChange={(value) => setValue('additionalAddressInfo.region', value)}
+                  placeholder="시·도"
+                  options={JOIN_REGION}
+                  isError={Boolean(fieldState.error)}
+                />
+              )}
             />
 
             <Controller
@@ -170,7 +169,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
       </div>
 
       <button
-        css={joinButton}
+        className={joinButton}
         onClick={handleSubmit}
         disabled={!(isAllFilled && Object.keys(errors).length === 0)}
       >

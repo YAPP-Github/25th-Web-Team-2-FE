@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
 
-import { emptyLayout } from './GoogleLoginPage.styles';
+import { emptyLayout } from './GoogleLoginPage.css';
 import useGoogleLoginMutation from '../hooks/useGoogleLoginMutation';
 
 export default function GoogleLoginPage() {
@@ -23,5 +23,5 @@ export default function GoogleLoginPage() {
     }
   }, [code, role, googleLogin]);
 
-  return <div css={emptyLayout}></div>;
+  return <div className={emptyLayout}></div>;
 }
