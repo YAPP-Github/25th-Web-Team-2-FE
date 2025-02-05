@@ -177,7 +177,7 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
               <input
                 type="file"
                 id="photos"
-                accept="image/*"
+                accept="image/png, image/jpeg"
                 multiple
                 onChange={uploadPhotos}
                 style={{ display: 'none' }}
