@@ -34,7 +34,7 @@ const PostCard = ({ post }: PostCardProps) => {
       <Link href={`/post/${experimentPostId}`} key={experimentPostId} className={postCardLayout}>
         <div className={postHeader}>
           <div className={postCardHeader}>
-            <span className={postLocation}>{univName}</span>
+            <span className={postLocation}>{univName ? univName : '비대면'}</span>
             <div className={postCardRightHeader}>
               <Icon icon="Eye" width={18} />
               <span className={postViews}>{views}</span>
