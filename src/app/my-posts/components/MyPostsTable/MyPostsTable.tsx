@@ -170,7 +170,6 @@ const MyPostsTable = () => {
         </Table>
       </div>
 
-      {/* ✅ Pagination 연결 */}
       <Pagination>
         <PaginationContent>
           <PaginationPrevious

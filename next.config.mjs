@@ -8,10 +8,12 @@ const nextConfig = {
     emotion: true,
   },
   images: {
+    domains: ['dobby-dev-bucket.s3.ap-northeast-2.amazonaws.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'dobby-dev-bucket.s3.ap-northeast-2.amazonaws.com',
+        pathname: '/resized-images/**',
       },
     ],
   },
