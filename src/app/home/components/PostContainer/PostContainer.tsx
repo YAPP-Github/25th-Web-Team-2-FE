@@ -41,7 +41,7 @@ const PostContainer = () => {
     handleFilterChange('recruitStatus', toggleChecked);
   };
 
-  // participantInfo를 응답받을 경우 filters 상태 업데이트
+  // 참여자 성별/나이 자동 필터링
   useEffect(() => {
     if (participantInfo) {
       setFilters((prev) => ({

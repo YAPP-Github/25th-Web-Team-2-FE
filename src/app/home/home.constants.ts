@@ -47,3 +47,8 @@ export const subAreaMapper: Record<string, string> = {
   GANGBUKGU: '강북구',
   GANGSEOGU: '강서구',
 };
+
+export const GENDER = [
+  { label: '남성', value: 'MALE' },
+  { label: '여성', value: 'FEMALE' },
+] as const;

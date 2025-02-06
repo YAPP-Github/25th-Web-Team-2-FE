@@ -1,5 +1,6 @@
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { isParticipantInfo } from '@/utils/typeGuard';
+import { GenderValue } from './home.types';
 
 export const formatPostDate = ({
   startDate,
@@ -50,4 +51,18 @@ export const calculateAgeFromBirthDate = (birthDate?: string) => {
   const date = new Date(birthDate);
   const age = today.getFullYear() - date.getFullYear();
   return age;
+};
+
+export const getContactTargetFilterText = (age?: number, gender?: GenderValue) => {
+  const genderLabelMapper = { MALE: '남성', FEMALE: '여성' };
+
+  if (age && gender) {
+    return `${genderLabelMapper[gender]} · 만 ${age}세`;
+  } else if (!age && gender) {
+    return `${genderLabelMapper[gender]}`;
+  } else if (age && !gender) {
+    return `만 ${age}세 `;
+  }
+
+  return '모집 대상';
 };

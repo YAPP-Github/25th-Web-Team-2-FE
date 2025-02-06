@@ -22,32 +22,15 @@ import {
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import { GenderValue } from '@/app/home/home.types';
+import { getContactTargetFilterText } from '@/app/home/home.utils';
+import { GENDER } from '@/app/home/home.constants';
 
 const AGE_MAX_LENGTH = 3;
-const genderLabelMapper = { MALE: '남성', FEMALE: '여성' };
-
-const GENDER = [
-  { label: '남성', value: 'MALE' },
-  { label: '여성', value: 'FEMALE' },
-] as const;
-
-type Gender = (typeof GENDER)[number]['value'];
-
-const getContactTargetFilterText = (age?: number, gender?: Gender) => {
-  if (age && gender) {
-    return `${genderLabelMapper[gender]} · 만 ${age}세`;
-  } else if (!age && gender) {
-    return `${genderLabelMapper[gender]}`;
-  } else if (age && !gender) {
-    return `만 ${age}세 `;
-  }
-
-  return '모집 대상';
-};
 
 interface ContactTargetFilterProps {
   onChange: (key: string, value: string | number | null) => void;
-  filterGender?: Gender;
+  filterGender?: GenderValue;
   filterAge?: number;
 }
 
@@ -55,7 +38,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const [isOpen, setIsOpen] = useState(false);
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
 
-  const [filteredGender, setFilteredGender] = useState<Gender | null>(null);
+  const [filteredGender, setFilteredGender] = useState<GenderValue | null>(null);
   const [filteredAge, setFilteredAge] = useState<number | null>(null);
 
   const handleChangeFilteredAge = (e: ChangeEvent<HTMLInputElement>) => {
