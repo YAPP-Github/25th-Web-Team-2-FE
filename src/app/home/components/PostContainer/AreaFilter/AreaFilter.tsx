@@ -30,8 +30,8 @@ import { ExperimentPostListFilters } from '@/apis/post';
 import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
 import { AreaAll } from '@/app/home/home.types';
 import { getRegionFilterText, isCheckedAreaAll } from '@/app/home/home.utils';
-import useFilterAreaQuery from '@/app/home/hooks/useFilterAreaQuery';
-import useFilterSubAreaQuery from '@/app/home/hooks/useFilterSubAreaQuery';
+import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
+import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 import { RegionType } from '@/types/filter';
@@ -51,8 +51,8 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   const isValidAreas =
     selectedAreaList.length < MAX_SELECTED_AREAS && isCheckedAreaAll(selectedAreas);
 
-  const { data: postRegion } = useFilterAreaQuery(selectedRegion);
-  const { data: postAreas } = useFilterSubAreaQuery(selectedRegion);
+  const { data: postRegion } = usePostRegionCountQuery(selectedRegion);
+  const { data: postAreas } = usePostAreaCountQuery(selectedRegion);
 
   const [isOpen, setIsOpen] = useState(false);
 
