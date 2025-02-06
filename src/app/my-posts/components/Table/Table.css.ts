@@ -1,4 +1,7 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
+
+import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
 
 export const tableContainer = style({
   width: '100%',
@@ -13,35 +16,51 @@ export const table = style({
 });
 
 export const tableHeader = style({
-  borderBottom: '0.1rem solid #ddd',
+  backgroundColor: colors.field02,
+  borderBottom: `0.1rem solid ${colors.line01}`,
 });
 
 export const tableBody = style({});
 
 export const tableRow = style({
-  borderBottom: '0.1rem solid #ddd',
+  height: '5rem',
   transition: 'background-color 0.2s',
-  selectors: {
-    '&:hover': {
-      backgroundColor: '#f3f3f3',
-    },
-  },
+});
+
+globalStyle('thead tr', {
+  height: '3.8rem !important',
+});
+
+globalStyle('tr:hover', {
+  backgroundColor: colors.field02,
+});
+
+globalStyle('tr:hover td:first-child', {
+  borderTopLeftRadius: '1.2rem',
+  borderBottomLeftRadius: '1.2rem',
+});
+
+globalStyle('tr:hover td:last-child', {
+  borderTopRightRadius: '1.2rem',
+  borderBottomRightRadius: '1.2rem',
 });
 
 export const tableHead = style({
-  padding: '0.8rem',
-  textAlign: 'left',
-  fontWeight: 'bold',
-  backgroundColor: '#f9f9f9',
-  whiteSpace: 'nowrap',
+  ...fonts.label.large.M14,
+  color: colors.text02,
+  verticalAlign: 'middle',
 });
 
 export const tableCell = style({
-  padding: '0.8rem',
-  textAlign: 'left',
+  ...fonts.title.small.M18,
+  padding: '1.2rem 1.6rem',
+
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
+
+  height: '1.8rem',
+  verticalAlign: 'middle',
 });
 
 export const tableFooter = style({

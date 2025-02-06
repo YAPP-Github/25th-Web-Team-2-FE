@@ -1,5 +1,8 @@
 import { style } from '@vanilla-extract/css';
 
+import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
+
 export const pagination = style({
   display: 'flex',
   justifyContent: 'center',
@@ -17,6 +20,8 @@ export const paginationContent = style({
 });
 
 export const paginationItem = style({
+  ...fonts.label.medium.M13,
+  color: colors.text02,
   listStyle: 'none',
 });
 
@@ -28,14 +33,14 @@ export const paginationLink = style({
   cursor: 'pointer',
   selectors: {
     '&:hover': {
-      backgroundColor: '#f3f3f3',
+      backgroundColor: colors.field02,
     },
   },
 });
 
 export const active = style({
-  fontWeight: 'bold',
-  backgroundColor: '#ddd',
+  ...fonts.label.medium.SB13,
+  color: colors.primaryMint,
 });
 
 export const paginationPrevious = style({

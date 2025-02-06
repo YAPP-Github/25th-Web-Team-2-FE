@@ -1,8 +1,16 @@
 'use client';
-
 import * as React from 'react';
 
-import * as styles from './Pagination.css';
+import {
+  pagination,
+  paginationContent,
+  paginationItem,
+  paginationLink,
+  active,
+  paginationPrevious,
+  paginationNext,
+  paginationEllipsis,
+} from './Pagination.css';
 
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
@@ -11,7 +19,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={`${styles.pagination} ${className}`}
+    className={`${pagination} ${className}`}
     {...props}
   />
 );
@@ -19,14 +27,14 @@ Pagination.displayName = 'Pagination';
 
 const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(
   ({ className, ...props }, ref) => (
-    <ul ref={ref} className={`${styles.paginationContent} ${className}`} {...props} />
+    <ul ref={ref} className={`${paginationContent} ${className}`} {...props} />
   ),
 );
 PaginationContent.displayName = 'PaginationContent';
 
 const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(
   ({ className, ...props }, ref) => (
-    <li ref={ref} className={`${styles.paginationItem} ${className}`} {...props} />
+    <li ref={ref} className={`${paginationItem} ${className}`} {...props} />
   ),
 );
 PaginationItem.displayName = 'PaginationItem';
@@ -38,7 +46,7 @@ type PaginationLinkProps = {
 const PaginationLink = ({ className, isActive, ...props }: PaginationLinkProps) => (
   <a
     aria-current={isActive ? 'page' : undefined}
-    className={`${styles.paginationLink} ${isActive ? styles.active : ''} ${className}`}
+    className={`${paginationLink} ${isActive ? active : ''} ${className}`}
     {...props}
   />
 );
@@ -49,30 +57,24 @@ const PaginationPrevious = ({
   ...props
 }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
-    aria-label="Go to previous page"
-    className={`${styles.paginationPrevious} ${className}`}
+    aria-label="이전 페이지"
+    className={`${paginationPrevious} ${className}`}
     {...props}
   >
-    <Icon icon="ChevronRound" color={colors.primaryMint} />
-    <span>Previous</span>
+    <Icon icon="Chevron" color={colors.icon02} rotate={90} />
   </PaginationLink>
 );
 PaginationPrevious.displayName = 'PaginationPrevious';
 
 const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
-  <PaginationLink
-    aria-label="Go to next page"
-    className={`${styles.paginationNext} ${className}`}
-    {...props}
-  >
-    <span>Next</span>
-    <Icon icon="ChevronRound" color={colors.primaryMint} />
+  <PaginationLink aria-label="다음 페이지" className={`${paginationNext} ${className}`} {...props}>
+    <Icon icon="Chevron" color={colors.icon02} rotate={270} />
   </PaginationLink>
 );
 PaginationNext.displayName = 'PaginationNext';
 
 const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
-  <span aria-hidden className={`${styles.paginationEllipsis} ${className}`} {...props}>
+  <span aria-hidden className={`${paginationEllipsis} ${className}`} {...props}>
     ∙∙∙
     <span className="sr-only">More pages</span>
   </span>
