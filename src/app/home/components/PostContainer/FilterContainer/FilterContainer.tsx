@@ -23,6 +23,7 @@ const FilterContainer = ({
 
   return (
     <div className={filterContainerLayout}>
+      {/* 필터 초기화 버튼 */}
       {isFiltered && (
         <>
           <button className={resetFilterButton} onClick={handleResetFilter}>
@@ -31,6 +32,7 @@ const FilterContainer = ({
           <span className={verticalLine} />
         </>
       )}
+
       {/* 진행 방식 필터링 */}
       <MatchTypeFilter
         filters={filters}

@@ -1,4 +1,4 @@
-import { AREA_ALL, areaMapper, subAreaMapper } from './home.constants';
+import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from './home.constants';
 import { GenderValue } from './home.types';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
@@ -75,13 +75,13 @@ export const getRegionFilterText = (region?: RegionType | null, areas?: string[]
 
   if (region) {
     if (!isArea) {
-      return `${areaMapper[region]}`;
+      return `${REGION_MAPPER[region]}`;
     }
 
     if (areas.length >= 2) {
-      return `${areaMapper[region]} · ${subAreaMapper[areas[0]]} 외 ${areas.length - 1}`;
+      return `${REGION_MAPPER[region]} · ${AREA_MAPPER[areas[0]]} 외 ${areas.length - 1}`;
     }
-    return `${areaMapper[region]} · ${subAreaMapper[areas[0]]}`;
+    return `${REGION_MAPPER[region]} · ${AREA_MAPPER[areas[0]]}`;
   }
 
   return '지역';

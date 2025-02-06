@@ -1,4 +1,4 @@
-export const areaMapper: Record<string, string> = {
+export const REGION_MAPPER: Record<string, string> = {
   ALL: '전국',
   SEOUL: '서울',
   GYEONGGI: '경기',
@@ -19,7 +19,7 @@ export const areaMapper: Record<string, string> = {
   JEJU: '제주',
 } as const;
 
-export const subAreaMapper: Record<string, string> = {
+export const AREA_MAPPER: Record<string, string> = {
   // 서울 부분 (기존 항목)
   SEOUL_ALL: '서울 전체',
   GEUMCHEONGU: '금천구',

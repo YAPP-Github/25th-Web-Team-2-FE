@@ -27,7 +27,7 @@ import {
 } from './AreaFilter.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import { AREA_ALL, areaMapper, subAreaMapper } from '@/app/home/home.constants';
+import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
 import { AreaAll } from '@/app/home/home.types';
 import { getRegionFilterText, isCheckedAreaAll } from '@/app/home/home.utils';
 import useFilterAreaQuery from '@/app/home/hooks/useFilterAreaQuery';
@@ -101,7 +101,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
                 onClick={() => handleClickRegion('ALL')}
               >
                 <span className={`${areaName} ${selectedRegion === 'ALL' && selectedRegionName}`}>
-                  {areaMapper['ALL']}
+                  {REGION_MAPPER['ALL']}
                 </span>
                 <span className={areaCount}>
                   {postRegion?.reduce((acc, cur) => acc + cur.count, 0)}
@@ -116,7 +116,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
                   <span
                     className={`${areaName} ${area.name === selectedRegion && selectedRegionName}`}
                   >
-                    {areaMapper[area.name]}
+                    {REGION_MAPPER[area.name]}
                   </span>
                   <span className={areaCount}>{area.count}</span>
                 </button>
@@ -142,7 +142,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
                           selectedAreas[subArea.name] && selectedRegionName
                         }`}
                       >
-                        {subAreaMapper[subArea.name]}
+                        {AREA_MAPPER[subArea.name]}
                       </span>
                       <span className={areaCount}>{subArea.count}</span>
                     </div>
