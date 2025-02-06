@@ -4,7 +4,7 @@ import * as Select from '@radix-ui/react-select';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
-import { triggerWrapper, contentContainer, selectItem } from './ProgressMethodFilter.css';
+import { triggerWrapper, contentContainer, selectItem } from './MatchTypeFilter.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import Icon from '@/components/Icon';
@@ -12,12 +12,12 @@ import { colors } from '@/styles/colors';
 
 const matchTypeMapper = { ALL: '전체', OFFLINE: '대면', ONLINE: '비대면' };
 
-interface ProgressMethodFilterProps {
+interface MatchTypeFilterProps {
   filters: ExperimentPostListFilters;
   onChange: (value: string) => void;
 }
 
-const ProgressMethodFilter = ({ filters, onChange }: ProgressMethodFilterProps) => {
+const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
@@ -63,4 +63,4 @@ const ProgressMethodFilter = ({ filters, onChange }: ProgressMethodFilterProps) 
   );
 };
 
-export default ProgressMethodFilter;
+export default MatchTypeFilter;
