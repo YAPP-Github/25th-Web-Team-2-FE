@@ -13,6 +13,8 @@ export const API_URL = {
   viewExperimentDetails: (postId: string) => `/v1/experiment-posts/${postId}/details`,
   applyMethod: (postId: string) => `/v1/experiment-posts/${postId}/apply-method`,
   uploadImage: '/v1/experiment-posts/image-upload-request',
+  myPosts: (page?: number, count?: number, order?: string) =>
+    `/v1/experiment-posts/my-posts?page=${page}&count=${count}&order=${order}`,
 };
 
 export const MOCK_API_URL = {

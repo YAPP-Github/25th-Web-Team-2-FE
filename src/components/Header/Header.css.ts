@@ -37,6 +37,15 @@ export const loginButton = style({
   borderRadius: '1.2rem',
 });
 
+export const myPostsButton = style({
+  display: 'inline-block',
+  ...fonts.label.large.SB14,
+  backgroundColor: colors.field05,
+  color: colors.text05,
+  padding: '0.6rem 1.4rem',
+  borderRadius: '1.2rem',
+});
+
 export const buttonWrapper = style({
   display: 'flex',
   gap: '0.4rem',
