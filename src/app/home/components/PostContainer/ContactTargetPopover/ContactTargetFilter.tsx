@@ -20,11 +20,11 @@ import {
   genderButtonGroup,
 } from './ContactTargetFilter.css';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
+import { GENDER } from '@/app/home/home.constants';
 import { GenderValue } from '@/app/home/home.types';
 import { getContactTargetFilterText } from '@/app/home/home.utils';
-import { GENDER } from '@/app/home/home.constants';
+import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
 
 const AGE_MAX_LENGTH = 3;
 

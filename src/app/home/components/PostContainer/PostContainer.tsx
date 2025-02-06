@@ -29,7 +29,7 @@ const PostContainer = () => {
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
-  const handleFilterChange = (key: string, value: string | number | boolean | null) => {
+  const handleFilterChange = (key: string, value: string | string[] | number | boolean | null) => {
     setFilters((prev) => ({
       ...prev,
       [key]: value,
@@ -39,6 +39,12 @@ const PostContainer = () => {
   const handleChange = () => {
     const toggleChecked = isRecruiting ? 'ALL' : 'OPEN';
     handleFilterChange('recruitStatus', toggleChecked);
+  };
+
+  const handleResetFilter = () => {
+    setFilters({
+      recruitStatus: 'ALL',
+    });
   };
 
   // 참여자 성별/나이 자동 필터링
@@ -56,7 +62,11 @@ const PostContainer = () => {
     <div className={postContainerLayout}>
       <h2 className={postContainerTitle}>공고를 확인해 보세요</h2>
       <div className={filterWrapper}>
-        <FilterContainer filters={filters} handleFilterChange={handleFilterChange} />
+        <FilterContainer
+          filters={filters}
+          handleFilterChange={handleFilterChange}
+          handleResetFilter={handleResetFilter}
+        />
         <JoinCheckbox
           label="모집 중인 공고만 보기"
           isChecked={isRecruiting}
