@@ -7,6 +7,7 @@ import {
   postsSorting,
 } from './MyPostsContainer.css';
 import MyPostsTable from '../MyPostsTable/MyPostsTable';
+
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
