@@ -48,5 +48,10 @@ export const selectItem = style({
       backgroundColor: colors.field02,
       outline: 'none',
     },
+    "&[data-state='checked']": {
+      backgroundColor: colors.primaryTinted,
+      color: colors.textPrimary,
+      border: `0.1rem solid ${colors.textPrimary}`,
+    },
   },
 });
