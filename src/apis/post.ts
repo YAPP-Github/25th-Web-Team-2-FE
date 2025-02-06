@@ -32,7 +32,7 @@ interface PostArea {
 export interface ExperimentPostListFilters {
   recruitStatus: 'ALL' | 'OPEN';
   matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
-  gender?: 'MALE' | 'FEMALE' | 'ALL';
+  gender?: 'MALE' | 'FEMALE';
   age?: number;
   region?: string;
   areas?: string;
@@ -44,7 +44,7 @@ export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
+    if (value !== undefined && value !== null) {
       queryParams.append(key, String(value));
     }
   });
