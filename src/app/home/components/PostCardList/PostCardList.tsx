@@ -2,10 +2,10 @@ import PostCard from '../PostCard/PostCard';
 import EmptyPostCard from './EmptyPostCard/EmptyPostCard';
 import { postCardListLayout } from './PostCardList.css';
 
-import { Post } from '@/types/post';
+import { ExperimentPost } from '@/types/post';
 
 interface PostCardListProps {
-  postList?: Post[];
+  postList?: ExperimentPost[];
 }
 
 const PostCardList = ({ postList }: PostCardListProps) => {

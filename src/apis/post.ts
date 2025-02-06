@@ -2,10 +2,10 @@ import { API } from './config';
 
 import { Area } from '@/app/home/home.types';
 import { API_URL } from '@/constants/url';
-import { Post } from '@/types/post';
+import { ExperimentPost } from '@/types/post';
 
-interface PostResponse {
-  content: Post[];
+interface ExperimentPostResponse {
+  content: ExperimentPost[];
   isLast: boolean;
   page: number;
   size: number;
@@ -29,10 +29,10 @@ interface PostArea {
   count: number;
 }
 
-export interface PostListParams {
+export interface ExperimentPostListFilters {
   recruitStatus: 'ALL' | 'OPEN';
   matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
-  gender?: '' | 'MALE' | 'FEMALE' | 'ALL';
+  gender?: 'MALE' | 'FEMALE' | 'ALL';
   age?: number;
   region?: string;
   areas?: string;
@@ -40,7 +40,7 @@ export interface PostListParams {
   count?: number;
 }
 
-export const fetchPostList = async (params: PostListParams = { recruitStatus: 'ALL' }) => {
+export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -49,7 +49,7 @@ export const fetchPostList = async (params: PostListParams = { recruitStatus: 'A
     }
   });
 
-  const res = await API.get<PostResponse>(API_URL.postList(queryParams.toString()));
+  const res = await API.get<ExperimentPostResponse>(API_URL.postList(queryParams.toString()));
 
   return res.data;
 };

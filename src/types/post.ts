@@ -1,9 +1,9 @@
-export interface Post {
-  postInfo: PostInfo;
+export interface ExperimentPost {
+  postInfo: ExperimentPostInfo;
   recruitStatus: boolean;
 }
 
-export interface PostInfo {
+export interface ExperimentPostInfo {
   experimentPostId: number;
   title: string;
   views: number;
