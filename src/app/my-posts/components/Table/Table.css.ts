@@ -53,13 +53,13 @@ export const tableHead = style({
 
 export const tableCell = style({
   ...fonts.title.small.M18,
-  padding: '1.2rem 1.6rem',
+  padding: '0 1.6rem',
 
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 
-  height: '1.8rem',
+  height: '5rem',
   verticalAlign: 'middle',
 });
 

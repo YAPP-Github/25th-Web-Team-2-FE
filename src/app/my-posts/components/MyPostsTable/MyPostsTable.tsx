@@ -33,43 +33,91 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '.
 import Icon from '@/components/Icon';
 
 export type DataRow = {
-  id: string;
+  experimentPostId: string;
   title: string;
-  date: string;
+  uploadDate: string;
   views: number;
   recruitStatus: boolean;
 };
 
 const data: DataRow[] = [
-  { id: '1', title: 'fMRI-EEG 실험', date: '2024.12.31', views: 81, recruitStatus: true },
   {
-    id: '2',
+    experimentPostId: '1',
+    title: 'fMRI-EEG 실험',
+    uploadDate: '2024.12.31',
+    views: 81,
+    recruitStatus: true,
+  },
+  {
+    experimentPostId: '2',
     title: '강남 삼성 서울 병원 연구 참가자',
-    date: '2024.12.31',
+    uploadDate: '2024.12.31',
     views: 820,
     recruitStatus: false,
   },
-  { id: '3', title: '스크린 인터랙션 참가자', date: '2024.12.31', views: 192, recruitStatus: true },
-  { id: '4', title: '인지과학 연구 참가자', date: '2024.12.31', views: 210, recruitStatus: true },
-  { id: '5', title: '심리학 실험 참가자', date: '2024.12.31', views: 134, recruitStatus: false },
-  { id: '6', title: 'VR 연구 참가자 모집', date: '2024.12.31', views: 98, recruitStatus: true },
   {
-    id: '7',
+    experimentPostId: '3',
+    title: '스크린 인터랙션 참가자',
+    uploadDate: '2024.12.31',
+    views: 192,
+    recruitStatus: true,
+  },
+  {
+    experimentPostId: '4',
+    title: '인지과학 연구 참가자',
+    uploadDate: '2024.12.31',
+    views: 210,
+    recruitStatus: true,
+  },
+  {
+    experimentPostId: '5',
+    title: '심리학 실험 참가자',
+    uploadDate: '2024.12.31',
+    views: 134,
+    recruitStatus: false,
+  },
+  {
+    experimentPostId: '6',
+    title: 'VR 연구 참가자 모집',
+    uploadDate: '2024.12.31',
+    views: 98,
+    recruitStatus: true,
+  },
+  {
+    experimentPostId: '7',
     title: '사용자 경험 연구 참가자',
-    date: '2024.12.31',
+    uploadDate: '2024.12.31',
     views: 320,
     recruitStatus: true,
   },
-  { id: '8', title: '뉴로마케팅 실험 참가자', date: '2024.12.31', views: 75, recruitStatus: false },
-  { id: '9', title: '의사결정 연구 참가자', date: '2024.12.31', views: 180, recruitStatus: true },
   {
-    id: '10',
+    experimentPostId: '8',
+    title: '뉴로마케팅 실험 참가자',
+    uploadDate: '2024.12.31',
+    views: 75,
+    recruitStatus: false,
+  },
+  {
+    experimentPostId: '9',
+    title: '의사결정 연구 참가자',
+    uploadDate: '2024.12.31',
+    views: 180,
+    recruitStatus: true,
+  },
+  {
+    experimentPostId: '10',
     title: '데이터 분석 연구 참가자',
-    date: '2024.12.31',
+    uploadDate: '2024.12.31',
     views: 250,
     recruitStatus: true,
   },
-  { id: '11', title: 'AI 모델링 연구 참가자', date: '2024.12.31', views: 295, recruitStatus: true },
+  {
+    experimentPostId: '11',
+    title: 'AI 모델링 연구 참가자',
+    uploadDate: '2024.12.31',
+    views: 295,
+    recruitStatus: true,
+  },
 ];
 
 export const columns: ColumnDef<DataRow>[] = [
@@ -80,9 +128,9 @@ export const columns: ColumnDef<DataRow>[] = [
     size: 592,
   },
   {
-    accessorKey: 'date',
+    accessorKey: 'uploadDate',
     header: '게시 날짜',
-    cell: ({ row }) => <div>{row.getValue('date')}</div>,
+    cell: ({ row }) => <div>{row.getValue('uploadDate')}</div>,
     size: 108,
   },
   {
@@ -97,9 +145,9 @@ export const columns: ColumnDef<DataRow>[] = [
     cell: ({ row }) => {
       const recruitStatus = row.getValue('recruitStatus');
       return recruitStatus === true ? (
-        <Icon icon="ToggleOn" width={32} height={18} />
+        <Icon icon="ToggleOn" width={32} height={18} cursor="pointer" />
       ) : (
-        <Icon icon="ToggleOff" width={32} height={18} />
+        <Icon icon="ToggleOff" width={32} height={18} cursor="pointer" />
       );
     },
     size: 68,
@@ -109,7 +157,7 @@ export const columns: ColumnDef<DataRow>[] = [
     header: '',
     cell: () => (
       <div>
-        <Icon icon="MenuDots" width={16} height={16} />
+        <Icon icon="MenuDots" width={16} height={16} cursor="pointer" />
       </div>
     ),
     size: 32,

@@ -4,7 +4,7 @@ import theme from '@/styles/theme';
 
 function ToggleOn(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="42" height="38" viewBox="0 0 42 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="42" height="38" viewBox="0 -3 42 38" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect y="6" width="32" height="18" rx="9" fill={props.color || theme.colors.primaryMint} />
       <g filter="url(#filter0_d_3107_24227)">
         <circle cx="23" cy="15" r="7" fill="white" />
