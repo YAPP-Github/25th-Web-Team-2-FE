@@ -19,13 +19,14 @@ import { ExperimentPostListFilters } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 
 const PostContainer = () => {
-  const { userInfo } = useUserInfo();
+  const { userInfo, isLoading } = useUserInfo();
   const participantInfo = filterParticipantInfo(userInfo);
 
-  const [filters, setFilters] = useState<ExperimentPostListFilters>({
-    recruitStatus: 'ALL',
-  });
-  const { data: postListData } = usePostListQuery(filters);
+  const [filters, setFilters] = useState<ExperimentPostListFilters>(
+    {} as ExperimentPostListFilters,
+  );
+
+  const { data: postListData } = usePostListQuery(filters, isLoading);
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
@@ -52,8 +53,14 @@ const PostContainer = () => {
     if (participantInfo) {
       setFilters((prev) => ({
         ...prev,
+        recruitStatus: 'ALL',
         gender: participantInfo.gender,
         age: calculateAgeFromBirthDate(participantInfo.birthDate),
+      }));
+    } else {
+      setFilters((prev) => ({
+        ...prev,
+        recruitStatus: 'ALL',
       }));
     }
   }, [participantInfo]);
