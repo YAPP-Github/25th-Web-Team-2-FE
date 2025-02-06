@@ -1,6 +1,9 @@
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { isParticipantInfo } from '@/utils/typeGuard';
+import { AREA_ALL, areaMapper, subAreaMapper } from './home.constants';
 import { GenderValue } from './home.types';
+
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { RegionType } from '@/types/filter';
+import { isParticipantInfo } from '@/utils/typeGuard';
 
 export const formatPostDate = ({
   startDate,
@@ -65,4 +68,26 @@ export const getContactTargetFilterText = (age?: number, gender?: GenderValue) =
   }
 
   return '모집 대상';
+};
+
+export const getRegionFilterText = (region?: RegionType | null, areas?: string[]) => {
+  const isArea = areas && areas.length > 0;
+
+  if (region) {
+    if (!isArea) {
+      return `${areaMapper[region]}`;
+    }
+
+    if (areas.length >= 2) {
+      return `${areaMapper[region]} · ${subAreaMapper[areas[0]]} 외 ${areas.length - 1}`;
+    }
+    return `${areaMapper[region]} · ${subAreaMapper[areas[0]]}`;
+  }
+
+  return '지역';
+};
+
+// 서울 전체, 경기 전체 등 선택 시 나머지 선택 불가 처리
+export const isCheckedAreaAll = (selectedAreas: Record<string, boolean>) => {
+  return !AREA_ALL.some((area) => selectedAreas[area]);
 };

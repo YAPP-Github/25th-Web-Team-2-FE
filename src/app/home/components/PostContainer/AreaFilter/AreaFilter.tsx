@@ -10,7 +10,7 @@ import {
   contentWrapper,
   areaListContainer,
   areaName,
-  selectedAreaName,
+  selectedRegionName,
   areaCount,
   areaButtonRecipe,
   verticalLine,
@@ -23,48 +23,62 @@ import {
   footerContainer,
   footerButtonContainer,
   buttonRecipe,
+  areaOpacity,
 } from './AreaFilter.css';
 
-import { areaMapper, subAreaMapper } from '@/app/home/home.constants';
-import { Area } from '@/app/home/home.types';
+import { ExperimentPostListFilters } from '@/apis/post';
+import { AREA_ALL, areaMapper, subAreaMapper } from '@/app/home/home.constants';
+import { AreaAll } from '@/app/home/home.types';
+import { getRegionFilterText, isCheckedAreaAll } from '@/app/home/home.utils';
 import useFilterAreaQuery from '@/app/home/hooks/useFilterAreaQuery';
 import useFilterSubAreaQuery from '@/app/home/hooks/useFilterSubAreaQuery';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import { RegionType } from '@/types/filter';
+
+const MAX_SELECTED_AREAS = 5;
 
 interface AreaFilterProps {
-  onChange: (key: string, value: string | number) => void;
+  filters: ExperimentPostListFilters;
+  onChange: (key: string, value: string | string[] | number | null) => void;
 }
 
-const AreaFilter = ({ onChange }: AreaFilterProps) => {
-  const [selectedArea, setSelectedArea] = useState<Area | 'ALL' | ''>('');
-  const [checkedSubAreas, setCheckedSubAreas] = useState<Record<string, boolean>>({});
-  const selectedSubArea = Object.keys(checkedSubAreas);
+// 지역 필터링
+const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
+  const [selectedRegion, setSelectedRegion] = useState<RegionType | 'ALL' | null>(null);
+  const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
+  const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
+  const isValidAreas =
+    selectedAreaList.length < MAX_SELECTED_AREAS && isCheckedAreaAll(selectedAreas);
 
-  const { data: postArea } = useFilterAreaQuery(selectedArea);
-  const { data: postSubArea } = useFilterSubAreaQuery(selectedArea);
-
-  const handleAreaClick = (area: Area | 'ALL') => {
-    setSelectedArea(area);
-  };
-
-  const handleSubAreaCheck = (subArea: string) => {
-    setCheckedSubAreas((prev) => ({
-      ...prev,
-      [subArea]: !prev[subArea],
-    }));
-  };
-
-  // TODO: subarea 여러개도 되도록 개선
-  const handleClickSave = () => {
-    setIsSelected(true);
-    setIsOpen(false);
-    onChange('region', selectedArea);
-    onChange('areas', selectedSubArea[0]);
-  };
+  const { data: postRegion } = useFilterAreaQuery(selectedRegion);
+  const { data: postAreas } = useFilterSubAreaQuery(selectedRegion);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
+
+  const isSelected = Boolean(filters.region) || Boolean(filters.areas);
+
+  const handleClickRegion = (area: RegionType | 'ALL') => {
+    setSelectedRegion(area);
+    setSelectedAreas({});
+  };
+
+  const handleClickArea = (subArea: string) => {
+    if (AREA_ALL.includes(subArea as AreaAll)) {
+      setSelectedAreas((prev) => ({ [subArea]: !prev[subArea] }));
+    } else {
+      setSelectedAreas((prev) => ({
+        ...prev,
+        [subArea]: !prev[subArea],
+      }));
+    }
+  };
+
+  const handleClickSave = () => {
+    setIsOpen(false);
+    onChange('region', selectedRegion);
+    onChange('areas', selectedAreaList.length > 0 ? selectedAreaList : null);
+  };
 
   return (
     <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
@@ -75,13 +89,7 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
           '--trigger-bg': isSelected ? colors.field09 : colors.field01,
         })}
       >
-        <span>
-          {isSelected
-            ? `${areaMapper[selectedArea]} . ${subAreaMapper[selectedSubArea[0]] ?? ''} ${
-                selectedSubArea.length >= 2 ? `외 ${selectedSubArea.length - 1}` : ''
-              }`
-            : '지역'}
-        </span>
+        <span>{getRegionFilterText(filters.region, filters.areas)}</span>
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
@@ -89,23 +97,25 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
           <div className={contentWrapper}>
             <div className={areaListContainer}>
               <button
-                className={areaButtonRecipe({ selected: selectedArea === 'ALL' })}
-                onClick={() => handleAreaClick('ALL')}
+                className={areaButtonRecipe({ selected: selectedRegion === 'ALL' })}
+                onClick={() => handleClickRegion('ALL')}
               >
-                <span className={`${areaName} ${selectedArea === 'ALL' && selectedAreaName}`}>
+                <span className={`${areaName} ${selectedRegion === 'ALL' && selectedRegionName}`}>
                   {areaMapper['ALL']}
                 </span>
                 <span className={areaCount}>
-                  {postArea?.reduce((acc, cur) => acc + cur.count, 0)}
+                  {postRegion?.reduce((acc, cur) => acc + cur.count, 0)}
                 </span>
               </button>
-              {postArea?.map((area, idx) => (
+              {postRegion?.map((area, idx) => (
                 <button
                   key={idx}
-                  className={areaButtonRecipe({ selected: area.name === selectedArea })}
-                  onClick={() => handleAreaClick(area.name)}
+                  className={areaButtonRecipe({ selected: area.name === selectedRegion })}
+                  onClick={() => handleClickRegion(area.name)}
                 >
-                  <span className={`${areaName} ${area.name === selectedArea && selectedAreaName}`}>
+                  <span
+                    className={`${areaName} ${area.name === selectedRegion && selectedRegionName}`}
+                  >
                     {areaMapper[area.name]}
                   </span>
                   <span className={areaCount}>{area.count}</span>
@@ -114,17 +124,22 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
             </div>
             <span className={verticalLine} />
             <div className={subAreaListContainer}>
-              {selectedArea ? (
-                postSubArea?.map((subArea, idx) => (
+              {selectedRegion ? (
+                postAreas?.map((subArea, idx) => (
                   <label
                     key={idx}
                     className={`${subAreaItem} 
-                      ${checkedSubAreas[subArea.name] && selectedSubAreaLabel}`}
+                      ${selectedAreas[subArea.name] && selectedSubAreaLabel}`}
                   >
-                    <div className={subAreaInfo}>
+                    <div
+                      className={subAreaInfo}
+                      style={assignInlineVars({
+                        [areaOpacity]: !isValidAreas && !selectedAreas[subArea.name] ? '0.6' : '1',
+                      })}
+                    >
                       <span
                         className={`${areaName} ${
-                          checkedSubAreas[subArea.name] && selectedAreaName
+                          selectedAreas[subArea.name] && selectedRegionName
                         }`}
                       >
                         {subAreaMapper[subArea.name]}
@@ -134,10 +149,11 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
                     <input
                       type="checkbox"
                       className={checkbox}
-                      checked={!!checkedSubAreas[subArea.name]}
-                      onChange={() => handleSubAreaCheck(subArea.name)}
+                      checked={!!selectedAreas[subArea.name]}
+                      onChange={() => handleClickArea(subArea.name)}
+                      disabled={!isValidAreas && !selectedAreas[subArea.name]}
                     />
-                    {!!checkedSubAreas[subArea.name] ? (
+                    {!!selectedAreas[subArea.name] ? (
                       <Icon
                         icon="CheckSquareFill"
                         width={20}
@@ -161,8 +177,8 @@ const AreaFilter = ({ onChange }: AreaFilterProps) => {
               <button
                 className={buttonRecipe({ type: 'reset' })}
                 onClick={() => {
-                  setSelectedArea('');
-                  setCheckedSubAreas({});
+                  setSelectedRegion(null);
+                  setSelectedAreas({});
                 }}
               >
                 초기화

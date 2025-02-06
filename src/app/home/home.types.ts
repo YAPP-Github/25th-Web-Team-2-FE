@@ -1,4 +1,4 @@
-import { GENDER } from './home.constants';
+import { AREA_ALL, GENDER } from './home.constants';
 
 export type Area =
   | '전국'
@@ -54,3 +54,5 @@ export interface SeoulRegion {
 }
 
 export type GenderValue = (typeof GENDER)[number]['value'];
+
+export type AreaAll = (typeof AREA_ALL)[number];

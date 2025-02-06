@@ -1,8 +1,11 @@
-import { style } from '@vanilla-extract/css';
+import { style, createVar } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
+
+// opacity에 사용할 CSS 변수 생성
+export const areaOpacity = createVar();
 
 // Popover Trigger (동적 색상은 CSS 변수로 처리)
 export const triggerWrapper = style({
@@ -63,7 +66,7 @@ export const areaName = style({
 });
 
 // 선택된 지역 텍스트 스타일
-export const selectedAreaName = style({
+export const selectedRegionName = style({
   color: colors.textPrimary,
 });
 
@@ -159,11 +162,12 @@ export const checkbox = style({
   pointerEvents: 'none',
 });
 
-// 서브 지역 정보 컨테이너
+// 서브 지역 정보 컨테이너 (opacity를 CSS 변수로 제어)
 export const subAreaInfo = style({
   display: 'flex',
   gap: '0.4rem',
   alignItems: 'center',
+  opacity: areaOpacity,
 });
 
 // placeholder (지역 미선택 시)
@@ -205,6 +209,12 @@ export const buttonRecipe = recipe({
       save: {
         backgroundColor: colors.primaryMint,
         color: colors.text01,
+        selectors: {
+          '&:disabled': {
+            opacity: 0.6,
+            cursor: 'not-allowed',
+          },
+        },
       },
     },
   },
