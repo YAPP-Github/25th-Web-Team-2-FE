@@ -6,42 +6,29 @@ import { useState } from 'react';
 
 import { triggerWrapper, contentContainer, selectItem } from './ProgressMethodFilter.css';
 
+import { ExperimentPostListFilters } from '@/apis/post';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-interface FilterOption {
-  label: '전체' | '대면' | '비대면';
-  value: 'ALL' | 'ONLINE' | 'OFFLINE';
-}
-
-const options: FilterOption[] = [
-  { label: '전체', value: 'ALL' },
-  { label: '대면', value: 'OFFLINE' },
-  { label: '비대면', value: 'ONLINE' },
-];
+const matchTypeMapper = { ALL: '전체', OFFLINE: '대면', ONLINE: '비대면' };
 
 interface ProgressMethodFilterProps {
+  filters: ExperimentPostListFilters;
   onChange: (value: string) => void;
 }
 
-const ProgressMethodFilter = ({ onChange }: ProgressMethodFilterProps) => {
-  const [selectedValue, setSelectedValue] = useState<FilterOption>(options[0]);
+const ProgressMethodFilter = ({ filters, onChange }: ProgressMethodFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
 
   const handleValueChange = (value: string) => {
-    const selectedOption = options.find((option) => option.value === value);
-
-    if (!selectedOption) return;
-
-    setSelectedValue(selectedOption);
     setIsSelected(true);
     onChange(value);
   };
 
   return (
     <Select.Root
-      value={selectedValue.value}
+      value={filters.matchType ? filters.matchType : ''}
       onValueChange={handleValueChange}
       onOpenChange={(open) => setIsOpen(open)}
     >
@@ -52,7 +39,7 @@ const ProgressMethodFilter = ({ onChange }: ProgressMethodFilterProps) => {
           '--trigger-bg': isSelected ? colors.field09 : colors.field01,
         })}
       >
-        <span>{selectedValue.label}</span>
+        <span>{filters.matchType ? matchTypeMapper[filters.matchType] : '진행 방식'}</span>
         <Select.Icon>
           <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
         </Select.Icon>
