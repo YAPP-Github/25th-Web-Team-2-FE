@@ -49,7 +49,9 @@ export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
-    if (Array.isArray(value) && value.length > 0) {
+    if (Number.isInteger(value)) {
+      queryParams.append(key, String(value));
+    } else if (Array.isArray(value) && value.length > 0) {
       value.forEach((v) => {
         queryParams.append(key, String(v));
       });
