@@ -42,3 +42,12 @@ export const filterParticipantInfo = (data?: ParticipantResponse | ResearcherRes
 
   return null;
 };
+
+export const calculateAgeFromBirthDate = (birthDate?: string) => {
+  if (!birthDate) return;
+
+  const today = new Date();
+  const date = new Date(birthDate);
+  const age = today.getFullYear() - date.getFullYear();
+  return age;
+};
