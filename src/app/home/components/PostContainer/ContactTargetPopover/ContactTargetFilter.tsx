@@ -33,7 +33,7 @@ const GENDER = [
 
 type Gender = (typeof GENDER)[number]['value'];
 
-const getFilterText = (age?: number, gender?: Gender) => {
+const getContactTargetFilterText = (age?: number, gender?: Gender) => {
   if (age && gender) {
     return `${genderLabelMapper[gender]} · 만 ${age}세`;
   } else if (!age && gender) {
@@ -41,6 +41,8 @@ const getFilterText = (age?: number, gender?: Gender) => {
   } else if (age && !gender) {
     return `만 ${age}세 `;
   }
+
+  return '모집 대상';
 };
 
 interface ContactTargetFilterProps {
@@ -96,8 +98,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
           '--popover-trigger-bg': isSelected ? colors.field09 : colors.field01,
         })}
       >
-        <span>{isSelected ? getFilterText(filterAge, filterGender) : '모집 대상'}</span>
-
+        <span>{getContactTargetFilterText(filterAge, filterGender)}</span>
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
