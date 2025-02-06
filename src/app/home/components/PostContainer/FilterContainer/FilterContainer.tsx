@@ -7,7 +7,7 @@ import { ExperimentPostListFilters } from '@/apis/post';
 
 interface FilterContainerProps {
   filters: ExperimentPostListFilters;
-  handleFilterChange: (key: string, value: string | number) => void;
+  handleFilterChange: (key: string, value: string | number | null) => void;
 }
 
 const FilterContainer = ({ filters, handleFilterChange }: FilterContainerProps) => {
@@ -22,8 +22,8 @@ const FilterContainer = ({ filters, handleFilterChange }: FilterContainerProps) 
       {/* 모집 대상 필터링 */}
       <ContactTargetFilter
         onChange={handleFilterChange}
-        initialGender={filters.gender}
-        initialAge={filters.age}
+        filterGender={filters.gender}
+        filterAge={filters.age}
       />
 
       {/* 지역 필터링 */}
