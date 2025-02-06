@@ -19,10 +19,10 @@ interface MatchTypeFilterProps {
 
 const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
+
+  const isSelected = Boolean(filters.matchType);
 
   const handleValueChange = (value: string) => {
-    setIsSelected(true);
     onChange(value);
   };
 
@@ -44,7 +44,7 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
           <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
         </Select.Icon>
       </Select.Trigger>
-      <Select.Content className={contentContainer}>
+      <Select.Content className={contentContainer} position="popper" sideOffset={4}>
         <Select.Viewport>
           <Select.Group>
             <Select.Item value="ALL" className={selectItem}>
