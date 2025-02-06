@@ -99,13 +99,13 @@ export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
 };
 
 export const getResearcherInfo = async () => {
-  const res = await API.get<ResearcherResponse>(API_URL.me('researchers'));
+  const res = await API.get<ResearcherResponse>(API_URL.me('researcher'));
 
   return res.data;
 };
 
 export const getParticipantInfo = async () => {
-  const res = await API.get<ParticipantResponse>(API_URL.me('participants'));
+  const res = await API.get<ParticipantResponse>(API_URL.me('participant'));
 
   return res.data;
 };
