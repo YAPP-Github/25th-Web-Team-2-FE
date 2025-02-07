@@ -3,4 +3,5 @@ export const QUERY_KEY = {
   postRegion: 'postRegion',
   postArea: 'postArea',
   updateRecruitStatus: 'updateRecruitStatus',
+  deletePost: 'deletePost',
 };
