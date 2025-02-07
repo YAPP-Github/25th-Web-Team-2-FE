@@ -13,6 +13,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'dobby-dev-bucket.s3.ap-northeast-2.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'dobby-prod-bucket.s3.ap-northeast-2.amazonaws.com',
+      },
     ],
   },
   webpack: (config, { isServer }) => {
