@@ -9,8 +9,9 @@ import {
   authCodeButton,
   sendAgainButton,
   authTimerText,
+  inputFooter,
 } from './AuthCodeInput.css';
-import { univInputWrapper } from '../UnivAuthInput.css';
+import { errorMessage, univInputWrapper } from '../UnivAuthInput.css';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import { joinInput } from '@/app/join/components/JoinInput/JoinInput.css';
@@ -35,10 +36,12 @@ const AuthCodeInput = ({
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [authCode, setAuthCode] = useState('');
+  const [error, setError] = useState('');
 
   const handleChangeAuthCode = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= AUTH_CODE_VALID_LENGTH) {
       setAuthCode(e.target.value);
+      setError('');
     }
   };
 
@@ -50,6 +53,10 @@ const AuthCodeInput = ({
         onSuccess: () => {
           setIsToastOpen(true);
           handleVerifyEmail();
+          setError('');
+        },
+        onError: (error) => {
+          setError(error.message);
         },
       },
     );
@@ -74,7 +81,7 @@ const AuthCodeInput = ({
               <button
                 type="button"
                 className={authCodeButton}
-                disabled={!authCode || authCode.length < AUTH_CODE_VALID_LENGTH}
+                disabled={!authCode || authCode.length < AUTH_CODE_VALID_LENGTH || Boolean(error)}
                 onClick={handleVerifyUniv}
               >
                 인증
@@ -82,9 +89,12 @@ const AuthCodeInput = ({
             </div>
           )}
         </div>
-        <button type="button" className={sendAgainButton} onClick={handleSendUnivAuthCode}>
-          인증번호 재전송
-        </button>
+        <div className={inputFooter}>
+          <span className={errorMessage}>{error}</span>
+          <button type="button" className={sendAgainButton} onClick={handleSendUnivAuthCode}>
+            인증번호 재전송
+          </button>
+        </div>
       </div>
       <EmailToast
         title="이메일 인증이 완료되었어요"

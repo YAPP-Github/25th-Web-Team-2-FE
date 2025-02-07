@@ -36,9 +36,15 @@ export const authCodeButton = style({
   },
 });
 
+export const inputFooter = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  alignItems: 'center',
+});
+
 export const sendAgainButton = style({
   ...fonts.label.large.M14,
   color: colors.text03,
   textDecorationLine: 'underline',
-  alignSelf: 'flex-end',
+  justifySelf: 'end',
 });
