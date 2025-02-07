@@ -1,4 +1,8 @@
+import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from './home.constants';
+import { GenderValue } from './home.types';
+
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { RegionType } from '@/types/filter';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 export const formatPostDate = ({
@@ -41,4 +45,49 @@ export const filterParticipantInfo = (data?: ParticipantResponse | ResearcherRes
   }
 
   return null;
+};
+
+export const calculateAgeFromBirthDate = (birthDate?: string) => {
+  if (!birthDate) return;
+
+  const today = new Date();
+  const date = new Date(birthDate);
+  const age = today.getFullYear() - date.getFullYear();
+  return age;
+};
+
+export const getContactTargetFilterText = (age?: number, gender?: GenderValue) => {
+  const genderLabelMapper = { MALE: '남성', FEMALE: '여성' };
+
+  if (age && gender) {
+    return `${genderLabelMapper[gender]} · 만 ${age}세`;
+  } else if (!age && gender) {
+    return `${genderLabelMapper[gender]}`;
+  } else if (age && !gender) {
+    return `만 ${age}세 `;
+  }
+
+  return '모집 대상';
+};
+
+export const getRegionFilterText = (region?: RegionType | null, areas?: string[]) => {
+  const isArea = areas && areas.length > 0;
+
+  if (region) {
+    if (!isArea) {
+      return `${REGION_MAPPER[region]}`;
+    }
+
+    if (areas.length >= 2) {
+      return `${REGION_MAPPER[region]} · ${AREA_MAPPER[areas[0]]} 외 ${areas.length - 1}`;
+    }
+    return `${REGION_MAPPER[region]} · ${AREA_MAPPER[areas[0]]}`;
+  }
+
+  return '지역';
+};
+
+// 서울 전체, 경기 전체 등 선택 시 나머지 선택 불가 처리
+export const isCheckedAreaAll = (selectedAreas: Record<string, boolean>) => {
+  return !AREA_ALL.some((area) => selectedAreas[area]);
 };

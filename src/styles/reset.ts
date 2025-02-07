@@ -157,6 +157,15 @@ const reset = css`
     box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;
   }
+
+  /* Chrome, Safari, Edge input number 스타일 제거 */
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export default reset;

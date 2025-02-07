@@ -1,14 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { fetchPostList, PostListParams } from '@/apis/post';
+import { fetchPostList, ExperimentPostListFilters } from '@/apis/post';
 import { QUERY_KEY } from '@/constants/queryKey';
 
-const usePostListQuery = (params: PostListParams) => {
-  const { matchType, gender, age, region, areas, recruitStatus } = params;
+const usePostListQuery = (filters: ExperimentPostListFilters, isLoading: boolean) => {
+  const { matchType, gender, age, region, areas, recruitStatus } = filters;
+
+  const isFilters = Object.keys(filters).length > 0;
 
   return useQuery({
     queryKey: [QUERY_KEY.post, matchType, gender, age, region, areas, recruitStatus],
-    queryFn: () => fetchPostList(params),
+    queryFn: () => fetchPostList(filters),
+    enabled: isFilters && !isLoading,
+    placeholderData: keepPreviousData,
   });
 };
 

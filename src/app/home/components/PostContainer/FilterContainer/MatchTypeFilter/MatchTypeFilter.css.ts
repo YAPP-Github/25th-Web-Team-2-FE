@@ -5,7 +5,6 @@ import { fonts } from '@/styles/fonts.css';
 
 export const triggerWrapper = style({
   ...fonts.label.large.SB14,
-  //   color: colors.text06,
   color: 'var(--trigger-color)',
   backgroundColor: 'var(--trigger-bg)',
   display: 'flex',
@@ -14,7 +13,6 @@ export const triggerWrapper = style({
   gap: '0.4rem',
   borderRadius: '1.2rem',
   padding: '0.5rem 1.4rem',
-  //   backgroundColor: colors.field01,
   cursor: 'pointer',
   selectors: {
     '&:hover': {
@@ -24,8 +22,6 @@ export const triggerWrapper = style({
 });
 
 export const contentContainer = style({
-  position: 'relative',
-  top: '3.6rem',
   width: '10rem',
   padding: '0.8rem',
   backgroundColor: colors.field01,
@@ -47,6 +43,11 @@ export const selectItem = style({
     '&[data-highlighted]': {
       backgroundColor: colors.field02,
       outline: 'none',
+    },
+    "&[data-state='checked']": {
+      backgroundColor: colors.primaryTinted,
+      color: colors.textPrimary,
+      border: `0.1rem solid ${colors.textPrimary}`,
     },
   },
 });

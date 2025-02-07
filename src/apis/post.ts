@@ -1,60 +1,71 @@
 import { API } from './config';
 
-import { Area } from '@/app/home/home.types';
 import { API_URL } from '@/constants/url';
-import { Post } from '@/types/post';
+import { AreaType, RegionType } from '@/types/filter';
+import { ExperimentPost } from '@/types/post';
 
-interface PostResponse {
-  content: Post[];
+interface ExperimentPostResponse {
+  content: ExperimentPost[];
   isLast: boolean;
   page: number;
   size: number;
   totalCount: number;
 }
 
-export type AreaResponse = PostAreaResponse | PostSubAreaResponse;
+export type AreaResponse = PostRegionResponse | PostAreaResponse;
+
+export interface PostRegionResponse {
+  total: number;
+  data: ExperimentPostRegion[];
+}
 
 export interface PostAreaResponse {
   total: number;
-  data: PostArea[];
+  data: ExperimentPostArea[];
 }
 
-export interface PostSubAreaResponse {
-  total: number;
-  data: PostArea[];
-}
-
-interface PostArea {
-  name: Area;
+interface ExperimentPostRegion {
+  name: RegionType;
   count: number;
 }
 
-export interface PostListParams {
+interface ExperimentPostArea {
+  name: AreaType;
+  count: number;
+}
+
+export interface ExperimentPostListFilters {
   recruitStatus: 'ALL' | 'OPEN';
   matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
-  gender?: '' | 'MALE' | 'FEMALE' | 'ALL';
+  gender?: 'MALE' | 'FEMALE';
   age?: number;
-  region?: string;
-  areas?: string;
+  region?: RegionType;
+  areas?: AreaType[];
   page?: number;
   count?: number;
 }
 
-export const fetchPostList = async (params: PostListParams = { recruitStatus: 'ALL' }) => {
+export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
+    if (Number.isInteger(value)) {
+      queryParams.append(key, String(value));
+    } else if (Array.isArray(value) && value.length > 0) {
+      value.forEach((v) => {
+        queryParams.append(key, String(v));
+      });
+    } else if (value !== undefined && value !== null && Object.keys(value).length > 0) {
       queryParams.append(key, String(value));
     }
   });
 
-  const res = await API.get<PostResponse>(API_URL.postList(queryParams.toString()));
+  const res = await API.get<ExperimentPostResponse>(API_URL.postList(queryParams.toString()));
 
   return res.data;
 };
 
-export const fetchPostCount = async <T>(region?: string) => {
+export const fetchPostCount = async <T>(region?: string | null) => {
   const res = await API.get<T>(API_URL.postArea(region));
 
   return res.data;

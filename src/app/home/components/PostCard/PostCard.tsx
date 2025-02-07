@@ -17,10 +17,10 @@ import {
 import { formatPostDate } from '../../home.utils';
 
 import Icon from '@/components/Icon';
-import { Post } from '@/types/post';
+import { ExperimentPost } from '@/types/post';
 
 interface PostCardProps {
-  post: Post;
+  post: ExperimentPost;
 }
 
 const PostCard = ({ post }: PostCardProps) => {
