@@ -8,9 +8,11 @@ import FilterContainer from './FilterContainer/FilterContainer';
 import {
   filterWrapper,
   postCardContainer,
+  postCardContentContainer,
   postContainerLayout,
   postContainerTitle,
   totalPostCount,
+  watchMoreButton,
 } from './PostContainer.css';
 import { calculateAgeFromBirthDate, filterParticipantInfo } from '../../home.utils';
 import useUserInfo from '../../hooks/useUserInfo';
@@ -19,14 +21,20 @@ import { ExperimentPostListFilters } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 
 const PostContainer = () => {
-  const { userInfo, isLoading } = useUserInfo();
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
   const participantInfo = filterParticipantInfo(userInfo);
 
   const [filters, setFilters] = useState<ExperimentPostListFilters>(
     {} as ExperimentPostListFilters,
   );
 
-  const { data: postListData } = usePostListQuery(filters, isLoading);
+  const {
+    data: postListData,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isFetching,
+  } = usePostListQuery(filters, isUserInfoLoading);
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
@@ -81,9 +89,23 @@ const PostContainer = () => {
           isArrow={false}
         />
       </div>
-      <div className={postCardContainer}>
-        <span className={totalPostCount}>총 {postListData?.content.length}개</span>
-        <PostCardList postList={postListData?.content} />
+      <div className={postCardContentContainer}>
+        <div className={postCardContainer}>
+          <span className={totalPostCount}>
+            {postListData ? `총 ${postListData?.pages[0].totalCount}개` : '로딩중...'}
+          </span>
+          <PostCardList postListData={postListData} />
+        </div>
+
+        {!isFetching && hasNextPage && (
+          <button
+            className={watchMoreButton}
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            더보기
+          </button>
+        )}
       </div>
     </div>
   );
