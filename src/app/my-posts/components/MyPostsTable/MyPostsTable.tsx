@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import {
   ColumnDef,
   SortingState,
@@ -20,7 +21,8 @@ import {
   textAlignLeft,
   textAlignRight,
 } from './MyPostsTable.css';
-import useMyPostsQuery, { MyPosts } from '../../hooks/useMyPostsQuery';
+import useMyPostsQuery, { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
+import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
 import {
   Pagination,
   PaginationContent,
@@ -44,10 +46,20 @@ const MyPostsTable = () => {
   const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
-  const { data, isLoading, error, refetch } = useMyPostsQuery({
+  const queryClient = useQueryClient();
+
+  const {
+    data,
+    isLoading,
+    error,
+    refetch: refetchMyPosts,
+  } = useMyPostsQuery({
     page: currentPage,
     count: pageSize,
   });
+
+  /* 모집 상태 변경 */
+  const { mutateAsync: updateRecruitStatusMutation } = useUpdateRecruitStatusMutation();
 
   const handleRecruitStatusUpdate = (experimentPostId: string, recruitStatus: boolean) => {
     if (recruitStatus) {
@@ -57,10 +69,38 @@ const MyPostsTable = () => {
   };
 
   const confirmRecruitStatusUpdate = () => {
-    if (selectedPostId) {
-      console.log(`모집 상태 변경: ${selectedPostId} → false`);
-      // TODO: 모집 상태 false로 변경하는 API 호출
-    }
+    if (!selectedPostId) return;
+
+    // todo 정렬 기능 추가시 변경
+    const queryKey = ['myPosts', currentPage, pageSize, 'DESC'];
+
+    const previousData = queryClient.getQueryData<UseMyPostsQueryResponse>(queryKey);
+
+    queryClient.setQueryData<UseMyPostsQueryResponse>(queryKey, (oldData) => {
+      if (!oldData) return oldData;
+      return {
+        ...oldData,
+        content: oldData.content.map((post) =>
+          post.experimentPostId === selectedPostId ? { ...post, recruitStatus: false } : post,
+        ),
+      };
+    });
+
+    updateRecruitStatusMutation(
+      { postId: selectedPostId },
+      {
+        onSuccess: () => {
+          refetchMyPosts();
+          setUpdateStatusConfirmOpen(false);
+        },
+        onError: () => {
+          if (previousData) {
+            queryClient.setQueryData(queryKey, previousData);
+          }
+        },
+      },
+    );
+
     setUpdateStatusConfirmOpen(false);
   };
 
@@ -95,13 +135,8 @@ const MyPostsTable = () => {
             onClick={() => {
               handleRecruitStatusUpdate(experimentPostId, recruitStatus);
             }}
-            style={{
-              all: 'unset', // 기본 버튼 스타일 제거
-              cursor: 'pointer',
-              display: 'inline-flex',
-            }}
           >
-            <Icon icon="ToggleOn" width={32} height={18} />
+            <Icon icon="ToggleOn" width={32} height={18} cursor="pointer" />
           </button>
         ) : (
           <Icon icon="ToggleOff" width={32} height={18} />
@@ -138,7 +173,7 @@ const MyPostsTable = () => {
     return (
       <div style={{ height: '40rem' }}>
         에러 발생: {error.message}
-        <div onClick={() => refetch()}>재시도 클릭</div>
+        <div onClick={() => refetchMyPosts()}>재시도 클릭</div>
       </div>
     );
 
