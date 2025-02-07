@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import {
@@ -108,7 +109,19 @@ const MyPostsTable = () => {
     {
       accessorKey: 'title',
       header: '제목',
-      cell: ({ row }) => <div>{row.getValue('title')}</div>,
+      cell: ({ row }) => {
+        const experimentPostId = row.original.experimentPostId;
+        return (
+          <Link
+            href={`/post/${experimentPostId}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div style={{ width: '100%', height: '100%', padding: '1rem 0' }}>
+              {row.getValue('title')}
+            </div>
+          </Link>
+        );
+      },
       size: 592,
     },
     {
