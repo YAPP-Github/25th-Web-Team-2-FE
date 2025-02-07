@@ -59,6 +59,13 @@ export const fonts = {
         lineHeight: '2.8rem',
         letterSpacing: '0',
       },
+      M20: {
+        fontSize: '2rem',
+        fontStyle: 'normal',
+        fontWeight: '700',
+        lineHeight: '3rem',
+        letterSpacing: '0',
+      },
     },
     large: {
       SB24: {
