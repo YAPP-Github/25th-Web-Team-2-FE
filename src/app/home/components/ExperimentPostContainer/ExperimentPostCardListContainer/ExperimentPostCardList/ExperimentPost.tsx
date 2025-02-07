@@ -19,7 +19,7 @@ const ExperimentPost = ({ postListData }: ExperimentPostProps) => {
     <ul className={experimentPostLayout}>
       {postListData?.pages.map((page) =>
         page.content.map((post) => (
-          <ExperimentPostCard key={post.postInfo.experimentPostId} post={post} />
+          <ExperimentPostCard key={post.postInfo.experimentPostId} experimentPost={post} />
         )),
       )}
     </ul>

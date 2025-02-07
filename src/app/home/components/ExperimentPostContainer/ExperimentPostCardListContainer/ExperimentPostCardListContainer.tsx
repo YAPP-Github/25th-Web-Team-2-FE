@@ -27,7 +27,7 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
     <div className={postCardContentContainer}>
       <div className={postCardContainer}>
         <span className={totalPostCount}>
-          {postListData ? `총 ${postListData?.pages[0].totalCount}개` : '로딩중...'}
+          {postListData ? `총 ${postListData?.pages[0].totalCount}개` : ''}
         </span>
         <ExperimentPost postListData={postListData} />
       </div>
