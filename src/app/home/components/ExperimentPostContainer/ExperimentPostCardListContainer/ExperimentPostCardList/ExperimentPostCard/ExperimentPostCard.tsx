@@ -13,9 +13,9 @@ import {
   postRewardContainer,
   postTitle,
   postViews,
-} from './PostCard.css';
-import { formatPostDate } from '../../home.utils';
+} from './ExperimentPostCard.css';
 
+import { formatPostDate } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import { ExperimentPost } from '@/types/post';
 

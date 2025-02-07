@@ -1,10 +1,10 @@
+import ExperimentPost from './ExperimentPostCardList/ExperimentPost';
 import {
   postCardContainer,
   postCardContentContainer,
   totalPostCount,
   watchMoreButton,
-} from './PostCardListContainer.css';
-import PostCardList from '../../PostCardList/PostCardList';
+} from './ExperimentPostCardListContainer.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import usePostListQuery from '@/app/home/hooks/usePostListQuery';
@@ -14,7 +14,7 @@ interface PostCardListContainerProps {
   isLoading: boolean;
 }
 
-const PostCardListContainer = ({ filters, isLoading }: PostCardListContainerProps) => {
+const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListContainerProps) => {
   const {
     data: postListData,
     hasNextPage,
@@ -29,7 +29,7 @@ const PostCardListContainer = ({ filters, isLoading }: PostCardListContainerProp
         <span className={totalPostCount}>
           {postListData ? `총 ${postListData?.pages[0].totalCount}개` : '로딩중...'}
         </span>
-        <PostCardList postListData={postListData} />
+        <ExperimentPost postListData={postListData} />
       </div>
 
       {!isFetching && hasNextPage && (
@@ -45,4 +45,4 @@ const PostCardListContainer = ({ filters, isLoading }: PostCardListContainerProp
   );
 };
 
-export default PostCardListContainer;
+export default ExperimentPostCardListContainer;

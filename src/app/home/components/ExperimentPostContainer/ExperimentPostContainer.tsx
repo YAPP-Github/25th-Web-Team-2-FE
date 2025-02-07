@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
-import FilterContainer from './FilterContainer/FilterContainer';
-import PostCardListContainer from './PostCardListContainer/PostCardListContainer';
+import ExperimentPostCardListContainer from './ExperimentPostCardListContainer/ExperimentPostCardListContainer';
 import {
   filterWrapper,
   postContainerLayout,
   postContainerTitle,
   recruitCheckLabel,
-} from './PostContainer.css';
+} from './ExperimentPostContainer.css';
+import FilterContainer from './FilterContainer/FilterContainer';
 import { calculateAgeFromBirthDate, filterParticipantInfo } from '../../home.utils';
 import useUserInfo from '../../hooks/useUserInfo';
 
@@ -17,7 +17,7 @@ import { ExperimentPostListFilters } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Icon from '@/components/Icon';
 
-const PostContainer = () => {
+const ExperimentPostContainer = () => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
   const participantInfo = filterParticipantInfo(userInfo);
 
@@ -85,9 +85,9 @@ const PostContainer = () => {
       </div>
 
       {/* 공고 목록 */}
-      <PostCardListContainer filters={filters} isLoading={isUserInfoLoading} />
+      <ExperimentPostCardListContainer filters={filters} isLoading={isUserInfoLoading} />
     </div>
   );
 };
 
-export default PostContainer;
+export default ExperimentPostContainer;
