@@ -39,6 +39,11 @@ export const filterWrapper = style({
   justifyContent: 'space-between',
 });
 
+export const recruitCheckLabel = style({
+  ...fonts.label.large.SB14,
+  color: colors.text06,
+});
+
 export const watchMoreButton = style({
   ...fonts.label.large.SB14,
   color: colors.text04,

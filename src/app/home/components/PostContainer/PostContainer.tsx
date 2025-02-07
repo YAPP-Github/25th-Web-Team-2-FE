@@ -11,6 +11,7 @@ import {
   postCardContentContainer,
   postContainerLayout,
   postContainerTitle,
+  recruitCheckLabel,
   totalPostCount,
   watchMoreButton,
 } from './PostContainer.css';
@@ -19,6 +20,7 @@ import useUserInfo from '../../hooks/useUserInfo';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
+import Icon from '@/components/Icon';
 
 const PostContainer = () => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
@@ -83,10 +85,12 @@ const PostContainer = () => {
           handleResetFilter={handleResetFilter}
         />
         <JoinCheckbox
+          labelClassName={recruitCheckLabel}
           label="모집 중인 공고만 보기"
           isChecked={isRecruiting}
           onChange={handleChange}
           isArrow={false}
+          emptyCheckIcon={<Icon icon="CheckSquareFill" />}
         />
       </div>
       <div className={postCardContentContainer}>
