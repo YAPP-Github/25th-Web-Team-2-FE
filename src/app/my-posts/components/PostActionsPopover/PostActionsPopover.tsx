@@ -21,8 +21,6 @@ import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { colors } from '@/styles/colors';
 
-
-
 interface PostActionsPopoverProps {
   experimentPostId: string;
 }
@@ -104,7 +102,7 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
           duration={2500}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
+            <Icon icon="Alert" color={colors.field09} width={24} height={24} />
             <p>공고 삭제를 실패하였습니다. 잠시 후 다시 시도해주세요.</p>
           </Toast.Title>
         </Toast.Root>
