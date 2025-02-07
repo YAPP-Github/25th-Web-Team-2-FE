@@ -82,7 +82,12 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
               <button
                 type="button"
                 className={`${univAuthButton} ${isEmailSent ? editButton : ''}`}
-                disabled={(!isEmailSent && !field.value) || isEmailVerified || isLoadingSend}
+                disabled={
+                  (!isEmailSent && !field.value) ||
+                  isEmailVerified ||
+                  isLoadingSend ||
+                  fieldState.invalid
+                }
                 onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
               >
                 {isLoadingSend ? '전송 중...' : isEmailSent ? '수정' : '인증번호 전송'}
