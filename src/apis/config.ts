@@ -3,6 +3,15 @@ import axios from 'axios';
 import { updateAccessToken } from './login';
 import { CustomAxiosError } from './type';
 
+const ERROR_MESSAGES = {
+  VE0004: '인증번호가 일치하지 않아요',
+  VE0005: '인증시간이 만료되었어요',
+  VE0007: '이미 인증된 메일입니다.',
+  AU0001: '유효한 입력값이 아닙니다.',
+  AU0002: '유효한 입력값이 아닙니다.',
+  AU0003: '유효한 입력값이 아닙니다.',
+};
+
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
@@ -18,13 +27,23 @@ API.interceptors.response.use(
       const { data, config } = error.response;
       const originalRequest = config;
 
-      if (data.code === 'VE007') {
-        return Promise.reject({ data: { isAuth: true }, message: '이미 인증된 메일입니다.' });
-      } else if (data.code === 'AU0001') {
+      if (data.code === 'VE0004') {
+        return Promise.reject({
+          data: { isAuth: false },
+          message: ERROR_MESSAGES[data.code],
+        });
+      } else if (data.code === 'VE0005') {
+        return Promise.reject({
+          data: { isAuth: false },
+          message: ERROR_MESSAGES[data.code],
+        });
+      } else if (data.code === 'VE0007') {
+        return Promise.reject({ data: { isAuth: true }, message: ERROR_MESSAGES[data.code] });
+      } else if (data.code === 'AU0001' || data.code === 'AU0002' || data.code === 'AU0003') {
         const refreshToken = sessionStorage.getItem('refreshToken');
 
         if (refreshToken === null) {
-          return Promise.reject({ data: { isAuth: false }, message: '유효한 입력값이 아닙니다.' });
+          return Promise.reject({ data: { isAuth: false }, message: ERROR_MESSAGES[data.code] });
         }
 
         const userInfo = await updateAccessToken(refreshToken);
