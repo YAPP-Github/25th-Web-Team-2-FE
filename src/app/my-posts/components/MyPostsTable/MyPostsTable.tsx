@@ -29,64 +29,97 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from '../Pagination/Pagination';
+import PostActionsPopover from '../PostActionsPopover/PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table/Table';
 
 import Icon from '@/components/Icon';
+import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 
-export const columns: ColumnDef<MyPosts>[] = [
-  {
-    accessorKey: 'title',
-    header: '제목',
-    cell: ({ row }) => <div>{row.getValue('title')}</div>,
-    size: 592,
-  },
-  {
-    accessorKey: 'uploadDate',
-    header: '게시 날짜',
-    cell: ({ row }) => <div>{row.getValue('uploadDate')}</div>,
-    size: 108,
-  },
-  {
-    accessorKey: 'views',
-    header: '조회수',
-    cell: ({ row }) => <div>{row.getValue('views')}</div>,
-    size: 80,
-  },
-  {
-    accessorKey: 'recruitStatus',
-    header: '모집 중',
-    cell: ({ row }) => {
-      const recruitStatus = row.getValue('recruitStatus');
-      return recruitStatus ? (
-        <Icon icon="ToggleOn" width={32} height={18} cursor="pointer" />
-      ) : (
-        <Icon icon="ToggleOff" width={32} height={18} cursor="pointer" />
-      );
-    },
-    size: 68,
-  },
-  {
-    id: 'actions',
-    header: '',
-    cell: () => (
-      <div>
-        <Icon icon="MenuDots" width={16} height={16} cursor="pointer" />
-      </div>
-    ),
-    size: 32,
-  },
-];
+const pageSize = 10;
 
 const MyPostsTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
   const { data, isLoading, error, refetch } = useMyPostsQuery({
     page: currentPage,
     count: pageSize,
   });
+
+  const handleRecruitStatusUpdate = (experimentPostId: string, recruitStatus: boolean) => {
+    if (recruitStatus) {
+      setSelectedPostId(experimentPostId);
+      setUpdateStatusConfirmOpen(true);
+    }
+  };
+
+  const confirmRecruitStatusUpdate = () => {
+    if (selectedPostId) {
+      console.log(`모집 상태 변경: ${selectedPostId} → false`);
+      // TODO: 모집 상태 false로 변경하는 API 호출
+    }
+    setUpdateStatusConfirmOpen(false);
+  };
+
+  const columns: ColumnDef<MyPosts>[] = [
+    {
+      accessorKey: 'title',
+      header: '제목',
+      cell: ({ row }) => <div>{row.getValue('title')}</div>,
+      size: 592,
+    },
+    {
+      accessorKey: 'uploadDate',
+      header: '게시 날짜',
+      cell: ({ row }) => <div>{row.getValue('uploadDate')}</div>,
+      size: 108,
+    },
+    {
+      accessorKey: 'views',
+      header: '조회수',
+      cell: ({ row }) => <div>{row.getValue('views')}</div>,
+      size: 80,
+    },
+    {
+      accessorKey: 'recruitStatus',
+      header: '모집 중',
+      cell: ({ row }) => {
+        const recruitStatus = Boolean(row.getValue('recruitStatus'));
+
+        const experimentPostId = row.original.experimentPostId;
+        return recruitStatus ? (
+          <button
+            onClick={() => {
+              handleRecruitStatusUpdate(experimentPostId, recruitStatus);
+            }}
+            style={{
+              all: 'unset', // 기본 버튼 스타일 제거
+              cursor: 'pointer',
+              display: 'inline-flex',
+            }}
+          >
+            <Icon icon="ToggleOn" width={32} height={18} />
+          </button>
+        ) : (
+          <Icon icon="ToggleOff" width={32} height={18} />
+        );
+      },
+      size: 68,
+    },
+    {
+      id: 'actions',
+      header: '',
+      cell: ({ row }) => {
+        const experimentPostId = row.original.experimentPostId;
+
+        return <PostActionsPopover experimentPostId={experimentPostId} />;
+      },
+      size: 32,
+    },
+  ];
 
   const table = useReactTable({
     data: data?.content ?? [],
@@ -198,6 +231,16 @@ const MyPostsTable = () => {
           />
         </PaginationContent>
       </Pagination>
+
+      {/* 모집 상태 변경 ConfirmModal */}
+      <ConfirmModal
+        isOpen={updateStatusConfirmOpen}
+        onOpenChange={setUpdateStatusConfirmOpen}
+        confirmTitle={`모집 완료를 누르면 \n 다시 모집 상태를 바꿀 수 없어요`}
+        cancelText="닫기"
+        confirmText="변경하기"
+        onConfirm={confirmRecruitStatusUpdate}
+      />
     </div>
   );
 };
