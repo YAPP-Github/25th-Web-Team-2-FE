@@ -28,3 +28,7 @@ export const watchMoreButton = style({
   padding: '1.2rem 0',
   borderRadius: '1.2rem',
 });
+
+export const loadingMoreButton = style({
+  height: '4.6rem',
+});

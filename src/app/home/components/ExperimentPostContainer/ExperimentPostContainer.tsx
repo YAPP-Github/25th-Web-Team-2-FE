@@ -43,7 +43,7 @@ const ExperimentPostContainer = () => {
           isChecked={isRecruiting}
           onChange={handleToggleRecruitStatus}
           isArrow={false}
-          emptyCheckIcon={<Icon icon="CheckSquareFill" />}
+          emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
         />
       </div>
 

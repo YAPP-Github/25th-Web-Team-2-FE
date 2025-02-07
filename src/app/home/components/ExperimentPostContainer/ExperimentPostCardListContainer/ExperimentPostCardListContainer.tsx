@@ -1,5 +1,6 @@
 import ExperimentPost from './ExperimentPostCardList/ExperimentPost';
 import {
+  loadingMoreButton,
   postCardContainer,
   postCardContentContainer,
   totalPostCount,
@@ -32,6 +33,7 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
         <ExperimentPost postListData={postListData} />
       </div>
 
+      {isFetching && <div className={loadingMoreButton} />}
       {!isFetching && hasNextPage && (
         <button
           className={watchMoreButton}
