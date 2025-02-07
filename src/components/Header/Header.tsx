@@ -10,6 +10,7 @@ import {
   headerLayout,
   image,
   loginButton,
+  myPostsButton,
 } from './Header.css';
 import Logo from '../../assets/images/logo.svg';
 import Icon from '../Icon';
@@ -30,10 +31,15 @@ const Header = () => {
         </Link>
 
         {userInfo ? (
-          <div className={buttonWrapper}>
-            <button>{userInfo.memberInfo.name}</button>
-            <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
-          </div>
+          <>
+            <Link href="/my-posts">
+              <button className={myPostsButton}>내가 쓴 글</button>
+            </Link>
+            <div className={buttonWrapper}>
+              <button>{userInfo.memberInfo.name}</button>
+              <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
+            </div>
+          </>
         ) : (
           <Link href="/login" className={loginButton}>
             로그인

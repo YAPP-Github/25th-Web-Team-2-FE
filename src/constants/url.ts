@@ -7,12 +7,14 @@ export const API_URL = {
   verify: '/v1/emails/verify',
   joinResearcher: '/v1/members/signup/researcher',
   joinParticipant: '/v1/members/signup/participant',
-  me: (role: string) => `/v1/members/${role}/me`,
+  me: (role: string) => `/v1/members/me/${role}`,
   refresh: '/v1/auth/refresh',
   uploadPost: '/v1/experiment-posts',
   viewExperimentDetails: (postId: string) => `/v1/experiment-posts/${postId}/details`,
   applyMethod: (postId: string) => `/v1/experiment-posts/${postId}/apply-method`,
   uploadImage: '/v1/experiment-posts/image-upload-request',
+  myPosts: (page?: number, count?: number, order?: string) =>
+    `/v1/experiment-posts/my-posts?page=${page}&count=${count}&order=${order}`,
 };
 
 export const MOCK_API_URL = {

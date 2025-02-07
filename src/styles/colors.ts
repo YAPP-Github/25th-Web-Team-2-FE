@@ -36,6 +36,7 @@ export const colors = {
   icon01: '#FFFFFF',
   icon02: '#CDD6DA',
   icon03: '#A0B1B9',
+  icon04: '#B1B7C3',
 
   // Line
   line01: '#E4E8EB',

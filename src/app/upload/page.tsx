@@ -1,5 +1,3 @@
-import React from 'react';
-
 import UploadContainer from './components/UploadContainer/UploadContainer';
 
 function UploadPage() {

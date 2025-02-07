@@ -12,6 +12,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'dobby-dev-bucket.s3.ap-northeast-2.amazonaws.com',
+        pathname: '/resized-images/**',
       },
     ],
   },
