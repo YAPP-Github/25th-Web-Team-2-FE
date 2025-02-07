@@ -2,18 +2,13 @@
 
 import { useEffect, useState } from 'react';
 
-import usePostListQuery from '../../hooks/usePostListQuery';
-import PostCardList from '../PostCardList/PostCardList';
 import FilterContainer from './FilterContainer/FilterContainer';
+import PostCardListContainer from './PostCardListContainer/PostCardListContainer';
 import {
   filterWrapper,
-  postCardContainer,
-  postCardContentContainer,
   postContainerLayout,
   postContainerTitle,
   recruitCheckLabel,
-  totalPostCount,
-  watchMoreButton,
 } from './PostContainer.css';
 import { calculateAgeFromBirthDate, filterParticipantInfo } from '../../home.utils';
 import useUserInfo from '../../hooks/useUserInfo';
@@ -29,14 +24,6 @@ const PostContainer = () => {
   const [filters, setFilters] = useState<ExperimentPostListFilters>(
     {} as ExperimentPostListFilters,
   );
-
-  const {
-    data: postListData,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isFetching,
-  } = usePostListQuery(filters, isUserInfoLoading);
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
@@ -79,11 +66,14 @@ const PostContainer = () => {
     <div className={postContainerLayout}>
       <h2 className={postContainerTitle}>공고를 확인해 보세요</h2>
       <div className={filterWrapper}>
+        {/* 필터링 */}
         <FilterContainer
           filters={filters}
           handleFilterChange={handleFilterChange}
           handleResetFilter={handleResetFilter}
         />
+
+        {/* 모집 중인 공고만 보기 */}
         <JoinCheckbox
           labelClassName={recruitCheckLabel}
           label="모집 중인 공고만 보기"
@@ -93,24 +83,9 @@ const PostContainer = () => {
           emptyCheckIcon={<Icon icon="CheckSquareFill" />}
         />
       </div>
-      <div className={postCardContentContainer}>
-        <div className={postCardContainer}>
-          <span className={totalPostCount}>
-            {postListData ? `총 ${postListData?.pages[0].totalCount}개` : '로딩중...'}
-          </span>
-          <PostCardList postListData={postListData} />
-        </div>
 
-        {!isFetching && hasNextPage && (
-          <button
-            className={watchMoreButton}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            더보기
-          </button>
-        )}
-      </div>
+      {/* 공고 목록 */}
+      <PostCardListContainer filters={filters} isLoading={isUserInfoLoading} />
     </div>
   );
 };
