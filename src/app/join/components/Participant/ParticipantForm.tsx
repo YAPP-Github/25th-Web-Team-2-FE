@@ -44,6 +44,10 @@ const ParticipantForm = () => {
     const formattedData = {
       ...formData,
       birthDate: formData.birthDate.replaceAll('.', '-'),
+      additionalAddressInfo:
+        Object.values(formData.additionalAddressInfo ?? {}).filter(Boolean).length > 0
+          ? formData.additionalAddressInfo
+          : null,
     };
 
     joinParticipant(formattedData, {
