@@ -8,7 +8,7 @@ import {
 } from './ExperimentPostCardListContainer.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import usePostListQuery from '@/app/home/hooks/usePostListQuery';
+import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
@@ -22,7 +22,7 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
     fetchNextPage,
     isFetchingNextPage,
     isFetching,
-  } = usePostListQuery(filters, isLoading);
+  } = useExperimentPostListQuery(filters, isLoading);
 
   return (
     <div className={postCardContentContainer}>

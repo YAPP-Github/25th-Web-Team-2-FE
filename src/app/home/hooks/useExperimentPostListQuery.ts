@@ -5,7 +5,7 @@ import { QUERY_KEY } from '@/constants/queryKey';
 
 const POST_PER_PAGE = 15;
 
-const usePostListQuery = (filters: ExperimentPostListFilters, isLoading: boolean) => {
+const useExperimentPostListQuery = (filters: ExperimentPostListFilters, isLoading: boolean) => {
   const { matchType, gender, age, region, areas, recruitStatus } = filters;
 
   const isFilters = Object.keys(filters).length > 0;
@@ -26,4 +26,4 @@ const usePostListQuery = (filters: ExperimentPostListFilters, isLoading: boolean
   });
 };
 
-export default usePostListQuery;
+export default useExperimentPostListQuery;
