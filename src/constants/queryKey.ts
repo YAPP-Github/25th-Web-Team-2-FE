@@ -4,4 +4,5 @@ export const QUERY_KEY = {
   postArea: 'postArea',
   updateRecruitStatus: 'updateRecruitStatus',
   deletePost: 'deletePost',
+  experimentPostDetail: 'experimentPostDetail',
 };
