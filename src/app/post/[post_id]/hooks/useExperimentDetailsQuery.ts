@@ -3,8 +3,8 @@ import { AxiosError } from 'axios';
 
 import { API } from '@/apis/config';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
-import { API_URL } from '@/constants/url';
 import { QUERY_KEY } from '@/constants/queryKey';
+import { API_URL } from '@/constants/url';
 
 interface UseExperimentDetailsQueryParams {
   postId: string;
