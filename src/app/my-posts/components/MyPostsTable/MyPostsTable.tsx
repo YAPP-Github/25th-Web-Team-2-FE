@@ -243,7 +243,7 @@ const MyPostsTable = () => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className={noResults}>
-                  검색 결과가 없습니다.
+                  작성한 글이 없습니다.
                 </TableCell>
               </TableRow>
             )}
