@@ -10,6 +10,8 @@ function MenuDots(props: SVGProps<SVGSVGElement>) {
       viewBox="0 0 4 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="메뉴 더보기"
       {...props}
     >
       <path

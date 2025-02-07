@@ -13,6 +13,7 @@ import {
 } from './Pagination.css';
 
 import Icon from '@/components/Icon';
+import { a11yHidden } from '@/styles/a11y.css';
 import { colors } from '@/styles/colors';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
@@ -76,7 +77,7 @@ PaginationNext.displayName = 'PaginationNext';
 const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
   <span aria-hidden className={`${paginationEllipsis} ${className}`} {...props}>
     ∙∙∙
-    <span className="sr-only">More pages</span>
+    <span className={a11yHidden}>더 많은 페이지</span>
   </span>
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';

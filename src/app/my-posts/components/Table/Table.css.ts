@@ -62,16 +62,3 @@ export const tableCell = style({
   height: '5rem',
   verticalAlign: 'middle',
 });
-
-export const tableFooter = style({
-  borderTop: '0.1rem solid #ddd',
-  backgroundColor: '#f9f9f9',
-  fontWeight: '500',
-});
-
-export const tableCaption = style({
-  marginTop: '1.6rem',
-  fontSize: '0.875rem',
-  color: '#888',
-  textAlign: 'center',
-});

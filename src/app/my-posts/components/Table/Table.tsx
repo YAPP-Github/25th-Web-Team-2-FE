@@ -5,10 +5,8 @@ import * as React from 'react';
 import {
   table,
   tableBody,
-  tableCaption,
   tableCell,
   tableContainer,
-  tableFooter,
   tableHead,
   tableHeader,
   tableRow,
@@ -40,14 +38,6 @@ const TableBody = React.forwardRef<
 ));
 TableBody.displayName = 'TableBody';
 
-const TableFooter = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tfoot ref={ref} className={`${tableFooter} ${className}`} {...props} />
-));
-TableFooter.displayName = 'TableFooter';
-
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
   ({ className, ...props }, ref) => (
     <tr ref={ref} className={`${tableRow} ${className}`} {...props} />
@@ -71,12 +61,4 @@ const TableCell = React.forwardRef<
 ));
 TableCell.displayName = 'TableCell';
 
-const TableCaption = React.forwardRef<
-  HTMLTableCaptionElement,
-  React.HTMLAttributes<HTMLTableCaptionElement>
->(({ className, ...props }, ref) => (
-  <caption ref={ref} className={`${tableCaption} ${className}`} {...props} />
-));
-TableCaption.displayName = 'TableCaption';
-
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
+export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell };
