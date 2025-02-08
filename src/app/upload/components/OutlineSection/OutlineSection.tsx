@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { disabledInput, outlineFormLayout, uploadInputContainer } from './OutlineSection.css';
@@ -18,9 +18,27 @@ import {
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 
 const OutlineSection = () => {
   const { control, setValue } = useFormContext();
+
+  const { userInfo, isLoading } = useUserInfo();
+
+  const isResearcher = (
+    user: ParticipantResponse | ResearcherResponse,
+  ): user is ResearcherResponse => {
+    return (user as ResearcherResponse).memberInfo.role === 'RESEARCHER';
+  };
+
+  useEffect(() => {
+    if (!userInfo || !isResearcher(userInfo)) return;
+
+    const researcherName = `${userInfo.univName} ${userInfo.major} ${userInfo.memberInfo.name}`;
+    setValue('leadResearcher', researcherName);
+    setValue('univName', userInfo.univName);
+  }, [userInfo, setValue]);
 
   // 실험 일시 및 소요시간 본문 참고 여부
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
