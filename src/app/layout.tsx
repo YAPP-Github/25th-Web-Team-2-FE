@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: '그라밋',
   description:
     '작은 연결로 시작되는 큰 발견 | 대학원생 연구자가 대학생 참여자를 모집하여 실험을 진행할 수 있도록 돕는 플랫폼',
+  icons: [{ url: '/favicon.svg', sizes: '20x20' }],
 };
 
 export default function RootLayout({

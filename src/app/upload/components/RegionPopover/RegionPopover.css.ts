@@ -33,27 +33,42 @@ export const uploadInputField = recipe({
     '::placeholder': {
       color: colors.text02,
     },
-    ':focus': {
-      outline: `0.1rem solid ${colors.lineTinted}`,
-      outlineOffset: '0',
-      border: 'none',
-    },
   },
   variants: {
-    isError: {
-      true: {
-        border: `0.1rem solid ${colors.textAlert}`,
-      },
-    },
     error: {
-      true: {
-        border: `0.1rem solid ${colors.textAlert}`,
-      },
+      true: {},
+      false: {},
+    },
+    isOpen: {
+      true: {},
+      false: {},
     },
   },
+  compoundVariants: [
+    {
+      variants: {
+        isOpen: true,
+      },
+      style: {
+        outline: `0.1rem solid ${colors.lineTinted}`,
+        outlineOffset: '0',
+        border: 'none',
+      },
+    },
+    {
+      variants: {
+        error: true,
+        isOpen: false,
+      },
+      style: {
+        outline: `0.1rem solid ${colors.textAlert}`,
+        border: 'none',
+      },
+    },
+  ],
   defaultVariants: {
-    isError: false,
     error: false,
+    isOpen: false,
   },
 });
 

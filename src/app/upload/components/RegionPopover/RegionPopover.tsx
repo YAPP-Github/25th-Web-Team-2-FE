@@ -77,7 +77,13 @@ const RegionPopover = ({ regionPopoverProps }: RegionPopoverProps) => {
             }
           }}
         >
-          <div role="button" className={uploadInputField({ error: !!error })}>
+          <div
+            role="button"
+            className={uploadInputField({
+              error: !!error,
+              isOpen: isOpenRegionPopover,
+            })}
+          >
             <span
               className={placeholderText({ hasValue: !!(selectedRegion && selectedSubRegion) })}
             >

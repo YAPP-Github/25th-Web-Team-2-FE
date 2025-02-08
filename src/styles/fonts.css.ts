@@ -62,6 +62,13 @@ export const fonts = {
       M20: {
         fontSize: '2rem',
         fontStyle: 'normal',
+        fontWeight: '500',
+        lineHeight: '3rem',
+        letterSpacing: '0',
+      },
+      B20: {
+        fontSize: '2rem',
+        fontStyle: 'normal',
         fontWeight: '700',
         lineHeight: '3rem',
         letterSpacing: '0',

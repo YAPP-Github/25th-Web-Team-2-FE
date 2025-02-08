@@ -58,7 +58,11 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
               fieldState?.error ? selectTrigger.error : ''
             }`}
           >
-            <Select.Value placeholder={disabled ? '본문 참고' : placeholder} />
+            {disabled && field.name === 'timeRequired' ? (
+              <span style={{ color: colors.text02 }}>본문 참고</span>
+            ) : (
+              <Select.Value placeholder={disabled ? '본문 참고' : placeholder} />
+            )}
             <Select.Icon asChild>
               <Icon
                 icon="Chevron"

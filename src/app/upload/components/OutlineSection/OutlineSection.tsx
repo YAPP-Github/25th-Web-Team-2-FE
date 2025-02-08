@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { disabledInput, outlineFormLayout, uploadInputContainer } from './OutlineSection.css';
@@ -15,12 +15,30 @@ import {
   uploadSectionLayout,
 } from '../UploadContainer/UploadContainer.css';
 
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
 const OutlineSection = () => {
   const { control, setValue } = useFormContext();
+
+  const { userInfo } = useUserInfo();
+
+  const isResearcher = (
+    user: ParticipantResponse | ResearcherResponse,
+  ): user is ResearcherResponse => {
+    return (user as ResearcherResponse).memberInfo.role === 'RESEARCHER';
+  };
+
+  useEffect(() => {
+    if (!userInfo || !isResearcher(userInfo)) return;
+
+    const researcherName = `${userInfo.univName} ${userInfo.major} ${userInfo.memberInfo.name}`;
+    setValue('leadResearcher', researcherName);
+    setValue('univName', userInfo.univName);
+  }, [userInfo, setValue]);
 
   // 실험 일시 및 소요시간 본문 참고 여부
   const [experimentDateChecked, setExperimentDateChecked] = useState(false);
@@ -50,17 +68,17 @@ const OutlineSection = () => {
     setValue('area', subRegion, { shouldValidate: true });
   };
 
-  const handleMatchTypeChange = (value: MatchType) => {
-    setValue('matchType', value, { shouldValidate: true });
+  const handleMatchTypeChange = (value: MatchType | null) => {
+    setValue('matchType', value);
 
     if (value === MatchType.ONLINE) {
-      setValue('region', null, { shouldValidate: true });
-      setValue('area', null, { shouldValidate: true });
-      setValue('univName', null, { shouldValidate: true });
+      setValue('region', null);
+      setValue('area', null);
+      setValue('univName', null);
     } else {
-      setValue('region', '', { shouldValidate: true });
-      setValue('area', '', { shouldValidate: true });
-      setValue('univName', '', { shouldValidate: true });
+      setValue('region', '');
+      setValue('area', '');
+      setValue('univName', '');
     }
   };
 
@@ -69,9 +87,9 @@ const OutlineSection = () => {
     setDurationChecked(newCheckedState);
 
     if (newCheckedState) {
-      setValue('timeRequired', null, { shouldValidate: true });
+      setValue('timeRequired', null);
     } else {
-      setValue('timeRequired', '', { shouldValidate: true });
+      setValue('timeRequired', '');
     }
   };
 
@@ -121,23 +139,15 @@ const OutlineSection = () => {
             name="startDate"
             control={control}
             render={({ field, fieldState }) => (
-              <Controller
-                name="endDate"
-                control={control}
-                render={() => (
-                  <>
-                    <DatePickerForm
-                      placeholder="실험 시작일 ~ 실험 종료일"
-                      onDateChange={(dates) => {
-                        setValue('startDate', dates.from || null, { shouldValidate: true });
-                        setValue('endDate', dates.to || null, { shouldValidate: true });
-                      }}
-                      experimentDateChecked={experimentDateChecked}
-                      error={fieldState.error}
-                      field={field}
-                    />
-                  </>
-                )}
+              <DatePickerForm
+                placeholder="실험 시작일 ~ 실험 종료일"
+                onDateChange={(dates) => {
+                  setValue('startDate', dates.from || null, { shouldValidate: true });
+                  setValue('endDate', dates.to || null, { shouldValidate: true });
+                }}
+                experimentDateChecked={experimentDateChecked}
+                error={fieldState.error}
+                field={field}
               />
             )}
           />
@@ -149,11 +159,11 @@ const OutlineSection = () => {
               const newCheckedState = !experimentDateChecked;
               setExperimentDateChecked(newCheckedState);
               if (newCheckedState) {
-                setValue('startDate', null);
-                setValue('endDate', null);
+                setValue('startDate', null, { shouldValidate: true });
+                setValue('endDate', null, { shouldValidate: true });
               } else {
-                setValue('startDate', undefined);
-                setValue('endDate', undefined);
+                setValue('startDate', undefined, { shouldValidate: true });
+                setValue('endDate', undefined, { shouldValidate: true });
               }
             }}
             label="본문 참고"

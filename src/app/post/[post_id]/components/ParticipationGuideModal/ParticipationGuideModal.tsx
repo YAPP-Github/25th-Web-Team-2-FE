@@ -12,6 +12,7 @@ import {
   copyToastTitle,
   copyToastViewport,
   warningMessage,
+  applyMethodContainer,
 } from './ParticipationGuideModal.css';
 import { closeButton, dialogOverlay } from '../../ExperimentPostPage.css';
 import { CommonModalProps } from '../../ExperimentPostPage.types';
@@ -54,10 +55,24 @@ const ParticipationGuideModal = ({
               </button>
             </Dialog.Close>
             <Dialog.Title asChild>
-              <h3 className={participationModalTitle}>{applyMethodData.content}</h3>
+              <h3
+                className={participationModalTitle}
+                style={{
+                  textAlign:
+                    applyMethodData.formUrl || applyMethodData.phoneNum ? 'left' : 'center',
+                }}
+              >
+                {applyMethodData.content}
+              </h3>
             </Dialog.Title>
 
-            <div>
+            <div
+              className={applyMethodContainer}
+              style={{
+                alignItems:
+                  applyMethodData.formUrl || applyMethodData.phoneNum ? 'flex-start' : 'center',
+              }}
+            >
               {/* 링크 */}
               {applyMethodData.formUrl && (
                 <div className={contactInfoRowContainer}>
@@ -97,12 +112,10 @@ const ParticipationGuideModal = ({
               )}
 
               {/* 개인정보보호 안내 */}
-              {(applyMethodData.formUrl || applyMethodData.phoneNum) && (
-                <div className={warningMessage}>
-                  <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
-                  개인정보보호에 유의해주세요
-                </div>
-              )}
+              <div className={warningMessage}>
+                <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
+                개인정보보호에 유의해주세요
+              </div>
             </div>
           </Dialog.Content>
 
