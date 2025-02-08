@@ -24,7 +24,7 @@ import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 const OutlineSection = () => {
   const { control, setValue } = useFormContext();
 
-  const { userInfo, isLoading } = useUserInfo();
+  const { userInfo } = useUserInfo();
 
   const isResearcher = (
     user: ParticipantResponse | ResearcherResponse,
@@ -72,13 +72,13 @@ const OutlineSection = () => {
     setValue('matchType', value, { shouldValidate: true });
 
     if (value === MatchType.ONLINE) {
-      setValue('region', null, { shouldValidate: true });
-      setValue('area', null, { shouldValidate: true });
-      setValue('univName', null, { shouldValidate: true });
+      setValue('region', null);
+      setValue('area', null);
+      setValue('univName', null);
     } else {
-      setValue('region', '', { shouldValidate: true });
-      setValue('area', '', { shouldValidate: true });
-      setValue('univName', '', { shouldValidate: true });
+      setValue('region', '');
+      setValue('area', '');
+      setValue('univName', '');
     }
   };
 
