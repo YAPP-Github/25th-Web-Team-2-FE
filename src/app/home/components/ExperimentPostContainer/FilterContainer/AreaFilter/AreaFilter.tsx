@@ -48,6 +48,8 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   const [selectedRegion, setSelectedRegion] = useState<RegionType | 'ALL' | null>(null);
   const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
   const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
+
+  const isValidSaveButton = selectedRegion && selectedAreaList.length > 0;
   const isValidAreas =
     selectedAreaList.length < MAX_SELECTED_AREAS && isCheckedAreaAll(selectedAreas);
 
@@ -183,7 +185,11 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
               >
                 초기화
               </button>
-              <button onClick={handleClickSave} className={buttonRecipe({ type: 'save' })}>
+              <button
+                onClick={handleClickSave}
+                className={buttonRecipe({ type: 'save' })}
+                disabled={!isValidSaveButton}
+              >
                 저장
               </button>
             </div>

@@ -39,24 +39,27 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
 
   const [filteredGender, setFilteredGender] = useState<GenderValue | null>(null);
-  const [filteredAge, setFilteredAge] = useState<number | null>(null);
+  const [filteredAge, setFilteredAge] = useState('');
 
   const handleChangeFilteredAge = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= AGE_MAX_LENGTH) {
-      setFilteredAge(Number(e.target.value));
+    const value = e.target.value;
+    const isValidNumber = /^\d*$/.test(value);
+
+    if (isValidNumber) {
+      setFilteredAge(value);
     }
   };
 
   const handleResetFilter = () => {
     setFilteredGender(null);
-    setFilteredAge(null);
+    setFilteredAge('');
   };
 
   const handleSaveFilter = () => {
     setIsOpen(false);
 
     onChange('gender', filteredGender);
-    onChange('age', filteredAge);
+    onChange('age', filteredAge !== '' ? Number(filteredAge) : null);
   };
 
   // 참여자 성별/나이 자동 필터링
@@ -68,7 +71,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
 
   useEffect(() => {
     if (filterAge) {
-      setFilteredAge(filterAge);
+      setFilteredAge(filterAge.toString());
     }
   }, [filterAge]);
 
@@ -107,8 +110,9 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
             <div className={ageInputContainer}>
               <input
                 className={ageInput}
-                value={filteredAge ?? ''}
-                type="number"
+                value={filteredAge}
+                type="text"
+                maxLength={AGE_MAX_LENGTH}
                 onChange={handleChangeFilteredAge}
                 placeholder="만 나이 입력"
               />
