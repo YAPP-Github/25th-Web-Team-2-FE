@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import {
   ColumnDef,
   SortingState,
@@ -10,6 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import {
@@ -20,7 +22,8 @@ import {
   textAlignLeft,
   textAlignRight,
 } from './MyPostsTable.css';
-import useMyPostsQuery, { MyPosts } from '../../hooks/useMyPostsQuery';
+import useMyPostsQuery, { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
+import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
 import {
   Pagination,
   PaginationContent,
@@ -29,64 +32,142 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from '../Pagination/Pagination';
+import PostActionsPopover from '../PostActionsPopover/PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table/Table';
 
 import Icon from '@/components/Icon';
+import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 
-export const columns: ColumnDef<MyPosts>[] = [
-  {
-    accessorKey: 'title',
-    header: '제목',
-    cell: ({ row }) => <div>{row.getValue('title')}</div>,
-    size: 592,
-  },
-  {
-    accessorKey: 'uploadDate',
-    header: '게시 날짜',
-    cell: ({ row }) => <div>{row.getValue('uploadDate')}</div>,
-    size: 108,
-  },
-  {
-    accessorKey: 'views',
-    header: '조회수',
-    cell: ({ row }) => <div>{row.getValue('views')}</div>,
-    size: 80,
-  },
-  {
-    accessorKey: 'recruitStatus',
-    header: '모집 중',
-    cell: ({ row }) => {
-      const recruitStatus = row.getValue('recruitStatus');
-      return recruitStatus ? (
-        <Icon icon="ToggleOn" width={32} height={18} cursor="pointer" />
-      ) : (
-        <Icon icon="ToggleOff" width={32} height={18} cursor="pointer" />
-      );
-    },
-    size: 68,
-  },
-  {
-    id: 'actions',
-    header: '',
-    cell: () => (
-      <div>
-        <Icon icon="MenuDots" width={16} height={16} cursor="pointer" />
-      </div>
-    ),
-    size: 32,
-  },
-];
+const pageSize = 10;
 
 const MyPostsTable = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
-  const { data, isLoading, error, refetch } = useMyPostsQuery({
+  const queryClient = useQueryClient();
+
+  const {
+    data,
+    isLoading,
+    error,
+    refetch: refetchMyPosts,
+  } = useMyPostsQuery({
     page: currentPage,
     count: pageSize,
   });
+
+  /* 모집 상태 변경 */
+  const { mutateAsync: updateRecruitStatusMutation } = useUpdateRecruitStatusMutation();
+
+  const handleRecruitStatusUpdate = (experimentPostId: string, recruitStatus: boolean) => {
+    if (recruitStatus) {
+      setSelectedPostId(experimentPostId);
+      setUpdateStatusConfirmOpen(true);
+    }
+  };
+
+  const confirmRecruitStatusUpdate = () => {
+    if (!selectedPostId) return;
+
+    // todo 정렬 기능 추가시 변경
+    const queryKey = ['myPosts', currentPage, pageSize, 'DESC'];
+
+    const previousData = queryClient.getQueryData<UseMyPostsQueryResponse>(queryKey);
+
+    queryClient.setQueryData<UseMyPostsQueryResponse>(queryKey, (oldData) => {
+      if (!oldData) return oldData;
+      return {
+        ...oldData,
+        content: oldData.content.map((post) =>
+          post.experimentPostId === selectedPostId ? { ...post, recruitStatus: false } : post,
+        ),
+      };
+    });
+
+    updateRecruitStatusMutation(
+      { postId: selectedPostId },
+      {
+        onSuccess: () => {
+          refetchMyPosts();
+          setUpdateStatusConfirmOpen(false);
+        },
+        onError: () => {
+          if (previousData) {
+            queryClient.setQueryData(queryKey, previousData);
+          }
+        },
+      },
+    );
+
+    setUpdateStatusConfirmOpen(false);
+  };
+
+  const columns: ColumnDef<MyPosts>[] = [
+    {
+      accessorKey: 'title',
+      header: '제목',
+      cell: ({ row }) => {
+        const experimentPostId = row.original.experimentPostId;
+        return (
+          <Link
+            href={`/post/${experimentPostId}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div style={{ width: '100%', height: '100%', padding: '1rem 0' }}>
+              {row.getValue('title')}
+            </div>
+          </Link>
+        );
+      },
+      size: 592,
+    },
+    {
+      accessorKey: 'uploadDate',
+      header: '게시 날짜',
+      cell: ({ row }) => <div>{row.getValue('uploadDate')}</div>,
+      size: 108,
+    },
+    {
+      accessorKey: 'views',
+      header: '조회수',
+      cell: ({ row }) => <div>{row.getValue('views')}</div>,
+      size: 80,
+    },
+    {
+      accessorKey: 'recruitStatus',
+      header: '모집 중',
+      cell: ({ row }) => {
+        const recruitStatus = Boolean(row.getValue('recruitStatus'));
+
+        const experimentPostId = row.original.experimentPostId;
+        return recruitStatus ? (
+          <button
+            onClick={() => {
+              handleRecruitStatusUpdate(experimentPostId, recruitStatus);
+            }}
+          >
+            <Icon icon="ToggleOn" width={32} height={18} cursor="pointer" />
+          </button>
+        ) : (
+          <Icon icon="ToggleOff" width={32} height={18} />
+        );
+      },
+      size: 68,
+    },
+    {
+      id: 'actions',
+      header: '',
+      cell: ({ row }) => {
+        const experimentPostId = row.original.experimentPostId;
+
+        return <PostActionsPopover experimentPostId={experimentPostId} />;
+      },
+      size: 32,
+    },
+  ];
 
   const table = useReactTable({
     data: data?.content ?? [],
@@ -105,7 +186,7 @@ const MyPostsTable = () => {
     return (
       <div style={{ height: '40rem' }}>
         에러 발생: {error.message}
-        <div onClick={() => refetch()}>재시도 클릭</div>
+        <div onClick={() => refetchMyPosts()}>재시도 클릭</div>
       </div>
     );
 
@@ -162,7 +243,7 @@ const MyPostsTable = () => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className={noResults}>
-                  검색 결과가 없습니다.
+                  작성한 글이 없습니다.
                 </TableCell>
               </TableRow>
             )}
@@ -198,6 +279,16 @@ const MyPostsTable = () => {
           />
         </PaginationContent>
       </Pagination>
+
+      {/* 모집 상태 변경 ConfirmModal */}
+      <ConfirmModal
+        isOpen={updateStatusConfirmOpen}
+        onOpenChange={setUpdateStatusConfirmOpen}
+        confirmTitle={`모집 완료를 누르면 \n 다시 모집 상태를 바꿀 수 없어요`}
+        cancelText="닫기"
+        confirmText="변경하기"
+        onConfirm={confirmRecruitStatusUpdate}
+      />
     </div>
   );
 };

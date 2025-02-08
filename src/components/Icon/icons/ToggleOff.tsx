@@ -4,7 +4,16 @@ import theme from '@/styles/theme';
 
 function ToggleOff(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width="42" height="38" viewBox="0 -3 42 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="42"
+      height="38"
+      viewBox="0 -4 42 38"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="토글 스위치 꺼짐"
+      transform="translate(-2, 0)"
+    >
       <rect y="6" width="32" height="18" rx="9" fill={props.color || theme.colors.field05} />
       <g filter="url(#filter0_d_3107_24218)">
         <circle cx="23" cy="15" r="7" fill="white" />

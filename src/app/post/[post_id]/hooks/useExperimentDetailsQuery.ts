@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 
 import { API } from '@/apis/config';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 interface UseExperimentDetailsQueryParams {
@@ -34,7 +35,7 @@ interface Address {
 }
 
 export interface UseQueryExperimentDetailsAPIResponse {
-  experimentPostId: number;
+  experimentPostId: string;
   title: string;
   uploadDate: string;
   uploaderName: string;
@@ -49,11 +50,11 @@ export interface UseQueryExperimentDetailsAPIResponse {
 }
 
 const useExperimentDetailsQuery = ({ postId }: UseExperimentDetailsQueryParams) => {
-  const queryKey = API_URL.viewExperimentDetails(postId);
-  const queryFn = () => API.post(queryKey).then((res) => res.data);
+  const url = API_URL.viewExperimentDetails(postId);
+  const queryFn = () => API.post(url).then((res) => res.data);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, AxiosError>({
-    queryKey: [queryKey],
+    queryKey: [QUERY_KEY.experimentPostDetail],
     queryFn,
     enabled: !!postId,
   });
