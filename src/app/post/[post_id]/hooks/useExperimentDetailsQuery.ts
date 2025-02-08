@@ -54,7 +54,7 @@ const useExperimentDetailsQuery = ({ postId }: UseExperimentDetailsQueryParams) 
   const queryFn = () => API.post(url).then((res) => res.data);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, AxiosError>({
-    queryKey: [QUERY_KEY.experimentPostDetail],
+    queryKey: [QUERY_KEY.experimentPostDetail, postId],
     queryFn,
     enabled: !!postId,
   });
