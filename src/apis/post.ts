@@ -4,7 +4,7 @@ import { API_URL } from '@/constants/url';
 import { AreaType, RegionType } from '@/types/filter';
 import { ExperimentPost } from '@/types/post';
 
-interface ExperimentPostResponse {
+export interface ExperimentPostResponse {
   content: ExperimentPost[];
   isLast: boolean;
   page: number;

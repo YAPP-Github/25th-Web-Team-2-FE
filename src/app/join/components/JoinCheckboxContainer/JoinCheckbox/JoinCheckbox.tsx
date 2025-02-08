@@ -21,6 +21,8 @@ interface JoinCheckboxProps {
   isAllCheck?: boolean;
   isArrow?: boolean;
   isAlert?: boolean;
+  labelClassName?: string;
+  emptyCheckIcon?: React.ReactNode;
 }
 
 const JoinCheckbox = ({
@@ -31,6 +33,8 @@ const JoinCheckbox = ({
   isAllCheck = false,
   isArrow = true,
   isAlert,
+  labelClassName,
+  emptyCheckIcon = <Icon icon="CheckSquareEmpty" />,
 }: JoinCheckboxProps) => {
   return (
     <div className={`${checkboxLayout} ${isAllCheck ? allCheckWrapper : ''}`}>
@@ -39,12 +43,12 @@ const JoinCheckbox = ({
         {isChecked ? (
           <Icon icon="CheckSquareFill" color={theme.colors.primaryMint} />
         ) : (
-          <Icon icon="CheckSquareEmpty" />
+          emptyCheckIcon
         )}
         <div>
           <div className={labelWrapper}>
             {isRequired && <span className={requiredCheckboxText}>[필수]</span>}
-            <span>{label}</span>
+            <span className={labelClassName}>{label}</span>
           </div>
           {isAlert && (
             <div className={tipWrapper}>

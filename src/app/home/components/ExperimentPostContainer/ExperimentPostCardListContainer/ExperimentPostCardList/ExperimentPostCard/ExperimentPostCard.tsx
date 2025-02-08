@@ -13,21 +13,21 @@ import {
   postRewardContainer,
   postTitle,
   postViews,
-} from './PostCard.css';
-import { formatPostDate } from '../../home.utils';
+} from './ExperimentPostCard.css';
 
+import { formatPostDate } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import { ExperimentPost } from '@/types/post';
 
-interface PostCardProps {
-  post: ExperimentPost;
+interface ExperimentPostCardProps {
+  experimentPost: ExperimentPost;
 }
 
-const PostCard = ({ post }: PostCardProps) => {
+const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
   const {
     postInfo: { experimentPostId, univName, views, title, reward, durationInfo },
     recruitStatus,
-  } = post;
+  } = experimentPost;
 
   return (
     <li>
@@ -70,4 +70,4 @@ const PostCard = ({ post }: PostCardProps) => {
   );
 };
 
-export default PostCard;
+export default ExperimentPostCard;
