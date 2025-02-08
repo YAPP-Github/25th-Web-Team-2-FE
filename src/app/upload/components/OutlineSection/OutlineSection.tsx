@@ -87,9 +87,9 @@ const OutlineSection = () => {
     setDurationChecked(newCheckedState);
 
     if (newCheckedState) {
-      setValue('timeRequired', null, { shouldValidate: true });
+      setValue('timeRequired', null);
     } else {
-      setValue('timeRequired', '', { shouldValidate: true });
+      setValue('timeRequired', '');
     }
   };
 
