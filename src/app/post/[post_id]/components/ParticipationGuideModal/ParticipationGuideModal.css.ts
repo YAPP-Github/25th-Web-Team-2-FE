@@ -21,7 +21,7 @@ export const participationGuideContent = style({
 });
 
 export const participationModalTitle = style({
-  ...fonts.title.medium.SB20,
+  ...fonts.title.medium.B20,
   color: colors.text06,
   marginTop: '1.2rem',
   marginRight: '1.2rem',
@@ -46,6 +46,12 @@ export const contactInfoContent = style({
   flexDirection: 'row',
   alignItems: 'center',
   gap: '0.6rem',
+});
+
+export const applyMethodContainer = style({
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  justifyContent: 'center',
 });
 
 export const warningMessage = style({
