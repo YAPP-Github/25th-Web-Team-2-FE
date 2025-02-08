@@ -15,11 +15,11 @@ import {
   uploadSectionLayout,
 } from '../UploadContainer/UploadContainer.css';
 
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 
 const OutlineSection = () => {
   const { control, setValue } = useFormContext();
