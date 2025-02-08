@@ -46,6 +46,9 @@ export const contactInfoContent = style({
   flexDirection: 'row',
   alignItems: 'center',
   gap: '0.6rem',
+  maxWidth: '31.5rem',
+  whiteSpace: 'normal',
+  wordBreak: 'break-all',
 });
 
 export const applyMethodContainer = style({
