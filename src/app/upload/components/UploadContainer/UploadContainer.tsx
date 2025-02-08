@@ -41,6 +41,9 @@ const UploadContainer = () => {
     selectedImages,
   });
 
+  console.log('error >> ', form.formState.errors);
+  console.log('formData >> ', form.getValues());
+
   return (
     <FormProvider {...form}>
       <div className={uploadLayout}>

@@ -139,23 +139,15 @@ const OutlineSection = () => {
             name="startDate"
             control={control}
             render={({ field, fieldState }) => (
-              <Controller
-                name="endDate"
-                control={control}
-                render={() => (
-                  <>
-                    <DatePickerForm
-                      placeholder="실험 시작일 ~ 실험 종료일"
-                      onDateChange={(dates) => {
-                        setValue('startDate', dates.from || null, { shouldValidate: true });
-                        setValue('endDate', dates.to || null, { shouldValidate: true });
-                      }}
-                      experimentDateChecked={experimentDateChecked}
-                      error={fieldState.error}
-                      field={field}
-                    />
-                  </>
-                )}
+              <DatePickerForm
+                placeholder="실험 시작일 ~ 실험 종료일"
+                onDateChange={(dates) => {
+                  setValue('startDate', dates.from || null, { shouldValidate: true });
+                  setValue('endDate', dates.to || null, { shouldValidate: true });
+                }}
+                experimentDateChecked={experimentDateChecked}
+                error={fieldState.error}
+                field={field}
               />
             )}
           />
@@ -167,11 +159,11 @@ const OutlineSection = () => {
               const newCheckedState = !experimentDateChecked;
               setExperimentDateChecked(newCheckedState);
               if (newCheckedState) {
-                setValue('startDate', null);
-                setValue('endDate', null);
+                setValue('startDate', null, { shouldValidate: true });
+                setValue('endDate', null, { shouldValidate: true });
               } else {
-                setValue('startDate', undefined);
-                setValue('endDate', undefined);
+                setValue('startDate', undefined, { shouldValidate: true });
+                setValue('endDate', undefined, { shouldValidate: true });
               }
             }}
             label="본문 참고"

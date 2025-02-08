@@ -1,6 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
 import { ko } from 'date-fns/locale';
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import { DayPicker, DateRange } from 'react-day-picker';
 import { FieldError } from 'react-hook-form';
 
@@ -30,15 +30,28 @@ interface DatePickerFormProps {
 }
 
 const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
-  (
-    { placeholder, onDateChange, experimentDateChecked = false, error, field }: DatePickerFormProps,
-    ref,
-  ) => {
+  ({ placeholder, onDateChange, experimentDateChecked = false, error, field }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDates, setSelectedDates] = useState<DateRange>({
       from: undefined,
       to: undefined,
     });
+
+    useEffect(() => {
+      if (experimentDateChecked) {
+        setSelectedDates({ from: undefined, to: undefined });
+      }
+    }, [experimentDateChecked]);
+
+    const handleOpenChange = (open: boolean) => {
+      if (experimentDateChecked) {
+        setIsOpen(false);
+        return;
+      }
+      setTimeout(() => {
+        setIsOpen(open);
+      }, 0.3);
+    };
 
     const handleDateChange = (range: DateRange) => {
       const formattedRange = formatRange(range);
@@ -47,37 +60,34 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
     };
 
     return (
-      <div
-        className={datePickerFieldContainer}
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === ' ') {
-            e.preventDefault();
-            setIsOpen((prev) => !prev);
-          }
-        }}
-      >
-        <Popover.Root open={isOpen && !experimentDateChecked} onOpenChange={setIsOpen}>
+      <div className={datePickerFieldContainer}>
+        <Popover.Root open={isOpen} onOpenChange={handleOpenChange}>
           <Popover.Trigger asChild>
             <div
-              className={datePickerField({ experimentDateChecked, isOpen, isError: !!error })}
+              role="button"
+              tabIndex={0}
+              className={datePickerField({
+                experimentDateChecked,
+                isOpen,
+                isError: !!error,
+              })}
               aria-label="실험일시 선택"
               ref={ref}
             >
               <span
                 className={placeholderText({
-                  bothDatesSelected: !!selectedDates.from,
+                  bothDatesSelected: !experimentDateChecked && !!selectedDates.from,
                   experimentDateChecked,
                 })}
               >
-                {!experimentDateChecked
-                  ? selectedDates.from
-                    ? selectedDates.from?.toLocaleDateString() ===
-                      selectedDates.to?.toLocaleDateString()
-                      ? `${selectedDates.from?.toLocaleDateString()}`
-                      : `${selectedDates.from?.toLocaleDateString()} ~ ${selectedDates.to?.toLocaleDateString()}`
-                    : placeholder
-                  : '본문 참고'}
+                {experimentDateChecked
+                  ? '본문 참고'
+                  : selectedDates.from
+                  ? selectedDates.from.toLocaleDateString() ===
+                    selectedDates.to?.toLocaleDateString()
+                    ? selectedDates.from.toLocaleDateString()
+                    : `${selectedDates.from.toLocaleDateString()} ~ ${selectedDates.to?.toLocaleDateString()}`
+                  : placeholder}
               </span>
               <span className={iconStyle}>
                 <Icon
@@ -102,11 +112,11 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
               className={popoverLayout}
               onFocusOutside={() => {
                 field?.onBlur();
-                setIsOpen(false);
+                handleOpenChange(false);
               }}
               onInteractOutside={() => {
                 field?.onBlur();
-                setIsOpen(false);
+                handleOpenChange(false);
               }}
             >
               <DayPicker

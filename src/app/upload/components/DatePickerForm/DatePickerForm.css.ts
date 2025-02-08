@@ -54,7 +54,6 @@ export const datePickerField = recipe({
   },
 });
 
-/** ✅ 날짜 placeholder */
 export const placeholderText = recipe({
   base: {
     ...fonts.label.large.R14,
@@ -66,13 +65,13 @@ export const placeholderText = recipe({
   variants: {
     experimentDateChecked: {
       true: {
-        color: colors.text02,
+        color: colors.text02, // 본문 참고일 때 원래 의도한 색
       },
       false: {},
     },
     bothDatesSelected: {
       true: {
-        color: colors.text06,
+        color: colors.text06, // 날짜가 선택되면 text06 (더 어두운) 적용
       },
       false: {
         color: colors.text02,
