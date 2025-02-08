@@ -3,7 +3,7 @@ import { customRadioGroup, customRadioButton } from './RadioButtonGroup.css';
 interface RadioButtonGroupProps<T> {
   options: { value: T; label: string }[];
   selectedValue: T | null;
-  onChange: (value: T) => void;
+  onChange: (value: T | null) => void;
   isError?: boolean;
 }
 
@@ -23,7 +23,13 @@ const RadioButtonGroup = <T extends string>({
             active: selectedValue === option.value,
             error: isError,
           })}
-          onClick={() => onChange(option.value)}
+          onClick={() => {
+            if (selectedValue === option.value) {
+              onChange(null);
+            } else {
+              onChange(option.value);
+            }
+          }}
         >
           {option.label}
         </button>

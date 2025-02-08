@@ -68,8 +68,8 @@ const OutlineSection = () => {
     setValue('area', subRegion, { shouldValidate: true });
   };
 
-  const handleMatchTypeChange = (value: MatchType) => {
-    setValue('matchType', value, { shouldValidate: true });
+  const handleMatchTypeChange = (value: MatchType | null) => {
+    setValue('matchType', value);
 
     if (value === MatchType.ONLINE) {
       setValue('region', null);

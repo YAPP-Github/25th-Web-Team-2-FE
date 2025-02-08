@@ -24,9 +24,6 @@ export const customRadioButton = recipe({
     ':hover': {
       backgroundColor: colors.field02,
     },
-    ':focus': {
-      border: `0.1rem solid ${colors.primaryMint}`,
-    },
   },
   variants: {
     active: {

@@ -94,6 +94,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
                   icon="Calendar"
                   width={20}
                   height={20}
+                  cursor="pointer"
                   color={isOpen && !experimentDateChecked ? colors.primaryMint : colors.icon03}
                   subcolor={
                     isOpen
