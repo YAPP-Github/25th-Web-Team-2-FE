@@ -21,9 +21,16 @@ import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerFor
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
-const OutlineSection = () => {
-  const { control, setValue } = useFormContext();
+interface OutlineSectionProps {
+  experimentDateChecked?: boolean;
+  durationChecked?: boolean;
+}
 
+const OutlineSection = ({
+  experimentDateChecked = false,
+  durationChecked = false,
+}: OutlineSectionProps) => {
+  const { control, setValue, getValues } = useFormContext();
   const { userInfo } = useUserInfo();
 
   const isResearcher = (
@@ -32,6 +39,7 @@ const OutlineSection = () => {
     return (user as ResearcherResponse).memberInfo.role === 'RESEARCHER';
   };
 
+  // 로그인한 유저의 정보 자동 채우기
   useEffect(() => {
     if (!userInfo || !isResearcher(userInfo)) return;
 
@@ -40,19 +48,22 @@ const OutlineSection = () => {
     setValue('univName', userInfo.univName);
   }, [userInfo, setValue]);
 
-  // 실험 일시 및 소요시간 본문 참고 여부
-  const [experimentDateChecked, setExperimentDateChecked] = useState(false);
-  const [durationChecked, setDurationChecked] = useState(false);
-
   // 대면 방식
   const selectedMatchType = useWatch({ control, name: 'matchType' });
 
-  // 실험 장소 지역구 선택
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const [selectedSubRegion, setSelectedSubRegion] = useState<string | null>(null);
+  // 실험 일시 및 소요시간 본문 참고 여부
+  const [isExperimentDateChecked, setIsExperimentDateChecked] = useState(experimentDateChecked);
+  const [isDurationChecked, setIsDurationChecked] = useState(durationChecked);
+
+  // 지역, 구 선택
   const [isOpenRegionPopover, setIsOpenRegionPopover] = useState(false);
 
-  // 유저 선택에 따라 재검증 및 null 처리
+  const watchedRegion = useWatch({ control: control, name: 'region' });
+  const watchedArea = useWatch({ control: control, name: 'area' });
+  const [selectedRegion, setSelectedRegion] = useState(watchedRegion);
+  const [selectedSubRegion, setSelectedSubRegion] = useState(watchedArea);
+
+  // 지역 선택
   const handleRegionSelect = (region: string) => {
     setSelectedRegion(region);
     setSelectedSubRegion(null);
@@ -61,6 +72,7 @@ const OutlineSection = () => {
     setValue('area', '', { shouldValidate: true });
   };
 
+  // 지역구 선택
   const handleSubRegionSelect = (subRegion: string) => {
     setSelectedSubRegion(subRegion);
     setIsOpenRegionPopover(false);
@@ -68,6 +80,16 @@ const OutlineSection = () => {
     setValue('area', subRegion, { shouldValidate: true });
   };
 
+  const regionPopoverProps = {
+    isOpenRegionPopover,
+    onOpenRegionPopover: setIsOpenRegionPopover,
+    selectedRegion,
+    selectedSubRegion,
+    onRegionSelect: handleRegionSelect,
+    onSubRegionSelect: handleSubRegionSelect,
+  };
+
+  // 대면 방식 선택 (비대면의 경우 실험 장소 null)
   const handleMatchTypeChange = (value: MatchType | null) => {
     setValue('matchType', value);
 
@@ -82,9 +104,10 @@ const OutlineSection = () => {
     }
   };
 
+  // 실험 소요 시간 본문 참고
   const handleDurationCheckboxChange = () => {
-    const newCheckedState = !durationChecked;
-    setDurationChecked(newCheckedState);
+    const newCheckedState = !isDurationChecked;
+    setIsDurationChecked(newCheckedState);
 
     if (newCheckedState) {
       setValue('timeRequired', null);
@@ -93,14 +116,21 @@ const OutlineSection = () => {
     }
   };
 
-  const regionPopoverProps = {
-    isOpenRegionPopover,
-    onOpenRegionPopover: setIsOpenRegionPopover,
-    selectedRegion,
-    selectedSubRegion,
-    onRegionSelect: handleRegionSelect,
-    onSubRegionSelect: handleSubRegionSelect,
+  // 공고 수정 시 선택된 실험 일시
+  const defaultDateRange = {
+    from: getValues('startDate') ? new Date(getValues('startDate')) : undefined,
+    to: getValues('endDate') ? new Date(getValues('endDate')) : undefined,
   };
+
+  useEffect(() => {
+    setSelectedRegion(watchedRegion);
+    setSelectedSubRegion(watchedArea);
+  }, [watchedRegion, watchedArea]);
+
+  useEffect(() => {
+    setIsExperimentDateChecked(experimentDateChecked);
+    setIsDurationChecked(durationChecked);
+  }, [experimentDateChecked, durationChecked]);
 
   return (
     <div className={uploadSectionLayout}>
@@ -145,19 +175,20 @@ const OutlineSection = () => {
                   setValue('startDate', dates.from || null, { shouldValidate: true });
                   setValue('endDate', dates.to || null, { shouldValidate: true });
                 }}
-                experimentDateChecked={experimentDateChecked}
+                experimentDateChecked={isExperimentDateChecked}
                 error={fieldState.error}
                 field={field}
+                initialDates={defaultDateRange}
               />
             )}
           />
 
           {/* 본문 참고 체크박스 */}
           <CheckboxWithIcon
-            checked={experimentDateChecked}
+            checked={isExperimentDateChecked}
             onChange={() => {
-              const newCheckedState = !experimentDateChecked;
-              setExperimentDateChecked(newCheckedState);
+              const newCheckedState = !isExperimentDateChecked;
+              setIsExperimentDateChecked(newCheckedState);
               if (newCheckedState) {
                 setValue('startDate', null, { shouldValidate: true });
                 setValue('endDate', null, { shouldValidate: true });
@@ -313,7 +344,7 @@ const OutlineSection = () => {
                       fieldState={fieldState}
                       options={durationMinutesOptions}
                       placeholder="1회당 시간 입력"
-                      disabled={durationChecked}
+                      disabled={isDurationChecked}
                       showErrorMessage={false}
                     />
                   )}
@@ -322,7 +353,7 @@ const OutlineSection = () => {
 
               {/* 본문 참고 체크박스 */}
               <CheckboxWithIcon
-                checked={durationChecked}
+                checked={isDurationChecked}
                 onChange={handleDurationCheckboxChange}
                 label="본문 참고"
               />

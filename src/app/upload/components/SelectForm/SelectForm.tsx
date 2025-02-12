@@ -42,7 +42,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
     return (
       <div className={selectInputContainer}>
         <Select.Root
-          value={field?.value ?? undefined}
+          value={field.value !== null ? String(field.value) : undefined}
           onValueChange={field?.onChange}
           onOpenChange={(open) => {
             setIsOpen(open);
@@ -79,7 +79,11 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
                 <Select.ScrollUpButton />
                 <Select.Viewport>
                   {options?.map((option) => (
-                    <Select.Item key={option.value} value={option.value} className={selectItem}>
+                    <Select.Item
+                      key={option.value}
+                      value={String(option.value)}
+                      className={selectItem}
+                    >
                       <Select.ItemText>{option.label}</Select.ItemText>
                     </Select.Item>
                   ))}

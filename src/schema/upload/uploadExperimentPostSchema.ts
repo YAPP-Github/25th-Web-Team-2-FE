@@ -21,7 +21,10 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     matchType: z.nativeEnum(MatchType),
 
     // 실험 횟수
-    count: z.enum(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']).transform(Number), // 참여 횟수
+    count: z.preprocess(
+      (val) => (typeof val === 'number' ? String(val) : val), // 숫자 → 문자열 변환
+      z.enum(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']).transform(Number), // 문자열 → 숫자 변환
+    ),
 
     // 소요 시간
     timeRequired: z

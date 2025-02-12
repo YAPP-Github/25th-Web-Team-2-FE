@@ -27,15 +27,28 @@ interface DatePickerFormProps {
   field?: {
     onBlur: VoidFunction;
   };
+  initialDates?: { from: Date | undefined; to: Date | undefined };
 }
 
 const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
-  ({ placeholder, onDateChange, experimentDateChecked = false, error, field }, ref) => {
+  (
+    { placeholder, onDateChange, experimentDateChecked = false, error, field, initialDates },
+    ref,
+  ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDates, setSelectedDates] = useState<DateRange>({
       from: undefined,
       to: undefined,
     });
+
+    useEffect(() => {
+      if (initialDates?.from || initialDates?.to) {
+        setSelectedDates({
+          from: initialDates.from,
+          to: initialDates.to,
+        });
+      }
+    }, [initialDates]);
 
     useEffect(() => {
       if (experimentDateChecked) {
