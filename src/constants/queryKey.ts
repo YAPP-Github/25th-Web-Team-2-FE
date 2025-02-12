@@ -5,4 +5,5 @@ export const QUERY_KEY = {
   updateRecruitStatus: 'updateRecruitStatus',
   deletePost: 'deletePost',
   experimentPostDetail: 'experimentPostDetail',
+  editPost: 'editPost',
 };
