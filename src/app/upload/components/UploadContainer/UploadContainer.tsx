@@ -32,13 +32,14 @@ const UploadContainer = () => {
 
   const [openToast, setOpenToast] = useState(false);
 
-  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [images, setImages] = useState<(File | string)[]>([]);
 
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
     addContact,
     setOpenToast,
-    selectedImages,
+    images,
+    isEdit: false,
   });
 
   return (
@@ -54,10 +55,7 @@ const UploadContainer = () => {
           <OutlineSection />
 
           {/* 실험 설명 */}
-          <DescriptionSection
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
-          />
+          <DescriptionSection images={images} setImages={setImages} />
 
           {/* 실험 참여 방법 */}
           <ApplyMethodSection

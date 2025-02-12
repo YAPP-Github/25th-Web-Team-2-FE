@@ -31,6 +31,14 @@ const convertLabelToValue = (labelToConvert: string): string => {
   return labelValueMap.get(labelToConvert) || labelToConvert;
 };
 
+const convertValueToLabel = (valueToConvert: string | null): string => {
+  const label = Array.from(labelValueMap.entries()).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([_, value]) => value === valueToConvert,
+  )?.[0];
+  return label || valueToConvert;
+};
+
 // 업로드된 이미지 경로 변경
 const convertToWebpUrl = (originalUrl: string) => {
   return originalUrl
@@ -38,4 +46,4 @@ const convertToWebpUrl = (originalUrl: string) => {
     .replace(/\.\w+$/, '.webp'); // 확장자 변경 (jpg, png → webp)
 };
 
-export { formatRange, convertLabelToValue, convertToWebpUrl };
+export { formatRange, convertLabelToValue, convertValueToLabel, convertToWebpUrl };
