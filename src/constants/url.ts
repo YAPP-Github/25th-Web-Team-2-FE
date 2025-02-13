@@ -19,6 +19,7 @@ export const API_URL = {
   updateRecruitStatus: (postId: string) => `/v1/experiment-posts/${postId}/recruit-status`,
   deletePost: (postId: string) => `/v1/experiment-posts/${postId}`,
   editPost: (postId: string) => `/v1/experiment-posts/${postId}`,
+  originExperimentPost: (postId: string) => `/v1/experiment-posts/${postId}/edit`,
 };
 
 export const MOCK_API_URL = {

@@ -47,6 +47,7 @@ export interface UseQueryExperimentDetailsAPIResponse {
   content: string;
   imageList: string[];
   isAuthor: boolean;
+  alarmAgree: boolean;
 }
 
 const useExperimentDetailsQuery = ({ postId }: UseExperimentDetailsQueryParams) => {
