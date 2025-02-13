@@ -99,7 +99,7 @@ export const photoGrid = style({
   gap: '10px',
   overflowX: 'auto',
   padding: '0 1.6rem',
-  height: '8rem',
+  height: '8.5rem',
   marginTop: '1rem',
   marginBottom: '1.4rem',
 });

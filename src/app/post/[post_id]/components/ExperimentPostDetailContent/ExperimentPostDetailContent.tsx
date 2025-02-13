@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   postDetailContentLayout,
@@ -28,6 +28,38 @@ interface ExperimentPostDetailContentProps {
 const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailContentProps) => {
   const { content, imageList = [] } = postDetailData;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [verifiedImages, setVerifiedImages] = useState<string[]>([]);
+
+  /** 이미지가 접근 가능한지 확인 polling */
+  async function checkImageExists(url: string, retries = 10, delay = 2000): Promise<boolean> {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const res = await fetch(url, { method: 'HEAD' });
+        if (res.ok) return true; // 이미지가 존재하면 즉시 반환
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(`Image load failed: ${url}`, error);
+      }
+      await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+    return false;
+  }
+
+  /** 이미지 존재 여부 확인 후 업데이트 */
+  useEffect(() => {
+    async function verifyImages() {
+      const results = await Promise.all(
+        imageList.map(async (image) =>
+          isValidImageUrl(image) && (await checkImageExists(image)) ? image : null,
+        ),
+      );
+      setVerifiedImages(results.filter((img): img is string => img !== null));
+    }
+
+    if (imageList.length > 0) {
+      verifyImages();
+    }
+  }, [imageList]);
 
   return (
     <div className={postDetailContentLayout}>
@@ -42,7 +74,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
           {imageList.length === 1 && isValidImageUrl(imageList[0]) ? (
             <div className={singleImageWrapper}>
               <Image
-                src={imageList[0]}
+                src={verifiedImages[0]}
                 alt="실험 안내 이미지"
                 width={588}
                 height={588}
@@ -55,7 +87,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
             </div>
           ) : (
             <div className={multiImageGrid}>
-              {imageList.filter(isValidImageUrl).map((src, index) => (
+              {verifiedImages.filter(isValidImageUrl).map((src, index) => (
                 <div key={index} className={imageItem}>
                   <Image
                     src={src}
