@@ -1,5 +1,6 @@
 import * as Select from '@radix-ui/react-select';
 import React, { forwardRef, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 import {
   formMessage,
@@ -35,6 +36,8 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
     { field, fieldState, options, placeholder = '선택', disabled = false, showErrorMessage = true },
     ref,
   ) => {
+    const { setValue } = useFormContext();
+
     const [isOpen, setIsOpen] = useState(false);
 
     if (!options?.length) return null;
@@ -43,7 +46,9 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
       <div className={selectInputContainer}>
         <Select.Root
           value={field.value ? String(field.value) : undefined}
-          onValueChange={field?.onChange}
+          onValueChange={(value) => {
+            setValue(field.name, value, { shouldValidate: true });
+          }}
           onOpenChange={(open) => {
             setIsOpen(open);
             if (!open) {
