@@ -8,8 +8,8 @@ import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 
 import useEditExperimentPostMutation from '@/app/edit/[post_id]/hooks/useEditExperimentPostMutation';
+import useOriginExperimentPostQuery from '@/app/edit/[post_id]/hooks/useOriginExperimentPostQuery';
 import useApplyMethodQuery from '@/app/post/[post_id]/hooks/useApplyMethodQuery';
-import useExperimentDetailsQuery from '@/app/post/[post_id]/hooks/useExperimentDetailsQuery';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -39,7 +39,7 @@ const useManageExperimentPostForm = ({
     data: experimentData,
     isLoading: isExperimentLoading,
     isError: isExperimentError,
-  } = useExperimentDetailsQuery({
+  } = useOriginExperimentPostQuery({
     postId: postId!,
   });
 
@@ -128,7 +128,7 @@ const useManageExperimentPostForm = ({
         imageListInfo: {
           images: experimentData.imageList,
         },
-        alarmAgree: false,
+        alarmAgree: experimentData.alarmAgree,
       });
     }
   }, [isEdit, experimentData, applyMethodData, form]);
@@ -160,8 +160,9 @@ const useManageExperimentPostForm = ({
       ...data,
       area: data.area ? convertLabelToValue(data.area) : null,
       imageListInfo: {
-        images: uploadedImageUrls, // 기존 + 새 이미지 포함
+        images: uploadedImageUrls,
       },
+      univName: data.matchType === MatchType.ONLINE ? null : data.univName,
     };
 
     if (isEdit && postId) {

@@ -6,4 +6,5 @@ export const QUERY_KEY = {
   deletePost: 'deletePost',
   experimentPostDetail: 'experimentPostDetail',
   editPost: 'editPost',
+  originExperimentPost: 'originExperimentPost',
 };
