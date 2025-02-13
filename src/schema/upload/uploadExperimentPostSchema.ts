@@ -44,7 +44,7 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     // 연구 책임자
     leadResearcher: z
       .string()
-      .min(10, { message: '최소 10자 이상으로 입력해 주세요' })
+      .min(5, { message: '최소 5자 이상으로 입력해 주세요' })
       .max(150, { message: '최대 150자 이하로 입력해 주세요' }),
     // 대학교
     univName: z.string().min(1, '').nullable(),
