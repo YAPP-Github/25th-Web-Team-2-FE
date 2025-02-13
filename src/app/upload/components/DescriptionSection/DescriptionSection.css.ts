@@ -80,6 +80,11 @@ export const uploadImagesContainer = style({
   borderTop: `0.1rem solid ${colors.line01}`,
 });
 
+export const fileInfoText = style({
+  ...fonts.label.large.R14,
+  color: colors.text02,
+});
+
 export const addImageContainer = style({
   ...fonts.label.medium.M13,
   color: colors.text04,

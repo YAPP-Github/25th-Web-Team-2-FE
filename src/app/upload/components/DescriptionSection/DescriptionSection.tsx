@@ -10,6 +10,7 @@ import {
   descriptionFormLayout,
   descriptionSectionLayout,
   descriptionTextarea,
+  fileInfoText,
   photoContainer,
   photoGrid,
   photoLayout,
@@ -189,7 +190,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                 onChange={uploadPhotos}
                 style={{ display: 'none' }}
               />
-              <p>jpg, png 최대 3장까지 첨부할 수 있어요</p>
+              <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
         </div>

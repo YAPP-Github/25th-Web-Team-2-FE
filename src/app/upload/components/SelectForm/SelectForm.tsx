@@ -42,7 +42,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
     return (
       <div className={selectInputContainer}>
         <Select.Root
-          value={field.value !== null ? String(field.value) : undefined}
+          value={field.value ? String(field.value) : undefined}
           onValueChange={field?.onChange}
           onOpenChange={(open) => {
             setIsOpen(open);

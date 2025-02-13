@@ -56,7 +56,7 @@ const ApplyMethodSection = ({
       {/* 실험 참여 방법 */}
       <div className={applyMethodContainer}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?{' '}
+          <span className={headingIcon}>3</span>어떤 방법으로 신청을 받을까요?{' '}
           <span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
@@ -68,7 +68,7 @@ const ApplyMethodSection = ({
               <InputForm
                 {...field}
                 id="applyMethodInfo.content"
-                placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
+                placeholder="참여자에게 신청 방법을 알려주세요 (예: 링크로 폼 제출해 주세요)"
                 maxLength={200}
                 size="full"
                 field={{ ...field, value: field.value ?? '' }}

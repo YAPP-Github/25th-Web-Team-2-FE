@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
@@ -30,6 +31,8 @@ const OutlineSection = ({
   experimentDateChecked = false,
   durationChecked = false,
 }: OutlineSectionProps) => {
+  const pathname = usePathname();
+  const isEdit = pathname.startsWith('/edit');
   const { control, setValue, getValues } = useFormContext();
   const { userInfo } = useUserInfo();
 
@@ -41,12 +44,12 @@ const OutlineSection = ({
 
   // 로그인한 유저의 정보 자동 채우기
   useEffect(() => {
-    if (!userInfo || !isResearcher(userInfo)) return;
+    if (isEdit || !userInfo || !isResearcher(userInfo)) return;
 
     const researcherName = `${userInfo.univName} ${userInfo.major} ${userInfo.memberInfo.name}`;
     setValue('leadResearcher', researcherName);
     setValue('univName', userInfo.univName);
-  }, [userInfo, setValue]);
+  }, [userInfo, setValue, isEdit]);
 
   // 대면 방식
   const selectedMatchType = useWatch({ control, name: 'matchType' });
@@ -100,7 +103,7 @@ const OutlineSection = ({
     } else {
       setValue('region', '');
       setValue('area', '');
-      setValue('univName', '');
+      setValue('univName', !isEdit && userInfo && isResearcher(userInfo) ? userInfo.univName : '');
     }
   };
 
@@ -262,7 +265,7 @@ const OutlineSection = ({
                   <InputForm
                     id="univName"
                     field={field}
-                    placeholder="대학교 입력"
+                    placeholder="장소 입력"
                     fieldState={fieldState}
                     showErrorMessage={false}
                   />
