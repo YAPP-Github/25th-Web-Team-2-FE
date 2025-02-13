@@ -61,30 +61,17 @@ export const textStyle = style({
   color: colors.text06,
 });
 
-export const alarmAgreeContainer = recipe({
-  base: {
-    width: 'fit-content',
-    height: '3.4rem',
-    padding: '0 1rem',
-    backgroundColor: colors.field02,
-    borderRadius: '0.8rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    cursor: 'pointer',
-    transition: 'background-color 0.2s ease-in-out',
-  },
-  variants: {
-    disabled: {
-      true: {
-        backgroundColor: colors.field02,
-      },
-      false: {},
-    },
-  },
-  defaultVariants: {
-    disabled: false,
-  },
+export const alarmAgreeContainer = style({
+  width: 'fit-content',
+  height: '3.4rem',
+  padding: '0 1rem',
+  backgroundColor: colors.field02,
+  borderRadius: '0.8rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease-in-out',
 });
 
 export const uploadFormSectionTitle = style({

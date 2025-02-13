@@ -220,7 +220,7 @@ const ApplyMethodSection = ({
       </div>
 
       {/* 공고 알림 */}
-      <div className={alarmAgreeContainer({ disabled: isEdit })}>
+      <div className={alarmAgreeContainer}>
         <Controller
           name="alarmAgree"
           control={control}
@@ -237,7 +237,9 @@ const ApplyMethodSection = ({
           )}
         />
       </div>
-      <p className={disabledAlarmAgreeText}>등록된 공고는 공고 알림 여부를 수정할 수 없어요</p>
+      {isEdit && (
+        <p className={disabledAlarmAgreeText}>등록된 공고는 공고 알림 여부를 수정할 수 없어요</p>
+      )}
     </div>
   );
 };
