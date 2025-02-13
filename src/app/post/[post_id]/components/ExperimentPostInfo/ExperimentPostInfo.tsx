@@ -12,6 +12,7 @@ import {
   postSubInfo,
   viewsContainer,
 } from './ExperimentPostInfo.css';
+import { formatDate } from '../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import {
@@ -82,7 +83,7 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           )}
         </div>
         <div className={postSubInfo}>
-          <div>{postDetailData.uploadDate}</div>
+          <div>{formatDate(postDetailData.uploadDate)}</div>
           <div>{postDetailData.uploaderName}</div>
           <div className={viewsContainer}>
             <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />
