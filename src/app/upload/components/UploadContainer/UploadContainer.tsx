@@ -51,11 +51,11 @@ const UploadContainer = () => {
         </div>
 
         <div className={uploadContentLayout}>
-          {/* 실험 개요 */}
-          <OutlineSection />
-
           {/* 실험 설명 */}
           <DescriptionSection images={images} setImages={setImages} />
+
+          {/* 실험 개요 */}
+          <OutlineSection />
 
           {/* 실험 참여 방법 */}
           <ApplyMethodSection

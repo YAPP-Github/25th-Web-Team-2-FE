@@ -17,6 +17,9 @@ import {
   uploadLayout,
   buttonVariants,
   buttonContainer,
+  headerSubTitle,
+  uploadContentLayout,
+  headerTitle,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
@@ -56,17 +59,24 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   return (
     <FormProvider {...form}>
       <div className={uploadLayout}>
-        <OutlineSection
-          experimentDateChecked={experimentDateChecked}
-          durationChecked={durationChecked}
-        />
-        <DescriptionSection images={images} setImages={setImages} />
-        <ApplyMethodSection
-          addLink={addLink}
-          setAddLink={setAddLink}
-          addContact={addContact}
-          setAddContact={setAddContact}
-        />
+        <div>
+          <h2 className={headerTitle}>실험에 대한 정보를 입력해 주세요</h2>
+          <p className={headerSubTitle}>구체적일수록 참여자 매칭 확률이 높아져요</p>
+        </div>
+
+        <div className={uploadContentLayout}>
+          <DescriptionSection images={images} setImages={setImages} />
+          <OutlineSection
+            experimentDateChecked={experimentDateChecked}
+            durationChecked={durationChecked}
+          />
+          <ApplyMethodSection
+            addLink={addLink}
+            setAddLink={setAddLink}
+            addContact={addContact}
+            setAddContact={setAddContact}
+          />
+        </div>
 
         {/* 버튼 */}
         <div className={buttonContainer}>

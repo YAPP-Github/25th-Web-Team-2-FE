@@ -4,6 +4,12 @@ import { recipe } from '@vanilla-extract/recipes';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
+export const descriptionSectionLayout = style({
+  backgroundColor: colors.field01,
+  borderRadius: '1.2rem',
+  padding: '3.2rem 2.8rem',
+});
+
 export const descriptionFormLayout = style({
   width: '100%',
   display: 'flex',

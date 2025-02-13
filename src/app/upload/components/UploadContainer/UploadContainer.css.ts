@@ -31,13 +31,14 @@ export const uploadFormSectionTitle = style({
 export const uploadContentLayout = style({
   display: 'flex',
   flexFlow: 'column nowrap',
-  gap: '4.8rem',
 });
 
 export const uploadSectionLayout = style({
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
   padding: '3.2rem 2.8rem',
+
+  marginTop: '4.8rem',
 });
 
 export const buttonContainer = style({

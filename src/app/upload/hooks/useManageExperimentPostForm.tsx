@@ -170,8 +170,6 @@ const useManageExperimentPostForm = ({
       univName: data.matchType === MatchType.ONLINE ? null : data.univName,
     };
 
-    console.log('updatedData >> ', updatedData);
-
     if (isEdit && postId) {
       await editExperimentPost(
         { postId, data: updatedData },

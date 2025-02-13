@@ -135,7 +135,7 @@ const OutlineSection = ({
   return (
     <div className={uploadSectionLayout}>
       <h3 className={uploadFormSectionTitle}>
-        <span className={headingIcon}>1</span>실험의 개요를 알려주세요{' '}
+        <span className={headingIcon}>2</span>실험의 개요를 알려주세요{' '}
         <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
 

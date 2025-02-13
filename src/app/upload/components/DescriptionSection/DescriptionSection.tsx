@@ -8,6 +8,7 @@ import {
   deleteButton,
   descriptionContentContainer,
   descriptionFormLayout,
+  descriptionSectionLayout,
   descriptionTextarea,
   photoContainer,
   photoGrid,
@@ -16,7 +17,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
-import { headingIcon, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
+import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
 import {
   copyToastLayout,
@@ -102,9 +103,9 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
 
   return (
     <>
-      <div className={uploadSectionLayout}>
+      <div className={descriptionSectionLayout}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>2</span>어떤 실험인가요?{' '}
+          <span className={headingIcon}>1</span>어떤 실험인가요?{' '}
           <span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
