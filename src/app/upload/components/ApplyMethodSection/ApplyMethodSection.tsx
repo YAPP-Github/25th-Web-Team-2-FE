@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -7,6 +8,7 @@ import {
   alarmAgreeContainer,
   applyMethodContainer,
   applyMethodContentLayout,
+  disabledAlarmAgreeText,
   targetConditionLayout,
   targetGroupContainer,
   textStyle,
@@ -40,6 +42,9 @@ const ApplyMethodSection = ({
   addContact,
   setAddContact,
 }: ApplyMethodSectionProps) => {
+  const pathname = usePathname();
+  const isEdit = pathname.startsWith('/edit');
+
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
 
   const ageError = !!(
@@ -215,7 +220,7 @@ const ApplyMethodSection = ({
       </div>
 
       {/* 공고 알림 */}
-      <div className={alarmAgreeContainer}>
+      <div className={alarmAgreeContainer({ disabled: isEdit })}>
         <Controller
           name="alarmAgree"
           control={control}
@@ -227,10 +232,12 @@ const ApplyMethodSection = ({
               align="left"
               size="large"
               boldStyle
+              disabled={isEdit}
             />
           )}
         />
       </div>
+      <p className={disabledAlarmAgreeText}>등록된 공고는 공고 알림 여부를 수정할 수 없어요</p>
     </div>
   );
 };

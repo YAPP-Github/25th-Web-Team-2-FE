@@ -61,10 +61,18 @@ export const checkboxLayout = recipe({
         color: colors.text04,
       },
     },
+    disabled: {
+      true: {
+        color: colors.text02,
+        cursor: 'default',
+      },
+      false: {},
+    },
   },
   defaultVariants: {
     size: 'small',
     align: 'right',
     boldStyle: false,
+    disabled: false,
   },
 });
