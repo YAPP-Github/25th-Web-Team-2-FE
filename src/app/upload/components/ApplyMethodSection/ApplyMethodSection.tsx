@@ -108,6 +108,7 @@ const ApplyMethodSection = ({
               checked={addContact}
               onChange={() => {
                 setAddContact((prev) => !prev);
+                setValue('applyMethodInfo.phoneNum', null);
               }}
               label="연락처를 추가할게요"
               align="left"

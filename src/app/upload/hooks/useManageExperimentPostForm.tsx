@@ -138,32 +138,39 @@ const useManageExperimentPostForm = ({
   const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
-    // 기존 이미지 URL (순서 유지)
-    let uploadedImageUrls: string[] = [...(data.imageListInfo.images || [])];
+    let updatedImages: (string | File)[] = [...images];
 
-    // 선택한 이미지 중 `File` 형식만 업로드 진행
     const newFiles = images.filter((image) => image instanceof File) as File[];
 
     if (newFiles.length > 0) {
       const uploadedFiles = await Promise.all(
-        newFiles.map(async (image) => {
-          const originalUrl = await uploadImageMutation(image);
+        newFiles.map(async (file) => {
+          const originalUrl = await uploadImageMutation(file);
           return convertToWebpUrl(originalUrl);
         }),
       );
 
-      // 기존 URL + 새로 업로드된 이미지 URL 유지
-      uploadedImageUrls = [...uploadedImageUrls, ...uploadedFiles];
+      let fileIndex = 0;
+      updatedImages = updatedImages.map((image) => {
+        if (image instanceof File) {
+          const uploadedUrl = uploadedFiles[fileIndex];
+          fileIndex++;
+          return uploadedUrl;
+        }
+        return image;
+      });
     }
 
     const updatedData = {
       ...data,
       area: data.area ? convertLabelToValue(data.area) : null,
       imageListInfo: {
-        images: uploadedImageUrls,
+        images: updatedImages as string[],
       },
       univName: data.matchType === MatchType.ONLINE ? null : data.univName,
     };
+
+    console.log('updatedData >> ', updatedData);
 
     if (isEdit && postId) {
       await editExperimentPost(

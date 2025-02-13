@@ -46,15 +46,13 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
   const contentError = errors.content;
   const [openToast, setOpenToast] = useState(false);
 
-  // ✅ 기존 이미지 불러오기 (최초 1회 실행)
   useEffect(() => {
     const existingImages = getValues('imageListInfo.images') || [];
     if (images.length === 0 && existingImages.length > 0) {
-      setImages(existingImages);
+      setImages(existingImages.slice(0, MAX_PHOTOS));
     }
-  }, []); // 🔹 최초 1회 실행
+  }, []);
 
-  // ✅ 파일 추가
   const uploadPhotos = (e: ChangeEvent<HTMLInputElement>): void => {
     const files = e.target.files;
     if (!files) return;
@@ -67,29 +65,23 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
         continue;
       }
 
-      if (images.length + newPhotos.length >= MAX_PHOTOS) {
-        break;
-      }
-
       newPhotos.push(file);
     }
 
-    setImages([...images, ...newPhotos]);
+    const updatedImages = [...images, ...newPhotos].slice(0, MAX_PHOTOS);
+    setImages(updatedImages);
   };
 
-  // ✅ 이미지 삭제 (기존 이미지 + 새 이미지 포함)
   const deletePhoto = (index: number): void => {
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
 
-    // 🔹 기존 이미지 (`URL`)만 `setValue`로 업데이트
     setValue(
       'imageListInfo.images',
       updatedImages.filter((img) => typeof img === 'string'),
     );
   };
 
-  // ✅ 드래그 앤 드롭 (기존 이미지 + 새 이미지 포함)
   const onDragStart = (e: DragEvent<HTMLDivElement>, index: number): void => {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('photoIndex', String(index));
@@ -150,7 +142,6 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               )}
             />
 
-            {/* ✅ 기존 이미지 (URL) + 새로 추가된 이미지 */}
             <div className={photoGrid}>
               {images.map((image, index) => (
                 <div
@@ -184,7 +175,6 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               ))}
             </div>
 
-            {/* ✅ 사진 추가 버튼 */}
             <div className={uploadImagesContainer}>
               <label htmlFor="photos" className={addImageContainer}>
                 <Icon icon="ImageAdd" width={16} height={16} />
