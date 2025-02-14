@@ -37,7 +37,7 @@ const OutlineSection = () => {
 
     const researcherName = `${userInfo.univName} ${userInfo.major} ${userInfo.memberInfo.name}`;
     setValue('leadResearcher', researcherName);
-    setValue('univName', userInfo.univName);
+    setValue('place', userInfo.univName);
   }, [userInfo, setValue]);
 
   // 실험 일시 및 소요시간 본문 참고 여부
@@ -74,11 +74,11 @@ const OutlineSection = () => {
     if (value === MatchType.ONLINE) {
       setValue('region', null);
       setValue('area', null);
-      setValue('univName', null);
+      setValue('place', null);
     } else {
       setValue('region', '');
       setValue('area', '');
-      setValue('univName', '');
+      setValue('place', '');
     }
   };
 
@@ -225,13 +225,13 @@ const OutlineSection = () => {
           ) : (
             <div className={uploadInputContainer}>
               <Controller
-                name="univName"
+                name="place"
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    id="univName"
+                    id="place"
                     field={field}
-                    placeholder="대학교 입력"
+                    placeholder="장소 입력"
                     fieldState={fieldState}
                     showErrorMessage={false}
                   />

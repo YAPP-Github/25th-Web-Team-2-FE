@@ -28,7 +28,7 @@ interface Summary {
 }
 
 interface Address {
-  univName: string | null;
+  place: string | null;
   region: string | null;
   area: string | null;
   detailedAddress: string;
