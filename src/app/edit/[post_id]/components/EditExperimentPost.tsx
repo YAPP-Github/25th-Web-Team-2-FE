@@ -1,7 +1,9 @@
 'use client';
 
+import * as Dialog from '@radix-ui/react-dialog';
 import * as Toast from '@radix-ui/react-toast';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
@@ -23,22 +25,40 @@ import {
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
+import { confirmContent, dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
+  const pathname = usePathname();
+  const isEdit = pathname.startsWith('/edit');
+
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
-  const [openToast, setOpenToast] = useState(false);
+  const [openToast, setOpenToast] = useState<boolean>(false);
   const [images, setImages] = useState<(File | string)[]>([]);
+  const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false);
 
-  const { form, handleSubmit, isLoading, applyMethodData } = useManageExperimentPostForm({
-    isEdit: true,
+  const { form, handleSubmit, isLoading, applyMethodData, isError } = useManageExperimentPostForm({
+    isEdit,
     postId: params.post_id,
     addLink,
     addContact,
     setOpenToast,
     images,
   });
+
+  // 기존 공고 데이터 불러오는 API 호출 실패 시 모달 열기
+  useEffect(() => {
+    if (isEdit && isError) {
+      setOpenAlertDialog(true);
+    }
+  }, [isEdit, isError, setOpenAlertDialog]);
+
+  // 모달 닫을 때 이전 페이지로 이동
+  const handleCloseDialog = () => {
+    setOpenAlertDialog(false);
+    window.history.back();
+  };
 
   useEffect(() => {
     if (applyMethodData) {
@@ -103,6 +123,15 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />
       </Toast.Provider>
+
+      <Dialog.Root open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
+        <Dialog.Overlay className={dialogOverlay} />
+        <Dialog.Content aria-describedby={undefined} className={confirmContent}>
+          <Dialog.Title>공고를 불러오지 못했어요.</Dialog.Title>
+          <p>시간을 두고 다시 시도해주세요.</p>
+          <button onClick={handleCloseDialog}>닫기</button>
+        </Dialog.Content>
+      </Dialog.Root>
     </FormProvider>
   );
 };

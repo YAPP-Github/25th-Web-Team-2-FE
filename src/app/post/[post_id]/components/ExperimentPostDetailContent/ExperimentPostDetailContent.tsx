@@ -35,7 +35,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
   async function checkImageExists(url: string, retries = 10, delay = 2000): Promise<boolean> {
     for (let i = 0; i < retries; i++) {
       try {
-        const res = await fetch(url, { method: 'HEAD' });
+        const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
         if (res.ok) return true; // 이미지가 존재하면 즉시 반환
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -71,12 +71,10 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
   return (
     <div className={postDetailContentLayout}>
       <h3>실험 안내</h3>
-
       {/* 본문 내용 */}
       <div className={postDetailContentWrapper}>{formattedContentText(content || '')}</div>
 
       {/* 이미지 컨테이너 */}
-
       {isImageLoading ? (
         <div
           style={{
@@ -90,6 +88,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
         </div>
       ) : verifiedImages.length > 0 ? (
         <div className={imageContainer}>
+          {/* singleImage */}
           {verifiedImages.length === 1 ? (
             <div className={singleImageWrapper}>
               <Image
@@ -97,8 +96,9 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
                 alt="실험 안내 이미지"
                 width={588}
                 height={588}
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'contain' }}
                 priority
+                quality={100}
               />
               <button className={maximizeIcon} onClick={() => setSelectedImage(verifiedImages[0])}>
                 <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
@@ -106,6 +106,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
             </div>
           ) : (
             <div className={multiImageGrid}>
+              {/* multiImages */}
               {verifiedImages.map((src, index) => (
                 <div key={index} className={imageItem}>
                   <Image
@@ -113,8 +114,9 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
                     alt={`실험 안내 이미지 ${index + 1}`}
                     width={286}
                     height={286}
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: 'contain' }}
                     priority
+                    quality={100}
                   />
                   <button className={maximizeIcon} onClick={() => setSelectedImage(src)}>
                     <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
@@ -124,16 +126,12 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
             </div>
           )}
         </div>
-      ) : (
-        <p style={{ textAlign: 'center', height: '40rem', lineHeight: '40rem' }}>
-          ⚠️ 이미지를 불러올 수 없습니다.
-        </p>
-      )}
+      ) : null}
 
       {/* 이미지 확대 모달 */}
       <Dialog.Root open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
         <Dialog.Overlay className={modalOverlay} />
-        <Dialog.Content className={modalContent}>
+        <Dialog.Content className={modalContent} aria-describedby={undefined}>
           <Dialog.Title className={a11yHidden}>확대된 이미지</Dialog.Title>
           <Dialog.Close asChild>
             <button className={closeButton} onClick={() => setSelectedImage(null)}>
@@ -152,8 +150,9 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
               alt="확대된 이미지"
               width={648}
               height={648}
+              quality={100}
               style={{
-                objectFit: 'cover',
+                objectFit: 'contain',
                 borderRadius: '1.2rem',
                 border: `0.1em solid ${colors.fieldToast}`,
               }}
