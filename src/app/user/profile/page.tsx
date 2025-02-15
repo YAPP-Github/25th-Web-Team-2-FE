@@ -1,6 +1,7 @@
 'use client';
 
 import ParticipantUserInfo from './components/ParticipantUserInfo/ParticipantUserInfo';
+import ResearcherUserInfo from './components/ResearcherUserInfo/ResearcherUserInfo';
 import UserInfoHeader from './components/UserInfoHeader/UserInfoHeader';
 import { joinLayout } from './ProfilePage.css';
 
@@ -20,6 +21,13 @@ const ProfilePage = () => {
       </section>
     );
   }
+
+  return (
+    <section className={joinLayout}>
+      <UserInfoHeader userInfo={userInfo} />
+      <ResearcherUserInfo userInfo={userInfo} />
+    </section>
+  );
 };
 
 export default ProfilePage;
