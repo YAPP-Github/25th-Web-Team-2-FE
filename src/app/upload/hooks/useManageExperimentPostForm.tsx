@@ -95,7 +95,7 @@ const useManageExperimentPostForm = ({
         endDate: experimentData.summary.endDate,
         matchType: experimentData.summary.matchType as MatchType,
         reward: experimentData.summary.reward,
-        univName: experimentData.address.univName,
+        place: experimentData.address.place,
         detailedAddress: experimentData.address.detailedAddress,
         region: experimentData.address.region,
         area: convertValueToLabel(experimentData.address.area),
@@ -167,7 +167,7 @@ const useManageExperimentPostForm = ({
       imageListInfo: {
         images: updatedImages as string[],
       },
-      univName: data.matchType === MatchType.ONLINE ? null : data.univName,
+      place: data.matchType === MatchType.ONLINE ? null : data.place,
     };
 
     if (isEdit && postId) {
