@@ -2,7 +2,12 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import { disabledInput, outlineFormLayout, uploadInputContainer } from './OutlineSection.css';
+import {
+  disabledInput,
+  isEndDatePastText,
+  outlineFormLayout,
+  uploadInputContainer,
+} from './OutlineSection.css';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
@@ -135,6 +140,11 @@ const OutlineSection = ({
     setIsDurationChecked(durationChecked);
   }, [experimentDateChecked, durationChecked]);
 
+  // 실험 종료날짜가 과거면 변경 불가능
+  const watchedEndDate = useWatch({ control, name: 'endDate' });
+  const endDate = watchedEndDate ? new Date(watchedEndDate) : null;
+  const isEndDatePast = (isEdit && endDate && endDate < new Date()) ?? false;
+
   return (
     <div className={uploadSectionLayout}>
       <h3 className={uploadFormSectionTitle}>
@@ -182,26 +192,31 @@ const OutlineSection = ({
                 error={fieldState.error}
                 field={field}
                 initialDates={defaultDateRange}
+                disabled={isEndDatePast}
               />
             )}
           />
 
           {/* 본문 참고 체크박스 */}
-          <CheckboxWithIcon
-            checked={isExperimentDateChecked}
-            onChange={() => {
-              const newCheckedState = !isExperimentDateChecked;
-              setIsExperimentDateChecked(newCheckedState);
-              if (newCheckedState) {
-                setValue('startDate', null, { shouldValidate: true });
-                setValue('endDate', null, { shouldValidate: true });
-              } else {
-                setValue('startDate', undefined, { shouldValidate: true });
-                setValue('endDate', undefined, { shouldValidate: true });
-              }
-            }}
-            label="본문 참고"
-          />
+          {isEndDatePast ? (
+            <p className={isEndDatePastText}>실험 종료일이 지났다면 일시를 변경할 수 없어요</p>
+          ) : (
+            <CheckboxWithIcon
+              checked={isExperimentDateChecked}
+              onChange={() => {
+                const newCheckedState = !isExperimentDateChecked;
+                setIsExperimentDateChecked(newCheckedState);
+                if (newCheckedState) {
+                  setValue('startDate', null, { shouldValidate: true });
+                  setValue('endDate', null, { shouldValidate: true });
+                } else {
+                  setValue('startDate', undefined, { shouldValidate: true });
+                  setValue('endDate', undefined, { shouldValidate: true });
+                }
+              }}
+              label="본문 참고"
+            />
+          )}
         </div>
 
         {/* 진행 방식 */}

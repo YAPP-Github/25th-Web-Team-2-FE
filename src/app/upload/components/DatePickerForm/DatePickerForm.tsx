@@ -28,11 +28,20 @@ interface DatePickerFormProps {
     onBlur: VoidFunction;
   };
   initialDates?: { from: Date | undefined; to: Date | undefined };
+  disabled?: boolean;
 }
 
 const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
   (
-    { placeholder, onDateChange, experimentDateChecked = false, error, field, initialDates },
+    {
+      placeholder,
+      onDateChange,
+      experimentDateChecked = false,
+      error,
+      field,
+      initialDates,
+      disabled = false,
+    },
     ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +66,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
     }, [experimentDateChecked]);
 
     const handleOpenChange = (open: boolean) => {
-      if (experimentDateChecked) {
+      if (experimentDateChecked || disabled) {
         setIsOpen(false);
         return;
       }
@@ -80,7 +89,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
               role="button"
               tabIndex={0}
               className={datePickerField({
-                experimentDateChecked,
+                experimentDateChecked: experimentDateChecked || disabled,
                 isOpen,
                 isError: !!error,
               })}
@@ -89,8 +98,8 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
             >
               <span
                 className={placeholderText({
-                  bothDatesSelected: !experimentDateChecked && !!selectedDates.from,
-                  experimentDateChecked,
+                  bothDatesSelected: !experimentDateChecked && !!selectedDates.from && !disabled,
+                  experimentDateChecked: experimentDateChecked,
                 })}
               >
                 {experimentDateChecked
