@@ -31,6 +31,13 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           <JoinInput<ResearcherUpdateSchemaType>
+            name="contactEmail"
+            control={form.control}
+            label="연락 받을 이메일"
+            required
+            placeholder="이메일 입력"
+          />
+          <JoinInput<ResearcherUpdateSchemaType>
             name="name"
             control={form.control}
             label="이름"
@@ -40,14 +47,14 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
           <JoinInput<ResearcherUpdateSchemaType>
             name="univName"
             control={form.control}
-            label="학교명"
+            label="소속 학교"
             required
             placeholder="학교명 입력"
           />
           <JoinInput<ResearcherUpdateSchemaType>
             name="major"
             control={form.control}
-            label="전공명"
+            label="소속 학과"
             required
             placeholder="전공명 입력"
           />
