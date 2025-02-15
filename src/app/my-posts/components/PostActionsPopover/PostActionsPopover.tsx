@@ -3,6 +3,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 import * as Toast from '@radix-ui/react-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import {
@@ -30,12 +31,15 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [openToast, setOpenToast] = useState(false);
 
+  const router = useRouter();
+
   const queryClient = useQueryClient();
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
 
   // todo 공고 수정
   const handleEdit = () => {
     setPopoverOpen(false);
+    router.push(`/edit/${experimentPostId}`);
   };
 
   const handleDelete = () => {

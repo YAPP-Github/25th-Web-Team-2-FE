@@ -1,7 +1,7 @@
 'use client';
 
 import * as Toast from '@radix-ui/react-toast';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
@@ -27,6 +27,7 @@ import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
 const UploadContainer = () => {
+  const router = useRouter();
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
 
@@ -68,9 +69,10 @@ const UploadContainer = () => {
 
         {/* 버튼 */}
         <div className={buttonContainer}>
-          <Link href={'/'}>
-            <button className={buttonVariants.active}>이전으로</button>
-          </Link>
+          <button className={buttonVariants.active} onClick={() => router.back()}>
+            이전으로
+          </button>
+
           <button className={buttonVariants.upload} onClick={handleSubmit} type="submit">
             {form.formState.isSubmitting ? '공고 등록 중' : '공고 등록하기'}
           </button>

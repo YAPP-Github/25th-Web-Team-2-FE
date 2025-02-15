@@ -2,6 +2,7 @@
 
 import * as Toast from '@radix-ui/react-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -75,7 +76,9 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           <h2>{postDetailData.title}</h2>
           {postDetailData.isAuthor && (
             <div>
-              <button className={buttonStyles({ type: 'edit' })}>수정</button>
+              <Link href={`/edit/${postDetailData.experimentPostId}`}>
+                <button className={buttonStyles({ type: 'edit' })}>수정</button>
+              </Link>
               <button className={buttonStyles()} onClick={() => setIsDeleteModalOpen(true)}>
                 삭제
               </button>
