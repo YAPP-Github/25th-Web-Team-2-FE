@@ -7,6 +7,7 @@ export const radioButtonGroupContainerLayout = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.6rem',
+  width: '100%',
 });
 
 export const labelWrapper = style({

@@ -7,6 +7,7 @@ export const inputContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '0.6rem',
+  width: '100%',
 });
 
 export const inputLabel = style({
