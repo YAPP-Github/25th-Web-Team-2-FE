@@ -27,6 +27,7 @@ interface Member {
   name: string;
   oauthEmail: string;
   provider: 'GOOGLE' | 'NAVER';
+  contactEmail: string;
   role: 'RESEARCHER' | 'PARTICIPANT';
 }
 
