@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { Controller } from 'react-hook-form';
 
 import {
   leaveButton,
   updateButton,
-  areaFilterContainer,
   termContainer,
   updateInfoFormContainer,
   updateInfoForm,
@@ -17,19 +15,12 @@ import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import AreaTooltip from '@/app/join/components/Participant/JoinInfoStep/AreaTooltip/AreaTooltip';
-import {
-  filterTitle,
-  filterTitleWrapper,
-  joinAreaFilterWrapper,
-  requiredStar,
-} from '@/app/join/components/Participant/JoinInfoStep/JoinInfoStep.css';
-import JoinSelect from '@/app/join/components/Participant/JoinInfoStep/JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from '@/app/join/components/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
+import AddressSelect from '@/components/AddressSelect/AddressSelect';
 import Icon from '@/components/Icon';
-
-// 참여자, 연구자 분기처리
+import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
   const { form, region, additionalRegion, handleSubmit, isLoading } = useFormParticipantUserInfo({
@@ -76,80 +67,30 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
           />
 
           {/* 거주 지역 */}
-          <div className={areaFilterContainer}>
-            <div className={filterTitleWrapper}>
-              <span className={filterTitle}>거주 지역</span>
-              <span className={requiredStar}>*</span>
-            </div>
-            <div className={joinAreaFilterWrapper}>
-              <Controller
-                name="basicAddressInfo.region"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <JoinSelect
-                    value={field.value}
-                    onChange={(value) => form.setValue('basicAddressInfo.region', value)}
-                    placeholder="시·도"
-                    options={JOIN_REGION}
-                    isError={Boolean(fieldState.error) && !field.value}
-                  />
-                )}
-              />
-
-              <Controller
-                name="basicAddressInfo.area"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <JoinSelect
-                    value={field.value}
-                    onChange={(value) => form.setValue('basicAddressInfo.area', value)}
-                    placeholder="시·군·구"
-                    options={JOIN_SUB_REGION[region || ''] || []}
-                    isError={Boolean(fieldState.error) && !field.value}
-                  />
-                )}
-              />
-            </div>
-          </div>
+          <AddressSelect<ParticipantUpdateSchemaType>
+            title="거주 지역"
+            control={form.control}
+            region="basicAddressInfo.region"
+            area="basicAddressInfo.area"
+            regionOptions={JOIN_REGION}
+            areaOptions={JOIN_SUB_REGION[region || ''] || []}
+            onChangeRegion={(value: string) => form.setValue('basicAddressInfo.region', value)}
+            onChangeArea={(value: string) => form.setValue('basicAddressInfo.area', value)}
+            isRequired
+          />
 
           {/* 추가 활동 지역 */}
-          <div className={areaFilterContainer}>
-            <div className={filterTitleWrapper}>
-              <span className={filterTitle}>추가 활동 지역</span>
-              <AreaTooltip />
-            </div>
-            <div className={areaFilterContainer}>
-              <div className={joinAreaFilterWrapper}>
-                <Controller
-                  name="additionalAddressInfo.region"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <JoinSelect
-                      value={field.value}
-                      onChange={(value) => form.setValue('additionalAddressInfo.region', value)}
-                      placeholder="시·도"
-                      options={JOIN_REGION}
-                      isError={Boolean(fieldState.error)}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="additionalAddressInfo.area"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <JoinSelect
-                      value={field.value}
-                      onChange={(value) => form.setValue('additionalAddressInfo.area', value)}
-                      placeholder="시·군·구"
-                      options={JOIN_SUB_REGION[additionalRegion || ''] || []}
-                      isError={Boolean(fieldState.error)}
-                    />
-                  )}
-                />
-              </div>
-            </div>
-          </div>
+          <AddressSelect<ParticipantUpdateSchemaType>
+            title="추가 활동 지역"
+            control={form.control}
+            region="additionalAddressInfo.region"
+            area="additionalAddressInfo.area"
+            regionOptions={JOIN_REGION}
+            areaOptions={JOIN_SUB_REGION[additionalRegion || ''] || []}
+            onChangeRegion={(value: string) => form.setValue('additionalAddressInfo.region', value)}
+            onChangeArea={(value: string) => form.setValue('additionalAddressInfo.area', value)}
+            tooltip={<AreaTooltip />}
+          />
 
           {/* 선호 실험 진행 방식 */}
           <RadioButtonGroupContainer<MatchType>

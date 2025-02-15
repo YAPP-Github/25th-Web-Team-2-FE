@@ -55,13 +55,6 @@ export const leaveButton = style({
   gap: '0.2em',
 });
 
-export const areaFilterContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.6rem',
-  width: '100%',
-});
-
 export const termContainer = style({
   ...fonts.body.normal.M16,
   color: colors.text06,
