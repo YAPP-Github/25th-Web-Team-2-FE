@@ -13,6 +13,8 @@ const useParticipantInfoQuery = ({ enabled }: useParticipantInfoQueryProps) => {
     queryFn: getParticipantInfo,
     enabled,
     retry: 1,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
 
