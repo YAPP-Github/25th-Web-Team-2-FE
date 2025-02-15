@@ -23,9 +23,10 @@ import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
-  const { form, region, additionalRegion, handleSubmit, isLoading } = useFormParticipantUserInfo({
-    userInfo,
-  });
+  const { form, region, additionalRegion, handleSubmit, isLoading, isError } =
+    useFormParticipantUserInfo({
+      userInfo,
+    });
 
   const [isToastOpen, setIsToastOpen] = useState(false);
 
@@ -137,9 +138,10 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
       </button>
 
       <EmailToast
-        title="회원정보가 수정되었어요"
+        title={isError ? '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.' : '저장되었어요'}
         isToastOpen={isToastOpen}
         setIsToastOpen={setIsToastOpen}
+        isError={isError}
       />
     </>
   );

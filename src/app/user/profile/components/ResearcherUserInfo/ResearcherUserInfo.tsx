@@ -18,7 +18,7 @@ import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
-  const { form, handleSubmit, isLoading } = useFormResearcherUserInfo({
+  const { form, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
     userInfo,
   });
 
@@ -85,9 +85,10 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
       </button>
 
       <EmailToast
-        title="회원정보가 수정되었어요"
+        title={isError ? '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.' : '저장되었어요'}
         isToastOpen={isToastOpen}
         setIsToastOpen={setIsToastOpen}
+        isError={isError}
       />
     </>
   );

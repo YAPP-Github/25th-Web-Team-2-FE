@@ -13,7 +13,7 @@ interface UseFormParticipantUserInfoProps {
 }
 
 const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProps) => {
-  const { mutate: updateParticipantInfo, isPending } = useUpdateParticipantInfoMutation();
+  const { mutate: updateParticipantInfo, isPending, isError } = useUpdateParticipantInfoMutation();
 
   const { memberInfo, basicAddressInfo, additionalAddressInfo, matchType } = userInfo;
 
@@ -62,6 +62,7 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
     additionalRegion,
     handleSubmit: (onSuccess: () => void) => form.handleSubmit(() => onSubmit(onSuccess)),
     isLoading: isPending,
+    isError,
   };
 };
 

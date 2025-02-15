@@ -13,7 +13,7 @@ interface UseFormResearcherUserInfoProps {
 }
 
 const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps) => {
-  const { mutate: updateResearcherInfo, isPending } = useUpdateResearcherInfoMutation();
+  const { mutate: updateResearcherInfo, isPending, isError } = useUpdateResearcherInfoMutation();
 
   const { memberInfo, univName, major, labInfo } = userInfo;
 
@@ -42,6 +42,7 @@ const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps)
     form,
     handleSubmit: (onSuccess: () => void) => form.handleSubmit(() => onSubmit(onSuccess)),
     isLoading: isPending,
+    isError,
   };
 };
 
