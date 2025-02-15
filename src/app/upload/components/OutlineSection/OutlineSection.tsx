@@ -1,3 +1,4 @@
+import { isBefore, startOfDay } from 'date-fns';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
@@ -9,6 +10,7 @@ import {
   uploadInputContainer,
 } from './OutlineSection.css';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
+import { parseDateString } from '../../upload.utils';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
@@ -142,8 +144,11 @@ const OutlineSection = ({
 
   // 실험 종료날짜가 과거면 변경 불가능
   const watchedEndDate = useWatch({ control, name: 'endDate' });
-  const endDate = watchedEndDate ? new Date(watchedEndDate) : null;
-  const isEndDatePast = (isEdit && endDate && endDate < new Date()) ?? false;
+
+  const endDate = parseDateString(watchedEndDate);
+  const today = startOfDay(new Date());
+
+  const isEndDatePast = isEdit && endDate ? isBefore(endDate, today) : false;
 
   return (
     <div className={uploadSectionLayout}>
