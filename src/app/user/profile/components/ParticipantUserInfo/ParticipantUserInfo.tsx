@@ -1,7 +1,6 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
 import {
   badge,
@@ -18,7 +17,7 @@ import {
   updateInfoFormContainer,
   updateInfoForm,
 } from './ParticipantUserInfo.css';
-import useUpdateParticipantInfoMutation from '../../hooks/useUpdateParticipantInfoMutation';
+import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
@@ -36,9 +35,6 @@ import RadioButtonGroupContainer from '@/app/join/components/Participant/JoinInf
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import Icon from '@/components/Icon';
-import ParticipantUpdateSchema, {
-  ParticipantUpdateSchemaType,
-} from '@/schema/profile/ParticipantUpdateSchema';
 
 const GENDER_LABEL = {
   MALE: '남성',
@@ -46,34 +42,14 @@ const GENDER_LABEL = {
 } as const;
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
-  const { memberInfo, basicAddressInfo, additionalAddressInfo, matchType } = userInfo;
-
-  const { control, setValue, getValues, handleSubmit } = useForm<ParticipantUpdateSchemaType>({
-    resolver: zodResolver(ParticipantUpdateSchema()),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      contactEmail: memberInfo.contactEmail,
-      name: memberInfo.name,
-      basicAddressInfo: basicAddressInfo,
-      additionalAddressInfo: additionalAddressInfo,
-      matchType: matchType,
-    },
+  const { form, region, additionalRegion, handleSubmit, isLoading } = useFormParticipantUserInfo({
+    userInfo,
   });
 
-  const region = useWatch({
-    control,
-    name: 'basicAddressInfo.region',
-  });
-
-  const additionalRegion = useWatch({
-    control,
-    name: 'additionalAddressInfo.region',
-  });
-
+  const { memberInfo } = userInfo;
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const { mutate: updateParticipantInfo, isPending } = useUpdateParticipantInfoMutation();
 
+  // TODO: API 수정 시 체크 상태 form으로 관리
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState({
     isAdvertise: false,
     isRecommend: false,
@@ -84,24 +60,6 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
       ...prev,
       [name]: e.target.checked,
     }));
-  };
-
-  const onSubmit = () => {
-    const formData = getValues();
-
-    const formattedData = {
-      ...formData,
-      additionalAddressInfo:
-        Object.values(formData.additionalAddressInfo ?? {}).filter(Boolean).length > 0
-          ? formData.additionalAddressInfo
-          : null,
-    };
-
-    updateParticipantInfo(formattedData, {
-      onSuccess: () => {
-        setIsToastOpen(true);
-      },
-    });
   };
 
   return (
@@ -127,7 +85,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
           {/* 연락 받을 이메일 */}
           <JoinInput
             name="contactEmail"
-            control={control}
+            control={form.control}
             label="연락 받을 이메일"
             required
             placeholder="이메일 입력"
@@ -138,7 +96,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
           {/* 이름 */}
           <JoinInput
             name="name"
-            control={control}
+            control={form.control}
             label="이름"
             required
             placeholder="이름(실명) 입력"
@@ -153,11 +111,11 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             <div className={joinAreaFilterWrapper}>
               <Controller
                 name="basicAddressInfo.region"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState }) => (
                   <JoinSelect
                     value={field.value}
-                    onChange={(value) => setValue('basicAddressInfo.region', value)}
+                    onChange={(value) => form.setValue('basicAddressInfo.region', value)}
                     placeholder="시·도"
                     options={JOIN_REGION}
                     isError={Boolean(fieldState.error) && !field.value}
@@ -167,11 +125,11 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
 
               <Controller
                 name="basicAddressInfo.area"
-                control={control}
+                control={form.control}
                 render={({ field, fieldState }) => (
                   <JoinSelect
                     value={field.value}
-                    onChange={(value) => setValue('basicAddressInfo.area', value)}
+                    onChange={(value) => form.setValue('basicAddressInfo.area', value)}
                     placeholder="시·군·구"
                     options={JOIN_SUB_REGION[region || ''] || []}
                     isError={Boolean(fieldState.error) && !field.value}
@@ -191,11 +149,11 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
               <div className={joinAreaFilterWrapper}>
                 <Controller
                   name="additionalAddressInfo.region"
-                  control={control}
+                  control={form.control}
                   render={({ field, fieldState }) => (
                     <JoinSelect
                       value={field.value}
-                      onChange={(value) => setValue('additionalAddressInfo.region', value)}
+                      onChange={(value) => form.setValue('additionalAddressInfo.region', value)}
                       placeholder="시·도"
                       options={JOIN_REGION}
                       isError={Boolean(fieldState.error)}
@@ -205,11 +163,11 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
 
                 <Controller
                   name="additionalAddressInfo.area"
-                  control={control}
+                  control={form.control}
                   render={({ field, fieldState }) => (
                     <JoinSelect
                       value={field.value}
-                      onChange={(value) => setValue('additionalAddressInfo.area', value)}
+                      onChange={(value) => form.setValue('additionalAddressInfo.area', value)}
                       placeholder="시·군·구"
                       options={JOIN_SUB_REGION[additionalRegion || ''] || []}
                       isError={Boolean(fieldState.error)}
@@ -222,7 +180,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
 
           {/* 선호 실험 진행 방식 */}
           <RadioButtonGroupContainer<MatchType>
-            control={control}
+            control={form.control}
             name="matchType"
             title="선호 실험 진행 방식"
             options={[
@@ -230,7 +188,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
               { value: 'OFFLINE', label: '대면' },
               { value: 'ONLINE', label: '비대면' },
             ]}
-            onChange={(value) => setValue('matchType', value)}
+            onChange={(value) => form.setValue('matchType', value)}
           />
 
           <div className={termContainer}>
@@ -256,8 +214,12 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
         </Link>
       </div>
 
-      <button className={updateButton} onClick={handleSubmit(onSubmit)} disabled={isPending}>
-        {isPending ? '저장중...' : '저장하기'}
+      <button
+        className={updateButton}
+        onClick={handleSubmit(() => setIsToastOpen(true))}
+        disabled={isLoading}
+      >
+        {isLoading ? '저장중...' : '저장하기'}
       </button>
 
       <EmailToast
