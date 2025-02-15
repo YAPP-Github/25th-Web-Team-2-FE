@@ -98,11 +98,11 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <th>실험 장소</th>
               <td className={textWrapRow}>
                 <p>
-                  {address.univName && address.region && address.area
+                  {address.place && address.region && address.area
                     ? `${getRegionLabel(address.region)} ${getAreaLabel(
                         address.region,
                         address.area,
-                      )} ${address.univName} ${address.detailedAddress}`
+                      )} ${address.place} ${address.detailedAddress}`
                     : '본문 참고'}
                 </p>
               </td>

@@ -46,8 +46,8 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
       .string()
       .min(5, { message: '최소 5자 이상으로 입력해 주세요' })
       .max(150, { message: '최대 150자 이하로 입력해 주세요' }),
-    // 대학교
-    univName: z.string().min(1, '').nullable(),
+    // 장소
+    place: z.string().min(1, '').nullable(),
     // 지역
     region: z.string().min(1, '').nullable(),
     // 지역구

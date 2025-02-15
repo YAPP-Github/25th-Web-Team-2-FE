@@ -22,7 +22,7 @@ export interface ExperimentPostData {
     | 'ABOUT_4H'
     | null;
   leadResearcher: string;
-  univName?: string | null;
+  place?: string | null;
   region?: string | null;
   area?: string | null;
   detailedAddress?: string;
@@ -50,7 +50,7 @@ export interface UploadedPostInfo {
   experimentPostId: number;
   title: string;
   views: number;
-  univName: string;
+  place: string;
   reward: string;
   durationInfo: {
     startDate: string;

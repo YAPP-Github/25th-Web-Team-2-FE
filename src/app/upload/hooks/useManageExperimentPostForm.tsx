@@ -61,7 +61,7 @@ const useManageExperimentPostForm = ({
       endDate: undefined,
       matchType: undefined,
       reward: '',
-      univName: undefined,
+      place: undefined,
       detailedAddress: '',
       region: undefined,
       area: undefined,
