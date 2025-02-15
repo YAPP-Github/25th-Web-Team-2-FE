@@ -2,13 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { API } from '@/apis/config';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
-
-interface UseExperimentDetailsQueryParams {
-  postId: string;
-}
 
 interface TargetGroup {
   startAge: number | null;
@@ -50,14 +47,15 @@ export interface UseQueryExperimentDetailsAPIResponse {
   alarmAgree: boolean;
 }
 
-const useExperimentDetailsQuery = ({ postId }: UseExperimentDetailsQueryParams) => {
+const useExperimentDetailsQuery = ({ postId }: { postId: string }) => {
+  const { isLoading: isUserInfoLoading } = useUserInfo();
   const url = API_URL.viewExperimentDetails(postId);
   const queryFn = () => API.post(url).then((res) => res.data);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, AxiosError>({
     queryKey: [QUERY_KEY.experimentPostDetail, postId],
     queryFn,
-    enabled: !!postId,
+    enabled: !!postId && !isUserInfoLoading,
   });
 };
 
