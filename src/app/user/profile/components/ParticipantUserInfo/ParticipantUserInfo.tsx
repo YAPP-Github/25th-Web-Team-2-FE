@@ -3,14 +3,7 @@ import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 
 import {
-  badge,
-  headerContainer,
-  infoContainer,
-  title,
-  titleContainer,
-  verticalLine,
   leaveButton,
-  emailWrapper,
   updateButton,
   areaFilterContainer,
   termContainer,
@@ -36,17 +29,13 @@ import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import Icon from '@/components/Icon';
 
-const GENDER_LABEL = {
-  MALE: '남성',
-  FEMALE: '여성',
-} as const;
+// 참여자, 연구자 분기처리
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
   const { form, region, additionalRegion, handleSubmit, isLoading } = useFormParticipantUserInfo({
     userInfo,
   });
 
-  const { memberInfo } = userInfo;
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   // TODO: API 수정 시 체크 상태 form으로 관리
@@ -64,22 +53,6 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
 
   return (
     <>
-      <div className={headerContainer}>
-        <div className={titleContainer}>
-          <span className={badge}>참여자</span>
-          <span className={title}>{memberInfo.name}님의 회원정보</span>
-        </div>
-        <div className={infoContainer}>
-          <span>{GENDER_LABEL[userInfo.gender]}</span>
-          <span className={verticalLine} />
-          <span>{userInfo.birthDate}</span>
-          <span className={verticalLine} />
-          <div className={emailWrapper}>
-            <span>ID</span>
-            <span>{memberInfo.oauthEmail}</span>
-          </div>
-        </div>
-      </div>
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
