@@ -7,6 +7,12 @@ import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import {
+  alertDialogContent,
+  alertDialogDescription,
+  alertDialogTitle,
+} from './EditExperimentPost.css';
+
+import {
   copyToastLayout,
   copyToastTitle,
   copyToastViewport,
@@ -24,7 +30,7 @@ import {
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
-import { confirmContent, dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
+import { closeButton, dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
@@ -126,10 +132,28 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
       <Dialog.Root open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
         <Dialog.Overlay className={dialogOverlay} />
-        <Dialog.Content aria-describedby={undefined} className={confirmContent}>
-          <Dialog.Title>공고를 불러오지 못했어요.</Dialog.Title>
-          <p>시간을 두고 다시 시도해주세요.</p>
-          <button onClick={handleCloseDialog}>닫기</button>
+        <Dialog.Content className={alertDialogContent}>
+          <Dialog.Close asChild>
+            <button className={closeButton} aria-label="모달 닫기" onClick={handleCloseDialog}>
+              <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
+            </button>
+          </Dialog.Close>
+          <Dialog.Title asChild>
+            <>
+              <Icon
+                icon="BangRound"
+                width={48}
+                height={48}
+                color={'rgba(246, 101, 112, 0.25)'}
+                subcolor={colors.textAlert}
+                aria-label="안내 아이콘"
+              />
+              <p className={alertDialogTitle}>공고를 불러오지 못했어요.</p>
+            </>
+          </Dialog.Title>
+          <Dialog.Description>
+            <p className={alertDialogDescription}>시간을 두고 다시 시도해주세요.</p>
+          </Dialog.Description>
         </Dialog.Content>
       </Dialog.Root>
     </FormProvider>
