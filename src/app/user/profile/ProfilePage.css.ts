@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-export const profileLayout = style({
+export const profilePageLayout = style({
   display: 'flex',
   width: '56rem',
   margin: '0 auto',

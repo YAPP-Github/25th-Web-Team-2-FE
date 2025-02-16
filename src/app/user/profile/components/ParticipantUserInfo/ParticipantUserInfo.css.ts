@@ -3,14 +3,6 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-export const joinLayout = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2.2rem',
-  paddingTop: '6rem',
-  flexGrow: 1,
-});
-
 export const updateInfoFormContainer = style({
   display: 'flex',
   flexDirection: 'column',
@@ -24,7 +16,7 @@ export const updateInfoForm = style({
   flexDirection: 'column',
   alignItems: 'center',
   gap: '2.8rem',
-  backgroundColor: colors.field03,
+  backgroundColor: colors.field02,
   borderRadius: '1.2rem',
   padding: '2.4rem 4rem',
 });

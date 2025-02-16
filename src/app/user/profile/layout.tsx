@@ -1,12 +1,12 @@
-import { profileLayout } from './ProfilePage.css';
+import { profilePageLayout } from './ProfilePage.css';
 
-import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
+import UserLayout from '@/components/layout/UserLayout/UserLayout';
 
 function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
-    <DefaultLayout>
-      <div className={profileLayout}>{children}</div>
-    </DefaultLayout>
+    <UserLayout>
+      <div className={profilePageLayout}>{children}</div>
+    </UserLayout>
   );
 }
 
