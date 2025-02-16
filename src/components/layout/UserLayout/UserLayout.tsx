@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 import { userLayout, userLayoutContainer } from './UserLayout.css';
 
-import BackToTopButton from '@/components/Button/BackToTopButton/BactToTopButton';
+import BackToTopButton from '@/components/Button/BackToTopButton/BackToTopButton';
 import Header from '@/components/Header/Header';
 
 const UserLayout = ({ children }: PropsWithChildren) => {
