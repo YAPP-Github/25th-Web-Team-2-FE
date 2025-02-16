@@ -152,7 +152,7 @@ const OutlineSection = ({
                 options={[
                   { value: MatchType.OFFLINE, label: '대면' },
                   { value: MatchType.ONLINE, label: '비대면' },
-                  { value: MatchType.HYBRID, label: '대면+비대면' },
+                  { value: MatchType.ALL, label: '대면+비대면' },
                 ]}
                 selectedValue={field.value}
                 onChange={(value) => {
