@@ -53,7 +53,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
     if (images.length === 0 && existingImages.length > 0) {
       setImages(existingImages.slice(0, MAX_PHOTOS));
     }
-  }, []);
+  }, [getValues, images.length, setImages]);
 
   const uploadPhotos = (e: ChangeEvent<HTMLInputElement>): void => {
     const files = e.target.files;
