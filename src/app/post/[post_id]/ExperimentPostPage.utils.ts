@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { durationMinutesOptions } from '@/app/upload/upload.constants';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
@@ -60,6 +62,13 @@ const getMatchTypeText = (matchType: 'OFFLINE' | 'ONLINE' | 'ALL'): string => {
   return matchTypeMap[matchType];
 };
 
+// yyyy-mm-dd 형식의 문자열을 yyyy.MM.dd 형식으로 변환하는 함수
+const formatDate = (hyphenDate: string): string => {
+  if (!hyphenDate) return '';
+
+  return format(new Date(hyphenDate), 'yyyy.MM.dd') ?? '';
+};
+
 export {
   formattedContentText,
   getGenderLabel,
@@ -68,4 +77,5 @@ export {
   getAreaLabel,
   isValidImageUrl,
   getMatchTypeText,
+  formatDate,
 };

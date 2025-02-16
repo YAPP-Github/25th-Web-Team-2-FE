@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -7,6 +8,7 @@ import {
   alarmAgreeContainer,
   applyMethodContainer,
   applyMethodContentLayout,
+  disabledAlarmAgreeText,
   targetConditionLayout,
   targetGroupContainer,
   textStyle,
@@ -40,6 +42,9 @@ const ApplyMethodSection = ({
   addContact,
   setAddContact,
 }: ApplyMethodSectionProps) => {
+  const pathname = usePathname();
+  const isEdit = pathname.startsWith('/edit');
+
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
 
   const ageError = !!(
@@ -51,7 +56,7 @@ const ApplyMethodSection = ({
       {/* 실험 참여 방법 */}
       <div className={applyMethodContainer}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>3</span>실험에 참여하려면 어떻게 하면 되나요?{' '}
+          <span className={headingIcon}>3</span>어떤 방법으로 신청을 받을까요?{' '}
           <span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
@@ -63,7 +68,7 @@ const ApplyMethodSection = ({
               <InputForm
                 {...field}
                 id="applyMethodInfo.content"
-                placeholder="예) 아래 연락처로 성함, 가능한 시간대를 보내주세요"
+                placeholder="참여자에게 신청 방법을 알려주세요 (예: 링크로 폼 제출해 주세요)"
                 maxLength={200}
                 size="full"
                 field={{ ...field, value: field.value ?? '' }}
@@ -108,6 +113,7 @@ const ApplyMethodSection = ({
               checked={addContact}
               onChange={() => {
                 setAddContact((prev) => !prev);
+                setValue('applyMethodInfo.phoneNum', null);
               }}
               label="연락처를 추가할게요"
               align="left"
@@ -226,10 +232,14 @@ const ApplyMethodSection = ({
               align="left"
               size="large"
               boldStyle
+              disabled={isEdit}
             />
           )}
         />
       </div>
+      {isEdit && (
+        <p className={disabledAlarmAgreeText}>등록된 공고는 공고 알림 여부를 수정할 수 없어요</p>
+      )}
     </div>
   );
 };

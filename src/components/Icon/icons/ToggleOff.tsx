@@ -16,7 +16,7 @@ function ToggleOff(props: SVGProps<SVGSVGElement>) {
     >
       <rect y="6" width="32" height="18" rx="9" fill={props.color || theme.colors.field05} />
       <g filter="url(#filter0_d_3107_24218)">
-        <circle cx="23" cy="15" r="7" fill="white" />
+        <circle cx="9" cy="15" r="7" fill="white" />
       </g>
       <defs>
         <filter

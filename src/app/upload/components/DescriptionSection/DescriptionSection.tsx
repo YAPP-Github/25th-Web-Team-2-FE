@@ -1,6 +1,6 @@
 import * as Toast from '@radix-ui/react-toast';
 import Image from 'next/image';
-import { ChangeEvent, DragEvent, useState } from 'react';
+import { ChangeEvent, DragEvent, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import {
@@ -8,7 +8,9 @@ import {
   deleteButton,
   descriptionContentContainer,
   descriptionFormLayout,
+  descriptionSectionLayout,
   descriptionTextarea,
+  fileInfoText,
   photoContainer,
   photoGrid,
   photoLayout,
@@ -16,7 +18,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
-import { headingIcon, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
+import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
 import {
   copyToastLayout,
@@ -28,24 +30,36 @@ import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperiment
 import { colors } from '@/styles/colors';
 
 interface DescriptionSectionProps {
-  selectedImages: File[];
-  setSelectedImages: (images: File[]) => void;
+  images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
+  setImages: (images: (string | File)[]) => void;
 }
 
 const MAX_PHOTOS = 3;
 const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
-const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSectionProps) => {
-  const { control, formState } = useFormContext<UploadExperimentPostSchemaType>();
-  const contentError = formState.errors.content;
+const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
+  const {
+    control,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useFormContext<UploadExperimentPostSchemaType>();
+
+  const contentError = errors.content;
   const [openToast, setOpenToast] = useState(false);
+
+  useEffect(() => {
+    const existingImages = getValues('imageListInfo.images') || [];
+    if (images.length === 0 && existingImages.length > 0) {
+      setImages(existingImages.slice(0, MAX_PHOTOS));
+    }
+  }, [getValues, images.length, setImages]);
 
   const uploadPhotos = (e: ChangeEvent<HTMLInputElement>): void => {
     const files = e.target.files;
-
     if (!files) return;
 
-    const newPhotos: File[] = [];
+    const newPhotos: (string | File)[] = [];
 
     for (const file of Array.from(files)) {
       if (!VALID_IMAGE_TYPES.includes(file.type)) {
@@ -53,29 +67,26 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
         continue;
       }
 
-      if (selectedImages.length + newPhotos.length >= MAX_PHOTOS) {
-        break;
-      }
-
       newPhotos.push(file);
     }
 
-    setSelectedImages([...selectedImages, ...newPhotos]);
+    const updatedImages = [...images, ...newPhotos].slice(0, MAX_PHOTOS);
+    setImages(updatedImages);
   };
 
-  // 파일 삭제
   const deletePhoto = (index: number): void => {
-    setSelectedImages(selectedImages.filter((_, i) => i !== index));
+    const updatedImages = images.filter((_, i) => i !== index);
+    setImages(updatedImages);
+
+    setValue(
+      'imageListInfo.images',
+      updatedImages.filter((img) => typeof img === 'string'),
+    );
   };
 
-  // 드래그 앤 드랍을 위한 핸들러
   const onDragStart = (e: DragEvent<HTMLDivElement>, index: number): void => {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('photoIndex', String(index));
-  };
-
-  const onDragOver = (e: DragEvent<HTMLDivElement>): void => {
-    e.preventDefault();
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>, targetIndex: number): void => {
@@ -84,19 +95,18 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
 
     if (sourceIndex === targetIndex) return;
 
-    const updatedPhotos = [...selectedImages];
-    const [movedPhoto] = updatedPhotos.splice(sourceIndex, 1);
-    updatedPhotos.splice(targetIndex, 0, movedPhoto);
+    const updatedImages = [...images];
+    const [movedImage] = updatedImages.splice(sourceIndex, 1);
+    updatedImages.splice(targetIndex, 0, movedImage);
 
-    setSelectedImages(updatedPhotos);
+    setImages(updatedImages);
   };
 
   return (
     <>
-      <div className={uploadSectionLayout}>
-        {/* 제목 영역 */}
+      <div className={descriptionSectionLayout}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>2</span>어떤 실험인가요?{' '}
+          <span className={headingIcon}>1</span>어떤 실험인가요?{' '}
           <span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
@@ -127,47 +137,45 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
                   {...field}
                   id="content"
                   className={descriptionTextarea({
-                    photoGridHeight: selectedImages.length > 0 ? 'withPhotos' : 'withoutPhotos',
+                    photoGridHeight: images.length > 0 ? 'withPhotos' : 'withoutPhotos',
                   })}
                   placeholder="본문을 입력해 주세요"
                 />
               )}
             />
 
-            {selectedImages.length > 0 && (
-              <div className={photoGrid}>
-                {selectedImages.map((photo, index) => (
-                  <div
-                    className={photoLayout}
-                    key={index}
-                    draggable
-                    onDragStart={(e) => onDragStart(e, index)}
-                    onDragOver={onDragOver}
-                    onDrop={(e) => onDrop(e, index)}
-                  >
-                    <div className={photoContainer}>
-                      <button className={deleteButton} onClick={() => deletePhoto(index)}>
-                        <Icon
-                          icon="CloseRound"
-                          width={20}
-                          height={20}
-                          color={colors.field09}
-                          cursor="pointer"
-                          subcolor={colors.field01}
-                        />
-                      </button>
-                      <Image
-                        src={URL.createObjectURL(photo)}
-                        alt="업로드한 이미지 미리보기"
-                        width={80}
-                        height={80}
-                        style={{ objectFit: 'cover', borderRadius: '1.2rem' }}
+            <div className={photoGrid}>
+              {images.map((image, index) => (
+                <div
+                  className={photoLayout}
+                  key={`image-${index}`}
+                  draggable
+                  onDragStart={(e) => onDragStart(e, index)}
+                  onDrop={(e) => onDrop(e, index)}
+                  onDragOver={(e) => e.preventDefault()}
+                >
+                  <div className={photoContainer}>
+                    <button className={deleteButton} onClick={() => deletePhoto(index)}>
+                      <Icon
+                        icon="CloseRound"
+                        width={20}
+                        height={20}
+                        color={colors.field09}
+                        cursor="pointer"
+                        subcolor={colors.field01}
                       />
-                    </div>
+                    </button>
+                    <Image
+                      src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                      alt="업로드된 이미지"
+                      width={80}
+                      height={80}
+                      style={{ objectFit: 'cover', borderRadius: '1.2rem' }}
+                    />
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
 
             <div className={uploadImagesContainer}>
               <label htmlFor="photos" className={addImageContainer}>
@@ -182,7 +190,7 @@ const DescriptionSection = ({ selectedImages, setSelectedImages }: DescriptionSe
                 onChange={uploadPhotos}
                 style={{ display: 'none' }}
               />
-              <p>jpg, png 최대 3장까지 첨부할 수 있어요</p>
+              <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
         </div>

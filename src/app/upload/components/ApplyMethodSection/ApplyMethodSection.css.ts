@@ -70,6 +70,8 @@ export const alarmAgreeContainer = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  cursor: 'pointer',
+  transition: 'background-color 0.2s ease-in-out',
 });
 
 export const uploadFormSectionTitle = style({
@@ -89,4 +91,10 @@ export const ReferToDetailsContainer = style({
   alignItems: 'center',
   gap: '0.2rem',
   justifyContent: 'right',
+});
+
+export const disabledAlarmAgreeText = style({
+  ...fonts.label.small.M12,
+  color: colors.text02,
+  marginTop: '0.4rem',
 });

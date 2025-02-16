@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import LoginCard from './components/LoginCard/LoginCard';
 import {
@@ -14,7 +15,9 @@ export default function LoginPage() {
   return (
     <div className={loginPageLayout}>
       <div className={sloganContainer}>
-        <Image src={Logo} alt="로고" width={80} height={28} />
+        <Link href="/" aria-label="홈 화면으로 이동">
+          <Image src={Logo} alt="로고" width={80} height={28} />
+        </Link>
         <div className={sloganWrapper}>
           <span>작은 연결로 시작되는 큰 발견</span>
           <br />

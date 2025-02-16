@@ -49,6 +49,7 @@ API.interceptors.response.use(
         const userInfo = await updateAccessToken(refreshToken);
 
         originalRequest.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+        API.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
         sessionStorage.setItem('refreshToken', userInfo.refreshToken);
         sessionStorage.setItem('role', userInfo.memberInfo.role);
         return axios(originalRequest);
