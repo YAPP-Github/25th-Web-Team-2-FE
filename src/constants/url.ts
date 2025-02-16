@@ -20,6 +20,8 @@ export const API_URL = {
   deletePost: (postId: string) => `/v1/experiment-posts/${postId}`,
   validateContactEmail: (contactEmail: string) =>
     `/v1/members/me/validation/contact-email?contactEmail=${contactEmail}`,
+  editPost: (postId: string) => `/v1/experiment-posts/${postId}`,
+  originExperimentPost: (postId: string) => `/v1/experiment-posts/${postId}/edit`,
 };
 
 export const MOCK_API_URL = {

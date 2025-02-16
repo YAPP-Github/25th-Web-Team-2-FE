@@ -2,6 +2,7 @@
 
 import * as Toast from '@radix-ui/react-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -12,6 +13,7 @@ import {
   postSubInfo,
   viewsContainer,
 } from './ExperimentPostInfo.css';
+import { formatDate } from '../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import {
@@ -74,7 +76,9 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           <h2>{postDetailData.title}</h2>
           {postDetailData.isAuthor && (
             <div>
-              <button className={buttonStyles({ type: 'edit' })}>수정</button>
+              <Link href={`/edit/${postDetailData.experimentPostId}`}>
+                <button className={buttonStyles({ type: 'edit' })}>수정</button>
+              </Link>
               <button className={buttonStyles()} onClick={() => setIsDeleteModalOpen(true)}>
                 삭제
               </button>
@@ -82,7 +86,7 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           )}
         </div>
         <div className={postSubInfo}>
-          <div>{postDetailData.uploadDate}</div>
+          <div>{formatDate(postDetailData.uploadDate)}</div>
           <div>{postDetailData.uploaderName}</div>
           <div className={viewsContainer}>
             <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />

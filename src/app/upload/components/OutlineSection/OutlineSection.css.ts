@@ -76,3 +76,9 @@ export const disabledInput = style({
   backgroundColor: colors.field02,
   color: colors.text02,
 });
+
+export const isEndDatePastText = style({
+  ...fonts.label.small.M12,
+  color: colors.text02,
+  marginTop: '0.4rem',
+});

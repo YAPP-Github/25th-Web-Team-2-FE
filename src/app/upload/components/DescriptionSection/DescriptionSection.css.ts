@@ -4,6 +4,12 @@ import { recipe } from '@vanilla-extract/recipes';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
+export const descriptionSectionLayout = style({
+  backgroundColor: colors.field01,
+  borderRadius: '1.2rem',
+  padding: '3.2rem 2.8rem',
+});
+
 export const descriptionFormLayout = style({
   width: '100%',
   display: 'flex',
@@ -74,6 +80,11 @@ export const uploadImagesContainer = style({
   borderTop: `0.1rem solid ${colors.line01}`,
 });
 
+export const fileInfoText = style({
+  ...fonts.label.large.R14,
+  color: colors.text02,
+});
+
 export const addImageContainer = style({
   ...fonts.label.medium.M13,
   color: colors.text04,
@@ -93,7 +104,7 @@ export const photoGrid = style({
   gap: '10px',
   overflowX: 'auto',
   padding: '0 1.6rem',
-  height: '8rem',
+  height: '8.5rem',
   marginTop: '1rem',
   marginBottom: '1.4rem',
 });

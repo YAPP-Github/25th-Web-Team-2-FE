@@ -1,7 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
-import { disabledInput, outlineFormLayout, uploadInputContainer } from './OutlineSection.css';
+import {
+  disabledInput,
+  isEndDatePastText,
+  outlineFormLayout,
+  uploadInputContainer,
+} from './OutlineSection.css';
+import { useExperimentDate } from '../../hooks/useExperimentDate';
+import { useExperimentDuration } from '../../hooks/useExperimentDuration';
+import useMatchType from '../../hooks/useMatchType';
+import useRegionSelect from '../../hooks/useRegionSelect';
+import useUserResearcherInfo from '../../hooks/useUserResearcherInfo';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
@@ -15,83 +24,48 @@ import {
   uploadSectionLayout,
 } from '../UploadContainer/UploadContainer.css';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
-const OutlineSection = () => {
+interface OutlineSectionProps {
+  experimentDateChecked?: boolean;
+  durationChecked?: boolean;
+}
+
+const OutlineSection = ({
+  experimentDateChecked = false,
+  durationChecked = false,
+}: OutlineSectionProps) => {
   const { control, setValue } = useFormContext();
 
-  const { userInfo } = useUserInfo();
+  // 공고 등록 시 연구자 정보 자동 채우기
+  useUserResearcherInfo();
 
-  const isResearcher = (
-    user: ParticipantResponse | ResearcherResponse,
-  ): user is ResearcherResponse => {
-    return (user as ResearcherResponse).memberInfo.role === 'RESEARCHER';
-  };
+  // 진행 방식 선택 로직
+  const { selectedMatchType, handleMatchTypeChange } = useMatchType();
 
-  useEffect(() => {
-    if (!userInfo || !isResearcher(userInfo)) return;
+  // 지역 선택 로직
+  const {
+    isOpenRegionPopover,
+    setIsOpenRegionPopover,
+    selectedRegion,
+    selectedSubRegion,
+    handleRegionSelect,
+    handleSubRegionSelect,
+  } = useRegionSelect();
 
-    const researcherName = `${userInfo.univName} ${userInfo.major} ${userInfo.memberInfo.name}`;
-    setValue('leadResearcher', researcherName);
-    setValue('univName', userInfo.univName);
-  }, [userInfo, setValue]);
+  // 실험 일시 선택 로직
+  const {
+    isExperimentDateChecked,
+    isEndDatePast,
+    handleExperimentDateCheckboxChange,
+    defaultDateRange,
+  } = useExperimentDate(experimentDateChecked);
 
-  // 실험 일시 및 소요시간 본문 참고 여부
-  const [experimentDateChecked, setExperimentDateChecked] = useState(false);
-  const [durationChecked, setDurationChecked] = useState(false);
-
-  // 대면 방식
-  const selectedMatchType = useWatch({ control, name: 'matchType' });
-
-  // 실험 장소 지역구 선택
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const [selectedSubRegion, setSelectedSubRegion] = useState<string | null>(null);
-  const [isOpenRegionPopover, setIsOpenRegionPopover] = useState(false);
-
-  // 유저 선택에 따라 재검증 및 null 처리
-  const handleRegionSelect = (region: string) => {
-    setSelectedRegion(region);
-    setSelectedSubRegion(null);
-
-    setValue('region', region, { shouldValidate: true });
-    setValue('area', '', { shouldValidate: true });
-  };
-
-  const handleSubRegionSelect = (subRegion: string) => {
-    setSelectedSubRegion(subRegion);
-    setIsOpenRegionPopover(false);
-
-    setValue('area', subRegion, { shouldValidate: true });
-  };
-
-  const handleMatchTypeChange = (value: MatchType | null) => {
-    setValue('matchType', value);
-
-    if (value === MatchType.ONLINE) {
-      setValue('region', null);
-      setValue('area', null);
-      setValue('univName', null);
-    } else {
-      setValue('region', '');
-      setValue('area', '');
-      setValue('univName', '');
-    }
-  };
-
-  const handleDurationCheckboxChange = () => {
-    const newCheckedState = !durationChecked;
-    setDurationChecked(newCheckedState);
-
-    if (newCheckedState) {
-      setValue('timeRequired', null);
-    } else {
-      setValue('timeRequired', '');
-    }
-  };
+  // 실험 소요 시간 로직
+  const { isDurationChecked, handleDurationCheckboxChange } =
+    useExperimentDuration(durationChecked);
 
   const regionPopoverProps = {
     isOpenRegionPopover,
@@ -105,7 +79,7 @@ const OutlineSection = () => {
   return (
     <div className={uploadSectionLayout}>
       <h3 className={uploadFormSectionTitle}>
-        <span className={headingIcon}>1</span>실험의 개요를 알려주세요{' '}
+        <span className={headingIcon}>2</span>실험의 개요를 알려주세요{' '}
         <span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
 
@@ -145,29 +119,25 @@ const OutlineSection = () => {
                   setValue('startDate', dates.from || null, { shouldValidate: true });
                   setValue('endDate', dates.to || null, { shouldValidate: true });
                 }}
-                experimentDateChecked={experimentDateChecked}
+                experimentDateChecked={isExperimentDateChecked}
                 error={fieldState.error}
                 field={field}
+                initialDates={defaultDateRange}
+                disabled={isEndDatePast}
               />
             )}
           />
 
           {/* 본문 참고 체크박스 */}
-          <CheckboxWithIcon
-            checked={experimentDateChecked}
-            onChange={() => {
-              const newCheckedState = !experimentDateChecked;
-              setExperimentDateChecked(newCheckedState);
-              if (newCheckedState) {
-                setValue('startDate', null, { shouldValidate: true });
-                setValue('endDate', null, { shouldValidate: true });
-              } else {
-                setValue('startDate', undefined, { shouldValidate: true });
-                setValue('endDate', undefined, { shouldValidate: true });
-              }
-            }}
-            label="본문 참고"
-          />
+          {isEndDatePast ? (
+            <p className={isEndDatePastText}>실험 종료일이 지났다면 일시를 변경할 수 없어요</p>
+          ) : (
+            <CheckboxWithIcon
+              checked={isExperimentDateChecked}
+              onChange={handleExperimentDateCheckboxChange}
+              label="본문 참고"
+            />
+          )}
         </div>
 
         {/* 진행 방식 */}
@@ -182,7 +152,7 @@ const OutlineSection = () => {
                 options={[
                   { value: MatchType.OFFLINE, label: '대면' },
                   { value: MatchType.ONLINE, label: '비대면' },
-                  { value: MatchType.HYBRID, label: '대면+비대면' },
+                  { value: MatchType.ALL, label: '대면+비대면' },
                 ]}
                 selectedValue={field.value}
                 onChange={(value) => {
@@ -225,13 +195,13 @@ const OutlineSection = () => {
           ) : (
             <div className={uploadInputContainer}>
               <Controller
-                name="univName"
+                name="place"
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    id="univName"
+                    id="place"
                     field={field}
-                    placeholder="대학교 입력"
+                    placeholder="장소 입력"
                     fieldState={fieldState}
                     showErrorMessage={false}
                   />
@@ -313,7 +283,7 @@ const OutlineSection = () => {
                       fieldState={fieldState}
                       options={durationMinutesOptions}
                       placeholder="1회당 시간 입력"
-                      disabled={durationChecked}
+                      disabled={isDurationChecked}
                       showErrorMessage={false}
                     />
                   )}
@@ -322,7 +292,7 @@ const OutlineSection = () => {
 
               {/* 본문 참고 체크박스 */}
               <CheckboxWithIcon
-                checked={durationChecked}
+                checked={isDurationChecked}
                 onChange={handleDurationCheckboxChange}
                 label="본문 참고"
               />

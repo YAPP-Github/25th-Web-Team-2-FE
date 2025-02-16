@@ -78,7 +78,14 @@ const ParticipationGuideModal = ({
                 <div className={contactInfoRowContainer}>
                   <span className={contactInfoTitle}>링크</span>
                   <div className={contactInfoContent}>
-                    {applyMethodData.formUrl}
+                    <a
+                      href={applyMethodData.formUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: colors.primaryMint, textDecoration: 'underline' }}
+                    >
+                      {applyMethodData.formUrl}
+                    </a>
                     <Icon
                       icon="Copy"
                       width={16}

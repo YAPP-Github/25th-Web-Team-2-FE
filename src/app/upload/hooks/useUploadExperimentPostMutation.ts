@@ -5,7 +5,7 @@ import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMeth
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';
 
-export interface UseUploadExperimentPostMutationParams {
+export interface ExperimentPostData {
   startDate?: string | null;
   endDate?: string | null;
   matchType: MatchType;
@@ -22,7 +22,7 @@ export interface UseUploadExperimentPostMutationParams {
     | 'ABOUT_4H'
     | null;
   leadResearcher: string;
-  univName?: string | null;
+  place?: string | null;
   region?: string | null;
   area?: string | null;
   detailedAddress?: string;
@@ -50,7 +50,7 @@ export interface UploadedPostInfo {
   experimentPostId: number;
   title: string;
   views: number;
-  univName: string;
+  place: string;
   reward: string;
   durationInfo: {
     startDate: string;
@@ -64,7 +64,7 @@ export interface UseUploadExperimentPostMutationResponse {
 
 const useUploadExperimentPostMutation = () => {
   const mutationKey = API_URL.uploadPost;
-  const mutationFn = async (data: UseUploadExperimentPostMutationParams) =>
+  const mutationFn = async (data: ExperimentPostData) =>
     await API.post<UseUploadExperimentPostMutationResponse>(mutationKey, data).then(
       (res) => res.data,
     );

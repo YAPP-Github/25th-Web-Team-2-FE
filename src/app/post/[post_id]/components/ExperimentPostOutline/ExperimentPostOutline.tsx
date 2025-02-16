@@ -19,6 +19,7 @@ import {
   getRegionLabel,
   getAreaLabel,
   getMatchTypeText,
+  formatDate,
 } from '../../ExperimentPostPage.utils';
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
@@ -78,7 +79,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
                 {summary.startDate && summary.endDate
                   ? summary.startDate === summary.endDate
                     ? summary.startDate
-                    : `${summary.startDate} ~ ${summary.endDate}`
+                    : `${formatDate(summary.startDate)} ~ ${formatDate(summary.endDate)}`
                   : '본문 참고'}
               </td>
             </tr>
@@ -97,11 +98,11 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <th>실험 장소</th>
               <td className={textWrapRow}>
                 <p>
-                  {address.univName && address.region && address.area
+                  {address.place && address.region && address.area
                     ? `${getRegionLabel(address.region)} ${getAreaLabel(
                         address.region,
                         address.area,
-                      )} ${address.univName} ${address.detailedAddress}`
+                      )} ${address.place} ${address.detailedAddress}`
                     : '본문 참고'}
                 </p>
               </td>
