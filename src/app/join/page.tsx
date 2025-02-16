@@ -2,6 +2,7 @@
 
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import ParticipantForm from './components/Participant/ParticipantForm';
 import ResearcherForm from './components/Researcher/ResearcherForm';
@@ -39,7 +40,9 @@ export default function JoinPage() {
 
   return (
     <section className={joinLayout}>
-      <Image src={Logo} alt="로고" width={80} height={28} />
+      <Link href="/" aria-label="홈 화면으로 이동">
+        <Image src={Logo} alt="로고" width={80} height={28} />
+      </Link>
       <div className={contentContainer}>
         <div className={titleContainer}>
           <h2 className={joinTitle}>
