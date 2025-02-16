@@ -20,7 +20,7 @@ interface useUploadExperimentPostProps {
   postId?: string;
   addLink: boolean;
   addContact: boolean;
-  setOpenToast: Dispatch<SetStateAction<boolean>>;
+  setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
 }
 
@@ -29,7 +29,7 @@ const useManageExperimentPostForm = ({
   postId,
   addLink,
   addContact,
-  setOpenToast,
+  setOpenAlertModal,
   images,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
@@ -187,7 +187,7 @@ const useManageExperimentPostForm = ({
           router.push(`/post/${response.postInfo.experimentPostId}`);
         },
         onError: () => {
-          setOpenToast(true);
+          setOpenAlertModal(true);
         },
       });
     }

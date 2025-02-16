@@ -1,6 +1,5 @@
 'use client';
 
-import * as Toast from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
@@ -18,27 +17,21 @@ import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
-import {
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
-} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
+import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 
 const UploadContainer = () => {
   const router = useRouter();
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
 
-  const [openToast, setOpenToast] = useState(false);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
 
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
     addContact,
-    setOpenToast,
+    setOpenAlertModal,
     images,
     isEdit: false,
   });
@@ -79,22 +72,16 @@ const UploadContainer = () => {
         </div>
       </div>
 
-      {/* 공고 등록 실패 시 토스트 알림 */}
-      {/* TODO: 에러 상태에 따라 다르게 토스트 알림 */}
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={openToast}
-          onOpenChange={setOpenToast}
-          duration={1500}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-            <p>공고 등록을 실패하였습니다.</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
+      {/* 공고 등록 실패 시 alert Modal */}
+      <AlertModal
+        title="공고 등록에 실패했어요"
+        description="시간을 두고 다시 시도해 주세요"
+        open={openAlertModal}
+        onOpenChange={setOpenAlertModal}
+        handleCloseModal={() => {
+          setOpenAlertModal(false);
+        }}
+      />
     </FormProvider>
   );
 };
