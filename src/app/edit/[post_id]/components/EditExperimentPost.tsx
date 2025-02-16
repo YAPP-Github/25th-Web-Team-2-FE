@@ -1,16 +1,9 @@
 'use client';
 
-import * as Dialog from '@radix-ui/react-dialog';
 import * as Toast from '@radix-ui/react-toast';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
-
-import {
-  alertDialogContent,
-  alertDialogDescription,
-  alertDialogTitle,
-} from './EditExperimentPost.css';
 
 import {
   copyToastLayout,
@@ -30,7 +23,7 @@ import {
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
-import { closeButton, dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
+import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
@@ -42,7 +35,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const [addContact, setAddContact] = useState<boolean>(false);
   const [openToast, setOpenToast] = useState<boolean>(false);
   const [images, setImages] = useState<(File | string)[]>([]);
-  const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false);
+  const [openAlertModal, setOpenAlertModal] = useState<boolean>(false);
 
   const { form, handleSubmit, isLoading, applyMethodData, isError } = useManageExperimentPostForm({
     isEdit,
@@ -56,13 +49,13 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   // 기존 공고 데이터 불러오는 API 호출 실패 시 모달 열기
   useEffect(() => {
     if (isEdit && isError) {
-      setOpenAlertDialog(true);
+      setOpenAlertModal(true);
     }
-  }, [isEdit, isError, setOpenAlertDialog]);
+  }, [isEdit, isError, setOpenAlertModal]);
 
   // 모달 닫을 때 이전 페이지로 이동
-  const handleCloseDialog = () => {
-    setOpenAlertDialog(false);
+  const handleCloseModal = () => {
+    setOpenAlertModal(false);
     router.back();
   };
 
@@ -73,14 +66,14 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
     }
   }, [applyMethodData]);
 
-  const experimentDateChecked =
-    form.getValues('startDate') === null && form.getValues('endDate') === null;
-  const durationChecked = form.getValues('timeRequired') === null;
-
-  // todo 로딩 스피너 추가 + error 시 모달 띄우고 이전 페이지
+  // todo 로딩 스피너 추가
   if (isLoading) {
     return <p>로딩 중...</p>;
   }
+
+  const experimentDateChecked =
+    form.getValues('startDate') === null && form.getValues('endDate') === null;
+  const durationChecked = form.getValues('timeRequired') === null;
 
   return (
     <FormProvider {...form}>
@@ -130,32 +123,14 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         <Toast.Viewport className={copyToastViewport} />
       </Toast.Provider>
 
-      <Dialog.Root open={openAlertDialog} onOpenChange={setOpenAlertDialog}>
-        <Dialog.Overlay className={dialogOverlay} />
-        <Dialog.Content className={alertDialogContent}>
-          <Dialog.Close asChild>
-            <button className={closeButton} aria-label="모달 닫기" onClick={handleCloseDialog}>
-              <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
-            </button>
-          </Dialog.Close>
-          <Dialog.Title asChild>
-            <>
-              <Icon
-                icon="BangRound"
-                width={48}
-                height={48}
-                color={'rgba(246, 101, 112, 0.25)'}
-                subcolor={colors.textAlert}
-                aria-label="안내 아이콘"
-              />
-              <p className={alertDialogTitle}>공고를 불러오지 못했어요.</p>
-            </>
-          </Dialog.Title>
-          <Dialog.Description>
-            <p className={alertDialogDescription}>시간을 두고 다시 시도해주세요.</p>
-          </Dialog.Description>
-        </Dialog.Content>
-      </Dialog.Root>
+      {/* 공고 불러오기 실패 시 모달 */}
+      <AlertModal
+        open={openAlertModal}
+        onOpenChange={setOpenAlertModal}
+        handleCloseModal={handleCloseModal}
+        title="공고를 불러오지 못했어요."
+        description="시간을 두고 다시 시도해주세요."
+      />
     </FormProvider>
   );
 };

@@ -4,7 +4,7 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
-export const alertDialogContent = style({
+export const alertModalContent = style({
   width: '32rem',
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
@@ -18,13 +18,14 @@ export const alertDialogContent = style({
   textAlign: 'center',
 });
 
-export const alertDialogTitle = style({
+export const alertModalTitle = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
   marginTop: '2rem',
   marginBottom: '0.8rem',
 });
 
-export const alertDialogDescription = style({
+export const alertModalDescription = style({
   ...fonts.body.normal.M16,
+  textAlign: 'center',
 });
