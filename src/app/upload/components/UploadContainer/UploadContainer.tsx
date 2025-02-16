@@ -24,9 +24,8 @@ const UploadContainer = () => {
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
 
-  const [openAlertModal, setOpenAlertModal] = useState(false);
-
   const [images, setImages] = useState<(File | string)[]>([]);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
