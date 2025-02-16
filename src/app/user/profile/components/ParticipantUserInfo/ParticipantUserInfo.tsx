@@ -8,7 +8,9 @@ import {
   updateInfoFormContainer,
   updateInfoForm,
 } from './ParticipantUserInfo.css';
+import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
+import ButtonInput from '../ButtonInput/ButtonInput';
 
 import { ParticipantResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
@@ -23,12 +25,25 @@ import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
-  const { form, region, additionalRegion, handleSubmit, isLoading, isError } =
+  const { form, contactEmail, region, additionalRegion, handleSubmit, isLoading, isError } =
     useFormParticipantUserInfo({
       userInfo,
     });
 
+  const {
+    refetch,
+    isLoading: isLoadingCheck,
+    isSuccess,
+    isError: isEmailDuplicateError,
+  } = useCheckValidEmailQuery(contactEmail);
+
   const [isToastOpen, setIsToastOpen] = useState(false);
+  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
+
+  const handleCheckValidEmail = async () => {
+    await refetch();
+    setIsValidToastOpen(true);
+  };
 
   // TODO: API 수정 시 체크 상태 form으로 관리
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState({
@@ -48,14 +63,22 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
-          <JoinInput
-            name="contactEmail"
+          <ButtonInput<ParticipantUpdateSchemaType>
             control={form.control}
-            label="연락 받을 이메일"
-            required
-            placeholder="이메일 입력"
-            tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
-            isTip={false}
+            name="contactEmail"
+            onClick={handleCheckValidEmail}
+            isLoadingCheck={isLoadingCheck}
+            isSuccess={isSuccess}
+            isEmailDuplicateError={isEmailDuplicateError}
+            setIsValidToastOpen={setIsValidToastOpen}
+            toast={
+              <EmailToast
+                title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
+                isToastOpen={isValidToastOpen}
+                setIsToastOpen={setIsValidToastOpen}
+                isError={isEmailDuplicateError}
+              />
+            }
           />
 
           {/* 이름 */}
@@ -123,7 +146,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             />
           </div>
         </section>
-        <Link href={`/user/profile/leave`} className={leaveButton}>
+        <Link href="/user/leave" className={leaveButton}>
           <span>회원탈퇴</span>
           <Icon icon="Chevron" rotate={-90} />
         </Link>
