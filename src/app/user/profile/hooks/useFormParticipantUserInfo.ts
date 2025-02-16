@@ -19,7 +19,7 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
 
   const form = useForm<ParticipantUpdateSchemaType>({
     resolver: zodResolver(ParticipantUpdateSchema()),
-    mode: 'onBlur',
+    mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
       contactEmail: memberInfo.contactEmail,
@@ -29,6 +29,8 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
       matchType: matchType,
     },
   });
+
+  const contactEmail = useWatch({ control: form.control, name: 'contactEmail' });
 
   const region = useWatch({
     control: form.control,
@@ -58,6 +60,7 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
 
   return {
     form,
+    contactEmail,
     region,
     additionalRegion,
     handleSubmit: (onSuccess: () => void) => form.handleSubmit(() => onSubmit(onSuccess)),
