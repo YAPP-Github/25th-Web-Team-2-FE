@@ -5,6 +5,9 @@ export const QUERY_KEY = {
   updateRecruitStatus: 'updateRecruitStatus',
   deletePost: 'deletePost',
   experimentPostDetail: 'experimentPostDetail',
+  participantInfo: 'participantInfo',
+  researcherInfo: 'researcherInfo',
+  checkValidEmail: 'checkValidEmail',
   editPost: 'editPost',
   originExperimentPost: 'originExperimentPost',
 };

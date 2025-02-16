@@ -2,15 +2,15 @@
 
 import { PropsWithChildren } from 'react';
 
-import { defaultLayout, defaultLayoutContainer } from './DefaultLayout.css';
+import { userLayout, userLayoutContainer } from './UserLayout.css';
 
 import BackToTopButton from '@/components/Button/BackToTopButton/BackToTopButton';
 import Header from '@/components/Header/Header';
 
-const DefaultLayout = ({ children }: PropsWithChildren) => {
+const UserLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div className={defaultLayoutContainer}>
-      <div className={defaultLayout}>
+    <div className={userLayoutContainer}>
+      <div className={userLayout}>
         <Header />
         {children}
         <BackToTopButton />
@@ -19,4 +19,4 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default DefaultLayout;
+export default UserLayout;

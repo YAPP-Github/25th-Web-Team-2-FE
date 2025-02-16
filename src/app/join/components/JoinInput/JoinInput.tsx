@@ -106,7 +106,7 @@ const JoinInput = <T extends FieldValues>({
                   disabled={disabled}
                   aria-invalid={fieldState.invalid ? true : false}
                   rows={3}
-                  maxLength={maxLength ?? 0}
+                  maxLength={maxLength}
                   style={{ width: '100%' }}
                   className={joinInput}
                   onFocus={() => setIsFocused(true)}
@@ -126,7 +126,7 @@ const JoinInput = <T extends FieldValues>({
               )}
             </div>
             {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-            {type === 'textarea' && (
+            {maxLength && (
               <span className={textCount}>
                 {field.value?.length || 0}/{maxLength}
               </span>

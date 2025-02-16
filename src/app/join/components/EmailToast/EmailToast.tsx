@@ -11,9 +11,10 @@ interface EmailToastProps {
   title: string;
   isToastOpen: boolean;
   setIsToastOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isError?: boolean;
 }
 
-const EmailToast = ({ title, isToastOpen, setIsToastOpen }: EmailToastProps) => {
+const EmailToast = ({ title, isToastOpen, setIsToastOpen, isError = false }: EmailToastProps) => {
   return (
     <Toast.Provider swipeDirection="up">
       <Toast.Root
@@ -23,7 +24,12 @@ const EmailToast = ({ title, isToastOpen, setIsToastOpen }: EmailToastProps) => 
         duration={1500}
       >
         <Toast.Title className={toastTitle}>
-          <Icon icon="CheckRound" color={theme.colors.primaryMint} width={24} height={24} />
+          {isError ? (
+            <Icon icon="BangRound" color={theme.colors.textAlert} width={24} height={24} />
+          ) : (
+            <Icon icon="CheckRound" color={theme.colors.primaryMint} />
+          )}
+
           <p>{title}</p>
         </Toast.Title>
       </Toast.Root>

@@ -34,14 +34,14 @@ const JoinCheckbox = ({
   isArrow = true,
   isAlert,
   labelClassName,
-  emptyCheckIcon = <Icon icon="CheckSquareEmpty" />,
+  emptyCheckIcon = <Icon icon="CheckSquareEmpty" cursor="pointer" />,
 }: JoinCheckboxProps) => {
   return (
     <div className={`${checkboxLayout} ${isAllCheck ? allCheckWrapper : ''}`}>
       <label className={checkboxWrapper}>
         <input className={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
         {isChecked ? (
-          <Icon icon="CheckSquareFill" color={theme.colors.primaryMint} />
+          <Icon icon="CheckSquareFill" color={theme.colors.primaryMint} cursor="pointer" />
         ) : (
           emptyCheckIcon
         )}
