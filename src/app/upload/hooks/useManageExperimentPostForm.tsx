@@ -178,6 +178,9 @@ const useManageExperimentPostForm = ({
             form.reset();
             router.push(`/post/${postId}`);
           },
+          onError: () => {
+            setOpenAlertModal(true);
+          },
         },
       );
     } else {

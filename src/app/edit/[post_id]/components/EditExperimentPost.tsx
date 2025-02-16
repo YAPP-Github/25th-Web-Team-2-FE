@@ -1,15 +1,9 @@
 'use client';
 
-import * as Toast from '@radix-ui/react-toast';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import {
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
-} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import ApplyMethodSection from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '@/app/upload/components/DescriptionSection/DescriptionSection';
 import OutlineSection from '@/app/upload/components/OutlineSection/OutlineSection';
@@ -22,9 +16,7 @@ import {
   headerTitle,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
-import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
-import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const pathname = usePathname();
@@ -33,29 +25,29 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
-  const [openToast, setOpenToast] = useState<boolean>(false);
+  const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [images, setImages] = useState<(File | string)[]>([]);
-  const [openAlertModal, setOpenAlertModal] = useState<boolean>(false);
+  const [openUpdateAlertModal, setOenUpdateAlertModal] = useState<boolean>(false);
 
   const { form, handleSubmit, isLoading, applyMethodData, isError } = useManageExperimentPostForm({
     isEdit,
     postId: params.post_id,
     addLink,
     addContact,
-    setOpenToast,
+    setOpenAlertModal: setOpenSubmitAlertDialog,
     images,
   });
 
   // 기존 공고 데이터 불러오는 API 호출 실패 시 모달 열기
   useEffect(() => {
     if (isEdit && isError) {
-      setOpenAlertModal(true);
+      setOenUpdateAlertModal(true);
     }
-  }, [isEdit, isError, setOpenAlertModal]);
+  }, [isEdit, isError, setOenUpdateAlertModal]);
 
   // 모달 닫을 때 이전 페이지로 이동
   const handleCloseModal = () => {
-    setOpenAlertModal(false);
+    setOenUpdateAlertModal(false);
     router.back();
   };
 
@@ -108,25 +100,20 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         </div>
       </div>
 
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={openToast}
-          onOpenChange={setOpenToast}
-          duration={1500}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-            <p>공고 수정을 실패하였습니다.</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
+      <AlertModal
+        title="공고 수정에 실패했어요"
+        description="시간을 두고 다시 시도해 주세요"
+        open={openSubmitAlertDialog}
+        onOpenChange={setOpenSubmitAlertDialog}
+        handleCloseModal={() => {
+          setOpenSubmitAlertDialog(false);
+        }}
+      />
 
       {/* 공고 불러오기 실패 시 모달 */}
       <AlertModal
-        open={openAlertModal}
-        onOpenChange={setOpenAlertModal}
+        open={openUpdateAlertModal}
+        onOpenChange={setOenUpdateAlertModal}
         handleCloseModal={handleCloseModal}
         title="공고를 불러오지 못했어요."
         description="시간을 두고 다시 시도해주세요."

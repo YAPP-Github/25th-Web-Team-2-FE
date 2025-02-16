@@ -25,7 +25,7 @@ const useMatchType = () => {
       setValue('region', null);
       setValue('area', null);
       setValue('place', null);
-      setValue('detailedAddress', null);
+      setValue('detailedAddress', '');
     } else {
       setValue('region', '');
       setValue('area', '');

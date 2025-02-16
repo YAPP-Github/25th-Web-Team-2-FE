@@ -30,7 +30,7 @@ const AlertModal = ({
             <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
           </button>
         </Dialog.Close>
-        <Dialog.Title asChild>
+        <Dialog.Title>
           <>
             <Icon
               icon="BangRound"
@@ -44,7 +44,7 @@ const AlertModal = ({
           </>
         </Dialog.Title>
         <Dialog.Description>
-          <p className={alertModalDescription}>{description}</p>
+          <div className={alertModalDescription}>{description}</div>
         </Dialog.Description>
       </Dialog.Content>
     </Dialog.Root>
