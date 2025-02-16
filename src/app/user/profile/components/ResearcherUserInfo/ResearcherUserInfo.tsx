@@ -23,6 +23,9 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   const { form, contactEmail, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
     userInfo,
   });
+
+  const isValidUpdate = Object.keys(form.formState.errors).length === 0;
+
   const {
     refetch,
     isLoading: isLoadingCheck,
@@ -99,7 +102,6 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
             label="소속 연구실 정보"
             placeholder="연구실 정보 입력"
             type="textarea"
-            maxLength={100}
           />
 
           {/* 광고성 정보 이메일/SMS 수신 동의 */}
@@ -113,7 +115,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
             />
           </div>
         </section>
-        <Link href={`/user/profile/leave`} className={leaveButton}>
+        <Link href="/user/leave" className={leaveButton}>
           <span>회원탈퇴</span>
           <Icon icon="Chevron" rotate={-90} />
         </Link>
@@ -122,7 +124,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
       <button
         className={updateButton}
         onClick={handleSubmit(() => setIsToastOpen(true))}
-        disabled={isLoading}
+        disabled={isLoading || !isValidUpdate}
       >
         {isLoading ? '저장중...' : '저장하기'}
       </button>

@@ -30,6 +30,8 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
       userInfo,
     });
 
+  const isValidUpdate = Object.keys(form.formState.errors).length === 0;
+
   const {
     refetch,
     isLoading: isLoadingCheck,
@@ -155,7 +157,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
       <button
         className={updateButton}
         onClick={handleSubmit(() => setIsToastOpen(true))}
-        disabled={isLoading}
+        disabled={isLoading || !isValidUpdate}
       >
         {isLoading ? '저장중...' : '저장하기'}
       </button>
