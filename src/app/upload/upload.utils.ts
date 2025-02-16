@@ -1,4 +1,4 @@
-import { format, parse } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { DateRange } from 'react-day-picker';
 
@@ -49,7 +49,7 @@ const convertToWebpUrl = (originalUrl: string) => {
 //  Date 객체로 변환
 const parseDateString = (dateString: string | null) => {
   if (!dateString) return null;
-  return parse(dateString, 'yyyy.MM.dd', new Date());
+  return parseISO(dateString);
 };
 
 export { formatRange, convertLabelToValue, convertValueToLabel, convertToWebpUrl, parseDateString };
