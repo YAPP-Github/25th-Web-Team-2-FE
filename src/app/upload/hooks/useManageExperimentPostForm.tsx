@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { convertLabelToValue, convertToWebpUrl, convertValueToLabel } from '../upload.utils';
+import { convertLabelToValue, convertValueToLabel } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 
@@ -150,7 +150,7 @@ const useManageExperimentPostForm = ({
       const uploadedFiles = await Promise.all(
         newFiles.map(async (file) => {
           const originalUrl = await uploadImageMutation(file);
-          return convertToWebpUrl(originalUrl);
+          return originalUrl;
         }),
       );
 
