@@ -26,15 +26,20 @@ const Header = () => {
         <Image src={Logo} alt="로고" className={image} />
       </Link>
       <div className={buttonContainer}>
-        <Link href="/upload">
-          <button className={contactButton}>실험 공고 등록</button>
-        </Link>
+        {userInfo?.memberInfo.role === 'RESEARCHER' && (
+          <Link href="/upload">
+            <button className={contactButton}>실험 공고 등록</button>
+          </Link>
+        )}
 
         {userInfo ? (
           <>
-            <Link href="/my-posts">
-              <button className={myPostsButton}>내가 쓴 글</button>
-            </Link>
+            {userInfo?.memberInfo.role === 'RESEARCHER' && (
+              <Link href="/my-posts">
+                <button className={myPostsButton}>내가 쓴 글</button>
+              </Link>
+            )}
+
             <div className={buttonWrapper}>
               <button>{userInfo.memberInfo.name}</button>
               <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />

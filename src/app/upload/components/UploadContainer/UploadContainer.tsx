@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import {
@@ -17,6 +17,7 @@ import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 
 const UploadContainer = () => {
@@ -27,6 +28,8 @@ const UploadContainer = () => {
   const [images, setImages] = useState<(File | string)[]>([]);
   const [openAlertModal, setOpenAlertModal] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
     addContact,
@@ -34,6 +37,19 @@ const UploadContainer = () => {
     images,
     isEdit: false,
   });
+
+  // todo middleware 적용 전 임시 redirect
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+
+  useEffect(() => {
+    if (!isUserInfoLoading && userInfo?.memberInfo.role !== 'RESEARCHER') {
+      router.replace('/');
+    } else {
+      setLoading(false);
+    }
+  }, [userInfo, router, isUserInfoLoading]);
+
+  if (loading) return <div>로딩 중...</div>;
 
   return (
     <FormProvider {...form}>

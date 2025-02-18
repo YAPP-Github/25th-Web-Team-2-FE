@@ -82,24 +82,26 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
         <div className={imageContainer}>
           {/* Single Image */}
           {imageSources.length === 1 ? (
-            <div className={singleImageWrapper}>
-              <Image
-                src={imageSources[0]}
-                alt="실험 안내 이미지"
-                width={588}
-                height={588}
-                style={{ objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }}
-                priority
-                quality={100}
-              />
-              <button className={maximizeIcon} onClick={() => setSelectedImage(imageSources[0])}>
-                <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
-              </button>
-            </div>
+            isValidImageUrl(imageSources[0]) && (
+              <div className={singleImageWrapper}>
+                <Image
+                  src={imageSources[0]}
+                  alt="실험 안내 이미지"
+                  width={588}
+                  height={588}
+                  style={{ objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }}
+                  priority
+                  quality={100}
+                />
+                <button className={maximizeIcon} onClick={() => setSelectedImage(imageSources[0])}>
+                  <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
+                </button>
+              </div>
+            )
           ) : (
             <div className={multiImageGrid}>
               {/* Multiple Images */}
-              {imageSources.map((src, index) => (
+              {imageSources.filter(isValidImageUrl).map((src, index) => (
                 <div key={index} className={imageItem}>
                   <Image
                     src={src}

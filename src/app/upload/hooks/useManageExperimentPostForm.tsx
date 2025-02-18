@@ -206,6 +206,7 @@ const useManageExperimentPostForm = ({
     isLoading: isExperimentLoading || isApplyMethodLoading,
     isError: isExperimentError || isApplyMethodError,
     applyMethodData,
+    isAuthor: experimentData?.isAuthor ?? false,
   };
 };
 

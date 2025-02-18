@@ -12,7 +12,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import {
   container,
@@ -35,17 +36,21 @@ import {
 import PostActionsPopover from '../PostActionsPopover/PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table/Table';
 
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 
 const pageSize = 10;
 
 const MyPostsTable = () => {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [currentPage, setCurrentPage] = useState(1);
   const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
 
   const queryClient = useQueryClient();
 
@@ -181,7 +186,14 @@ const MyPostsTable = () => {
     columnResizeMode: 'onChange',
   });
 
-  if (isLoading) return <div style={{ height: '40rem' }}>로딩 중...</div>;
+  // todo middleware 적용 전 임시 redirect
+  useEffect(() => {
+    if (!isUserInfoLoading && !userInfo) {
+      router.replace('/');
+    }
+  }, [userInfo, router, isUserInfoLoading]);
+
+  if (isUserInfoLoading || isLoading) return <div style={{ height: '40rem' }}>로딩 중...</div>;
   if (error)
     return (
       <div style={{ height: '40rem' }}>
