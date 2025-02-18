@@ -22,6 +22,7 @@ interface useUploadExperimentPostProps {
   addContact: boolean;
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
+  setImages?: Dispatch<SetStateAction<(File | string)[]>>;
 }
 
 const useManageExperimentPostForm = ({
@@ -31,6 +32,7 @@ const useManageExperimentPostForm = ({
   addContact,
   setOpenAlertModal,
   images,
+  setImages,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
 
@@ -89,6 +91,8 @@ const useManageExperimentPostForm = ({
 
   useEffect(() => {
     if (isEdit && experimentData && applyMethodData) {
+      setImages?.(experimentData.imageList);
+
       form.reset({
         leadResearcher: experimentData.summary.leadResearcher,
         startDate: experimentData.summary.startDate,
@@ -131,7 +135,7 @@ const useManageExperimentPostForm = ({
         alarmAgree: experimentData.alarmAgree,
       });
     }
-  }, [isEdit, experimentData, applyMethodData, form]);
+  }, [isEdit, experimentData, applyMethodData, form, setImages]);
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
