@@ -40,8 +40,8 @@ const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
   const {
     control,
-    getValues,
     setValue,
+    getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -50,10 +50,11 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
 
   useEffect(() => {
     const existingImages = getValues('imageListInfo.images') || [];
+
     if (images.length === 0 && existingImages.length > 0) {
-      setImages(existingImages.slice(0, MAX_PHOTOS));
+      setImages([...existingImages.slice(0, MAX_PHOTOS)]);
     }
-  }, [getValues, images.length, setImages]);
+  }, [getValues, images, setImages]);
 
   const uploadPhotos = (e: ChangeEvent<HTMLInputElement>): void => {
     const files = e.target.files;
@@ -144,38 +145,41 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               )}
             />
 
-            <div className={photoGrid}>
-              {images.map((image, index) => (
-                <div
-                  className={photoLayout}
-                  key={`image-${index}`}
-                  draggable
-                  onDragStart={(e) => onDragStart(e, index)}
-                  onDrop={(e) => onDrop(e, index)}
-                  onDragOver={(e) => e.preventDefault()}
-                >
-                  <div className={photoContainer}>
-                    <button className={deleteButton} onClick={() => deletePhoto(index)}>
-                      <Icon
-                        icon="CloseRound"
-                        width={20}
-                        height={20}
-                        color={colors.field09}
-                        cursor="pointer"
-                        subcolor={colors.field01}
+            {/* Image Container */}
+            {images.length > 0 && (
+              <div className={photoGrid}>
+                {images.map((image, index) => (
+                  <div
+                    className={photoLayout}
+                    key={`image-${index}`}
+                    draggable
+                    onDragStart={(e) => onDragStart(e, index)}
+                    onDrop={(e) => onDrop(e, index)}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
+                    <div className={photoContainer}>
+                      <button className={deleteButton} onClick={() => deletePhoto(index)}>
+                        <Icon
+                          icon="CloseRound"
+                          width={20}
+                          height={20}
+                          color={colors.field09}
+                          cursor="pointer"
+                          subcolor={colors.field01}
+                        />
+                      </button>
+                      <Image
+                        src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                        alt="업로드된 이미지"
+                        width={80}
+                        height={80}
+                        style={{ objectFit: 'cover', borderRadius: '1.2rem' }}
                       />
-                    </button>
-                    <Image
-                      src={typeof image === 'string' ? image : URL.createObjectURL(image)}
-                      alt="업로드된 이미지"
-                      width={80}
-                      height={80}
-                      style={{ objectFit: 'cover', borderRadius: '1.2rem' }}
-                    />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             <div className={uploadImagesContainer}>
               <label htmlFor="photos" className={addImageContainer}>

@@ -58,10 +58,10 @@ export const descriptionTextarea = recipe({
   variants: {
     photoGridHeight: {
       withPhotos: {
-        height: 'calc(22rem - 8.5rem)',
+        height: '16rem',
       },
       withoutPhotos: {
-        height: '22rem',
+        height: '24rem',
       },
     },
   },

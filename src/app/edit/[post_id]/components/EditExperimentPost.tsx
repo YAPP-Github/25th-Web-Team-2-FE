@@ -36,6 +36,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
     addContact,
     setOpenAlertModal: setOpenSubmitAlertDialog,
     images,
+    setImages,
   });
 
   // 기존 공고 데이터 불러오는 API 호출 실패 시 모달 열기
