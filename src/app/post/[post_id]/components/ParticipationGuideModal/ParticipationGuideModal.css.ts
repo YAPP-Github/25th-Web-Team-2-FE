@@ -1,23 +1,38 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
-export const participationGuideContent = style({
-  width: '49rem',
-  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
-  backgroundColor: colors.field01,
-  borderRadius: '1.2rem',
-  padding: '2rem 3rem 3rem 3.3rem',
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2rem',
-  zIndex: zIndex.dialogContent,
+export const participationGuideContent = recipe({
+  base: {
+    width: '49rem',
+    boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+    backgroundColor: colors.field01,
+    borderRadius: '1.2rem',
+    padding: '2rem 3rem 3rem 3.3rem',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    display: 'flex',
+    flexDirection: 'column',
+    zIndex: zIndex.dialogContent,
+  },
+  variants: {
+    onlyContent: {
+      true: {
+        gap: 0,
+      },
+      false: {
+        gap: '2rem',
+      },
+    },
+  },
+  defaultVariants: {
+    onlyContent: true,
+  },
 });
 
 export const participationModalTitle = style({

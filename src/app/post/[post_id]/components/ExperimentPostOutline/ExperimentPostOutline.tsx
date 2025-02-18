@@ -124,7 +124,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
           </button>
         ) : (
           <button className={checkButton({ disabled: true })} disabled>
-            모집이 완료 되었어요
+            모집이 완료되었어요
           </button>
         )}
       </div>

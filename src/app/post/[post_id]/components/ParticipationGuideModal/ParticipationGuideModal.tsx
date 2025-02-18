@@ -48,10 +48,15 @@ const ParticipationGuideModal = ({
       <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
         <Dialog.Portal>
           <Dialog.Overlay className={dialogOverlay} />
-          <Dialog.Content className={participationGuideContent} aria-describedby={undefined}>
+          <Dialog.Content
+            className={participationGuideContent({
+              onlyContent: !(applyMethodData.formUrl || applyMethodData.phoneNum),
+            })}
+            aria-describedby={undefined}
+          >
             <Dialog.Close asChild>
               <button className={closeButton} aria-label="모달 닫기">
-                <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
+                <Icon icon="X" color={colors.icon03} width={14} height={14} cursor="pointer" />
               </button>
             </Dialog.Close>
             <Dialog.Title asChild>
@@ -120,7 +125,7 @@ const ParticipationGuideModal = ({
 
               {/* 개인정보보호 안내 */}
               <div className={warningMessage}>
-                <Icon icon="Alert" color={colors.textAlert} width={13} height={13} />
+                <Icon icon="Alert" color={colors.textAlert} width={18} height={18} />
                 개인정보보호에 유의해주세요
               </div>
             </div>

@@ -163,7 +163,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                           icon="CloseRound"
                           width={20}
                           height={20}
-                          color={colors.field09}
+                          color={'rgba(109, 123, 130, 0.7)'}
                           cursor="pointer"
                           subcolor={colors.field01}
                         />
@@ -182,9 +182,17 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
             )}
 
             <div className={uploadImagesContainer}>
-              <label htmlFor="photos" className={addImageContainer}>
-                <Icon icon="ImageAdd" width={16} height={16} />
-                <p style={{ color: colors.text04, fontWeight: '500' }}>사진 추가</p>
+              <label
+                htmlFor="photos"
+                className={addImageContainer({ disabled: !!(images.length >= 3) })}
+              >
+                <Icon
+                  icon="ImageAdd"
+                  width={16}
+                  height={16}
+                  color={!!(images.length >= 3) ? colors.icon02 : colors.icon03}
+                />
+                <p>사진 추가</p>
               </label>
               <input
                 type="file"

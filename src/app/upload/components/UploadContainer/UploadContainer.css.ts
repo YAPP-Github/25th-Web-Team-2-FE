@@ -8,6 +8,7 @@ export const uploadLayout = style({
   flexFlow: 'column nowrap',
   gap: '4rem',
   color: colors.text06,
+  marginTop: '1.6rem',
 });
 
 export const headerTitle = style({

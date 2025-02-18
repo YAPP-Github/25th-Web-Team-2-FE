@@ -85,18 +85,36 @@ export const fileInfoText = style({
   color: colors.text02,
 });
 
-export const addImageContainer = style({
-  ...fonts.label.medium.M13,
-  color: colors.text04,
-  backgroundColor: colors.field04,
-  height: '3.2rem',
-  display: 'flex',
-  flexFlow: 'row nowrap',
-  gap: '0.6rem',
-  alignItems: 'center',
-  padding: '0.8rem 1.2rem',
-  borderRadius: '0.8rem',
-  cursor: 'pointer',
+export const addImageContainer = recipe({
+  base: {
+    ...fonts.label.medium.M13,
+    fontWeight: '500',
+
+    height: '3.2rem',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    gap: '0.6rem',
+    alignItems: 'center',
+    padding: '0.8rem 1.2rem',
+    borderRadius: '0.8rem',
+  },
+  variants: {
+    disabled: {
+      true: {
+        backgroundColor: colors.field03,
+        color: colors.text02,
+        cursor: 'not-allowed',
+      },
+      false: {
+        backgroundColor: colors.field04,
+        color: colors.text04,
+        cursor: 'pointer',
+      },
+    },
+  },
+  defaultVariants: {
+    disabled: false,
+  },
 });
 
 export const photoGrid = style({

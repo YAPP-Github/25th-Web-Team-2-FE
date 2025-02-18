@@ -66,7 +66,7 @@ const getMatchTypeText = (matchType: 'OFFLINE' | 'ONLINE' | 'ALL'): string => {
 const formatDate = (hyphenDate: string): string => {
   if (!hyphenDate) return '';
 
-  return format(new Date(hyphenDate), 'yyyy.MM.dd') ?? '';
+  return format(new Date(hyphenDate), 'yyyy. MM. dd') ?? '';
 };
 
 export {
