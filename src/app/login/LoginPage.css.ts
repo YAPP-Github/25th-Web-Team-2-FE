@@ -4,6 +4,10 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const loginLayout = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
   backgroundColor: colors.field01,
   minWidth: '100rem',
   height: 'calc(100vh - 12.2rem)',
