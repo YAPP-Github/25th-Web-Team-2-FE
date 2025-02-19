@@ -18,6 +18,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
+import { formMessage } from '../InputForm/InputForm.css';
 import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
 import {
@@ -205,6 +206,13 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
+
+          {/* 에러 메시지  */}
+          {errors.content?.message && (
+            <p className={formMessage} style={{ marginTop: '-1.2rem' }}>
+              {errors.content.message}
+            </p>
+          )}
         </div>
       </div>
 

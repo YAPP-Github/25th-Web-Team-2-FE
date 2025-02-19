@@ -45,6 +45,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
     return (
       <div className={selectInputContainer}>
         <Select.Root
+          key={field.value}
           value={field.value ? String(field.value) : undefined}
           onValueChange={(value) => {
             setValue(field.name, value, { shouldValidate: true });

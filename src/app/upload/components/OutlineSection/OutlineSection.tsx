@@ -94,6 +94,7 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
+                {...field}
                 id="leadResearcher"
                 field={field}
                 type="text"
@@ -114,6 +115,7 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <DatePickerForm
+                {...field}
                 placeholder="실험 시작일 ~ 실험 종료일"
                 onDateChange={(dates) => {
                   setValue('startDate', dates.from || null, { shouldValidate: true });
@@ -148,7 +150,8 @@ const OutlineSection = ({
             name="matchType"
             control={control}
             render={({ field, fieldState }) => (
-              <RadioButtonGroup<MatchType>
+              <RadioButtonGroup
+                {...field}
                 options={[
                   { value: MatchType.OFFLINE, label: '대면' },
                   { value: MatchType.ONLINE, label: '비대면' },
@@ -157,9 +160,10 @@ const OutlineSection = ({
                 selectedValue={field.value}
                 onChange={(value) => {
                   field.onChange(value);
-                  handleMatchTypeChange(value);
+                  handleMatchTypeChange(value as MatchType | null);
                 }}
                 isError={!!fieldState.error}
+                ref={field.ref}
               />
             )}
           />
@@ -175,6 +179,7 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
+                {...field}
                 id="reward"
                 field={field}
                 fieldState={fieldState}
@@ -199,6 +204,7 @@ const OutlineSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
+                    {...field}
                     id="place"
                     field={field}
                     placeholder="장소 입력"
@@ -266,6 +272,7 @@ const OutlineSection = ({
                     placeholder="실험 횟수 입력"
                     disabled={false}
                     showErrorMessage={false}
+                    ref={field.ref}
                   />
                 )}
               />
@@ -285,6 +292,7 @@ const OutlineSection = ({
                       placeholder="1회당 시간 입력"
                       disabled={isDurationChecked}
                       showErrorMessage={false}
+                      ref={field.ref}
                     />
                   )}
                 />
