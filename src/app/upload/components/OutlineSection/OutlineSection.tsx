@@ -185,6 +185,7 @@ const OutlineSection = ({
                 fieldState={fieldState}
                 placeholder="예) 현금 10,000원"
                 type="text"
+                showErrorMessage={true}
               />
             )}
           />
