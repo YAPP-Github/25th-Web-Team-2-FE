@@ -31,6 +31,8 @@ interface JoinInputProps<T extends FieldValues> {
   value?: PathValue<T, Path<T>>;
   maxLength?: number;
   isTip?: boolean;
+  isCount?: boolean;
+  count?: number;
 }
 
 const JoinInput = <T extends FieldValues>({
@@ -46,6 +48,8 @@ const JoinInput = <T extends FieldValues>({
   value,
   maxLength,
   isTip = true,
+  isCount = false,
+  count,
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
@@ -129,6 +133,11 @@ const JoinInput = <T extends FieldValues>({
             {maxLength && (
               <span className={textCount}>
                 {field.value?.length || 0}/{maxLength}
+              </span>
+            )}
+            {isCount && count && (
+              <span className={textCount}>
+                {field.value?.length || 0}/{count}
               </span>
             )}
             {tip && !fieldState.error && (
