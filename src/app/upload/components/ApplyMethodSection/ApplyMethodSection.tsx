@@ -100,11 +100,11 @@ const ApplyMethodSection = ({
                     {...field}
                     id="applyMethodInfo.formUrl"
                     placeholder="https://"
-                    maxLength={200}
+                    maxLength={100}
                     size="full"
                     field={field}
                     fieldState={fieldState}
-                    showErrorMessage={false}
+                    showErrorMessage={true}
                   />
                 )}
               />
@@ -130,11 +130,10 @@ const ApplyMethodSection = ({
                     {...field}
                     id="applyMethodInfo.phoneNum"
                     placeholder="연락처, 이메일 등"
-                    maxLength={100}
                     size="full"
                     field={field}
                     fieldState={fieldState}
-                    showErrorMessage={false}
+                    showErrorMessage={true}
                   />
                 )}
               />
