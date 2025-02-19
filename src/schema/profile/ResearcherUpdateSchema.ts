@@ -34,6 +34,9 @@ const ResearcherUpdateSchema = () => {
 
     // 랩실정보: 선택. 100자 이하. 입력 막기x.
     labInfo: z.string().max(100, { message: '최대 100자 이하로 입력해 주세요' }).optional(),
+
+    // 이메일 수신 동의 체크 여부.
+    adConsent: z.boolean(),
   });
 };
 

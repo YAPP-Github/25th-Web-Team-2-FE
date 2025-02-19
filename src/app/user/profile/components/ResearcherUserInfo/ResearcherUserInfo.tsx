@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
+import { Controller } from 'react-hook-form';
 
 import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
@@ -33,10 +34,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
     isError: isEmailDuplicateError,
   } = useCheckValidEmailQuery(contactEmail);
 
-  // TODO: API 수정 시 체크 상태 form으로 관리
-  const [isAdvertise, toggle] = useReducer((prev) => !prev, false);
   const [isToastOpen, setIsToastOpen] = useState(false);
-
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
   const handleCheckValidEmail = async () => {
@@ -105,15 +103,23 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
           />
 
           {/* 광고성 정보 이메일/SMS 수신 동의 */}
-          <div className={termContainer}>
-            <JoinCheckbox
-              label="[선택] 광고성 정보 이메일/SMS 수신 동의"
-              isChecked={isAdvertise}
-              onChange={toggle}
-              isArrow={false}
-              emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
-            />
-          </div>
+          <Controller
+            name="adConsent"
+            control={form.control}
+            render={({ field }) => {
+              return (
+                <div className={termContainer}>
+                  <JoinCheckbox
+                    label="[선택] 광고성 정보 이메일/SMS 수신 동의"
+                    isChecked={field.value}
+                    onChange={() => form.setValue('adConsent', !field.value)}
+                    isArrow={false}
+                    emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                  />
+                </div>
+              );
+            }}
+          />
         </section>
         <Link href="/user/leave" className={leaveButton}>
           <span>회원탈퇴</span>
