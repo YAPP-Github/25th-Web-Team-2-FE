@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+
 import { leaveSuccessPageLayout } from './success.css';
 
 function LeaveSuccessLayout({ children }: { children: React.ReactNode }) {

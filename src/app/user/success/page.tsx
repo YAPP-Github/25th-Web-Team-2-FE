@@ -1,5 +1,9 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect } from 'react';
+
 import {
   homeLink,
   image,
@@ -8,9 +12,7 @@ import {
   subTitle,
   title,
 } from './success.css';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect } from 'react';
+
 import JoinSuccess from '@/assets/images/joinSuccess.svg';
 import Logo from '@/assets/images/logo.svg';
 import useSessionStorage from '@/hooks/useSessionStorage';
