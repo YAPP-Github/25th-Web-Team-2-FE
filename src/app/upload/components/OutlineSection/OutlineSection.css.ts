@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
@@ -62,6 +62,15 @@ export const uploadInputContainer = style({
   display: 'flex',
   flexFlow: 'column nowrap',
   gap: '0.8rem',
+});
+
+export const uploadSelectInputContainer = style({
+  display: 'flex',
+  flexFlow: 'column nowrap',
+});
+
+globalStyle(`${uploadSelectInputContainer} > *:nth-child(1)`, {
+  marginBottom: '0.8rem',
 });
 
 export const disabledInput = style({

@@ -198,7 +198,7 @@ const ApplyMethodSection = ({
               name="targetGroupInfo.genderType"
               control={control}
               render={({ field, fieldState }) => (
-                <RadioButtonGroup<GenderType>
+                <RadioButtonGroup
                   options={[
                     { value: GenderType.MALE, label: '남성' },
                     { value: GenderType.FEMALE, label: '여성' },

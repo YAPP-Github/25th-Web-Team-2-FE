@@ -5,7 +5,6 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const applyMethodContainer = style({
-  marginTop: '2rem',
   marginBottom: '4.8rem',
 });
 

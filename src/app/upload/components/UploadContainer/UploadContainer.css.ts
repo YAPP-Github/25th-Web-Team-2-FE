@@ -37,7 +37,7 @@ export const uploadContentLayout = style({
 export const uploadSectionLayout = style({
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
-  padding: '3.2rem 2.8rem',
+  padding: '2.8rem 2.8rem',
 
   marginTop: '4.8rem',
 });

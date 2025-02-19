@@ -7,7 +7,7 @@ import { fonts } from '@/styles/fonts.css';
 export const descriptionSectionLayout = style({
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
-  padding: '3.2rem 2.8rem',
+  padding: '2.8rem 2.8rem',
 });
 
 export const descriptionFormLayout = style({

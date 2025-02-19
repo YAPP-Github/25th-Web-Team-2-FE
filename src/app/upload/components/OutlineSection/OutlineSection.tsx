@@ -5,6 +5,7 @@ import {
   isEndDatePastText,
   outlineFormLayout,
   uploadInputContainer,
+  uploadSelectInputContainer,
 } from './OutlineSection.css';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
@@ -259,7 +260,7 @@ const OutlineSection = ({
         <div>
           <p className={label}>소요 시간</p>
 
-          <div className={uploadInputContainer}>
+          <div className={uploadSelectInputContainer}>
             {/* 실험 횟수 */}
             <div>
               <Controller
@@ -298,7 +299,6 @@ const OutlineSection = ({
                   )}
                 />
               </div>
-
               {/* 본문 참고 체크박스 */}
               <CheckboxWithIcon
                 checked={isDurationChecked}
