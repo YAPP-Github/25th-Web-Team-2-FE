@@ -21,7 +21,7 @@ const Menu = ({ userInfo }: MenuProps) => {
 
   const logout = () => {
     clear();
-    window.location.reload();
+    window.location.href = '/';
   };
 
   return (
