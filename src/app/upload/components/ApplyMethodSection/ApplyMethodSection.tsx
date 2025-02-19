@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import {
@@ -17,6 +17,7 @@ import {
 import AgeForm from '../AgeForm/AgeForm';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
+import { formMessage } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
@@ -44,6 +45,7 @@ const ApplyMethodSection = ({
 }: ApplyMethodSectionProps) => {
   const pathname = usePathname();
   const isEdit = pathname.startsWith('/edit');
+  const [isAgeFormFocused, setIsAgeFormFocused] = useState<boolean>(false);
 
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -151,13 +153,19 @@ const ApplyMethodSection = ({
           {/* 나이 */}
           <div>
             <p className={label}>나이</p>
-            <div className={ageInputContainer({ isError: ageError })}>
+            <div className={ageInputContainer({ isError: ageError, isFocused: isAgeFormFocused })}>
               <span className={textStyle}>만</span>
               <Controller
                 name="targetGroupInfo.startAge"
                 control={control}
                 render={({ field }) => (
-                  <AgeForm {...field} id="startAge" placeholder="00" field={field} />
+                  <AgeForm
+                    {...field}
+                    id="startAge"
+                    placeholder="00"
+                    field={field}
+                    setIsFocused={setIsAgeFormFocused}
+                  />
                 )}
               />
               <span className={textStyle}>~</span>
@@ -165,11 +173,23 @@ const ApplyMethodSection = ({
                 name="targetGroupInfo.endAge"
                 control={control}
                 render={({ field }) => (
-                  <AgeForm {...field} id="endAge" placeholder="00" field={field} />
+                  <AgeForm
+                    {...field}
+                    id="endAge"
+                    placeholder="00"
+                    field={field}
+                    setIsFocused={setIsAgeFormFocused}
+                  />
                 )}
               />
               <span className={textStyle}>세</span>
             </div>
+            {ageError && (
+              <p className={formMessage} role="alert" aria-live="polite">
+                {formState.errors.targetGroupInfo?.startAge?.message ||
+                  formState.errors.targetGroupInfo?.endAge?.message}
+              </p>
+            )}
           </div>
 
           {/* 성별 */}

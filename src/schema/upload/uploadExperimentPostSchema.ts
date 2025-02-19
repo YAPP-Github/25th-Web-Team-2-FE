@@ -93,10 +93,14 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
         : z.string().nullable(),
     }),
     targetGroupInfo: z.object({
-      // 참여 가능 나이 (이상)
-      startAge: z.coerce.number().min(0, '0세 이상'),
-      // 참여 가능 나이 (이하)
-      endAge: z.coerce.number().min(0, '0세 이상').max(100),
+      startAge: z.coerce
+        .number({ message: '' })
+        .min(0, { message: '0세 이상이어야 합니다' })
+        .max(100, { message: '100세 이하로 입력해주세요' }),
+      endAge: z.coerce
+        .number({ message: '' })
+        .min(0, { message: '0세 이상이어야 합니다' })
+        .max(100, { message: '100세 이하로 입력해주세요' }),
       genderType: z.nativeEnum(GenderType), // 성별
       otherCondition: z.string().max(300, '최대 300자 이하로 입력해 주세요').optional(), // 기타조건
     }),
