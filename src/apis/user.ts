@@ -5,8 +5,21 @@ import { API_URL } from '@/constants/url';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
+export type ReasonType =
+  | `RESEARCH_STOPPED`
+  | `SECURITY_CONCERN`
+  | `NO_NECESSARY_FUNCTION`
+  | `TOO_MANY_EMAILS`
+  | `INCONVENIENT_SITE`
+  | `OTHER`;
+
 export interface ValidateContactEmailParams {
   contactEmail: string;
+}
+
+export interface LeaveUserParams {
+  reasonType: ReasonType;
+  reason: string | null;
 }
 
 export const updateParticipantInfo = async (params: ParticipantUpdateSchemaType) => {
@@ -25,4 +38,8 @@ export const validateContactEmail = async ({ contactEmail }: ValidateContactEmai
   const res = await API.get(API_URL.validateContactEmail(contactEmail));
 
   return res.data;
+};
+
+export const leaveUser = async ({ reasonType, reason }: LeaveUserParams) => {
+  return await API.delete<ResearcherResponse>(API_URL.leave, { data: { reasonType, reason } });
 };
