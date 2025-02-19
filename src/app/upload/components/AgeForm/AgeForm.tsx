@@ -19,8 +19,7 @@ const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
 
-      // 빈 문자열이거나 양의 정수만 허용
-      if (value === '' || /^[0-9]\d*$/.test(value)) {
+      if (/^\d*$/.test(value)) {
         field.onChange(e);
       }
     };
@@ -31,7 +30,6 @@ const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(
           {...field}
           ref={ref}
           id={id}
-          type="number"
           className={ageInput}
           placeholder={placeholder}
           value={field.value || ''}
