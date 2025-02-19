@@ -33,12 +33,7 @@ const ResearcherUpdateSchema = () => {
       .max(10, { message: '최대 10자 이하로 입력해 주세요' }),
 
     // 랩실정보: 선택. 100자 이하. 입력 막기x.
-    labInfo: z
-      .string()
-      .refine((value) => value.length <= 100, {
-        message: '연구실 정보는 최대 100자까지만 입력 가능해요',
-      })
-      .optional(),
+    labInfo: z.string().max(100, { message: '최대 100자 이하로 입력해 주세요' }).optional(),
   });
 };
 
