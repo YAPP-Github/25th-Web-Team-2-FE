@@ -6,7 +6,7 @@ import { ROLE } from '@/constants/config';
 import useSessionStorage from '@/hooks/useSessionStorage';
 
 const useServiceAgreeCheck = () => {
-  const role = useSessionStorage('role');
+  const { value: role } = useSessionStorage('role');
 
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState<ServiceAgreeCheck>({
     isTermOfService: false,

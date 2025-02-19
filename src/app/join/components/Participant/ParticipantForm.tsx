@@ -16,7 +16,7 @@ import ParticipantJoinSchema, {
 } from '@/schema/join/ParticipantJoinSchema';
 
 const ParticipantForm = () => {
-  const oauthEmail = useSessionStorage('email');
+  const { value: oauthEmail } = useSessionStorage('email');
 
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 

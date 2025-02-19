@@ -14,7 +14,7 @@ import useSessionStorage from '@/hooks/useSessionStorage';
 import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const ResearcherForm = () => {
-  const oauthEmail = useSessionStorage('email');
+  const { value: oauthEmail } = useSessionStorage('email');
 
   const { mutate: joinResearcher } = useResearcherJoinMutation();
 

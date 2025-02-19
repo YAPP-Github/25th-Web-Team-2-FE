@@ -5,7 +5,7 @@ import { ROLE } from '@/constants/config';
 import useSessionStorage from '@/hooks/useSessionStorage';
 
 const useUserInfo = () => {
-  const role = useSessionStorage('role');
+  const { value: role } = useSessionStorage('role');
   const isParticipant = role === ROLE.participant;
   const isResearcher = role === ROLE.researcher;
 
