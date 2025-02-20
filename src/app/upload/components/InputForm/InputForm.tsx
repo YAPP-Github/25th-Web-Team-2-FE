@@ -73,7 +73,7 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
               {textLength}/{maxLength}
             </div>
           )}
-          {fieldState?.error && showErrorMessage && (
+          {fieldState?.error && showErrorMessage && fieldState.error.message !== '' && (
             <p className={formMessage} role="alert" aria-live="polite">
               {fieldState.error.message}
             </p>

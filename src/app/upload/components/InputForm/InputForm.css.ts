@@ -7,7 +7,7 @@ export const textInputContainer = styleVariants({
   half: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.4rem',
+
     position: 'relative',
     width: '100%',
     maxWidth: '45.2rem',
@@ -15,7 +15,7 @@ export const textInputContainer = styleVariants({
   full: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.4rem',
+
     position: 'relative',
     width: '100%',
     maxWidth: '93.6rem',
@@ -73,4 +73,5 @@ export const formMessage = style({
   ...fonts.label.small.M12,
   color: colors.textAlert,
   margin: '0',
+  marginTop: '0.4rem',
 });

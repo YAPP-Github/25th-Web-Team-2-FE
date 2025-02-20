@@ -27,7 +27,6 @@ export const checkboxContainer = recipe({
 
 export const checkboxLayout = recipe({
   base: {
-    marginTop: '0.4rem',
     display: 'flex',
     cursor: 'pointer',
   },

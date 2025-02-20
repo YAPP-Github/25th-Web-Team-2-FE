@@ -106,7 +106,7 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
           duration={2500}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.field09} width={24} height={24} />
+            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
             <p>공고 삭제를 실패하였습니다. 잠시 후 다시 시도해주세요.</p>
           </Toast.Title>
         </Toast.Root>

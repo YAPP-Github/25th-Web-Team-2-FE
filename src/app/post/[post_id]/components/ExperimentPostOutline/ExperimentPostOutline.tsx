@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 import {
   checkButton,
-  divider,
-  textWrapRow,
   postOutlineContent,
   postOutlineLayout,
   postOutlineTitle,
@@ -12,6 +10,7 @@ import {
   buttonContainer,
   scrollableContent,
   dynamicSpacing,
+  divider,
 } from './ExperimentPostOutline.css';
 import {
   getGenderLabel,
@@ -24,6 +23,8 @@ import {
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
+
+import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 
 interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -47,7 +48,9 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <td>
                 <p>
                   만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
-                  {getGenderLabel(targetGroup.genderType)}
+                  {targetGroup.genderType === GenderType.ALL
+                    ? '성별 무관'
+                    : getGenderLabel(targetGroup.genderType)}
                 </p>
               </td>
             </tr>
@@ -90,13 +93,15 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
             <tr>
               <th>소요 시간</th>
               <td>
-                <span className={participationCount}>{summary.count}회 참여</span>{' '}
-                {summary.timeRequired ? getDurationLabel(summary.timeRequired) : '본문 참고'}
+                <span className={participationCount}>{summary.count}회 참여</span>
+                {summary.timeRequired
+                  ? `회당 ${getDurationLabel(summary.timeRequired)}`
+                  : '본문 참고'}
               </td>
             </tr>
             <tr>
               <th>실험 장소</th>
-              <td className={textWrapRow}>
+              <td>
                 <p>
                   {address.place && address.region && address.area
                     ? `${getRegionLabel(address.region)} ${getAreaLabel(
@@ -109,7 +114,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
             </tr>
             <tr>
               <th>연구 책임</th>
-              <td className={textWrapRow}>
+              <td>
                 <p>{summary.leadResearcher}</p>
               </td>
             </tr>
@@ -124,7 +129,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
           </button>
         ) : (
           <button className={checkButton({ disabled: true })} disabled>
-            모집이 완료 되었어요
+            모집이 완료되었어요
           </button>
         )}
       </div>

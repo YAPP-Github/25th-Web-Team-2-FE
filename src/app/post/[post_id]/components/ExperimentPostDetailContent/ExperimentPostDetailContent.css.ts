@@ -55,13 +55,13 @@ export const maximizeIcon = style({
 
 export const multiImageGrid = style({
   display: 'grid',
-  gridTemplateColumns: 'repeat(2, 28.6rem)',
+  gridTemplateColumns: 'repeat(3, 18.5rem)',
   gap: '1.6rem',
 });
 
 export const imageItem = style({
-  width: '28.6rem',
-  height: '28.6rem',
+  width: '18.5rem',
+  height: '18.5rem',
   borderRadius: '1.2rem',
   overflow: 'hidden',
 
@@ -87,9 +87,7 @@ export const modalContent = style({
   alignItems: 'center',
   backgroundColor: '#fff',
   boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.2)',
-
   borderRadius: '1.2rem',
-
   zIndex: zIndex.imageViewerModalContent,
 });
 

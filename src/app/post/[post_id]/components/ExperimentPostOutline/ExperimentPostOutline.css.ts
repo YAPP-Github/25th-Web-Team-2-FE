@@ -22,7 +22,6 @@ export const postOutlineLayout = style({
 export const postOutlineTitle = style({
   ...fonts.title.small.SB18,
   color: colors.text07,
-  position: 'sticky',
   top: 0,
   backgroundColor: colors.field01,
   paddingBottom: '1.6rem',
@@ -43,21 +42,14 @@ globalStyle(`${postOutlineContent} th`, {
   width: '6rem',
   textAlign: 'left',
   verticalAlign: 'top',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  wordWrap: 'break-word',
 });
 
 globalStyle(`${postOutlineContent} td`, {
   ...fonts.body.normal.M16,
   color: colors.text06,
-  whiteSpace: 'nowrap',
   width: '20.4rem',
   textAlign: 'left',
   verticalAlign: 'top',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  wordWrap: 'break-word',
 });
 
 export const scrollableContent = style({
@@ -88,13 +80,13 @@ export const otherConditionWrapper = style({
 
 export const participationCount = style({
   position: 'relative',
-  marginRight: '3.2rem',
+  marginRight: '1.6rem',
   selectors: {
     '&::after': {
       content: '""',
       position: 'absolute',
       top: '50%',
-      left: 'calc(100% + 1.6rem)',
+      left: 'calc(100% + 0.8rem)',
       transform: 'translateY(-50%)',
       width: '0.1rem',
       height: '1rem',
@@ -141,21 +133,6 @@ export const checkButton = recipe({
   defaultVariants: {
     disabled: false,
   },
-});
-
-export const textWrapRow = style({
-  height: 'auto',
-  maxHeight: '4.8rem',
-});
-
-globalStyle(`${textWrapRow} p`, {
-  display: '-webkit-box',
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: 'vertical',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  wordBreak: 'break-word',
-  whiteSpace: 'normal',
 });
 
 export const dynamicSpacing = style({

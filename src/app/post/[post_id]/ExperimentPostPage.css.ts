@@ -12,6 +12,8 @@ export const dialogOverlay = style({
 export const closeButton = style({
   cursor: 'pointer',
   position: 'absolute',
+  width: '2rem',
+  height: '2rem',
   top: '1.2rem',
   right: '1.2rem',
   textAlign: 'right',

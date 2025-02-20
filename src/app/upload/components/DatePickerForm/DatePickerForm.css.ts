@@ -133,7 +133,6 @@ globalStyle(`.${datepickerCustomClass} .rdp-month_caption`, {
 });
 
 globalStyle(`.${datepickerCustomClass} .rdp-dropdowns`, {
-  marginTop: '2.4rem',
   marginRight: '3rem',
   marginLeft: '3rem',
   width: '21.6rem',

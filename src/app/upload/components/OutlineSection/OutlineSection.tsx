@@ -5,6 +5,7 @@ import {
   isEndDatePastText,
   outlineFormLayout,
   uploadInputContainer,
+  uploadSelectInputContainer,
 } from './OutlineSection.css';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
@@ -94,6 +95,7 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
+                {...field}
                 id="leadResearcher"
                 field={field}
                 type="text"
@@ -114,6 +116,7 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <DatePickerForm
+                {...field}
                 placeholder="실험 시작일 ~ 실험 종료일"
                 onDateChange={(dates) => {
                   setValue('startDate', dates.from || null, { shouldValidate: true });
@@ -148,7 +151,8 @@ const OutlineSection = ({
             name="matchType"
             control={control}
             render={({ field, fieldState }) => (
-              <RadioButtonGroup<MatchType>
+              <RadioButtonGroup
+                {...field}
                 options={[
                   { value: MatchType.OFFLINE, label: '대면' },
                   { value: MatchType.ONLINE, label: '비대면' },
@@ -157,9 +161,10 @@ const OutlineSection = ({
                 selectedValue={field.value}
                 onChange={(value) => {
                   field.onChange(value);
-                  handleMatchTypeChange(value);
+                  handleMatchTypeChange(value as MatchType | null);
                 }}
                 isError={!!fieldState.error}
+                ref={field.ref}
               />
             )}
           />
@@ -175,11 +180,13 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
+                {...field}
                 id="reward"
                 field={field}
                 fieldState={fieldState}
                 placeholder="예) 현금 10,000원"
                 type="text"
+                showErrorMessage={true}
               />
             )}
           />
@@ -199,6 +206,7 @@ const OutlineSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
+                    {...field}
                     id="place"
                     field={field}
                     placeholder="장소 입력"
@@ -252,7 +260,7 @@ const OutlineSection = ({
         <div>
           <p className={label}>소요 시간</p>
 
-          <div className={uploadInputContainer}>
+          <div className={uploadSelectInputContainer}>
             {/* 실험 횟수 */}
             <div>
               <Controller
@@ -266,6 +274,7 @@ const OutlineSection = ({
                     placeholder="실험 횟수 입력"
                     disabled={false}
                     showErrorMessage={false}
+                    ref={field.ref}
                   />
                 )}
               />
@@ -285,11 +294,11 @@ const OutlineSection = ({
                       placeholder="1회당 시간 입력"
                       disabled={isDurationChecked}
                       showErrorMessage={false}
+                      ref={field.ref}
                     />
                   )}
                 />
               </div>
-
               {/* 본문 참고 체크박스 */}
               <CheckboxWithIcon
                 checked={isDurationChecked}

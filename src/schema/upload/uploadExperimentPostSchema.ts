@@ -57,7 +57,8 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     // 보상
     reward: z
       .string({ message: '최소 1자 이상으로 입력해 주세요' })
-      .min(1, { message: '최소 1자 이상으로 입력해 주세요' }),
+      .min(1, { message: '최소 1자 이상으로 입력해 주세요' })
+      .max(170, { message: '최대 170자 이하로 입력해 주세요' }),
 
     // 실험 제목
     title: z
@@ -83,20 +84,24 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
       // 링크
       formUrl: addLink
         ? z
-            .string()
+            .string({ message: '' })
             .max(100, '최대 100자 이하로 입력해 주세요')
             .url({ message: '링크를 입력해 주세요' })
         : z.string().nullable(),
       // 연락처
       phoneNum: addContact
-        ? z.string().max(100, '최대 100자 이하로 입력해 주세요')
+        ? z.string({ message: '' }).max(50, '최대 50자 이하로 입력해 주세요')
         : z.string().nullable(),
     }),
     targetGroupInfo: z.object({
-      // 참여 가능 나이 (이상)
-      startAge: z.coerce.number().min(0, '0세 이상'),
-      // 참여 가능 나이 (이하)
-      endAge: z.coerce.number().min(0, '0세 이상').max(100),
+      startAge: z.coerce
+        .number({ message: '' })
+        .min(0, { message: '0세 이상이어야 합니다' })
+        .max(100, { message: '100세 이하로 입력해주세요' }),
+      endAge: z.coerce
+        .number({ message: '' })
+        .min(0, { message: '0세 이상이어야 합니다' })
+        .max(100, { message: '100세 이하로 입력해주세요' }),
       genderType: z.nativeEnum(GenderType), // 성별
       otherCondition: z.string().max(300, '최대 300자 이하로 입력해 주세요').optional(), // 기타조건
     }),

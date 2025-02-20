@@ -31,6 +31,8 @@ interface DatePickerFormProps {
   disabled?: boolean;
 }
 
+const MAX_DATE_SELECTIONS = 2;
+
 const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
   (
     {
@@ -49,6 +51,7 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
       from: undefined,
       to: undefined,
     });
+    const [clickCount, setClickCount] = useState<number>(0);
 
     useEffect(() => {
       if (initialDates?.from || initialDates?.to) {
@@ -66,19 +69,29 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
     }, [experimentDateChecked]);
 
     const handleOpenChange = (open: boolean) => {
+      if (!open) {
+        setClickCount(0);
+      }
       if (experimentDateChecked || disabled) {
         setIsOpen(false);
         return;
       }
       setTimeout(() => {
         setIsOpen(open);
-      }, 0.3);
+      }, 0);
     };
 
     const handleDateChange = (range: DateRange) => {
       const formattedRange = formatRange(range);
       setSelectedDates(range);
       onDateChange(formattedRange);
+
+      const newClickCount = clickCount + 1;
+      setClickCount(newClickCount);
+      if (newClickCount >= MAX_DATE_SELECTIONS) {
+        setIsOpen(false);
+        setClickCount(0);
+      }
     };
 
     return (

@@ -18,6 +18,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
+import { formMessage } from '../InputForm/InputForm.css';
 import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
 import {
@@ -40,8 +41,8 @@ const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
   const {
     control,
-    getValues,
     setValue,
+    getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -50,10 +51,11 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
 
   useEffect(() => {
     const existingImages = getValues('imageListInfo.images') || [];
+
     if (images.length === 0 && existingImages.length > 0) {
-      setImages(existingImages.slice(0, MAX_PHOTOS));
+      setImages([...existingImages.slice(0, MAX_PHOTOS)]);
     }
-  }, [getValues, images.length, setImages]);
+  }, [getValues, images, setImages]);
 
   const uploadPhotos = (e: ChangeEvent<HTMLInputElement>): void => {
     const files = e.target.files;
@@ -144,43 +146,54 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               )}
             />
 
-            <div className={photoGrid}>
-              {images.map((image, index) => (
-                <div
-                  className={photoLayout}
-                  key={`image-${index}`}
-                  draggable
-                  onDragStart={(e) => onDragStart(e, index)}
-                  onDrop={(e) => onDrop(e, index)}
-                  onDragOver={(e) => e.preventDefault()}
-                >
-                  <div className={photoContainer}>
-                    <button className={deleteButton} onClick={() => deletePhoto(index)}>
-                      <Icon
-                        icon="CloseRound"
-                        width={20}
-                        height={20}
-                        color={colors.field09}
-                        cursor="pointer"
-                        subcolor={colors.field01}
+            {/* Image Container */}
+            {images.length > 0 && (
+              <div className={photoGrid}>
+                {images.map((image, index) => (
+                  <div
+                    className={photoLayout}
+                    key={`image-${index}`}
+                    draggable
+                    onDragStart={(e) => onDragStart(e, index)}
+                    onDrop={(e) => onDrop(e, index)}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
+                    <div className={photoContainer}>
+                      <button className={deleteButton} onClick={() => deletePhoto(index)}>
+                        <Icon
+                          icon="CloseRound"
+                          width={20}
+                          height={20}
+                          color={'rgba(109, 123, 130, 0.7)'}
+                          cursor="pointer"
+                          subcolor={colors.field01}
+                        />
+                      </button>
+                      <Image
+                        src={typeof image === 'string' ? image : URL.createObjectURL(image)}
+                        alt="업로드된 이미지"
+                        width={80}
+                        height={80}
+                        style={{ objectFit: 'cover', borderRadius: '1.2rem' }}
                       />
-                    </button>
-                    <Image
-                      src={typeof image === 'string' ? image : URL.createObjectURL(image)}
-                      alt="업로드된 이미지"
-                      width={80}
-                      height={80}
-                      style={{ objectFit: 'cover', borderRadius: '1.2rem' }}
-                    />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             <div className={uploadImagesContainer}>
-              <label htmlFor="photos" className={addImageContainer}>
-                <Icon icon="ImageAdd" width={16} height={16} />
-                <p style={{ color: colors.text04, fontWeight: '500' }}>사진 추가</p>
+              <label
+                htmlFor="photos"
+                className={addImageContainer({ disabled: !!(images.length >= 3) })}
+              >
+                <Icon
+                  icon="ImageAdd"
+                  width={16}
+                  height={16}
+                  color={!!(images.length >= 3) ? colors.icon02 : colors.icon03}
+                />
+                <p>사진 추가</p>
               </label>
               <input
                 type="file"
@@ -193,6 +206,13 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
+
+          {/* 에러 메시지  */}
+          {errors.content?.message && (
+            <p className={formMessage} style={{ marginTop: '-1.2rem' }}>
+              {errors.content.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -205,8 +225,8 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
           duration={3500}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.primaryMint} width={24} height={24} />
-            <p>지원되지 않는 파일 형식입니다. JPG 또는 PNG 파일을 업로드하세요.</p>
+            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
+            <p>지원되지 않는 파일 형식이에요. JPG 또는 PNG를 업로드 해주세요.</p>
           </Toast.Title>
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />
