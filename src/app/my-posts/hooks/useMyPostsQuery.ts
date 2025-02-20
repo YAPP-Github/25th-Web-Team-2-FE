@@ -27,8 +27,8 @@ interface UseMyPostsQueryParams {
 }
 
 const useMyPostsQuery = ({ page = 1, count = 10, order = 'DESC' }: UseMyPostsQueryParams) => {
-  const queryKey = API_URL.myPosts(page, count, order);
-  const queryFn = () => API.get<UseMyPostsQueryResponse>(queryKey).then((res) => res.data);
+  const url = API_URL.myPosts(page, count, order);
+  const queryFn = () => API.get<UseMyPostsQueryResponse>(url).then((res) => res.data);
 
   return useQuery<UseMyPostsQueryResponse, AxiosError>({
     queryKey: ['myPosts', page, count, order],

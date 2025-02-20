@@ -1,6 +1,6 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, UseQueryResult } from '@tanstack/react-query';
 import {
   ColumnDef,
   SortingState,
@@ -13,7 +13,7 @@ import {
 } from '@tanstack/react-table';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import {
   container,
@@ -26,8 +26,9 @@ import {
   emptyTitle,
   emptySubTitle,
 } from './MyPostsTable.css';
-import useMyPostsQuery, { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
+import { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
 import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
+import { PAGE_SIZE } from '../MyPostsContainer/MyPostsContainer';
 import {
   Pagination,
   PaginationContent,
@@ -44,29 +45,28 @@ import { contactButton } from '@/components/Header/Header.css';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 
-const pageSize = 10;
-
-const MyPostsTable = () => {
+interface MyPostsTableProps {
+  myPostAPIResponse: UseQueryResult<UseMyPostsQueryResponse>;
+  currentPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  order: 'DESC' | 'ASC';
+}
+const MyPostsTable = ({
+  myPostAPIResponse,
+  currentPage,
+  setCurrentPage,
+  order,
+}: MyPostsTableProps) => {
   const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
-
   const queryClient = useQueryClient();
 
-  const {
-    data,
-    isLoading,
-    error,
-    refetch: refetchMyPosts,
-  } = useMyPostsQuery({
-    page: currentPage,
-    count: pageSize,
-  });
+  const { data, isLoading, error, refetch: refetchMyPosts } = myPostAPIResponse;
 
   /* 모집 상태 변경 */
   const { mutateAsync: updateRecruitStatusMutation } = useUpdateRecruitStatusMutation();
@@ -81,8 +81,7 @@ const MyPostsTable = () => {
   const confirmRecruitStatusUpdate = () => {
     if (!selectedPostId) return;
 
-    // todo 정렬 기능 추가시 변경
-    const queryKey = ['myPosts', currentPage, pageSize, 'DESC'];
+    const queryKey = ['myPosts', currentPage, PAGE_SIZE, order];
 
     const previousData = queryClient.getQueryData<UseMyPostsQueryResponse>(queryKey);
 
@@ -230,7 +229,7 @@ const MyPostsTable = () => {
       </div>
     );
 
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / pageSize);
+  const totalPages = Math.ceil((data?.totalCount ?? 0) / PAGE_SIZE);
 
   return (
     <div className={container}>
