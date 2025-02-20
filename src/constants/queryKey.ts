@@ -10,4 +10,5 @@ export const QUERY_KEY = {
   checkValidEmail: 'checkValidEmail',
   editPost: 'editPost',
   originExperimentPost: 'originExperimentPost',
+  applyMethod: 'applyMethod',
 };

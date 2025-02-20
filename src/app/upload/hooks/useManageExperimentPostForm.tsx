@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -37,6 +38,7 @@ const useManageExperimentPostForm = ({
   setImages,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // 기존 공고 데이터 불러오기
   const {
@@ -180,9 +182,16 @@ const useManageExperimentPostForm = ({
       await editExperimentPost(
         { postId, data: updatedData },
         {
-          onSuccess: () => {
-            form.reset();
+          onSuccess: async () => {
+            setSuccessToast(true);
+
+            await Promise.allSettled([
+              queryClient.invalidateQueries({ queryKey: ['experimentPostDetail', postId] }),
+              queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
+            ]);
+
             router.push(`/post/${postId}`);
+            form.reset();
           },
           onError: () => {
             setOpenAlertModal(true);
@@ -192,12 +201,9 @@ const useManageExperimentPostForm = ({
     } else {
       uploadExperimentPost(updatedData, {
         onSuccess: (response) => {
-          form.reset();
-
           setSuccessToast(true);
-          setTimeout(() => {
-            router.push(`/post/${response.postInfo.experimentPostId}`);
-          }, 800);
+          router.push(`/post/${response.postInfo.experimentPostId}`);
+          form.reset();
         },
         onError: () => {
           setOpenAlertModal(true);

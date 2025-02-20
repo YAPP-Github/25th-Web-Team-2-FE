@@ -1,10 +1,16 @@
 'use client';
 
+import * as Toast from '@radix-ui/react-toast';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import {
+  copyToastLayout,
+  copyToastTitle,
+  copyToastViewport,
+} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import ApplyMethodSection from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '@/app/upload/components/DescriptionSection/DescriptionSection';
 import OutlineSection from '@/app/upload/components/OutlineSection/OutlineSection';
@@ -17,7 +23,9 @@ import {
   headerTitle,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
+import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const pathname = usePathname();
@@ -29,6 +37,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [images, setImages] = useState<(File | string)[]>([]);
   const [openUpdateAlertModal, setOenUpdateAlertModal] = useState<boolean>(false);
+  const [successToast, setSuccessToast] = useState(false);
 
   const { form, handleSubmit, isLoading, applyMethodData, isError, isAuthor } =
     useManageExperimentPostForm({
@@ -37,6 +46,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
       addLink,
       addContact,
       setOpenAlertModal: setOpenSubmitAlertDialog,
+      setSuccessToast,
       images,
       setImages,
     });
@@ -131,6 +141,22 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         title="공고를 불러오지 못했어요"
         description="시간을 두고 다시 시도해주세요"
       />
+
+      {/* 공고 수정 성공 시 successToast */}
+      <Toast.Provider swipeDirection="right">
+        <Toast.Root
+          className={copyToastLayout}
+          open={successToast}
+          onOpenChange={setSuccessToast}
+          duration={800}
+        >
+          <Toast.Title className={copyToastTitle}>
+            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
+            <p>공고가 수정되었어요!</p>
+          </Toast.Title>
+        </Toast.Root>
+        <Toast.Viewport className={copyToastViewport} />
+      </Toast.Provider>
     </FormProvider>
   );
 };

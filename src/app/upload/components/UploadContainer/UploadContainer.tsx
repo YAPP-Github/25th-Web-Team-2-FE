@@ -35,7 +35,7 @@ const UploadContainer = () => {
 
   const [images, setImages] = useState<(File | string)[]>([]);
   const [openAlertModal, setOpenAlertModal] = useState(false);
-  const [successToast, setSuccessToast] = useState(true);
+  const [successToast, setSuccessToast] = useState(false);
 
   const [loading, setLoading] = useState(true);
 
@@ -114,7 +114,7 @@ const UploadContainer = () => {
           className={copyToastLayout}
           open={successToast}
           onOpenChange={setSuccessToast}
-          duration={800}
+          duration={600}
         >
           <Toast.Title className={copyToastTitle}>
             <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
