@@ -44,6 +44,7 @@ import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { contactButton } from '@/components/Header/Header.css';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import Spinner from '@/components/Spinner/Spinner';
 
 interface MyPostsTableProps {
   myPostAPIResponse: UseQueryResult<UseMyPostsQueryResponse>;
@@ -199,7 +200,7 @@ const MyPostsTable = ({
   if (isUserInfoLoading || isLoading)
     return (
       <div className={tableEmptyViewLayout}>
-        <Icon icon="AllEmpty" width={24} height={24} />
+        <Spinner />
         <p className={emptySubTitle}>로딩중..</p>
       </div>
     );

@@ -11,7 +11,7 @@ import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutlin
 
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { contactButton } from '@/components/Header/Header.css';
-import Icon from '@/components/Icon';
+import Spinner from '@/components/Spinner/Spinner';
 
 const ExperimentPostContainer = () => {
   const pathname = usePathname();
@@ -31,7 +31,7 @@ const ExperimentPostContainer = () => {
   if (isLoading) {
     return (
       <div className={emptyViewLayout}>
-        <Icon icon="AllEmpty" width={24} height={24} />
+        <Spinner />
         <p className={emptySubTitle}>로딩중..</p>
       </div>
     );

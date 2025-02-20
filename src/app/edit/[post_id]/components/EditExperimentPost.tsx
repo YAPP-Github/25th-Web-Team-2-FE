@@ -26,6 +26,7 @@ import {
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
@@ -85,7 +86,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   // todo 로딩 스피너 추가
   if (isLoading) {
     <>
-      <Icon icon="AllEmpty" width={24} height={24} />
+      <Spinner />
       <p className={emptySubTitle}>로딩중..</p>
     </>;
   }

@@ -28,6 +28,7 @@ import {
 } from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
 
 const UploadContainer = () => {
@@ -64,7 +65,7 @@ const UploadContainer = () => {
   if (loading)
     return (
       <div className={emptyViewLayout}>
-        <Icon icon="AllEmpty" width={24} height={24} />
+        <Spinner />
         <p className={emptySubTitle}>로딩중..</p>
       </div>
     );
