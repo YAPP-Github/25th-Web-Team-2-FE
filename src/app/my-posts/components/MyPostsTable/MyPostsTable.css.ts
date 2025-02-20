@@ -54,3 +54,26 @@ export const textAlignRight = style({
 globalStyle(`${textAlignRight} div`, {
   textAlign: 'right',
 });
+
+export const tableEmptyViewLayout = style({
+  width: '100%',
+  margin: '0 auto',
+  height: 'calc(100vh - 27.4rem)',
+
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '0.8rem',
+});
+
+export const emptyTitle = style({
+  ...fonts.body.normal.M16,
+  color: colors.text04,
+  marginTop: '0.8rem',
+});
+export const emptySubTitle = style({
+  ...fonts.label.small.M12,
+  color: colors.text04,
+  marginBottom: '1.6rem',
+});

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -83,7 +84,10 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   // todo 로딩 스피너 추가
   if (isLoading) {
-    return <p>로딩 중...</p>;
+    <>
+      <Icon icon="AllEmpty" width={24} height={24} />
+      <p className={emptySubTitle}>로딩중..</p>
+    </>;
   }
 
   const experimentDateChecked =

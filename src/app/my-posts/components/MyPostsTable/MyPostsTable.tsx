@@ -22,6 +22,9 @@ import {
   noResults,
   textAlignLeft,
   textAlignRight,
+  tableEmptyViewLayout,
+  emptyTitle,
+  emptySubTitle,
 } from './MyPostsTable.css';
 import useMyPostsQuery, { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
 import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
@@ -37,6 +40,7 @@ import PostActionsPopover from '../PostActionsPopover/PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table/Table';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { contactButton } from '@/components/Header/Header.css';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 
@@ -193,12 +197,36 @@ const MyPostsTable = () => {
     }
   }, [userInfo, router, isUserInfoLoading]);
 
-  if (isUserInfoLoading || isLoading) return <div style={{ height: '40rem' }}>로딩 중...</div>;
+  if (isUserInfoLoading || isLoading)
+    return (
+      <div className={tableEmptyViewLayout}>
+        <Icon icon="AllEmpty" width={24} height={24} />
+        <p className={emptySubTitle}>로딩중..</p>
+      </div>
+    );
+
+  if (!data?.content.length) {
+    return (
+      <div className={tableEmptyViewLayout}>
+        <Icon icon="AllEmpty" width={60} height={60} />
+        <p className={emptyTitle}>작성한 글이 없습니다.</p>
+        <p className={emptySubTitle}>첫 번째 실험 공고를 올려 볼까요?</p>
+        <Link href="/upload">
+          <button className={contactButton}>공고 등록하기</button>
+        </Link>
+      </div>
+    );
+  }
+
   if (error)
     return (
-      <div style={{ height: '40rem' }}>
-        에러 발생: {error.message}
-        <div onClick={() => refetchMyPosts()}>재시도 클릭</div>
+      <div className={tableEmptyViewLayout}>
+        <p className={emptyTitle} style={{ marginBottom: '2rem' }}>
+          잠시 후 다시 시도해 주세요
+        </p>
+        <button onClick={() => refetchMyPosts()} className={contactButton}>
+          재시도
+        </button>
       </div>
     );
 

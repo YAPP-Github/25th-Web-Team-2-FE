@@ -9,3 +9,12 @@ export const postContentLayout = style({
   borderRadius: '1.2rem',
   position: 'relative',
 });
+
+export const emptyViewLayout = style({
+  height: 'calc(100vh - 25rem)',
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  justifyContent: 'center',
+  gap: '0.8rem',
+  alignItems: 'center',
+});
