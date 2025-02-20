@@ -19,6 +19,8 @@ import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
+import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostContainer/ExperimentPostContainer.css';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -59,7 +61,13 @@ const UploadContainer = () => {
     }
   }, [userInfo, router, isUserInfoLoading]);
 
-  if (loading) return <div>로딩 중...</div>;
+  if (loading)
+    return (
+      <div className={emptyViewLayout}>
+        <Icon icon="AllEmpty" width={24} height={24} />
+        <p className={emptySubTitle}>로딩중..</p>
+      </div>
+    );
 
   return (
     <FormProvider {...form}>
