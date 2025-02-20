@@ -17,6 +17,7 @@ import {
 import { formattedContentText, isValidImageUrl } from '../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
 
+import { convertToWebpUrl } from '@/app/upload/upload.utils';
 import Icon from '@/components/Icon';
 import { a11yHidden } from '@/styles/a11y.css';
 import { colors } from '@/styles/colors';
@@ -28,15 +29,14 @@ interface ExperimentPostDetailContentProps {
 const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailContentProps) => {
   const { content, imageList = [] } = postDetailData;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [verifiedImages, setVerifiedImages] = useState<string[]>([]);
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
+  const [imageSources, setImageSources] = useState<string[]>([]);
 
-  /** 이미지가 접근 가능한지 확인 polling */
+  /** 이미지가 접근 가능한지 확인하는 polling */
   async function checkImageExists(url: string, retries = 10, delay = 2000): Promise<boolean> {
     for (let i = 0; i < retries; i++) {
       try {
         const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
-        if (res.ok) return true; // 이미지가 존재하면 즉시 반환
+        if (res.ok) return true;
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(`Image load failed: ${url}`, error);
@@ -46,26 +46,29 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
     return false;
   }
 
-  /** 이미지 존재 여부 확인 후 업데이트 */
+  /** WebP 변환 이미지 polling 후 교체 */
   useEffect(() => {
-    async function verifyImages() {
-      setIsImageLoading(true);
+    if (imageList.length === 0) return;
 
-      const results = await Promise.all(
-        imageList.map(async (image) =>
-          isValidImageUrl(image) && (await checkImageExists(image)) ? image : null,
-        ),
+    const originalImages = [...imageList];
+    setImageSources(originalImages); // 원본 이미지 먼저 렌더링
+
+    async function checkAndReplaceWithWebp() {
+      const updatedImages = await Promise.all(
+        originalImages.map(async (originalUrl) => {
+          if (!isValidImageUrl(originalUrl)) return originalUrl;
+
+          const webpUrl = convertToWebpUrl(originalUrl);
+          const isWebpAvailable = await checkImageExists(webpUrl);
+
+          return isWebpAvailable ? webpUrl : originalUrl;
+        }),
       );
 
-      setVerifiedImages(results.filter((img): img is string => img !== null));
-      setIsImageLoading(false);
+      setImageSources(updatedImages);
     }
 
-    if (imageList.length > 0) {
-      verifyImages();
-    } else {
-      setIsImageLoading(false);
-    }
+    checkAndReplaceWithWebp();
   }, [imageList]);
 
   return (
@@ -75,46 +78,37 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
       <div className={postDetailContentWrapper}>{formattedContentText(content || '')}</div>
 
       {/* 이미지 컨테이너 */}
-      {isImageLoading ? (
-        <div
-          style={{
-            textAlign: 'center',
-            color: colors.text02,
-            height: '40rem',
-            lineHeight: '40rem',
-          }}
-        >
-          🔄 이미지 로딩 중...
-        </div>
-      ) : verifiedImages.length > 0 ? (
+      {imageSources.length > 0 && (
         <div className={imageContainer}>
-          {/* singleImage */}
-          {verifiedImages.length === 1 ? (
-            <div className={singleImageWrapper}>
-              <Image
-                src={verifiedImages[0]}
-                alt="실험 안내 이미지"
-                width={588}
-                height={588}
-                style={{ objectFit: 'contain' }}
-                priority
-                quality={100}
-              />
-              <button className={maximizeIcon} onClick={() => setSelectedImage(verifiedImages[0])}>
-                <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
-              </button>
-            </div>
+          {/* Single Image */}
+          {imageSources.length === 1 ? (
+            isValidImageUrl(imageSources[0]) && (
+              <div className={singleImageWrapper}>
+                <Image
+                  src={imageSources[0]}
+                  alt="실험 안내 이미지"
+                  width={588}
+                  height={588}
+                  style={{ objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }}
+                  priority
+                  quality={100}
+                />
+                <button className={maximizeIcon} onClick={() => setSelectedImage(imageSources[0])}>
+                  <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
+                </button>
+              </div>
+            )
           ) : (
             <div className={multiImageGrid}>
-              {/* multiImages */}
-              {verifiedImages.map((src, index) => (
+              {/* Multiple Images */}
+              {imageSources.filter(isValidImageUrl).map((src, index) => (
                 <div key={index} className={imageItem}>
                   <Image
                     src={src}
                     alt={`실험 안내 이미지 ${index + 1}`}
-                    width={286}
-                    height={286}
-                    style={{ objectFit: 'contain' }}
+                    width={185}
+                    height={185}
+                    style={{ objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }}
                     priority
                     quality={100}
                   />
@@ -126,7 +120,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
             </div>
           )}
         </div>
-      ) : null}
+      )}
 
       {/* 이미지 확대 모달 */}
       <Dialog.Root open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>

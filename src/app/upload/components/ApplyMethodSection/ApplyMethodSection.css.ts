@@ -5,7 +5,6 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const applyMethodContainer = style({
-  marginTop: '2rem',
   marginBottom: '4.8rem',
 });
 
@@ -43,6 +42,7 @@ export const ageInputContainer = recipe({
     border: `0.1rem solid ${colors.line01}`,
     borderRadius: '1.2rem',
     padding: '1.3rem 1.6rem',
+    transition: 'border-color 0.2s ease-in-out',
   },
   variants: {
     isError: {
@@ -50,9 +50,15 @@ export const ageInputContainer = recipe({
         border: `0.1rem solid ${colors.textAlert}`,
       },
     },
+    isFocused: {
+      true: {
+        border: `0.1rem solid ${colors.primaryMint}`,
+      },
+    },
   },
   defaultVariants: {
     isError: false,
+    isFocused: false,
   },
 });
 

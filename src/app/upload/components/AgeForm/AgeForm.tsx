@@ -11,23 +11,36 @@ interface AgeFormProps {
     onBlur: VoidFunction;
   };
   placeholder?: string;
+  setIsFocused: (value: boolean) => void;
 }
 
-const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(({ field, placeholder, id }, ref) => {
-  return (
-    <div className={ageFormContainer}>
-      <input
-        {...field}
-        ref={ref}
-        id={id}
-        type="number"
-        className={ageInput}
-        placeholder={placeholder}
-        value={field.value || ''}
-      />
-    </div>
-  );
-});
+const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(
+  ({ field, placeholder, id, setIsFocused }, ref) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+
+      if (/^\d*$/.test(value)) {
+        field.onChange(e);
+      }
+    };
+
+    return (
+      <div className={ageFormContainer}>
+        <input
+          {...field}
+          ref={ref}
+          id={id}
+          className={ageInput}
+          placeholder={placeholder}
+          value={field.value || ''}
+          onChange={handleChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+        />
+      </div>
+    );
+  },
+);
 
 AgeForm.displayName = 'AgeForm';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, UseQueryResult } from '@tanstack/react-query';
 import {
   ColumnDef,
   SortingState,
@@ -12,7 +12,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import {
   container,
@@ -21,9 +22,13 @@ import {
   noResults,
   textAlignLeft,
   textAlignRight,
+  tableEmptyViewLayout,
+  emptyTitle,
+  emptySubTitle,
 } from './MyPostsTable.css';
-import useMyPostsQuery, { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
+import { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
 import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
+import { PAGE_SIZE } from '../MyPostsContainer/MyPostsContainer';
 import {
   Pagination,
   PaginationContent,
@@ -35,29 +40,34 @@ import {
 import PostActionsPopover from '../PostActionsPopover/PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table/Table';
 
+import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { contactButton } from '@/components/Header/Header.css';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import Spinner from '@/components/Spinner/Spinner';
 
-const pageSize = 10;
-
-const MyPostsTable = () => {
+interface MyPostsTableProps {
+  myPostAPIResponse: UseQueryResult<UseMyPostsQueryResponse>;
+  currentPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  order: 'DESC' | 'ASC';
+}
+const MyPostsTable = ({
+  myPostAPIResponse,
+  currentPage,
+  setCurrentPage,
+  order,
+}: MyPostsTableProps) => {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
   const queryClient = useQueryClient();
 
-  const {
-    data,
-    isLoading,
-    error,
-    refetch: refetchMyPosts,
-  } = useMyPostsQuery({
-    page: currentPage,
-    count: pageSize,
-  });
+  const { data, isLoading, error, refetch: refetchMyPosts } = myPostAPIResponse;
 
   /* 모집 상태 변경 */
   const { mutateAsync: updateRecruitStatusMutation } = useUpdateRecruitStatusMutation();
@@ -72,8 +82,7 @@ const MyPostsTable = () => {
   const confirmRecruitStatusUpdate = () => {
     if (!selectedPostId) return;
 
-    // todo 정렬 기능 추가시 변경
-    const queryKey = ['myPosts', currentPage, pageSize, 'DESC'];
+    const queryKey = ['myPosts', currentPage, PAGE_SIZE, order];
 
     const previousData = queryClient.getQueryData<UseMyPostsQueryResponse>(queryKey);
 
@@ -181,16 +190,47 @@ const MyPostsTable = () => {
     columnResizeMode: 'onChange',
   });
 
-  if (isLoading) return <div style={{ height: '40rem' }}>로딩 중...</div>;
-  if (error)
+  // todo middleware 적용 전 임시 redirect
+  useEffect(() => {
+    if (!isUserInfoLoading && !userInfo) {
+      router.replace('/');
+    }
+  }, [userInfo, router, isUserInfoLoading]);
+
+  if (isUserInfoLoading || isLoading)
     return (
-      <div style={{ height: '40rem' }}>
-        에러 발생: {error.message}
-        <div onClick={() => refetchMyPosts()}>재시도 클릭</div>
+      <div className={tableEmptyViewLayout}>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중..</p>
       </div>
     );
 
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / pageSize);
+  if (!data?.content.length) {
+    return (
+      <div className={tableEmptyViewLayout}>
+        <Icon icon="AllEmpty" width={60} height={60} />
+        <p className={emptyTitle}>작성한 글이 없습니다.</p>
+        <p className={emptySubTitle}>첫 번째 실험 공고를 올려 볼까요?</p>
+        <Link href="/upload">
+          <button className={contactButton}>공고 등록하기</button>
+        </Link>
+      </div>
+    );
+  }
+
+  if (error)
+    return (
+      <div className={tableEmptyViewLayout}>
+        <p className={emptyTitle} style={{ marginBottom: '2rem' }}>
+          잠시 후 다시 시도해 주세요
+        </p>
+        <button onClick={() => refetchMyPosts()} className={contactButton}>
+          재시도
+        </button>
+      </div>
+    );
+
+  const totalPages = Math.ceil((data?.totalCount ?? 0) / PAGE_SIZE);
 
   return (
     <div className={container}>

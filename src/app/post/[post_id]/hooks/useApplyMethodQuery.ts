@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { API } from '@/apis/config';
+import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 interface UseApplyMethodQueryParams {
@@ -16,11 +17,11 @@ export interface UseApplyMethodQueryResponse {
 }
 
 const useApplyMethodQuery = ({ postId }: UseApplyMethodQueryParams) => {
-  const queryKey = API_URL.applyMethod(postId);
-  const queryFn = () => API.get(queryKey).then((res) => res.data);
+  const url = API_URL.applyMethod(postId);
+  const queryFn = () => API.get(url).then((res) => res.data);
 
   return useQuery<UseApplyMethodQueryResponse, AxiosError>({
-    queryKey: [queryKey],
+    queryKey: [QUERY_KEY.applyMethod, postId],
     queryFn,
     enabled: !!postId,
   });

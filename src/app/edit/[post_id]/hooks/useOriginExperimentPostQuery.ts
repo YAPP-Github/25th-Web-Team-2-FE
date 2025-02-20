@@ -14,6 +14,7 @@ const useOriginExperimentPostQuery = ({ postId }: { postId: string }) => {
     queryKey: [QUERY_KEY.originExperimentPost, postId],
     queryFn,
     enabled: !!postId,
+    retry: false,
   });
 };
 

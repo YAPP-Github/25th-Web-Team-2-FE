@@ -1,11 +1,10 @@
 import { style, globalStyle } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const postInfoLayout = style({
-  marginTop: '3.8rem',
+  marginTop: '1.6rem',
   width: '100%',
   height: '6rem',
 });
@@ -53,33 +52,8 @@ export const postHeaderContainer = style({
   alignItems: 'center',
 });
 
-export const buttonStyles = recipe({
-  base: {
-    ...fonts.label.large.M14,
-    color: colors.text03,
-    cursor: 'pointer',
-  },
-  variants: {
-    type: {
-      edit: {
-        position: 'relative',
-        marginRight: '1.6rem',
-      },
-      delete: {},
-    },
-  },
-  defaultVariants: {
-    type: 'delete',
-  },
-});
-
-globalStyle(`${buttonStyles({ type: 'edit' })}::after`, {
-  content: '""',
-  position: 'absolute',
-  top: '50%',
-  left: 'calc(100% + 0.8rem)',
-  transform: 'translateY(-50%)',
-  width: '0.1rem',
-  height: '0.8rem',
-  backgroundColor: colors.line02,
+export const buttonStyles = style({
+  ...fonts.label.large.M14,
+  color: colors.text03,
+  cursor: 'pointer',
 });

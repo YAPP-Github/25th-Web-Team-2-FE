@@ -18,6 +18,7 @@ import {
   uploadImagesContainer,
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
+import { formMessage } from '../InputForm/InputForm.css';
 import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
 import {
@@ -163,7 +164,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                           icon="CloseRound"
                           width={20}
                           height={20}
-                          color={colors.field09}
+                          color={'rgba(109, 123, 130, 0.7)'}
                           cursor="pointer"
                           subcolor={colors.field01}
                         />
@@ -182,9 +183,17 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
             )}
 
             <div className={uploadImagesContainer}>
-              <label htmlFor="photos" className={addImageContainer}>
-                <Icon icon="ImageAdd" width={16} height={16} />
-                <p style={{ color: colors.text04, fontWeight: '500' }}>사진 추가</p>
+              <label
+                htmlFor="photos"
+                className={addImageContainer({ disabled: !!(images.length >= 3) })}
+              >
+                <Icon
+                  icon="ImageAdd"
+                  width={16}
+                  height={16}
+                  color={!!(images.length >= 3) ? colors.icon02 : colors.icon03}
+                />
+                <p>사진 추가</p>
               </label>
               <input
                 type="file"
@@ -197,6 +206,13 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
+
+          {/* 에러 메시지  */}
+          {errors.content?.message && (
+            <p className={formMessage} style={{ marginTop: '-1.2rem' }}>
+              {errors.content.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -209,8 +225,8 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
           duration={3500}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.primaryMint} width={24} height={24} />
-            <p>지원되지 않는 파일 형식입니다. JPG 또는 PNG 파일을 업로드하세요.</p>
+            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
+            <p>지원되지 않는 파일 형식이에요. JPG 또는 PNG를 업로드 해주세요.</p>
           </Toast.Title>
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />

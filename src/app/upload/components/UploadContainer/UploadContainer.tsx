@@ -1,7 +1,8 @@
 'use client';
 
+import * as Toast from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import {
@@ -17,7 +18,18 @@ import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
+import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
+import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostContainer/ExperimentPostContainer.css';
+import {
+  copyToastLayout,
+  copyToastTitle,
+  copyToastViewport,
+} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
+import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import Spinner from '@/components/Spinner/Spinner';
+import { colors } from '@/styles/colors';
 
 const UploadContainer = () => {
   const router = useRouter();
@@ -26,6 +38,9 @@ const UploadContainer = () => {
 
   const [images, setImages] = useState<(File | string)[]>([]);
   const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [successToast, setSuccessToast] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
@@ -33,7 +48,27 @@ const UploadContainer = () => {
     setOpenAlertModal,
     images,
     isEdit: false,
+    setSuccessToast,
   });
+
+  // todo middleware 적용 전 임시 redirect
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+
+  useEffect(() => {
+    if (!isUserInfoLoading && userInfo?.memberInfo.role !== 'RESEARCHER') {
+      router.replace('/');
+    } else {
+      setLoading(false);
+    }
+  }, [userInfo, router, isUserInfoLoading]);
+
+  if (loading)
+    return (
+      <div className={emptyViewLayout}>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중..</p>
+      </div>
+    );
 
   return (
     <FormProvider {...form}>
@@ -81,6 +116,22 @@ const UploadContainer = () => {
           setOpenAlertModal(false);
         }}
       />
+
+      {/* 공고 등록 성공 시 successToast */}
+      <Toast.Provider swipeDirection="right">
+        <Toast.Root
+          className={copyToastLayout}
+          open={successToast}
+          onOpenChange={setSuccessToast}
+          duration={2000}
+        >
+          <Toast.Title className={copyToastTitle}>
+            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
+            <p>공고가 등록되었어요!</p>
+          </Toast.Title>
+        </Toast.Root>
+        <Toast.Viewport className={copyToastViewport} />
+      </Toast.Provider>
     </FormProvider>
   );
 };

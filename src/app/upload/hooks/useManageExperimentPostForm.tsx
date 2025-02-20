@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { convertLabelToValue, convertToWebpUrl, convertValueToLabel } from '../upload.utils';
+import { convertLabelToValue, convertValueToLabel } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 
@@ -21,6 +22,7 @@ interface useUploadExperimentPostProps {
   addLink: boolean;
   addContact: boolean;
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
+  setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
 }
@@ -31,10 +33,12 @@ const useManageExperimentPostForm = ({
   addLink,
   addContact,
   setOpenAlertModal,
+  setSuccessToast,
   images,
   setImages,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // 기존 공고 데이터 불러오기
   const {
@@ -150,7 +154,7 @@ const useManageExperimentPostForm = ({
       const uploadedFiles = await Promise.all(
         newFiles.map(async (file) => {
           const originalUrl = await uploadImageMutation(file);
-          return convertToWebpUrl(originalUrl);
+          return originalUrl;
         }),
       );
 
@@ -178,9 +182,16 @@ const useManageExperimentPostForm = ({
       await editExperimentPost(
         { postId, data: updatedData },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
+            setSuccessToast(true);
+
+            await Promise.allSettled([
+              queryClient.invalidateQueries({ queryKey: ['experimentPostDetail', postId] }),
+              queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
+            ]);
+
+            await router.push(`/post/${postId}`);
             form.reset();
-            router.push(`/post/${postId}`);
           },
           onError: () => {
             setOpenAlertModal(true);
@@ -190,8 +201,9 @@ const useManageExperimentPostForm = ({
     } else {
       uploadExperimentPost(updatedData, {
         onSuccess: (response) => {
-          form.reset();
+          setSuccessToast(true);
           router.push(`/post/${response.postInfo.experimentPostId}`);
+          form.reset();
         },
         onError: () => {
           setOpenAlertModal(true);
@@ -206,6 +218,7 @@ const useManageExperimentPostForm = ({
     isLoading: isExperimentLoading || isApplyMethodLoading,
     isError: isExperimentError || isApplyMethodError,
     applyMethodData,
+    isAuthor: experimentData?.isAuthor ?? false,
   };
 };
 

@@ -42,6 +42,7 @@ const CheckboxWithIcon = ({
             cursor={disabled ? 'notAllowed' : 'pointer'}
           />
         )}
+
         <p>{label}</p>
       </div>
     </div>

@@ -75,11 +75,12 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
         <div className={postHeaderContainer}>
           <h2>{postDetailData.title}</h2>
           {postDetailData.isAuthor && (
-            <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
               <Link href={`/edit/${postDetailData.experimentPostId}`}>
-                <button className={buttonStyles({ type: 'edit' })}>수정</button>
+                <button className={buttonStyles}>수정</button>
               </Link>
-              <button className={buttonStyles()} onClick={() => setIsDeleteModalOpen(true)}>
+              <div style={{ width: '0.1rem', height: '0.8rem', backgroundColor: colors.line03 }} />
+              <button className={buttonStyles} onClick={() => setIsDeleteModalOpen(true)}>
                 삭제
               </button>
             </div>
@@ -111,7 +112,7 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           duration={1700}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.field09} width={24} height={24} />
+            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
             <p>{toastMessage}</p>
           </Toast.Title>
         </Toast.Root>
