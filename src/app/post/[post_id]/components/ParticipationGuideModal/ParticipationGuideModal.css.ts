@@ -88,8 +88,8 @@ export const warningMessage = style({
 
 export const copyToastLayout = style({
   height: '5.2rem',
-  backgroundColor: colors.field01,
-  color: colors.text06,
+  backgroundColor: colors.fieldToast,
+  color: colors.text01,
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
   borderRadius: '8rem',
   padding: '1.4rem 2.4rem',

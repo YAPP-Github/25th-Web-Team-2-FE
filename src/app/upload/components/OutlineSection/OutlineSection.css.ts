@@ -84,6 +84,8 @@ export const disabledInput = style({
   border: `0.1rem solid ${colors.line01}`,
   backgroundColor: colors.field02,
   color: colors.text02,
+  display: 'flex',
+  alignItems: 'center',
 });
 
 export const isEndDatePastText = style({

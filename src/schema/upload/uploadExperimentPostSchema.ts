@@ -84,13 +84,13 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
       // 링크
       formUrl: addLink
         ? z
-            .string()
+            .string({ message: '' })
             .max(100, '최대 100자 이하로 입력해 주세요')
             .url({ message: '링크를 입력해 주세요' })
         : z.string().nullable(),
       // 연락처
       phoneNum: addContact
-        ? z.string().max(50, '최대 50자 이하로 입력해 주세요')
+        ? z.string({ message: '' }).max(50, '최대 50자 이하로 입력해 주세요')
         : z.string().nullable(),
     }),
     targetGroupInfo: z.object({

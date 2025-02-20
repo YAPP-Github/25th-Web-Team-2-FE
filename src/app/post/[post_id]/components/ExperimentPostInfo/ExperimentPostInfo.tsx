@@ -112,7 +112,7 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           duration={1700}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.field09} width={24} height={24} />
+            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
             <p>{toastMessage}</p>
           </Toast.Title>
         </Toast.Root>

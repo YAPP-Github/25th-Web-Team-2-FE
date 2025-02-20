@@ -225,8 +225,8 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
           duration={3500}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.primaryMint} width={24} height={24} />
-            <p>지원되지 않는 파일 형식입니다. JPG 또는 PNG 파일을 업로드하세요.</p>
+            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
+            <p>지원되지 않는 파일 형식이에요. JPG 또는 PNG를 업로드 해주세요.</p>
           </Toast.Title>
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />

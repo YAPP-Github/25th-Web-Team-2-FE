@@ -125,7 +125,7 @@ const ParticipationGuideModal = ({
 
               {/* 개인정보보호 안내 */}
               <div className={warningMessage}>
-                <Icon icon="Alert" color={colors.textAlert} width={18} height={18} />
+                <Icon icon="AlertOutlined" color={colors.textAlert} width={18} height={18} />
                 개인정보보호에 유의해주세요
               </div>
             </div>
