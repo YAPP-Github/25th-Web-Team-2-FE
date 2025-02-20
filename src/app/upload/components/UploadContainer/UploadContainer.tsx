@@ -1,5 +1,6 @@
 'use client';
 
+import * as Toast from '@radix-ui/react-toast';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
@@ -18,7 +19,14 @@ import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import {
+  copyToastLayout,
+  copyToastTitle,
+  copyToastViewport,
+} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
+import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import { colors } from '@/styles/colors';
 
 const UploadContainer = () => {
   const router = useRouter();
@@ -27,6 +35,7 @@ const UploadContainer = () => {
 
   const [images, setImages] = useState<(File | string)[]>([]);
   const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [successToast, setSuccessToast] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
@@ -36,6 +45,7 @@ const UploadContainer = () => {
     setOpenAlertModal,
     images,
     isEdit: false,
+    setSuccessToast,
   });
 
   // todo middleware 적용 전 임시 redirect
@@ -97,6 +107,22 @@ const UploadContainer = () => {
           setOpenAlertModal(false);
         }}
       />
+
+      {/* 공고 등록 성공 시 successToast */}
+      <Toast.Provider swipeDirection="right">
+        <Toast.Root
+          className={copyToastLayout}
+          open={successToast}
+          onOpenChange={setSuccessToast}
+          duration={800}
+        >
+          <Toast.Title className={copyToastTitle}>
+            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
+            <p>공고가 등록되었어요!</p>
+          </Toast.Title>
+        </Toast.Root>
+        <Toast.Viewport className={copyToastViewport} />
+      </Toast.Provider>
     </FormProvider>
   );
 };
