@@ -123,7 +123,7 @@ const UploadContainer = () => {
           className={copyToastLayout}
           open={successToast}
           onOpenChange={setSuccessToast}
-          duration={600}
+          duration={2000}
         >
           <Toast.Title className={copyToastTitle}>
             <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />

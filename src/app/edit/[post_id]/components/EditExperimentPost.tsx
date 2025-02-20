@@ -85,10 +85,12 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   // todo 로딩 스피너 추가
   if (isLoading) {
-    <>
-      <Spinner />
-      <p className={emptySubTitle}>로딩중..</p>
-    </>;
+    return (
+      <>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중..</p>
+      </>
+    );
   }
 
   const experimentDateChecked =

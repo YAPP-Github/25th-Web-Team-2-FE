@@ -31,6 +31,8 @@ interface DatePickerFormProps {
   disabled?: boolean;
 }
 
+const MAX_DATE_SELECTIONS = 2;
+
 const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
   (
     {
@@ -84,8 +86,9 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
       setSelectedDates(range);
       onDateChange(formattedRange);
 
-      setClickCount((prev) => prev + 1);
-      if (clickCount + 1 === 2) {
+      const newClickCount = clickCount + 1;
+      setClickCount(newClickCount);
+      if (newClickCount >= MAX_DATE_SELECTIONS) {
         setIsOpen(false);
         setClickCount(0);
       }
