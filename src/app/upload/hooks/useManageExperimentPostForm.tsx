@@ -190,7 +190,7 @@ const useManageExperimentPostForm = ({
               queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
             ]);
 
-            router.push(`/post/${postId}`);
+            await router.push(`/post/${postId}`);
             form.reset();
           },
           onError: () => {
