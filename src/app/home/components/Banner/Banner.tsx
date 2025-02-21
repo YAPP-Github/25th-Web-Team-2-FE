@@ -13,7 +13,7 @@ import {
   navigationRight,
 } from './Banner.css';
 
-import BannerImage from '@/assets/images/banner.svg';
+import BannerImage from '@/assets/images/banner.webp';
 import Icon from '@/components/Icon';
 
 const BANNER_LENGTH = 3;
@@ -37,14 +37,39 @@ const Banner = () => {
           <div
             className={carouselContainer}
             style={{
+              width: `${BANNER_LENGTH * 100}%`,
               transform: carouselRef.current
                 ? `translateX(-${(bannerIdx - 1) * carouselRef.current.clientWidth}px)`
                 : 'none',
             }}
           >
-            <Image src={BannerImage} alt="배너1" className={bannerImage} priority />
-            <Image src={BannerImage} alt="배너2" className={bannerImage} priority />
-            <Image src={BannerImage} alt="배너3" className={bannerImage} priority />
+            <Image
+              src={BannerImage}
+              alt="first-banner"
+              className={bannerImage}
+              priority
+              width={1000}
+              height={80}
+              unoptimized
+            />
+            <Image
+              src={BannerImage}
+              alt="second-banner"
+              className={bannerImage}
+              priority
+              width={1000}
+              height={80}
+              unoptimized
+            />
+            <Image
+              src={BannerImage}
+              alt="third-banner"
+              className={bannerImage}
+              priority
+              width={1000}
+              height={80}
+              unoptimized
+            />
           </div>
         </div>
         <button className={navigationLeft} onClick={handleClickPrev}>
