@@ -233,6 +233,7 @@ const OutlineSection = ({
                     rules={{ required: '지역구를 선택해 주세요' }}
                     render={({ fieldState: areaFieldState }) => (
                       <RegionPopover
+                        {...field}
                         regionPopoverProps={{
                           ...regionPopoverProps,
                           error: fieldState.error || areaFieldState.error,
