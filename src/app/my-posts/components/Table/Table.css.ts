@@ -31,16 +31,16 @@ globalStyle('thead tr', {
   height: '3.8rem !important',
 });
 
-globalStyle('tr:hover', {
+globalStyle(`${tableRow}:hover`, {
   backgroundColor: colors.field02,
 });
 
-globalStyle('tr:hover td:first-child', {
+globalStyle(`${tableRow}:hover td:first-child`, {
   borderTopLeftRadius: '1.2rem',
   borderBottomLeftRadius: '1.2rem',
 });
 
-globalStyle('tr:hover td:last-child', {
+globalStyle(`${tableRow}:hover td:last-child`, {
   borderTopRightRadius: '1.2rem',
   borderBottomRightRadius: '1.2rem',
 });

@@ -26,6 +26,12 @@ export const contactButton = style({
   color: colors.text06,
   padding: '0.6rem 1.4rem',
   borderRadius: '1.2rem',
+
+  selectors: {
+    '&:hover': {
+      backgroundColor: colors.field04,
+    },
+  },
 });
 
 export const loginButton = style({
