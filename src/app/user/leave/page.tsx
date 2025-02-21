@@ -158,7 +158,9 @@ const LeavePage = () => {
       </div>
 
       <div className={buttonContainer}>
-        <button className={button}>이전으로</button>
+        <button className={button} onClick={() => router.back()}>
+          이전으로
+        </button>
         <button
           className={leaveButton}
           disabled={!isValidLeave || !isChecked}
