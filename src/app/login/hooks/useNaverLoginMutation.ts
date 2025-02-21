@@ -19,6 +19,7 @@ const useNaverLoginMutation = () => {
       }
 
       sessionStorage.setItem('email', memberInfo.oauthEmail);
+
       router.push('/join');
     },
     onError: () => {

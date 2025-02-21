@@ -14,3 +14,13 @@ export const termContainer = style({
   padding: '1.6rem',
   gap: '1.2rem',
 });
+
+export const termWrapper = style({
+  ...fonts.label.medium.R13,
+  overflowY: 'scroll',
+  maxHeight: 160,
+  padding: '0.8rem 1.6rem',
+  borderRadius: '1.2rem',
+  backgroundColor: colors.field02,
+  color: colors.text05,
+});

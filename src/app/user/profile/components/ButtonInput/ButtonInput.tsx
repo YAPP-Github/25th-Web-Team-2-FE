@@ -23,6 +23,7 @@ interface ButtonInputProps<T extends FieldValues> {
   isEmailDuplicateError: boolean;
   setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
+  tip?: string;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -32,6 +33,7 @@ const ButtonInput = <T extends FieldValues>({
   isLoadingCheck,
   isSuccess,
   toast,
+  tip,
 }: ButtonInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const validateButtonRef = useRef<HTMLButtonElement>(null);
@@ -86,11 +88,11 @@ const ButtonInput = <T extends FieldValues>({
                 )}
               </div>
               {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-              <div className={tipWrapper}>
-                <span>
-                  주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요
-                </span>
-              </div>
+              {tip && (
+                <div className={tipWrapper}>
+                  <span>{tip}</span>
+                </div>
+              )}
             </>
           );
         }}

@@ -25,7 +25,7 @@ interface ExperimentPostCardProps {
 
 const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
   const {
-    postInfo: { experimentPostId, univName, views, title, reward, durationInfo },
+    postInfo: { experimentPostId, place, views, title, reward, durationInfo },
     recruitStatus,
   } = experimentPost;
 
@@ -34,7 +34,7 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
       <Link href={`/post/${experimentPostId}`} key={experimentPostId} className={postCardLayout}>
         <div className={postHeader}>
           <div className={postCardHeader}>
-            <span className={postLocation}>{univName ? univName : '비대면'}</span>
+            <span className={postLocation}>{place ? place : '비대면'}</span>
             <div className={postCardRightHeader}>
               <Icon icon="Eye" width={18} />
               <span className={postViews}>{views}</span>

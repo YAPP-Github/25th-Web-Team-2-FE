@@ -5,11 +5,14 @@ import { useFormContext, useWatch } from 'react-hook-form';
 
 import { nextButton } from './JoinEmailStep.css';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
+import EmailToast from '../../EmailToast/EmailToast';
 import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../JoinInput/JoinInput';
 
+import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
+import ButtonInput from '@/app/user/profile/components/ButtonInput/ButtonInput';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinEmailStepProps {
@@ -20,11 +23,16 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const {
     control,
     trigger,
+    setValue,
     formState: { errors },
   } = useFormContext<ResearcherJoinSchemaType>();
-  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
+  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck({
+    onCheckAdConsent: (checked) => setValue('adConsent', checked),
+  });
+
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
   const univEmail = useWatch({ name: 'univEmail', control });
+  const contactEmail = useWatch({ name: 'contactEmail', control });
 
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
@@ -48,9 +56,24 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
     setIsEmailVerified(true);
   };
 
+  const {
+    refetch,
+    isLoading: isLoadingCheck,
+    isSuccess,
+    isError: isEmailDuplicateError,
+  } = useCheckValidEmailInfoQuery(contactEmail);
+
+  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
+
+  const handleCheckValidEmail = async () => {
+    await refetch();
+    setIsValidToastOpen(true);
+  };
+
   return (
     <section className={joinForm}>
       <div className={joinContentContainer}>
+        {/* 소셜 이메일 */}
         <JoinInput<ResearcherJoinSchemaType>
           name="oauthEmail"
           control={control}
@@ -59,15 +82,31 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           placeholder="이메일 입력"
           disabled
         />
-        <JoinInput<ResearcherJoinSchemaType>
-          name="contactEmail"
+
+        {/* 연락 받을 이메일 */}
+        <ButtonInput<ResearcherJoinSchemaType>
           control={control}
-          label="연락 받을 이메일"
-          placeholder="이메일 입력"
-          required
+          name="contactEmail"
+          onClick={handleCheckValidEmail}
+          isLoadingCheck={isLoadingCheck}
+          isSuccess={isSuccess}
+          isEmailDuplicateError={isEmailDuplicateError}
+          setIsValidToastOpen={setIsValidToastOpen}
           tip="로그인 아이디와 달라도 괜찮아요"
+          toast={
+            <EmailToast
+              title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
+              isToastOpen={isValidToastOpen}
+              setIsToastOpen={setIsValidToastOpen}
+              isError={isEmailDuplicateError}
+            />
+          }
         />
+
+        {/* 학교 메일 인증 */}
         <UnivAuthInput isEmailVerified={isEmailVerified} handleVerifyEmail={handleVerifyEmail} />
+
+        {/* 동의 체크 항목 */}
         <JoinCheckboxContainer
           serviceAgreeCheck={serviceAgreeCheck}
           handleAllCheck={handleAllCheck}

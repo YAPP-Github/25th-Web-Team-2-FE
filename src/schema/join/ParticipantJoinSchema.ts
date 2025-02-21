@@ -76,6 +76,12 @@ const ParticipantJoinSchema = () => {
 
     // 선호 실험 진행 방식. 선택. 대면/비대면/전체
     matchType: z.union([z.literal('OFFLINE'), z.literal('ONLINE'), z.literal('ALL')]).optional(),
+
+    // 이메일 수신 동의 여부.
+    adConsent: z.boolean(),
+
+    // 매칭 이메일 수신 동의 여부.
+    matchConsent: z.boolean(),
   });
 };
 

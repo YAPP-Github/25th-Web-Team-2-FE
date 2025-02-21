@@ -36,6 +36,7 @@ export interface UseQueryExperimentDetailsAPIResponse {
   title: string;
   uploadDate: string;
   uploaderName: string;
+  isUploaderActive: boolean;
   views: number;
   recruitStatus: boolean;
   summary: Summary;

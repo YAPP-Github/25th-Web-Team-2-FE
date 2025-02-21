@@ -1,4 +1,5 @@
 import { API } from './config';
+import { ValidateContactEmailParams } from './user';
 
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
@@ -116,6 +117,12 @@ export const getParticipantInfo = async () => {
 
 export const updateAccessToken = async (refreshToken: string) => {
   const res = await API.post<LoginResponse>(API_URL.refresh, { refreshToken });
+
+  return res.data;
+};
+
+export const validateContactEmailInfo = async ({ contactEmail }: ValidateContactEmailParams) => {
+  const res = await API.get(API_URL.validateContactEmailInfo(contactEmail));
 
   return res.data;
 };

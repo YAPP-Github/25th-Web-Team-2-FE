@@ -55,6 +55,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
             isSuccess={isSuccess}
             isEmailDuplicateError={isEmailDuplicateError}
             setIsValidToastOpen={setIsValidToastOpen}
+            tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
             toast={
               <EmailToast
                 title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
