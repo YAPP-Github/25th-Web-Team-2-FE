@@ -41,7 +41,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const [openUpdateAlertModal, setOenUpdateAlertModal] = useState<boolean>(false);
   const [successToast, setSuccessToast] = useState(false);
 
-  const { form, handleSubmit, isLoading, applyMethodData, isError, isAuthor } =
+  const { form, handleSubmit, isLoading, applyMethodData, isError, isAuthor, isRecruitStatus } =
     useManageExperimentPostForm({
       isEdit,
       postId: params.post_id,
@@ -110,6 +110,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
           <OutlineSection
             experimentDateChecked={experimentDateChecked}
             durationChecked={durationChecked}
+            isRecruitStatus={isRecruitStatus}
           />
           <ApplyMethodSection
             addLink={addLink}

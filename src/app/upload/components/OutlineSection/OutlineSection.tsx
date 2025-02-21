@@ -32,11 +32,13 @@ import { MatchType } from '@/types/uploadExperimentPost';
 interface OutlineSectionProps {
   experimentDateChecked?: boolean;
   durationChecked?: boolean;
+  isRecruitStatus?: boolean;
 }
 
 const OutlineSection = ({
   experimentDateChecked = false,
   durationChecked = false,
+  isRecruitStatus = true,
 }: OutlineSectionProps) => {
   const { control, setValue } = useFormContext();
 
@@ -126,20 +128,24 @@ const OutlineSection = ({
                 error={fieldState.error}
                 field={field}
                 initialDates={defaultDateRange}
-                disabled={isEndDatePast}
+                disabled={isEndDatePast || !isRecruitStatus}
               />
             )}
           />
 
           {/* 본문 참고 체크박스 */}
-          {isEndDatePast ? (
+          {!isRecruitStatus && !isEndDatePast ? (
+            <p className={isEndDatePastText}>모집 완료된 공고는 일시를 변경할 수 없어요</p>
+          ) : isEndDatePast ? (
             <p className={isEndDatePastText}>실험 종료일이 지났다면 일시를 변경할 수 없어요</p>
           ) : (
-            <CheckboxWithIcon
-              checked={isExperimentDateChecked}
-              onChange={handleExperimentDateCheckboxChange}
-              label="본문 참고"
-            />
+            <div style={{ marginTop: '0.4rem' }}>
+              <CheckboxWithIcon
+                checked={isExperimentDateChecked}
+                onChange={handleExperimentDateCheckboxChange}
+                label="본문 참고"
+              />
+            </div>
           )}
         </div>
 
@@ -300,11 +306,13 @@ const OutlineSection = ({
                 />
               </div>
               {/* 본문 참고 체크박스 */}
-              <CheckboxWithIcon
-                checked={isDurationChecked}
-                onChange={handleDurationCheckboxChange}
-                label="본문 참고"
-              />
+              <div style={{ marginTop: '0.4rem' }}>
+                <CheckboxWithIcon
+                  checked={isDurationChecked}
+                  onChange={handleDurationCheckboxChange}
+                  label="본문 참고"
+                />
+              </div>
             </>
           </div>
         </div>

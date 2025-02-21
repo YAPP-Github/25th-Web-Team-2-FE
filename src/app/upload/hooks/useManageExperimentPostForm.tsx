@@ -219,6 +219,7 @@ const useManageExperimentPostForm = ({
     isError: isExperimentError || isApplyMethodError,
     applyMethodData,
     isAuthor: experimentData?.isAuthor ?? false,
+    isRecruitStatus: experimentData?.recruitStatus ?? true,
   };
 };
 
