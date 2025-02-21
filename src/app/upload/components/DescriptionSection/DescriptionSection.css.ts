@@ -109,6 +109,12 @@ export const addImageContainer = recipe({
         backgroundColor: colors.field04,
         color: colors.text04,
         cursor: 'pointer',
+
+        selectors: {
+          '&:hover': {
+            backgroundColor: colors.field05,
+          },
+        },
       },
     },
   },
