@@ -17,10 +17,11 @@ const JoinCheckboxContainer = ({
 }: JoinCheckboxContainerProps) => {
   const { control, setValue } = useFormContext();
   const adConsent = useWatch({ name: 'adConsent', control });
+  const matchConsent = useWatch({ name: 'matchConsent', control });
 
-  const { isTermOfService, isPrivacy, isRecommend } = serviceAgreeCheck;
+  const { isTermOfService, isPrivacy } = serviceAgreeCheck;
 
-  const isAllCheck = isTermOfService && isPrivacy && adConsent && (isRecommend ?? true);
+  const isAllCheck = isTermOfService && isPrivacy && adConsent && (matchConsent ?? true);
 
   return (
     <div className={termContainer}>
@@ -64,12 +65,19 @@ const JoinCheckboxContainer = ({
       />
 
       {/* 실험 추천 이메일 수신 동의 */}
-      {isRecommend !== undefined && (
-        <JoinCheckbox
-          label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
-          isChecked={isRecommend}
-          onChange={(e) => handleChange(e, 'isRecommend')}
-          isAlert={true}
+      {matchConsent !== undefined && (
+        <Controller
+          name="matchConsent"
+          control={control}
+          render={({ field }) => {
+            return (
+              <JoinCheckbox
+                label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
+                isChecked={field.value}
+                onChange={() => setValue('matchConsent', !field.value)}
+              />
+            );
+          }}
         />
       )}
     </div>

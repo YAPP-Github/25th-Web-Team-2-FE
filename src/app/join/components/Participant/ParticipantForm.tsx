@@ -35,6 +35,8 @@ const ParticipantForm = () => {
         region: '',
         area: '',
       },
+      adConsent: false,
+      matchConsent: false,
     },
   });
 
