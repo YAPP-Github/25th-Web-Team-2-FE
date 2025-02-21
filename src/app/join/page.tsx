@@ -41,7 +41,7 @@ export default function JoinPage() {
   return (
     <section className={joinLayout}>
       <Link href="/" aria-label="홈 화면으로 이동">
-        <Image src={Logo} alt="로고" width={80} height={28} />
+        <Image src={Logo} alt="로고" />
       </Link>
       <div className={contentContainer}>
         <div className={titleContainer}>
