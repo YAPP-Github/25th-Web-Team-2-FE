@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import { Controller } from 'react-hook-form';
 
 import {
   leaveButton,
@@ -45,19 +46,6 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
   const handleCheckValidEmail = async () => {
     await refetch();
     setIsValidToastOpen(true);
-  };
-
-  // TODO: API 수정 시 체크 상태 form으로 관리
-  const [serviceAgreeCheck, setServiceAgreeCheck] = useState({
-    isAdvertise: false,
-    isRecommend: false,
-  });
-
-  const handleChangeCheck = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
-    setServiceAgreeCheck((prev) => ({
-      ...prev,
-      [name]: e.target.checked,
-    }));
   };
 
   return (
@@ -132,19 +120,42 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
           />
 
           <div className={termContainer}>
-            <JoinCheckbox
-              label="[선택] 광고성 정보 이메일/SMS 수신 동의"
-              isChecked={serviceAgreeCheck.isAdvertise}
-              onChange={(e) => handleChangeCheck(e, 'isAdvertise')}
-              isArrow={false}
-              emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+            {/* 광고성 정보 이메일/SMS 수신 동의 */}
+            <Controller
+              name="adConsent"
+              control={form.control}
+              render={({ field }) => {
+                return (
+                  <div className={termContainer}>
+                    <JoinCheckbox
+                      label="[선택] 광고성 정보 이메일/SMS 수신 동의"
+                      isChecked={field.value}
+                      onChange={() => form.setValue('adConsent', !field.value)}
+                      isArrow={false}
+                      emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                    />
+                  </div>
+                );
+              }}
             />
-            <JoinCheckbox
-              label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
-              isChecked={serviceAgreeCheck.isRecommend}
-              onChange={(e) => handleChangeCheck(e, 'isRecommend')}
-              isArrow={false}
-              emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+
+            {/* 광고성 정보 이메일/SMS 수신 동의 */}
+            <Controller
+              name="matchConsent"
+              control={form.control}
+              render={({ field }) => {
+                return (
+                  <div className={termContainer}>
+                    <JoinCheckbox
+                      label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
+                      isChecked={field.value}
+                      onChange={() => form.setValue('matchConsent', !field.value)}
+                      isArrow={false}
+                      emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                    />
+                  </div>
+                );
+              }}
             />
           </div>
         </section>

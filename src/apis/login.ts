@@ -44,6 +44,8 @@ export interface ParticipantResponse {
     area: string;
   };
   matchType: 'OFFLINE' | 'ONLINE' | 'ALL';
+  adConsent: boolean;
+  matchConsent: boolean;
 }
 
 export interface ResearcherResponse {
@@ -52,6 +54,7 @@ export interface ResearcherResponse {
   univName: string;
   major: string;
   labInfo: string;
+  adConsent: boolean;
 }
 
 export interface NaverLoginParams {

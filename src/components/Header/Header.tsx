@@ -3,19 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {
-  buttonContainer,
-  buttonWrapper,
-  contactButton,
-  headerLayout,
-  image,
-  loginButton,
-  myPostsButton,
-} from './Header.css';
+import { buttonContainer, contactButton, headerLayout, image, loginButton } from './Header.css';
+import Menu from './Menu';
 import Logo from '../../assets/images/logo.svg';
-import Icon from '../Icon';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { isResearcherInfo } from '@/utils/typeGuard';
 
 const Header = () => {
   const { userInfo } = useUserInfo();
@@ -26,24 +19,14 @@ const Header = () => {
         <Image src={Logo} alt="로고" className={image} width={100.5} height={30} />
       </Link>
       <div className={buttonContainer}>
-        {userInfo?.memberInfo.role === 'RESEARCHER' && (
-          <Link href="/upload">
-            <button className={contactButton}>실험 공고 등록</button>
-          </Link>
-        )}
-
         {userInfo ? (
           <>
-            {userInfo?.memberInfo.role === 'RESEARCHER' && (
-              <Link href="/my-posts">
-                <button className={myPostsButton}>내가 쓴 글</button>
+            {isResearcherInfo(userInfo) && (
+              <Link href="/upload">
+                <button className={contactButton}>실험 공고 등록</button>
               </Link>
             )}
-
-            <div className={buttonWrapper}>
-              <button>{userInfo.memberInfo.name}</button>
-              <Icon icon="TriangleArrow" width={20} height={20} rotate={180} />
-            </div>
+            <Menu userInfo={userInfo} />
           </>
         ) : (
           <Link href="/login" className={loginButton}>

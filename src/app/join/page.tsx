@@ -22,7 +22,7 @@ import { ROLE } from '@/constants/config';
 import useSessionStorage from '@/hooks/useSessionStorage';
 
 export default function JoinPage() {
-  const role = useSessionStorage('role');
+  const { value: role } = useSessionStorage('role');
   const { step } = useFunnel(['email', 'info', 'success'] as const);
 
   // TODO: 추후 스켈레톤 처리

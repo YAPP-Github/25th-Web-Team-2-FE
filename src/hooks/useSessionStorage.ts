@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
-const useSessionStorage = (key: string, defaultValue: string = '') => {
+const useSessionStorage = (key: string = '', defaultValue: string = '') => {
   const [storedValue, setStoredValue] = useState(defaultValue);
+
+  const clear = () => {
+    sessionStorage.clear();
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -10,7 +14,7 @@ const useSessionStorage = (key: string, defaultValue: string = '') => {
     }
   }, [key, defaultValue]);
 
-  return storedValue;
+  return { value: storedValue, clear };
 };
 
 export default useSessionStorage;

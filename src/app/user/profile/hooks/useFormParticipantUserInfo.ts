@@ -15,7 +15,14 @@ interface UseFormParticipantUserInfoProps {
 const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProps) => {
   const { mutate: updateParticipantInfo, isPending, isError } = useUpdateParticipantInfoMutation();
 
-  const { memberInfo, basicAddressInfo, additionalAddressInfo, matchType } = userInfo;
+  const {
+    memberInfo,
+    basicAddressInfo,
+    additionalAddressInfo,
+    matchType,
+    adConsent,
+    matchConsent,
+  } = userInfo;
 
   const form = useForm<ParticipantUpdateSchemaType>({
     resolver: zodResolver(ParticipantUpdateSchema()),
@@ -27,6 +34,8 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
       basicAddressInfo: basicAddressInfo,
       additionalAddressInfo: additionalAddressInfo,
       matchType: matchType,
+      adConsent: adConsent ?? false,
+      matchConsent: matchConsent ?? false,
     },
   });
 

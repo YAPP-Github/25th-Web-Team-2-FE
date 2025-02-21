@@ -15,7 +15,7 @@ interface UseFormResearcherUserInfoProps {
 const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps) => {
   const { mutate: updateResearcherInfo, isPending, isError } = useUpdateResearcherInfoMutation();
 
-  const { memberInfo, univName, major, labInfo } = userInfo;
+  const { memberInfo, univName, major, labInfo, adConsent } = userInfo;
 
   const form = useForm<ResearcherUpdateSchemaType>({
     resolver: zodResolver(ResearcherUpdateSchema()),
@@ -27,6 +27,7 @@ const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps)
       univName: univName,
       major: major,
       labInfo: labInfo,
+      adConsent: adConsent ?? false,
     },
   });
 
