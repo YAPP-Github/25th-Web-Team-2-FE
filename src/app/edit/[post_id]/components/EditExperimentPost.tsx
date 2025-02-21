@@ -156,7 +156,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
           className={copyToastLayout}
           open={successToast}
           onOpenChange={setSuccessToast}
-          duration={800}
+          duration={1000}
         >
           <Toast.Title className={copyToastTitle}>
             <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />

@@ -183,14 +183,15 @@ const useManageExperimentPostForm = ({
         { postId, data: updatedData },
         {
           onSuccess: async () => {
-            setSuccessToast(true);
-
             await Promise.allSettled([
               queryClient.invalidateQueries({ queryKey: ['experimentPostDetail', postId] }),
               queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
             ]);
 
-            await router.push(`/post/${postId}`);
+            setSuccessToast(true);
+            setTimeout(() => {
+              router.push(`/post/${postId}`);
+            }, 1000);
             form.reset();
           },
           onError: () => {
@@ -202,7 +203,9 @@ const useManageExperimentPostForm = ({
       uploadExperimentPost(updatedData, {
         onSuccess: (response) => {
           setSuccessToast(true);
-          router.push(`/post/${response.postInfo.experimentPostId}`);
+          setTimeout(() => {
+            router.push(`/post/${response.postInfo.experimentPostId}`);
+          }, 1000);
           form.reset();
         },
         onError: () => {
