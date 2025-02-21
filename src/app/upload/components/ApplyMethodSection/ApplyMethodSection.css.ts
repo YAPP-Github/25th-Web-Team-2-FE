@@ -78,6 +78,8 @@ export const alarmAgreeContainer = style({
   alignItems: 'center',
   cursor: 'pointer',
   transition: 'background-color 0.2s ease-in-out',
+
+  marginTop: '2.3rem',
 });
 
 export const uploadFormSectionTitle = style({

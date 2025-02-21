@@ -4,7 +4,6 @@ import { recipe } from '@vanilla-extract/recipes';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-/** ✅ 날짜 선택 필드 컨테이너 */
 export const datePickerFieldContainer = style({
   position: 'relative',
   outline: 'none',
@@ -15,7 +14,6 @@ export const datePickerFieldContainer = style({
   },
 });
 
-/** ✅ 날짜 선택 필드 */
 export const datePickerField = recipe({
   base: {
     width: '100%',
@@ -80,12 +78,10 @@ export const placeholderText = recipe({
   },
 });
 
-/** ✅ 아이콘 스타일 */
 export const iconStyle = style({
   marginLeft: '1rem',
 });
 
-/** ✅ Popover 레이아웃 */
 export const popoverLayout = style({
   backgroundColor: colors.field01,
   border: `0.1rem solid ${colors.line01}`,
@@ -96,12 +92,10 @@ export const popoverLayout = style({
   boxShadow: '0rem 0.4rem 1rem rgba(0, 0, 0, 0.1)',
 });
 
-/** ✅ globalStyle을 위한 기본 클래스 */
 export const datepickerCustomClass = style({});
 
-/** ✅ react-day-picker 전역 스타일 */
 globalStyle(`.${datepickerCustomClass} .rdp-months`, {
-  width: '40rem',
+  // width: '40rem',
   position: 'relative',
   paddingTop: '1.2rem',
 });
@@ -133,8 +127,6 @@ globalStyle(`.${datepickerCustomClass} .rdp-month_caption`, {
 });
 
 globalStyle(`.${datepickerCustomClass} .rdp-dropdowns`, {
-  marginRight: '3rem',
-  marginLeft: '3rem',
   width: '21.6rem',
   display: 'flex',
   flexFlow: 'row-reverse nowrap',

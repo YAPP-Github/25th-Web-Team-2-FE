@@ -122,7 +122,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                 {...field}
                 type="text"
                 id="title"
-                placeholder="실험 제목을 입력해 주세요"
+                placeholder="제목을 입력해 주세요"
                 field={field}
                 fieldState={fieldState}
                 size="full"
@@ -192,6 +192,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                   width={16}
                   height={16}
                   color={!!(images.length >= 3) ? colors.icon02 : colors.icon03}
+                  cursor="pointer"
                 />
                 <p>사진 추가</p>
               </label>

@@ -14,7 +14,7 @@ export const selectTrigger = styleVariants({
     ...fonts.label.large.R14,
     width: '100%',
     height: '4.8rem',
-    padding: '0.8rem 1.2rem',
+    padding: '0.8rem 1.6rem',
     border: `0.1rem solid ${colors.line01}`,
     borderRadius: '1.2rem',
     color: colors.text06,

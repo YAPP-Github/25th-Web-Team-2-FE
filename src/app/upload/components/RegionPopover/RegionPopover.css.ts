@@ -9,6 +9,7 @@ export const regionPopoverContainer = style({
   borderRadius: '1.2rem',
   outline: 'none',
   border: `0.1rem solid ${colors.line01}`,
+  cursor: 'pointer',
   selectors: {
     '&[data-state="open"]': {
       border: `0.1rem solid ${colors.primaryMint}`,
@@ -27,7 +28,7 @@ export const uploadInputField = recipe({
     width: '100%',
     maxWidth: '45.2rem',
     height: '4.8rem',
-    padding: '10px',
+    padding: '0.8rem 1.6rem',
     borderRadius: '1.2rem',
     outline: 'none',
     '::placeholder': {
