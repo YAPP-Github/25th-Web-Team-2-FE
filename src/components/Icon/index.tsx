@@ -1,14 +1,22 @@
-import { CSSProperties } from 'react';
+'use client';
 
-import { containerStyle } from './icon.styled';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+
+import { iconContainer, dynamicVars, iconDynamicStyle } from './icon.css';
 import * as icons from './icons';
 
-interface IconProps extends React.SVGProps<SVGSVGElement> {
+export interface CustomSVGProps extends React.SVGProps<SVGSVGElement> {
+  subcolor?: string;
+}
+
+type Cursor = 'initial' | 'default' | 'pointer' | 'notAllowed' | undefined;
+
+interface IconProps extends CustomSVGProps {
   icon: keyof typeof icons;
   width?: number;
   height?: number;
-  rotate?: number;
-  cursor?: CSSProperties['cursor'];
+  rotate?: 0 | -90 | 90 | -180 | 180 | 270;
+  cursor?: Cursor;
   color?: string;
 }
 
@@ -17,21 +25,30 @@ export default function Icon({
   cursor = 'initial',
   width = 24,
   height = 24,
-  rotate,
+  rotate = 0,
   className,
   color,
+  subcolor,
   ...props
 }: IconProps) {
-  const IconComponent = icons[icon as keyof typeof icons];
+  const IconComponent = icons[icon];
 
   return (
-    <div css={containerStyle({ width, height, rotate, cursor })}>
+    <div
+      className={iconContainer({
+        rotate,
+        cursor,
+      })}
+    >
       <IconComponent
         {...props}
-        className={`icon ${className || ''}`.trim()}
-        width={width}
-        height={height}
+        className={`${iconDynamicStyle} ${className || ''}`.trim()}
+        style={assignInlineVars({
+          [dynamicVars.width]: `${width}px`,
+          [dynamicVars.height]: `${height}px`,
+        })}
         color={color}
+        subcolor={subcolor}
       />
     </div>
   );

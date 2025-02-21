@@ -1,18 +1,13 @@
-'use client';
+import Banner from './home/components/Banner/Banner';
+import ExperimentPostContainer from './home/components/ExperimentPostContainer/ExperimentPostContainer';
 
-import { css } from '@emotion/react';
-
-import theme from '@/styles/theme';
+import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 
 export default function Home() {
   return (
-    <div>
-      <span css={testStyle}>test</span>
-    </div>
+    <DefaultLayout>
+      <Banner />
+      <ExperimentPostContainer />
+    </DefaultLayout>
   );
 }
-
-const testStyle = css`
-  ${theme.fonts.body.normal.SB16}
-  color: ${theme.colors.primaryMint};
-`;

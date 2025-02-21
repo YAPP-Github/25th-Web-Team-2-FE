@@ -1,8 +1,23 @@
 /** @type {import('next').NextConfig} */
+
+import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
+
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
     emotion: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'dobby-dev-bucket.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'dobby-prod-bucket.s3.ap-northeast-2.amazonaws.com',
+      },
+    ],
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
@@ -22,6 +37,17 @@ const nextConfig = {
     }
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/error',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
 };
 
-export default nextConfig;
+const withVanillaExtract = createVanillaExtractPlugin();
+
+export default withVanillaExtract(nextConfig);

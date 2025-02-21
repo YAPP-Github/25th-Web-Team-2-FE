@@ -1,0 +1,91 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-31",
+      "reward": "30분당 15,000원",
+      "views": 1000
+    },
+    {
+      "id": 2,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": true,
+      "title": "명륜 - 스크린 인터랙션 참여자 (한국 국적 학부생 혹은 대학원생 대상)",
+      "testDate": "2024-12-10",
+      "reward": "30분당 20,000원",
+      "views": 1000
+    },
+
+    {
+      "id": 3,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    },
+
+    {
+      "id": 4,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    },
+
+    {
+      "id": 5,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    },
+    {
+      "id": 6,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    },
+
+    {
+      "id": 7,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    },
+
+    {
+      "id": 8,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    },
+
+    {
+      "id": 9,
+      "place": "한국외국어대학교 자연과학캠퍼스",
+      "isContacted": false,
+      "title": "(율전) 1월 fMRI-EEG 실험",
+      "testDate": "2024-12-20",
+      "reward": "30분당 30,000원",
+      "views": 1000
+    }
+  ]
+}

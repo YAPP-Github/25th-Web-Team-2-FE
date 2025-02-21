@@ -1,0 +1,14 @@
+export const QUERY_KEY = {
+  post: 'experiment-posts',
+  postRegion: 'postRegion',
+  postArea: 'postArea',
+  updateRecruitStatus: 'updateRecruitStatus',
+  deletePost: 'deletePost',
+  experimentPostDetail: 'experimentPostDetail',
+  participantInfo: 'participantInfo',
+  researcherInfo: 'researcherInfo',
+  checkValidEmail: 'checkValidEmail',
+  editPost: 'editPost',
+  originExperimentPost: 'originExperimentPost',
+  applyMethod: 'applyMethod',
+};

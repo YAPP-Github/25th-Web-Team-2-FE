@@ -1,0 +1,58 @@
+import { SVGProps } from 'react';
+
+import theme from '@/styles/theme';
+
+function ToggleOn(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width="42"
+      height="38"
+      viewBox="0 -4 42 38"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="토글 스위치 켜짐"
+      transform="translate(0,3)"
+    >
+      <rect y="6" width="32" height="18" rx="9" fill={props.color || theme.colors.primaryMint} />
+      <g filter="url(#filter0_d_3107_24227)">
+        <circle cx="23" cy="15" r="7" fill="white" />
+      </g>
+      <defs>
+        <filter
+          id="filter0_d_3107_24227"
+          x="4"
+          y="0"
+          width="38"
+          height="38"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="4" />
+          <feGaussianBlur stdDeviation="6" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.0627451 0 0 0 0 0.0666667 0 0 0 0 0.0705882 0 0 0 0.1 0"
+          />
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3107_24227" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_3107_24227"
+            result="shape"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+export default ToggleOn;
