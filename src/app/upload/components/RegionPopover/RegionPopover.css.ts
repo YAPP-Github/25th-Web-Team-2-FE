@@ -27,7 +27,7 @@ export const uploadInputField = recipe({
     width: '100%',
     maxWidth: '45.2rem',
     height: '4.8rem',
-    padding: '10px',
+    padding: '0.8rem 1.6rem',
     borderRadius: '1.2rem',
     outline: 'none',
     '::placeholder': {
