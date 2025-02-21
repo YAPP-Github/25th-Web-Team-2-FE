@@ -22,14 +22,14 @@ export const buttonContainer = style({
 
 export const contactButton = style({
   ...fonts.label.large.SB14,
-  backgroundColor: colors.field03,
+  backgroundColor: colors.field04,
   color: colors.text06,
   padding: '0.6rem 1.4rem',
   borderRadius: '1.2rem',
 
   selectors: {
     '&:hover': {
-      backgroundColor: colors.field04,
+      backgroundColor: colors.field05,
     },
   },
 });
