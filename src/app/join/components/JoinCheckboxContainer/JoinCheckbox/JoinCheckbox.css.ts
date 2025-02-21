@@ -7,6 +7,7 @@ export const checkboxLayout = style({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  width: 'inherit',
 });
 
 export const checkboxWrapper = style({
