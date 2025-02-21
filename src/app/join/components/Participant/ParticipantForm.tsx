@@ -5,7 +5,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import useFunnel from '../../hooks/useFunnel';
 import useParticipantJoinMutation from '../../hooks/useParticipantJoinMutation';
 import { STEP } from '../../JoinPage.constants';
-import { getProvider } from '../../JoinPage.utils';
 import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
 import { Participant } from '.';
@@ -17,6 +16,7 @@ import ParticipantJoinSchema, {
 
 const ParticipantForm = () => {
   const { value: oauthEmail } = useSessionStorage('email');
+  const { value: provider } = useSessionStorage('provider');
 
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 
@@ -60,11 +60,11 @@ const ParticipantForm = () => {
   };
 
   useEffect(() => {
-    if (oauthEmail) {
+    if (oauthEmail && provider) {
       participantMethods.setValue('oauthEmail', oauthEmail);
-      participantMethods.setValue('provider', getProvider(oauthEmail));
+      participantMethods.setValue('provider', provider as 'GOOGLE' | 'NAVER');
     }
-  }, [oauthEmail, participantMethods]);
+  }, [oauthEmail, participantMethods, provider]);
 
   return (
     <FormProvider {...participantMethods}>
