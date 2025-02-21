@@ -24,6 +24,11 @@ const roleMapper = {
 
 type Role = '연구자' | '참여자';
 
+const PROVIDER = {
+  google: 'GOOGLE',
+  naver: 'NAVER',
+};
+
 interface LoginCardProps {
   role: Role;
   description: string[];
@@ -33,12 +38,12 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
   const router = useRouter();
 
   const goToLoginGoogle = () => {
-    const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${roleMapper[role]}`;
+    const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${roleMapper[role]}|${PROVIDER.google}`;
     router.push(googleOauthURL);
   };
 
   const goToLoginNaver = () => {
-    const naverOauthURL = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${roleMapper[role]}`;
+    const naverOauthURL = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${roleMapper[role]}|${PROVIDER.naver}`;
     router.push(naverOauthURL);
   };
 

@@ -12,6 +12,7 @@ export const bannerWrapper = style({
   height: '15vh',
   display: 'flex',
   alignItems: 'center',
+  width: '100%',
 });
 
 export const navigationLeft = style({
@@ -22,11 +23,13 @@ export const navigationLeft = style({
 export const bannerCarousel = style({
   position: 'relative',
   overflow: 'hidden',
+  width: '100%',
 });
 
 export const carouselContainer = style({
   display: 'flex',
   transition: 'all 1s',
+  width: '100%',
 });
 
 export const navigationRight = style({

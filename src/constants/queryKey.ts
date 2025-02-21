@@ -8,6 +8,7 @@ export const QUERY_KEY = {
   participantInfo: 'participantInfo',
   researcherInfo: 'researcherInfo',
   checkValidEmail: 'checkValidEmail',
+  checkValidEmailInfo: 'checkValidEmailInfo',
   editPost: 'editPost',
   originExperimentPost: 'originExperimentPost',
   applyMethod: 'applyMethod',

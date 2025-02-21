@@ -5,7 +5,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import useFunnel from '../../hooks/useFunnel';
 import useResearcherJoinMutation from '../../hooks/useResearcherJoinMutation';
 import { STEP } from '../../JoinPage.constants';
-import { getProvider } from '../../JoinPage.utils';
 import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
 import { Researcher } from '.';
@@ -15,6 +14,7 @@ import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/Re
 
 const ResearcherForm = () => {
   const { value: oauthEmail } = useSessionStorage('email');
+  const { value: provider } = useSessionStorage('provider');
 
   const { mutate: joinResearcher } = useResearcherJoinMutation();
 
@@ -31,6 +31,7 @@ const ResearcherForm = () => {
       name: '',
       univName: '',
       major: '',
+      adConsent: false,
     },
   });
 
@@ -40,11 +41,11 @@ const ResearcherForm = () => {
   };
 
   useEffect(() => {
-    if (oauthEmail) {
+    if (oauthEmail && provider) {
       researcherMethods.setValue('oauthEmail', oauthEmail);
-      researcherMethods.setValue('provider', getProvider(oauthEmail));
+      researcherMethods.setValue('provider', provider as 'GOOGLE' | 'NAVER');
     }
-  }, [oauthEmail, researcherMethods]);
+  }, [oauthEmail, researcherMethods, provider]);
 
   return (
     <FormProvider {...researcherMethods}>
