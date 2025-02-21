@@ -5,7 +5,11 @@ import { ServiceAgreeCheck } from '../JoinPage.types';
 import { ROLE } from '@/constants/config';
 import useSessionStorage from '@/hooks/useSessionStorage';
 
-const useServiceAgreeCheck = () => {
+interface UseServiceAgreeCheckProps {
+  onCheckAdConsent: (checked: boolean) => void;
+}
+
+const useServiceAgreeCheck = ({ onCheckAdConsent }: UseServiceAgreeCheckProps) => {
   const { value: role } = useSessionStorage('role');
 
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState<ServiceAgreeCheck>({
@@ -16,6 +20,7 @@ const useServiceAgreeCheck = () => {
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const toggleChecked = e.target.checked;
+    onCheckAdConsent(toggleChecked);
 
     setServiceAgreeCheck((prev) => ({
       ...prev,

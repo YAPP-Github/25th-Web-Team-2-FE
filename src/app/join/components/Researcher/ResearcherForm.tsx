@@ -31,6 +31,7 @@ const ResearcherForm = () => {
       name: '',
       univName: '',
       major: '',
+      adConsent: false,
     },
   });
 

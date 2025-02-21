@@ -23,9 +23,13 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const {
     control,
     trigger,
+    setValue,
     formState: { errors },
   } = useFormContext<ResearcherJoinSchemaType>();
-  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck();
+  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck({
+    onCheckAdConsent: (checked) => setValue('adConsent', checked),
+  });
+
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
   const univEmail = useWatch({ name: 'univEmail', control });
   const contactEmail = useWatch({ name: 'contactEmail', control });
