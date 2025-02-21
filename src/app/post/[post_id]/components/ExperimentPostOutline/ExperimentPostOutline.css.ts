@@ -5,8 +5,7 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const postOutlineLayout = style({
-  minWidth: '34rem',
-  maxWidth: '44rem',
+  minWidth: '36rem',
   height: 'min-content',
   maxHeight: '60rem',
   borderRadius: '1.2rem',
@@ -17,6 +16,8 @@ export const postOutlineLayout = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+  paddingLeft: '3.2rem',
+  paddingRight: '1.6rem',
 });
 
 export const postOutlineTitle = style({
@@ -57,6 +58,7 @@ export const scrollableContent = style({
   position: 'relative',
   overflowY: 'auto',
   overflowX: 'hidden',
+  paddingRight: '1.6rem',
 });
 
 export const divider = style({
@@ -71,7 +73,6 @@ export const otherConditionWrapper = style({
   color: colors.text05,
   backgroundColor: colors.field02,
   borderRadius: '0.8rem',
-  width: '28rem',
   padding: '1.2rem 1.4rem',
   display: 'flex',
   justifyContent: 'left',
@@ -96,18 +97,16 @@ export const participationCount = style({
 });
 
 export const buttonContainer = style({
-  width: '34rem',
   height: '8.8rem',
   position: 'sticky',
   bottom: 0,
-  padding: '0 3rem',
-  marginLeft: '-3rem',
   backgroundColor: colors.field01,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   borderBottomLeftRadius: '1.2rem',
   borderBottomRightRadius: '1.2rem',
+  marginRight: '1.6rem',
 });
 
 export const checkButton = recipe({
