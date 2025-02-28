@@ -91,24 +91,36 @@ const Banner = () => {
               alt="참여자 언제 다 모을지 고민이라면 공고를 올리고 가까운 참여자에게 실험을 알려보세요"
               className={bannerImage}
               priority
+              width={1000}
+              height={80}
+              style={{ width: 'auto', height: 'auto' }}
             />
             <Image
               src={WebBannerSecond}
               alt="공강 시간에 부담 없이 용돈 버는 방법 학교 근처 실험에 참여하고 보상을 받아보세요"
               className={bannerImage}
               priority
+              width={1000}
+              height={80}
+              style={{ width: 'auto', height: 'auto' }}
             />
             <Image
               src={WebBanner}
               alt="참여자 언제 다 모을지 고민이라면 공고를 올리고 가까운 참여자에게 실험을 알려보세요"
               className={bannerImage}
               priority
+              width={1000}
+              height={80}
+              style={{ width: 'auto', height: 'auto' }}
             />
             <Image
               src={WebBannerSecond}
               alt="공강 시간에 부담 없이 용돈 버는 방법 학교 근처 실험에 참여하고 보상을 받아보세요"
               className={bannerImage}
               priority
+              width={1000}
+              height={80}
+              style={{ width: 'auto', height: 'auto' }}
             />
           </div>
         </div>
