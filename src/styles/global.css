@@ -1,0 +1,28 @@
+:root {
+  --font-family: 'Pretendard', 'Inter', sans-serif;
+  --primary-mint: #26b5be;
+  --primary-tinted: #dff9fa;
+}
+
+html {
+  background-color: #ffffff;
+  color: #3c3f44;
+  line-height: 1.4;
+  font-size: 62.5%; /* 1rem = 10px */
+
+  .rdp-root {
+    --rdp-cell-size: 4rem;
+
+    --rdp-day-height: 4rem;
+    --rdp-day-width: 4rem;
+    --rdp-day_button-height: 4rem;
+    --rdp-day_button-width: 4rem;
+
+    --rdp-accent-color: var(--primary-mint);
+
+    --rdp-accent-background-color: var(--primary-tinted);
+    --rdp-background-color: var(--primary-tinted);
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    --rdp-outline-selected: 0.1rem solid var(--primary-tinted);
+  }
+}
