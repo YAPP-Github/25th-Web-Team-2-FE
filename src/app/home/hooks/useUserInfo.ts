@@ -1,3 +1,4 @@
+'use client';
 import useParticipantInfoQuery from './useParticipantInfoQuery';
 import useResearcherInfoQuery from './useResearcherInfoQuery';
 

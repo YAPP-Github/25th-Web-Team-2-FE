@@ -1,5 +1,3 @@
-'use client';
-
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 
 function PostLayout({ children }: { children: React.ReactNode }) {

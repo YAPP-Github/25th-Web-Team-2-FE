@@ -1,7 +1,4 @@
-'use client';
-
 import { PropsWithChildren } from 'react';
-import { Footer } from 'react-day-picker';
 
 import { myPostsLayout, myPostsLayoutContainer } from './MyPostsPage.css';
 
@@ -13,7 +10,6 @@ function MyPostsLayout({ children }: PropsWithChildren) {
       <div className={myPostsLayout}>
         <Header />
         {children}
-        <Footer />
       </div>
     </div>
   );
