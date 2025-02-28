@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 function BackToTopGroup(props: SVGProps<SVGSVGElement>) {
   return (
@@ -14,14 +14,14 @@ function BackToTopGroup(props: SVGProps<SVGSVGElement>) {
     >
       <path
         d="M9.00001 20L9.00001 7.4M9.00001 7.4L14.4 12.8M9.00001 7.4L3.60001 12.8"
-        stroke={props.color || theme.colors.icon03}
+        stroke={props.color || colors.icon03}
         strokeWidth="2.7"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M16.2 2H9H1.8"
-        stroke={props.color || theme.colors.icon03}
+        stroke={props.color || colors.icon03}
         strokeWidth="2.7"
         strokeLinecap="round"
       />

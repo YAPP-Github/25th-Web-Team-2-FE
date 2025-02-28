@@ -5,7 +5,7 @@ import * as Toast from '@radix-ui/react-toast';
 import { toastLayout, toastTitle, toastViewport } from './EmailToast.css';
 
 import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 interface EmailToastProps {
   title: string;
@@ -25,9 +25,9 @@ const EmailToast = ({ title, isToastOpen, setIsToastOpen, isError = false }: Ema
       >
         <Toast.Title className={toastTitle}>
           {isError ? (
-            <Icon icon="BangRound" color={theme.colors.textAlert} width={24} height={24} />
+            <Icon icon="BangRound" color={colors.textAlert} width={24} height={24} />
           ) : (
-            <Icon icon="CheckRound" color={theme.colors.primaryMint} />
+            <Icon icon="CheckRound" color={colors.primaryMint} />
           )}
 
           <p>{title}</p>

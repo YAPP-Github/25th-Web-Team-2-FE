@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 function Information(props: SVGProps<SVGSVGElement>) {
   return (
@@ -12,16 +12,10 @@ function Information(props: SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="10"
-        stroke={props.color || theme.colors.icon03}
-        strokeWidth="1.5"
-      />
+      <circle cx="12" cy="12" r="10" stroke={props.color || colors.icon03} strokeWidth="1.5" />
       <path
         d="M12 17V11"
-        stroke={props.color || theme.colors.icon03}
+        stroke={props.color || colors.icon03}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -31,7 +25,7 @@ function Information(props: SVGProps<SVGSVGElement>) {
         cy="1"
         r="1"
         transform="matrix(1 0 0 -1 11 9)"
-        fill={props.color || theme.colors.icon03}
+        fill={props.color || colors.icon03}
       />
     </svg>
   );
