@@ -38,8 +38,6 @@ export const navigationRight = style({
 });
 
 export const bannerImage = style({
-  width: '100%',
-  height: 'auto',
   borderRadius: '1.2rem',
 });
 

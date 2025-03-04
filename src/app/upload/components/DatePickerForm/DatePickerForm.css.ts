@@ -202,6 +202,12 @@ globalStyle(`.${datepickerCustomClass} .rdp-selected .rdp-range_middle`, {
   height: '4rem',
 });
 
+globalStyle(`.${datepickerCustomClass} .rdp-range_middle`, {
+  width: '4rem',
+  height: '4rem',
+  backgroundColor: colors.primaryTinted,
+});
+
 globalStyle(`.${datepickerCustomClass} .rdp-today .rdp-day_button`, {
   color: colors.text06,
   width: '4rem',
@@ -212,6 +218,10 @@ globalStyle(`.${datepickerCustomClass} .rdp-today .rdp-day_button`, {
 });
 
 globalStyle(`.${datepickerCustomClass} .rdp-range_start .rdp-day_button`, {
+  backgroundColor: colors.primaryMint,
+  color: colors.text01,
+});
+globalStyle(`.${datepickerCustomClass} .rdp-range_end .rdp-day_button`, {
   backgroundColor: colors.primaryMint,
   color: colors.text01,
 });

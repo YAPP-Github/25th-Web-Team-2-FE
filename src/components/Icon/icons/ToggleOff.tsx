@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 function ToggleOff(props: SVGProps<SVGSVGElement>) {
   return (
@@ -14,7 +14,7 @@ function ToggleOff(props: SVGProps<SVGSVGElement>) {
       aria-label="토글 스위치 꺼짐"
       transform="translate(-2, 0)"
     >
-      <rect y="6" width="32" height="18" rx="9" fill={props.color || theme.colors.field05} />
+      <rect y="6" width="32" height="18" rx="9" fill={props.color || colors.field05} />
       <g filter="url(#filter0_d_3107_24218)">
         <circle cx="9" cy="15" r="7" fill="white" />
       </g>

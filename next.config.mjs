@@ -4,9 +4,6 @@ import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const nextConfig = {
   reactStrictMode: true,
-  compiler: {
-    emotion: true,
-  },
   images: {
     remotePatterns: [
       {

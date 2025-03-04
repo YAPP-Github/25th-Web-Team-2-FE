@@ -1,5 +1,3 @@
-'use client';
-
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 
 function UploadLayout({ children }: { children: React.ReactNode }) {

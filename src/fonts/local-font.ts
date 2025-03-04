@@ -33,6 +33,7 @@ const pretendard = localFont({
     },
   ],
   variable: '--font-pretendard',
+  display: 'swap',
 });
 
 export default pretendard;
