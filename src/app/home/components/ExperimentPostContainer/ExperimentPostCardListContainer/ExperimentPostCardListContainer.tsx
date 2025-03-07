@@ -9,6 +9,9 @@ import {
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
+import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
+import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostContainer/ExperimentPostContainer.css';
+import Spinner from '@/components/Spinner/Spinner';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
@@ -22,7 +25,17 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
     fetchNextPage,
     isFetchingNextPage,
     isFetching,
+    isLoading: isListLoading,
   } = useExperimentPostListQuery(filters, isLoading);
+
+  if (isListLoading) {
+    return (
+      <div className={emptyViewLayout}>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중..</p>
+      </div>
+    );
+  }
 
   return (
     <div className={postCardContentContainer}>
