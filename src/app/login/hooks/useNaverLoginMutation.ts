@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 
 import { API } from '@/apis/config';
 import { naverLogin, NaverLoginParams } from '@/apis/login';
+import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
 
 const useNaverLoginMutation = () => {
   const router = useRouter();
@@ -14,6 +15,10 @@ const useNaverLoginMutation = () => {
         API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         sessionStorage.setItem('refreshToken', refreshToken);
         sessionStorage.setItem('role', memberInfo.role);
+
+        identifyUser(memberInfo.oauthEmail);
+        setUserProperties({ email: memberInfo.oauthEmail, role: memberInfo.role });
+
         router.push('/');
         return;
       }
