@@ -25,6 +25,7 @@ import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentD
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { trackEvent } from '@/lib/mixpanelClient';
 
 interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -124,7 +125,15 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
 
       <div className={buttonContainer}>
         {recruitStatus ? (
-          <button className={checkButton()} onClick={() => setIsModalOpen(true)}>
+          <button
+            className={checkButton()}
+            onClick={() => {
+              trackEvent('ApplyMethod Interaction', {
+                action: 'Click ApplyMethod Modal',
+              });
+              setIsModalOpen(true);
+            }}
+          >
             참여 방법 확인하기
           </button>
         ) : (

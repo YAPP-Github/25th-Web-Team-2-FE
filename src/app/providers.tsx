@@ -2,10 +2,9 @@
 
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { trackEvent } from '@/lib/mixpanelClient';
+import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/mocks/MSWProvider';
 
 function makeQueryClient() {
@@ -25,14 +24,14 @@ function getQueryClient() {
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
-
-  const pathname = usePathname();
-
   useEffect(() => {
-    if (pathname) {
-      trackEvent('Page Viewed', { page: pathname });
+    if (typeof window !== 'undefined') {
+      const pageTitle = document.title;
+
+      trackEvent('Page Viewed', { page: pageTitle });
+      setUserProperties({ last_visited_page: pageTitle });
     }
-  }, [pathname]);
+  }, []); //
 
   return (
     <MSWProvider>

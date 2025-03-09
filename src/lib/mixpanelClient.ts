@@ -18,7 +18,7 @@ export const initMixpanel = () => {
       persistence: 'localStorage',
     });
     isMixpanelInitialized = true;
-    console.log('✅ Mixpanel initialized');
+    // console.log('Mixpanel initialized');
   }
 };
 
@@ -36,7 +36,7 @@ export const trackEvent = (event: string, properties?: Record<string, any>) => {
   }
 
   if (!isMixpanelInitialized) {
-    console.warn('Mixpanel is not initialized. Initializing now...');
+    // console.warn('Mixpanel is not initialized. Initializing now...');
     initMixpanel();
   }
   mixpanel.track(event, properties);
@@ -48,6 +48,9 @@ export const trackEvent = (event: string, properties?: Record<string, any>) => {
 export const identifyUser = (userId: string) => {
   if (!MIXPANEL_TOKEN) return;
   mixpanel.identify(userId);
+  mixpanel.people.set_once({
+    signup_date: new Date().toISOString(), // 최초 가입 시점 기록
+  });
 };
 
 /**
@@ -57,4 +60,14 @@ export const identifyUser = (userId: string) => {
 export const setUserProperties = (properties: Record<string, string>) => {
   if (!MIXPANEL_TOKEN) return;
   mixpanel.people.set(properties);
+};
+
+/**
+ * 사용자 로그아웃 (로그아웃 시 호출)
+ */
+export const logoutUser = () => {
+  if (!MIXPANEL_TOKEN) return;
+
+  mixpanel.reset();
+  // console.log('Mixpanel user data reset');
 };
