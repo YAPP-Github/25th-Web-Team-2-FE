@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { PropsWithChildren, useEffect, useState } from 'react';
 
-import EmailToast from '../join/components/EmailToast/EmailToast';
+import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 
 const LoginError = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();

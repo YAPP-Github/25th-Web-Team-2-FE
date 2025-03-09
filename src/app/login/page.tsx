@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import LoginCard from './components/LoginCard/LoginCard';
-import LoginError from './LoginError';
+import LoginError from './components/LoginCard/LoginError/LoginError';
 import {
   loginPageLayout,
   sloganContainer,
