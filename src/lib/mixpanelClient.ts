@@ -28,8 +28,7 @@ export const initMixpanel = () => {
  * @param properties 이벤트 속성 (선택)
  */
 
-//todo 수정 예정
-export const trackEvent = (event: string, properties?: Record<string, any>) => {
+export const trackEvent = (event: string, properties?: Record<string, string>) => {
   if (!MIXPANEL_TOKEN) {
     console.warn('Mixpanel Token is missing.');
     return;

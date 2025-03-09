@@ -96,7 +96,7 @@ const ParticipationGuideModal = ({
                       onClick={() => {
                         trackEvent('ApplyMethod Interaction', {
                           action: 'Link Clicked',
-                          link_url: applyMethodData.formUrl,
+                          link_url: applyMethodData.formUrl ?? '',
                         });
                       }}
                     >
