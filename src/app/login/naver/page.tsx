@@ -19,7 +19,7 @@ export default function NaverLoginPage() {
     if (code && stateParams) {
       const [state, role, provider] = stateParams.split('|');
       sessionStorage.setItem('role', role);
-      sessionStorage.setItem('role', provider);
+      sessionStorage.setItem('provider', provider);
       naverLogin({ code: encodeURIComponent(code), role, state: encodeURIComponent(state) });
       isSubmitted.current = true;
     }
