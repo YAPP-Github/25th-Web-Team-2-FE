@@ -1,40 +1,20 @@
-'use client';
-
-import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 import LoginCard from './components/LoginCard/LoginCard';
+import LoginError from './LoginError';
 import {
   loginPageLayout,
   sloganContainer,
   sloganWrapper,
   loginCardContainer,
 } from './LoginPage.css';
-import EmailToast from '../join/components/EmailToast/EmailToast';
 
 import Logo from '@/assets/images/logo.svg';
 
 export default function LoginPage() {
-  const queryClient = useQueryClient();
-
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const close = () => setIsOpen(false);
-
-  useEffect(() => {
-    const storedErrorMessage = queryClient.getQueryData<string>(['loginError']);
-
-    if (storedErrorMessage) {
-      setErrorMessage(storedErrorMessage);
-      setIsOpen(true);
-      queryClient.removeQueries({ queryKey: ['loginError'] });
-    }
-  }, [queryClient]);
-
   return (
-    <>
+    <LoginError>
       <div className={loginPageLayout}>
         <div className={sloganContainer}>
           <Link href="/" aria-label="홈 화면으로 이동">
@@ -54,9 +34,6 @@ export default function LoginPage() {
           <LoginCard role="참여자" description={['정보를 등록하면', '딱 맞는 실험을 찾아드려요']} />
         </div>
       </div>
-      {isOpen && (
-        <EmailToast title={errorMessage} isToastOpen={isOpen} setIsToastOpen={close} isError />
-      )}
-    </>
+    </LoginError>
   );
 }
