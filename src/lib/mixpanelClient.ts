@@ -3,6 +3,7 @@
 import mixpanel from 'mixpanel-browser';
 
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
+const isClient = typeof window !== 'undefined';
 let isMixpanelInitialized = false;
 
 export const initMixpanel = () => {
@@ -28,14 +29,15 @@ export const initMixpanel = () => {
  * @param properties 이벤트 속성 (선택)
  */
 
-export const trackEvent = (event: string, properties?: Record<string, string>) => {
+export const trackEvent = (event: string, properties?: Record<string, any>) => {
+  if (!isClient) return;
+
   if (!MIXPANEL_TOKEN) {
     console.warn('Mixpanel Token is missing.');
     return;
   }
 
   if (!isMixpanelInitialized) {
-    // console.warn('Mixpanel is not initialized. Initializing now...');
     initMixpanel();
   }
   mixpanel.track(event, properties);
@@ -45,11 +47,16 @@ export const trackEvent = (event: string, properties?: Record<string, string>) =
  * @param userId 사용자 ID
  */
 export const identifyUser = (userId: string) => {
-  if (!MIXPANEL_TOKEN) return;
-  mixpanel.identify(userId);
-  mixpanel.people.set_once({
-    signup_date: new Date().toISOString(), // 최초 가입 시점 기록
-  });
+  if (!MIXPANEL_TOKEN || !isClient) return;
+
+  try {
+    mixpanel.identify(userId);
+    mixpanel.people.set_once({
+      signup_date: new Date().toISOString(), // 최초 가입 시점 기록
+    });
+  } catch (error) {
+    console.error('Mixpanel identify error:', error);
+  }
 };
 
 /**
@@ -57,16 +64,26 @@ export const identifyUser = (userId: string) => {
  * @param properties 사용자 속성 데이터
  */
 export const setUserProperties = (properties: Record<string, string>) => {
+  if (!isClient) return;
   if (!MIXPANEL_TOKEN) return;
-  mixpanel.people.set(properties);
+
+  try {
+    mixpanel.people.set(properties);
+  } catch (error) {
+    console.error('Mixpanel set properties error:', error);
+  }
 };
 
 /**
  * 사용자 로그아웃 (로그아웃 시 호출)
  */
 export const logoutUser = () => {
-  if (!MIXPANEL_TOKEN) return;
+  if (!MIXPANEL_TOKEN || !isClient) return;
 
-  mixpanel.reset();
-  // console.log('Mixpanel user data reset');
+  try {
+    mixpanel.reset();
+    // console.log('Mixpanel user data reset');
+  } catch (error) {
+    console.error('Mixpanel reset error:', error);
+  }
 };

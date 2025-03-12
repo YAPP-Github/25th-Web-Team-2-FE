@@ -39,10 +39,9 @@ const ParticipationGuideModal = ({
   const handleCopyContent = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setIsCopyToastOpen(true);
-    });
-
-    trackEvent('ApplyMethod Interaction', {
-      action: 'Link Copied',
+      trackEvent('ApplyMethod Interaction', {
+        action: 'Link Copied',
+      });
     });
   };
 

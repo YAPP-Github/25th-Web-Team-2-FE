@@ -2,6 +2,7 @@
 
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
@@ -24,14 +25,16 @@ function getQueryClient() {
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
+  const pathname = usePathname();
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const pageTitle = document.title;
 
-      trackEvent('Page Viewed', { page: pageTitle });
+      trackEvent('Page Viewed', { page: pageTitle, path: pathname });
       setUserProperties({ last_visited_page: pageTitle });
     }
-  }, []); //
+  }, [pathname]);
 
   return (
     <MSWProvider>
