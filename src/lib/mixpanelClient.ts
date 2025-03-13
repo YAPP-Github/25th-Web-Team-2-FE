@@ -19,7 +19,6 @@ export const initMixpanel = () => {
       persistence: 'localStorage',
     });
     isMixpanelInitialized = true;
-    // console.log('Mixpanel initialized');
   }
 };
 
@@ -82,7 +81,6 @@ export const logoutUser = () => {
 
   try {
     mixpanel.reset();
-    // console.log('Mixpanel user data reset');
   } catch (error) {
     console.error('Mixpanel reset error:', error);
   }
