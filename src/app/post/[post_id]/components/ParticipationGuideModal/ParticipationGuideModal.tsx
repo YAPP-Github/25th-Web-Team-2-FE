@@ -19,6 +19,7 @@ import { CommonModalProps } from '../../ExperimentPostPage.types';
 import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
 
 import Icon from '@/components/Icon';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 
 interface ParticipationGuideModalProps extends CommonModalProps {
@@ -38,6 +39,9 @@ const ParticipationGuideModal = ({
   const handleCopyContent = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setIsCopyToastOpen(true);
+      trackEvent('ApplyMethod Interaction', {
+        action: 'Link Copied',
+      });
     });
   };
 
@@ -88,6 +92,12 @@ const ParticipationGuideModal = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{ color: colors.primaryMint, textDecoration: 'underline' }}
+                      onClick={() => {
+                        trackEvent('ApplyMethod Interaction', {
+                          action: 'Link Clicked',
+                          link_url: applyMethodData.formUrl ?? '',
+                        });
+                      }}
                     >
                       {applyMethodData.formUrl}
                     </a>
