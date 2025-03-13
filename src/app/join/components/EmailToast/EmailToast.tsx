@@ -25,7 +25,13 @@ const EmailToast = ({ title, isToastOpen, setIsToastOpen, isError = false }: Ema
       >
         <Toast.Title className={toastTitle}>
           {isError ? (
-            <Icon icon="BangRound" color={colors.textAlert} width={24} height={24} />
+            <Icon
+              icon="BangRound"
+              width={24}
+              height={24}
+              color={colors.textAlert}
+              subcolor={colors.field01}
+            />
           ) : (
             <Icon icon="CheckRound" color={colors.primaryMint} />
           )}
