@@ -3,6 +3,11 @@ import axios from 'axios';
 import { updateAccessToken } from './login';
 import { CustomAxiosError } from './type';
 
+const roleMapper: Record<string, string> = {
+  RESEARCHER: '연구자',
+  PARTICIPANT: '참여자',
+};
+
 const ERROR_MESSAGES = {
   VE0004: '인증번호가 일치하지 않아요',
   VE0005: '인증시간이 만료되었어요',
@@ -10,6 +15,8 @@ const ERROR_MESSAGES = {
   AU0001: '유효한 입력값이 아닙니다.',
   AU0002: '유효한 입력값이 아닙니다.',
   AU0003: '유효한 입력값이 아닙니다.',
+  ME0002: (role?: string) =>
+    role ? `${roleMapper[role]}로 등록된 이메일이에요` : `이미 등록된 이메일이에요`,
 };
 
 export const API = axios.create({
@@ -27,7 +34,13 @@ API.interceptors.response.use(
       const { data, config } = error.response;
       const originalRequest = config;
 
-      if (data.code === 'VE0004') {
+      if (data.code === 'ME0002') {
+        const role = data.message.split(': ').pop()?.trim();
+
+        return Promise.reject({
+          message: ERROR_MESSAGES[data.code](role),
+        });
+      } else if (data.code === 'VE0004') {
         return Promise.reject({
           data: { isAuth: false },
           message: ERROR_MESSAGES[data.code],
@@ -55,7 +68,7 @@ API.interceptors.response.use(
         return axios(originalRequest);
       }
 
-      return Promise.reject(error);
+      return Promise.reject(data);
     }
 
     // timeout 내에 서버 응답이 없는 경우

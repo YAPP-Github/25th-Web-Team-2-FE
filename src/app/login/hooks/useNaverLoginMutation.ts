@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import { API } from '@/apis/config';
@@ -7,6 +7,7 @@ import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
 
 const useNaverLoginMutation = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ code, role, state }: NaverLoginParams) => naverLogin({ code, role, state }),
@@ -24,10 +25,12 @@ const useNaverLoginMutation = () => {
       }
 
       sessionStorage.setItem('email', memberInfo.oauthEmail);
-
       router.push('/join');
     },
-    onError: () => {
+    onError: (error) => {
+      const errorMessage = error.message || '로그인 중 오류가 발생했습니다. 다시 시도해주세요.';
+      queryClient.setQueryData(['loginError'], errorMessage);
+
       router.push('/login');
     },
   });
