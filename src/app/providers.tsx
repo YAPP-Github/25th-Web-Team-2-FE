@@ -1,12 +1,12 @@
 'use client';
 
-import { Global, ThemeProvider } from '@emotion/react';
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
+import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/mocks/MSWProvider';
-import global from '@/styles/global';
-import theme from '@/styles/theme';
 
 function makeQueryClient() {
   return new QueryClient();
@@ -25,15 +25,22 @@ function getQueryClient() {
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const pageTitle = document.title;
+
+      trackEvent('Page Viewed', { page: pageTitle, path: pathname });
+      setUserProperties({ last_visited_page: pageTitle });
+    }
+  }, [pathname]);
 
   return (
     <MSWProvider>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <Global styles={global} />
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
-        </ThemeProvider>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </MSWProvider>
   );

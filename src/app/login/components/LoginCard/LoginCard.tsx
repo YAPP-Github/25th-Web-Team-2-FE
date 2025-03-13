@@ -15,7 +15,7 @@ import { descriptionWrapper } from '../../LoginPage.css';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 const roleMapper = {
   연구자: 'RESEARCHER',
@@ -53,10 +53,8 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
         <div
           className={badge}
           style={assignInlineVars({
-            '--badge-color':
-              role === '연구자' ? theme.colors.secondaryPink : theme.colors.primaryMint,
-            '--badge-bg':
-              role === '연구자' ? theme.colors.secondaryTinted : theme.colors.primaryTinted,
+            '--badge-color': role === '연구자' ? colors.secondaryPink : colors.primaryMint,
+            '--badge-bg': role === '연구자' ? colors.secondaryTinted : colors.primaryTinted,
           })}
         >
           {role}

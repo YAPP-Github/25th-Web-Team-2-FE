@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
-import theme from '@/styles/theme';
+import { zIndex } from '@/styles/zIndex';
 
 export const toastLayout = style({
   color: colors.text06,
@@ -15,7 +15,7 @@ export const toastLayout = style({
   top: 0,
   left: '50%',
   transform: 'translateX(-50%)',
-  zIndex: theme.zIndex.toastContent,
+  zIndex: zIndex.toastContent,
 });
 
 export const toastTitle = style({
@@ -33,5 +33,5 @@ export const toastViewport = style({
   top: '6rem',
   left: '50%',
   transform: 'translateX(-50%)',
-  zIndex: theme.zIndex.toastViewport,
+  zIndex: zIndex.toastViewport,
 });

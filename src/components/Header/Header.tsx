@@ -16,7 +16,15 @@ const Header = () => {
   return (
     <div className={headerLayout}>
       <Link href="/">
-        <Image src={Logo} alt="로고" className={image} width={100.5} height={30} />
+        <Image
+          src={Logo}
+          alt="로고"
+          className={image}
+          width={100.5}
+          height={30}
+          priority
+          style={{ width: 'auto', height: 'auto' }}
+        />
       </Link>
       <div className={buttonContainer}>
         {userInfo ? (

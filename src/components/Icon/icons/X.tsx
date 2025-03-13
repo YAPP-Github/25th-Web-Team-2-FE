@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 function X(props: SVGProps<SVGSVGElement>) {
   return (
@@ -14,7 +14,7 @@ function X(props: SVGProps<SVGSVGElement>) {
     >
       <path
         d="M11 1L1 11M1 1L11 11"
-        stroke={props.color || theme.colors.icon03}
+        stroke={props.color || colors.icon03}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

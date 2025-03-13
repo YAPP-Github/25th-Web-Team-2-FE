@@ -10,7 +10,7 @@ import {
 } from './JoinCheckbox.css';
 
 import Icon from '@/components/Icon';
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 
 interface JoinCheckboxProps {
   label: string;
@@ -41,7 +41,7 @@ const JoinCheckbox = ({
       <label className={checkboxWrapper}>
         <input className={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
         {isChecked ? (
-          <Icon icon="CheckSquareFill" color={theme.colors.primaryMint} cursor="pointer" />
+          <Icon icon="CheckSquareFill" color={colors.primaryMint} cursor="pointer" />
         ) : (
           emptyCheckIcon
         )}

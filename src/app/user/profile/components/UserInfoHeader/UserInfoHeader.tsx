@@ -11,7 +11,7 @@ import {
 } from './UserInfoHeader.css';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import theme from '@/styles/theme';
+import { colors } from '@/styles/colors';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 const GENDER_LABEL = {
@@ -30,8 +30,8 @@ const UserInfoHeader = ({ userInfo }: { userInfo: ParticipantResponse | Research
           <span
             className={badge}
             style={assignInlineVars({
-              '--badge-color': theme.colors.primaryMint,
-              '--badge-bg': theme.colors.primaryTinted,
+              '--badge-color': colors.primaryMint,
+              '--badge-bg': colors.primaryTinted,
             })}
           >
             참여자
@@ -58,8 +58,8 @@ const UserInfoHeader = ({ userInfo }: { userInfo: ParticipantResponse | Research
         <span
           className={badge}
           style={assignInlineVars({
-            '--badge-color': theme.colors.secondaryPink,
-            '--badge-bg': theme.colors.secondaryTinted,
+            '--badge-color': colors.secondaryPink,
+            '--badge-bg': colors.secondaryTinted,
           })}
         >
           연구자

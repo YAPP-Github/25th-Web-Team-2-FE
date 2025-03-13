@@ -1,5 +1,3 @@
-'use client';
-
 import * as Select from '@radix-ui/react-select';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -9,6 +7,7 @@ import { contentContainer, selectItem, triggerWrapper } from './Menu.css';
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import Icon from '@/components/Icon';
 import useSessionStorage from '@/hooks/useSessionStorage';
+import { logoutUser } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
 interface MenuProps {
@@ -21,6 +20,7 @@ const Menu = ({ userInfo }: MenuProps) => {
 
   const logout = () => {
     clear();
+    logoutUser();
     window.location.href = '/';
   };
 

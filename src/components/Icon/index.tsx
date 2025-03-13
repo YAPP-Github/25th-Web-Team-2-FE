@@ -1,5 +1,3 @@
-'use client';
-
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 import { iconContainer, dynamicVars, iconDynamicStyle } from './icon.css';
