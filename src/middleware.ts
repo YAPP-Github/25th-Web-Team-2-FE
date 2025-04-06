@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getToken } from 'next-auth/jwt';
+import { getToken, JWT } from 'next-auth/jwt';
+import { logout } from './lib/auth-utils';
 
 const goToLogin = (request: NextRequest) => {
   return NextResponse.redirect(new URL('/login', request.url));
@@ -10,32 +11,51 @@ const goToHome = (request: NextRequest) => {
   return NextResponse.redirect(new URL('/', request.url));
 };
 
+const isExpiredToken = (token: JWT) => {
+  const currentTimeSec = Math.floor(Date.now() / 1000);
+  const isExpired = token.exp < currentTimeSec;
+  return isExpired;
+};
+
 export async function middleware(request: NextRequest) {
-  const session = await getToken({
+  const { searchParams } = request.nextUrl;
+
+  const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
   const isJoinPage = request.nextUrl.pathname.startsWith('/join');
-  const isUserPage = request.nextUrl.pathname.startsWith('/user');
-  const isMyPostsPage = request.nextUrl.pathname.startsWith('/my-posts');
+  const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
 
-  if (isJoinPage) {
-    // 비로그인 사용자는 로그인 페이지로 이동
-    // TODO: 회원가입 유저와 직접 접근하는 유저 구분 필요.
-    // if (!session) {
-    //   return goToLogin(request);
-    // }
-
-    // 로그인 사용자는 홈으로 이동
-    if (session) {
-      return goToHome(request);
-    }
+  // 토큰이 없는 경우
+  if (!token) {
+    return goToLogin(request);
   }
 
-  if (isUserPage || isMyPostsPage) {
-    if (!session) {
-      return goToLogin(request);
+  // 토큰이 만료된 경우
+  if (token && isExpiredToken(token)) {
+    const response = goToLogin(request);
+
+    // Next-Auth 관련 모든 쿠키 삭제
+    const cookiesToClear = [
+      'next-auth.session-token',
+      'next-auth.csrf-token',
+      'next-auth.callback-url',
+    ];
+
+    cookiesToClear.forEach((cookieName) => {
+      if (request.cookies.has(cookieName)) {
+        response.cookies.delete(cookieName);
+      }
+    });
+
+    return response;
+  }
+
+  if (isJoinPage && !isJoinSuccessPage) {
+    if (token && !token.isTempUser) {
+      return goToHome(request);
     }
   }
 
@@ -44,5 +64,5 @@ export async function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 지정
 export const config = {
-  matcher: ['/join/:path*', '/my-posts/:path*', '/user/:path*'],
+  matcher: ['/join/:path*', '/my-posts/:path*', '/user/profile/:path*', '/user/leave/:path*'],
 };
