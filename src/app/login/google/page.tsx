@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { emptyLayout } from './GoogleLoginPage.css';
 import useGoogleLoginMutation from '../hooks/useGoogleLoginMutation';
+import { joinWithCredentials } from '@/lib/auth-utils';
 
 export default function GoogleLoginPage() {
   const router = useRouter();
@@ -17,12 +18,16 @@ export default function GoogleLoginPage() {
     onSuccessLogin: () => {
       router.push('/');
     },
-    onSuccessJoin: (oauthEmail: string) => {
+    onSuccessJoin: async (oauthEmail: string) => {
       if (state) {
         const [role, provider] = state.split('|');
-        sessionStorage.setItem('email', oauthEmail);
-        sessionStorage.setItem('role', role);
-        sessionStorage.setItem('provider', provider);
+
+        await joinWithCredentials({
+          oauthEmail,
+          role,
+          provider,
+        });
+
         router.push('/join');
       }
     },

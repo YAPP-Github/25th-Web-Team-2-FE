@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { emptyLayout } from './NaverLoginPage.css';
 import useNaverLoginMutation from '../hooks/useNaverLoginMutation';
+import { joinWithCredentials } from '@/lib/auth-utils';
 
 export default function NaverLoginPage() {
   const router = useRouter();
@@ -17,12 +18,16 @@ export default function NaverLoginPage() {
     onSuccessLogin: () => {
       router.push('/');
     },
-    onSuccessJoin: (oauthEmail: string) => {
+    onSuccessJoin: async (oauthEmail: string) => {
       if (stateParams) {
         const [_, role, provider] = stateParams.split('|');
-        sessionStorage.setItem('email', oauthEmail);
-        sessionStorage.setItem('role', role);
-        sessionStorage.setItem('provider', provider);
+
+        await joinWithCredentials({
+          oauthEmail,
+          role,
+          provider,
+        });
+
         router.push('/join');
       }
     },
