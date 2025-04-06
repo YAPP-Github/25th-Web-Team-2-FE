@@ -1,38 +1,44 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 
-import { API } from '@/apis/config';
 import { googleLogin } from '@/apis/login';
+import { loginWithCredentials } from '@/lib/auth-utils';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
+import { API } from '@/apis/config';
 
-const useGoogleLoginMutation = () => {
-  const router = useRouter();
+interface UseGoogleLoginMutationProps {
+  onSuccessLogin: () => void;
+  onSuccessJoin: (oauthEmail: string) => void;
+  onError: () => void;
+}
+
+const useGoogleLoginMutation = ({
+  onSuccessLogin,
+  onSuccessJoin,
+  onError,
+}: UseGoogleLoginMutationProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ code, role }: { code: string; role: string }) => googleLogin(code, role),
-    onSuccess: ({ isRegistered, accessToken, refreshToken, memberInfo }) => {
+    onSuccess: async ({ isRegistered, accessToken, refreshToken, memberInfo }) => {
       if (isRegistered) {
         API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        sessionStorage.setItem('refreshToken', refreshToken);
-        sessionStorage.setItem('role', memberInfo.role);
+        await loginWithCredentials(accessToken, refreshToken, memberInfo.role);
 
         identifyUser(memberInfo.oauthEmail);
         setUserProperties({ email: memberInfo.oauthEmail, role: memberInfo.role });
 
-        router.push('/');
+        onSuccessLogin();
         return;
       }
 
-      sessionStorage.setItem('email', memberInfo.oauthEmail);
-
-      router.push('/join');
+      onSuccessJoin(memberInfo.oauthEmail);
     },
     onError: (error) => {
       const errorMessage = error.message || '로그인 중 오류가 발생했습니다. 다시 시도해주세요.';
       queryClient.setQueryData(['loginError'], errorMessage);
 
-      router.push('/login');
+      onError();
     },
   });
 };
