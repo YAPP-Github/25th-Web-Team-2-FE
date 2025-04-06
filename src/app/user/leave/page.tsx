@@ -29,6 +29,7 @@ import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import Icon from '@/components/Icon';
 import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 import { colors } from '@/styles/colors';
+import { signOut } from 'next-auth/react';
 
 const useLeaveMutation = () => {
   return useMutation({
@@ -68,7 +69,7 @@ const LeavePage = () => {
 
     leave(formattedData, {
       onSuccess: () => {
-        router.push('/user/success');
+        signOut({ callbackUrl: '/user/success' });
       },
     });
   };
