@@ -15,7 +15,7 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 import Icon from '@/components/Icon';
 
 const ExperimentPostContainer = () => {
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+  const { userInfo, isLoading: isUserInfoLoading, isSessionReady } = useUserInfo();
 
   const {
     filters,
@@ -23,7 +23,7 @@ const ExperimentPostContainer = () => {
     handleFilterChange,
     handleToggleRecruitStatus,
     handleResetFilter,
-  } = useExperimentFilters(userInfo);
+  } = useExperimentFilters(isSessionReady, userInfo);
 
   return (
     <div className={postContainerLayout}>
