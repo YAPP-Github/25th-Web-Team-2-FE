@@ -68,11 +68,11 @@ API.interceptors.response.use(
           const userInfo = await updateAccessToken(refreshToken);
 
           // Next-Auth 재로그인
-          await loginWithCredentials(
-            userInfo.accessToken,
-            userInfo.refreshToken,
-            userInfo.memberInfo.role,
-          );
+          await loginWithCredentials({
+            accessToken: userInfo.accessToken,
+            refreshToken: userInfo.refreshToken,
+            role: userInfo.memberInfo.role,
+          });
 
           originalRequest.headers.Authorization = `Bearer ${userInfo.accessToken}`;
           API.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;

@@ -23,7 +23,7 @@ const useGoogleLoginMutation = ({
     onSuccess: async ({ isRegistered, accessToken, refreshToken, memberInfo }) => {
       if (isRegistered) {
         API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        await loginWithCredentials(accessToken, refreshToken, memberInfo.role);
+        await loginWithCredentials({ accessToken, refreshToken, role: memberInfo.role });
 
         identifyUser(memberInfo.oauthEmail);
         setUserProperties({ email: memberInfo.oauthEmail, role: memberInfo.role });
