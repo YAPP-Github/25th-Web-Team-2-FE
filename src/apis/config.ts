@@ -1,7 +1,10 @@
 import axios from 'axios';
+import { getSession } from 'next-auth/react';
 
 import { updateAccessToken } from './login';
 import { CustomAxiosError } from './type';
+
+import { loginWithCredentials, logout } from '@/lib/auth-utils';
 
 const roleMapper: Record<string, string> = {
   RESEARCHER: '연구자',
@@ -53,19 +56,31 @@ API.interceptors.response.use(
       } else if (data.code === 'VE0007') {
         return Promise.reject({ data: { isAuth: true }, message: ERROR_MESSAGES[data.code] });
       } else if (data.code === 'AU0001' || data.code === 'AU0002' || data.code === 'AU0003') {
-        const refreshToken = sessionStorage.getItem('refreshToken');
+        try {
+          // Next-Auth 세션에서 리프레시 토큰 가져오기
+          const session = await getSession();
+          const refreshToken = session?.refreshToken;
 
-        if (refreshToken === null) {
-          return Promise.reject({ data: { isAuth: false }, message: ERROR_MESSAGES[data.code] });
+          if (!refreshToken) {
+            return Promise.reject({ data: { isAuth: false }, message: ERROR_MESSAGES[data.code] });
+          }
+
+          const userInfo = await updateAccessToken(refreshToken);
+
+          // Next-Auth 재로그인
+          await loginWithCredentials(
+            userInfo.accessToken,
+            userInfo.refreshToken,
+            userInfo.memberInfo.role,
+          );
+
+          originalRequest.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+          API.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+          return axios(originalRequest);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (err) {
+          await logout();
         }
-
-        const userInfo = await updateAccessToken(refreshToken);
-
-        originalRequest.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-        API.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-        sessionStorage.setItem('refreshToken', userInfo.refreshToken);
-        sessionStorage.setItem('role', userInfo.memberInfo.role);
-        return axios(originalRequest);
       }
 
       return Promise.reject(data);
