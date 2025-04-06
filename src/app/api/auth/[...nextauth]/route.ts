@@ -11,6 +11,9 @@ export const authOptions: NextAuthOptions = {
         accessToken: { label: 'accessToken', type: 'text' },
         refreshToken: { label: 'refreshToken', type: 'text' },
         role: { label: 'role', type: 'text' },
+        isTempUser: { label: 'isTempUser', type: 'text' },
+        oauthEmail: { label: 'oauthEmail', type: 'text' },
+        provider: { label: 'provider', type: 'text' },
       },
       async authorize(credentials) {
         if (!credentials?.accessToken || !credentials?.refreshToken || !credentials?.role) {
@@ -23,6 +26,9 @@ export const authOptions: NextAuthOptions = {
           accessToken: credentials.accessToken,
           refreshToken: credentials.refreshToken,
           role: credentials.role,
+          isTempUser: credentials.isTempUser === 'true',
+          oauthEmail: credentials.oauthEmail,
+          provider: credentials.provider,
         };
       },
     }),
@@ -34,6 +40,15 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
         token.role = user.role;
+
+        if (user.isTempUser && user.oauthEmail && user.provider) {
+          token.isTempUser = user.isTempUser;
+          token.oauthEmail = user.oauthEmail;
+          token.provider = user.provider;
+
+          const currentTime = Math.floor(Date.now() / 1000);
+          token.exp = currentTime + 15 * 60; // 15분 후 만료
+        }
       }
 
       // useSession의 update 트리거 시 토큰 정보 갱신
@@ -51,6 +66,13 @@ export const authOptions: NextAuthOptions = {
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       session.role = token.role;
+
+      // 임시 사용자 플래그 추가
+      if (token.isTempUser && token.oauthEmail && token.provider) {
+        session.isTempUser = token.isTempUser;
+        session.oauthEmail = token.oauthEmail;
+        session.provider = token.provider;
+      }
 
       return session;
     },

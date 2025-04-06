@@ -6,13 +6,18 @@ declare module 'next-auth' {
     accessToken?: string;
     refreshToken?: string;
     role?: string;
-    error?: string;
+    isTempUser?: boolean;
+    oauthEmail?: string;
+    provider?: string;
   }
 
   interface User {
     accessToken: string;
     refreshToken: string;
     role: string;
+    isTempUser?: boolean;
+    oauthEmail?: string;
+    provider?: string;
   }
 }
 
@@ -22,5 +27,11 @@ declare module 'next-auth/jwt' {
     accessToken: string;
     refreshToken: string;
     role: string;
+    iat: number;
+    exp: number;
+    jti: string;
+    isTempUser?: boolean;
+    oauthEmail?: string;
+    provider?: string;
   }
 }
