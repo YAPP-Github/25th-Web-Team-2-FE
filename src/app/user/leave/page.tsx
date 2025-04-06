@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
@@ -29,7 +30,6 @@ import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import Icon from '@/components/Icon';
 import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 import { colors } from '@/styles/colors';
-import { signOut } from 'next-auth/react';
 
 const useLeaveMutation = () => {
   return useMutation({

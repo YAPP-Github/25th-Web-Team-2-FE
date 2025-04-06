@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -10,7 +11,6 @@ import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 import { Researcher } from '.';
 
 import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { useSession } from 'next-auth/react';
 
 const ResearcherForm = () => {
   const { mutate: joinResearcher } = useResearcherJoinMutation();

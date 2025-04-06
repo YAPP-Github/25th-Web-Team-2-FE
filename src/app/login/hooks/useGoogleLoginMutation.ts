@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { API } from '@/apis/config';
 import { googleLogin } from '@/apis/login';
 import { loginWithCredentials } from '@/lib/auth-utils';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
-import { API } from '@/apis/config';
 
 interface UseGoogleLoginMutationProps {
   onSuccessLogin: () => void;

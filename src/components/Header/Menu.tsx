@@ -7,9 +7,9 @@ import { contentContainer, selectItem, triggerWrapper } from './Menu.css';
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import Icon from '@/components/Icon';
 import useSessionStorage from '@/hooks/useSessionStorage';
+import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
-import { logout } from '@/lib/auth-utils';
 
 interface MenuProps {
   userInfo: ParticipantResponse | ResearcherResponse;

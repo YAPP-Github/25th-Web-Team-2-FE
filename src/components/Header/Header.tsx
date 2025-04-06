@@ -4,9 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { headerLayout, image } from './Header.css';
+import RightHeader from './RightHeader/RightHeader';
 import Logo from '../../assets/images/logo.svg';
 
-import RightHeader from './RightHeader/RightHeader';
 
 const Header = () => {
   return (

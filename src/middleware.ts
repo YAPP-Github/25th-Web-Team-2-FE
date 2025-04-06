@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken, JWT } from 'next-auth/jwt';
-import { logout } from './lib/auth-utils';
 
 const goToLogin = (request: NextRequest) => {
   return NextResponse.redirect(new URL('/login', request.url));

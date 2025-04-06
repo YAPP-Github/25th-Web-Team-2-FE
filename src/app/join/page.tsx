@@ -3,6 +3,7 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 import ParticipantForm from './components/Participant/ParticipantForm';
 import ResearcherForm from './components/Researcher/ResearcherForm';
@@ -19,7 +20,6 @@ import {
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
-import { useSession } from 'next-auth/react';
 
 export default function JoinPage() {
   const { data: session } = useSession();

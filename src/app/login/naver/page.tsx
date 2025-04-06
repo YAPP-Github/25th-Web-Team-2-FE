@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { emptyLayout } from './NaverLoginPage.css';
 import useNaverLoginMutation from '../hooks/useNaverLoginMutation';
+
 import { joinWithCredentials } from '@/lib/auth-utils';
 
 export default function NaverLoginPage() {
