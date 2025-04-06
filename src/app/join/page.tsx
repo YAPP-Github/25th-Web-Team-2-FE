@@ -19,10 +19,12 @@ import {
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
-import useSessionStorage from '@/hooks/useSessionStorage';
+import { useSession } from 'next-auth/react';
 
 export default function JoinPage() {
-  const { value: role } = useSessionStorage('role');
+  const { data: session } = useSession();
+  const role = session?.role;
+
   const { step } = useFunnel(['email', 'info', 'success'] as const);
 
   // TODO: 추후 스켈레톤 처리

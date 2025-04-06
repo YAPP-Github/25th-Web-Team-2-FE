@@ -9,14 +9,15 @@ import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
 import { Researcher } from '.';
 
-import useSessionStorage from '@/hooks/useSessionStorage';
 import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { useSession } from 'next-auth/react';
 
 const ResearcherForm = () => {
-  const { value: oauthEmail } = useSessionStorage('email');
-  const { value: provider } = useSessionStorage('provider');
-
   const { mutate: joinResearcher } = useResearcherJoinMutation();
+
+  const { data: session } = useSession();
+  const oauthEmail = session?.oauthEmail;
+  const provider = session?.provider;
 
   const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
 
@@ -45,7 +46,7 @@ const ResearcherForm = () => {
       researcherMethods.setValue('oauthEmail', oauthEmail);
       researcherMethods.setValue('provider', provider as 'GOOGLE' | 'NAVER');
     }
-  }, [oauthEmail, researcherMethods, provider]);
+  }, [researcherMethods, oauthEmail, provider]);
 
   return (
     <FormProvider {...researcherMethods}>

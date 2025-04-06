@@ -9,14 +9,15 @@ import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
 import { Participant } from '.';
 
-import useSessionStorage from '@/hooks/useSessionStorage';
 import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
+import { useSession } from 'next-auth/react';
 
 const ParticipantForm = () => {
-  const { value: oauthEmail } = useSessionStorage('email');
-  const { value: provider } = useSessionStorage('provider');
+  const { data: session } = useSession();
+  const oauthEmail = session?.oauthEmail;
+  const provider = session?.provider;
 
   const { mutate: joinParticipant } = useParticipantJoinMutation();
 
@@ -64,7 +65,7 @@ const ParticipantForm = () => {
       participantMethods.setValue('oauthEmail', oauthEmail);
       participantMethods.setValue('provider', provider as 'GOOGLE' | 'NAVER');
     }
-  }, [oauthEmail, participantMethods, provider]);
+  }, [participantMethods, oauthEmail, provider]);
 
   return (
     <FormProvider {...participantMethods}>
