@@ -48,7 +48,7 @@ const ExperimentPostContainer = () => {
       </div>
 
       {/* 공고 목록 */}
-      <ExperimentPostCardListContainer filters={filters} isLoading={isUserInfoLoading} />
+      <ExperimentPostCardListContainer filters={filters} isUserInfoLoading={isUserInfoLoading} />
     </div>
   );
 };
