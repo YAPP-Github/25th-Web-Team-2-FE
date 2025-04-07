@@ -15,7 +15,7 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 import Icon from '@/components/Icon';
 
 const ExperimentPostContainer = () => {
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+  const { userInfo, isLoading: isUserInfoLoading, isSessionReady } = useUserInfo();
 
   const {
     filters,
@@ -23,7 +23,7 @@ const ExperimentPostContainer = () => {
     handleFilterChange,
     handleToggleRecruitStatus,
     handleResetFilter,
-  } = useExperimentFilters(userInfo);
+  } = useExperimentFilters(isSessionReady, userInfo);
 
   return (
     <div className={postContainerLayout}>
@@ -48,7 +48,7 @@ const ExperimentPostContainer = () => {
       </div>
 
       {/* 공고 목록 */}
-      <ExperimentPostCardListContainer filters={filters} isLoading={isUserInfoLoading} />
+      <ExperimentPostCardListContainer filters={filters} isUserInfoLoading={isUserInfoLoading} />
     </div>
   );
 };

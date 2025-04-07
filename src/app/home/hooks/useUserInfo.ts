@@ -1,22 +1,32 @@
 'use client';
+
+import { useSession } from 'next-auth/react';
+
 import useParticipantInfoQuery from './useParticipantInfoQuery';
 import useResearcherInfoQuery from './useResearcherInfoQuery';
 
 import { ROLE } from '@/constants/config';
-import useSessionStorage from '@/hooks/useSessionStorage';
 
 const useUserInfo = () => {
-  const { value: role } = useSessionStorage('role');
-  const isParticipant = role === ROLE.participant;
-  const isResearcher = role === ROLE.researcher;
+  const { data: session, status } = useSession();
+
+  const role = session?.role;
+  const isSessionReady = status !== 'loading';
+  const isParticipant = isSessionReady && role === ROLE.participant;
+  const isResearcher = isSessionReady && role === ROLE.researcher;
 
   const participantQuery = useParticipantInfoQuery({ enabled: isParticipant });
   const researcherQuery = useResearcherInfoQuery({ enabled: isResearcher });
 
+  const isLoading = !isSessionReady || participantQuery.isLoading || researcherQuery.isLoading;
+
   return {
     userInfo: isParticipant ? participantQuery.data : researcherQuery.data,
-    isLoading: participantQuery.isLoading || researcherQuery.isLoading,
+    isLoading,
     isError: participantQuery.isError || researcherQuery.isError,
+    isSessionReady,
+    isResearcher,
+    isParticipant,
   };
 };
 

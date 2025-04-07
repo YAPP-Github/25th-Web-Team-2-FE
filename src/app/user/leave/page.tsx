@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
@@ -68,7 +69,7 @@ const LeavePage = () => {
 
     leave(formattedData, {
       onSuccess: () => {
-        router.push('/user/success');
+        signOut({ callbackUrl: '/user/success' });
       },
     });
   };

@@ -15,10 +15,13 @@ import Spinner from '@/components/Spinner/Spinner';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
-  isLoading: boolean;
+  isUserInfoLoading: boolean;
 }
 
-const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListContainerProps) => {
+const ExperimentPostCardListContainer = ({
+  filters,
+  isUserInfoLoading,
+}: PostCardListContainerProps) => {
   const {
     data: postListData,
     hasNextPage,
@@ -26,9 +29,9 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
     isFetchingNextPage,
     isFetching,
     isLoading: isListLoading,
-  } = useExperimentPostListQuery(filters, isLoading);
+  } = useExperimentPostListQuery(filters, isUserInfoLoading);
 
-  if (isListLoading) {
+  if (isUserInfoLoading || isListLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />

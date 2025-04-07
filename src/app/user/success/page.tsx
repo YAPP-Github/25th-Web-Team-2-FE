@@ -1,8 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
 
 import {
   homeLink,
@@ -15,15 +12,8 @@ import {
 
 import JoinSuccess from '@/assets/images/joinSuccess.svg';
 import Logo from '@/assets/images/logo.svg';
-import useSessionStorage from '@/hooks/useSessionStorage';
 
 const LeaveSuccessPage = () => {
-  const { clear } = useSessionStorage();
-
-  useEffect(() => {
-    clear();
-  }, []);
-
   return (
     <div className={leaveSuccessLayout}>
       <div className={leaveTitleContainer}>
