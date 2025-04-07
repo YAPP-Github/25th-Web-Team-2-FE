@@ -6,7 +6,6 @@ import { contentContainer, selectItem, triggerWrapper } from './Menu.css';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import Icon from '@/components/Icon';
-import useSessionStorage from '@/hooks/useSessionStorage';
 import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
@@ -17,10 +16,8 @@ interface MenuProps {
 
 const Menu = ({ userInfo }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { clear } = useSessionStorage();
 
   const handleLogout = async () => {
-    clear();
     logoutUser();
     await logout();
   };
