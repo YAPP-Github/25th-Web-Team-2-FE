@@ -1,9 +1,9 @@
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 import { ServiceAgreeCheck } from '../JoinPage.types';
 
 import { ROLE } from '@/constants/config';
-import { useSession } from 'next-auth/react';
 
 interface UseServiceAgreeCheckProps {
   onCheckAdConsent: (checked: boolean) => void;
