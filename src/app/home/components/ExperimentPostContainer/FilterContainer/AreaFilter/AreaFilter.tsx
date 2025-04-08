@@ -29,7 +29,7 @@ import {
 import { ExperimentPostListFilters } from '@/apis/post';
 import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
 import { AreaAll } from '@/app/home/home.types';
-import { getRegionFilterText, isCheckedAreaAll } from '@/app/home/home.utils';
+import { getRegionFilterText } from '@/app/home/home.utils';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
@@ -52,8 +52,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   // region과 area 모두 선택했을 때, 아무것도 선택 안되었을 때
   const isValidSaveButton = !selectedRegion || (selectedRegion && selectedAreaList.length > 0);
 
-  const isValidAreas =
-    selectedAreaList.length < MAX_SELECTED_AREAS && isCheckedAreaAll(selectedAreas);
+  const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
 
   const { data: postRegion } = usePostRegionCountQuery(selectedRegion);
   const { data: postAreas } = usePostAreaCountQuery(selectedRegion);
@@ -67,20 +66,34 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     setSelectedAreas({});
   };
 
-  const handleClickRegion = (area: RegionType) => {
-    setSelectedRegion(area);
+  const handleClickRegion = (region: RegionType) => {
+    setSelectedRegion(region);
     setSelectedAreas({});
   };
 
-  const handleClickArea = (subArea: string) => {
-    if (AREA_ALL.includes(subArea as AreaAll)) {
-      setSelectedAreas((prev) => ({ [subArea]: !prev[subArea] }));
-    } else {
-      setSelectedAreas((prev) => ({
-        ...prev,
-        [subArea]: !prev[subArea],
-      }));
+  const handleClickArea = (area: string) => {
+    const isClickAreaAll = AREA_ALL.includes(area as AreaAll);
+
+    // 전체 지역을 클릭한 경우 - 기존 선택을 모두 지우고 AreaAll만 토글
+    if (isClickAreaAll) {
+      const targetArea = selectedAreas[area];
+      setSelectedAreas({ [area]: !targetArea });
+      return;
     }
+
+    // 전체 지역이 선택되어 있는지 확인
+    const hasSelectedAreaAll = AREA_ALL.some((area) => selectedAreas[area]);
+
+    // 전체 지역이 이미 선택되어 있는데 다른 지역을 클릭한 경우
+    if (hasSelectedAreaAll) {
+      setSelectedAreas({ [area]: !selectedAreas[area] });
+      return;
+    }
+
+    setSelectedAreas((prev) => ({
+      ...prev,
+      [area]: !prev[area],
+    }));
   };
 
   const handleClickSave = () => {
