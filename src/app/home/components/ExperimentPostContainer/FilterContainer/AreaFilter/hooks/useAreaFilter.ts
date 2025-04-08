@@ -6,6 +6,14 @@ import { RegionType } from '@/types/filter';
 
 const MAX_SELECTED_AREAS = 5;
 
+const isAreaAllType = (area: string) => {
+  return AREA_ALL.includes(area as AreaAll);
+};
+
+const hasSelectedAreaAll = (selectedAreas: Record<string, boolean>) => {
+  return AREA_ALL.some((area) => selectedAreas[area]);
+};
+
 const useAreaFilter = () => {
   const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
   const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
@@ -13,7 +21,7 @@ const useAreaFilter = () => {
 
   const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
 
-  // 저장 버튼 활성화 조건: region과 area 모두 선택했을 때, 아무것도 선택 안되었을 때
+  // 저장 버튼 활성화 조건: region과 area 모두 선택했을 때 | 아무것도 선택 안되었을 때
   const isValidSelection = selectedRegion && selectedAreaList.length > 0;
   const isValidSaveButton = !selectedRegion || isValidSelection;
 
@@ -28,25 +36,12 @@ const useAreaFilter = () => {
   };
 
   const handleSelectArea = (area: string) => {
-    const isClickAreaAll = AREA_ALL.includes(area as AreaAll);
-
-    // 전체 지역을 클릭한 경우 - 기존 선택을 모두 지우고 AreaAll만 토글
-    if (isClickAreaAll) {
-      const targetArea = selectedAreas[area];
-      setSelectedAreas({ [area]: !targetArea });
-      return;
-    }
-
-    // 전체 지역이 선택되어 있는지 확인
-    const hasSelectedAreaAll = AREA_ALL.some((area) => selectedAreas[area]);
-
-    // 전체 지역이 이미 선택되어 있는데 다른 지역을 클릭한 경우
-    if (hasSelectedAreaAll) {
+    // 전체 지역을 클릭한 경우 | 전체 지역이 이미 선택되어 있는데 다른 지역을 클릭한 경우
+    if (isAreaAllType(area) || hasSelectedAreaAll(selectedAreas)) {
       setSelectedAreas({ [area]: !selectedAreas[area] });
       return;
     }
 
-    // 일반적인 토글 처리
     setSelectedAreas((prev) => ({
       ...prev,
       [area]: !prev[area],
