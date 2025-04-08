@@ -7,18 +7,15 @@ import { RegionType } from '@/types/filter';
 const MAX_SELECTED_AREAS = 5;
 
 const useAreaFilter = () => {
-  // 지역 상태 관리
   const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
   const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
-
-  // 선택된 지역 배열
   const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
 
-  // 선택 가능 여부
   const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
 
   // 저장 버튼 활성화 조건: region과 area 모두 선택했을 때, 아무것도 선택 안되었을 때
-  const isValidSaveButton = !selectedRegion || (selectedRegion && selectedAreaList.length > 0);
+  const isValidSelection = selectedRegion && selectedAreaList.length > 0;
+  const isValidSaveButton = !selectedRegion || isValidSelection;
 
   const handleReset = () => {
     setSelectedRegion(null);
@@ -57,16 +54,13 @@ const useAreaFilter = () => {
   };
 
   return {
-    // 상태
     selectedRegion,
     selectedAreas,
     selectedAreaList,
 
-    // 플래그
     isValidAreas,
     isValidSaveButton,
 
-    // 이벤트 핸들러
     handleReset,
     handleSelectRegion,
     handleSelectArea,
