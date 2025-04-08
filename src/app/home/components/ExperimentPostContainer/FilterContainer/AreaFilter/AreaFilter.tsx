@@ -23,18 +23,15 @@ import {
   areaOpacity,
 } from './AreaFilter.css';
 import FooterButtonContainer from './components/FooterButtonContainer/FooterButtonContainer';
+import useAreaFilter from './hooks/useAreaFilter';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
-import { AreaAll } from '@/app/home/home.types';
+import { REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
 import { getRegionFilterText } from '@/app/home/home.utils';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
-import { RegionType } from '@/types/filter';
-
-const MAX_SELECTED_AREAS = 5;
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
@@ -43,74 +40,40 @@ interface AreaFilterProps {
 
 // 지역 필터링
 const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
-  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
-  const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
-  const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
-
-  // region과 area 모두 선택했을 때, 아무것도 선택 안되었을 때
-  const isValidSaveButton = !selectedRegion || (selectedRegion && selectedAreaList.length > 0);
-
-  const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
+  const {
+    selectedRegion,
+    selectedAreas,
+    selectedAreaList,
+    isValidAreas,
+    isValidSaveButton,
+    handleReset,
+    handleSelectRegion,
+    handleSelectArea,
+  } = useAreaFilter();
 
   const { data: postRegion } = usePostRegionCountQuery(selectedRegion);
   const { data: postAreas } = usePostAreaCountQuery(selectedRegion);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const isSelected = Boolean(filters.region) || Boolean(filters.areas);
-
-  const handleReset = () => {
-    setSelectedRegion(null);
-    setSelectedAreas({});
-  };
-
-  const handleClickRegion = (region: RegionType) => {
-    setSelectedRegion(region);
-    setSelectedAreas({});
-  };
-
-  const handleClickArea = (area: string) => {
-    const isClickAreaAll = AREA_ALL.includes(area as AreaAll);
-
-    // 전체 지역을 클릭한 경우 - 기존 선택을 모두 지우고 AreaAll만 토글
-    if (isClickAreaAll) {
-      const targetArea = selectedAreas[area];
-      setSelectedAreas({ [area]: !targetArea });
-      return;
-    }
-
-    // 전체 지역이 선택되어 있는지 확인
-    const hasSelectedAreaAll = AREA_ALL.some((area) => selectedAreas[area]);
-
-    // 전체 지역이 이미 선택되어 있는데 다른 지역을 클릭한 경우
-    if (hasSelectedAreaAll) {
-      setSelectedAreas({ [area]: !selectedAreas[area] });
-      return;
-    }
-
-    setSelectedAreas((prev) => ({
-      ...prev,
-      [area]: !prev[area],
-    }));
-  };
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const isFilterSelected = Boolean(filters.region) || Boolean(filters.areas);
 
   const handleSave = () => {
-    setIsOpen(false);
+    setIsFilterOpen(false);
     onChange('region', selectedRegion);
     onChange('areas', selectedAreaList.length > 0 ? selectedAreaList : null);
   };
 
   return (
-    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+    <Popover.Root open={isFilterOpen} onOpenChange={setIsFilterOpen}>
       <Popover.Trigger
         className={triggerWrapper}
         style={assignInlineVars({
-          '--trigger-color': isSelected ? colors.text01 : colors.text06,
-          '--trigger-bg': isSelected ? colors.field09 : colors.field01,
+          '--trigger-color': isFilterSelected ? colors.text01 : colors.text06,
+          '--trigger-bg': isFilterSelected ? colors.field09 : colors.field01,
         })}
       >
         <span>{getRegionFilterText(filters.region, filters.areas)}</span>
-        <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
+        <Icon icon="Chevron" width={20} rotate={isFilterOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className={regionContentContainer}>
@@ -120,7 +83,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
                 <button
                   key={idx}
                   className={areaButtonRecipe({ selected: area.name === selectedRegion })}
-                  onClick={() => handleClickRegion(area.name)}
+                  onClick={() => handleSelectRegion(area.name)}
                 >
                   <span
                     className={`${areaName} ${area.name === selectedRegion && selectedRegionName}`}
@@ -159,7 +122,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
                       type="checkbox"
                       className={checkbox}
                       checked={!!selectedAreas[subArea.name]}
-                      onChange={() => handleClickArea(subArea.name)}
+                      onChange={() => handleSelectArea(subArea.name)}
                       disabled={!isValidAreas && !selectedAreas[subArea.name]}
                     />
                     {!!selectedAreas[subArea.name] ? (
