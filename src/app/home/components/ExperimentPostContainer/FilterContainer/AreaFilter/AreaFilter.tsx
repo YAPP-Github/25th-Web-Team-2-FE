@@ -20,14 +20,9 @@ import {
   checkbox,
   subAreaInfo,
   placeholderArea,
-  footerContainer,
-  footerButtonContainer,
-  buttonRecipe,
   areaOpacity,
-  infoText,
-  buttonContainer,
-  infoTextContainer,
 } from './AreaFilter.css';
+import FooterButtonContainer from './components/FooterButtonContainer/FooterButtonContainer';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
@@ -99,7 +94,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     }));
   };
 
-  const handleClickSave = () => {
+  const handleSave = () => {
     setIsOpen(false);
     onChange('region', selectedRegion);
     onChange('areas', selectedAreaList.length > 0 ? selectedAreaList : null);
@@ -186,26 +181,11 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
               )}
             </div>
           </div>
-          <div className={footerContainer}>
-            <div className={footerButtonContainer}>
-              <div className={infoTextContainer}>
-                <Icon icon="Information" width={16} height={16} />
-                <span className={infoText}>최대 5개까지 선택할 수 있어요</span>
-              </div>
-              <div className={buttonContainer}>
-                <button className={buttonRecipe({ type: 'reset' })} onClick={handleReset}>
-                  초기화
-                </button>
-                <button
-                  onClick={handleClickSave}
-                  className={buttonRecipe({ type: 'save' })}
-                  disabled={!isValidSaveButton}
-                >
-                  저장
-                </button>
-              </div>
-            </div>
-          </div>
+          <FooterButtonContainer
+            handleReset={handleReset}
+            handleSave={handleSave}
+            isValidSaveButton={isValidSaveButton}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
