@@ -45,7 +45,7 @@ interface AreaFilterProps {
 
 // 지역 필터링
 const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
-  const [selectedRegion, setSelectedRegion] = useState<RegionType | 'ALL' | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
   const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
   const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
 
@@ -60,7 +60,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
 
   const isSelected = Boolean(filters.region) || Boolean(filters.areas);
 
-  const handleClickRegion = (area: RegionType | 'ALL') => {
+  const handleClickRegion = (area: RegionType) => {
     setSelectedRegion(area);
     setSelectedAreas({});
   };
@@ -98,17 +98,6 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
         <Popover.Content className={regionContentContainer}>
           <div className={contentWrapper}>
             <div className={areaListContainer}>
-              <button
-                className={areaButtonRecipe({ selected: selectedRegion === 'ALL' })}
-                onClick={() => handleClickRegion('ALL')}
-              >
-                <span className={`${areaName} ${selectedRegion === 'ALL' && selectedRegionName}`}>
-                  {REGION_MAPPER['ALL']}
-                </span>
-                <span className={areaCount}>
-                  {postRegion?.reduce((acc, cur) => acc + cur.count, 0)}
-                </span>
-              </button>
               {postRegion?.map((area, idx) => (
                 <button
                   key={idx}
