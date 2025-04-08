@@ -54,8 +54,8 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   const { data: postRegion } = usePostRegionCountQuery(selectedRegion);
   const { data: postAreas } = usePostAreaCountQuery(selectedRegion);
 
+  const isFiltered = Boolean(filters.region) || Boolean(filters.areas);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const isFilterSelected = Boolean(filters.region) || Boolean(filters.areas);
 
   const handleSave = () => {
     setIsFilterOpen(false);
@@ -68,8 +68,8 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
       <Popover.Trigger
         className={triggerWrapper}
         style={assignInlineVars({
-          '--trigger-color': isFilterSelected ? colors.text01 : colors.text06,
-          '--trigger-bg': isFilterSelected ? colors.field09 : colors.field01,
+          '--trigger-color': isFiltered ? colors.text01 : colors.text06,
+          '--trigger-bg': isFiltered ? colors.field09 : colors.field01,
         })}
       >
         <span>{getRegionFilterText(filters.region, filters.areas)}</span>

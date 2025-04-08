@@ -22,8 +22,7 @@ const useAreaFilter = () => {
   const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
 
   // 저장 버튼 활성화 조건: region과 area 모두 선택했을 때 | 아무것도 선택 안되었을 때
-  const isValidSelection = selectedRegion && selectedAreaList.length > 0;
-  const isValidSaveButton = !selectedRegion || isValidSelection;
+  const isValidSaveButton = !selectedRegion || selectedAreaList.length > 0;
 
   const handleReset = () => {
     setSelectedRegion(null);
