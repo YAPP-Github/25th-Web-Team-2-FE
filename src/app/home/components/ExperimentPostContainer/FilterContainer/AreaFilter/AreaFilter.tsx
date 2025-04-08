@@ -49,7 +49,9 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
   const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
 
-  const isValidSaveButton = selectedRegion && selectedAreaList.length > 0;
+  // region과 area 모두 선택했을 때, 아무것도 선택 안되었을 때
+  const isValidSaveButton = !selectedRegion || (selectedRegion && selectedAreaList.length > 0);
+
   const isValidAreas =
     selectedAreaList.length < MAX_SELECTED_AREAS && isCheckedAreaAll(selectedAreas);
 
@@ -59,6 +61,11 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const isSelected = Boolean(filters.region) || Boolean(filters.areas);
+
+  const handleReset = () => {
+    setSelectedRegion(null);
+    setSelectedAreas({});
+  };
 
   const handleClickRegion = (area: RegionType) => {
     setSelectedRegion(area);
@@ -165,13 +172,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
           </div>
           <div className={footerContainer}>
             <div className={footerButtonContainer}>
-              <button
-                className={buttonRecipe({ type: 'reset' })}
-                onClick={() => {
-                  setSelectedRegion(null);
-                  setSelectedAreas({});
-                }}
-              >
+              <button className={buttonRecipe({ type: 'reset' })} onClick={handleReset}>
                 초기화
               </button>
               <button
