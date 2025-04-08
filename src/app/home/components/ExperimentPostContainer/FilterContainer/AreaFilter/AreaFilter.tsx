@@ -24,6 +24,9 @@ import {
   footerButtonContainer,
   buttonRecipe,
   areaOpacity,
+  infoText,
+  buttonContainer,
+  infoTextContainer,
 } from './AreaFilter.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
@@ -185,16 +188,22 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
           </div>
           <div className={footerContainer}>
             <div className={footerButtonContainer}>
-              <button className={buttonRecipe({ type: 'reset' })} onClick={handleReset}>
-                초기화
-              </button>
-              <button
-                onClick={handleClickSave}
-                className={buttonRecipe({ type: 'save' })}
-                disabled={!isValidSaveButton}
-              >
-                저장
-              </button>
+              <div className={infoTextContainer}>
+                <Icon icon="Information" width={16} height={16} />
+                <span className={infoText}>최대 5개까지 선택할 수 있어요</span>
+              </div>
+              <div className={buttonContainer}>
+                <button className={buttonRecipe({ type: 'reset' })} onClick={handleReset}>
+                  초기화
+                </button>
+                <button
+                  onClick={handleClickSave}
+                  className={buttonRecipe({ type: 'save' })}
+                  disabled={!isValidSaveButton}
+                >
+                  저장
+                </button>
+              </div>
             </div>
           </div>
         </Popover.Content>
