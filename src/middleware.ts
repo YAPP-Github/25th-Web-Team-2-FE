@@ -63,5 +63,12 @@ export async function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 지정
 export const config = {
-  matcher: ['/join/:path*', '/my-posts/:path*', '/user/profile/:path*', '/user/leave/:path*'],
+  matcher: [
+    '/join/:path*',
+    '/my-posts',
+    '/user/profile/:path*',
+    '/user/leave/:path*',
+    '/edit/:path*',
+    '/upload',
+  ],
 };

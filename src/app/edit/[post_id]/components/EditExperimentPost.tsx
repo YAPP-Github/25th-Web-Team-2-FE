@@ -5,8 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -26,7 +24,6 @@ import {
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
-import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
@@ -74,24 +71,6 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
       setAddContact(!!applyMethodData.phoneNum);
     }
   }, [applyMethodData]);
-
-  // 로그인 유저가 아니거나 작성자가 아닐 경우 홈으로 이동
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
-  useEffect(() => {
-    if ((!isLoading && !isAuthor) || (!isUserInfoLoading && !userInfo)) {
-      router.replace('/');
-    }
-  }, [isAuthor, isLoading, isUserInfoLoading, router, userInfo]);
-
-  // todo 로딩 스피너 추가
-  if (isLoading) {
-    return (
-      <>
-        <Spinner />
-        <p className={emptySubTitle}>로딩중..</p>
-      </>
-    );
-  }
 
   const experimentDateChecked =
     form.getValues('startDate') === null && form.getValues('endDate') === null;

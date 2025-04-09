@@ -35,7 +35,7 @@ const ExperimentPostCardListContainer = ({
     return (
       <div className={emptyViewLayout}>
         <Spinner />
-        <p className={emptySubTitle}>로딩중..</p>
+        <p className={emptySubTitle}>로딩중</p>
       </div>
     );
   }
