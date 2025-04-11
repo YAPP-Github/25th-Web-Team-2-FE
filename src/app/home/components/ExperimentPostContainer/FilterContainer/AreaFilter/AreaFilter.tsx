@@ -8,25 +8,14 @@ import {
   triggerWrapper,
   regionContentContainer,
   contentWrapper,
-  areaListContainer,
-  areaName,
-  selectedRegionName,
-  areaCount,
-  areaButtonRecipe,
   verticalLine,
-  subAreaListContainer,
-  subAreaItem,
-  selectedSubAreaLabel,
-  checkbox,
-  subAreaInfo,
-  placeholderArea,
-  areaOpacity,
 } from './AreaFilter.css';
+import AreaContainer from './components/AreaContainer/AreaContainer';
 import FooterButtonContainer from './components/FooterButtonContainer/FooterButtonContainer';
+import RegionContainer from './components/RegionContainer/RegionContainer';
 import useAreaFilter from './hooks/useAreaFilter';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import { REGION_MAPPER, AREA_MAPPER } from '@/app/home/home.constants';
 import { getRegionFilterText } from '@/app/home/home.utils';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
@@ -38,7 +27,6 @@ interface AreaFilterProps {
   onChange: (key: string, value: string | string[] | number | null) => void;
 }
 
-// 지역 필터링
 const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
   const {
     selectedRegion,
@@ -51,8 +39,8 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     handleSelectArea,
   } = useAreaFilter();
 
-  const { data: postRegion } = usePostRegionCountQuery(selectedRegion);
-  const { data: postAreas } = usePostAreaCountQuery(selectedRegion);
+  const { data: experimentPostRegion } = usePostRegionCountQuery(selectedRegion);
+  const { data: experimentPostAreas } = usePostAreaCountQuery(selectedRegion);
 
   const isFiltered = Boolean(filters.region) || Boolean(filters.areas);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -78,71 +66,19 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
       <Popover.Portal>
         <Popover.Content className={regionContentContainer}>
           <div className={contentWrapper}>
-            <div className={areaListContainer}>
-              {postRegion?.map((area, idx) => (
-                <button
-                  key={idx}
-                  className={areaButtonRecipe({ selected: area.name === selectedRegion })}
-                  onClick={() => handleSelectRegion(area.name)}
-                >
-                  <span
-                    className={`${areaName} ${area.name === selectedRegion && selectedRegionName}`}
-                  >
-                    {REGION_MAPPER[area.name]}
-                  </span>
-                  <span className={areaCount}>{area.count}</span>
-                </button>
-              ))}
-            </div>
+            <RegionContainer
+              experimentPostRegion={experimentPostRegion}
+              selectedRegion={selectedRegion}
+              handleSelectRegion={handleSelectRegion}
+            />
             <span className={verticalLine} />
-            <div className={subAreaListContainer}>
-              {selectedRegion ? (
-                postAreas?.map((subArea, idx) => (
-                  <label
-                    key={idx}
-                    className={`${subAreaItem} 
-                      ${selectedAreas[subArea.name] && selectedSubAreaLabel}`}
-                  >
-                    <div
-                      className={subAreaInfo}
-                      style={assignInlineVars({
-                        [areaOpacity]: !isValidAreas && !selectedAreas[subArea.name] ? '0.6' : '1',
-                      })}
-                    >
-                      <span
-                        className={`${areaName} ${
-                          selectedAreas[subArea.name] && selectedRegionName
-                        }`}
-                      >
-                        {AREA_MAPPER[subArea.name]}
-                      </span>
-                      <span className={areaCount}>{subArea.count}</span>
-                    </div>
-                    <input
-                      type="checkbox"
-                      className={checkbox}
-                      checked={!!selectedAreas[subArea.name]}
-                      onChange={() => handleSelectArea(subArea.name)}
-                      disabled={!isValidAreas && !selectedAreas[subArea.name]}
-                    />
-                    {!!selectedAreas[subArea.name] ? (
-                      <Icon
-                        icon="CheckSquareFill"
-                        width={20}
-                        height={20}
-                        color={colors.primaryMint}
-                      />
-                    ) : (
-                      <Icon icon="CheckSquareEmpty" width={20} height={20} />
-                    )}
-                  </label>
-                ))
-              ) : (
-                <div className={placeholderArea}>
-                  <span>지역을 먼저 선택해 주세요</span>
-                </div>
-              )}
-            </div>
+            <AreaContainer
+              experimentPostAreas={experimentPostAreas}
+              selectedRegion={selectedRegion}
+              handleSelectArea={handleSelectArea}
+              isValidAreas={isValidAreas}
+              selectedAreas={selectedAreas}
+            />
           </div>
           <FooterButtonContainer
             handleReset={handleReset}
