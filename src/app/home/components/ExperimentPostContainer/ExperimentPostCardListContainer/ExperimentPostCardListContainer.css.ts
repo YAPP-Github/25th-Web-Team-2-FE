@@ -32,3 +32,30 @@ export const watchMoreButton = style({
 export const loadingMoreButton = style({
   height: '4.6rem',
 });
+
+export const allPostsViewedContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '20rem',
+  gap: '1.2rem',
+});
+
+export const allPostsViewedTitle = style({
+  ...fonts.body.normal.SB16,
+  color: colors.text05,
+  textAlign: 'center',
+});
+
+export const allPostsViewedSubTitle = style({
+  ...fonts.label.large.M14,
+  color: colors.text03,
+  textAlign: 'center',
+});
+
+export const allPostsViewedContentContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.4rem',
+});
