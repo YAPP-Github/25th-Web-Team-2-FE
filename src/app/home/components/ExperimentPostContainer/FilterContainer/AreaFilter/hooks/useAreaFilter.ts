@@ -30,7 +30,7 @@ const useAreaFilter = () => {
   };
 
   const handleSelectRegion = (region: RegionType) => {
-    setSelectedRegion(region);
+    setSelectedRegion((prev) => (prev === region ? null : region));
     setSelectedAreas({});
   };
 
