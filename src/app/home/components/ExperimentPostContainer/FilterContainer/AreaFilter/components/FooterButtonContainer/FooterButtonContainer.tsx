@@ -1,11 +1,11 @@
 import {
   buttonContainer,
+  buttonRecipe,
   footerButtonContainer,
   footerContainer,
   infoText,
   infoTextContainer,
 } from './FooterButtonContainer.css';
-import { buttonRecipe } from '../../AreaFilter.css';
 
 import Icon from '@/components/Icon';
 

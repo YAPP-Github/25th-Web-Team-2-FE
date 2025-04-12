@@ -1,5 +1,5 @@
-import { regionContainer, selectedRegionName } from './RegionContainer.css';
-import { areaButtonRecipe, areaCount, areaName } from '../../AreaFilter.css';
+import { areaButtonRecipe, regionContainer, selectedRegionName } from './RegionContainer.css';
+import { areaCount, areaName } from '../../AreaFilter.css';
 
 import { ExperimentPostRegion } from '@/apis/post';
 import { REGION_MAPPER } from '@/app/home/home.constants';
@@ -18,9 +18,9 @@ const RegionContainer = ({
 }: RegionContainerProps) => {
   return (
     <div className={regionContainer}>
-      {experimentPostRegion?.map((area, idx) => (
+      {experimentPostRegion?.map((area) => (
         <button
-          key={idx}
+          key={area.name}
           className={areaButtonRecipe({ selected: area.name === selectedRegion })}
           onClick={() => handleSelectRegion(area.name)}
         >

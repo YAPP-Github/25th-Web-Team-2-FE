@@ -1,8 +1,21 @@
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+
+import {
+  areaOpacity,
+  checkbox,
+  placeholderArea,
+  selectedRegionName,
+  selectedSubAreaLabel,
+  subAreaInfo,
+  subAreaItem,
+  subAreaListContainer,
+} from './AreaContainer.css';
+import { areaCount, areaName } from '../../AreaFilter.css';
+
 import { ExperimentPostArea } from '@/apis/post';
 import { AREA_MAPPER } from '@/app/home/home.constants';
 import Icon from '@/components/Icon';
-import { areaOpacity, selectedSubAreaLabel, subAreaInfo, subAreaItem, subAreaListContainer } from './AreaContainer.css';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
+import { colors } from '@/styles/colors';
 
 interface AreaContainerProps {
   selectedRegion: string | null;

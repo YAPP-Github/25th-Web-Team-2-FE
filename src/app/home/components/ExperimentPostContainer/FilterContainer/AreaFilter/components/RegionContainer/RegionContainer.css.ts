@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 
@@ -17,4 +18,33 @@ export const regionContainer = style({
 
 export const selectedRegionName = style({
   color: colors.textPrimary,
+});
+
+export const areaButtonRecipe = recipe({
+  base: {
+    display: 'flex',
+    gap: '0.4rem',
+    alignItems: 'center',
+    padding: '0.6rem 1.2rem',
+    borderRadius: '1.2rem',
+  },
+  variants: {
+    selected: {
+      true: {
+        backgroundColor: colors.primaryTinted,
+        outline: `0.1rem solid ${colors.lineTinted}`,
+        fontWeight: 'bold',
+      },
+      false: {
+        selectors: {
+          '&:hover': {
+            backgroundColor: colors.field03,
+          },
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    selected: false,
+  },
 });
