@@ -99,6 +99,10 @@ export const ageInput = style({
       outline: 'none',
       border: `0.1rem solid ${colors.primaryMint}`,
     },
+
+    '&::placeholder': {
+      color: colors.text02,
+    },
   },
 });
 
