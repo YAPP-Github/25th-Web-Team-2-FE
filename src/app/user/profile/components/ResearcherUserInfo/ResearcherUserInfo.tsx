@@ -16,9 +16,9 @@ import { ResearcherResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
-import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { colors } from '@/styles/colors';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {

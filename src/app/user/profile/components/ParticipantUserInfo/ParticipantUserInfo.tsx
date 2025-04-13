@@ -21,9 +21,9 @@ import RadioButtonGroupContainer from '@/app/join/components/Participant/JoinInf
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
-import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { colors } from '@/styles/colors';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {

@@ -3,10 +3,9 @@
 import * as Tooltip from '@radix-ui/react-tooltip';
 
 import { tooltipContent } from './AreaTooltip.css';
+import ArrowTooltip from './ArrowTooltip';
 
 import Icon from '@/components/Icon';
-import ArrowTooltip from './ArrowTooltip';
-import { colors } from '@/styles/colors';
 
 const AreaTooltip = () => {
   return (
