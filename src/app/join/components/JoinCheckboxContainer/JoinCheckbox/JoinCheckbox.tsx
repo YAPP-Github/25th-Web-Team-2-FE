@@ -57,7 +57,7 @@ const JoinCheckbox = ({
           )}
         </div>
       </label>
-      {isArrow && <Icon icon="Chevron" width={20} height={20} cursor="pointer" />}
+      {/* {isArrow && <Icon icon="Chevron" width={20} height={20} cursor="pointer" />} */}
     </div>
   );
 };
