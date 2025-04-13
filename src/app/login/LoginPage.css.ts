@@ -10,14 +10,16 @@ export const loginLayout = style({
   justifyContent: 'center',
   backgroundColor: colors.field01,
   minWidth: '100rem',
-  height: 'calc(100vh - 12.2rem)',
   margin: '0 auto',
+  padding: '8.4rem 0',
 });
 
 export const loginPageLayout = style({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
   gap: '6.5rem',
+  minHeight: 'calc(100vh - 29rem)', // 29rem = footer(12.2rem) + padding 위/아래 (8.4rem * 2)
 });
 
 export const descriptionWrapper = style({
