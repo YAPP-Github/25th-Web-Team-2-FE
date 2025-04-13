@@ -14,6 +14,7 @@ import {
   joinInput,
   inputWrapper,
   inputLabel,
+  infoContainer,
 } from './JoinInput.css';
 
 import Icon from '@/components/Icon';
@@ -129,23 +130,35 @@ const JoinInput = <T extends FieldValues>({
                 </button>
               )}
             </div>
-            {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-            {maxLength && (
-              <span className={textCount}>
-                {field.value?.length || 0}/{maxLength}
-              </span>
-            )}
-            {isCount && count && (
-              <span className={textCount}>
-                {field.value?.length || 0}/{count}
-              </span>
-            )}
-            {tip && !fieldState.error && (
-              <div className={tipWrapper}>
-                {isTip && <span className={tipAlert}>Tip</span>}
-                <span>{tip}</span>
+            <div className={infoContainer}>
+              {/* 왼쪽: 에러 메시지 또는 헬퍼 텍스트 */}
+              <div>
+                {fieldState.error ? (
+                  <span className={errorMessage}>{fieldState.error.message}</span>
+                ) : (
+                  tip && (
+                    <div className={tipWrapper}>
+                      {isTip && <span className={tipAlert}>Tip</span>}
+                      <span>{tip}</span>
+                    </div>
+                  )
+                )}
               </div>
-            )}
+
+              {/* 오른쪽: 카운트 */}
+              <div>
+                {maxLength && (
+                  <span className={textCount}>
+                    {field.value?.length || 0}/{maxLength}
+                  </span>
+                )}
+                {isCount && count && (
+                  <span className={textCount}>
+                    {field.value?.length || 0}/{count}
+                  </span>
+                )}
+              </div>
+            </div>
           </>
         )}
       />
