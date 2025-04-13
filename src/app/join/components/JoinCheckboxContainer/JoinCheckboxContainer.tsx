@@ -39,6 +39,7 @@ const JoinCheckboxContainer = ({
         isChecked={isAllCheck}
         onChange={handleAllCheck}
         isAllCheck={true}
+        isArrow={false}
       />
 
       {/* 서비스 이용약관 동의 */}
