@@ -18,7 +18,6 @@ export const loginPageLayout = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '6.5rem',
-  paddingTop: '8.4rem',
 });
 
 export const descriptionWrapper = style({
@@ -37,12 +36,12 @@ export const sloganWrapper = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
   textAlign: 'center',
+  whiteSpace: 'pre-wrap',
 });
 
 export const loginCardContainer = style({
   display: 'flex',
   justifyContent: 'center',
   gap: '2rem',
-  marginBottom: '2.8rem',
   minHeight: '37rem',
 });
