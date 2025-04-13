@@ -45,7 +45,7 @@ const UserInfoHeader = ({ userInfo }: { userInfo: ParticipantResponse | Research
           <span>{userInfo.birthDate}</span>
           <span className={verticalLine} />
           <div className={emailWrapper}>
-            <span>ID</span>
+            <span className={subTitle}>ID</span>
             <span>{memberInfo.oauthEmail}</span>
           </div>
         </div>
