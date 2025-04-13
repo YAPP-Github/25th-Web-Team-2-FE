@@ -47,13 +47,25 @@ export const filterParticipantInfo = (data?: ParticipantResponse | ResearcherRes
   return null;
 };
 
-export const calculateAgeFromBirthDate = (birthDate?: string) => {
+/**
+ * 만 나이 계산 함수
+ * @param birthDate - 'YYYY-MM-DD' 형식의 생년월일 문자열
+ * @returns 만 나이
+ */
+export const calculateAgeFromBirthDate = (birthDate: string) => {
   if (!birthDate) return;
 
   const today = new Date();
-  const date = new Date(birthDate);
-  const age = today.getFullYear() - date.getFullYear();
-  return age;
+  const birth = new Date(birthDate);
+
+  const yearDiff = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  const dayDiff = today.getDate() - birth.getDate();
+
+  // 생일이 지난 경우
+  const hasBirthdayPassed = monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0);
+
+  return hasBirthdayPassed ? yearDiff : yearDiff - 1;
 };
 
 export const getContactTargetFilterText = (age?: number, gender?: GenderValue) => {

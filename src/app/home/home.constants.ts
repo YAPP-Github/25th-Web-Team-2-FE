@@ -21,7 +21,7 @@ export const REGION_MAPPER: Record<string, string> = {
 
 export const AREA_MAPPER: Record<string, string> = {
   // 서울 부분 (기존 항목)
-  SEOUL_ALL: '서울 전체',
+  SEOUL_ALL: '전체',
   GEUMCHEONGU: '금천구',
   NOWONGU: '노원구',
   DOBONGGU: '도봉구',
@@ -49,7 +49,7 @@ export const AREA_MAPPER: Record<string, string> = {
   GANGSEOGU: '강서구',
 
   // 경기
-  GYEONGGI_ALL: '경기 전체',
+  GYEONGGI_ALL: '전체',
   GAPYEONGGUN: '가평군',
   GOYANG_DEOKYANGGU: '고양 덕양구',
   GOYANG_ILSANDONGGU: '고양 일산동구',
@@ -94,7 +94,7 @@ export const AREA_MAPPER: Record<string, string> = {
   HWASEONGSI: '화성시',
 
   // 인천
-  INCHOEN_ALL: '인천 전체',
+  INCHOEN_ALL: '전체',
   GANGHWAGUN: '강화군',
   GYEYANGGU: '계양구',
   NAMDONGGU: '남동구',
@@ -107,7 +107,7 @@ export const AREA_MAPPER: Record<string, string> = {
   INCHEON_JUNGGU: '인천 중구',
 
   // 강원
-  GANGWON_ALL: '강원 전체',
+  GANGWON_ALL: '전체',
   GANGNEUNGSI: '강릉시',
   GANGWON_GOSEONGGUN: '강원 고성군',
   DONGHAESI: '동해시',
@@ -128,7 +128,7 @@ export const AREA_MAPPER: Record<string, string> = {
   HOENGSEONGGUN: '횡성군',
 
   // 대전
-  DAEJEON_ALL: '대전 전체',
+  DAEJEON_ALL: '전체',
   DAEJEON_DAEDOKGU: '대전 대덕구',
   DAEJEON_DONGGU: '대전 동구',
   DAEJEON_SEOGU: '대전 서구',
@@ -139,7 +139,7 @@ export const AREA_MAPPER: Record<string, string> = {
   SEJONG: '세종',
 
   // 충남
-  CHUNGNAM_ALL: '충남 전체',
+  CHUNGNAM_ALL: '전체',
   GYERYONGSI: '계룡시',
   GONGJUSI: '공주시',
   GEUMSANGUN: '금산군',
@@ -156,7 +156,7 @@ export const AREA_MAPPER: Record<string, string> = {
   CHEONGYANG: '청양군',
 
   // 충북
-  CHUNGBUK_ALL: '충북 전체',
+  CHUNGBUK_ALL: '전체',
   GUAESANGUN: '괴산군',
   DANYANGGUN: '단양군',
   BOEUNGUN: '보은군',
@@ -172,7 +172,7 @@ export const AREA_MAPPER: Record<string, string> = {
   CHUNGJUSI: '충주시',
 
   // 경남
-  GYEONGNAM_ALL: '경남 전체',
+  GYEONGNAM_ALL: '전체',
   GEOJESI: '거제시',
   GEOCHANGGUN: '거창군',
   GYEONGNAM_GOSEONGGUN: '경남 고성군',
@@ -197,7 +197,7 @@ export const AREA_MAPPER: Record<string, string> = {
   HAPCHEONGUN: '합천군',
 
   // 경북
-  GYEONGBUK_ALL: '경북 전체',
+  GYEONGBUK_ALL: '전체',
   GYEONGSANSI: '경산시',
   GYEONGJUSI: '경주시',
   GORYEONGGUN: '고령군',
@@ -223,7 +223,7 @@ export const AREA_MAPPER: Record<string, string> = {
   POHANG_BUKGU: '포항 북구',
 
   // 전남
-  JEONNAM_ALL: '전남 전체',
+  JEONNAM_ALL: '전체',
   GANGJINGUN: '강진군',
   GOHEUNGGUN: '고흥군',
   GOKSEONGGUN: '곡성군',
@@ -248,7 +248,7 @@ export const AREA_MAPPER: Record<string, string> = {
   HWASUNGUN: '화순군',
 
   // 전북
-  JEONBUK_ALL: '전북 전체',
+  JEONBUK_ALL: '전체',
   GOCHANGGUN: '고창군',
   GUNSAN: '군산시',
   GIMJESI: '김제시',
@@ -266,7 +266,7 @@ export const AREA_MAPPER: Record<string, string> = {
   JINAN: '진안군',
 
   // 대구
-  DAEGU_ALL: '대구 전체',
+  DAEGU_ALL: '전체',
   GUNWEEGUN: '군위군',
   DAEGU_NAMGU: '대구 남구',
   DAEGU_DALSEOGU: '대구 달서구',
@@ -278,7 +278,7 @@ export const AREA_MAPPER: Record<string, string> = {
   DAEGU_JUNGGU: '대구 중구',
 
   // 광주
-  GWANGJU_ALL: '광주 전체',
+  GWANGJU_ALL: '전체',
   GWANGJU_GWANGSANGU: '광주 광산구',
   GWANGJU_NAMGU: '광주 남구',
   GWANGJU_DONGGU: '광주 동구',
@@ -286,7 +286,7 @@ export const AREA_MAPPER: Record<string, string> = {
   GWANGJU_SEOGU: '광주 서구',
 
   // 부산
-  BUSAN_ALL: '부산 전체',
+  BUSAN_ALL: '전체',
   BUSAN_GANGSEOGU: '부산 강서구',
   GEUMJEONGGU: '금정구',
   GIJANGGUN: '기장군',
@@ -305,7 +305,7 @@ export const AREA_MAPPER: Record<string, string> = {
   HAEUNDAEGU: '해운대구',
 
   // 울산
-  ULSAN_ALL: '울산 전체',
+  ULSAN_ALL: '전체',
   ULSAN_NAMGU: '울산 남구',
   ULSAN_DONGGU: '울산 동구',
   ULSAN_BUKGU: '울산 북구',
