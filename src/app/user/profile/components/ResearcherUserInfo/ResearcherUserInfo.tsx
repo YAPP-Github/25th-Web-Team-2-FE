@@ -4,7 +4,6 @@ import { Controller } from 'react-hook-form';
 
 import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
-import ButtonInput from '../ButtonInput/ButtonInput';
 import {
   leaveButton,
   updateButton,
@@ -19,6 +18,7 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   const { form, contactEmail, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({

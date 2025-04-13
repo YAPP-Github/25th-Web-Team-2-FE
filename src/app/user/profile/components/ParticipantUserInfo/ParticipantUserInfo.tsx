@@ -11,7 +11,6 @@ import {
 } from './ParticipantUserInfo.css';
 import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
-import ButtonInput from '../ButtonInput/ButtonInput';
 
 import { ParticipantResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
@@ -24,6 +23,7 @@ import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
 import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
   const { form, contactEmail, region, additionalRegion, handleSubmit, isLoading, isError } =

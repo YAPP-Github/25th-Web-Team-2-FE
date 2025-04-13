@@ -12,8 +12,8 @@ import JoinInput from '../../JoinInput/JoinInput';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
-import ButtonInput from '@/app/user/profile/components/ButtonInput/ButtonInput';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 
 interface JoinEmailStepProps {
   onNext: () => void;
