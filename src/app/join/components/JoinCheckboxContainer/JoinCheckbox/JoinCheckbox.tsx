@@ -19,7 +19,6 @@ interface JoinCheckboxProps {
   onChange: (e: any) => void;
   isRequired?: boolean;
   isAllCheck?: boolean;
-  isArrow?: boolean;
   isAlert?: boolean;
   labelClassName?: string;
   emptyCheckIcon?: React.ReactNode;
@@ -31,7 +30,6 @@ const JoinCheckbox = ({
   onChange,
   isRequired = false,
   isAllCheck = false,
-  isArrow = true,
   isAlert,
   labelClassName,
   emptyCheckIcon = <Icon icon="CheckSquareEmpty" cursor="pointer" />,
@@ -57,7 +55,6 @@ const JoinCheckbox = ({
           )}
         </div>
       </label>
-      {/* {isArrow && <Icon icon="Chevron" width={20} height={20} cursor="pointer" />} */}
     </div>
   );
 };

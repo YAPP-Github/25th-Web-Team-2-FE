@@ -8,7 +8,7 @@ import Icon from '@/components/Icon';
 
 const AreaTooltip = () => {
   return (
-    <Tooltip.Provider>
+    <Tooltip.Provider delayDuration={0}>
       <Tooltip.Root>
         <Tooltip.Trigger asChild>
           <button>

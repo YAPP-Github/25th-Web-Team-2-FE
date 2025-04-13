@@ -114,7 +114,6 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
                     label="[선택] 광고성 정보 이메일/SMS 수신 동의"
                     isChecked={field.value}
                     onChange={() => form.setValue('adConsent', !field.value)}
-                    isArrow={false}
                     emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
                   />
                 </div>
