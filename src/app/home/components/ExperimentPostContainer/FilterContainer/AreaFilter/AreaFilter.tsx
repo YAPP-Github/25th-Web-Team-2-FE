@@ -64,7 +64,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
         <Icon icon="Chevron" width={20} rotate={isFilterOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className={regionContentContainer}>
+        <Popover.Content className={regionContentContainer} align="start">
           <div className={contentWrapper}>
             <RegionContainer
               experimentPostRegion={experimentPostRegion}

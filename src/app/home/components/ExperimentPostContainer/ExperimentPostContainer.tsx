@@ -13,6 +13,7 @@ import useUserInfo from '../../hooks/useUserInfo';
 
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
 
 const ExperimentPostContainer = () => {
   const { userInfo, isLoading: isUserInfoLoading, isSessionReady } = useUserInfo();
@@ -43,7 +44,7 @@ const ExperimentPostContainer = () => {
           isChecked={isRecruiting}
           onChange={handleToggleRecruitStatus}
           isArrow={false}
-          emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+          emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />}
         />
       </div>
 

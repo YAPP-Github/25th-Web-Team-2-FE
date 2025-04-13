@@ -12,7 +12,7 @@ export const triggerWrapper = style({
   justifyContent: 'space-between',
   gap: '0.4rem',
   borderRadius: '1.2rem',
-  padding: '0.5rem 1.4rem',
+  padding: '0.6rem 1rem 0.6rem 1.4rem',
   cursor: 'pointer',
   selectors: {
     '&:hover': {

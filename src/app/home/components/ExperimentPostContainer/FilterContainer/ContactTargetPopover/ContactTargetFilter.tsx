@@ -88,7 +88,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className={popoverContent}>
+        <Popover.Content className={popoverContent} align="start">
           <div className={genderSelectWrapper}>
             <span className={label}>성별</span>
             <div className={genderButtonGroup}>
