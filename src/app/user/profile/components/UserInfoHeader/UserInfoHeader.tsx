@@ -5,6 +5,7 @@ import {
   emailWrapper,
   headerContainer,
   infoContainer,
+  subTitle,
   title,
   titleContainer,
   verticalLine,
@@ -67,11 +68,11 @@ const UserInfoHeader = ({ userInfo }: { userInfo: ParticipantResponse | Research
         <span className={title}>{memberInfo.name}님의 회원정보</span>
       </div>
       <div className={infoContainer}>
-        <span>학교 메일</span>
+        <span className={subTitle}>학교 메일</span>
         <span>{userInfo.univEmail}</span>
         <span className={verticalLine} />
         <div className={emailWrapper}>
-          <span>ID</span>
+          <span className={subTitle}>ID</span>
           <span>{memberInfo.oauthEmail}</span>
         </div>
       </div>

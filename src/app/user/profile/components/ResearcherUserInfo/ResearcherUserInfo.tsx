@@ -19,6 +19,7 @@ import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
+import { colors } from '@/styles/colors';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   const { form, contactEmail, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
@@ -101,6 +102,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
             label="소속 연구실 정보"
             placeholder="연구실 정보 입력"
             type="textarea"
+            maxLength={100}
           />
 
           {/* 광고성 정보 이메일/SMS 수신 동의 */}
@@ -114,7 +116,9 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
                     label="[선택] 광고성 정보 이메일/SMS 수신 동의"
                     isChecked={field.value}
                     onChange={() => form.setValue('adConsent', !field.value)}
-                    emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                    emptyCheckIcon={
+                      <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                    }
                   />
                 </div>
               );

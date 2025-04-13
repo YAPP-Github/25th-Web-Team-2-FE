@@ -24,6 +24,7 @@ import AddressSelect from '@/components/AddressSelect/AddressSelect';
 import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
+import { colors } from '@/styles/colors';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
   const { form, contactEmail, region, additionalRegion, handleSubmit, isLoading, isError } =
@@ -132,7 +133,9 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
                       label="[선택] 광고성 정보 이메일/SMS 수신 동의"
                       isChecked={field.value}
                       onChange={() => form.setValue('adConsent', !field.value)}
-                      emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                      emptyCheckIcon={
+                        <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                      }
                     />
                   </div>
                 );
@@ -150,7 +153,9 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
                       label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
                       isChecked={field.value}
                       onChange={() => form.setValue('matchConsent', !field.value)}
-                      emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                      emptyCheckIcon={
+                        <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                      }
                     />
                   </div>
                 );
