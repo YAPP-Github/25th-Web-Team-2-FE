@@ -19,7 +19,11 @@ API.interceptors.response.use(
       const originalRequest = config;
 
       if (isAuthError(data.code)) {
-        return login({ request: originalRequest, code: data.code });
+        return login({
+          axiosInstance: API,
+          request: originalRequest,
+          code: data.code,
+        });
       }
 
       if (data.code === 'ME0002') {
