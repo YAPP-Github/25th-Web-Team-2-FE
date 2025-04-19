@@ -1,7 +1,8 @@
 import { AxiosError } from 'axios';
+import { ERROR_MESSAGES } from './constants';
 
 interface ApiErrorResponse {
-  code: string;
+  code: keyof typeof ERROR_MESSAGES;
   message: string;
   data: unknown;
 }
