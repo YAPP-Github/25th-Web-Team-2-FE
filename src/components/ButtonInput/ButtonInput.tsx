@@ -2,13 +2,15 @@ import React, { useRef, useState } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import {
-  errorMessage,
   inputContainer,
   inputLabel,
+  errorMessage,
   joinInput,
   requiredStar,
   tipWrapper,
-} from '@/app/join/components/JoinInput/JoinInput.css';
+  infoContainer,
+} from './ButtonInput.css';
+
 import {
   univAuthButton,
   univInputWrapper,
@@ -87,12 +89,17 @@ const ButtonInput = <T extends FieldValues>({
                   </button>
                 )}
               </div>
-              {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-              {tip && (
-                <div className={tipWrapper}>
-                  <span>{tip}</span>
-                </div>
-              )}
+              <div className={infoContainer}>
+                {fieldState.error ? (
+                  <span className={errorMessage}>{fieldState.error.message}</span>
+                ) : (
+                  tip && (
+                    <div className={tipWrapper}>
+                      <span>{tip}</span>
+                    </div>
+                  )
+                )}
+              </div>
             </>
           );
         }}

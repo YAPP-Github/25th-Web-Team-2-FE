@@ -10,7 +10,7 @@ import JoinInput from '../../JoinInput/JoinInput';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
-import ButtonInput from '@/app/user/profile/components/ButtonInput/ButtonInput';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinEmailStepProps {

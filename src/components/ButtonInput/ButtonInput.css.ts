@@ -44,17 +44,6 @@ export const requiredStar = style({
   color: colors.textAlert,
 });
 
-export const inputWrapper = style({
-  position: 'relative',
-});
-
-export const inputResetButton = style({
-  position: 'absolute',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  right: '1.7rem',
-});
-
 export const infoContainer = style({
   display: 'flex',
   justifyContent: 'space-between',
@@ -72,15 +61,4 @@ export const tipWrapper = style({
   display: 'flex',
   gap: '0.4rem',
   color: colors.text02,
-});
-
-export const textCount = style({
-  ...fonts.label.small.M12,
-  display: 'flex',
-  justifyContent: 'flex-end',
-  color: colors.text02,
-});
-
-export const tipAlert = style({
-  color: colors.textPrimary,
 });

@@ -22,7 +22,7 @@ export const requiredStar = style({
 });
 
 export const tipWrapper = style({
-  ...fonts.label.small.M12,
+  ...fonts.label.medium.R13,
   display: 'flex',
   gap: '0.4rem',
   color: colors.text02,

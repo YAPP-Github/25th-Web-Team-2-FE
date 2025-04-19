@@ -43,7 +43,6 @@ const ExperimentPostContainer = () => {
           label="모집 중인 공고만 보기"
           isChecked={isRecruiting}
           onChange={handleToggleRecruitStatus}
-          isArrow={false}
           emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />}
         />
       </div>

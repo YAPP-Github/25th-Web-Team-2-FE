@@ -4,7 +4,6 @@ import { Controller } from 'react-hook-form';
 
 import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
-import ButtonInput from '../ButtonInput/ButtonInput';
 import {
   leaveButton,
   updateButton,
@@ -17,8 +16,10 @@ import { ResearcherResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
+import { colors } from '@/styles/colors';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   const { form, contactEmail, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
@@ -101,6 +102,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
             label="소속 연구실 정보"
             placeholder="연구실 정보 입력"
             type="textarea"
+            maxLength={100}
           />
 
           {/* 광고성 정보 이메일/SMS 수신 동의 */}
@@ -114,8 +116,9 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
                     label="[선택] 광고성 정보 이메일/SMS 수신 동의"
                     isChecked={field.value}
                     onChange={() => form.setValue('adConsent', !field.value)}
-                    isArrow={false}
-                    emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                    emptyCheckIcon={
+                      <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                    }
                   />
                 </div>
               );
