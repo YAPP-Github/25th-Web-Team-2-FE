@@ -1,10 +1,13 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
-import { AuthErrorCode } from './type';
 import { getSession } from 'next-auth/react';
+
+import { AuthErrorCode } from './type';
 import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
-import { loginWithCredentials, logout } from '@/lib/auth-utils';
+
 import { API } from '.';
+
+import { loginWithCredentials, logout } from '@/lib/auth-utils';
 
 export const isAuthError = (code: string) => {
   return (
