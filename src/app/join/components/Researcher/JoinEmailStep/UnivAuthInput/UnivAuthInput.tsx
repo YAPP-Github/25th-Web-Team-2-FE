@@ -28,7 +28,7 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
 
   const {
     mutate: sendEmail,
-    error: sendError,
+    error: authCodeError,
     isPending: isLoadingSend,
   } = useSendUnivAuthCodeMutation();
 
@@ -46,10 +46,6 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
         setIsToastOpen(true);
         startTimer();
       },
-      onError: () => {
-        // TODO: 이미 인증된 유저인 경우에만 verify
-        handleVerifyEmail();
-      },
     });
   };
 
@@ -64,7 +60,6 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
         <span>학교 메일 인증</span>
         <span className={required}>*</span>
       </label>
-
       <Controller
         name="univEmail"
         control={control}
@@ -95,8 +90,11 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
                   {isLoadingSend ? '전송 중...' : isEmailSent ? '수정' : '인증번호 전송'}
                 </button>
               </div>
-              {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-              {sendError && <span className={errorMessage}>{sendError.message}</span>}
+              {fieldState.error ? (
+                <span className={errorMessage}>{fieldState.error.message}</span>
+              ) : (
+                authCodeError && <span className={errorMessage}>{authCodeError.message}</span>
+              )}
             </>
           );
         }}
