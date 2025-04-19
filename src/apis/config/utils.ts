@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { getSession } from 'next-auth/react';
 
-import { AuthErrorCode } from './type';
+import { AuthErrorCode } from './types';
 import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
 

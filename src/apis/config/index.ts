@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { ERROR_MESSAGES } from './constants';
-import { CustomAxiosError } from './type';
+import { CustomAxiosError } from './types';
 import { isAuthError, login } from './utils';
 
 export const API = axios.create({
