@@ -58,9 +58,8 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             control={form.control}
             name="contactEmail"
             onClick={handleCheckValidEmail}
-            isLoadingCheck={isLoadingCheck}
+            isLoading={isLoadingCheck}
             isSuccess={isSuccess}
-            isEmailDuplicateError={isEmailDuplicateError}
             setIsValidToastOpen={setIsValidToastOpen}
             tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
             toast={

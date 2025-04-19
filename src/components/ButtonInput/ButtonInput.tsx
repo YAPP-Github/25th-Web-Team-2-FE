@@ -20,9 +20,8 @@ interface ButtonInputProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
   onClick: () => void;
-  isLoadingCheck: boolean;
+  isLoading: boolean;
   isSuccess: boolean;
-  isEmailDuplicateError: boolean;
   setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
   tip?: string;
@@ -32,7 +31,7 @@ const ButtonInput = <T extends FieldValues>({
   control,
   name,
   onClick,
-  isLoadingCheck,
+  isLoading,
   isSuccess,
   toast,
   tip,
@@ -81,11 +80,11 @@ const ButtonInput = <T extends FieldValues>({
                   <button
                     type="button"
                     className={univAuthButton}
-                    disabled={isButtonDisabled || isLoadingCheck || isSuccess}
+                    disabled={isButtonDisabled || isLoading || isSuccess}
                     onClick={onClick}
                     ref={validateButtonRef}
                   >
-                    {isLoadingCheck ? '확인 중...' : '중복 확인'}
+                    {isLoading ? '확인 중...' : '중복 확인'}
                   </button>
                 )}
               </div>

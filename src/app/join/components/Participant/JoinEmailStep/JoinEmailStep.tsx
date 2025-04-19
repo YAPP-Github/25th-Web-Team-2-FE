@@ -79,9 +79,8 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           control={control}
           name="contactEmail"
           onClick={handleCheckValidEmail}
-          isLoadingCheck={isLoadingCheck}
+          isLoading={isLoadingCheck}
           isSuccess={isValidEmail}
-          isEmailDuplicateError={isEmailDuplicateError}
           setIsValidToastOpen={setIsValidToastOpen}
           tip="로그인 아이디와 달라도 괜찮아요"
           toast={
