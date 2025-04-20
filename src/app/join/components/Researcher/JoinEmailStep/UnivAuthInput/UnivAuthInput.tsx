@@ -65,10 +65,7 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
         control={control}
         render={({ field, fieldState }) => {
           const isButtonDisabled =
-            (!isEmailSent && !field.value) ||
-            isEmailVerified ||
-            isLoadingSend ||
-            fieldState.invalid;
+            (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
 
           return (
             <>
