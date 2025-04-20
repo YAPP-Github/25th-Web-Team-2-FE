@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { sendUnivAuthCode } from '@/apis/login';
+import { CustomError } from '@/apis/config/error';
+import { sendUnivAuthCode, UnivAuthCodeResponse } from '@/apis/login';
 
-// TODO: 이미 인증된 메일일 경우 에러 처리
 const useSendUnivAuthCodeMutation = () => {
-  return useMutation({
+  return useMutation<UnivAuthCodeResponse, CustomError, string>({
     mutationFn: sendUnivAuthCode,
   });
 };

@@ -21,9 +21,14 @@ import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 interface UnivAuthInputProps {
   isEmailVerified: boolean;
   handleVerifyEmail: () => void;
+  handleResetVerifyEmail: () => void;
 }
 
-const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProps) => {
+const UnivAuthInput = ({
+  isEmailVerified,
+  handleVerifyEmail,
+  handleResetVerifyEmail,
+}: UnivAuthInputProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
@@ -36,8 +41,9 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
-
   const univEmail = useWatch({ name: 'univEmail', control });
+
+  const isUnivEmailAuthenticated = isEmailSent || isEmailVerified;
 
   const handleSendUnivAuthCode = () => {
     sendEmail(univEmail, {
@@ -46,11 +52,17 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
         setIsToastOpen(true);
         startTimer();
       },
+      onError: (error) => {
+        if (error.errorCode === 'VE0007') {
+          handleVerifyEmail();
+        }
+      },
     });
   };
 
   const handleClickEdit = () => {
     setIsEmailSent(false);
+    handleResetVerifyEmail();
     stopTimer();
   };
 
@@ -76,15 +88,19 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
                   className={joinInput}
                   placeholder="학교 메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
-                  disabled={isEmailSent || isEmailVerified}
+                  disabled={isUnivEmailAuthenticated}
                 />
                 <button
                   type="button"
-                  className={`${univAuthButton} ${isEmailSent ? editButton : ''}`}
+                  className={`${univAuthButton} ${isUnivEmailAuthenticated ? editButton : ''}`}
                   disabled={isButtonDisabled}
-                  onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
+                  onClick={isUnivEmailAuthenticated ? handleClickEdit : handleSendUnivAuthCode}
                 >
-                  {isLoadingSend ? '전송 중...' : isEmailSent ? '수정' : '인증번호 전송'}
+                  {isLoadingSend
+                    ? '전송 중...'
+                    : isUnivEmailAuthenticated
+                    ? '수정'
+                    : '인증번호 전송'}
                 </button>
               </div>
               {fieldState.error ? (

@@ -4,9 +4,9 @@ import { getSession } from 'next-auth/react';
 import { AuthErrorCode } from './types';
 import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
+import { CustomError } from './error';
 
 import { loginWithCredentials, logout } from '@/lib/auth-utils';
-import { CustomError } from './error';
 
 export const isAuthError = (code: string) => {
   return (

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 import { ERROR_MESSAGES } from './constants';
+import { CustomError, NetworkError } from './error';
 import { CustomAxiosError } from './types';
 import { isAuthError, login } from './utils';
-import { CustomError, NetworkError } from './error';
 
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
