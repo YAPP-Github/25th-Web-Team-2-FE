@@ -19,6 +19,31 @@ import {
 
 import Icon from '@/components/Icon';
 
+const formatDateInput = (inputType: string, value: string) => {
+  if (inputType !== 'date') return value;
+
+  const numbers = value.replace(/\D/g, '');
+
+  if (numbers.length <= 4) {
+    if (numbers.length === 4 && value.includes('.')) return value;
+
+    return numbers;
+  }
+
+  if (numbers.length <= 6) {
+    if (numbers.length === 6 && value.includes('.')) return value;
+
+    const year = numbers.substring(0, 4);
+    const month = numbers.substring(4, 6);
+    return `${year}.${month}`;
+  }
+
+  const year = numbers.substring(0, 4);
+  const month = numbers.substring(4, 6);
+  const day = numbers.substring(6, 8);
+  return `${year}.${month}.${day}`;
+};
+
 interface JoinInputProps<T extends FieldValues> {
   type?: 'input' | 'textarea';
   name: Path<T>;
@@ -34,6 +59,7 @@ interface JoinInputProps<T extends FieldValues> {
   isTip?: boolean;
   isCount?: boolean;
   count?: number;
+  inputType?: 'text' | 'date';
 }
 
 const JoinInput = <T extends FieldValues>({
@@ -51,6 +77,7 @@ const JoinInput = <T extends FieldValues>({
   isTip = true,
   isCount = false,
   count,
+  inputType = 'text',
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
@@ -100,6 +127,10 @@ const JoinInput = <T extends FieldValues>({
                   aria-invalid={fieldState.invalid ? true : false}
                   style={{ width: '100%' }}
                   className={joinInput}
+                  onChange={(e) => {
+                    const formattedValue = formatDateInput(inputType, e.target.value);
+                    field.onChange(formattedValue);
+                  }}
                   onFocus={() => setIsFocused(true)}
                   onBlur={(e) => handleBlur(e, field.onBlur)}
                 />

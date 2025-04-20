@@ -78,6 +78,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           maxLength={10}
           tip="나중에 수정할 수 없어요"
           isTip={false}
+          inputType="date"
         />
 
         {/* 거주 지역 */}
