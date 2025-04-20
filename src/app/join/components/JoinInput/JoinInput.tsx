@@ -23,24 +23,25 @@ const formatDateInput = (inputType: string, value: string) => {
   if (inputType !== 'date') return value;
 
   const numbers = value.replace(/\D/g, '');
+  const UNIT = { start: 0, year: 4, month: 6, total: 8 };
 
-  if (numbers.length <= 4) {
-    if (numbers.length === 4 && value.includes('.')) return value;
+  if (numbers.length <= UNIT.year) {
+    if (numbers.length === UNIT.year && value.includes('.')) return value;
 
     return numbers;
   }
 
-  if (numbers.length <= 6) {
-    if (numbers.length === 6 && value.includes('.')) return value;
+  if (numbers.length <= UNIT.month) {
+    if (numbers.length === UNIT.month && value.includes('.')) return value;
 
-    const year = numbers.substring(0, 4);
-    const month = numbers.substring(4, 6);
+    const year = numbers.substring(UNIT.start, UNIT.year);
+    const month = numbers.substring(UNIT.year, UNIT.month);
     return `${year}.${month}`;
   }
 
-  const year = numbers.substring(0, 4);
-  const month = numbers.substring(4, 6);
-  const day = numbers.substring(6, 8);
+  const year = numbers.substring(UNIT.start, UNIT.year);
+  const month = numbers.substring(UNIT.year, UNIT.month);
+  const day = numbers.substring(UNIT.month, UNIT.total);
   return `${year}.${month}.${day}`;
 };
 
