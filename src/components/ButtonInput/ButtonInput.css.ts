@@ -40,6 +40,30 @@ export const joinInput = style({
   },
 });
 
+export const inputWrapper = style({
+  position: 'relative',
+  backgroundColor: colors.field01,
+  borderRadius: '1rem',
+});
+
+export const confirmButton = style({
+  ...fonts.label.large.SB14,
+  position: 'absolute',
+  right: '1.2rem',
+  top: '1rem',
+  padding: '0.7rem 1.6rem',
+  borderRadius: '1rem',
+  color: colors.text01,
+  backgroundColor: colors.primaryMint,
+  border: 'none',
+  selectors: {
+    '&:disabled': {
+      color: colors.text02,
+      backgroundColor: colors.field04,
+    },
+  },
+});
+
 export const requiredStar = style({
   color: colors.textAlert,
 });

@@ -9,12 +9,9 @@ import {
   requiredStar,
   tipWrapper,
   infoContainer,
+  inputWrapper,
+  confirmButton,
 } from './ButtonInput.css';
-
-import {
-  univAuthButton,
-  univInputWrapper,
-} from '@/app/join/components/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
 
 interface ButtonInputProps<T extends FieldValues> {
   control: Control<T>;
@@ -66,7 +63,7 @@ const ButtonInput = <T extends FieldValues>({
 
           return (
             <>
-              <div className={univInputWrapper}>
+              <div className={inputWrapper}>
                 <input
                   {...field}
                   style={{ width: '100%' }}
@@ -79,7 +76,7 @@ const ButtonInput = <T extends FieldValues>({
                 {isFocused && field.value && (
                   <button
                     type="button"
-                    className={univAuthButton}
+                    className={confirmButton}
                     disabled={isButtonDisabled || isLoading || isSuccess}
                     onClick={onClick}
                     ref={validateButtonRef}
