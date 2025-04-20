@@ -24,6 +24,12 @@ interface UnivAuthInputProps {
   handleResetVerifyEmail: () => void;
 }
 
+const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
+  if (isLoading) return '전송 중...';
+  if (isAuthenticated) return '수정';
+  return '인증번호 전송';
+};
+
 const UnivAuthInput = ({
   isEmailVerified,
   handleVerifyEmail,
@@ -96,11 +102,7 @@ const UnivAuthInput = ({
                   disabled={isButtonDisabled}
                   onClick={isUnivEmailAuthenticated ? handleClickEdit : handleSendUnivAuthCode}
                 >
-                  {isLoadingSend
-                    ? '전송 중...'
-                    : isUnivEmailAuthenticated
-                    ? '수정'
-                    : '인증번호 전송'}
+                  {getButtonText(isLoadingSend, isUnivEmailAuthenticated)}
                 </button>
               </div>
               {fieldState.error ? (
