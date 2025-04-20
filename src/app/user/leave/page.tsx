@@ -1,12 +1,12 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
+import useLeaveMutation from './hooks/useLeaveMutation';
 import {
   alertTextWrapper,
   button,
@@ -27,18 +27,11 @@ import {
   title,
 } from './LeavePage.css';
 
-import { leaveUser } from '@/apis/user';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import Icon from '@/components/Icon';
 import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 import { colors } from '@/styles/colors';
-
-const useLeaveMutation = () => {
-  return useMutation({
-    mutationFn: leaveUser,
-  });
-};
 
 const REASONS = [
   { label: '연구 활동 또는 실험 참여를 중단했어요', value: 'RESEARCH_STOPPED' },
