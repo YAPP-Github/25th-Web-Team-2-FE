@@ -1,11 +1,9 @@
-import axios, { InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { getSession } from 'next-auth/react';
 
 import { AuthErrorCode } from './types';
 import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
-
-import { API } from '.';
 
 import { loginWithCredentials, logout } from '@/lib/auth-utils';
 
@@ -20,9 +18,11 @@ export const isAuthError = (code: string) => {
 };
 
 export const login = async ({
+  axiosInstance,
   request,
   code,
 }: {
+  axiosInstance: AxiosInstance;
   request: InternalAxiosRequestConfig;
   code: AuthErrorCode;
 }) => {
@@ -45,7 +45,7 @@ export const login = async ({
     });
 
     request.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-    API.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+    axiosInstance.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
     return axios(request);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
