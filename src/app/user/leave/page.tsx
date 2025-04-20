@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
+import LeaveHeader from './components/LeaveHeader/LeaveHeader';
 import useLeaveMutation from './hooks/useLeaveMutation';
 import {
   alertTextWrapper,
@@ -15,16 +16,13 @@ import {
   checkFormItem,
   confirmCheckText,
   confirmCheckWrapper,
-  description,
   footerMessageContainer,
   leaveButton,
   leaveFormLayout,
-  leaveHeaderWrapper,
   leaveMessageContainer,
   leaveReasonContainer,
   listItem,
   listSubText,
-  title,
 } from './LeavePage.css';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
@@ -80,12 +78,7 @@ const LeavePage = () => {
   return (
     <section className={leaveFormLayout}>
       <div className={leaveReasonContainer}>
-        <div className={leaveHeaderWrapper}>
-          <h2 className={title}>{userInfo?.memberInfo.name}님, 정말 탈퇴하시겠어요?</h2>
-          <span className={description}>
-            탈퇴를 결정한 이유를 말씀해 주세요. 서비스 개선에 중요한 자료로 활용할게요
-          </span>
-        </div>
+        <LeaveHeader userName={userInfo?.memberInfo.name} />
         <div className={checkFormContainer}>
           <Controller
             name="reasonType"
