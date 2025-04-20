@@ -111,12 +111,15 @@ export const listSubText = style({
 });
 
 export const confirmCheckWrapper = style({
-  ...fonts.label.large.M14,
-  color: colors.text06,
-
   display: 'flex',
   alignItems: 'center',
   gap: '0.6rem',
+  padding: '0.6rem 0',
+});
+
+export const confirmCheckText = style({
+  ...fonts.label.large.M14,
+  color: colors.text06,
 });
 
 export const buttonContainer = style({

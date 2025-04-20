@@ -13,6 +13,7 @@ import {
   buttonContainer,
   checkFormContainer,
   checkFormItem,
+  confirmCheckText,
   confirmCheckWrapper,
   description,
   footerMessageContainer,
@@ -160,9 +161,9 @@ const LeavePage = () => {
             height={18}
             cursor="pointer"
             onClick={() => setIsChecked(!isChecked)}
-            color={isChecked ? colors.primaryMint : colors.icon03}
+            color={isChecked ? colors.primaryMint : colors.icon02}
           />
-          <span>유의사항을 모두 확인하였으며 이에 동의합니다</span>
+          <span className={confirmCheckText}>유의사항을 모두 확인하였으며 이에 동의합니다</span>
         </div>
       </div>
 
