@@ -19,6 +19,32 @@ import {
 
 import Icon from '@/components/Icon';
 
+const formatDateInput = (inputType: string, value: string) => {
+  if (inputType !== 'date') return value;
+
+  const numbers = value.replace(/\D/g, '');
+  const UNIT = { start: 0, year: 4, month: 6, total: 8 };
+
+  if (numbers.length <= UNIT.year) {
+    if (numbers.length === UNIT.year && value.includes('.')) return value;
+
+    return numbers;
+  }
+
+  if (numbers.length <= UNIT.month) {
+    if (numbers.length === UNIT.month && value.includes('.')) return value;
+
+    const year = numbers.substring(UNIT.start, UNIT.year);
+    const month = numbers.substring(UNIT.year, UNIT.month);
+    return `${year}.${month}`;
+  }
+
+  const year = numbers.substring(UNIT.start, UNIT.year);
+  const month = numbers.substring(UNIT.year, UNIT.month);
+  const day = numbers.substring(UNIT.month, UNIT.total);
+  return `${year}.${month}.${day}`;
+};
+
 interface JoinInputProps<T extends FieldValues> {
   type?: 'input' | 'textarea';
   name: Path<T>;
@@ -34,6 +60,7 @@ interface JoinInputProps<T extends FieldValues> {
   isTip?: boolean;
   isCount?: boolean;
   count?: number;
+  inputType?: 'text' | 'date';
 }
 
 const JoinInput = <T extends FieldValues>({
@@ -51,6 +78,7 @@ const JoinInput = <T extends FieldValues>({
   isTip = true,
   isCount = false,
   count,
+  inputType = 'text',
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
@@ -100,6 +128,10 @@ const JoinInput = <T extends FieldValues>({
                   aria-invalid={fieldState.invalid ? true : false}
                   style={{ width: '100%' }}
                   className={joinInput}
+                  onChange={(e) => {
+                    const formattedValue = formatDateInput(inputType, e.target.value);
+                    field.onChange(formattedValue);
+                  }}
                   onFocus={() => setIsFocused(true)}
                   onBlur={(e) => handleBlur(e, field.onBlur)}
                 />

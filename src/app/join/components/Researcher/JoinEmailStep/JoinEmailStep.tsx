@@ -11,6 +11,7 @@ import JoinInput from '../../JoinInput/JoinInput';
 
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
+import useVerifyUnivEmail from '@/app/join/hooks/useVerifyUnivEmail';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
@@ -34,7 +35,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const univEmail = useWatch({ name: 'univEmail', control });
   const contactEmail = useWatch({ name: 'contactEmail', control });
 
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const { isEmailVerified, handleVerifyEmail, handleResetVerifyEmail } = useVerifyUnivEmail();
 
   const handleNextStep = async () => {
     const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
@@ -51,10 +52,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
     isEmailVerified &&
     serviceAgreeCheck.isTermOfService &&
     serviceAgreeCheck.isPrivacy;
-
-  const handleVerifyEmail = () => {
-    setIsEmailVerified(true);
-  };
 
   const {
     refetch,
@@ -88,9 +85,8 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           control={control}
           name="contactEmail"
           onClick={handleCheckValidEmail}
-          isLoadingCheck={isLoadingCheck}
+          isLoading={isLoadingCheck}
           isSuccess={isSuccess}
-          isEmailDuplicateError={isEmailDuplicateError}
           setIsValidToastOpen={setIsValidToastOpen}
           tip="로그인 아이디와 달라도 괜찮아요"
           toast={
@@ -104,7 +100,11 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         />
 
         {/* 학교 메일 인증 */}
-        <UnivAuthInput isEmailVerified={isEmailVerified} handleVerifyEmail={handleVerifyEmail} />
+        <UnivAuthInput
+          isEmailVerified={isEmailVerified}
+          handleVerifyEmail={handleVerifyEmail}
+          handleResetVerifyEmail={handleResetVerifyEmail}
+        />
 
         {/* 동의 체크 항목 */}
         <JoinCheckboxContainer

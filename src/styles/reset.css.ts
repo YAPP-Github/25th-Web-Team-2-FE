@@ -89,31 +89,6 @@ globalStyle('textarea', {
   },
 });
 
-globalStyle(
-  'input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active',
-  {
-    '@layer': {
-      [layers.reset]: {
-        WebkitTextFillColor: '#000',
-        WebkitBoxShadow: '0 0 0px 1000px #fff inset',
-        boxShadow: '0 0 0px 1000px #fff inset',
-        transition: 'background-color 0.3s ease-in-out 0s',
-      },
-    },
-  },
-);
-
-globalStyle('input:autofill, input:autofill:hover, input:autofill:focus, input:autofill:active', {
-  '@layer': {
-    [layers.reset]: {
-      WebkitTextFillColor: '#000',
-      WebkitBoxShadow: '0 0 0px 1000px #fff inset',
-      boxShadow: '0 0 0px 1000px #fff inset',
-      transition: 'background-color 5000s ease-in-out 0s',
-    },
-  },
-});
-
 globalStyle('input::-webkit-inner-spin-button, input::-webkit-outer-spin-button', {
   '@layer': {
     [layers.reset]: {
