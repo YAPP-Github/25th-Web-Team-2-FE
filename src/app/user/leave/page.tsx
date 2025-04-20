@@ -4,16 +4,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 
 import LeaveHeader from './components/LeaveHeader/LeaveHeader';
+import LeaveReasonForm from './components/LeaveReasonForm/LeaveReasonForm';
 import useLeaveMutation from './hooks/useLeaveMutation';
 import {
   alertTextWrapper,
   button,
   buttonContainer,
-  checkFormContainer,
-  checkFormItem,
   confirmCheckText,
   confirmCheckWrapper,
   footerMessageContainer,
@@ -26,19 +25,9 @@ import {
 } from './LeavePage.css';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
-import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import Icon from '@/components/Icon';
 import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 import { colors } from '@/styles/colors';
-
-const REASONS = [
-  { label: '연구 활동 또는 실험 참여를 중단했어요', value: 'RESEARCH_STOPPED' },
-  { label: '보안이 걱정돼요', value: 'SECURITY_CONCERN' },
-  { label: '필요한 기능이 없어요', value: 'NO_NECESSARY_FUNCTION' },
-  { label: '메일이 너무 자주 와요', value: 'TOO_MANY_EMAILS' },
-  { label: '사이트를 이용하기 불편해요', value: 'INCONVENIENT_SITE' },
-  { label: '기타 (직접 입력)', value: 'OTHER' },
-] as const;
 
 const LeavePage = () => {
   const router = useRouter();
@@ -68,6 +57,7 @@ const LeavePage = () => {
     });
   };
 
+  // form 상태 (control만 있으면 분리 가능)
   const reasonType = useWatch({ name: 'reasonType', control });
   const reason = useWatch({ name: 'reason', control });
 
@@ -79,45 +69,7 @@ const LeavePage = () => {
     <section className={leaveFormLayout}>
       <div className={leaveReasonContainer}>
         <LeaveHeader userName={userInfo?.memberInfo.name} />
-        <div className={checkFormContainer}>
-          <Controller
-            name="reasonType"
-            control={control}
-            render={({ field }) => (
-              <>
-                {REASONS.map((reason) => {
-                  return (
-                    <label key={reason.value} className={checkFormItem}>
-                      <input
-                        {...field}
-                        type="radio"
-                        value={reason.value}
-                        onChange={(e) => {
-                          field.onChange(reason.value);
-
-                          if (field.value === 'OTHER' && e.target.value !== field.value) {
-                            reset({ reasonType: reason.value, reason: '' });
-                          }
-                        }}
-                      />
-                      <span>{reason.label}</span>
-                    </label>
-                  );
-                })}
-                {field.value === 'OTHER' && (
-                  <JoinInput<LeaveSchemaType>
-                    name="reason"
-                    control={control}
-                    placeholder="사유를 입력해주세요"
-                    type="textarea"
-                    isCount
-                    count={300}
-                  />
-                )}
-              </>
-            )}
-          />
-        </div>
+        <LeaveReasonForm control={control} reset={reset} />
       </div>
 
       <div className={footerMessageContainer}>
