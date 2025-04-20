@@ -1,19 +1,16 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import LeaveButtonContainer from './components/LeaveButtonContainer/LeaveButtonContainer';
 import LeaveHeader from './components/LeaveHeader/LeaveHeader';
 import LeaveReasonForm from './components/LeaveReasonForm/LeaveReasonForm';
 import useLeaveForm from './hooks/useLeaveForm';
 import {
   alertTextWrapper,
-  button,
-  buttonContainer,
   confirmCheckText,
   confirmCheckWrapper,
   footerMessageContainer,
-  leaveButton,
   leaveFormLayout,
   leaveMessageContainer,
   leaveReasonContainer,
@@ -26,7 +23,6 @@ import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
 const LeavePage = () => {
-  const router = useRouter();
   const { userInfo } = useUserInfo();
   const { control, reset, handleSubmit, isValidLeave } = useLeaveForm();
 
@@ -74,18 +70,11 @@ const LeavePage = () => {
         </div>
       </div>
 
-      <div className={buttonContainer}>
-        <button className={button} onClick={() => router.back()}>
-          이전으로
-        </button>
-        <button
-          className={leaveButton}
-          disabled={!isValidLeave || !isChecked}
-          onClick={handleSubmit}
-        >
-          탈퇴하기
-        </button>
-      </div>
+      <LeaveButtonContainer
+        isValidLeave={isValidLeave}
+        isChecked={isChecked}
+        handleSubmit={handleSubmit}
+      />
     </section>
   );
 };
