@@ -26,7 +26,7 @@ const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps)
       name: memberInfo.name,
       univName: univName,
       major: major,
-      labInfo: labInfo,
+      labInfo: labInfo ?? '',
       adConsent: adConsent ?? false,
     },
   });

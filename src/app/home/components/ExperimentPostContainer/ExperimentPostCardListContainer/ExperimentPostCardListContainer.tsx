@@ -1,5 +1,9 @@
 import ExperimentPost from './ExperimentPostCardList/ExperimentPost';
 import {
+  allPostsViewedContainer,
+  allPostsViewedContentContainer,
+  allPostsViewedSubTitle,
+  allPostsViewedTitle,
   loadingMoreButton,
   postCardContainer,
   postCardContentContainer,
@@ -11,14 +15,18 @@ import { ExperimentPostListFilters } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostContainer/ExperimentPostContainer.css';
+import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
-  isLoading: boolean;
+  isUserInfoLoading: boolean;
 }
 
-const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListContainerProps) => {
+const ExperimentPostCardListContainer = ({
+  filters,
+  isUserInfoLoading,
+}: PostCardListContainerProps) => {
   const {
     data: postListData,
     hasNextPage,
@@ -26,9 +34,9 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
     isFetchingNextPage,
     isFetching,
     isLoading: isListLoading,
-  } = useExperimentPostListQuery(filters, isLoading);
+  } = useExperimentPostListQuery(filters, isUserInfoLoading);
 
-  if (isListLoading) {
+  if (isUserInfoLoading || isListLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />
@@ -55,6 +63,15 @@ const ExperimentPostCardListContainer = ({ filters, isLoading }: PostCardListCon
         >
           더보기
         </button>
+      )}
+      {!isFetching && !hasNextPage && (
+        <div className={allPostsViewedContainer}>
+          <Icon icon="Golf" width={40} height={40} />
+          <div className={allPostsViewedContentContainer}>
+            <span className={allPostsViewedTitle}>모든 공고를 다 확인했어요!</span>
+            <span className={allPostsViewedSubTitle}>새롭게 올라올 공고도 기대해 주세요</span>
+          </div>
+        </div>
       )}
     </div>
   );

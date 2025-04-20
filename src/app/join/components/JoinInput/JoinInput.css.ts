@@ -55,13 +55,20 @@ export const inputResetButton = style({
   right: '1.7rem',
 });
 
+export const infoContainer = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+});
+
 export const errorMessage = style({
-  ...fonts.label.large.R14,
+  ...fonts.label.medium.R13,
   color: colors.textAlert,
 });
 
 export const tipWrapper = style({
-  ...fonts.label.small.M12,
+  ...fonts.label.medium.R13,
   display: 'flex',
   gap: '0.4rem',
   color: colors.text02,

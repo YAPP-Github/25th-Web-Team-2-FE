@@ -10,15 +10,16 @@ export const loginLayout = style({
   justifyContent: 'center',
   backgroundColor: colors.field01,
   minWidth: '100rem',
-  height: 'calc(100vh - 12.2rem)',
   margin: '0 auto',
+  padding: '8.4rem 0',
 });
 
 export const loginPageLayout = style({
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
   gap: '6.5rem',
-  paddingTop: '8.4rem',
+  minHeight: 'calc(100vh - 29rem)', // 29rem = footer(12.2rem) + padding 위/아래 (8.4rem * 2)
 });
 
 export const descriptionWrapper = style({
@@ -37,12 +38,12 @@ export const sloganWrapper = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
   textAlign: 'center',
+  whiteSpace: 'pre-wrap',
 });
 
 export const loginCardContainer = style({
   display: 'flex',
   justifyContent: 'center',
   gap: '2rem',
-  marginBottom: '2.8rem',
   minHeight: '37rem',
 });

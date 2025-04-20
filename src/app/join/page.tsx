@@ -3,6 +3,7 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 import ParticipantForm from './components/Participant/ParticipantForm';
 import ResearcherForm from './components/Researcher/ResearcherForm';
@@ -19,10 +20,11 @@ import {
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
-import useSessionStorage from '@/hooks/useSessionStorage';
 
 export default function JoinPage() {
-  const { value: role } = useSessionStorage('role');
+  const { data: session } = useSession();
+  const role = session?.role;
+
   const { step } = useFunnel(['email', 'info', 'success'] as const);
 
   // TODO: 추후 스켈레톤 처리

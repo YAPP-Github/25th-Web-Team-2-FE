@@ -1,9 +1,9 @@
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
 import { ServiceAgreeCheck } from '../JoinPage.types';
 
 import { ROLE } from '@/constants/config';
-import useSessionStorage from '@/hooks/useSessionStorage';
 
 interface UseServiceAgreeCheckProps {
   onCheckAdConsent: (checked: boolean) => void;
@@ -14,7 +14,8 @@ const useServiceAgreeCheck = ({
   onCheckAdConsent,
   onCheckMatchConsent,
 }: UseServiceAgreeCheckProps) => {
-  const { value: role } = useSessionStorage('role');
+  const { data: session } = useSession();
+  const role = session?.role;
 
   const [serviceAgreeCheck, setServiceAgreeCheck] = useState<ServiceAgreeCheck>({
     isTermOfService: false,

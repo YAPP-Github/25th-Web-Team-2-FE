@@ -5,7 +5,10 @@ import { calculateAgeFromBirthDate, filterParticipantInfo } from '../home.utils'
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { ExperimentPostListFilters } from '@/apis/post';
 
-export const useExperimentFilters = (userInfo?: ParticipantResponse | ResearcherResponse) => {
+export const useExperimentFilters = (
+  isSessionReady: boolean,
+  userInfo?: ParticipantResponse | ResearcherResponse,
+) => {
   const participantInfo = filterParticipantInfo(userInfo);
   const [filters, setFilters] = useState<ExperimentPostListFilters>(
     {} as ExperimentPostListFilters,
@@ -31,8 +34,10 @@ export const useExperimentFilters = (userInfo?: ParticipantResponse | Researcher
     });
   };
 
-  // 참여자 성별/나이 자동 필터링
   useEffect(() => {
+    if (!isSessionReady) return;
+
+    // 참여자일 경우 자동 필터링 적용
     if (participantInfo) {
       setFilters((prev) => ({
         ...prev,
@@ -40,13 +45,15 @@ export const useExperimentFilters = (userInfo?: ParticipantResponse | Researcher
         gender: participantInfo.gender,
         age: calculateAgeFromBirthDate(participantInfo.birthDate),
       }));
-    } else {
-      setFilters((prev) => ({
-        ...prev,
-        recruitStatus: 'ALL',
-      }));
+
+      return;
     }
-  }, [participantInfo]);
+
+    setFilters((prev) => ({
+      ...prev,
+      recruitStatus: 'ALL',
+    }));
+  }, [isSessionReady, participantInfo]);
 
   return {
     filters,

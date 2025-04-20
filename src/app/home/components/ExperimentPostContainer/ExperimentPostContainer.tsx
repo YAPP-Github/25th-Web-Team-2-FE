@@ -13,9 +13,10 @@ import useUserInfo from '../../hooks/useUserInfo';
 
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
 
 const ExperimentPostContainer = () => {
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+  const { userInfo, isLoading: isUserInfoLoading, isSessionReady } = useUserInfo();
 
   const {
     filters,
@@ -23,7 +24,7 @@ const ExperimentPostContainer = () => {
     handleFilterChange,
     handleToggleRecruitStatus,
     handleResetFilter,
-  } = useExperimentFilters(userInfo);
+  } = useExperimentFilters(isSessionReady, userInfo);
 
   return (
     <div className={postContainerLayout}>
@@ -42,13 +43,12 @@ const ExperimentPostContainer = () => {
           label="모집 중인 공고만 보기"
           isChecked={isRecruiting}
           onChange={handleToggleRecruitStatus}
-          isArrow={false}
-          emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+          emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />}
         />
       </div>
 
       {/* 공고 목록 */}
-      <ExperimentPostCardListContainer filters={filters} isLoading={isUserInfoLoading} />
+      <ExperimentPostCardListContainer filters={filters} isUserInfoLoading={isUserInfoLoading} />
     </div>
   );
 };

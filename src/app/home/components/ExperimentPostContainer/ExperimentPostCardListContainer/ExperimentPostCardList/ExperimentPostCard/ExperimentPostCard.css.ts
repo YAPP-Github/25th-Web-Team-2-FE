@@ -1,7 +1,26 @@
-import { style } from '@vanilla-extract/css';
+import { style, styleVariants } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
+
+export const textEllipsis = styleVariants({
+  // 한 줄 말줄임표
+  singleLine: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    wordBreak: 'break-word',
+    whiteSpace: 'nowrap',
+  },
+
+  // 두 줄 말줄임표
+  twoLines: {
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    wordBreak: 'break-word',
+  },
+});
 
 export const postCardLayout = style({
   display: 'flex',
@@ -15,6 +34,8 @@ export const postCardLayout = style({
   height: '20rem',
   padding: '1.6rem 2rem',
   backgroundColor: colors.field01,
+
+  overflow: 'hidden',
 
   selectors: {
     '&:hover': {
@@ -52,10 +73,13 @@ export const postViews = style({
   color: colors.text03,
 });
 
-export const postTitle = style({
-  ...fonts.title.small.SB18,
-  color: colors.text06,
-});
+export const postTitle = style([
+  textEllipsis.twoLines,
+  {
+    ...fonts.title.small.SB18,
+    color: colors.text06,
+  },
+]);
 
 export const contactedPostTag = style({
   width: 'fit-content',
@@ -75,14 +99,21 @@ export const postRewardContainer = style({
 export const announceText = style({
   ...fonts.label.medium.M13,
   color: colors.text03,
+  whiteSpace: 'nowrap',
 });
 
-export const postReward = style({
-  ...fonts.label.medium.SB13,
-  color: colors.primaryMint,
-});
+export const postReward = style([
+  textEllipsis.singleLine,
+  {
+    ...fonts.label.medium.SB13,
+    color: colors.primaryMint,
+  },
+]);
 
-export const postDate = style({
-  ...fonts.label.medium.M13,
-  color: colors.text04,
-});
+export const postDate = style([
+  textEllipsis.singleLine,
+  {
+    ...fonts.label.medium.M13,
+    color: colors.text04,
+  },
+]);

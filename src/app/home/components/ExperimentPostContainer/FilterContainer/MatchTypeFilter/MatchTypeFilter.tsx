@@ -44,21 +44,23 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
           <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
         </Select.Icon>
       </Select.Trigger>
-      <Select.Content className={contentContainer} position="popper" sideOffset={4}>
-        <Select.Viewport>
-          <Select.Group>
-            <Select.Item value="ALL" className={selectItem}>
-              <Select.ItemText>전체</Select.ItemText>
-            </Select.Item>
-            <Select.Item value="OFFLINE" className={selectItem}>
-              <Select.ItemText>대면</Select.ItemText>
-            </Select.Item>
-            <Select.Item value="ONLINE" className={selectItem}>
-              <Select.ItemText>비대면</Select.ItemText>
-            </Select.Item>
-          </Select.Group>
-        </Select.Viewport>
-      </Select.Content>
+      <Select.Portal>
+        <Select.Content className={contentContainer} position="popper" sideOffset={6} align="start">
+          <Select.Viewport>
+            <Select.Group>
+              <Select.Item value="ALL" className={selectItem}>
+                <Select.ItemText>전체</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="OFFLINE" className={selectItem}>
+                <Select.ItemText>대면</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="ONLINE" className={selectItem}>
+                <Select.ItemText>비대면</Select.ItemText>
+              </Select.Item>
+            </Select.Group>
+          </Select.Viewport>
+        </Select.Content>
+      </Select.Portal>
     </Select.Root>
   );
 };

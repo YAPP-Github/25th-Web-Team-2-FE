@@ -6,7 +6,7 @@ import { contentContainer, selectItem, triggerWrapper } from './Menu.css';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import Icon from '@/components/Icon';
-import useSessionStorage from '@/hooks/useSessionStorage';
+import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
@@ -16,12 +16,10 @@ interface MenuProps {
 
 const Menu = ({ userInfo }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { clear } = useSessionStorage();
 
-  const logout = () => {
-    clear();
+  const handleLogout = async () => {
     logoutUser();
-    window.location.href = '/';
+    await logout();
   };
 
   return (
@@ -54,7 +52,7 @@ const Menu = ({ userInfo }: MenuProps) => {
                 내가 쓴 글
               </Link>
             )}
-            <Select.Label className={selectItem} onClick={logout}>
+            <Select.Label className={selectItem} onClick={handleLogout}>
               로그아웃
             </Select.Label>
           </Select.Group>
