@@ -47,7 +47,7 @@ const REASONS = [
   { label: '메일이 너무 자주 와요', value: 'TOO_MANY_EMAILS' },
   { label: '사이트를 이용하기 불편해요', value: 'INCONVENIENT_SITE' },
   { label: '기타 (직접 입력)', value: 'OTHER' },
-];
+] as const;
 
 const LeavePage = () => {
   const router = useRouter();
@@ -60,7 +60,7 @@ const LeavePage = () => {
     reValidateMode: 'onChange',
     resolver: zodResolver(LeaveSchema()),
     defaultValues: {
-      reason: null,
+      reason: '',
     },
   });
 
@@ -78,7 +78,11 @@ const LeavePage = () => {
   };
 
   const reasonType = useWatch({ name: 'reasonType', control });
-  const isValidLeave = reasonType && Object.keys(formState.errors).length === 0;
+  const reason = useWatch({ name: 'reason', control });
+
+  const reasonCondition =
+    reasonType !== 'OTHER' || (reasonType === 'OTHER' && reason && reason.trim().length >= 1);
+  const isValidLeave = reasonType && reasonCondition && Object.keys(formState.errors).length === 0;
 
   return (
     <section className={leaveFormLayout}>
@@ -100,14 +104,13 @@ const LeavePage = () => {
                     <label key={reason.value} className={checkFormItem}>
                       <input
                         {...field}
-                        name="leave-reason"
                         type="radio"
                         value={reason.value}
                         onChange={(e) => {
                           field.onChange(reason.value);
 
                           if (field.value === 'OTHER' && e.target.value !== field.value) {
-                            reset({ reason: null });
+                            reset({ reasonType: reason.value, reason: '' });
                           }
                         }}
                       />
