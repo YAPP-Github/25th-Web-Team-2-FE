@@ -91,6 +91,23 @@ export const leaveMessageContainer = style({
   flexDirection: 'column',
   borderRadius: '1.2rem',
   padding: '1.4rem 1.6rem',
+
+  listStyle: 'none',
+});
+
+export const listItem = style({
+  position: 'relative',
+  paddingLeft: '1.2rem',
+
+  '::before': {
+    content: '•',
+    position: 'absolute',
+    left: '0rem',
+  },
+});
+
+export const listSubText = style({
+  paddingLeft: '1.2rem',
 });
 
 export const confirmCheckWrapper = style({
