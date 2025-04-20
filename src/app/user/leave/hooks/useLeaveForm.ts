@@ -8,7 +8,7 @@ import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 
 const useLeaveForm = () => {
   const { control, reset, formState, handleSubmit } = useForm<LeaveSchemaType>({
-    mode: 'onBlur',
+    mode: 'onChange',
     reValidateMode: 'onChange',
     resolver: zodResolver(LeaveSchema()),
     defaultValues: {
