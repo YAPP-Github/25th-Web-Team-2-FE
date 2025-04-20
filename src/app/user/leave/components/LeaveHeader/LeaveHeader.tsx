@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { leaveHeaderWrapper, title, description } from './LeaveHeader.css';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
