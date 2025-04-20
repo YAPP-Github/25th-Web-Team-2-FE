@@ -2,11 +2,12 @@ import React from 'react';
 
 import { leaveHeaderWrapper, title, description } from './LeaveHeader.css';
 
-interface LeaveHeaderProps {
-  userName?: string;
-}
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 
-const LeaveHeader = ({ userName }: LeaveHeaderProps) => {
+const LeaveHeader = () => {
+  const { userInfo } = useUserInfo();
+  const userName = userInfo?.memberInfo.name;
+
   return (
     <div className={leaveHeaderWrapper}>
       <h2 className={title}>{userName}님, 정말 탈퇴하시겠어요?</h2>
