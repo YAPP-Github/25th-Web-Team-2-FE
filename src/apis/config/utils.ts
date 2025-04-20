@@ -6,6 +6,7 @@ import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
 
 import { loginWithCredentials, logout } from '@/lib/auth-utils';
+import { CustomError } from './error';
 
 export const isAuthError = (code: string) => {
   return (
@@ -21,10 +22,12 @@ export const login = async ({
   axiosInstance,
   request,
   code,
+  status,
 }: {
   axiosInstance: AxiosInstance;
   request: InternalAxiosRequestConfig;
   code: AuthErrorCode;
+  status: number;
 }) => {
   try {
     // Next-Auth 세션에서 리프레시 토큰 가져오기
@@ -32,7 +35,11 @@ export const login = async ({
     const refreshToken = session?.refreshToken;
 
     if (!refreshToken) {
-      return Promise.reject({ message: ERROR_MESSAGES[code] });
+      throw new CustomError({
+        status,
+        errorCode: code,
+        message: ERROR_MESSAGES[code],
+      });
     }
 
     const userInfo = await updateAccessToken(refreshToken);
