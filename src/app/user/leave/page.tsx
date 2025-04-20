@@ -137,13 +137,13 @@ const LeavePage = () => {
           <span>그라밋 탈퇴 전 확인해 주세요</span>
         </div>
 
-        <div className={leaveMessageContainer}>
+        <ul className={leaveMessageContainer}>
           <li className={listItem}>
             회원가입 시 입력한 정보가 모두 삭제되며, 삭제된 데이터는 복구되지 않습니다
           </li>
-          <span className={listSubText}>
+          <li className={listSubText}>
             *부적합 정보, 이용 제한 및 징계에 관한 기록은 일정 기간 보관합니다
-          </span>
+          </li>
           <li className={listItem}>
             회원 탈퇴 시 작성하신 게시물 등은 삭제되지 않으므로 탈퇴 전 삭제해 주세요
           </li>
@@ -152,15 +152,14 @@ const LeavePage = () => {
             있습니다
           </li>
           <li className={listItem}>같은 소셜 아이디로 재가입 시 신규 회원으로 가입됩니다</li>
-        </div>
+        </ul>
 
-        <div className={confirmCheckWrapper}>
+        <div className={confirmCheckWrapper} onClick={() => setIsChecked(!isChecked)}>
           <Icon
             icon="CheckSquareFill"
             width={18}
             height={18}
             cursor="pointer"
-            onClick={() => setIsChecked(!isChecked)}
             color={isChecked ? colors.primaryMint : colors.icon02}
           />
           <span className={confirmCheckText}>유의사항을 모두 확인하였으며 이에 동의합니다</span>

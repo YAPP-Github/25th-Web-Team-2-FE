@@ -52,6 +52,7 @@ export const checkFormItem = style({
   alignItems: 'center',
   gap: '0.8rem',
   padding: '0.2rem 0',
+  cursor: 'pointer',
 });
 
 globalStyle(`${checkFormItem} input[type="radio"]`, {
@@ -116,6 +117,7 @@ export const confirmCheckWrapper = style({
   alignItems: 'center',
   gap: '0.6rem',
   padding: '0.6rem 0',
+  cursor: 'pointer',
 });
 
 export const confirmCheckText = style({
