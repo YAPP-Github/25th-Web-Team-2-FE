@@ -13,13 +13,10 @@ const LeaveSchema = () => {
       'OTHER',
     ]),
 
-    reason: z.union([
-      z
-        .string()
-        .min(1, { message: '최소 1자 이상 입력해 주세요' })
-        .max(300, { message: '최대 300자 이하로 입력해 주세요' }),
-      z.null(),
-    ]),
+    reason: z
+      .string()
+      .min(1, { message: '최소 1자 이상 입력해 주세요' })
+      .max(300, { message: '최대 300자 이하로 입력해 주세요' }),
   });
 };
 

@@ -21,7 +21,7 @@ const useLeaveForm = () => {
   const reason = useWatch({ name: 'reason', control });
 
   const reasonCondition =
-    reasonType !== 'OTHER' || (reasonType === 'OTHER' && reason && reason.trim().length >= 1);
+    reasonType !== 'OTHER' || (reasonType === 'OTHER' && reason.trim().length >= 1);
   const isValidLeave = reasonType && reasonCondition && Object.keys(formState.errors).length === 0;
 
   const onSubmit = (data: LeaveSchemaType) => {
