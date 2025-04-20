@@ -1,14 +1,11 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
-import React, { useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useState } from 'react';
 
 import LeaveHeader from './components/LeaveHeader/LeaveHeader';
 import LeaveReasonForm from './components/LeaveReasonForm/LeaveReasonForm';
-import useLeaveMutation from './hooks/useLeaveMutation';
+import useLeaveForm from './hooks/useLeaveForm';
 import {
   alertTextWrapper,
   button,
@@ -26,44 +23,14 @@ import {
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import Icon from '@/components/Icon';
-import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 import { colors } from '@/styles/colors';
 
 const LeavePage = () => {
   const router = useRouter();
   const { userInfo } = useUserInfo();
-  const { mutate: leave } = useLeaveMutation();
+  const { control, reset, handleSubmit, isValidLeave } = useLeaveForm();
 
   const [isChecked, setIsChecked] = useState(false);
-  const { control, reset, formState, handleSubmit } = useForm<LeaveSchemaType>({
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
-    resolver: zodResolver(LeaveSchema()),
-    defaultValues: {
-      reason: '',
-    },
-  });
-
-  const onSubmit = (data: LeaveSchemaType) => {
-    const formattedData = {
-      reasonType: data.reasonType,
-      reason: data.reason === '' ? null : data.reason,
-    };
-
-    leave(formattedData, {
-      onSuccess: () => {
-        signOut({ callbackUrl: '/user/success' });
-      },
-    });
-  };
-
-  // form 상태 (control만 있으면 분리 가능)
-  const reasonType = useWatch({ name: 'reasonType', control });
-  const reason = useWatch({ name: 'reason', control });
-
-  const reasonCondition =
-    reasonType !== 'OTHER' || (reasonType === 'OTHER' && reason && reason.trim().length >= 1);
-  const isValidLeave = reasonType && reasonCondition && Object.keys(formState.errors).length === 0;
 
   return (
     <section className={leaveFormLayout}>
@@ -114,7 +81,7 @@ const LeavePage = () => {
         <button
           className={leaveButton}
           disabled={!isValidLeave || !isChecked}
-          onClick={handleSubmit(onSubmit)}
+          onClick={handleSubmit}
         >
           탈퇴하기
         </button>
