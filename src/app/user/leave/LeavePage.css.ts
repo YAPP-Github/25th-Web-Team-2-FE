@@ -23,22 +23,6 @@ export const leaveReasonContainer = style({
   gap: '2.4rem',
 });
 
-export const leaveHeaderWrapper = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.2rem',
-});
-
-export const title = style({
-  ...fonts.title.medium.SB20,
-  color: colors.text06,
-});
-
-export const description = style({
-  ...fonts.label.large.R14,
-  color: colors.text03,
-});
-
 export const footerMessageContainer = style({
   display: 'flex',
   flexDirection: 'column',
@@ -80,17 +64,4 @@ export const listItem = style({
 
 export const listSubText = style({
   paddingLeft: '1.2rem',
-});
-
-export const confirmCheckWrapper = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.6rem',
-  padding: '0.6rem 0',
-  cursor: 'pointer',
-});
-
-export const confirmCheckText = style({
-  ...fonts.label.large.M14,
-  color: colors.text06,
 });

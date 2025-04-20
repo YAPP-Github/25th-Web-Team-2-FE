@@ -1,15 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useReducer } from 'react';
 
+import LeaveAgreeCheckContainer from './components/LeaveAgreeCheckContainer/LeaveAgreeCheckContainer';
 import LeaveButtonContainer from './components/LeaveButtonContainer/LeaveButtonContainer';
 import LeaveHeader from './components/LeaveHeader/LeaveHeader';
 import LeaveReasonForm from './components/LeaveReasonForm/LeaveReasonForm';
 import useLeaveForm from './hooks/useLeaveForm';
 import {
   alertTextWrapper,
-  confirmCheckText,
-  confirmCheckWrapper,
   footerMessageContainer,
   leaveFormLayout,
   leaveMessageContainer,
@@ -20,13 +19,12 @@ import {
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 const LeavePage = () => {
   const { userInfo } = useUserInfo();
   const { control, reset, handleSubmit, isValidLeave } = useLeaveForm();
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isAgree, toggle] = useReducer((prev) => !prev, false);
 
   return (
     <section className={leaveFormLayout}>
@@ -58,21 +56,12 @@ const LeavePage = () => {
           <li className={listItem}>같은 소셜 아이디로 재가입 시 신규 회원으로 가입됩니다</li>
         </ul>
 
-        <div className={confirmCheckWrapper} onClick={() => setIsChecked(!isChecked)}>
-          <Icon
-            icon="CheckSquareFill"
-            width={18}
-            height={18}
-            cursor="pointer"
-            color={isChecked ? colors.primaryMint : colors.icon02}
-          />
-          <span className={confirmCheckText}>유의사항을 모두 확인하였으며 이에 동의합니다</span>
-        </div>
+        <LeaveAgreeCheckContainer isAgree={isAgree} toggle={toggle} />
       </div>
 
       <LeaveButtonContainer
         isValidLeave={isValidLeave}
-        isChecked={isChecked}
+        isChecked={isAgree}
         handleSubmit={handleSubmit}
       />
     </section>
