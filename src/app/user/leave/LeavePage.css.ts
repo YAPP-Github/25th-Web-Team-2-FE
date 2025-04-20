@@ -51,6 +51,7 @@ export const checkFormItem = style({
   display: 'flex',
   alignItems: 'center',
   gap: '0.8rem',
+  padding: '0.2rem 0',
 });
 
 globalStyle(`${checkFormItem} input[type="radio"]`, {
@@ -90,7 +91,7 @@ export const leaveMessageContainer = style({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: '1.2rem',
-  padding: '1.4rem 1.6rem',
+  padding: '1.4rem 2.4rem 1.4rem 1.6rem',
 
   listStyle: 'none',
 });
