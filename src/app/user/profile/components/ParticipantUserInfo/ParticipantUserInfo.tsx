@@ -11,7 +11,6 @@ import {
 } from './ParticipantUserInfo.css';
 import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
-import ButtonInput from '../ButtonInput/ButtonInput';
 
 import { ParticipantResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
@@ -22,8 +21,10 @@ import RadioButtonGroupContainer from '@/app/join/components/Participant/JoinInf
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
+import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
+import { colors } from '@/styles/colors';
 
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
   const { form, contactEmail, region, additionalRegion, handleSubmit, isLoading, isError } =
@@ -57,9 +58,8 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             control={form.control}
             name="contactEmail"
             onClick={handleCheckValidEmail}
-            isLoadingCheck={isLoadingCheck}
+            isLoading={isLoadingCheck}
             isSuccess={isSuccess}
-            isEmailDuplicateError={isEmailDuplicateError}
             setIsValidToastOpen={setIsValidToastOpen}
             tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
             toast={
@@ -132,8 +132,9 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
                       label="[선택] 광고성 정보 이메일/SMS 수신 동의"
                       isChecked={field.value}
                       onChange={() => form.setValue('adConsent', !field.value)}
-                      isArrow={false}
-                      emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                      emptyCheckIcon={
+                        <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                      }
                     />
                   </div>
                 );
@@ -151,8 +152,9 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
                       label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
                       isChecked={field.value}
                       onChange={() => form.setValue('matchConsent', !field.value)}
-                      isArrow={false}
-                      emptyCheckIcon={<Icon icon="CheckSquareFill" cursor="pointer" />}
+                      emptyCheckIcon={
+                        <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                      }
                     />
                   </div>
                 );

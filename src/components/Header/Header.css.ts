@@ -35,6 +35,14 @@ export const contactButton = style({
   },
 });
 
+export const HeaderButton = style({
+  ...fonts.label.large.SB14,
+  backgroundColor: colors.primaryTinted,
+  color: colors.primaryMint,
+  padding: '0.6rem 1.4rem',
+  borderRadius: '1.2rem',
+});
+
 export const loginButton = style({
   display: 'inline-block',
   ...fonts.label.large.SB14,

@@ -2,25 +2,23 @@ import React, { useRef, useState } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import {
-  errorMessage,
   inputContainer,
   inputLabel,
+  errorMessage,
   joinInput,
   requiredStar,
   tipWrapper,
-} from '@/app/join/components/JoinInput/JoinInput.css';
-import {
-  univAuthButton,
-  univInputWrapper,
-} from '@/app/join/components/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
+  infoContainer,
+  inputWrapper,
+  confirmButton,
+} from './ButtonInput.css';
 
 interface ButtonInputProps<T extends FieldValues> {
   control: Control<T>;
   name: Path<T>;
   onClick: () => void;
-  isLoadingCheck: boolean;
+  isLoading: boolean;
   isSuccess: boolean;
-  isEmailDuplicateError: boolean;
   setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
   tip?: string;
@@ -30,7 +28,7 @@ const ButtonInput = <T extends FieldValues>({
   control,
   name,
   onClick,
-  isLoadingCheck,
+  isLoading,
   isSuccess,
   toast,
   tip,
@@ -65,7 +63,7 @@ const ButtonInput = <T extends FieldValues>({
 
           return (
             <>
-              <div className={univInputWrapper}>
+              <div className={inputWrapper}>
                 <input
                   {...field}
                   style={{ width: '100%' }}
@@ -78,21 +76,26 @@ const ButtonInput = <T extends FieldValues>({
                 {isFocused && field.value && (
                   <button
                     type="button"
-                    className={univAuthButton}
-                    disabled={isButtonDisabled || isLoadingCheck || isSuccess}
+                    className={confirmButton}
+                    disabled={isButtonDisabled || isLoading || isSuccess}
                     onClick={onClick}
                     ref={validateButtonRef}
                   >
-                    {isLoadingCheck ? '확인 중...' : '중복 확인'}
+                    {isLoading ? '확인 중...' : '중복 확인'}
                   </button>
                 )}
               </div>
-              {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-              {tip && (
-                <div className={tipWrapper}>
-                  <span>{tip}</span>
-                </div>
-              )}
+              <div className={infoContainer}>
+                {fieldState.error ? (
+                  <span className={errorMessage}>{fieldState.error.message}</span>
+                ) : (
+                  tip && (
+                    <div className={tipWrapper}>
+                      <span>{tip}</span>
+                    </div>
+                  )
+                )}
+              </div>
             </>
           );
         }}

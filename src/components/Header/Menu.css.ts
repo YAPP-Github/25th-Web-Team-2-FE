@@ -19,6 +19,7 @@ export const contentContainer = style({
   padding: '0.8rem',
   backgroundColor: colors.field01,
   borderRadius: '0.8rem',
+  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.08)',
 });
 
 export const selectItem = style({

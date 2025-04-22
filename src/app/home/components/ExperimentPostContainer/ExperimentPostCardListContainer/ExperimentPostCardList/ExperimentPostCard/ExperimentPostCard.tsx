@@ -17,6 +17,7 @@ import {
 
 import { formatPostDate } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
 import { ExperimentPost } from '@/types/post';
 
 interface ExperimentPostCardProps {
@@ -36,7 +37,7 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
           <div className={postCardHeader}>
             <span className={postLocation}>{place ? place : '비대면'}</span>
             <div className={postCardRightHeader}>
-              <Icon icon="Eye" width={18} />
+              <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
               <span className={postViews}>{views}</span>
             </div>
           </div>

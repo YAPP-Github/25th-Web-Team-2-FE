@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { buttonContainer, contactButton, loginButton } from '../Header.css';
+import { buttonContainer, HeaderButton, loginButton } from '../Header.css';
 import Menu from '../Menu';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
@@ -17,7 +17,7 @@ const RightHeader = () => {
       {userInfo ? (
         <>
           {isResearcher && (
-            <Link href="/upload" className={contactButton}>
+            <Link href="/upload" className={HeaderButton}>
               실험 공고 등록
             </Link>
           )}

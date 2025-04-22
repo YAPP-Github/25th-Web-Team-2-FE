@@ -21,7 +21,7 @@ export const popoverTrigger = style({
   gap: '0.4rem',
   alignItems: 'center',
   width: 'fit-content',
-  padding: '0.6rem 1.4rem',
+  padding: '0.6rem 1rem 0.6rem 1.4rem',
   border: 'none',
   borderRadius: '1.2rem',
   color: 'var(--popover-trigger-color)',
@@ -98,6 +98,10 @@ export const ageInput = style({
     '&:focus': {
       outline: 'none',
       border: `0.1rem solid ${colors.primaryMint}`,
+    },
+
+    '&::placeholder': {
+      color: colors.text02,
     },
   },
 });

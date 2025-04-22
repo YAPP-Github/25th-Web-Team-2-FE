@@ -27,7 +27,3 @@ export const tooltipContent = style({
     },
   },
 });
-
-export const tooltipArrow = style({
-  fill: colors.field01,
-});

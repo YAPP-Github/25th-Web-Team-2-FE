@@ -21,14 +21,25 @@ import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 interface UnivAuthInputProps {
   isEmailVerified: boolean;
   handleVerifyEmail: () => void;
+  handleResetVerifyEmail: () => void;
 }
 
-const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProps) => {
+const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
+  if (isLoading) return '전송 중...';
+  if (isAuthenticated) return '수정';
+  return '인증번호 전송';
+};
+
+const UnivAuthInput = ({
+  isEmailVerified,
+  handleVerifyEmail,
+  handleResetVerifyEmail,
+}: UnivAuthInputProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
     mutate: sendEmail,
-    error: sendError,
+    error: authCodeError,
     isPending: isLoadingSend,
   } = useSendUnivAuthCodeMutation();
 
@@ -36,8 +47,9 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
-
   const univEmail = useWatch({ name: 'univEmail', control });
+
+  const isUnivEmailAuthenticated = isEmailSent || isEmailVerified;
 
   const handleSendUnivAuthCode = () => {
     sendEmail(univEmail, {
@@ -46,15 +58,17 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
         setIsToastOpen(true);
         startTimer();
       },
-      onError: () => {
-        // TODO: 이미 인증된 유저인 경우에만 verify
-        handleVerifyEmail();
+      onError: (error) => {
+        if (error.errorCode === 'VE0007') {
+          handleVerifyEmail();
+        }
       },
     });
   };
 
   const handleClickEdit = () => {
     setIsEmailSent(false);
+    handleResetVerifyEmail();
     stopTimer();
   };
 
@@ -64,16 +78,12 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
         <span>학교 메일 인증</span>
         <span className={required}>*</span>
       </label>
-
       <Controller
         name="univEmail"
         control={control}
         render={({ field, fieldState }) => {
           const isButtonDisabled =
-            (!isEmailSent && !field.value) ||
-            isEmailVerified ||
-            isLoadingSend ||
-            fieldState.invalid;
+            (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
 
           return (
             <>
@@ -84,19 +94,22 @@ const UnivAuthInput = ({ isEmailVerified, handleVerifyEmail }: UnivAuthInputProp
                   className={joinInput}
                   placeholder="학교 메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
-                  disabled={isEmailSent || isEmailVerified}
+                  disabled={isUnivEmailAuthenticated}
                 />
                 <button
                   type="button"
-                  className={`${univAuthButton} ${isEmailSent ? editButton : ''}`}
+                  className={`${univAuthButton} ${isUnivEmailAuthenticated ? editButton : ''}`}
                   disabled={isButtonDisabled}
-                  onClick={isEmailSent ? handleClickEdit : handleSendUnivAuthCode}
+                  onClick={isUnivEmailAuthenticated ? handleClickEdit : handleSendUnivAuthCode}
                 >
-                  {isLoadingSend ? '전송 중...' : isEmailSent ? '수정' : '인증번호 전송'}
+                  {getButtonText(isLoadingSend, isUnivEmailAuthenticated)}
                 </button>
               </div>
-              {fieldState.error && <span className={errorMessage}>{fieldState.error.message}</span>}
-              {sendError && <span className={errorMessage}>{sendError.message}</span>}
+              {fieldState.error ? (
+                <span className={errorMessage}>{fieldState.error.message}</span>
+              ) : (
+                authCodeError && <span className={errorMessage}>{authCodeError.message}</span>
+              )}
             </>
           );
         }}

@@ -24,12 +24,12 @@ export interface PostAreaResponse {
   data: ExperimentPostArea[];
 }
 
-interface ExperimentPostRegion {
+export interface ExperimentPostRegion {
   name: RegionType;
   count: number;
 }
 
-interface ExperimentPostArea {
+export interface ExperimentPostArea {
   name: AreaType;
   count: number;
 }

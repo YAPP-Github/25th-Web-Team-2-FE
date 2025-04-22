@@ -5,7 +5,6 @@ import { fonts } from '@/styles/fonts.css';
 
 export const univInputWrapper = style({
   position: 'relative',
-  backgroundColor: colors.field01,
   borderRadius: '1rem',
 });
 

@@ -5,7 +5,7 @@ import { API_URL } from '@/constants/url';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-interface UnivAuthCodeResponse {
+export interface UnivAuthCodeResponse {
   isSuccess: boolean;
   message: string;
 }
