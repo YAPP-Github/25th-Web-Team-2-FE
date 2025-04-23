@@ -25,6 +25,7 @@ interface useUploadExperimentPostProps {
   setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
+  setErrorMessage?: Dispatch<SetStateAction<string | null>>;
 }
 
 const useManageExperimentPostForm = ({
@@ -36,6 +37,7 @@ const useManageExperimentPostForm = ({
   setSuccessToast,
   images,
   setImages,
+  setErrorMessage,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -44,16 +46,12 @@ const useManageExperimentPostForm = ({
   const {
     data: experimentData,
     isLoading: isExperimentLoading,
-    isError: isExperimentError,
+    error: originExperimentError,
   } = useOriginExperimentPostQuery({
     postId: postId!,
   });
 
-  const {
-    data: applyMethodData,
-    isLoading: isApplyMethodLoading,
-    isError: isApplyMethodError,
-  } = useApplyMethodQuery({
+  const { data: applyMethodData, isLoading: isApplyMethodLoading } = useApplyMethodQuery({
     postId: postId!,
   });
 
@@ -93,6 +91,7 @@ const useManageExperimentPostForm = ({
     },
   });
 
+  // 기존 공고 데이터로 form reset
   useEffect(() => {
     if (isEdit && experimentData && applyMethodData) {
       setImages?.(experimentData.imageList);
@@ -194,7 +193,8 @@ const useManageExperimentPostForm = ({
             }, 1000);
             form.reset();
           },
-          onError: () => {
+          onError: (error) => {
+            setErrorMessage?.(error.message);
             setOpenAlertModal(true);
           },
         },
@@ -208,7 +208,8 @@ const useManageExperimentPostForm = ({
           }, 1000);
           form.reset();
         },
-        onError: () => {
+        onError: (error) => {
+          setErrorMessage?.(error.message);
           setOpenAlertModal(true);
         },
       });
@@ -219,10 +220,10 @@ const useManageExperimentPostForm = ({
     form,
     handleSubmit: form.handleSubmit(handleSubmit),
     isLoading: isExperimentLoading || isApplyMethodLoading,
-    isError: isExperimentError || isApplyMethodError,
     applyMethodData,
     isAuthor: experimentData?.isAuthor ?? false,
     isRecruitStatus: experimentData?.recruitStatus ?? true,
+    originExperimentError,
   };
 };
 

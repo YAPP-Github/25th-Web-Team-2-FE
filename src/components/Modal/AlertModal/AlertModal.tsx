@@ -44,7 +44,7 @@ const AlertModal = ({
           </>
         </Dialog.Title>
         <Dialog.Description>
-          <div className={alertModalDescription}>{description}</div>
+          <span className={alertModalDescription}>{description}</span>
         </Dialog.Description>
       </Dialog.Content>
     </Dialog.Root>
