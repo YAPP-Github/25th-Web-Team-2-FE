@@ -6,7 +6,7 @@ import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
 import { CustomError } from './error';
 
-import { loginWithCredentials, logout } from '@/lib/auth-utils';
+import { loginWithCredentials } from '@/lib/auth-utils';
 
 export const isAuthError = (code: string) => {
   return (
@@ -29,33 +29,28 @@ export const login = async ({
   code: AuthErrorCode;
   status: number;
 }) => {
-  try {
-    // Next-Auth 세션에서 리프레시 토큰 가져오기
-    const session = await getSession();
-    const refreshToken = session?.refreshToken;
+  // Next-Auth 세션에서 리프레시 토큰 가져오기
+  const session = await getSession();
+  const refreshToken = session?.refreshToken;
 
-    if (!refreshToken) {
-      throw new CustomError({
-        status,
-        errorCode: code,
-        message: ERROR_MESSAGES[code],
-      });
-    }
-
-    const userInfo = await updateAccessToken(refreshToken);
-
-    // Next-Auth 재로그인
-    await loginWithCredentials({
-      accessToken: userInfo.accessToken,
-      refreshToken: userInfo.refreshToken,
-      role: userInfo.memberInfo.role,
+  if (!refreshToken) {
+    throw new CustomError({
+      status,
+      errorCode: code,
+      message: ERROR_MESSAGES[code],
     });
-
-    request.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-    axiosInstance.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-    return axios(request);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {
-    await logout();
   }
+
+  const userInfo = await updateAccessToken(refreshToken);
+
+  // Next-Auth 재로그인
+  await loginWithCredentials({
+    accessToken: userInfo.accessToken,
+    refreshToken: userInfo.refreshToken,
+    role: userInfo.memberInfo.role,
+  });
+
+  request.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+  axiosInstance.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
+  return axios(request);
 };
