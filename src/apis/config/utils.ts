@@ -33,7 +33,7 @@ export const login = async ({
   const session = await getSession();
   const refreshToken = session?.refreshToken;
 
-  if (!refreshToken) {
+  if (!refreshToken || refreshToken === 'temp-token') {
     throw new CustomError({
       status,
       errorCode: code,
