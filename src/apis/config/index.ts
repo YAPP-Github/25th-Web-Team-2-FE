@@ -30,7 +30,7 @@ API.interceptors.response.use(
       const originalRequest = config;
 
       if (isAuthError(data.code)) {
-        await login({
+        return await login({
           axiosInstance: API,
           request: originalRequest,
           code: data.code,
