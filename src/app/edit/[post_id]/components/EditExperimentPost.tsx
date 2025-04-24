@@ -5,8 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
+import { CustomError } from '@/apis/config/error';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -26,7 +25,6 @@ import {
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
-import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
@@ -36,12 +34,16 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
-  const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
-  const [images, setImages] = useState<(File | string)[]>([]);
-  const [openUpdateAlertModal, setOenUpdateAlertModal] = useState<boolean>(false);
-  const [successToast, setSuccessToast] = useState(false);
 
-  const { form, handleSubmit, isLoading, applyMethodData, isError, isAuthor, isRecruitStatus } =
+  const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
+  const [openUpdateAlertModal, setOenUpdateAlertModal] = useState<boolean>(false);
+
+  const [images, setImages] = useState<(File | string)[]>([]);
+
+  const [successToast, setSuccessToast] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
     useManageExperimentPostForm({
       isEdit,
       postId: params.post_id,
@@ -51,16 +53,20 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
       setSuccessToast,
       images,
       setImages,
+      setErrorMessage,
     });
 
-  // 기존 공고 데이터 불러오는 API 호출 실패 시 모달 열기
   useEffect(() => {
-    if (!isLoading && !isAuthor) return;
+    if (originExperimentError instanceof CustomError) {
+      if (originExperimentError.errorCode) {
+        setErrorMessage(originExperimentError.message);
+      } else {
+        setErrorMessage(null);
+      }
 
-    if (isEdit && isError) {
       setOenUpdateAlertModal(true);
     }
-  }, [isAuthor, isEdit, isError, isLoading, setOenUpdateAlertModal]);
+  }, [isLoading, originExperimentError]);
 
   // 모달 닫을 때 이전 페이지로 이동
   const handleCloseModal = () => {
@@ -74,24 +80,6 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
       setAddContact(!!applyMethodData.phoneNum);
     }
   }, [applyMethodData]);
-
-  // 로그인 유저가 아니거나 작성자가 아닐 경우 홈으로 이동
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
-  useEffect(() => {
-    if ((!isLoading && !isAuthor) || (!isUserInfoLoading && !userInfo)) {
-      router.replace('/');
-    }
-  }, [isAuthor, isLoading, isUserInfoLoading, router, userInfo]);
-
-  // todo 로딩 스피너 추가
-  if (isLoading) {
-    return (
-      <>
-        <Spinner />
-        <p className={emptySubTitle}>로딩중..</p>
-      </>
-    );
-  }
 
   const experimentDateChecked =
     form.getValues('startDate') === null && form.getValues('endDate') === null;
@@ -131,23 +119,24 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         </div>
       </div>
 
-      <AlertModal
-        title="공고 수정에 실패했어요"
-        description="시간을 두고 다시 시도해 주세요"
-        open={openSubmitAlertDialog}
-        onOpenChange={setOpenSubmitAlertDialog}
-        handleCloseModal={() => {
-          setOpenSubmitAlertDialog(false);
-        }}
-      />
-
       {/* 공고 불러오기 실패 시 모달 */}
       <AlertModal
         open={openUpdateAlertModal}
         onOpenChange={setOenUpdateAlertModal}
         handleCloseModal={handleCloseModal}
         title="공고를 불러오지 못했어요"
-        description="시간을 두고 다시 시도해주세요"
+        description={errorMessage ?? '시간을 두고 다시 시도해주세요'}
+      />
+
+      {/* 공고 수정 실패 시 모달 */}
+      <AlertModal
+        title="공고 수정에 실패했어요"
+        description={errorMessage ?? '시간을 두고 다시 시도해주세요'}
+        open={openSubmitAlertDialog}
+        onOpenChange={setOpenSubmitAlertDialog}
+        handleCloseModal={() => {
+          setOpenSubmitAlertDialog(false);
+        }}
       />
 
       {/* 공고 수정 성공 시 successToast */}

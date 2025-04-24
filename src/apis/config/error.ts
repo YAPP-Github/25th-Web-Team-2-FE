@@ -11,7 +11,7 @@ interface CustomErrorParams {
 }
 
 export class CustomError extends Error {
-  errorCode: string;
+  errorCode: ErrorCode;
   status: number;
   message: string;
 

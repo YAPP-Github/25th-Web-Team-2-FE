@@ -12,7 +12,7 @@ const useResearcherInfoQuery = ({ enabled }: useResearcherInfoQueryProps) => {
     queryKey: [QUERY_KEY.researcherInfo],
     queryFn: getResearcherInfo,
     enabled,
-    retry: 1,
+    retry: 0,
   });
 };
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { ERROR_MESSAGES } from './constants';
-import { CustomError, NetworkError } from './error';
+import { CustomError, NetworkError, UnhandledError } from './error';
 import { CustomAxiosError } from './types';
 import { isAuthError, login } from './utils';
 
@@ -15,12 +15,22 @@ API.interceptors.response.use(
     return response;
   },
   async (error: CustomAxiosError) => {
-    if (error.response && error.response.data.code in ERROR_MESSAGES) {
+    // 에러 응답이 없는 경우
+    if (!error.response) {
+      throw new NetworkError();
+    }
+
+    // 에러 응답이 있음 & 정의되지 않은 에러 코드인 경우
+    if (error.response && !(error.response.data.code in ERROR_MESSAGES)) {
+      throw new UnhandledError();
+    }
+
+    try {
       const { data, config, status } = error.response;
       const originalRequest = config;
 
       if (isAuthError(data.code)) {
-        return login({
+        return await login({
           axiosInstance: API,
           request: originalRequest,
           code: data.code,
@@ -28,6 +38,7 @@ API.interceptors.response.use(
         });
       }
 
+      // 예외 케이스
       if (data.code === 'ME0002') {
         const role = data.message.split(': ').pop()?.trim();
 
@@ -43,9 +54,17 @@ API.interceptors.response.use(
         errorCode: data.code,
         message: ERROR_MESSAGES[data.code],
       });
-    }
+    } catch (err) {
+      if (err instanceof CustomError) {
+        throw err;
+      }
 
-    // timeout 내에 서버 응답이 없는 경우
-    throw new NetworkError();
+      const error = err as CustomError;
+      throw new CustomError({
+        status: error.status,
+        errorCode: error.errorCode,
+        message: error.message,
+      });
+    }
   },
 );
