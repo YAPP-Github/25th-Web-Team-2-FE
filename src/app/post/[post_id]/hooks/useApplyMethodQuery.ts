@@ -6,7 +6,7 @@ import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 interface UseApplyMethodQueryParams {
-  postId: string;
+  postId: string | undefined;
 }
 
 export interface UseApplyMethodQueryResponse {
@@ -17,7 +17,7 @@ export interface UseApplyMethodQueryResponse {
 }
 
 const useApplyMethodQuery = ({ postId }: UseApplyMethodQueryParams) => {
-  const url = API_URL.applyMethod(postId);
+  const url = API_URL.applyMethod(postId ?? '');
   const queryFn = () => API.get(url).then((res) => res.data);
 
   return useQuery<UseApplyMethodQueryResponse, AxiosError>({

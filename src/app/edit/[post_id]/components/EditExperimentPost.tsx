@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import { CustomError } from '@/apis/config/error';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -57,17 +56,16 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
     });
 
   useEffect(() => {
-    if (isEdit && originExperimentError) {
-      const error = originExperimentError as unknown as CustomError;
-      if (error.errorCode) {
-        setErrorMessage(error.message);
+    if (originExperimentError) {
+      if (originExperimentError.errorCode) {
+        setErrorMessage(originExperimentError.message);
       } else {
         setErrorMessage(null);
       }
 
       setOenUpdateAlertModal(true);
     }
-  }, [isLoading, isEdit, originExperimentError]);
+  }, [isLoading, originExperimentError]);
 
   // 모달 닫을 때 이전 페이지로 이동
   const handleCloseModal = () => {

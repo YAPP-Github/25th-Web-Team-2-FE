@@ -48,11 +48,11 @@ const useManageExperimentPostForm = ({
     isLoading: isExperimentLoading,
     error: originExperimentError,
   } = useOriginExperimentPostQuery({
-    postId: postId!,
+    postId: postId,
   });
 
   const { data: applyMethodData, isLoading: isApplyMethodLoading } = useApplyMethodQuery({
-    postId: postId!,
+    postId: postId,
   });
 
   const form = useForm<UploadExperimentPostSchemaType>({
