@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
+import { CustomError } from '@/apis/config/error';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -56,7 +57,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
     });
 
   useEffect(() => {
-    if (originExperimentError) {
+    if (originExperimentError instanceof CustomError) {
       if (originExperimentError.errorCode) {
         setErrorMessage(originExperimentError.message);
       } else {
