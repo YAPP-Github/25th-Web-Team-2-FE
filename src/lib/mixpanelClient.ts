@@ -14,7 +14,6 @@ export const initMixpanel = () => {
 
   if (!isMixpanelInitialized) {
     mixpanel.init(MIXPANEL_TOKEN, {
-      debug: process.env.NODE_ENV === 'development',
       track_pageview: false,
       persistence: 'localStorage',
     });

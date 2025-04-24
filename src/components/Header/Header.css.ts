@@ -4,6 +4,7 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const headerLayout = style({
+  backgroundColor: 'transparent',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',

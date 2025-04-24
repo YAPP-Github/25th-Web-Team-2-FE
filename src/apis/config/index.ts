@@ -20,12 +20,32 @@ API.interceptors.response.use(
       const originalRequest = config;
 
       if (isAuthError(data.code)) {
-        return login({
-          axiosInstance: API,
-          request: originalRequest,
-          code: data.code,
-          status,
-        });
+        try {
+          await login({
+            axiosInstance: API,
+            request: originalRequest,
+            code: data.code,
+            status,
+          });
+        } catch (err) {
+          const newErr = err as CustomAxiosError;
+
+          if (
+            newErr.response &&
+            newErr.response?.data.code in ERROR_MESSAGES &&
+            newErr.response?.data.code !== 'ME0002'
+          ) {
+            const newCode = newErr.response?.data.code;
+
+            throw new CustomError({
+              status,
+              errorCode: newCode,
+              message: ERROR_MESSAGES[newCode],
+            });
+          }
+
+          throw newErr;
+        }
       }
 
       if (data.code === 'ME0002') {

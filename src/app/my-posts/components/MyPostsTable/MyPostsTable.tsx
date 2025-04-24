@@ -12,8 +12,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import {
   container,
@@ -58,13 +57,12 @@ const MyPostsTable = ({
   setCurrentPage,
   order,
 }: MyPostsTableProps) => {
-  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [updateStatusConfirmOpen, setUpdateStatusConfirmOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+  const { isLoading: isUserInfoLoading } = useUserInfo();
   const queryClient = useQueryClient();
 
   const { data, isLoading, error, refetch: refetchMyPosts } = myPostAPIResponse;
@@ -190,18 +188,11 @@ const MyPostsTable = ({
     columnResizeMode: 'onChange',
   });
 
-  // todo middleware 적용 전 임시 redirect
-  useEffect(() => {
-    if (!isUserInfoLoading && !userInfo) {
-      router.replace('/');
-    }
-  }, [userInfo, router, isUserInfoLoading]);
-
   if (isUserInfoLoading || isLoading)
     return (
       <div className={tableEmptyViewLayout}>
         <Spinner />
-        <p className={emptySubTitle}>로딩중..</p>
+        <p className={emptySubTitle}>로딩중</p>
       </div>
     );
 
