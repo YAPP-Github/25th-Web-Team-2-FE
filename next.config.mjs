@@ -4,7 +4,6 @@ import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin';
 
 const nextConfig = {
   reactStrictMode: true,
-  productionBrowserSourceMaps: true,
   images: {
     remotePatterns: [
       {
