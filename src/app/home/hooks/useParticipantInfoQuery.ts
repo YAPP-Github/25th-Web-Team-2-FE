@@ -12,7 +12,7 @@ const useParticipantInfoQuery = ({ enabled }: useParticipantInfoQueryProps) => {
     queryKey: [QUERY_KEY.participantInfo],
     queryFn: getParticipantInfo,
     enabled,
-    retry: 1,
+    retry: 0,
     staleTime: Infinity,
     gcTime: Infinity,
   });
