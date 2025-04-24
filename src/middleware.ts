@@ -16,8 +16,23 @@ const isExpiredToken = (token: JWT) => {
   return isExpired;
 };
 
+// Next-Auth 관련 모든 쿠키 삭제
+const clearAuthCookies = (request: NextRequest, response: NextResponse) => {
+  const cookiesToClear = [
+    'next-auth.session-token',
+    'next-auth.csrf-token',
+    'next-auth.callback-url',
+  ];
+
+  cookiesToClear.forEach((cookieName) => {
+    if (request.cookies.has(cookieName)) {
+      response.cookies.delete(cookieName);
+    }
+  });
+};
+
 export async function middleware(request: NextRequest) {
-  const { searchParams } = request.nextUrl;
+  const { searchParams, pathname } = request.nextUrl;
 
   const token = await getToken({
     req: request,
@@ -28,27 +43,24 @@ export async function middleware(request: NextRequest) {
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
 
   // 토큰이 없는 경우
-  if (!token) {
+  if (!token && pathname !== '/') {
     return goToLogin(request);
   }
 
   // 토큰이 만료된 경우
-  if (token && isExpiredToken(token)) {
+  if (token && isExpiredToken(token) && pathname !== '/') {
     const response = goToLogin(request);
+    clearAuthCookies(request, response);
 
-    // Next-Auth 관련 모든 쿠키 삭제
-    const cookiesToClear = [
-      'next-auth.session-token',
-      'next-auth.csrf-token',
-      'next-auth.callback-url',
-    ];
+    return response;
+  }
 
-    cookiesToClear.forEach((cookieName) => {
-      if (request.cookies.has(cookieName)) {
-        response.cookies.delete(cookieName);
-      }
-    });
+  // 임시 사용자가 회원가입 이탈했을 경우
+  const isTempUser = token?.isTempUser === true && token?.accessToken === 'temp-token';
 
+  if (isTempUser && !isJoinPage) {
+    const response = NextResponse.next();
+    clearAuthCookies(request, response);
     return response;
   }
 
@@ -63,5 +75,5 @@ export async function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 지정
 export const config = {
-  matcher: ['/join/:path*', '/my-posts/:path*', '/user/profile/:path*', '/user/leave/:path*'],
+  matcher: ['/', '/join/:path*', '/my-posts/:path*', '/user/profile/:path*', '/user/leave/:path*'],
 };
