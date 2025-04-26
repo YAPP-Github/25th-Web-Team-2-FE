@@ -3,29 +3,41 @@
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { usePathname } from 'next/navigation';
+import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
+import { API } from '@/apis/config';
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/mocks/MSWProvider';
 
-function makeQueryClient() {
+function makeQueryClient(session: Session | null) {
+  if (session?.accessToken) {
+    API.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
+  }
+
   return new QueryClient();
 }
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
-function getQueryClient() {
+function getQueryClient(session: Session | null) {
   if (isServer) {
-    return makeQueryClient();
+    return makeQueryClient(session);
   } else {
-    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    if (!browserQueryClient) browserQueryClient = makeQueryClient(session);
     return browserQueryClient;
   }
 }
 
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient();
+export default function Providers({
+  children,
+  session,
+}: {
+  children: React.ReactNode;
+  session: Session | null;
+}) {
+  const queryClient = getQueryClient(session);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,7 +50,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <SessionProvider>
+    <SessionProvider session={session}>
       <MSWProvider>
         <QueryClientProvider client={queryClient}>
           {children}
