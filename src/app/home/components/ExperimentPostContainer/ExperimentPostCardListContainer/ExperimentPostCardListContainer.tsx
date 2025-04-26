@@ -38,7 +38,7 @@ const ExperimentPostCardListContainer = ({
 
   const hasData = postListData && postListData.pages && postListData.pages.length > 0;
 
-  if (isUserInfoLoading || isListLoading) {
+  if (!hasData || isUserInfoLoading || isListLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />
