@@ -5,7 +5,7 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
-import CustomQueryClientProvider from './QueryClientProvider';
+import CustomQueryClientProvider from './CustomQueryClientProvider';
 
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/mocks/MSWProvider';
