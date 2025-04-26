@@ -14,9 +14,7 @@ const CustomQueryClientProvider = ({
 }) => {
   const [queryClient] = useState(() => new QueryClient());
 
-  const authorization = API.defaults.headers.common['Authorization'];
-
-  if (session?.accessToken && typeof authorization === 'undefined') {
+  if (session?.accessToken) {
     API.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
   }
 
