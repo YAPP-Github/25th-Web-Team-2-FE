@@ -35,7 +35,7 @@ export const useExperimentFilters = (
   };
 
   useEffect(() => {
-    if (!isLoadingUserInfo) return;
+    if (isLoadingUserInfo) return;
 
     // 참여자일 경우 자동 필터링 적용
     if (participantInfo) {

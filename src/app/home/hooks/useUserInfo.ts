@@ -24,7 +24,6 @@ const useUserInfo = () => {
     userInfo: isParticipant ? participantQuery.data : researcherQuery.data,
     isLoading,
     isError: participantQuery.isError || researcherQuery.isError,
-    isSessionReady,
     isResearcher,
     isParticipant,
   };
