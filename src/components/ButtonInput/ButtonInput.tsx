@@ -79,6 +79,7 @@ const ButtonInput = <T extends FieldValues>({
                     className={confirmButton}
                     disabled={isButtonDisabled || isLoading || isSuccess}
                     onClick={onClick}
+                    onMouseDown={(e) => e.preventDefault()}
                     ref={validateButtonRef}
                   >
                     {isLoading ? '확인 중...' : '중복 확인'}
