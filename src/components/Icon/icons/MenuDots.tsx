@@ -5,13 +5,14 @@ import { colors } from '@/styles/colors';
 function MenuDots(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="4"
+      width="3"
       height="12"
       viewBox="0 0 4 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="메뉴 더보기"
+      transform="translate(0,-1)"
       {...props}
     >
       <path

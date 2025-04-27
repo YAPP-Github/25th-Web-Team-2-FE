@@ -5,17 +5,17 @@ import { colors } from '@/styles/colors';
 function ToggleOn(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="42"
-      height="38"
-      viewBox="0 -4 42 38"
+      width={props.width ?? '32'}
+      height={props.height ?? '38'}
+      viewBox="0 -4 32 38"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="토글 스위치 켜짐"
-      transform="translate(0,3)"
+      transform="translate(5,3)"
     >
       <rect y="6" width="32" height="18" rx="9" fill={props.color || colors.primaryMint} />
-      <g filter="url(#filter0_d_3107_24227)">
+      <g>
         <circle cx="23" cy="15" r="7" fill="white" />
       </g>
       <defs>

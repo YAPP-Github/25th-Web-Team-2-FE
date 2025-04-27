@@ -5,17 +5,17 @@ import { colors } from '@/styles/colors';
 function ToggleOff(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="42"
-      height="38"
-      viewBox="0 -4 42 38"
+      width={props.width ?? '32'}
+      height={props.height ?? '38'}
+      viewBox="0 -2 32 38"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="토글 스위치 꺼짐"
-      transform="translate(-2, 0)"
+      transform="translate(10, 1)"
     >
       <rect y="6" width="32" height="18" rx="9" fill={props.color || colors.field05} />
-      <g filter="url(#filter0_d_3107_24218)">
+      <g>
         <circle cx="9" cy="15" r="7" fill="white" />
       </g>
       <defs>
