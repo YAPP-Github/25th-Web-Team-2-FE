@@ -8,7 +8,7 @@ const LeaveHeader = () => {
 
   return (
     <div className={leaveHeaderWrapper}>
-      <h2 className={title}>{userName}님, 정말 탈퇴하시겠어요?</h2>
+      <h2 className={title}>{userName && `${userName}님, 정말 탈퇴하시겠어요?`}</h2>
       <span className={description}>
         탈퇴를 결정한 이유를 말씀해 주세요. 서비스 개선에 중요한 자료로 활용할게요
       </span>
