@@ -6,7 +6,7 @@ import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { ExperimentPostListFilters } from '@/apis/post';
 
 export const useExperimentFilters = (
-  isSessionReady: boolean,
+  isLoadingUserInfo: boolean,
   userInfo?: ParticipantResponse | ResearcherResponse,
 ) => {
   const participantInfo = filterParticipantInfo(userInfo);
@@ -35,7 +35,7 @@ export const useExperimentFilters = (
   };
 
   useEffect(() => {
-    if (!isSessionReady) return;
+    if (isLoadingUserInfo) return;
 
     // 참여자일 경우 자동 필터링 적용
     if (participantInfo) {
@@ -53,7 +53,7 @@ export const useExperimentFilters = (
       ...prev,
       recruitStatus: 'ALL',
     }));
-  }, [isSessionReady, participantInfo]);
+  }, [isLoadingUserInfo, participantInfo]);
 
   return {
     filters,
