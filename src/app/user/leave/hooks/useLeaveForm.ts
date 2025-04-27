@@ -21,16 +21,18 @@ const useLeaveForm = () => {
   const reason = useWatch({ name: 'reason', control });
 
   const reasonCondition =
-    reasonType !== 'OTHER' || (reasonType === 'OTHER' && reason.trim().length >= 1);
+    reasonType !== 'OTHER' || (reasonType === 'OTHER' && !!reason && reason.trim().length >= 1);
   const isValidLeave = reasonType && reasonCondition && Object.keys(formState.errors).length === 0;
 
   const onSubmit = (data: LeaveSchemaType) => {
     const formattedData = {
       reasonType: data.reasonType,
-      reason: data.reason === '' ? null : data.reason,
+      reason: data.reason,
     };
 
-    leave(formattedData, {
+    const submitData = data.reason !== '' ? formattedData : { reasonType: data.reasonType };
+
+    leave(submitData, {
       onSuccess: () => {
         signOut({ callbackUrl: '/user/success' });
       },
