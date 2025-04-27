@@ -16,7 +16,8 @@ export const paginationContent = style({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  gap: '0.4rem',
+  justifyContent: 'center',
+  gap: '0.8rem',
 });
 
 export const paginationItem = style({
@@ -26,11 +27,15 @@ export const paginationItem = style({
 });
 
 export const paginationLink = style({
-  padding: '0.8rem 1.2rem',
-  borderRadius: '0.4rem',
+  width: '2.4rem',
+  height: '2.4rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   textDecoration: 'none',
   fontSize: '1.4rem',
   cursor: 'pointer',
+  borderRadius: '0.8rem',
   selectors: {
     '&:hover': {
       backgroundColor: colors.field02,
@@ -46,13 +51,11 @@ export const active = style({
 export const paginationPrevious = style({
   display: 'flex',
   alignItems: 'center',
-  gap: '0.4rem',
 });
 
 export const paginationNext = style({
   display: 'flex',
   alignItems: 'center',
-  gap: '0.4rem',
 });
 
 export const paginationEllipsis = style({
