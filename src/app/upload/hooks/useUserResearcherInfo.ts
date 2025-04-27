@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { ROLE } from '@/constants/config';
 
 const useUserResearcherInfo = () => {
   const pathname = usePathname();
@@ -16,7 +17,7 @@ const useUserResearcherInfo = () => {
   const isResearcher = (
     user: ParticipantResponse | ResearcherResponse,
   ): user is ResearcherResponse => {
-    return (user as ResearcherResponse).memberInfo.role === 'RESEARCHER';
+    return (user as ResearcherResponse).memberInfo.role === ROLE.researcher;
   };
 
   // 로그인한 연구자 정보 자동 채우기
