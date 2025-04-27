@@ -16,7 +16,7 @@ interface JoinResponse {
   memberInfo: Member;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   isRegistered: boolean;
   accessToken: string;
   refreshToken: string;
