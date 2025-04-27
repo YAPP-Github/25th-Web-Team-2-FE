@@ -210,7 +210,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
 
           {/* 에러 메시지  */}
           {errors.content?.message && (
-            <p className={formMessage} style={{ marginTop: '-1.2rem' }}>
+            <p className={formMessage} style={{ marginTop: '-0.2rem' }}>
               {errors.content.message}
             </p>
           )}

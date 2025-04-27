@@ -6,7 +6,7 @@ export const myPostsLayoutContainer = style({
   width: 'fit-content',
   margin: '0 auto',
   backgroundColor: colors.field01,
-  paddingBottom: '2.6rem',
+  paddingBottom: '5.6rem',
 });
 
 export const myPostsLayout = style({

@@ -78,7 +78,7 @@ export const disabledInput = style({
   width: '100%',
   maxWidth: '45.2rem',
   height: '4.8rem',
-  padding: '10px',
+  padding: '1.6rem',
   borderRadius: '1.2rem',
   outline: 'none',
   border: `0.1rem solid ${colors.line01}`,

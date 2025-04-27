@@ -36,7 +36,6 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
   const queryClient = useQueryClient();
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
 
-  // todo 공고 수정
   const handleEdit = () => {
     setPopoverOpen(false);
     router.push(`/edit/${experimentPostId}`);
@@ -67,7 +66,7 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
       <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
         <PopoverTrigger asChild>
           <button aria-label="수정 / 삭제 팝오버 열기" className={postsActionsPopoverContainer}>
-            <Icon role="button" icon="MenuDots" width={20} height={20} cursor="pointer" />
+            <Icon role="button" icon="MenuDots" width={12} height={12} cursor="pointer" />
           </button>
         </PopoverTrigger>
         <PopoverContent
