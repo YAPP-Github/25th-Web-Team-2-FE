@@ -10,6 +10,7 @@ import { Role } from '@/types/user';
 export interface UnivAuthCodeResponse {
   isSuccess: boolean;
   message: string;
+  requestCount: number;
 }
 
 interface JoinResponse {
