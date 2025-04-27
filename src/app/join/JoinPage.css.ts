@@ -12,12 +12,14 @@ export const joinPageLayout = style({
 });
 
 export const joinLayout = style({
+  width: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
   gap: '4rem',
-  paddingTop: '8.4rem',
-  flexGrow: 1,
+  // paddingTop: '8.4rem',
+  // flexGrow: 1,
 });
 
 export const contentContainer = style({
