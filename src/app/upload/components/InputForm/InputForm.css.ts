@@ -61,6 +61,7 @@ export const textSubMessageLayout = styleVariants({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: '0.4rem',
+    marginBottom: '0.8rem',
   },
   noCounter: {
     display: 'flex',
