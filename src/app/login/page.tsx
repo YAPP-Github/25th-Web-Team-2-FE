@@ -26,10 +26,13 @@ export default function LoginPage() {
         </section>
         <section className={loginCardContainer}>
           <LoginCard
-            role="연구자"
+            role="RESEARCHER"
             description={['그라밋에서 손쉽게', '연구 참여자를 모아보세요']}
           />
-          <LoginCard role="참여자" description={['정보를 등록하면', '딱 맞는 실험을 찾아드려요']} />
+          <LoginCard
+            role="PARTICIPANT"
+            description={['정보를 등록하면', '딱 맞는 실험을 찾아드려요']}
+          />
         </section>
       </div>
     </LoginError>
