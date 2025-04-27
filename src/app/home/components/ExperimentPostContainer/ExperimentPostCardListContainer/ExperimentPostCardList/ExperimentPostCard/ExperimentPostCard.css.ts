@@ -6,10 +6,11 @@ import { fonts } from '@/styles/fonts.css';
 export const textEllipsis = styleVariants({
   // 한 줄 말줄임표
   singleLine: {
+    display: '-webkit-box',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
     wordBreak: 'break-word',
-    whiteSpace: 'nowrap',
   },
 
   // 두 줄 말줄임표
