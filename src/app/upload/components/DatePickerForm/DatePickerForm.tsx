@@ -170,6 +170,17 @@ const DatePickerForm = forwardRef<HTMLInputElement, DatePickerFormProps>(
                 className={datepickerCustomClass}
                 captionLayout="dropdown-months"
                 showOutsideDays
+                modifiers={{
+                  singleDay:
+                    selectedDates.from &&
+                    selectedDates.to &&
+                    selectedDates.from.getTime() === selectedDates.to.getTime()
+                      ? [selectedDates.from]
+                      : [],
+                }}
+                modifiersClassNames={{
+                  singleDay: 'single-day-selected',
+                }}
               />
             </Popover.Content>
           </Popover.Portal>

@@ -95,7 +95,6 @@ export const popoverLayout = style({
 export const datepickerCustomClass = style({});
 
 globalStyle(`.${datepickerCustomClass} .rdp-months`, {
-  // width: '40rem',
   position: 'relative',
   paddingTop: '1.2rem',
 });
@@ -176,6 +175,7 @@ globalStyle(`.${datepickerCustomClass} .rdp-weekdays`, {
 
 globalStyle(`.${datepickerCustomClass} .rdp-weekdays th`, {
   ...fonts.label.medium.M13,
+  verticalAlign: 'middle',
 });
 
 globalStyle(`.${datepickerCustomClass} .rdp-weekdays th:first-of-type`, {
@@ -228,4 +228,19 @@ globalStyle(`.${datepickerCustomClass} .rdp-range_end .rdp-day_button`, {
 
 globalStyle(`.${datepickerCustomClass} .rdp-selected`, {
   ...fonts.body.normal.M16,
+});
+
+globalStyle(`.${datepickerCustomClass} .rdp-day.single-day-selected`, {
+  position: 'relative',
+});
+
+globalStyle(`.${datepickerCustomClass} .rdp-day.single-day-selected::after`, {
+  ...fonts.label.small.M12,
+  content: '"하루 진행"',
+  position: 'absolute',
+  left: '50%',
+  transform: 'translateX(-50%)',
+  fontSize: '1.2rem',
+  color: colors.textPrimary,
+  whiteSpace: 'nowrap',
 });

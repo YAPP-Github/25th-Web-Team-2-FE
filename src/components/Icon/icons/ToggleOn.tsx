@@ -12,7 +12,7 @@ function ToggleOn(props: SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="토글 스위치 켜짐"
-      transform="translate(5,3)"
+      transform="translate(4,3)"
     >
       <rect y="6" width="32" height="18" rx="9" fill={props.color || colors.primaryMint} />
       <g>
