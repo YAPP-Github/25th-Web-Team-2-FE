@@ -1,7 +1,7 @@
-import { ROLE } from '@/constants/config';
 import { API } from './config';
 import { ValidateContactEmailParams } from './user';
 
+import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';

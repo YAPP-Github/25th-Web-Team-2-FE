@@ -15,9 +15,9 @@ import { descriptionWrapper } from '../../LoginPage.css';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
+import { ROLE } from '@/constants/config';
 import { colors } from '@/styles/colors';
 import { Role } from '@/types/user';
-import { ROLE } from '@/constants/config';
 
 const roleMapper = {
   RESEARCHER: '연구자',

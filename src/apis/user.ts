@@ -1,7 +1,7 @@
-import { ROLE } from '@/constants/config';
 import { API } from './config';
 import { ParticipantResponse, ResearcherResponse } from './login';
 
+import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
