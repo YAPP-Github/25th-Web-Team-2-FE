@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { nextButton } from './JoinEmailStep.css';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 import EmailToast from '../../EmailToast/EmailToast';
 import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
@@ -12,7 +11,7 @@ import JoinInput from '../../JoinInput/JoinInput';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import useVerifyUnivEmail from '@/app/join/hooks/useVerifyUnivEmail';
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
+import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
