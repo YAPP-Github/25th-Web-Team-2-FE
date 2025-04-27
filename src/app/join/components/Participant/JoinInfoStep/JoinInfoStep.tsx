@@ -15,7 +15,7 @@ import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGr
 import JoinInput from '../../JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
-import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css'; // 이미 vanilla‐extract로 변환된 JoinPage 스타일 파일
+import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
