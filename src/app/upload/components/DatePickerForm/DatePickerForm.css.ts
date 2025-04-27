@@ -230,17 +230,38 @@ globalStyle(`.${datepickerCustomClass} .rdp-selected`, {
   ...fonts.body.normal.M16,
 });
 
-globalStyle(`.${datepickerCustomClass} .rdp-day.single-day-selected`, {
-  position: 'relative',
-});
+globalStyle(
+  `.${datepickerCustomClass} .rdp-day.single-day-selected,
+  .${datepickerCustomClass} .rdp-day.start-day-selected,
+  .${datepickerCustomClass} .rdp-day.end-day-selected`,
+  {
+    position: 'relative',
+  },
+);
+
+globalStyle(
+  `.${datepickerCustomClass} .rdp-day.single-day-selected::after,
+  .${datepickerCustomClass} .rdp-day.start-day-selected::after,
+  .${datepickerCustomClass} .rdp-day.end-day-selected::after`,
+  {
+    ...fonts.label.small.M12,
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    fontSize: '1.2rem',
+    color: colors.textPrimary,
+    whiteSpace: 'nowrap',
+  },
+);
 
 globalStyle(`.${datepickerCustomClass} .rdp-day.single-day-selected::after`, {
-  ...fonts.label.small.M12,
   content: '"하루 진행"',
-  position: 'absolute',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  fontSize: '1.2rem',
-  color: colors.textPrimary,
-  whiteSpace: 'nowrap',
+});
+
+globalStyle(`.${datepickerCustomClass} .rdp-day.start-day-selected::after`, {
+  content: '"시작일"',
+});
+
+globalStyle(`.${datepickerCustomClass} .rdp-day.end-day-selected::after`, {
+  content: '"종료일"',
 });
