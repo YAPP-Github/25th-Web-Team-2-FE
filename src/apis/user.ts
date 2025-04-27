@@ -19,7 +19,7 @@ export interface ValidateContactEmailParams {
 
 export interface LeaveUserParams {
   reasonType: ReasonType;
-  reason: string | null;
+  reason?: string;
 }
 
 export const updateParticipantInfo = async (params: ParticipantUpdateSchemaType) => {

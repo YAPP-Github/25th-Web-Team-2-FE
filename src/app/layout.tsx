@@ -1,14 +1,15 @@
 import type { Metadata } from 'next';
 import Head from 'next/head';
 import Script from 'next/script';
+import { getServerSession } from 'next-auth';
 
 import Providers from './providers';
 
 import Footer from '@/components/Footer/Footer';
 import pretendard from '@/fonts/local-font';
-
 import '@/styles/reset.css';
 import '@/styles/global.css';
+import { authOptions } from '@/lib/auth-utils';
 
 export const metadata: Metadata = {
   title: '그라밋',
@@ -17,11 +18,13 @@ export const metadata: Metadata = {
   icons: [{ url: '/favicon.svg', sizes: '20x20' }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="ko" className={pretendard.className}>
       <Head>
@@ -55,7 +58,7 @@ export default function RootLayout({
         />
       </Head>
       <body suppressHydrationWarning={true}>
-        <Providers>
+        <Providers session={session}>
           {children}
           <Footer />
         </Providers>

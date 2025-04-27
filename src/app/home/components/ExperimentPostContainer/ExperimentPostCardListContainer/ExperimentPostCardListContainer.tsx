@@ -36,7 +36,9 @@ const ExperimentPostCardListContainer = ({
     isLoading: isListLoading,
   } = useExperimentPostListQuery(filters, isUserInfoLoading);
 
-  if (isUserInfoLoading || isListLoading) {
+  const hasData = postListData && postListData.pages && postListData.pages.length > 0;
+
+  if (!hasData || isUserInfoLoading || isListLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />
@@ -64,7 +66,7 @@ const ExperimentPostCardListContainer = ({
           더보기
         </button>
       )}
-      {!isFetching && !hasNextPage && (
+      {!isFetching && !hasNextPage && hasData && (
         <div className={allPostsViewedContainer}>
           <Icon icon="Golf" width={40} height={40} />
           <div className={allPostsViewedContentContainer}>
