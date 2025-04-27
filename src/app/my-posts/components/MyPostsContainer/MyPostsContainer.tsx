@@ -33,18 +33,22 @@ const MyPostsContainer = () => {
   return (
     <div className={myPostContainerLayout}>
       <div className={myPostsHeaderContainer}>
-        <h2 className={myPostsHeaderText}>내가 작성한 글</h2>
-        {myPostAPIResponse.data?.content && myPostAPIResponse.data.content.length > 0 && (
-          <div className={postsSorting} onClick={toggleOrder} style={{ cursor: 'pointer' }}>
-            <p>{order === 'DESC' ? '최신순' : '오래된 순'}</p>
-            <Icon
-              icon="ArrowSorting"
-              width={20}
-              height={20}
-              color={colors.icon04}
-              rotate={order === 'DESC' ? 0 : 180}
-            />
-          </div>
+        {!myPostAPIResponse.isError && (
+          <>
+            <h2 className={myPostsHeaderText}>내가 작성한 글</h2>
+            {myPostAPIResponse.data?.content && myPostAPIResponse.data.content.length > 0 && (
+              <div className={postsSorting} onClick={toggleOrder} style={{ cursor: 'pointer' }}>
+                <p>{order === 'DESC' ? '최신순' : '오래된 순'}</p>
+                <Icon
+                  icon="ArrowSorting"
+                  width={20}
+                  height={20}
+                  color={colors.icon04}
+                  rotate={order === 'DESC' ? 0 : 180}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
 
