@@ -52,8 +52,8 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
         <div
           className={badge}
           style={assignInlineVars({
-            '--badge-color': role === 'PARTICIPANT' ? colors.secondaryPink : colors.primaryMint,
-            '--badge-bg': role === 'PARTICIPANT' ? colors.secondaryTinted : colors.primaryTinted,
+            '--badge-color': role === 'RESEARCHER' ? colors.secondaryPink : colors.primaryMint,
+            '--badge-bg': role === 'RESEARCHER' ? colors.secondaryTinted : colors.primaryTinted,
           })}
         >
           {roleMapper[role]}
