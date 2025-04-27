@@ -38,6 +38,7 @@ const UnivAuthInput = ({
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
+    data: authCodeData,
     mutate: sendEmail,
     error: authCodeError,
     isPending: isLoadingSend,
@@ -123,7 +124,7 @@ const UnivAuthInput = ({
         />
       )}
       <EmailToast
-        title="인증번호가 발송되었어요"
+        title={`인증번호가 발송되었어요. (${authCodeData?.requestCount}회 / 하루 최대 3회)`}
         isToastOpen={isToastOpen}
         setIsToastOpen={setIsToastOpen}
       />

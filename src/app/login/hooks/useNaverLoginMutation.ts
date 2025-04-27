@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { getAuthErrorMessage } from '../LoginPage.utils';
+
 import { API } from '@/apis/config';
-import { naverLogin, NaverLoginParams } from '@/apis/login';
+import { CustomError } from '@/apis/config/error';
+import { LoginResponse, naverLogin, NaverLoginParams } from '@/apis/login';
 import { loginWithCredentials } from '@/lib/auth-utils';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
 
@@ -18,7 +21,7 @@ const useNaverLoginMutation = ({
 }: UseNaverLoginMutationProps) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<LoginResponse, CustomError, NaverLoginParams>({
     mutationFn: ({ code, role, state }: NaverLoginParams) => naverLogin({ code, role, state }),
     onSuccess: async ({ isRegistered, accessToken, refreshToken, memberInfo }) => {
       if (isRegistered) {
@@ -34,10 +37,11 @@ const useNaverLoginMutation = ({
 
       onSuccessJoin(memberInfo.oauthEmail);
     },
-    onError: (error) => {
-      const errorMessage = error.message || '로그인 중 오류가 발생했습니다. 다시 시도해주세요.';
-      queryClient.setQueryData(['loginError'], errorMessage);
+    onError: (error, variables) => {
+      const { role } = variables;
+      const errorMessage = getAuthErrorMessage(role, error);
 
+      queryClient.setQueryData(['loginError'], errorMessage);
       onError();
     },
   });

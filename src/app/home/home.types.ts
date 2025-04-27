@@ -55,4 +55,6 @@ export interface SeoulRegion {
 
 export type GenderValue = (typeof GENDER)[number]['value'];
 
+export type GenderFilterValue = (typeof GENDER)[number]['value'] | 'ALL';
+
 export type AreaAll = (typeof AREA_ALL)[number];

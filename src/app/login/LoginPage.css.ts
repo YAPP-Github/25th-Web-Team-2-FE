@@ -17,7 +17,6 @@ export const loginLayout = style({
 export const loginPageLayout = style({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'space-between',
   gap: '6.5rem',
   minHeight: 'calc(100vh - 29rem)', // 29rem = footer(12.2rem) + padding 위/아래 (8.4rem * 2)
 });

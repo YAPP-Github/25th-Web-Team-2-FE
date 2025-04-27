@@ -15,14 +15,14 @@ import { descriptionWrapper } from '../../LoginPage.css';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
+import { ROLE } from '@/constants/config';
 import { colors } from '@/styles/colors';
+import { Role } from '@/types/user';
 
 const roleMapper = {
-  연구자: 'RESEARCHER',
-  참여자: 'PARTICIPANT',
+  RESEARCHER: '연구자',
+  PARTICIPANT: '참여자',
 };
-
-type Role = '연구자' | '참여자';
 
 const PROVIDER = {
   google: 'GOOGLE',
@@ -38,12 +38,12 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
   const router = useRouter();
 
   const goToLoginGoogle = () => {
-    const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${roleMapper[role]}|${PROVIDER.google}`;
+    const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${role}|${PROVIDER.google}`;
     router.push(googleOauthURL);
   };
 
   const goToLoginNaver = () => {
-    const naverOauthURL = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${roleMapper[role]}|${PROVIDER.naver}`;
+    const naverOauthURL = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${role}|${PROVIDER.naver}`;
     router.push(naverOauthURL);
   };
 
@@ -53,11 +53,11 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
         <div
           className={badge}
           style={assignInlineVars({
-            '--badge-color': role === '연구자' ? colors.secondaryPink : colors.primaryMint,
-            '--badge-bg': role === '연구자' ? colors.secondaryTinted : colors.primaryTinted,
+            '--badge-color': role === ROLE.researcher ? colors.secondaryPink : colors.primaryMint,
+            '--badge-bg': role === ROLE.researcher ? colors.secondaryTinted : colors.primaryTinted,
           })}
         >
-          {role}
+          {roleMapper[role]}
         </div>
         <div className={descriptionWrapper}>
           {description.map((text, idx) => (

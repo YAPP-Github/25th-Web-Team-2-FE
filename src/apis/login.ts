@@ -1,13 +1,16 @@
 import { API } from './config';
 import { ValidateContactEmailParams } from './user';
 
+import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { Role } from '@/types/user';
 
 export interface UnivAuthCodeResponse {
   isSuccess: boolean;
   message: string;
+  requestCount: number;
 }
 
 interface JoinResponse {
@@ -16,7 +19,7 @@ interface JoinResponse {
   memberInfo: Member;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   isRegistered: boolean;
   accessToken: string;
   refreshToken: string;
@@ -29,7 +32,7 @@ interface Member {
   oauthEmail: string;
   provider: 'GOOGLE' | 'NAVER';
   contactEmail: string;
-  role: 'RESEARCHER' | 'PARTICIPANT';
+  role: Role;
 }
 
 export interface ParticipantResponse {
@@ -104,13 +107,13 @@ export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
 };
 
 export const getResearcherInfo = async () => {
-  const res = await API.get<ResearcherResponse>(API_URL.me('researcher'));
+  const res = await API.get<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()));
 
   return res.data;
 };
 
 export const getParticipantInfo = async () => {
-  const res = await API.get<ParticipantResponse>(API_URL.me('participant'));
+  const res = await API.get<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()));
 
   return res.data;
 };

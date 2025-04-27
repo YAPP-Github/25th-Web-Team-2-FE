@@ -12,6 +12,7 @@ export const leaveHeaderWrapper = style({
 export const title = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
+  height: '2.8rem',
 });
 
 export const description = style({

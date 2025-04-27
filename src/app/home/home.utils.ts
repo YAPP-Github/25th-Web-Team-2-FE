@@ -1,5 +1,5 @@
 import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from './home.constants';
-import { GenderValue } from './home.types';
+import { GenderFilterValue } from './home.types';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { RegionType } from '@/types/filter';
@@ -68,11 +68,11 @@ export const calculateAgeFromBirthDate = (birthDate: string) => {
   return hasBirthdayPassed ? yearDiff : yearDiff - 1;
 };
 
-export const getContactTargetFilterText = (age?: number, gender?: GenderValue) => {
-  const genderLabelMapper = { MALE: '남성', FEMALE: '여성' };
+export const getContactTargetFilterText = (age?: number, gender?: GenderFilterValue) => {
+  const genderLabelMapper = { MALE: '남성', FEMALE: '여성', ALL: '' };
 
   if (age && gender) {
-    return `${genderLabelMapper[gender]} · 만 ${age}세`;
+    return gender === 'ALL' ? `만 ${age}세` : `${genderLabelMapper[gender]} · 만 ${age}세`;
   } else if (!age && gender) {
     return `${genderLabelMapper[gender]}`;
   } else if (age && !gender) {
