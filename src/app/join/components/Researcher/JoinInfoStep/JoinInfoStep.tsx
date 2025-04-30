@@ -3,8 +3,7 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import { joinButton } from '@/app/join/components/Participant/JoinInfoStep/JoinInfoStep.css';
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
+import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
@@ -54,7 +53,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
       <button
-        className={joinButton}
+        className={nextButton}
         onClick={handleSubmit}
         disabled={!(isAllFilled && Object.keys(errors).length === 0)}
       >

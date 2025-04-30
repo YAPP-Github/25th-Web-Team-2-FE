@@ -38,17 +38,6 @@ API.interceptors.response.use(
         });
       }
 
-      // 예외 케이스
-      if (data.code === 'ME0002') {
-        const role = data.message.split(': ').pop()?.trim();
-
-        throw new CustomError({
-          status,
-          errorCode: data.code,
-          message: ERROR_MESSAGES[data.code](role),
-        });
-      }
-
       throw new CustomError({
         status,
         errorCode: data.code,

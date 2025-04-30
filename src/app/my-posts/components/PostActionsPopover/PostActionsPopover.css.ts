@@ -6,8 +6,8 @@ import { zIndex } from '@/styles/zIndex';
 
 export const postsActionsPopoverContainer = style({
   marginLeft: '-1.6rem',
-  height: '2rem',
-  verticalAlign: 'middle',
+  height: '1.6rem',
+  width: '1.6rem',
 });
 
 export const postsActionsPopoverContent = style({

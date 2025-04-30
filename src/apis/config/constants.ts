@@ -1,8 +1,3 @@
-const roleMapper: Record<string, string> = {
-  RESEARCHER: '연구자',
-  PARTICIPANT: '참여자',
-};
-
 export const ERROR_MESSAGES = {
   // 공통 예외 코드
   DB0001: '서비스에 일시적인 문제가 발생했어요',
@@ -29,8 +24,7 @@ export const ERROR_MESSAGES = {
 
   // 회원 예외 코드
   ME0001: '회원 정보를 찾을 수 없어요',
-  ME0002: (role?: string) =>
-    role ? `${roleMapper[role]}로 등록된 이메일이에요` : `이미 등록된 이메일이에요`,
+  ME0002: `이미 등록된 이메일이에요`,
   ME0003: '연구자 정보를 찾을 수 없어요',
   ME0004: '참여자 정보를 찾을 수 없어요',
   ME0005: '학교 이메일 인증이 필요해요. 먼저 이메일을 인증해주세요.',

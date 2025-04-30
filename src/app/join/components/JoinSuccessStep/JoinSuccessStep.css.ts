@@ -8,16 +8,22 @@ export const joinSuccessLayout = style({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: '9rem',
-  paddingTop: '3.6rem',
+  gap: '3.2rem',
+});
+
+export const joinContentContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '3.2rem',
+  textAlign: 'center',
 });
 
 export const joinTitleContainer = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '6.4rem',
-  textAlign: 'center',
+  gap: '4rem',
 });
 
 export const title = style({
@@ -35,5 +41,4 @@ export const homeLink = style({
   color: colors.text01,
   borderRadius: '1.2rem',
   padding: '1.2rem 3.35rem',
-  marginTop: '2.6rem',
 });

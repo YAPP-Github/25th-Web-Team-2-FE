@@ -8,16 +8,17 @@ export const joinPageLayout = style({
   backgroundColor: colors.field01,
   width: '56rem',
   margin: '0 auto',
+  padding: '8rem 0',
   minHeight: 'calc(100vh - 12.2rem)',
 });
 
 export const joinLayout = style({
+  width: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
   gap: '4rem',
-  paddingTop: '8.4rem',
-  flexGrow: 1,
 });
 
 export const contentContainer = style({
@@ -80,7 +81,6 @@ export const nextButton = style({
   padding: '1.2rem 0',
   width: '20rem',
   alignItems: 'center',
-  marginBottom: '5.6rem',
   selectors: {
     '&:disabled': {
       color: colors.text02,

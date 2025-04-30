@@ -55,6 +55,27 @@ globalStyle(`${textAlignRight} div`, {
   textAlign: 'right',
 });
 
+export const tableInfoRow = style({
+  ...fonts.body.normal.R16,
+});
+
+export const tableBody = style({});
+
+export const tableRow = style({});
+
+globalStyle(`${tableBody} > ${tableRow} > td`, {
+  paddingTop: '0.4rem',
+  paddingBottom: '0.4rem',
+});
+
+globalStyle(
+  `${tableBody} > ${tableRow}:first-child > td, ${tableBody} > ${tableRow}:last-child > td`,
+  {
+    paddingTop: '0',
+    paddingBottom: '0',
+  },
+);
+
 export const tableEmptyViewLayout = style({
   width: '100%',
   margin: '0 auto',

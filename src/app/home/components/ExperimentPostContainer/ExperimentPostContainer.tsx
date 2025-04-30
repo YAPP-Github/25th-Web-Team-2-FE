@@ -16,7 +16,7 @@ import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
 const ExperimentPostContainer = () => {
-  const { userInfo, isLoading: isUserInfoLoading, isSessionReady } = useUserInfo();
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
 
   const {
     filters,
@@ -24,7 +24,7 @@ const ExperimentPostContainer = () => {
     handleFilterChange,
     handleToggleRecruitStatus,
     handleResetFilter,
-  } = useExperimentFilters(isSessionReady, userInfo);
+  } = useExperimentFilters(isUserInfoLoading, userInfo);
 
   return (
     <div className={postContainerLayout}>

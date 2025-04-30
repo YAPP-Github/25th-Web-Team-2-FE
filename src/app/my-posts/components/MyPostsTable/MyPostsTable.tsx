@@ -24,6 +24,9 @@ import {
   tableEmptyViewLayout,
   emptyTitle,
   emptySubTitle,
+  tableInfoRow,
+  tableBody,
+  tableRow,
 } from './MyPostsTable.css';
 import { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
 import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
@@ -134,13 +137,13 @@ const MyPostsTable = ({
     {
       accessorKey: 'uploadDate',
       header: '게시 날짜',
-      cell: ({ row }) => <div>{row.getValue('uploadDate')}</div>,
+      cell: ({ row }) => <div className={tableInfoRow}>{row.getValue('uploadDate')}</div>,
       size: 108,
     },
     {
       accessorKey: 'views',
       header: '조회수',
-      cell: ({ row }) => <div>{row.getValue('views')}</div>,
+      cell: ({ row }) => <div className={tableInfoRow}>{row.getValue('views')}</div>,
       size: 80,
     },
     {
@@ -159,7 +162,7 @@ const MyPostsTable = ({
             <Icon icon="ToggleOn" width={32} height={18} cursor="pointer" />
           </button>
         ) : (
-          <Icon icon="ToggleOff" width={32} height={18} />
+          <Icon icon="ToggleOff" width={32} height={18} cursor="notAllowed" />
         );
       },
       size: 68,
@@ -232,8 +235,7 @@ const MyPostsTable = ({
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  const isLeftAlign =
-                    header.column.id === 'title' || header.column.id === 'recruitStatus';
+                  const isLeftAlign = header.column.id === 'title';
                   return (
                     <TableHead
                       key={header.id}
@@ -249,14 +251,13 @@ const MyPostsTable = ({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className={tableBody}>
             <tr style={{ height: '1.2rem' }} />
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className={tableRow}>
                   {row.getVisibleCells().map((cell) => {
-                    const isLeftAlign =
-                      cell.column.id === 'title' || cell.column.id === 'recruitStatus';
+                    const isLeftAlign = cell.column.id === 'title';
                     return (
                       <TableCell
                         key={cell.id}
