@@ -1,27 +1,28 @@
 import { CustomError, NetworkError, UnhandledError } from './error';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 interface RequestProps {
-  method: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
-  body?: Record<
-    string,
-    string | string[] | number | null | object | boolean | Array<string | number | null>
-  >;
+  method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
+  body?: Record<string, unknown>;
   headers?: Record<string, string>;
 }
 
 type FetchProps = Omit<RequestProps, 'method'>;
-const fetchClient = {
-  async request<T = void>(url: string, { method, body, headers }: RequestProps): Promise<T> {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
 
-      const response = await fetch(url, {
+const fetchClient = {
+  onRequestCallback: (config: RequestProps) => config,
+
+  async request<T = void>(url: string, config: RequestProps): Promise<T> {
+    try {
+      const { method, body, headers } = this.onRequestCallback(config);
+
+      const response = await fetch(`${BASE_URL}${url}`, {
         method,
         body: body && JSON.stringify(body),
         headers: {
-          ...headers,
           'Content-Type': 'application/json',
-          ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+          ...headers,
         },
       });
 
@@ -36,7 +37,7 @@ const fetchClient = {
 
       return await response.json();
     } catch (error) {
-      if (!navigator.onLine) {
+      if (typeof window !== 'undefined' && !navigator.onLine) {
         throw new NetworkError();
       }
 
@@ -70,6 +71,9 @@ const fetchClient = {
   },
   put<T = void>(url: string, options: FetchProps = {}): Promise<T> {
     return this.request(url, { method: 'PUT', body: options.body, headers: options.headers });
+  },
+  onRequest(callback: (config: RequestProps) => RequestProps) {
+    this.onRequestCallback = callback;
   },
 };
 
