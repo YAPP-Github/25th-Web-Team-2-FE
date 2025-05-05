@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { getServerSession } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
 import { AuthErrorCode } from './types';
@@ -6,7 +7,7 @@ import { updateAccessToken } from '../login';
 import { ERROR_MESSAGES } from './constants';
 import { CustomError } from './error';
 
-import { loginWithCredentials } from '@/lib/auth-utils';
+import { authOptions, loginWithCredentials } from '@/lib/auth-utils';
 
 export const isAuthError = (code: string) => {
   return (
@@ -36,7 +37,7 @@ export const login = async ({
   if (!refreshToken) {
     throw new CustomError({
       status,
-      errorCode: code,
+      code,
       message: ERROR_MESSAGES[code],
     });
   }
@@ -53,4 +54,20 @@ export const login = async ({
   request.headers.Authorization = `Bearer ${userInfo.accessToken}`;
   axiosInstance.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
   return axios(request);
+};
+
+export const getSessionRefreshToken = async () => {
+  const isServer = typeof window === 'undefined';
+
+  try {
+    if (isServer) {
+      const session = await getServerSession(authOptions);
+      return session?.refreshToken || null;
+    } else {
+      const session = await getSession();
+      return session?.refreshToken || null;
+    }
+  } catch (_) {
+    return null;
+  }
 };
