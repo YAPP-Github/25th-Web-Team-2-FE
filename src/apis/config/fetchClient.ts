@@ -152,13 +152,29 @@ const fetchClient = {
   },
 };
 
-// 현재 코드에 추가할 수 있는 부분
-export function createFetchClient(accessToken?: string) {
-  // 클로저로 액세스 토큰을 캡처하는 fetchClient 사본 생성
+/**
+ * SSR 환경에서 사용하는 fetchClient
+ *
+ * @param accessToken
+ * @returns fetchClient
+ *
+ * @example 서버 컴포넌트에서 사용
+ * ```tsx
+ * import { createFetchClient } from '@/apis/config/fetchClient';
+ * import { getServerSession } from 'next-auth/next';
+ *
+ * export default async function Page() {
+ *   const session = await getServerSession(authOptions);
+ *   const fetchClient = createFetchClient(session?.accessToken);
+ *   const data = await fetchClient.get(url);
+ *   // ...
+ * }
+ * ```
+ */
+export const createSSRFetchClient = (accessToken?: string) => {
   return {
     ...fetchClient,
     onRequestCallback: (config: RequestProps) => {
-      // 액세스 토큰이 제공된 경우 항상 해당 토큰 사용
       if (accessToken) {
         return {
           ...config,
@@ -168,10 +184,10 @@ export function createFetchClient(accessToken?: string) {
           },
         };
       }
-      // 그렇지 않으면 기존 콜백 사용
-      return fetchClient.onRequestCallback(config);
+
+      return config;
     },
   };
-}
+};
 
 export default fetchClient;
