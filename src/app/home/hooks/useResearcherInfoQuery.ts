@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { QUERY_KEY } from '@/constants/queryKey';
 import { getResearcherInfo } from '@/apis/user';
+import { QUERY_KEY } from '@/constants/queryKey';
 
 interface useResearcherInfoQueryProps {
   enabled: boolean;

@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { getSession } from 'next-auth/react';
+
 import { authOptions } from '@/lib/auth-utils';
 
 export const isAuthError = (code: string) => {
