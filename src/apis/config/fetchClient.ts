@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomError, NetworkError, UnhandledError } from './error';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -13,7 +14,7 @@ type FetchProps = Omit<RequestProps, 'method'>;
 const fetchClient = {
   onRequestCallback: (config: RequestProps) => config,
 
-  async request<T = void>(url: string, config: RequestProps): Promise<T> {
+  async request<T = any>(url: string, config: RequestProps): Promise<T> {
     try {
       const { method, body, headers } = this.onRequestCallback(config);
 
@@ -49,28 +50,28 @@ const fetchClient = {
     }
   },
 
-  get<T = void>(url: string, options: FetchProps = {}): Promise<T> {
+  get<T = any>(url: string, options: FetchProps = {}): Promise<T> {
     return this.request<T>(url, { method: 'GET', headers: options.headers });
   },
-  post<T = void>(url: string, options: FetchProps = {}): Promise<T> {
-    return this.request(url, {
+  post<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+    return this.request<T>(url, {
       method: 'POST',
       body: options.body,
       headers: options.headers,
     });
   },
-  delete<T = void>(url: string, options: FetchProps = {}): Promise<T> {
-    return this.request(url, { method: 'DELETE', body: options.body, headers: options.headers });
+  delete<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+    return this.request<T>(url, { method: 'DELETE', body: options.body, headers: options.headers });
   },
-  patch<T = void>(url: string, options: FetchProps = {}): Promise<T> {
-    return this.request(url, {
+  patch<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+    return this.request<T>(url, {
       method: 'PATCH',
       body: options.body,
       headers: options.headers,
     });
   },
-  put<T = void>(url: string, options: FetchProps = {}): Promise<T> {
-    return this.request(url, { method: 'PUT', body: options.body, headers: options.headers });
+  put<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+    return this.request<T>(url, { method: 'PUT', body: options.body, headers: options.headers });
   },
   onRequest(callback: (config: RequestProps) => RequestProps) {
     this.onRequestCallback = callback;
