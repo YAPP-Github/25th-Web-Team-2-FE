@@ -7,8 +7,8 @@ const roleMapper: Record<string, string> = {
 };
 
 export const getAuthErrorMessage = (role: string, error: CustomError) => {
-  const alreadyJoinedMessage = `${roleMapper[role]}로 ${ERROR_MESSAGES[error.errorCode]}`;
-  const message = error.errorCode === 'ME0002' ? alreadyJoinedMessage : error.message;
+  const alreadyJoinedMessage = `${roleMapper[role]}로 ${ERROR_MESSAGES[error.code]}`;
+  const message = error.code === 'ME0002' ? alreadyJoinedMessage : error.message;
   const errorMessage = message || '로그인 중 오류가 발생했습니다. 다시 시도해주세요.';
 
   return errorMessage;

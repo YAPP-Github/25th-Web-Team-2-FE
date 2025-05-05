@@ -40,7 +40,7 @@ API.interceptors.response.use(
 
       throw new CustomError({
         status,
-        errorCode: data.code,
+        code: data.code,
         message: ERROR_MESSAGES[data.code],
       });
     } catch (err) {
@@ -51,7 +51,7 @@ API.interceptors.response.use(
       const error = err as CustomError;
       throw new CustomError({
         status: error.status,
-        errorCode: error.errorCode,
+        code: error.code,
         message: error.message,
       });
     }
