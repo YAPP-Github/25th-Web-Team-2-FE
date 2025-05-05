@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import fetchClient from '@/apis/config/fetchClient';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 

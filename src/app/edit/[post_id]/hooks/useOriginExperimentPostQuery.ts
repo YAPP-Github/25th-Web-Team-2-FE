@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import fetchClient from '@/apis/config/fetchClient';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { UseQueryExperimentDetailsAPIResponse } from '@/app/post/[post_id]/hooks/useExperimentDetailsQuery';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';

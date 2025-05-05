@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import fetchClient from '@/apis/config/fetchClient';
+import { fetchClient } from '@/apis/config/fetchClient';
 import {
   ExperimentPostData,
   UploadedPostInfo,

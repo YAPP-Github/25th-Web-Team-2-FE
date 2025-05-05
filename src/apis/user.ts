@@ -1,4 +1,4 @@
-import fetchClient from './config/fetchClient';
+import { fetchClient } from './config/fetchClient';
 import { ParticipantResponse, ResearcherResponse } from './login';
 
 import { ROLE } from '@/constants/config';

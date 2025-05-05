@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import fetchClient from '@/apis/config/fetchClient';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';

@@ -1,4 +1,4 @@
-import fetchClient from './config/fetchClient';
+import { fetchClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
 import { API_URL } from '@/constants/url';

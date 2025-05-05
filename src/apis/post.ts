@@ -1,4 +1,4 @@
-import fetchClient from './config/fetchClient';
+import { fetchClient } from './config/fetchClient';
 
 import { API_URL } from '@/constants/url';
 import { AreaType, RegionType } from '@/types/filter';

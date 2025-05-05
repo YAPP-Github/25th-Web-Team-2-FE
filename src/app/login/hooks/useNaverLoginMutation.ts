@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAuthErrorMessage } from '../LoginPage.utils';
 
 import { CustomError } from '@/apis/config/error';
-import fetchClient from '@/apis/config/fetchClient';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { LoginResponse, naverLogin, NaverLoginParams } from '@/apis/login';
 import { loginWithCredentials } from '@/lib/auth-utils';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
