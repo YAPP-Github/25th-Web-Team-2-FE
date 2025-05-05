@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ERROR_MESSAGES } from './constants';
 import { CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
 import { getSessionRefreshToken, isAuthError } from './utils';
@@ -13,6 +12,7 @@ interface RequestProps {
   method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
   body?: Record<string, any>;
   headers?: Record<string, string>;
+  isRetry?: boolean;
 }
 
 type FetchProps = Omit<RequestProps, 'method'>;
@@ -106,13 +106,19 @@ const fetchClient = {
     url: string;
   }): Promise<T> {
     try {
+      if (config.isRetry) {
+        throw new CustomError({
+          status,
+          code,
+        });
+      }
+
       const refreshToken = await getSessionRefreshToken();
 
       if (!refreshToken) {
         throw new CustomError({
           status,
           code,
-          message: ERROR_MESSAGES[code],
         });
       }
 
@@ -126,6 +132,7 @@ const fetchClient = {
 
       return this.request<T>(url, {
         ...config,
+        isRetry: true,
         headers: {
           ...config.headers,
           Authorization: `Bearer ${userInfo.accessToken}`,
@@ -136,14 +143,35 @@ const fetchClient = {
         throw err;
       }
 
-      const { status, code, message } = err as CustomError;
+      const { status, code } = err as CustomError;
       throw new CustomError({
         status,
         code,
-        message,
       });
     }
   },
 };
+
+// 현재 코드에 추가할 수 있는 부분
+export function createFetchClient(accessToken?: string) {
+  // 클로저로 액세스 토큰을 캡처하는 fetchClient 사본 생성
+  return {
+    ...fetchClient,
+    onRequestCallback: (config: RequestProps) => {
+      // 액세스 토큰이 제공된 경우 항상 해당 토큰 사용
+      if (accessToken) {
+        return {
+          ...config,
+          headers: {
+            ...config.headers,
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      }
+      // 그렇지 않으면 기존 콜백 사용
+      return fetchClient.onRequestCallback(config);
+    },
+  };
+}
 
 export default fetchClient;
