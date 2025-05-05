@@ -66,27 +66,27 @@ const fetchClient = {
     }
   },
 
-  get<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+  get<T = any>(url: string, options: FetchProps = {}) {
     return this.request<T>(url, { method: 'GET', headers: options.headers });
   },
-  post<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+  post<T = any>(url: string, options: FetchProps = {}) {
     return this.request<T>(url, {
       method: 'POST',
       body: options.body,
       headers: options.headers,
     });
   },
-  delete<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+  delete<T = any>(url: string, options: FetchProps = {}) {
     return this.request<T>(url, { method: 'DELETE', body: options.body, headers: options.headers });
   },
-  patch<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+  patch<T = any>(url: string, options: FetchProps = {}) {
     return this.request<T>(url, {
       method: 'PATCH',
       body: options.body,
       headers: options.headers,
     });
   },
-  put<T = any>(url: string, options: FetchProps = {}): Promise<T> {
+  put<T = any>(url: string, options: FetchProps = {}) {
     return this.request<T>(url, { method: 'PUT', body: options.body, headers: options.headers });
   },
 
