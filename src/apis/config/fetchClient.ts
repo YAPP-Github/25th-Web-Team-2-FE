@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 interface RequestProps {
   method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
-  body?: Record<string, unknown>;
+  body?: Record<string, any>;
   headers?: Record<string, string>;
 }
 
