@@ -1,4 +1,4 @@
-import { API } from './config';
+import fetchClient from './config/fetchClient';
 
 import { API_URL } from '@/constants/url';
 import { AreaType, RegionType } from '@/types/filter';
@@ -60,13 +60,9 @@ export const fetchPostList = async (params: ExperimentPostListFilters) => {
     }
   });
 
-  const res = await API.get<ExperimentPostResponse>(API_URL.postList(queryParams.toString()));
-
-  return res.data;
+  return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams.toString()));
 };
 
 export const fetchPostCount = async <T>(region?: string | null) => {
-  const res = await API.get<T>(API_URL.postArea(region));
-
-  return res.data;
+  return await fetchClient.get<T>(API_URL.postArea(region));
 };
