@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '@/apis/config';
+import fetchClient from '@/apis/config/fetchClient';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';
@@ -65,9 +65,9 @@ export interface UseUploadExperimentPostMutationResponse {
 const useUploadExperimentPostMutation = () => {
   const mutationKey = API_URL.uploadPost;
   const mutationFn = async (data: ExperimentPostData) =>
-    await API.post<UseUploadExperimentPostMutationResponse>(mutationKey, data).then(
-      (res) => res.data,
-    );
+    await fetchClient.post<UseUploadExperimentPostMutationResponse>(mutationKey, {
+      body: data,
+    });
 
   return useMutation({
     mutationKey: [mutationKey],

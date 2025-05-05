@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '@/apis/config';
+import fetchClient from '@/apis/config/fetchClient';
 import { API_URL } from '@/constants/url';
 
 interface PresignedUrlResponse {
@@ -13,7 +13,9 @@ const useUploadImagesMutation = () => {
     mutationFn: async (file: File): Promise<string> => {
       const fileName = encodeURIComponent(file.name);
 
-      const { data } = await API.post<PresignedUrlResponse>(API_URL.uploadImage, { fileName });
+      const data = await fetchClient.post<PresignedUrlResponse>(API_URL.uploadImage, {
+        body: { fileName },
+      });
 
       if (!data.preSignedUrl) {
         throw new Error('❌ Presigned URL이 반환되지 않았습니다.');

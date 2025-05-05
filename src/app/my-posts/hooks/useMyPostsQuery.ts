@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { API } from '@/apis/config';
+import fetchClient from '@/apis/config/fetchClient';
 import { API_URL } from '@/constants/url';
 
 export interface MyPosts {
@@ -28,9 +27,9 @@ interface UseMyPostsQueryParams {
 
 const useMyPostsQuery = ({ page = 1, count = 10, order = 'DESC' }: UseMyPostsQueryParams) => {
   const url = API_URL.myPosts(page, count, order);
-  const queryFn = () => API.get<UseMyPostsQueryResponse>(url).then((res) => res.data);
+  const queryFn = () => fetchClient.get<UseMyPostsQueryResponse>(url);
 
-  return useQuery<UseMyPostsQueryResponse, AxiosError>({
+  return useQuery<UseMyPostsQueryResponse>({
     queryKey: ['myPosts', page, count, order],
     queryFn,
   });
