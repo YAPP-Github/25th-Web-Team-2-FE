@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getParticipantInfo } from '@/apis/login';
 import { QUERY_KEY } from '@/constants/queryKey';
+import { getParticipantInfo } from '@/apis/user';
 
 interface useParticipantInfoQueryProps {
   enabled: boolean;

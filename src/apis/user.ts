@@ -23,6 +23,14 @@ export interface LeaveUserParams {
   reason?: string;
 }
 
+export const getResearcherInfo = async () => {
+  return await fetchClient.get<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()));
+};
+
+export const getParticipantInfo = async () => {
+  return await fetchClient.get<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()));
+};
+
 export const updateParticipantInfo = async (params: ParticipantUpdateSchemaType) => {
   return await fetchClient.put<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()), {
     body: params,

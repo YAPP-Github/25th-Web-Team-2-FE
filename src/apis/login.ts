@@ -1,7 +1,6 @@
 import fetchClient from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
-import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
@@ -95,14 +94,6 @@ export const joinResearcher = async (params: ResearcherJoinSchemaType) => {
 
 export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
   return await fetchClient.post<JoinResponse>(API_URL.joinParticipant, { body: params });
-};
-
-export const getResearcherInfo = async () => {
-  return await fetchClient.get<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()));
-};
-
-export const getParticipantInfo = async () => {
-  return await fetchClient.get<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()));
 };
 
 export const updateAccessToken = async (refreshToken: string) => {
