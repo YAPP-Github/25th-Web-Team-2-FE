@@ -1,0 +1,89 @@
+import { style } from '@vanilla-extract/css';
+
+import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
+
+export const layout = style({
+  width: '100%',
+});
+
+export const headerWrapper = style({
+  display: 'grid',
+  gridTemplateColumns: '20px 1fr 20px',
+  alignItems: 'center',
+  justifyItems: 'center',
+  padding: '1.2rem 1.6rem',
+});
+
+export const headerTitle = style({
+  ...fonts.body.normal.SB16,
+  color: colors.text06,
+});
+
+export const progressBar = style({
+  height: '0.2rem',
+  backgroundColor: colors.field05,
+});
+
+export const mainContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
+  padding: '2.8rem 1.6rem 0 1.6rem',
+});
+
+export const emailTitleContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.2rem',
+});
+
+export const titleContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.4rem',
+});
+
+export const title = style({
+  ...fonts.title.medium.SB20,
+  color: colors.text06,
+});
+
+export const description = style({
+  ...fonts.label.large.R14,
+  color: colors.text03,
+});
+
+export const emailWrapper = style({
+  display: 'flex',
+  alignItems: 'center',
+  width: '17.8rem',
+
+  border: `1px solid ${colors.line01}`,
+  borderRadius: '5.2rem',
+  padding: '0.2rem 0.8rem 0.2rem 0.6rem',
+});
+
+export const email = style({
+  ...fonts.label.small.R12,
+  color: colors.text03,
+});
+
+export const emailInput = style({
+  ...fonts.body.small.M15,
+  color: colors.text06,
+  border: `1px solid ${colors.line01}`,
+  borderRadius: '1.2rem',
+  padding: '1.6rem',
+
+  selectors: {
+    '&:focus': {
+      outline: 'none',
+      border: `0.1rem solid ${colors.primaryMint}`,
+    },
+
+    '&::placeholder': {
+      color: colors.text02,
+    },
+  },
+});
