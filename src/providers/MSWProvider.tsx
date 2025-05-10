@@ -13,7 +13,7 @@ const MSWProvider = ({ children }: { children: React.ReactNode }) => {
       if (isStartedRef.current) return;
       isStartedRef.current = true;
 
-      const initMSW = await import('./index').then((res) => res.initMSW);
+      const initMSW = await import('../mocks/index').then((res) => res.initMSW);
       await initMSW();
       setIsMSWReady(true);
     };

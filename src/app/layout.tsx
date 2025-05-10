@@ -3,13 +3,12 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { getServerSession } from 'next-auth';
 
-import Providers from './providers';
-
 import Footer from '@/components/Footer/Footer';
 import pretendard from '@/fonts/local-font';
 import '@/styles/reset.css';
 import '@/styles/global.css';
 import { authOptions } from '@/lib/auth-utils';
+import Providers from '@/providers/providers';
 
 export const metadata: Metadata = {
   title: '그라밋',
