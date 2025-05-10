@@ -1,41 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getToken, JWT } from 'next-auth/jwt';
+import { getToken } from 'next-auth/jwt';
 
-// 디바이스 타입 반환 함수
-const getDeviceType = (userAgent: string) => {
-  const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-  return mobileRegex.test(userAgent) ? 'mobile' : 'desktop';
-};
-
-const goToLogin = (request: NextRequest) => {
-  return NextResponse.redirect(new URL('/login', request.url));
-};
-
-const goToHome = (request: NextRequest) => {
-  return NextResponse.redirect(new URL('/', request.url));
-};
-
-const isExpiredToken = (token: JWT) => {
-  const currentTimeSec = Math.floor(Date.now() / 1000);
-  const isExpired = token.exp < currentTimeSec;
-  return isExpired;
-};
-
-// Next-Auth 관련 모든 쿠키 삭제
-const clearAuthCookies = (request: NextRequest, response: NextResponse) => {
-  const cookiesToClear = [
-    'next-auth.session-token',
-    'next-auth.csrf-token',
-    'next-auth.callback-url',
-  ];
-
-  cookiesToClear.forEach((cookieName) => {
-    if (request.cookies.has(cookieName)) {
-      response.cookies.delete(cookieName);
-    }
-  });
-};
+import {
+  clearAuthCookies,
+  getDeviceType,
+  goToHome,
+  goToLogin,
+  isExpiredToken,
+} from './middleware/utils';
 
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
