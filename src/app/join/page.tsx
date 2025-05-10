@@ -1,66 +1,16 @@
-'use client';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-import { assignInlineVars } from '@vanilla-extract/dynamic';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-
-import ParticipantForm from './components/Participant/ParticipantForm';
-import ResearcherForm from './components/Researcher/ResearcherForm';
-import useFunnel from './hooks/useFunnel';
-import { STEP } from './JoinPage.constants';
-import {
-  contentContainer,
-  joinLayout,
-  joinTitle,
-  progressBarContainer,
-  progressBarFill,
-  titleContainer,
-} from './JoinPage.css';
-
-import Logo from '@/assets/images/logo.svg';
-import { ROLE } from '@/constants/config';
-
+// middleware단에서 desktop 또는 mobile 페이지로 rewrite 시킴
+// middleware가 동작하지 않을 경우에 대응하는 페이지 컴포넌트
 export default function JoinPage() {
-  const { data: session } = useSession();
-  const role = session?.role;
+  const header = headers();
+  const userAgent = header.get('user-agent') || '';
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 
-  const { step } = useFunnel(['email', 'info', 'success'] as const);
-
-  // TODO: 추후 스켈레톤 처리
-  if (!role) return null;
-
-  if (step === STEP.success) {
-    return (
-      <section className={joinLayout}>
-        <div className={contentContainer}>
-          {role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}
-        </div>
-      </section>
-    );
+  if (isMobile) {
+    redirect('/join/mobile');
+  } else {
+    redirect('/join/desktop');
   }
-
-  return (
-    <section className={joinLayout}>
-      <Link href="/" aria-label="홈 화면으로 이동">
-        <Image src={Logo} alt="로고" />
-      </Link>
-      <div className={contentContainer}>
-        <div className={titleContainer}>
-          <h2 className={joinTitle}>
-            {role === ROLE.researcher ? '연구자 회원가입' : '참여자 회원가입'}
-          </h2>
-          <div className={progressBarContainer}>
-            <div
-              className={progressBarFill}
-              style={assignInlineVars({
-                '--progress-width': step === STEP.email ? '50%' : '100%',
-              })}
-            />
-          </div>
-        </div>
-        {role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}
-      </div>
-    </section>
-  );
 }

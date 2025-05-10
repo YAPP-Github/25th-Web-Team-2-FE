@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken, JWT } from 'next-auth/jwt';
 
+// 디바이스 타입 반환 함수
+const getDeviceType = (userAgent: string) => {
+  const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  return mobileRegex.test(userAgent) ? 'mobile' : 'desktop';
+};
+
 const goToLogin = (request: NextRequest) => {
   return NextResponse.redirect(new URL('/login', request.url));
 };
@@ -32,15 +38,31 @@ const clearAuthCookies = (request: NextRequest, response: NextResponse) => {
 };
 
 export async function middleware(request: NextRequest) {
-  const { searchParams, pathname } = request.nextUrl;
+  const url = request.nextUrl.clone();
+  const { searchParams, pathname } = url;
+  const userAgent = request.headers.get('user-agent') || '';
+  const deviceType = getDeviceType(userAgent);
 
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  const isJoinPage = request.nextUrl.pathname.startsWith('/join');
+  const isJoinPage = url.pathname.startsWith('/join');
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
+
+  // joinPage만 먼저 desktop, mobile 구분
+  if (isJoinPage && !isJoinSuccessPage) {
+    if (!pathname.match(/\/join\/(desktop|mobile)(\/.*)?$/)) {
+      const segments = pathname.split('/').filter(Boolean);
+      const restPath = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
+
+      const newPathname = `/join/${deviceType}${restPath}`;
+      url.pathname = newPathname;
+
+      return NextResponse.rewrite(url);
+    }
+  }
 
   // 토큰이 없는 경우
   if (!token && pathname !== '/') {
