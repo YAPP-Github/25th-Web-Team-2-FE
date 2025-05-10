@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Head from 'next/head';
 import Script from 'next/script';
 import { getServerSession } from 'next-auth';
 
@@ -8,7 +7,7 @@ import pretendard from '@/fonts/local-font';
 import '@/styles/reset.css';
 import '@/styles/global.css';
 import { authOptions } from '@/lib/auth-utils';
-import Providers from '@/providers/providers';
+import Providers from '@/providers/Providers';
 
 export const metadata: Metadata = {
   title: '그라밋',
@@ -26,36 +25,6 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={pretendard.className}>
-      <Head>
-        <link
-          rel="preload"
-          href="/fonts/Pretendard-Regular.subset.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Pretendard-Medium.subset.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Pretendard-SemiBold.subset.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Pretendard-Bold.subset.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </Head>
       <body suppressHydrationWarning={true}>
         <Providers session={session}>
           {children}
