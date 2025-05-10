@@ -3,13 +3,21 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-export const joinPageLayout = style({
+export const desktopJoinPageLayout = style({
   display: 'flex',
   backgroundColor: colors.field01,
   width: '56rem',
+  minHeight: 'calc(100vh - 12.2rem)',
   margin: '0 auto',
   padding: '8rem 0',
-  minHeight: 'calc(100vh - 12.2rem)',
+});
+
+export const mobileJoinPageLayout = style({
+  display: 'flex',
+  backgroundColor: colors.field01,
+  width: '400px',
+  height: '100dvh',
+  margin: '0 auto',
 });
 
 export const joinLayout = style({
