@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { getAuthErrorMessage } from '../LoginPage.utils';
 
-import { API } from '@/apis/config';
 import { CustomError } from '@/apis/config/error';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { googleLogin, LoginResponse } from '@/apis/login';
 import { loginWithCredentials } from '@/lib/auth-utils';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
@@ -30,7 +30,14 @@ const useGoogleLoginMutation = ({
     mutationFn: ({ code, role }: GoogleLoginParams) => googleLogin(code, role),
     onSuccess: async ({ isRegistered, accessToken, refreshToken, memberInfo }) => {
       if (isRegistered) {
-        API.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        fetchClient.onRequest((config) => {
+          config.headers = {
+            ...config.headers,
+            Authorization: `Bearer ${accessToken}`,
+          };
+
+          return config;
+        });
         await loginWithCredentials({ accessToken, refreshToken, role: memberInfo.role });
 
         identifyUser(memberInfo.oauthEmail);

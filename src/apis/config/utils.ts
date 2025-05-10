@@ -1,12 +1,12 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { getServerSession } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
+import { createBaseFetchClient, RequestProps } from './createBaseFetchClient';
+import { CustomError } from './error';
 import { AuthErrorCode } from './types';
 import { updateAccessToken } from '../login';
-import { ERROR_MESSAGES } from './constants';
-import { CustomError } from './error';
 
-import { loginWithCredentials } from '@/lib/auth-utils';
+import { authOptions, loginWithCredentials } from '@/lib/auth-utils';
 
 export const isAuthError = (code: string) => {
   return (
@@ -18,39 +18,77 @@ export const isAuthError = (code: string) => {
   );
 };
 
-export const login = async ({
-  axiosInstance,
-  request,
+export const getSessionRefreshToken = async () => {
+  const isServer = typeof window === 'undefined';
+
+  try {
+    if (isServer) {
+      const session = await getServerSession(authOptions);
+      return session?.refreshToken || null;
+    } else {
+      const session = await getSession();
+      return session?.refreshToken || null;
+    }
+  } catch (_) {
+    return null;
+  }
+};
+
+export const retryLogin = async <T>({
+  fetchClient,
+  config,
   code,
   status,
+  url,
 }: {
-  axiosInstance: AxiosInstance;
-  request: InternalAxiosRequestConfig;
+  fetchClient: ReturnType<typeof createBaseFetchClient>;
+  config: RequestProps;
   code: AuthErrorCode;
   status: number;
-}) => {
-  // Next-Auth 세션에서 리프레시 토큰 가져오기
-  const session = await getSession();
-  const refreshToken = session?.refreshToken;
+  url: string;
+}): Promise<T> => {
+  try {
+    if (config.isRetry) {
+      throw new CustomError({
+        status,
+        code,
+      });
+    }
 
-  if (!refreshToken) {
+    const refreshToken = await getSessionRefreshToken();
+
+    if (!refreshToken) {
+      throw new CustomError({
+        status,
+        code,
+      });
+    }
+
+    const userInfo = await updateAccessToken(refreshToken);
+
+    await loginWithCredentials({
+      accessToken: userInfo.accessToken,
+      refreshToken: userInfo.refreshToken,
+      role: userInfo.memberInfo.role,
+    });
+
+    return fetchClient.request<T>(url, {
+      ...config,
+      isRetry: true,
+      headers: {
+        ...config.headers,
+        Authorization: `Bearer ${userInfo.accessToken}`,
+      },
+    });
+  } catch (err) {
+    if (err instanceof CustomError) {
+      throw err;
+    }
+
+    const { status, code } = err as CustomError;
     throw new CustomError({
       status,
-      errorCode: code,
-      message: ERROR_MESSAGES[code],
+      code,
     });
   }
-
-  const userInfo = await updateAccessToken(refreshToken);
-
-  // Next-Auth 재로그인
-  await loginWithCredentials({
-    accessToken: userInfo.accessToken,
-    refreshToken: userInfo.refreshToken,
-    role: userInfo.memberInfo.role,
-  });
-
-  request.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-  axiosInstance.defaults.headers.Authorization = `Bearer ${userInfo.accessToken}`;
-  return axios(request);
 };

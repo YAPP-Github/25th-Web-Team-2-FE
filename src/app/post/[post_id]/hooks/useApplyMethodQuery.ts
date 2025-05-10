@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
@@ -18,9 +17,9 @@ export interface UseApplyMethodQueryResponse {
 
 const useApplyMethodQuery = ({ postId }: UseApplyMethodQueryParams) => {
   const url = API_URL.applyMethod(postId ?? '');
-  const queryFn = () => API.get(url).then((res) => res.data);
+  const queryFn = () => fetchClient.get(url);
 
-  return useQuery<UseApplyMethodQueryResponse, AxiosError>({
+  return useQuery<UseApplyMethodQueryResponse>({
     queryKey: [QUERY_KEY.applyMethod, postId],
     queryFn,
     enabled: !!postId,
