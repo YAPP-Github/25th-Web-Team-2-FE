@@ -48,7 +48,7 @@ const SelectForm = forwardRef<HTMLButtonElement, SelectFormProps>(
           key={field.value ?? field.name}
           value={field.value ? String(field.value) : undefined}
           onValueChange={(value) => {
-            setValue(field.name, value, { shouldValidate: true });
+            setValue(field.name, value, { shouldValidate: true, shouldDirty: true });
           }}
           onOpenChange={(open) => {
             setIsOpen(open);

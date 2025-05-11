@@ -51,10 +51,12 @@ const useManageExperimentPostForm = ({
     postId: postId,
   });
 
+  // 참여 방법 불러오기
   const { data: applyMethodData, isLoading: isApplyMethodLoading } = useApplyMethodQuery({
     postId: postId,
   });
 
+  // 공고 form
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
