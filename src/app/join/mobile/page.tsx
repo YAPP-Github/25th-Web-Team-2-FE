@@ -15,7 +15,7 @@ async function MobileJoinPage() {
   return (
     <div className={layout}>
       <JoinHeader role={role} />
-      <ContactEmailStep role={role} provider={provider} oauthEmail={oauthEmail} />;
+      <ContactEmailStep role={role} provider={provider} oauthEmail={oauthEmail} />
     </div>
   );
 }

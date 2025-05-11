@@ -15,7 +15,8 @@ export const desktopJoinPageLayout = style({
 export const mobileJoinPageLayout = style({
   display: 'flex',
   backgroundColor: colors.field01,
-  width: '400px',
+  width: '100%',
+  maxWidth: '768px',
   height: '100dvh',
   margin: '0 auto',
 });
