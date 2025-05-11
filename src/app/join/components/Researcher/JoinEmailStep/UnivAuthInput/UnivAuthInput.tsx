@@ -60,7 +60,7 @@ const UnivAuthInput = ({
         startTimer();
       },
       onError: (error) => {
-        if (error.errorCode === 'VE0007') {
+        if (error.code === 'VE0007') {
           handleVerifyEmail();
         }
       },

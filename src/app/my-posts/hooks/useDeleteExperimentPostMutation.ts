@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
@@ -15,9 +15,7 @@ export interface UseDeleteExperimentPostMutationResponse {
 const useDeleteExperimentPostMutation = () => {
   const mutationFn = async ({ postId }: UseDeleteExperimentPostMutationParams) => {
     const url = API_URL.deletePost(postId);
-    return await API.delete<UseDeleteExperimentPostMutationResponse>(url, {}).then(
-      (res) => res.data,
-    );
+    return await fetchClient.delete<UseDeleteExperimentPostMutationResponse>(url);
   };
 
   return useMutation({

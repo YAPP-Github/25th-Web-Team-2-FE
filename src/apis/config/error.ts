@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from './constants';
 import { ErrorCode } from './types';
 
 export const SERVER_ERROR_STATUS = 500;
@@ -5,21 +6,21 @@ export const NETWORK_ERROR_STATUS = 5001;
 export const UNHANDLED_ERROR_STATUS = 5002;
 
 interface CustomErrorParams {
-  errorCode: ErrorCode;
+  code: ErrorCode;
   status: number;
-  message: string;
+  message?: string;
 }
 
 export class CustomError extends Error {
-  errorCode: ErrorCode;
+  code: ErrorCode;
   status: number;
   message: string;
 
-  constructor({ errorCode, status, message }: CustomErrorParams) {
+  constructor({ code, status, message }: CustomErrorParams) {
     super();
-    this.errorCode = errorCode;
+    this.code = code;
     this.status = status;
-    this.message = message;
+    this.message = message || ERROR_MESSAGES[code];
   }
 }
 
