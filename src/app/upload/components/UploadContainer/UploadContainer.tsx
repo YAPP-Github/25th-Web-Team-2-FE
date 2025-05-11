@@ -66,11 +66,11 @@ const UploadContainer = () => {
 
   const handleConfirmLeave = () => {
     setIsLeaveConfirmModalOpen(false);
+    history.go(-2);
   };
 
   const handleCancelLeave = () => {
     setIsLeaveConfirmModalOpen(false);
-    history.go(-2);
   };
 
   useEffect(() => {
