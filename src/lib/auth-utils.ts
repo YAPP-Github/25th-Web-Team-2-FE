@@ -2,6 +2,8 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { signIn, signOut } from 'next-auth/react';
 
+import { LoginProvider, Role } from '@/types/user';
+
 interface LoginWithCredentialsParams {
   accessToken: string;
   refreshToken: string;
@@ -73,10 +75,10 @@ export const authOptions: NextAuthOptions = {
           id: 'id', // 필수 반환값
           accessToken: credentials.accessToken,
           refreshToken: credentials.refreshToken,
-          role: credentials.role,
+          role: credentials.role as Role,
           isTempUser: credentials.isTempUser === 'true',
           oauthEmail: credentials.oauthEmail,
-          provider: credentials.provider,
+          provider: credentials.provider as LoginProvider,
         };
       },
     }),

@@ -11,6 +11,7 @@ import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 import { Researcher } from '.';
 
 import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { LoginProvider } from '@/types/user';
 
 const ResearcherForm = () => {
   const { mutate: joinResearcher } = useResearcherJoinMutation();
@@ -44,7 +45,7 @@ const ResearcherForm = () => {
   useEffect(() => {
     if (oauthEmail && provider) {
       researcherMethods.setValue('oauthEmail', oauthEmail);
-      researcherMethods.setValue('provider', provider as 'GOOGLE' | 'NAVER');
+      researcherMethods.setValue('provider', provider as LoginProvider);
     }
   }, [researcherMethods, oauthEmail, provider]);
 

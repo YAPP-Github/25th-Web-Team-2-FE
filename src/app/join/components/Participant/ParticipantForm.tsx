@@ -13,6 +13,7 @@ import { Participant } from '.';
 import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
+import { LoginProvider } from '@/types/user';
 
 const ParticipantForm = () => {
   const { data: session } = useSession();
@@ -63,7 +64,7 @@ const ParticipantForm = () => {
   useEffect(() => {
     if (oauthEmail && provider) {
       participantMethods.setValue('oauthEmail', oauthEmail);
-      participantMethods.setValue('provider', provider as 'GOOGLE' | 'NAVER');
+      participantMethods.setValue('provider', provider as LoginProvider);
     }
   }, [participantMethods, oauthEmail, provider]);
 
