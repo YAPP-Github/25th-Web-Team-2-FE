@@ -24,19 +24,6 @@ export async function middleware(request: NextRequest) {
   const isJoinPage = url.pathname.startsWith('/join');
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
 
-  // joinPage만 먼저 desktop, mobile 구분
-  if (isJoinPage && !isJoinSuccessPage) {
-    if (!pathname.match(/\/join\/(desktop|mobile)(\/.*)?$/)) {
-      const segments = pathname.split('/').filter(Boolean);
-      const restPath = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
-
-      const newPathname = `/join/${deviceType}${restPath}`;
-      url.pathname = newPathname;
-
-      return NextResponse.rewrite(url);
-    }
-  }
-
   // 토큰이 없는 경우
   if (!token && pathname !== '/') {
     return goToLogin(request);
@@ -62,6 +49,17 @@ export async function middleware(request: NextRequest) {
   if (isJoinPage && !isJoinSuccessPage) {
     if (token && !token.isTempUser) {
       return goToHome(request);
+    }
+
+    // joinPage만 먼저 desktop, mobile 구분
+    if (!pathname.match(/\/join\/(desktop|mobile)(\/.*)?$/)) {
+      const segments = pathname.split('/').filter(Boolean);
+      const restPath = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
+
+      const newPathname = `/join/${deviceType}${restPath}`;
+      url.pathname = newPathname;
+
+      return NextResponse.rewrite(url);
     }
   }
 
