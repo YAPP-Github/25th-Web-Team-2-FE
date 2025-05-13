@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { convertLabelToValue, convertValueToLabel } from '../upload.utils';
+import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
+import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 
 import useEditExperimentPostMutation from '@/app/edit/[post_id]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[post_id]/hooks/useOriginExperimentPostQuery';
@@ -44,7 +45,7 @@ const useManageExperimentPostForm = ({
 
   // 기존 공고 데이터 불러오기
   const {
-    data: experimentData,
+    data: originExperimentData,
     isLoading: isExperimentLoading,
     error: originExperimentError,
   } = useOriginExperimentPostQuery({
@@ -56,120 +57,38 @@ const useManageExperimentPostForm = ({
     postId: postId,
   });
 
+  // 기존 공고 데이터 Form 형식으로 포맷
+  const originFormData = useMemo(() => {
+    if (!originExperimentData || !applyMethodData) return undefined;
+    return transformOriginFormData(originExperimentData, applyMethodData);
+  }, [originExperimentData, applyMethodData]);
+
   // 공고 form
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
     resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
-    defaultValues: {
-      leadResearcher: '',
-      startDate: undefined,
-      endDate: undefined,
-      matchType: undefined,
-      reward: '',
-      place: undefined,
-      detailedAddress: '',
-      region: undefined,
-      area: undefined,
-      count: undefined,
-      timeRequired: undefined,
-      title: '',
-      content: '',
-      applyMethodInfo: {
-        content: '',
-        formUrl: null,
-        phoneNum: null,
-      },
-      targetGroupInfo: {
-        startAge: undefined,
-        endAge: undefined,
-        genderType: undefined,
-        otherCondition: '',
-      },
-      imageListInfo: {
-        images: [],
-      },
-      alarmAgree: false,
-    },
+    defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
 
   // 기존 공고 데이터로 form reset
   useEffect(() => {
-    if (isEdit && experimentData && applyMethodData) {
-      setImages?.(experimentData.imageList);
+    if (isEdit && originExperimentData) {
+      setImages?.(originExperimentData.imageList);
 
-      form.reset({
-        leadResearcher: experimentData.summary.leadResearcher,
-        startDate: experimentData.summary.startDate,
-        endDate: experimentData.summary.endDate,
-        matchType: experimentData.summary.matchType as MatchType,
-        reward: experimentData.summary.reward,
-        place: experimentData.address.place,
-        detailedAddress: experimentData.address.detailedAddress,
-        region: experimentData.address.region,
-        area: convertValueToLabel(experimentData.address.area),
-        count: experimentData.summary.count,
-        timeRequired: experimentData.summary.timeRequired as
-          | 'LESS_30M'
-          | 'ABOUT_30M'
-          | 'ABOUT_1H'
-          | 'ABOUT_1H30M'
-          | 'ABOUT_2H'
-          | 'ABOUT_2H30M'
-          | 'ABOUT_3H'
-          | 'ABOUT_3H30M'
-          | 'ABOUT_4H'
-          | null
-          | undefined,
-        title: experimentData.title,
-        content: experimentData.content,
-        applyMethodInfo: {
-          content: applyMethodData.content,
-          formUrl: applyMethodData.formUrl,
-          phoneNum: applyMethodData.phoneNum,
-        },
-        targetGroupInfo: {
-          startAge: experimentData.targetGroup.startAge ?? undefined,
-          endAge: experimentData.targetGroup.endAge ?? undefined,
-          genderType: experimentData.targetGroup.genderType,
-          otherCondition: experimentData.targetGroup.otherCondition || '',
-        },
-        imageListInfo: {
-          images: experimentData.imageList,
-        },
-        alarmAgree: experimentData.alarmAgree,
-      });
+      form.reset(originFormData);
     }
-  }, [isEdit, experimentData, applyMethodData, form, setImages]);
+  }, [isEdit, originExperimentData, form, setImages, originFormData]);
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
   const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
-    let updatedImages: (string | File)[] = [...images];
+    /* 이미지 먼저 등록 */
+    const updatedImages = await uploadImages(images, uploadImageMutation);
 
-    const newFiles = images.filter((image) => image instanceof File) as File[];
-
-    if (newFiles.length > 0) {
-      const uploadedFiles = await Promise.all(
-        newFiles.map(async (file) => {
-          const originalUrl = await uploadImageMutation(file);
-          return originalUrl;
-        }),
-      );
-
-      let fileIndex = 0;
-      updatedImages = updatedImages.map((image) => {
-        if (image instanceof File) {
-          const uploadedUrl = uploadedFiles[fileIndex];
-          fileIndex++;
-          return uploadedUrl;
-        }
-        return image;
-      });
-    }
-
+    /* 최종 공고 FormData */
     const updatedData = {
       ...data,
       area: data.area ? convertLabelToValue(data.area) : null,
@@ -223,9 +142,11 @@ const useManageExperimentPostForm = ({
     handleSubmit: form.handleSubmit(handleSubmit),
     isLoading: isExperimentLoading || isApplyMethodLoading,
     applyMethodData,
-    isAuthor: experimentData?.isAuthor ?? false,
-    isRecruitStatus: experimentData?.recruitStatus ?? true,
+    isAuthor: originExperimentData?.isAuthor ?? false,
+    isRecruitStatus: originExperimentData?.recruitStatus ?? true,
     originExperimentError,
+
+    originFormData,
   };
 };
 

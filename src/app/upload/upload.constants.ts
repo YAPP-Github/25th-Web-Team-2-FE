@@ -52,3 +52,34 @@ export const durationMinutesOptions = [
   { label: '약 3시간 30분', value: 'ABOUT_3H30M' },
   { label: '약 4시간', value: 'ABOUT_4H' },
 ];
+
+export const EXPERIMENT_POST_DEFAULT_VALUES = {
+  leadResearcher: '',
+  startDate: undefined,
+  endDate: undefined,
+  matchType: undefined,
+  reward: '',
+  place: undefined,
+  detailedAddress: '',
+  region: undefined,
+  area: undefined,
+  count: undefined,
+  timeRequired: undefined,
+  title: '',
+  content: '',
+  applyMethodInfo: {
+    content: '',
+    formUrl: null,
+    phoneNum: null,
+  },
+  targetGroupInfo: {
+    startAge: undefined,
+    endAge: undefined,
+    genderType: undefined,
+    otherCondition: '',
+  },
+  imageListInfo: {
+    images: [],
+  },
+  alarmAgree: false,
+};
