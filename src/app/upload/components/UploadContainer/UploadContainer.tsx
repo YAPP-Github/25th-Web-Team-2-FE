@@ -1,7 +1,7 @@
 'use client';
 
 import * as Toast from '@radix-ui/react-toast';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import {
@@ -12,6 +12,7 @@ import {
   headerTitle,
   headerSubTitle,
 } from './UploadContainer.css';
+import useLeaveConfirmModal from '../../hooks/useLeaveConfirmModal';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
@@ -38,8 +39,6 @@ const UploadContainer = () => {
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [successToast, setSuccessToast] = useState(false);
 
-  const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false);
-
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
     addContact,
@@ -56,41 +55,8 @@ const UploadContainer = () => {
     );
   }, [form.formState.dirtyFields]);
 
-  const handleBackClick = () => {
-    if (isUserInputDirty) {
-      setIsLeaveConfirmModalOpen(true);
-    } else {
-      history.back();
-    }
-  };
-
-  const handleConfirmLeave = () => {
-    setIsLeaveConfirmModalOpen(false);
-    history.go(-2);
-  };
-
-  const handleCancelLeave = () => {
-    setIsLeaveConfirmModalOpen(false);
-  };
-
-  useEffect(() => {
-    if (isUserInputDirty) {
-      history.pushState(null, '', location.href);
-    }
-
-    const handlePopState = (event: PopStateEvent) => {
-      if (!isUserInputDirty) return;
-
-      event.preventDefault();
-      setIsLeaveConfirmModalOpen(true);
-      history.pushState(null, '', location.href);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [isUserInputDirty]);
+  const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
+    useLeaveConfirmModal({ isUserInputDirty });
 
   return (
     <FormProvider {...form}>
