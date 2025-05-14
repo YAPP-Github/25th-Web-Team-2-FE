@@ -4,7 +4,7 @@ interface UseLeaveConfirmModalOptions {
   isUserInputDirty: boolean;
 }
 
-interface UseLeaveConfirmModalResult {
+interface UseLeaveConfirmModalReturn {
   isLeaveConfirmModalOpen: boolean;
   handleCancelLeave: VoidFunction;
   handleConfirmLeave: VoidFunction;
@@ -14,7 +14,7 @@ interface UseLeaveConfirmModalResult {
 
 const useLeaveConfirmModal = ({
   isUserInputDirty,
-}: UseLeaveConfirmModalOptions): UseLeaveConfirmModalResult => {
+}: UseLeaveConfirmModalOptions): UseLeaveConfirmModalReturn => {
   const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false);
 
   // 이전으로 버튼 클릭

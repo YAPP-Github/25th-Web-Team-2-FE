@@ -22,10 +22,14 @@ import {
   uploadContentLayout,
   headerTitle,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
+import useLeaveConfirmModal from '@/app/upload/hooks/useLeaveConfirmModal';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
+import { EXPERIMENT_POST_DEFAULT_VALUES } from '@/app/upload/upload.constants';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { colors } from '@/styles/colors';
+import { deepEqual } from '@/utils/deepEqual';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const pathname = usePathname();
@@ -43,18 +47,50 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const [successToast, setSuccessToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
-    useManageExperimentPostForm({
-      isEdit,
-      postId: params.post_id,
-      addLink,
-      addContact,
-      setOpenAlertModal: setOpenSubmitAlertDialog,
-      setSuccessToast,
-      images,
-      setImages,
-      setErrorMessage,
-    });
+  const [isUserInputDirty, setIsUserInputDirty] = useState(false);
+
+  const {
+    form,
+    handleSubmit,
+    isLoading,
+    applyMethodData,
+    isRecruitStatus,
+    originExperimentError,
+    originFormData,
+  } = useManageExperimentPostForm({
+    isEdit,
+    postId: params.post_id,
+    addLink,
+    addContact,
+    setOpenAlertModal: setOpenSubmitAlertDialog,
+    setSuccessToast,
+    images,
+    setImages,
+    setErrorMessage,
+  });
+
+  const watchedValues = form.watch();
+
+  // 사용자 입력 감지
+  useEffect(() => {
+    if (!originFormData) {
+      setIsUserInputDirty(false);
+      return;
+    }
+
+    // origin이 defaultValues가 아닐때
+    const isNotDefaultForm = !deepEqual(originFormData, EXPERIMENT_POST_DEFAULT_VALUES);
+    if (!isNotDefaultForm) {
+      setIsUserInputDirty(false);
+      return;
+    }
+
+    const changed = !deepEqual({ ...originFormData }, { ...watchedValues });
+    setIsUserInputDirty(changed);
+  }, [originFormData, form, watchedValues]);
+
+  const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
+    useLeaveConfirmModal({ isUserInputDirty });
 
   useEffect(() => {
     if (originExperimentError instanceof CustomError) {
@@ -110,7 +146,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
         {/* 버튼 */}
         <div className={buttonContainer}>
-          <button className={buttonVariants.active} onClick={() => router.back()}>
+          <button className={buttonVariants.active} onClick={handleBackClick}>
             이전으로
           </button>
           <button className={buttonVariants.upload} onClick={handleSubmit} type="submit">
@@ -154,6 +190,21 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />
       </Toast.Provider>
+
+      {/* 공고 수정 중 이탈 시 ConfirmModal */}
+      <ConfirmModal
+        isOpen={isLeaveConfirmModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            handleCancelLeave();
+          }
+        }}
+        confirmTitle="페이지에서 나가시겠어요?"
+        descriptionText="입력한 내용은 따로 저장되지 않아요"
+        cancelText="취소"
+        confirmText="나가기"
+        onConfirm={handleConfirmLeave}
+      />
     </FormProvider>
   );
 };
