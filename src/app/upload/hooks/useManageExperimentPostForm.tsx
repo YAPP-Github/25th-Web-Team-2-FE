@@ -43,6 +43,10 @@ const useManageExperimentPostForm = ({
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
+  const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
+  const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
+
   // 기존 공고 데이터 불러오기
   const {
     data: originExperimentData,
@@ -73,16 +77,11 @@ const useManageExperimentPostForm = ({
 
   // 기존 공고 데이터로 form reset
   useEffect(() => {
-    if (isEdit && originExperimentData) {
-      setImages?.(originExperimentData.imageList);
-
+    if (isEdit && originFormData) {
+      setImages?.(originFormData.imageListInfo.images as (string | File)[]);
       form.reset(originFormData);
     }
-  }, [isEdit, originExperimentData, form, setImages, originFormData]);
-
-  const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
-  const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
-  const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
+  }, [isEdit, originFormData, form, setImages]);
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
     /* 이미지 먼저 등록 */

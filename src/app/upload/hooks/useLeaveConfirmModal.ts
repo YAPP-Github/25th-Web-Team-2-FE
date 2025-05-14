@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface UseLeaveConfirmModalOptions {
   isUserInputDirty: boolean;
@@ -18,24 +18,24 @@ const useLeaveConfirmModal = ({
   const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false);
 
   // 이전으로 버튼 클릭
-  const handleBackClick = useCallback(() => {
+  const handleBackClick = () => {
     if (isUserInputDirty) {
       setIsLeaveConfirmModalOpen(true);
     } else {
       history.back();
     }
-  }, [isUserInputDirty]);
+  };
 
   // 나가기
-  const handleConfirmLeave = useCallback(() => {
+  const handleConfirmLeave = () => {
     setIsLeaveConfirmModalOpen(false);
     history.go(-2);
-  }, []);
+  };
 
   // 페이지 유지
-  const handleCancelLeave = useCallback(() => {
+  const handleCancelLeave = () => {
     setIsLeaveConfirmModalOpen(false);
-  }, []);
+  };
 
   useEffect(() => {
     if (isUserInputDirty) {
