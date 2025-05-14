@@ -1,16 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { UseQueryExperimentDetailsAPIResponse } from '@/app/post/[post_id]/hooks/useExperimentDetailsQuery';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
-const useOriginExperimentPostQuery = ({ postId }: { postId: string | undefined }) => {
+const useOriginExperimentPostQuery = ({ postId }: { postId?: string }) => {
   const url = API_URL.originExperimentPost(postId ?? '');
-  const queryFn = () => API.get(url).then((res) => res.data);
+  const queryFn = () => fetchClient.get(url);
 
-  return useQuery<UseQueryExperimentDetailsAPIResponse, AxiosError>({
+  return useQuery<UseQueryExperimentDetailsAPIResponse>({
     queryKey: [QUERY_KEY.originExperimentPost, postId],
     queryFn,
     enabled: !!postId,

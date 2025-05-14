@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
@@ -20,7 +20,7 @@ export interface UseUpdateRecruitStatusMutationResponse {
 const useUpdateRecruitStatusMutation = () => {
   const mutationFn = async ({ postId }: UseUpdateRecruitStatusMutationParams) => {
     const url = API_URL.updateRecruitStatus(postId);
-    return await API.patch<UseUpdateRecruitStatusMutationResponse>(url, {}).then((res) => res.data);
+    return await fetchClient.patch<UseUpdateRecruitStatusMutationResponse>(url);
   };
 
   return useMutation({

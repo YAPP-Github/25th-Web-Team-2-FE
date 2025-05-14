@@ -1,4 +1,4 @@
-import { API } from './config';
+import { fetchClient } from './config/fetchClient';
 import { ParticipantResponse, ResearcherResponse } from './login';
 
 import { ROLE } from '@/constants/config';
@@ -23,28 +23,32 @@ export interface LeaveUserParams {
   reason?: string;
 }
 
-export const updateParticipantInfo = async (params: ParticipantUpdateSchemaType) => {
-  const res = await API.put<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()), {
-    ...params,
-  });
+export const getResearcherInfo = async () => {
+  return await fetchClient.get<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()));
+};
 
-  return res.data;
+export const getParticipantInfo = async () => {
+  return await fetchClient.get<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()));
+};
+
+export const updateParticipantInfo = async (params: ParticipantUpdateSchemaType) => {
+  return await fetchClient.put<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()), {
+    body: params,
+  });
 };
 
 export const updateResearcherInfo = async (params: ResearcherUpdateSchemaType) => {
-  const res = await API.put<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()), {
-    ...params,
+  return await fetchClient.put<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()), {
+    body: params,
   });
-
-  return res.data;
 };
 
 export const validateContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
-  const res = await API.get(API_URL.validateContactEmail(contactEmail));
-
-  return res.data;
+  return await fetchClient.get(API_URL.validateContactEmail(contactEmail));
 };
 
 export const leaveUser = async ({ reasonType, reason }: LeaveUserParams) => {
-  return await API.delete<ResearcherResponse>(API_URL.leave, { data: { reasonType, reason } });
+  return await fetchClient.delete<ResearcherResponse>(API_URL.leave, {
+    body: { reasonType, reason },
+  });
 };

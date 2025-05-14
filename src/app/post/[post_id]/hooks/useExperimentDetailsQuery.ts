@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { QUERY_KEY } from '@/constants/queryKey';
@@ -51,9 +50,9 @@ export interface UseQueryExperimentDetailsAPIResponse {
 const useExperimentDetailsQuery = ({ postId }: { postId: string }) => {
   const { isLoading: isUserInfoLoading } = useUserInfo();
   const url = API_URL.viewExperimentDetails(postId);
-  const queryFn = () => API.post(url).then((res) => res.data);
+  const queryFn = () => fetchClient.post(url);
 
-  return useQuery<UseQueryExperimentDetailsAPIResponse, AxiosError>({
+  return useQuery<UseQueryExperimentDetailsAPIResponse>({
     queryKey: [QUERY_KEY.experimentPostDetail, postId],
     queryFn,
     enabled: !!postId && !isUserInfoLoading,

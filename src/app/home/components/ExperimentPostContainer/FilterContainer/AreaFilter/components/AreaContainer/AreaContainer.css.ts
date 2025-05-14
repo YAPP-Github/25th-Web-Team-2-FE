@@ -22,7 +22,6 @@ export const subAreaItem = style({
   alignItems: 'center',
   justifyContent: 'space-between',
   gap: '0.4rem',
-  height: '100%',
   padding: '0.6rem 0.8rem',
   borderRadius: '1.2rem',
 });

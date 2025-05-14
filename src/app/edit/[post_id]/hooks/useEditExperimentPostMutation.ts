@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 import {
   ExperimentPostData,
   UploadedPostInfo,
@@ -15,7 +15,7 @@ export interface UseEditExperimentPostMutationResponse {
 const useEditExperimentPostMutation = () => {
   const mutationFn = async ({ postId, data }: { postId: string; data: ExperimentPostData }) => {
     const url = API_URL.editPost(postId);
-    await API.put<UseEditExperimentPostMutationResponse>(url, data).then((res) => res.data);
+    return await fetchClient.put<UseEditExperimentPostMutationResponse>(url, { body: data });
   };
 
   return useMutation({

@@ -58,7 +58,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   useEffect(() => {
     if (originExperimentError instanceof CustomError) {
-      if (originExperimentError.errorCode) {
+      if (originExperimentError.code) {
         setErrorMessage(originExperimentError.message);
       } else {
         setErrorMessage(null);

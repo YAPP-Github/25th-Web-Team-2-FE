@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import CustomQueryClientProvider from './CustomQueryClientProvider';
 
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
-import MSWProvider from '@/mocks/MSWProvider';
+import MSWProvider from '@/providers/MSWProvider';
 
 export default function Providers({
   children,

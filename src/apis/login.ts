@@ -1,7 +1,6 @@
-import { API } from './config';
+import { fetchClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
-import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
@@ -68,64 +67,39 @@ export interface NaverLoginParams {
 }
 
 export const googleLogin = async (code: string, role: string) => {
-  const res = await API.post<LoginResponse>(API_URL.google(role), { authorizationCode: code });
-
-  return res.data;
+  return await fetchClient.post<LoginResponse>(API_URL.google(role), {
+    body: { authorizationCode: code },
+  });
 };
 
 export const naverLogin = async ({ code, role, state }: NaverLoginParams) => {
-  const res = await API.post<LoginResponse>(API_URL.naver(role), {
-    authorizationCode: code,
-    state,
+  return await fetchClient.post<LoginResponse>(API_URL.naver(role), {
+    body: { authorizationCode: code, state },
   });
-
-  return res.data;
 };
 
 export const sendUnivAuthCode = async (univEmail: string) => {
-  const res = await API.post<UnivAuthCodeResponse>(API_URL.send, { univEmail });
-
-  return res.data;
+  return await fetchClient.post<UnivAuthCodeResponse>(API_URL.send, { body: { univEmail } });
 };
 
 export const verifyUnivAuthCode = async (univEmail: string, inputCode: string) => {
-  const res = await API.post<UnivAuthCodeResponse>(API_URL.verify, { univEmail, inputCode });
-
-  return res.data;
+  return await fetchClient.post<UnivAuthCodeResponse>(API_URL.verify, {
+    body: { univEmail, inputCode },
+  });
 };
 
 export const joinResearcher = async (params: ResearcherJoinSchemaType) => {
-  const res = await API.post<JoinResponse>(API_URL.joinResearcher, { ...params });
-
-  return res.data;
+  return await fetchClient.post<JoinResponse>(API_URL.joinResearcher, { body: params });
 };
 
 export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
-  const res = await API.post<JoinResponse>(API_URL.joinParticipant, { ...params });
-
-  return res.data;
-};
-
-export const getResearcherInfo = async () => {
-  const res = await API.get<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()));
-
-  return res.data;
-};
-
-export const getParticipantInfo = async () => {
-  const res = await API.get<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()));
-
-  return res.data;
+  return await fetchClient.post<JoinResponse>(API_URL.joinParticipant, { body: params });
 };
 
 export const updateAccessToken = async (refreshToken: string) => {
-  const res = await API.post<LoginResponse>(API_URL.refresh, { refreshToken });
-
-  return res.data;
+  return await fetchClient.post<LoginResponse>(API_URL.refresh, { body: { refreshToken } });
 };
 
 export const validateContactEmailInfo = async ({ contactEmail }: ValidateContactEmailParams) => {
-  const res = await API.get(API_URL.validateContactEmailInfo(contactEmail));
-
-  return res.data;
+  return await fetchClient.get(API_URL.validateContactEmailInfo(contactEmail));
 };

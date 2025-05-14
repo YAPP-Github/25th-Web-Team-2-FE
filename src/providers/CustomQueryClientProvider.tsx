@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Session } from 'next-auth';
 import { useState } from 'react';
 
-import { API } from '@/apis/config';
+import { fetchClient } from '@/apis/config/fetchClient';
 
 const CustomQueryClientProvider = ({
   children,
@@ -14,8 +14,17 @@ const CustomQueryClientProvider = ({
 }) => {
   const [queryClient] = useState(() => new QueryClient());
 
-  if (session?.accessToken) {
-    API.defaults.headers.common['Authorization'] = `Bearer ${session.accessToken}`;
+  const isClient = typeof window !== 'undefined';
+
+  if (isClient && session?.accessToken) {
+    fetchClient.onRequest((config) => {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${session.accessToken}`,
+      };
+
+      return config;
+    });
   }
 
   return (
