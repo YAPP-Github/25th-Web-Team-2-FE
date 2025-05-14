@@ -5,6 +5,7 @@ import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { QUERY_KEY } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
+import { MatchType } from '@/types/uploadExperimentPost';
 
 interface TargetGroup {
   startAge: number | null;
@@ -17,7 +18,7 @@ interface Summary {
   startDate: string | null;
   endDate: string | null;
   leadResearcher: string;
-  matchType: 'OFFLINE' | 'ONLINE' | 'ALL';
+  matchType: MatchType;
   reward: string;
   count: number;
   timeRequired: string | null;
