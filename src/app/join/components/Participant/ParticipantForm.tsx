@@ -1,18 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 import useFunnel from '../../hooks/useFunnel';
-import useParticipantJoinMutation from '../../hooks/useParticipantJoinMutation';
+import { useParticipantJoin } from '../../hooks/useParticipantJoin';
 import { STEP } from '../../JoinPage.constants';
 import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
 import { Participant } from '.';
 
-import ParticipantJoinSchema, {
-  ParticipantJoinSchemaType,
-} from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
 
 const ParticipantForm = () => {
@@ -20,46 +16,13 @@ const ParticipantForm = () => {
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
 
-  const { mutate: joinParticipant } = useParticipantJoinMutation();
-
   const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
 
-  const participantMethods = useForm<ParticipantJoinSchemaType>({
-    resolver: zodResolver(ParticipantJoinSchema()),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      oauthEmail: '',
-      contactEmail: '',
-      name: '',
-      birthDate: '',
-      basicAddressInfo: {
-        region: '',
-        area: '',
-      },
-      adConsent: false,
-      matchConsent: false,
+  const { participantMethods, handleSubmit } = useParticipantJoin({
+    onSuccess: () => {
+      setStep(STEP.success);
     },
   });
-
-  const handleParticipantSubmit = () => {
-    const formData = participantMethods.getValues();
-
-    const formattedData = {
-      ...formData,
-      birthDate: formData.birthDate.replaceAll('.', '-'),
-      additionalAddressInfo:
-        Object.values(formData.additionalAddressInfo ?? {}).filter(Boolean).length > 0
-          ? formData.additionalAddressInfo
-          : null,
-    };
-
-    joinParticipant(formattedData, {
-      onSuccess: () => {
-        setStep(STEP.success);
-      },
-    });
-  };
 
   useEffect(() => {
     if (oauthEmail && provider) {
@@ -75,9 +38,7 @@ const ParticipantForm = () => {
           <Participant.EmailStep onNext={() => setStep(STEP.info)} />
         </Step>
         <Step name={STEP.info}>
-          <Participant.InfoStep
-            handleSubmit={participantMethods.handleSubmit(handleParticipantSubmit)}
-          />
+          <Participant.InfoStep handleSubmit={handleSubmit} />
         </Step>
         <Step name={STEP.success}>
           <JoinSuccessStep />

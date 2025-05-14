@@ -1,13 +1,13 @@
-import { getServerSession } from 'next-auth';
+'use client';
+
+import { useSession } from 'next-auth/react';
 
 import ContactEmailStep from './ContactEmailStep';
 import JoinHeader from './Header';
 import { layout } from './page.css';
 
-import { authOptions } from '@/lib/auth-utils';
-
-async function MobileJoinPage() {
-  const session = await getServerSession(authOptions);
+export default function MobileJoinPage() {
+  const { data: session } = useSession();
   const role = session?.role;
   const provider = session?.provider;
   const oauthEmail = session?.oauthEmail;
@@ -19,5 +19,3 @@ async function MobileJoinPage() {
     </div>
   );
 }
-
-export default MobileJoinPage;
