@@ -18,7 +18,7 @@ export const buttonContainer = style({
   gap: '1.2rem',
 });
 
-globalStyle(`${buttonContainer} button`, {
+globalStyle(`${buttonContainer} a`, {
   ...fonts.label.large.M14,
   color: colors.text02,
   background: 'none',
