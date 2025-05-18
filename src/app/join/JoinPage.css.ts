@@ -14,6 +14,7 @@ export const desktopJoinPageLayout = style({
 
 export const mobileJoinPageLayout = style({
   display: 'flex',
+  flexDirection: 'column',
   backgroundColor: colors.field01,
   width: '100%',
   maxWidth: '768px',

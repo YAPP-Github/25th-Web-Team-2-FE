@@ -1,0 +1,47 @@
+import { useSession } from 'next-auth/react';
+import { FormProvider } from 'react-hook-form';
+
+import { Participant } from './Participant';
+import JoinSuccessStep from '../components/JoinSuccessStep/JoinSuccessStep';
+import useFunnel from '../hooks/useFunnel';
+import { useParticipantJoin } from '../hooks/useParticipantJoin';
+import { STEP } from '../JoinPage.constants';
+
+import { LoginProvider } from '@/types/user';
+
+const ParticipantForm = () => {
+  const { data: session } = useSession();
+  const provider = session?.provider;
+  const oauthEmail = session?.oauthEmail;
+
+  const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
+
+  const { participantMethods, handleSubmit } = useParticipantJoin({
+    initialValues: {
+      provider: provider as LoginProvider,
+      oauthEmail: oauthEmail || '',
+    },
+    onSuccess: () => {
+      setStep(STEP.success);
+    },
+  });
+
+  return (
+    <FormProvider {...participantMethods}>
+      <Funnel>
+        <Step name={STEP.email}>
+          <Participant.ContactEmailStep
+            provider={provider}
+            oauthEmail={oauthEmail}
+            onNext={() => setStep(STEP.info)}
+          />
+        </Step>
+        <Step name={STEP.success}>
+          <JoinSuccessStep />
+        </Step>
+      </Funnel>
+    </FormProvider>
+  );
+};
+
+export default ParticipantForm;
