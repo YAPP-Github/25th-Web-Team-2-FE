@@ -23,17 +23,14 @@ export default function MobileJoinPage() {
   const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
+    initialValues: {
+      provider: provider as LoginProvider,
+      oauthEmail: oauthEmail || '',
+    },
     onSuccess: () => {
       setStep(STEP.success);
     },
   });
-
-  useEffect(() => {
-    if (oauthEmail && provider) {
-      participantMethods.setValue('oauthEmail', oauthEmail);
-      participantMethods.setValue('provider', provider as LoginProvider);
-    }
-  }, [participantMethods, oauthEmail, provider]);
 
   return (
     // <div className={layout}>
