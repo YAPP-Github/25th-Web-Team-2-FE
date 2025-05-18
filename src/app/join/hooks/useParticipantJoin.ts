@@ -28,7 +28,6 @@ export const useParticipantJoin = ({ onSuccess }: UseParticipantJoinProps) => {
   const participantMethods = useForm<ParticipantJoinSchemaType>({
     resolver: zodResolver(ParticipantJoinSchema()),
     mode: 'onBlur',
-    reValidateMode: 'onChange',
     defaultValues: PARTICIPANT_DEFAULT_VALUES,
   });
 
