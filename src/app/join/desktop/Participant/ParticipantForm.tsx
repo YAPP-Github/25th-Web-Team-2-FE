@@ -5,7 +5,7 @@ import { FormProvider } from 'react-hook-form';
 import useFunnel from '../../hooks/useFunnel';
 import { useParticipantJoin } from '../../hooks/useParticipantJoin';
 import { STEP } from '../../JoinPage.constants';
-import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
+import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 
 import { Participant } from '.';
 

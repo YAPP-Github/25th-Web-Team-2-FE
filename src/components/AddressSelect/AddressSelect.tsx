@@ -8,7 +8,7 @@ import {
   requiredStar,
 } from './AddressSelect.css';
 
-import JoinSelect from '@/app/join/components/Participant/JoinInfoStep/JoinSelect/JoinSelect';
+import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
 import { FilterOption } from '@/app/join/JoinPage.types';
 
 interface AddressSelectProps<T extends FieldValues> {

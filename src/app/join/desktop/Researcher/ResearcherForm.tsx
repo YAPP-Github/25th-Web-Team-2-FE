@@ -3,10 +3,10 @@ import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
 import useResearcherJoinMutation from '../../hooks/useResearcherJoinMutation';
 import { STEP } from '../../JoinPage.constants';
-import JoinSuccessStep from '../JoinSuccessStep/JoinSuccessStep';
 
 import { Researcher } from '.';
 

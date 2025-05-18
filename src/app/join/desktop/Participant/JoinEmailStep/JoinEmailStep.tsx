@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import EmailToast from '../../EmailToast/EmailToast';
-import JoinCheckboxContainer from '../../JoinCheckboxContainer/JoinCheckboxContainer';
-import JoinInput from '../../JoinInput/JoinInput';
+import EmailToast from '../../../components/EmailToast/EmailToast';
+import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/JoinCheckboxContainer';
+import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';

@@ -12,7 +12,7 @@ import {
 } from './JoinInfoStep.css';
 import JoinSelect from './JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
-import JoinInput from '../../JoinInput/JoinInput';
+import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';

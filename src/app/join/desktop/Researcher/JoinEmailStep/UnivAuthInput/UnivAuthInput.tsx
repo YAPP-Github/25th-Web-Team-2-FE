@@ -11,8 +11,12 @@ import {
   editButton,
   errorMessage,
 } from './UnivAuthInput.css';
-import EmailToast from '../../../EmailToast/EmailToast';
-import { inputContainer, inputLabel, joinInput } from '../../../JoinInput/JoinInput.css';
+import EmailToast from '../../../../components/EmailToast/EmailToast';
+import {
+  inputContainer,
+  inputLabel,
+  joinInput,
+} from '../../../../components/JoinInput/JoinInput.css';
 
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';

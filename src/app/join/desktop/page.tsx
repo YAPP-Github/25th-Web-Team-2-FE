@@ -5,8 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 
-import ParticipantForm from '../components/Participant/ParticipantForm';
-import ResearcherForm from '../components/Researcher/ResearcherForm';
+import ParticipantForm from './Participant/ParticipantForm';
+import ResearcherForm from './Researcher/ResearcherForm';
 import useFunnel from '../hooks/useFunnel';
 import { STEP } from '../JoinPage.constants';
 import {
