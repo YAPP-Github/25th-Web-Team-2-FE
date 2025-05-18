@@ -76,6 +76,8 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
 
         {/* 연락 받을 이메일 */}
         <ButtonInput<ParticipantJoinSchemaType>
+          title="연락 받을 이메일"
+          required
           control={control}
           name="contactEmail"
           onClick={handleCheckValidEmail}

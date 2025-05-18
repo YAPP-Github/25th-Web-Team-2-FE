@@ -55,6 +55,8 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
           <ButtonInput<ParticipantUpdateSchemaType>
+            title="연락 받을 이메일"
+            required
             control={form.control}
             name="contactEmail"
             onClick={handleCheckValidEmail}
