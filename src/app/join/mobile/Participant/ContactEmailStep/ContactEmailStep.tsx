@@ -9,28 +9,28 @@ import {
   mainContainer,
   emailTitleContainer,
   titleContainer,
-} from './page.css';
+} from '../../page.css';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
-import { LoginProvider, Role } from '@/types/user';
-
-interface ContactEmailStepProps {
-  role?: Role;
-  provider?: LoginProvider;
-  oauthEmail?: string;
-}
+import { LoginProvider } from '@/types/user';
 
 const logoMap = {
   NAVER: Naver,
   GOOGLE: Google,
 };
 
-const ContactEmailStep = ({ role, provider, oauthEmail }: ContactEmailStepProps) => {
+interface ContactEmailStepProps {
+  onNext: () => void;
+  provider?: LoginProvider;
+  oauthEmail?: string;
+}
+
+const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProps) => {
   const titleText = '연락 받을 이메일을 입력해 주세요';
   const descriptionText = '로그인 아이디와 달라도 괜찮아요';
 
-  if (!role || !provider) {
+  if (!provider) {
     return null;
   }
 

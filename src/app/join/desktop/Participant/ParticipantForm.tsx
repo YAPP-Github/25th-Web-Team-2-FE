@@ -2,10 +2,10 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
 
+import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
 import { useParticipantJoin } from '../../hooks/useParticipantJoin';
 import { STEP } from '../../JoinPage.constants';
-import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 
 import { Participant } from '.';
 
