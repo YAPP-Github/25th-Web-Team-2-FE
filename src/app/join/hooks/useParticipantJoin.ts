@@ -7,6 +7,19 @@ import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
 
+const PARTICIPANT_DEFAULT_VALUES = {
+  oauthEmail: '',
+  contactEmail: '',
+  name: '',
+  birthDate: '',
+  basicAddressInfo: {
+    region: '',
+    area: '',
+  },
+  adConsent: false,
+  matchConsent: false,
+} as const;
+
 interface UseParticipantJoinProps {
   onSuccess: () => void;
 }
@@ -16,18 +29,7 @@ export const useParticipantJoin = ({ onSuccess }: UseParticipantJoinProps) => {
     resolver: zodResolver(ParticipantJoinSchema()),
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    defaultValues: {
-      oauthEmail: '',
-      contactEmail: '',
-      name: '',
-      birthDate: '',
-      basicAddressInfo: {
-        region: '',
-        area: '',
-      },
-      adConsent: false,
-      matchConsent: false,
-    },
+    defaultValues: PARTICIPANT_DEFAULT_VALUES,
   });
 
   const { mutate: joinParticipant } = useParticipantJoinMutation();
