@@ -51,7 +51,14 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
     return StepComponent;
   }, []);
 
-  return { Funnel, Step, setStep, step: currentStep } as const;
+  return {
+    Funnel,
+    Step,
+    setStep,
+    step: currentStep,
+    steps,
+    currentStepIdx: steps.findIndex((step) => step === currentStep),
+  } as const;
 };
 
 export default useFunnel;
