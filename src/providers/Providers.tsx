@@ -9,6 +9,7 @@ import CustomQueryClientProvider from './CustomQueryClientProvider';
 
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/providers/MSWProvider';
+import { OverlayProvider } from './OverlayProvider';
 
 export default function Providers({
   children,
@@ -31,7 +32,9 @@ export default function Providers({
   return (
     <SessionProvider session={session}>
       <MSWProvider>
-        <CustomQueryClientProvider session={session}>{children}</CustomQueryClientProvider>
+        <CustomQueryClientProvider session={session}>
+          <OverlayProvider>{children}</OverlayProvider>
+        </CustomQueryClientProvider>
       </MSWProvider>
     </SessionProvider>
   );
