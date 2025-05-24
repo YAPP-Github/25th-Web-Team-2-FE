@@ -5,7 +5,7 @@ import { Participant } from './Participant';
 import JoinSuccessStep from '../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../hooks/useFunnel';
 import { useParticipantJoin } from '../hooks/useParticipantJoin';
-import { STEP } from '../JoinPage.constants';
+import { MOBILE_JOIN_STEP_LIST, STEP } from '../JoinPage.constants';
 
 import { LoginProvider } from '@/types/user';
 
@@ -14,7 +14,7 @@ const ParticipantForm = () => {
   const provider = session?.provider;
   const oauthEmail = session?.oauthEmail;
 
-  const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
+  const { Funnel, Step, setStep } = useFunnel(MOBILE_JOIN_STEP_LIST);
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
     initialValues: {
@@ -37,7 +37,10 @@ const ParticipantForm = () => {
           />
         </Step>
         <Step name={STEP.info}>
-          <Participant.JoinInfoStep onNext={() => setStep(STEP.success)} />
+          <Participant.JoinInfoStep onNext={() => setStep(STEP.additionalInfo)} />
+        </Step>
+        <Step name={STEP.additionalInfo}>
+          <Participant.JoinAdditionalInfoStep onNext={() => setStep(STEP.success)} />
         </Step>
         <Step name={STEP.success}>
           <JoinSuccessStep />

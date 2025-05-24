@@ -41,8 +41,11 @@ export const JOIN_SUB_REGION = JOIN_REGION.reduce(
 export const STEP = {
   email: 'email',
   info: 'info',
+  additionalInfo: 'additionalInfo',
   success: 'success',
 } as const;
+
+export const MOBILE_JOIN_STEP_LIST = ['email', 'info', 'additionalInfo', 'success'] as const;
 
 export const SERVICE_TERM_TEXT = [
   `제1조 (목적)

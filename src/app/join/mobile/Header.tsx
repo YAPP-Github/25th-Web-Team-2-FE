@@ -9,6 +9,7 @@ import Icon from '@/components/Icon';
 import { ROLE } from '@/constants/config';
 import { colors } from '@/styles/colors';
 import { Role } from '@/types/user';
+import { MOBILE_JOIN_STEP_LIST } from '../JoinPage.constants';
 
 const headerTitleMap = {
   [ROLE.researcher]: '연구자 회원가입',
@@ -16,7 +17,7 @@ const headerTitleMap = {
 } as const;
 
 const JoinHeader = ({ role }: { role?: Role }) => {
-  const { steps, currentStepIdx } = useFunnel(['email', 'info', 'success'] as const);
+  const { steps, currentStepIdx } = useFunnel(MOBILE_JOIN_STEP_LIST);
 
   const progressPercentage =
     currentStepIdx + 1 === steps.length
