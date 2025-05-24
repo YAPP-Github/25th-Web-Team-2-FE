@@ -36,6 +36,9 @@ const ParticipantForm = () => {
             onNext={() => setStep(STEP.info)}
           />
         </Step>
+        <Step name={STEP.info}>
+          <Participant.JoinInfoStep onNext={() => setStep(STEP.success)} />
+        </Step>
         <Step name={STEP.success}>
           <JoinSuccessStep />
         </Step>
