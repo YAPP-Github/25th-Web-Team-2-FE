@@ -24,6 +24,9 @@ export const triggerWrapper = style({
     "&[aria-invalid='true']": {
       outline: `0.1rem solid ${colors.textAlert}`,
     },
+    "&[data-state='open']": {
+      borderRadius: '1.2rem 1.2rem 0 0',
+    },
   },
 
   '@media': {
@@ -46,8 +49,14 @@ export const selectContent = style({
   borderRadius: '1.2rem',
 
   backgroundColor: colors.field01,
-  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+  boxShadow: '0px 4px 8px rgba(53, 59, 61, 0.2)',
   overflowY: 'scroll',
+
+  selectors: {
+    '&[data-state="open"]': {
+      borderRadius: '0 0 1.2rem 1.2rem',
+    },
+  },
 
   '@media': {
     'screen and (max-width: 768px)': {
