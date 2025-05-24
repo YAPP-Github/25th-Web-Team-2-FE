@@ -52,19 +52,21 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   const { open, close } = useOverlay();
 
   const handleCheckValidEmail = async () => {
-    await refetch();
+    const query = await refetch();
     setIsValidToastOpen(true);
 
-    open(() => (
-      <FormProvider {...methods}>
-        <ServiceAgreeBottomSheet
-          onConfirm={() => {
-            onNext();
-            close();
-          }}
-        />
-      </FormProvider>
-    ));
+    if (query.isSuccess) {
+      open(() => (
+        <FormProvider {...methods}>
+          <ServiceAgreeBottomSheet
+            onConfirm={() => {
+              onNext();
+              close();
+            }}
+          />
+        </FormProvider>
+      ));
+    }
   };
 
   const titleText = '연락 받을 이메일을 입력해 주세요';
