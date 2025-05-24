@@ -19,6 +19,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
         title="참여자 정보를 입력해주세요"
         description="성별/생년월일은 추후 수정할 수 없으니 신중히 입력해 주세요"
       />
+
+      {/* 이름 */}
       <JoinInput
         className={emailInput}
         control={control}
@@ -27,6 +29,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
         placeholder="이름을 입력해 주세요"
         required
       />
+
+      {/* 생년월일 */}
       <JoinInput
         className={emailInput}
         control={control}
@@ -35,6 +39,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
         placeholder="YYYY. MM. DD"
         required
       />
+
       {/* 성별 */}
       <RadioButtonGroupContainer<Gender>
         control={control}
