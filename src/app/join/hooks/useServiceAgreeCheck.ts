@@ -6,14 +6,14 @@ import { ServiceAgreeCheck } from '../JoinPage.types';
 import { ROLE } from '@/constants/config';
 
 interface UseServiceAgreeCheckProps {
-  onCheckAdConsent: (checked: boolean) => void;
+  onCheckAdConsent?: (checked: boolean) => void;
   onCheckMatchConsent?: (checked: boolean) => void;
 }
 
 const useServiceAgreeCheck = ({
   onCheckAdConsent,
   onCheckMatchConsent,
-}: UseServiceAgreeCheckProps) => {
+}: UseServiceAgreeCheckProps = {}) => {
   const { data: session } = useSession();
   const role = session?.role;
 
@@ -25,7 +25,7 @@ const useServiceAgreeCheck = ({
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const toggleChecked = e.target.checked;
-    onCheckAdConsent(toggleChecked);
+    onCheckAdConsent?.(toggleChecked);
     onCheckMatchConsent?.(toggleChecked);
 
     setServiceAgreeCheck((prev) => ({

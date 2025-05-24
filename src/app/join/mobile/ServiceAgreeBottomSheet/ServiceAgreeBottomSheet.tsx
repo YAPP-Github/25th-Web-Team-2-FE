@@ -10,7 +10,7 @@ import {
   SERVICE_TERM_TEXT,
 } from '../../JoinPage.constants';
 import { checkboxWrapper, serviceAgreeBottomSheetLayout } from '../page.css';
-import { agreeButton } from './ServiceAgreeBottomSheet.css';
+import Button from '@/components/Button/Button';
 
 interface ServiceAgreeBottomSheetProps {
   onConfirm: () => void;
@@ -20,10 +20,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
   const { control, setValue } = useFormContext();
   const matchConsent = useWatch({ name: 'matchConsent', control });
 
-  const { serviceAgreeCheck, handleChangeCheck } = useServiceAgreeCheck({
-    onCheckAdConsent: (checked) => setValue('adConsent', checked),
-    onCheckMatchConsent: (checked) => setValue('matchConsent', checked),
-  });
+  const { serviceAgreeCheck, handleChangeCheck } = useServiceAgreeCheck();
 
   const { isTermOfService, isPrivacy } = serviceAgreeCheck;
   const isValid = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
@@ -104,9 +101,9 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
         />
       )}
 
-      <button className={agreeButton} disabled={!isValid} onClick={onConfirm}>
+      <Button variant="primary" size="small" height="56px" disabled={!isValid} onClick={onConfirm}>
         동의하기
-      </button>
+      </Button>
     </section>
   );
 };
