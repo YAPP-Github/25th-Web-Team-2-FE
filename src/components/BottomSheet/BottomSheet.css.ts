@@ -43,7 +43,7 @@ export const backdrop = recipe({
   variants: {
     isOpen: {
       true: {
-        backgroundColor: 'rgba(0, 22, 54, 0.31)',
+        backgroundColor: colors.fieldDim,
       },
       false: {
         backgroundColor: 'transparent',
@@ -100,17 +100,3 @@ export const dragHandle = style({
 export const contentContainer = style({
   padding: '8px 16px 16px 16px',
 });
-
-// export const ConfirmButton = styled.button`
-//   flex-grow: 1;
-//   padding: 1.3rem 0;
-//   border-radius: 0.8rem;
-//   ${({ theme }) => theme.fonts.body16};
-//   color: ${({ theme }) => theme.colors.white};
-//   background-color: ${({ theme }) => theme.colors.green600};
-
-//   &:disabled {
-//     cursor: not-allowed;
-//     background-color: ${({ theme }) => theme.colors.green100};
-//   }
-// `;
