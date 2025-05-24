@@ -22,7 +22,7 @@ const JoinHeader = ({ role }: { role?: Role }) => {
   const progressPercentage =
     currentStepIdx + 1 === steps.length
       ? '100%'
-      : `${((currentStepIdx + 1) / steps.length) * 100}%`;
+      : `${((currentStepIdx + 1) / steps.length - 1) * 100}%`;
 
   if (!role) {
     return null;
