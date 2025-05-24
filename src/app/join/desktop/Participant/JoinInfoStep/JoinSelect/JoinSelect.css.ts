@@ -63,6 +63,20 @@ export const selectContent = style({
       maxHeight: '28.6rem',
     },
   },
+
+  '::-webkit-scrollbar': {
+    width: '2.2rem',
+  },
+  '::-webkit-scrollbar-track': {
+    backgroundColor: 'transparent',
+  },
+  '::-webkit-scrollbar-thumb': {
+    backgroundColor: colors.icon02,
+    borderRadius: '3rem',
+
+    border: '0.8rem solid transparent',
+    backgroundClip: 'padding-box',
+  },
 });
 
 export const selectList = style({
