@@ -9,6 +9,13 @@ export const fonts = {
         lineHeight: '2.4rem',
         letterSpacing: '0',
       },
+      SB15: {
+        fontSize: '1.5rem',
+        fontStyle: 'normal',
+        fontWeight: '600',
+        lineHeight: '2.4rem',
+        letterSpacing: '0',
+      },
     },
     normal: {
       R16: {
