@@ -1,13 +1,9 @@
-import Button from '@/components/Button/Button';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
-import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
-import { MatchType } from '@/app/join/JoinPage.types';
+
 import AreaTooltip from '@/app/join/desktop/Participant/JoinInfoStep/AreaTooltip/AreaTooltip';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
 import {
   filterTitle,
   filterTitleWrapper,
@@ -15,6 +11,12 @@ import {
   joinAreaFilterWrapper,
   requiredStar,
 } from '@/app/join/desktop/Participant/JoinInfoStep/JoinInfoStep.css';
+import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
+import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
+import { MatchType } from '@/app/join/JoinPage.types';
+import Button from '@/components/Button/Button';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinAdditionalInfoStepProps {
   onSubmit: () => void;

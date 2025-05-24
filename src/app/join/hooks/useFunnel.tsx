@@ -21,14 +21,26 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   const searchParams = useSearchParams();
   const currentStep = searchParams.get('step') || DEFAULT_STEP;
 
-  const currentStepIdx = steps.findIndex((step) => step === currentStep);
-  const isLast = currentStepIdx === steps.length - 2;
+  const currentStepIdx = useMemo(
+    () => steps.findIndex((step) => step === currentStep),
+    [steps, currentStep],
+  );
+
+  const isLast = currentStepIdx === steps.length - 1;
 
   const setStep = (step: string) => {
-    if (isLast) {
-      router.replace(`?step=${step}`);
-    } else {
-      router.push(`?step=${step}`);
+    router.push(`?step=${step}`);
+  };
+
+  const goToPrev = () => {
+    if (currentStepIdx > 0) {
+      setStep(steps[currentStepIdx - 1]);
+    }
+  };
+
+  const goToNext = () => {
+    if (!isLast) {
+      setStep(steps[currentStepIdx + 1]);
     }
   };
 
@@ -59,6 +71,8 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
     step: currentStep,
     steps,
     currentStepIdx,
+    goToPrev,
+    goToNext,
   } as const;
 };
 

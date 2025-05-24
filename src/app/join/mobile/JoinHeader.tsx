@@ -3,13 +3,13 @@ import React from 'react';
 
 import { headerTitle, headerWrapper, progressBar } from './page.css';
 import useFunnel from '../hooks/useFunnel';
+import { MOBILE_JOIN_STEP_LIST } from '../JoinPage.constants';
 import { progressBarFill } from '../JoinPage.css';
 
 import Icon from '@/components/Icon';
 import { ROLE } from '@/constants/config';
 import { colors } from '@/styles/colors';
 import { Role } from '@/types/user';
-import { MOBILE_JOIN_STEP_LIST } from '../JoinPage.constants';
 
 const headerTitleMap = {
   [ROLE.researcher]: '연구자 회원가입',
@@ -17,7 +17,7 @@ const headerTitleMap = {
 } as const;
 
 const JoinHeader = ({ role }: { role?: Role }) => {
-  const { steps, currentStepIdx } = useFunnel(MOBILE_JOIN_STEP_LIST);
+  const { steps, currentStepIdx, goToPrev } = useFunnel(MOBILE_JOIN_STEP_LIST);
 
   const progressPercentage =
     currentStepIdx + 1 === steps.length
@@ -31,7 +31,7 @@ const JoinHeader = ({ role }: { role?: Role }) => {
   return (
     <>
       <header className={headerWrapper}>
-        <Icon icon="Arrow" width={20} height={20} color={colors.text06} />
+        <Icon icon="Arrow" width={20} height={20} color={colors.text06} onClick={goToPrev} />
         <h1 className={headerTitle}>{headerTitleMap[role]}</h1>
       </header>
 

@@ -14,7 +14,7 @@ const ParticipantForm = () => {
   const provider = session?.provider;
   const oauthEmail = session?.oauthEmail;
 
-  const { Funnel, Step, setStep } = useFunnel(MOBILE_JOIN_STEP_LIST);
+  const { Funnel, Step, setStep, goToNext } = useFunnel(MOBILE_JOIN_STEP_LIST);
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
     initialValues: {
@@ -33,11 +33,11 @@ const ParticipantForm = () => {
           <Participant.ContactEmailStep
             provider={provider}
             oauthEmail={oauthEmail}
-            onNext={() => setStep(STEP.info)}
+            onNext={goToNext}
           />
         </Step>
         <Step name={STEP.info}>
-          <Participant.JoinInfoStep onNext={() => setStep(STEP.additionalInfo)} />
+          <Participant.JoinInfoStep onNext={goToNext} />
         </Step>
         <Step name={STEP.additionalInfo}>
           <Participant.JoinAdditionalInfoStep onSubmit={handleSubmit} />
