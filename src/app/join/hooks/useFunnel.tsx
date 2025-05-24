@@ -21,7 +21,8 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   const searchParams = useSearchParams();
   const currentStep = searchParams.get('step') || DEFAULT_STEP;
 
-  const isLast = steps.findIndex((step) => step === currentStep) === steps.length - 2;
+  const currentStepIdx = steps.findIndex((step) => step === currentStep);
+  const isLast = currentStepIdx === steps.length - 2;
 
   const setStep = (step: string) => {
     if (isLast) {
@@ -57,7 +58,7 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
     setStep,
     step: currentStep,
     steps,
-    currentStepIdx: steps.findIndex((step) => step === currentStep),
+    currentStepIdx,
   } as const;
 };
 
