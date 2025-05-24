@@ -28,15 +28,17 @@ const JoinSelect = ({ placeholder, onChange, isError, options, value }: JoinSele
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>
-        <Select.Content className={selectContent} position="popper" sideOffset={4}>
-          <Select.Group className={selectList}>
-            {options?.map((option) => (
-              <Select.Item key={option.value} value={option.value} className={selectItem}>
-                <Select.ItemText>{option.label}</Select.ItemText>
-              </Select.Item>
-            ))}
-          </Select.Group>
-        </Select.Content>
+        {options && options.length > 0 && (
+          <Select.Content className={selectContent} position="popper" sideOffset={-8}>
+            <Select.Group className={selectList}>
+              {options?.map((option) => (
+                <Select.Item key={option.value} value={option.value} className={selectItem}>
+                  <Select.ItemText>{option.label}</Select.ItemText>
+                </Select.Item>
+              ))}
+            </Select.Group>
+          </Select.Content>
+        )}
       </Select.Portal>
     </Select.Root>
   );
