@@ -1,17 +1,30 @@
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import TitleSection from '../../components/TitleSection/TitleSection';
-import { emailInput, mainContentLayout } from '../../page.css';
-import { useFormContext } from 'react-hook-form';
+import { bottomButtonLayout, emailInput, mainContentLayout } from '../../page.css';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { Gender } from '@/app/join/JoinPage.types';
+import Button from '@/components/Button/Button';
 
 interface JoinInfoStepProps {
   onNext: () => void;
 }
 
 const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
-  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext<ParticipantJoinSchemaType>();
+
+  const values = useWatch({
+    name: ['name', 'birthDate', 'gender'],
+    control,
+  });
+
+  const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
+  const isError = Object.keys(errors).length > 0;
 
   return (
     <main className={mainContentLayout}>
@@ -53,6 +66,18 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
         onChange={(value) => setValue('gender', value)}
         required
       />
+
+      <div className={bottomButtonLayout}>
+        <Button
+          variant="primary"
+          size="small"
+          height="56px"
+          onClick={onNext}
+          disabled={!isValid || isError}
+        >
+          다음
+        </Button>
+      </div>
     </main>
   );
 };

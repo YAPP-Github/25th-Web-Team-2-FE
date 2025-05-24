@@ -77,3 +77,12 @@ export const checkboxWrapper = style({
   textAlign: 'left',
   wordBreak: 'keep-all',
 });
+
+export const bottomButtonLayout = style({
+  position: 'fixed',
+  left: 0,
+  bottom: 16,
+  width: '100%',
+
+  padding: '0 1.6rem',
+});
