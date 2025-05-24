@@ -1,5 +1,7 @@
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+
 import {
   backdrop,
   contentContainer,
@@ -9,7 +11,6 @@ import {
   sheet,
   sheetContainer,
 } from './BottomSheet.css';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 
 const CLOSE_THRESHOLD = 30;
 
@@ -30,14 +31,8 @@ interface BottomSheetProps {
 const BottomSheet = ({
   isOpen,
   onClose,
-  onConfirm,
   content,
-  title,
-  cancelText,
-  confirmText,
-  confirmDisabled,
   delay = 200,
-  subTitle,
   onAnimationEnd,
 }: BottomSheetProps) => {
   const [isAnimating, setIsAnimating] = useState(isOpen);
@@ -104,16 +99,6 @@ const BottomSheet = ({
               <div className={dragHandle} />
             </header>
             <div className={contentContainer}>{content}</div>
-            {/* {(cancelText || confirmText) && (
-              <S.Footer>
-                {cancelText && <S.CancelButton onClick={onClose}>{cancelText}</S.CancelButton>}
-                {confirmText && (
-                  <S.ConfirmButton onClick={onConfirm} disabled={confirmDisabled}>
-                    {confirmText}
-                  </S.ConfirmButton>
-                )}
-              </S.Footer>
-            )} */}
           </div>
         </div>,
         document.body,

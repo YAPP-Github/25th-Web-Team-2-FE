@@ -1,11 +1,13 @@
-import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import { useFormContext, useWatch } from 'react-hook-form';
+
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, emailInput, mainContentLayout } from '../../page.css';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+
+import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { Gender } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinInfoStepProps {
   onNext: () => void;

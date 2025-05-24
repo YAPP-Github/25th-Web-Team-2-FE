@@ -1,5 +1,6 @@
-import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
+
+import BottomSheet from '@/components/BottomSheet/BottomSheet';
 
 interface OverlayProps {
   title?: string;
@@ -20,7 +21,6 @@ interface OverlayContextProps {
   close: () => void;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const OverlayContext = createContext<OverlayContextProps | null>(null);
 
 export const OverlayProvider = ({ children }: PropsWithChildren) => {

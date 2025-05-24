@@ -1,8 +1,9 @@
-import JoinCheckbox from '../../components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import useServiceAgreeCheck from '../../hooks/useServiceAgreeCheck';
+
 import AgreeAccordion from '../../components/JoinCheckboxContainer/AgreeAccordion/AgreeAccordion';
+import JoinCheckbox from '../../components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Policy from '../../components/JoinCheckboxContainer/Policy';
+import useServiceAgreeCheck from '../../hooks/useServiceAgreeCheck';
 import {
   ADVERTISE_TEXT,
   PRIVACY_TEXT,
@@ -10,6 +11,7 @@ import {
   SERVICE_TERM_TEXT,
 } from '../../JoinPage.constants';
 import { checkboxWrapper, serviceAgreeBottomSheetLayout } from '../page.css';
+
 import Button from '@/components/Button/Button';
 
 interface ServiceAgreeBottomSheetProps {

@@ -1,6 +1,7 @@
+import { style } from '@vanilla-extract/css';
+
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
-import { style } from '@vanilla-extract/css';
 
 export const titleContainerLayout = style({
   display: 'flex',

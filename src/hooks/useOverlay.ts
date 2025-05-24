@@ -1,5 +1,6 @@
-import { OverlayContext } from '@/providers/OverlayProvider';
 import { useContext } from 'react';
+
+import { OverlayContext } from '@/providers/OverlayProvider';
 
 const useOverlay = () => {
   const dispatch = useContext(OverlayContext);

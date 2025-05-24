@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, CSSProperties, forwardRef } from 'react';
+
 import { buttonRecipe } from './Button.css';
 import Spinner from '../Spinner/Spinner';
 
@@ -43,5 +44,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
+
+Button.displayName = 'Button';
 
 export default Button;

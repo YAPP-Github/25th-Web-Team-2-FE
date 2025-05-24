@@ -1,6 +1,7 @@
-import { colors } from '@/styles/colors';
 import { createVar, keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+
+import { colors } from '@/styles/colors';
 
 const slideUp = keyframes({
   from: {
