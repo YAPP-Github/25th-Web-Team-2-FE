@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 
-import JoinHeader from './JoinHeader';
+import JoinHeader from './components/JoinHeader/JoinHeader';
 import ParticipantForm from './ParticipantForm';
 import ResearcherForm from './ResearcherForm';
 import useFunnel from '../hooks/useFunnel';
