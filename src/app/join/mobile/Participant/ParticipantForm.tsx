@@ -1,11 +1,12 @@
 import { useSession } from 'next-auth/react';
 import { FormProvider } from 'react-hook-form';
 
-import { Participant } from './Participant';
-import JoinSuccessStep from '../components/JoinSuccessStep/JoinSuccessStep';
-import useFunnel from '../hooks/useFunnel';
-import { useParticipantJoin } from '../hooks/useParticipantJoin';
-import { MOBILE_JOIN_STEP_LIST, STEP } from '../JoinPage.constants';
+import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
+import useFunnel from '../../hooks/useFunnel';
+import { useParticipantJoin } from '../../hooks/useParticipantJoin';
+import { MOBILE_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
+
+import { Participant } from '.';
 
 import { LoginProvider } from '@/types/user';
 

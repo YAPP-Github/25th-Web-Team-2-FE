@@ -1,10 +1,10 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import React from 'react';
 
-import { headerTitle, headerWrapper, progressBar } from './page.css';
-import useFunnel from '../hooks/useFunnel';
-import { MOBILE_JOIN_STEP_LIST } from '../JoinPage.constants';
-import { progressBarFill } from '../JoinPage.css';
+import useFunnel from '../../../hooks/useFunnel';
+import { MOBILE_JOIN_STEP_LIST } from '../../../JoinPage.constants';
+import { progressBarFill } from '../../../JoinPage.css';
+import { headerTitle, headerWrapper, progressBar } from '../../page.css';
 
 import Icon from '@/components/Icon';
 import { ROLE } from '@/constants/config';

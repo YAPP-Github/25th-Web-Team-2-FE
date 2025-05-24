@@ -2,9 +2,9 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
+import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { email, emailWrapper, emailInput, mainContentLayout } from '../../page.css';
-import ServiceAgreeBottomSheet from '../../ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
