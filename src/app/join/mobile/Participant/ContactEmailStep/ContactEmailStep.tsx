@@ -2,18 +2,18 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
+import TitleSection from '../../components/TitleSection/TitleSection';
 import { email, emailWrapper, emailInput, mainContentLayout } from '../../page.css';
+import ServiceAgreeBottomSheet from '../../ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
+import useOverlay from '@/hooks/useOverlay';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
-import useOverlay from '@/hooks/useOverlay';
-import ServiceAgreeBottomSheet from '../../ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
-import TitleSection from '../../components/TitleSection/TitleSection';
 
 const logoMap = {
   NAVER: Naver,
@@ -35,7 +35,6 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   const {
     refetch,
     isLoading: isLoadingCheck,
-    isSuccess: isValidEmail,
     isError: isEmailDuplicateError,
   } = useCheckValidEmailInfoQuery(contactEmail);
 
@@ -83,7 +82,6 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
         name="contactEmail"
         onClick={handleCheckValidEmail}
         isLoading={isLoadingCheck}
-        isSuccess={isValidEmail}
         setIsValidToastOpen={setIsValidToastOpen}
         toast={
           <EmailToast

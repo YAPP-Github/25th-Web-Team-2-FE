@@ -18,7 +18,6 @@ interface ButtonInputProps<T extends FieldValues> {
   name: Path<T>;
   onClick: () => void;
   isLoading: boolean;
-  isSuccess: boolean;
   setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
   title?: string;
@@ -32,7 +31,6 @@ const ButtonInput = <T extends FieldValues>({
   name,
   onClick,
   isLoading,
-  isSuccess,
   toast,
   title,
   required,
@@ -83,7 +81,7 @@ const ButtonInput = <T extends FieldValues>({
                   <button
                     type="button"
                     className={confirmButton}
-                    disabled={isButtonDisabled || isLoading || isSuccess}
+                    disabled={isButtonDisabled || isLoading}
                     onClick={onClick}
                     onMouseDown={(e) => e.preventDefault()}
                     ref={validateButtonRef}

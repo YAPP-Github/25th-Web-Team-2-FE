@@ -37,7 +37,6 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
   const {
     refetch,
     isLoading: isLoadingCheck,
-    isSuccess,
     isError: isEmailDuplicateError,
   } = useCheckValidEmailQuery(contactEmail);
 
@@ -61,7 +60,6 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             name="contactEmail"
             onClick={handleCheckValidEmail}
             isLoading={isLoadingCheck}
-            isSuccess={isSuccess}
             setIsValidToastOpen={setIsValidToastOpen}
             tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
             toast={

@@ -55,7 +55,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const {
     refetch,
     isLoading: isLoadingCheck,
-    isSuccess,
     isError: isEmailDuplicateError,
   } = useCheckValidEmailInfoQuery(contactEmail);
 
@@ -81,11 +80,12 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
 
         {/* 연락 받을 이메일 */}
         <ButtonInput<ResearcherJoinSchemaType>
+          title="연락 받을 이메일"
+          required
           control={control}
           name="contactEmail"
           onClick={handleCheckValidEmail}
           isLoading={isLoadingCheck}
-          isSuccess={isSuccess}
           setIsValidToastOpen={setIsValidToastOpen}
           tip="로그인 아이디와 달라도 괜찮아요"
           toast={
