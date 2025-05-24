@@ -29,7 +29,12 @@ const JoinSelect = ({ placeholder, onChange, isError, options, value }: JoinSele
       </Select.Trigger>
       <Select.Portal>
         {options && options.length > 0 && (
-          <Select.Content className={selectContent} position="popper" sideOffset={-8}>
+          <Select.Content
+            className={selectContent}
+            position="popper"
+            sideOffset={-8}
+            avoidCollisions={false}
+          >
             <Select.Group className={selectList}>
               {options?.map((option) => (
                 <Select.Item key={option.value} value={option.value} className={selectItem}>
