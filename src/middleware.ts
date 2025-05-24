@@ -46,8 +46,8 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  if (isJoinPage && !isJoinSuccessPage) {
-    if (token && !token.isTempUser) {
+  if (isJoinPage) {
+    if (!isJoinSuccessPage && token && !token.isTempUser) {
       return goToHome(request);
     }
 
