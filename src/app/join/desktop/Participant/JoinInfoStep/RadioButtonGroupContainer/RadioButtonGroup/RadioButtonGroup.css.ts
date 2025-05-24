@@ -12,6 +12,7 @@ export const customRadioGroup = style({
 export const customRadioButton = style({
   ...fonts.label.large.M14,
   flexGrow: 1,
+  flexBasis: 0,
   height: '4.8rem',
   padding: '1rem 2rem',
   border: `0.1rem solid ${colors.line01}`,
