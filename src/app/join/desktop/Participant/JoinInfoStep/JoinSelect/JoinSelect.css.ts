@@ -25,6 +25,17 @@ export const triggerWrapper = style({
       outline: `0.1rem solid ${colors.textAlert}`,
     },
   },
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      ...fonts.body.small.M15,
+      selectors: {
+        '&[data-placeholder]': {
+          ...fonts.body.small.M15,
+        },
+      },
+    },
+  },
 });
 
 export const selectContent = style({
