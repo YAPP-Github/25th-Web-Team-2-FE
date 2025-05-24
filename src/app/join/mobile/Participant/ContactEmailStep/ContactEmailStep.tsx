@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
 import {
   email,
@@ -20,6 +20,8 @@ import Naver from '@/assets/images/naver.svg';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
+import useOverlay from '@/hooks/useOverlay';
+import ServiceAgreeBottomSheet from '../../ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 
 const logoMap = {
   NAVER: Naver,
@@ -33,7 +35,8 @@ interface ContactEmailStepProps {
 }
 
 const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProps) => {
-  const { control } = useFormContext<ParticipantJoinSchemaType>();
+  const methods = useFormContext<ParticipantJoinSchemaType>();
+  const { control } = methods;
 
   const contactEmail = useWatch({ name: 'contactEmail', control });
 
@@ -46,9 +49,22 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
+  const { open, close } = useOverlay();
+
   const handleCheckValidEmail = async () => {
     await refetch();
     setIsValidToastOpen(true);
+
+    open(() => (
+      <FormProvider {...methods}>
+        <ServiceAgreeBottomSheet
+          onConfirm={() => {
+            onNext();
+            close();
+          }}
+        />
+      </FormProvider>
+    ));
   };
 
   const titleText = '연락 받을 이메일을 입력해 주세요';

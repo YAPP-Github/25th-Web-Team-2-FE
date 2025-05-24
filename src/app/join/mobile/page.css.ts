@@ -87,3 +87,15 @@ export const emailInput = style({
     },
   },
 });
+
+export const serviceAgreeBottomSheetLayout = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.4rem',
+});
+
+export const checkboxWrapper = style({
+  padding: '0.6rem 0',
+  textAlign: 'left',
+  wordBreak: 'keep-all',
+});
