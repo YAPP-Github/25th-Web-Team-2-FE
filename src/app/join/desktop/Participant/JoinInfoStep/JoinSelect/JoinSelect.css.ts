@@ -12,6 +12,7 @@ export const triggerWrapper = style({
   gap: '0.4rem',
   borderRadius: '1.2rem',
   padding: '1.6rem',
+  border: `0.1rem solid ${colors.line01}`,
   backgroundColor: colors.field01,
   cursor: 'pointer',
   width: '100%',
