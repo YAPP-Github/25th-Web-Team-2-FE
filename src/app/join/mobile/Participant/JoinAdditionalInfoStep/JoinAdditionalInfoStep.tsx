@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import MatchConsentConfirmModal from '../../components/MatchConsentConfirmModal/MatchConsentConfirmModal';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
@@ -19,7 +21,7 @@ import Button from '@/components/Button/Button';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinAdditionalInfoStepProps {
-  onSubmit: () => void;
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
 }
 
 const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
@@ -29,16 +31,26 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
     formState: { errors },
   } = useFormContext<ParticipantJoinSchemaType>();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  const matchConsent = useWatch({ name: 'matchConsent', control });
   const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
   const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
 
   const values = useWatch({
-    name: ['basicAddressInfo.area', 'basicAddressInfo.region', 'matchType'],
+    name: ['basicAddressInfo.area', 'basicAddressInfo.region'],
     control,
   });
 
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
+
+  const handleSubmitAfterConsent = () => {
+    setValue('matchConsent', true);
+    onSubmit();
+  };
 
   return (
     <main className={mainContentLayout}>
@@ -135,10 +147,25 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
       />
 
       <div className={bottomButtonLayout}>
-        <Button variant="primary" size="small" onClick={onSubmit} disabled={!isValid || isError}>
+        <Button
+          variant="primary"
+          size="small"
+          onClick={matchConsent ? onSubmit : openModal}
+          disabled={!isValid || isError}
+        >
           회원가입
         </Button>
       </div>
+
+      <MatchConsentConfirmModal
+        title={`실험 추천 알림에\n동의하지 않으셨네요!`}
+        description={`선호 지역과 방식에 맞는 실험만 골라\n메일로 보내드릴게요. 동의하시겠어요?`}
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        onClose={closeModal}
+        onSubmit={onSubmit}
+        onConsent={handleSubmitAfterConsent}
+      />
     </main>
   );
 };
