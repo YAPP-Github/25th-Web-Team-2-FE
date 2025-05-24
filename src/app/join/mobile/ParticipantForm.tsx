@@ -40,7 +40,7 @@ const ParticipantForm = () => {
           <Participant.JoinInfoStep onNext={() => setStep(STEP.additionalInfo)} />
         </Step>
         <Step name={STEP.additionalInfo}>
-          <Participant.JoinAdditionalInfoStep onNext={() => setStep(STEP.success)} />
+          <Participant.JoinAdditionalInfoStep onSubmit={handleSubmit} />
         </Step>
         <Step name={STEP.success}>
           <JoinSuccessStep />

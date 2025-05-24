@@ -17,10 +17,10 @@ import {
 } from '@/app/join/desktop/Participant/JoinInfoStep/JoinInfoStep.css';
 
 interface JoinAdditionalInfoStepProps {
-  onNext: () => void;
+  onSubmit: () => void;
 }
 
-const JoinAdditionalInfoStep = ({ onNext }: JoinAdditionalInfoStepProps) => {
+const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
   const {
     control,
     setValue,
@@ -133,7 +133,7 @@ const JoinAdditionalInfoStep = ({ onNext }: JoinAdditionalInfoStepProps) => {
       />
 
       <div className={bottomButtonLayout}>
-        <Button variant="primary" size="small" onClick={onNext} disabled={!isValid || isError}>
+        <Button variant="primary" size="small" onClick={onSubmit} disabled={!isValid || isError}>
           회원가입
         </Button>
       </div>
