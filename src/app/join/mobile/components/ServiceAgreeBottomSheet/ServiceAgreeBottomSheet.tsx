@@ -91,6 +91,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
                 return (
                   <JoinCheckbox
                     label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
+                    subLabel="*참여할 수 있는 실험 알림을 보내드려요"
                     className={checkboxWrapper}
                     isChecked={field.value}
                     onChange={() => setValue('matchConsent', !field.value)}

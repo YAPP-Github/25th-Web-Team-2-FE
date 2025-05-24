@@ -32,9 +32,14 @@ export const requiredCheckboxText = style({
   color: colors.textPrimary,
 });
 
+export const subLabelText = style({
+  color: colors.textPrimary,
+});
+
 export const labelWrapper = style({
   display: 'flex',
   gap: '0.4rem',
+  whiteSpace: 'pre-wrap',
 });
 
 export const tipWrapper = style({
