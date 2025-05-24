@@ -25,7 +25,7 @@ export const progressBar = style({
   backgroundColor: colors.field05,
 });
 
-export const mainContainer = style({
+export const mainContentLayout = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '2rem',

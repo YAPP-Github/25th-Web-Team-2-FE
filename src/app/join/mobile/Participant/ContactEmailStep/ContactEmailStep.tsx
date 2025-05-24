@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
-import { email, emailWrapper, emailInput, mainContainer } from '../../page.css';
+import { email, emailWrapper, emailInput, mainContentLayout } from '../../page.css';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
@@ -66,7 +66,7 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   }
 
   return (
-    <main className={mainContainer}>
+    <main className={mainContentLayout}>
       <TitleSection
         title="연락 받을 이메일을 입력해 주세요"
         description="로그인 아이디와 달라도 괜찮아요"
