@@ -28,14 +28,21 @@ export const triggerWrapper = style({
 });
 
 export const selectContent = style({
-  width: '23.6rem',
+  minWidth: 'var(--radix-select-trigger-width)',
   maxHeight: '34rem',
   padding: '1rem 0.8rem',
-  backgroundColor: colors.field01,
   border: `0.1rem solid ${colors.line01}`,
   borderRadius: '1.2rem',
+
+  backgroundColor: colors.field01,
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
   overflowY: 'scroll',
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      maxHeight: '28.6rem',
+    },
+  },
 });
 
 export const selectList = style({
