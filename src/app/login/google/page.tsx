@@ -17,7 +17,7 @@ export default function GoogleLoginPage() {
 
   const { mutate: googleLogin } = useGoogleLoginMutation({
     onSuccessLogin: () => {
-      router.push('/');
+      router.replace('/');
     },
     onSuccessJoin: async (oauthEmail: string) => {
       if (state) {
@@ -29,11 +29,11 @@ export default function GoogleLoginPage() {
           provider,
         });
 
-        router.push('/join');
+        router.replace('/join');
       }
     },
     onError: () => {
-      router.push('/login');
+      router.replace('/login');
     },
   });
 
