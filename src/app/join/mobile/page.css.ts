@@ -69,6 +69,12 @@ export const emailInput = style({
 export const serviceAgreeBottomSheetLayout = style({
   display: 'flex',
   flexDirection: 'column',
+  gap: '1.6rem',
+});
+
+export const serviceAgreeContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
   gap: '0.4rem',
 });
 
