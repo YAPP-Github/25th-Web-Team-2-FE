@@ -12,7 +12,13 @@ import { Researcher } from '.';
 
 import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-const ResearcherForm = () => {
+interface ResearcherFormProps {
+  onDirtyChange?: (dirty: boolean) => void;
+}
+
+const AUTO_INPUT_FIELDS: (keyof ResearcherJoinSchemaType)[] = ['oauthEmail'];
+
+const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
   const { mutate: joinResearcher } = useResearcherJoinMutation();
 
   const { data: session } = useSession();
@@ -35,6 +41,14 @@ const ResearcherForm = () => {
       adConsent: false,
     },
   });
+
+  const isUserInputDirty = Object.keys(researcherMethods.formState.dirtyFields).some(
+    (key) => !AUTO_INPUT_FIELDS.includes(key as keyof ResearcherJoinSchemaType),
+  );
+
+  useEffect(() => {
+    onDirtyChange?.(isUserInputDirty);
+  }, [isUserInputDirty, onDirtyChange]);
 
   const handleResearcherSubmit = () => {
     const formData = researcherMethods.getValues();

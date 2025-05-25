@@ -1,7 +1,9 @@
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface UseLeaveConfirmModalOptions {
   isUserInputDirty: boolean;
+  isHomePath?: boolean;
 }
 
 interface UseLeaveConfirmModalReturn {
@@ -14,27 +16,41 @@ interface UseLeaveConfirmModalReturn {
 
 const useLeaveConfirmModal = ({
   isUserInputDirty,
+  isHomePath = false,
 }: UseLeaveConfirmModalOptions): UseLeaveConfirmModalReturn => {
+  const router = useRouter();
   const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false);
+
+  const navigateHomeOrBack = () => {
+    if (isHomePath) {
+      router.push('/');
+    } else {
+      history.back();
+    }
+  };
 
   // 이전으로 버튼 클릭
   const handleBackClick = () => {
     if (isUserInputDirty) {
       setIsLeaveConfirmModalOpen(true);
     } else {
-      history.back();
+      navigateHomeOrBack();
     }
+  };
+
+  // 나가기 취소
+  const handleCancelLeave = () => {
+    setIsLeaveConfirmModalOpen(false);
   };
 
   // 나가기
   const handleConfirmLeave = () => {
     setIsLeaveConfirmModalOpen(false);
-    history.go(-2);
-  };
-
-  // 페이지 유지
-  const handleCancelLeave = () => {
-    setIsLeaveConfirmModalOpen(false);
+    if (isHomePath) {
+      router.push('/');
+    } else {
+      history.go(-2);
+    }
   };
 
   useEffect(() => {

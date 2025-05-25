@@ -14,7 +14,13 @@ import ParticipantJoinSchema, {
   ParticipantJoinSchemaType,
 } from '@/schema/join/ParticipantJoinSchema';
 
-const ParticipantForm = () => {
+interface ParticipantFormProps {
+  onDirtyChange?: (dirty: boolean) => void;
+}
+
+const AUTO_INPUT_FIELDS: (keyof ParticipantJoinSchemaType)[] = ['oauthEmail'];
+
+const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
@@ -40,6 +46,14 @@ const ParticipantForm = () => {
       matchConsent: false,
     },
   });
+
+  const isUserInputDirty = Object.keys(participantMethods.formState.dirtyFields).some(
+    (key) => !AUTO_INPUT_FIELDS.includes(key as keyof ParticipantJoinSchemaType),
+  );
+
+  useEffect(() => {
+    onDirtyChange?.(isUserInputDirty);
+  }, [isUserInputDirty, onDirtyChange]);
 
   const handleParticipantSubmit = () => {
     const formData = participantMethods.getValues();

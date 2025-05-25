@@ -74,7 +74,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const isUserInputDirty = form.formState.isDirty;
 
   const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
-    useLeaveConfirmModal({ isUserInputDirty: isUserInputDirty });
+    useLeaveConfirmModal({ isUserInputDirty });
 
   useEffect(() => {
     if (originExperimentError instanceof CustomError) {
