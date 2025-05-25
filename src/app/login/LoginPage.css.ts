@@ -46,3 +46,10 @@ export const loginCardContainer = style({
   gap: '2rem',
   minHeight: '37rem',
 });
+
+export const mobileLoginLayout = style({
+  height: '100dvh',
+  padding: '0 1.6rem',
+
+  backgroundColor: colors.field01,
+});
