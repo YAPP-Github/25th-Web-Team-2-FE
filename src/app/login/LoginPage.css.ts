@@ -53,3 +53,15 @@ export const mobileLoginLayout = style({
 
   backgroundColor: colors.field01,
 });
+
+export const loginRedirectLayout = style({
+  height: '100dvh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '0.4rem',
+
+  color: colors.text06,
+  fontSize: '1.6rem',
+});
