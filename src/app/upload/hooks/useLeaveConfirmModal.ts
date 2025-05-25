@@ -22,14 +22,14 @@ const useLeaveConfirmModal = ({
     if (isUserInputDirty) {
       setIsLeaveConfirmModalOpen(true);
     } else {
-      history.back();
+      history.go(-2);
     }
   };
 
   // 나가기
   const handleConfirmLeave = () => {
     setIsLeaveConfirmModalOpen(false);
-    history.go(-2);
+    history.go(-3);
   };
 
   // 페이지 유지
