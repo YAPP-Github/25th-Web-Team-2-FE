@@ -33,9 +33,12 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   };
 
   const goToPrev = () => {
-    if (currentStepIdx > 0) {
-      setStep(steps[currentStepIdx - 1]);
+    if (currentStepIdx === 0) {
+      router.replace('/login');
+      return;
     }
+
+    setStep(steps[currentStepIdx - 1]);
   };
 
   const goToNext = () => {
