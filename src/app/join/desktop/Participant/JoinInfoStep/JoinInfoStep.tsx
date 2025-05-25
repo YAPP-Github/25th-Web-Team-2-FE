@@ -2,7 +2,7 @@
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import AreaTooltip from './AreaTooltip/AreaTooltip';
+import AreaTooltip from '../../../components/AreaTooltip/AreaTooltip';
 import {
   joinAreaFilterContainer,
   filterTitleWrapper,

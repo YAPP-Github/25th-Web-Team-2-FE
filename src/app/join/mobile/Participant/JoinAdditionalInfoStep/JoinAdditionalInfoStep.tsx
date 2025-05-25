@@ -5,7 +5,7 @@ import MatchConsentConfirmModal from '../../components/MatchConsentConfirmModal/
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
-import AreaTooltip from '@/app/join/desktop/Participant/JoinInfoStep/AreaTooltip/AreaTooltip';
+import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import {
   filterTitle,
   filterTitleWrapper,
