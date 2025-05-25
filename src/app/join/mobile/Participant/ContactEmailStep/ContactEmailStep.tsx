@@ -4,12 +4,19 @@ import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
-import { email, emailWrapper, emailInput, mainContentLayout } from '../../page.css';
+import {
+  email,
+  emailWrapper,
+  emailInput,
+  mainContentLayout,
+  bottomButtonLayout,
+} from '../../page.css';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
+import Button from '@/components/Button/Button';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import useOverlay from '@/hooks/useOverlay';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
@@ -36,9 +43,11 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
     refetch,
     isLoading: isLoadingCheck,
     isError: isEmailDuplicateError,
+    isSuccess: isEmailValid,
   } = useCheckValidEmailInfoQuery(contactEmail);
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
+  const [isShowNextButton, setIsShowNextButton] = useState(false);
 
   const { open, close } = useOverlay();
 
@@ -47,6 +56,7 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
     setIsValidToastOpen(true);
 
     if (query.isSuccess) {
+      setIsShowNextButton(true);
       open(() => (
         <FormProvider {...methods}>
           <ServiceAgreeBottomSheet
@@ -92,6 +102,20 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
           />
         }
       />
+
+      {isShowNextButton && (
+        <div className={bottomButtonLayout}>
+          <Button
+            variant="primary"
+            size="small"
+            height="56px"
+            disabled={!isEmailValid}
+            onClick={onNext}
+          >
+            다음
+          </Button>
+        </div>
+      )}
     </main>
   );
 };
