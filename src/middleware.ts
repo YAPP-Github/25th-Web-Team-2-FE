@@ -21,16 +21,18 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  const isHomePage = pathname === '/';
+  const isLoginPage = url.pathname.startsWith('/login');
   const isJoinPage = url.pathname.startsWith('/join');
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
 
   // 토큰이 없는 경우
-  if (!token && pathname !== '/') {
+  if (!token && !isHomePage && !isLoginPage) {
     return goToLogin(request);
   }
 
   // 토큰이 만료된 경우
-  if (token && isExpiredToken(token) && pathname !== '/') {
+  if (token && isExpiredToken(token) && !isHomePage && !isLoginPage) {
     const response = goToLogin(request);
     clearAuthCookies(request, response);
 
@@ -46,17 +48,18 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  if (isJoinPage) {
+  if (isJoinPage || isLoginPage) {
     if (!isJoinSuccessPage && token && !token.isTempUser) {
       return goToHome(request);
     }
 
     // joinPage만 먼저 desktop, mobile 구분
-    if (!pathname.match(/\/join\/(desktop|mobile)(\/.*)?$/)) {
+    if (!pathname.match(/\/(join|login)\/(desktop|mobile)(\/.*)?$/)) {
       const segments = pathname.split('/').filter(Boolean);
+      const basePath = segments[0];
       const restPath = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
 
-      const newPathname = `/join/${deviceType}${restPath}`;
+      const newPathname = `/${basePath}/${deviceType}${restPath}`;
       url.pathname = newPathname;
 
       return NextResponse.rewrite(url);
@@ -68,5 +71,12 @@ export async function middleware(request: NextRequest) {
 
 // 미들웨어가 실행될 경로 지정
 export const config = {
-  matcher: ['/', '/join/:path*', '/my-posts/:path*', '/user/profile/:path*', '/user/leave/:path*'],
+  matcher: [
+    '/',
+    '/join/:path*',
+    '/login',
+    '/my-posts/:path*',
+    '/user/profile/:path*',
+    '/user/leave/:path*',
+  ],
 };
