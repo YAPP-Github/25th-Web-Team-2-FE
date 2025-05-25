@@ -24,12 +24,10 @@ import {
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useLeaveConfirmModal from '@/app/upload/hooks/useLeaveConfirmModal';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
-import { EXPERIMENT_POST_DEFAULT_VALUES } from '@/app/upload/upload.constants';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { colors } from '@/styles/colors';
-import { deepEqual } from '@/utils/deepEqual';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const pathname = usePathname();
@@ -46,8 +44,6 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   const [successToast, setSuccessToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const [isUserInputDirty, setIsUserInputDirty] = useState(false);
 
   const {
     form,
@@ -69,28 +65,16 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
     setErrorMessage,
   });
 
-  const watchedValues = form.watch();
-
-  // 사용자 입력 감지
   useEffect(() => {
-    if (!originFormData) {
-      setIsUserInputDirty(false);
-      return;
+    if (originFormData) {
+      form.reset(originFormData);
     }
+  }, [originFormData, form]);
 
-    // origin이 defaultValues가 아닐때
-    const isNotDefaultForm = !deepEqual(originFormData, EXPERIMENT_POST_DEFAULT_VALUES);
-    if (!isNotDefaultForm) {
-      setIsUserInputDirty(false);
-      return;
-    }
-
-    const changed = !deepEqual({ ...originFormData }, { ...watchedValues });
-    setIsUserInputDirty(changed);
-  }, [originFormData, form, watchedValues]);
+  const isUserInputDirty = form.formState.isDirty;
 
   const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
-    useLeaveConfirmModal({ isUserInputDirty });
+    useLeaveConfirmModal({ isUserInputDirty: isUserInputDirty });
 
   useEffect(() => {
     if (originExperimentError instanceof CustomError) {

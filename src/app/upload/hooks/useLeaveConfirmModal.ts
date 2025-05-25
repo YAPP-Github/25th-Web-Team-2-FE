@@ -22,14 +22,14 @@ const useLeaveConfirmModal = ({
     if (isUserInputDirty) {
       setIsLeaveConfirmModalOpen(true);
     } else {
-      history.go(-2);
+      history.back();
     }
   };
 
   // 나가기
   const handleConfirmLeave = () => {
     setIsLeaveConfirmModalOpen(false);
-    history.go(-3);
+    history.go(-2);
   };
 
   // 페이지 유지
@@ -38,13 +38,13 @@ const useLeaveConfirmModal = ({
   };
 
   useEffect(() => {
-    if (isUserInputDirty) {
-      history.pushState(null, '', location.href);
+    if (!isUserInputDirty) {
+      return;
     }
 
-    const handlePopState = (event: PopStateEvent) => {
-      if (!isUserInputDirty) return;
+    history.pushState(null, '', location.href);
 
+    const handlePopState = (event: PopStateEvent) => {
       event.preventDefault();
       setIsLeaveConfirmModalOpen(true);
       history.pushState(null, '', location.href);
