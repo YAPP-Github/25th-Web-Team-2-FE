@@ -6,13 +6,32 @@ import { tooltipContent } from './AreaTooltip.css';
 import ArrowTooltip from './ArrowTooltip';
 
 import Icon from '@/components/Icon';
+import { useEffect, useState } from 'react';
+import { isMobile } from '@/utils/deviceType';
+import { ONE_SECOND } from '@/constants/time';
 
 const AreaTooltip = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggle = () => setOpen((prev) => !prev);
+
+  useEffect(() => {
+    if (isMobile()) {
+      setOpen(true);
+
+      const timer = setTimeout(() => {
+        setOpen(false);
+      }, ONE_SECOND * 5);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <Tooltip.Provider delayDuration={0}>
-      <Tooltip.Root>
+      <Tooltip.Root open={open} onOpenChange={toggle}>
         <Tooltip.Trigger asChild>
-          <button>
+          <button onClick={toggle}>
             <Icon icon="Information" width={18} height={18} />
           </button>
         </Tooltip.Trigger>
