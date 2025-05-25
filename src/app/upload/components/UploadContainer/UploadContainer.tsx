@@ -12,7 +12,6 @@ import {
   headerTitle,
   headerSubTitle,
 } from './UploadContainer.css';
-import useLeaveConfirmModal from '../../hooks/useLeaveConfirmModal';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
@@ -26,6 +25,7 @@ import {
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 

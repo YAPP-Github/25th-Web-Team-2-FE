@@ -22,11 +22,11 @@ import {
   uploadContentLayout,
   headerTitle,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
-import useLeaveConfirmModal from '@/app/upload/hooks/useLeaveConfirmModal';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {

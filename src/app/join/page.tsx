@@ -17,11 +17,11 @@ import {
   progressBarFill,
   titleContainer,
 } from './JoinPage.css';
-import useLeaveConfirmModal from '../upload/hooks/useLeaveConfirmModal';
 
 import Logo from '@/assets/images/logo.svg';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { ROLE } from '@/constants/config';
+import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 
 export default function JoinPage() {
   const { data: session } = useSession();
