@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { sloganContainer, loginCardContainer } from '../LoginPage.css';
+import MobileLoginCard from './components/MobileLoginCard/MobileLoginCard';
+import { mobileLoginPageLayout } from './MobileLoginPage.css';
+import { mobileLoginCardContainer, tempText } from './MobileLoginPage.css';
 
 import Logo from '@/assets/images/logo.svg';
-import { mobileLoginPageLayout } from './MobileLoginPage.css';
-
 import { ROLE } from '@/constants/config';
-import MobileLoginCard from './components/MobileLoginCard/MobileLoginCard';
-import { mobileLoginCardContainer, tempText } from './MobileLoginPage.css';
+
 
 export default function MobileLoginPage() {
   return (

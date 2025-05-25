@@ -13,10 +13,10 @@ import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
+import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';

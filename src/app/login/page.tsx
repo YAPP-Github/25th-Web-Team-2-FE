@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Spinner from '@/components/Spinner/Spinner';
+import { useEffect } from 'react';
+
 import { loginRedirectLayout } from './LoginPage.css';
+
+import Spinner from '@/components/Spinner/Spinner';
 import { getDeviceType } from '@/utils/deviceType';
 
 export default function LoginPage() {

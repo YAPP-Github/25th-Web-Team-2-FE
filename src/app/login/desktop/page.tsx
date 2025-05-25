@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import LoginCard from './LoginCard/LoginCard';
 import {
   loginPageLayout,
   sloganContainer,
   sloganWrapper,
   loginCardContainer,
 } from '../LoginPage.css';
+import LoginCard from './LoginCard/LoginCard';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';

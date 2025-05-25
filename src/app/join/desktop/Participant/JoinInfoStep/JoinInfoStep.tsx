@@ -2,7 +2,6 @@
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import AreaTooltip from '../../../components/AreaTooltip/AreaTooltip';
 import {
   joinAreaFilterContainer,
   filterTitleWrapper,
@@ -12,6 +11,7 @@ import {
 } from './JoinInfoStep.css';
 import JoinSelect from './JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGroupContainer';
+import AreaTooltip from '../../../components/AreaTooltip/AreaTooltip';
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';

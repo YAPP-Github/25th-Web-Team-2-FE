@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
+
 import {
   buttonContainer,
   loginButton,
@@ -9,7 +11,6 @@ import {
   titleText,
   verticalLine,
 } from './MobileLoginCard.css';
-import Image from 'next/image';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';

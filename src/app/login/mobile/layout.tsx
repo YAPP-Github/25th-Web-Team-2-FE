@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
-import { mobileLoginLayout } from '../LoginPage.css';
 import LoginError from '../components/LoginError/LoginError';
+import { mobileLoginLayout } from '../LoginPage.css';
 
 export const metadata: Metadata = {
   title: '그라밋 | 로그인 | 모바일',
