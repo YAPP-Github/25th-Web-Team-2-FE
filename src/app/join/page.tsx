@@ -31,7 +31,7 @@ export default function JoinPage() {
 
   const [joinFormDirty, setJoinFormDirty] = useState(false);
   const { isLeaveConfirmModalOpen, handleBackClick, handleConfirmLeave, handleCancelLeave } =
-    useLeaveConfirmModal({ isUserInputDirty: joinFormDirty, isHomePath: true });
+    useLeaveConfirmModal({ isUserInputDirty: joinFormDirty });
 
   // TODO: 추후 스켈레톤 처리
   if (!role) return null;
@@ -52,7 +52,7 @@ export default function JoinPage() {
 
   return (
     <section className={joinLayout}>
-      <button onClick={handleBackClick} aria-label="홈 화면으로 이동">
+      <button onClick={() => handleBackClick({ goHome: true })} aria-label="홈 화면으로 이동">
         <Image src={Logo} alt="로고" />
       </button>
       <div className={contentContainer}>
@@ -88,7 +88,7 @@ export default function JoinPage() {
         descriptionText="입력한 내용은 따로 저장되지 않아요"
         cancelText="취소"
         confirmText="나가기"
-        onConfirm={handleConfirmLeave}
+        onConfirm={() => handleConfirmLeave({ goHome: true })}
       />
     </section>
   );

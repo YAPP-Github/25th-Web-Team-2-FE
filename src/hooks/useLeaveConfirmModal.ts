@@ -3,26 +3,24 @@ import { useEffect, useState } from 'react';
 
 interface UseLeaveConfirmModalOptions {
   isUserInputDirty: boolean;
-  isHomePath?: boolean;
 }
 
 interface UseLeaveConfirmModalReturn {
   isLeaveConfirmModalOpen: boolean;
-  handleCancelLeave: VoidFunction;
-  handleConfirmLeave: VoidFunction;
-  handleBackClick: VoidFunction;
   setIsLeaveConfirmModalOpen: (open: boolean) => void;
+  handleCancelLeave: VoidFunction;
+  handleBackClick: (args: { goHome: boolean }) => void;
+  handleConfirmLeave: (args: { goHome: boolean }) => void;
 }
 
 const useLeaveConfirmModal = ({
   isUserInputDirty,
-  isHomePath = false,
 }: UseLeaveConfirmModalOptions): UseLeaveConfirmModalReturn => {
   const router = useRouter();
   const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false);
 
-  const navigateHomeOrBack = () => {
-    if (isHomePath) {
+  const navigate = (goHome: boolean) => {
+    if (goHome) {
       router.push('/');
     } else {
       history.back();
@@ -30,11 +28,11 @@ const useLeaveConfirmModal = ({
   };
 
   // 이전으로 버튼 클릭
-  const handleBackClick = () => {
+  const handleBackClick = ({ goHome }: { goHome: boolean }) => {
     if (isUserInputDirty) {
       setIsLeaveConfirmModalOpen(true);
     } else {
-      navigateHomeOrBack();
+      navigate(goHome);
     }
   };
 
@@ -44,9 +42,9 @@ const useLeaveConfirmModal = ({
   };
 
   // 나가기
-  const handleConfirmLeave = () => {
+  const handleConfirmLeave = ({ goHome }: { goHome: boolean }) => {
     setIsLeaveConfirmModalOpen(false);
-    if (isHomePath) {
+    if (goHome) {
       router.push('/');
     } else {
       history.go(-2);

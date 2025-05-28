@@ -45,31 +45,18 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const [successToast, setSuccessToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const {
-    form,
-    handleSubmit,
-    isLoading,
-    applyMethodData,
-    isRecruitStatus,
-    originExperimentError,
-    originFormData,
-  } = useManageExperimentPostForm({
-    isEdit,
-    postId: params.post_id,
-    addLink,
-    addContact,
-    setOpenAlertModal: setOpenSubmitAlertDialog,
-    setSuccessToast,
-    images,
-    setImages,
-    setErrorMessage,
-  });
-
-  useEffect(() => {
-    if (originFormData) {
-      form.reset(originFormData);
-    }
-  }, [originFormData, form]);
+  const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
+    useManageExperimentPostForm({
+      isEdit,
+      postId: params.post_id,
+      addLink,
+      addContact,
+      setOpenAlertModal: setOpenSubmitAlertDialog,
+      setSuccessToast,
+      images,
+      setImages,
+      setErrorMessage,
+    });
 
   const isUserInputDirty = form.formState.isDirty;
 
@@ -130,7 +117,10 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
         {/* 버튼 */}
         <div className={buttonContainer}>
-          <button className={buttonVariants.active} onClick={handleBackClick}>
+          <button
+            className={buttonVariants.active}
+            onClick={() => handleBackClick({ goHome: false })}
+          >
             이전으로
           </button>
           <button className={buttonVariants.upload} onClick={handleSubmit} type="submit">
@@ -187,7 +177,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         descriptionText="입력한 내용은 따로 저장되지 않아요"
         cancelText="취소"
         confirmText="나가기"
-        onConfirm={handleConfirmLeave}
+        onConfirm={() => handleConfirmLeave({ goHome: false })}
       />
     </FormProvider>
   );

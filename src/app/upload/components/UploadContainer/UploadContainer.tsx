@@ -84,7 +84,10 @@ const UploadContainer = () => {
 
         {/* 버튼 */}
         <div className={buttonContainer}>
-          <button className={buttonVariants.active} onClick={handleBackClick}>
+          <button
+            className={buttonVariants.active}
+            onClick={() => handleBackClick({ goHome: false })}
+          >
             이전으로
           </button>
 
@@ -133,7 +136,7 @@ const UploadContainer = () => {
         descriptionText="입력한 내용은 따로 저장되지 않아요"
         cancelText="취소"
         confirmText="나가기"
-        onConfirm={handleConfirmLeave}
+        onConfirm={() => handleConfirmLeave({ goHome: false })}
       />
     </FormProvider>
   );
