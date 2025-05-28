@@ -23,15 +23,15 @@ const useRegionSelect = () => {
   const handleRegionSelect = (region: string) => {
     setSelectedRegion(region);
     setSelectedSubRegion(null);
-    setValue('region', region, { shouldValidate: true });
-    setValue('area', '', { shouldValidate: true });
+    setValue('region', region, { shouldValidate: true, shouldDirty: true });
+    setValue('area', '', { shouldValidate: true, shouldDirty: true });
   };
 
   // 지역구 선택 (area)
   const handleSubRegionSelect = (subRegion: string) => {
     setSelectedSubRegion(subRegion);
     setIsOpenRegionPopover(false);
-    setValue('area', subRegion, { shouldValidate: true });
+    setValue('area', subRegion, { shouldValidate: true, shouldDirty: true });
   };
 
   return {

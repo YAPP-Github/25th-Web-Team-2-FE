@@ -1,8 +1,7 @@
 'use client';
 
 import * as Toast from '@radix-ui/react-toast';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import {
@@ -25,10 +24,14 @@ import {
 } from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
+const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
+
 const UploadContainer = () => {
-  const router = useRouter();
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
 
@@ -44,6 +47,16 @@ const UploadContainer = () => {
     isEdit: false,
     setSuccessToast,
   });
+
+  // 자동 입력 필드 제외 isDirty 체크
+  const isUserInputDirty = useMemo(() => {
+    return Object.keys(form.formState.dirtyFields).some(
+      (key) => !AUTO_INPUT_FIELDS.includes(key as keyof UploadExperimentPostSchemaType),
+    );
+  }, [form.formState.dirtyFields]);
+
+  const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
+    useLeaveConfirmModal({ isUserInputDirty });
 
   return (
     <FormProvider {...form}>
@@ -71,7 +84,10 @@ const UploadContainer = () => {
 
         {/* 버튼 */}
         <div className={buttonContainer}>
-          <button className={buttonVariants.active} onClick={() => router.back()}>
+          <button
+            className={buttonVariants.active}
+            onClick={() => handleBackClick({ goHome: false })}
+          >
             이전으로
           </button>
 
@@ -107,6 +123,21 @@ const UploadContainer = () => {
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />
       </Toast.Provider>
+
+      {/* 공고 등록 중 이탈 시 confirmModal */}
+      <ConfirmModal
+        isOpen={isLeaveConfirmModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            handleCancelLeave();
+          }
+        }}
+        confirmTitle="페이지에서 나가시겠어요?"
+        descriptionText="입력한 내용은 따로 저장되지 않아요"
+        cancelText="취소"
+        confirmText="나가기"
+        onConfirm={() => handleConfirmLeave({ goHome: false })}
+      />
     </FormProvider>
   );
 };

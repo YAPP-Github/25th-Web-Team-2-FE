@@ -25,8 +25,8 @@ export const useExperimentDate = (experimentDateChecked: boolean) => {
     setIsExperimentDateChecked(newCheckedState);
 
     if (newCheckedState) {
-      setValue('startDate', null, { shouldValidate: true });
-      setValue('endDate', null, { shouldValidate: true });
+      setValue('startDate', null, { shouldValidate: true, shouldDirty: true });
+      setValue('endDate', null, { shouldValidate: true, shouldDirty: true });
     } else {
       setValue('startDate', undefined);
       setValue('endDate', undefined);

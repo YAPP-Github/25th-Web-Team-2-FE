@@ -25,6 +25,8 @@ import {
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
+import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 
 const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
@@ -55,6 +57,11 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
       setImages,
       setErrorMessage,
     });
+
+  const isUserInputDirty = form.formState.isDirty;
+
+  const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
+    useLeaveConfirmModal({ isUserInputDirty });
 
   useEffect(() => {
     if (originExperimentError instanceof CustomError) {
@@ -110,7 +117,10 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
         {/* 버튼 */}
         <div className={buttonContainer}>
-          <button className={buttonVariants.active} onClick={() => router.back()}>
+          <button
+            className={buttonVariants.active}
+            onClick={() => handleBackClick({ goHome: false })}
+          >
             이전으로
           </button>
           <button className={buttonVariants.upload} onClick={handleSubmit} type="submit">
@@ -154,6 +164,21 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />
       </Toast.Provider>
+
+      {/* 공고 수정 중 이탈 시 ConfirmModal */}
+      <ConfirmModal
+        isOpen={isLeaveConfirmModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            handleCancelLeave();
+          }
+        }}
+        confirmTitle="페이지에서 나가시겠어요?"
+        descriptionText="입력한 내용은 따로 저장되지 않아요"
+        cancelText="취소"
+        confirmText="나가기"
+        onConfirm={() => handleConfirmLeave({ goHome: false })}
+      />
     </FormProvider>
   );
 };
