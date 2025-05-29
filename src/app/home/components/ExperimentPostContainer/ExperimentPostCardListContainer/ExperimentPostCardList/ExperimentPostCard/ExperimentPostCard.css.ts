@@ -58,10 +58,13 @@ export const postCardHeader = style({
   gap: '1.6rem',
 });
 
-export const postLocation = style({
-  ...fonts.label.medium.R13,
-  color: colors.text03,
-});
+export const postLocation = style([
+  textEllipsis.singleLine,
+  {
+    ...fonts.label.medium.R13,
+    color: colors.text03,
+  },
+]);
 
 export const postCardRightHeader = style({
   display: 'flex',
