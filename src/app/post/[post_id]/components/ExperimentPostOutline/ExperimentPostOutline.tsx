@@ -26,6 +26,7 @@ import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGui
 
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { trackEvent } from '@/lib/mixpanelClient';
+import { MatchType } from '@/types/uploadExperimentPost';
 
 interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -104,7 +105,9 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <th>실험 장소</th>
               <td>
                 <p>
-                  {address.place && address.region && address.area
+                  {summary.matchType === MatchType.ONLINE
+                    ? '비대면'
+                    : address.place && address.region && address.area
                     ? `${getRegionLabel(address.region)} ${getAreaLabel(
                         address.region,
                         address.area,
@@ -113,6 +116,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
                 </p>
               </td>
             </tr>
+
             <tr>
               <th>연구 책임</th>
               <td>
