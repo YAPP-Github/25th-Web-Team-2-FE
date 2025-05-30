@@ -38,6 +38,8 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   const { control } = methods;
 
   const contactEmail = useWatch({ name: 'contactEmail', control });
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
 
   const {
     refetch,
@@ -50,6 +52,8 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   const [isShowNextButton, setIsShowNextButton] = useState(false);
 
   const { open, close } = useOverlay();
+
+  const isValidCheck = isTermOfService && isPrivacy;
 
   const handleCheckValidEmail = async () => {
     const query = await refetch();
@@ -109,7 +113,7 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
             variant="primary"
             size="small"
             height="56px"
-            disabled={!isEmailValid}
+            disabled={!isEmailValid || !isValidCheck}
             onClick={onNext}
           >
             다음
