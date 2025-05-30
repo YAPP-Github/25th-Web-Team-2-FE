@@ -18,9 +18,11 @@ interface ButtonInputProps<T extends FieldValues> {
   name: Path<T>;
   onClick: () => void;
   isLoading: boolean;
-  isSuccess: boolean;
   setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
+  title?: string;
+  required?: boolean;
+  className?: string;
   tip?: string;
 }
 
@@ -29,8 +31,10 @@ const ButtonInput = <T extends FieldValues>({
   name,
   onClick,
   isLoading,
-  isSuccess,
   toast,
+  title,
+  required,
+  className,
   tip,
 }: ButtonInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -51,8 +55,8 @@ const ButtonInput = <T extends FieldValues>({
   return (
     <div className={inputContainer}>
       <label className={inputLabel}>
-        <span>연락 받을 이메일</span>
-        <span className={requiredStar}>*</span>
+        {title && <span>{title}</span>}
+        {required && <span className={requiredStar}>*</span>}
       </label>
 
       <Controller
@@ -67,7 +71,7 @@ const ButtonInput = <T extends FieldValues>({
                 <input
                   {...field}
                   style={{ width: '100%' }}
-                  className={joinInput}
+                  className={className ? className : joinInput}
                   placeholder="이메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
                   onFocus={() => setIsFocused(true)}
@@ -77,7 +81,7 @@ const ButtonInput = <T extends FieldValues>({
                   <button
                     type="button"
                     className={confirmButton}
-                    disabled={isButtonDisabled || isLoading || isSuccess}
+                    disabled={isButtonDisabled || isLoading}
                     onClick={onClick}
                     onMouseDown={(e) => e.preventDefault()}
                     ref={validateButtonRef}

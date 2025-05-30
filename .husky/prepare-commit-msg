@@ -1,2 +1,2 @@
-pnpm lint
+
 pnpm jira-prepare-commit-msg $1

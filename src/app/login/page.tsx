@@ -1,41 +1,25 @@
-import Image from 'next/image';
-import Link from 'next/link';
+'use client';
 
-import LoginCard from './components/LoginCard/LoginCard';
-import LoginError from './components/LoginCard/LoginError/LoginError';
-import {
-  loginPageLayout,
-  sloganContainer,
-  sloganWrapper,
-  loginCardContainer,
-} from './LoginPage.css';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-import Logo from '@/assets/images/logo.svg';
-import { ROLE } from '@/constants/config';
+import { loginRedirectLayout } from './LoginPage.css';
+
+import Spinner from '@/components/Spinner/Spinner';
+import { getDeviceType } from '@/utils/deviceType';
 
 export default function LoginPage() {
-  const SLOGAN = '작은 연결로 시작되는 큰 발견\n그라밋이 도울게요';
+  const router = useRouter();
+
+  useEffect(() => {
+    const deviceType = getDeviceType();
+    router.replace(`/login/${deviceType}`);
+  }, [router]);
 
   return (
-    <LoginError>
-      <div className={loginPageLayout}>
-        <section className={sloganContainer}>
-          <Link href="/" aria-label="홈 화면으로 이동">
-            <Image src={Logo} alt="로고" />
-          </Link>
-          <h1 className={sloganWrapper}>{SLOGAN}</h1>
-        </section>
-        <section className={loginCardContainer}>
-          <LoginCard
-            role={ROLE.researcher}
-            description={['그라밋에서 손쉽게', '연구 참여자를 모아보세요']}
-          />
-          <LoginCard
-            role={ROLE.participant}
-            description={['정보를 등록하면', '딱 맞는 실험을 찾아드려요']}
-          />
-        </section>
-      </div>
-    </LoginError>
+    <div className={loginRedirectLayout}>
+      <Spinner />
+      <span>로그인 페이지로 이동 중...</span>
+    </div>
   );
 }

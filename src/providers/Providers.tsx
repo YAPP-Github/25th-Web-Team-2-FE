@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import { useEffect } from 'react';
 
 import CustomQueryClientProvider from './CustomQueryClientProvider';
+import { OverlayProvider } from './OverlayProvider';
 
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/providers/MSWProvider';
@@ -31,7 +32,9 @@ export default function Providers({
   return (
     <SessionProvider session={session}>
       <MSWProvider>
-        <CustomQueryClientProvider session={session}>{children}</CustomQueryClientProvider>
+        <CustomQueryClientProvider session={session}>
+          <OverlayProvider>{children}</OverlayProvider>
+        </CustomQueryClientProvider>
       </MSWProvider>
     </SessionProvider>
   );

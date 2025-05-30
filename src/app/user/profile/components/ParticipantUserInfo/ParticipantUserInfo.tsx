@@ -13,11 +13,11 @@ import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
+import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import AreaTooltip from '@/app/join/components/Participant/JoinInfoStep/AreaTooltip/AreaTooltip';
-import RadioButtonGroupContainer from '@/app/join/components/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
+import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
@@ -37,7 +37,6 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
   const {
     refetch,
     isLoading: isLoadingCheck,
-    isSuccess,
     isError: isEmailDuplicateError,
   } = useCheckValidEmailQuery(contactEmail);
 
@@ -55,11 +54,12 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
           <ButtonInput<ParticipantUpdateSchemaType>
+            title="연락 받을 이메일"
+            required
             control={form.control}
             name="contactEmail"
             onClick={handleCheckValidEmail}
             isLoading={isLoadingCheck}
-            isSuccess={isSuccess}
             setIsValidToastOpen={setIsValidToastOpen}
             tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
             toast={

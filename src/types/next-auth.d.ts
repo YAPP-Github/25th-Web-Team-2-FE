@@ -1,23 +1,25 @@
 import { DefaultSession } from 'next-auth';
 
+import { Role, LoginProvider } from './user';
+
 // Next-Auth 타입 확장
 declare module 'next-auth' {
   interface Session extends DefaultSession {
     accessToken?: string;
     refreshToken?: string;
-    role?: string;
+    role?: Role;
     isTempUser?: boolean;
     oauthEmail?: string;
-    provider?: string;
+    provider?: LoginProvider;
   }
 
   interface User {
     accessToken: string;
     refreshToken: string;
-    role: string;
+    role: Role;
     isTempUser?: boolean;
     oauthEmail?: string;
-    provider?: string;
+    provider?: LoginProvider;
   }
 }
 
@@ -26,12 +28,12 @@ declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string;
     refreshToken: string;
-    role: string;
+    role: Role;
     iat: number;
     exp: number;
     jti: string;
     isTempUser?: boolean;
     oauthEmail?: string;
-    provider?: string;
+    provider?: LoginProvider;
   }
 }

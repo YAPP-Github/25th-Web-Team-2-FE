@@ -1,6 +1,22 @@
 export const fonts = {
   // body
   body: {
+    small: {
+      M15: {
+        fontSize: '1.5rem',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        lineHeight: '2.4rem',
+        letterSpacing: '0',
+      },
+      SB15: {
+        fontSize: '1.5rem',
+        fontStyle: 'normal',
+        fontWeight: '600',
+        lineHeight: '2.4rem',
+        letterSpacing: '0',
+      },
+    },
     normal: {
       R16: {
         fontSize: '1.6rem',

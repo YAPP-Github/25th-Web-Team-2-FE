@@ -31,7 +31,6 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   const {
     refetch,
     isLoading: isLoadingCheck,
-    isSuccess,
     isError: isEmailDuplicateError,
   } = useCheckValidEmailQuery(contactEmail);
 
@@ -49,11 +48,12 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
           <ButtonInput<ResearcherUpdateSchemaType>
+            title="연락 받을 이메일"
+            required
             control={form.control}
             name="contactEmail"
             onClick={handleCheckValidEmail}
             isLoading={isLoadingCheck}
-            isSuccess={isSuccess}
             setIsValidToastOpen={setIsValidToastOpen}
             tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
             toast={

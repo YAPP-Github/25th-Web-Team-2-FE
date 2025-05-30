@@ -17,7 +17,7 @@ export default function NaverLoginPage() {
 
   const { mutate: naverLogin } = useNaverLoginMutation({
     onSuccessLogin: () => {
-      router.push('/');
+      router.replace('/');
     },
     onSuccessJoin: async (oauthEmail: string) => {
       if (stateParams) {
@@ -29,11 +29,11 @@ export default function NaverLoginPage() {
           provider,
         });
 
-        router.push('/join');
+        router.replace('/join');
       }
     },
     onError: () => {
-      router.push('/login');
+      router.replace('/login');
     },
   });
 
