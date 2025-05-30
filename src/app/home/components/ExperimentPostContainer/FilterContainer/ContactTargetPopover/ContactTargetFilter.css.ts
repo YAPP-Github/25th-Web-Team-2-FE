@@ -26,9 +26,17 @@ export const popoverTrigger = style({
   borderRadius: '1.2rem',
   color: 'var(--popover-trigger-color)',
   backgroundColor: 'var(--popover-trigger-bg)',
+  whiteSpace: 'nowrap',
   selectors: {
     '&:hover': {
       boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+    },
+  },
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      color: 'var(--trigger-color-mobile)',
+      backgroundColor: 'var(--trigger-bg-mobile)',
     },
   },
 });

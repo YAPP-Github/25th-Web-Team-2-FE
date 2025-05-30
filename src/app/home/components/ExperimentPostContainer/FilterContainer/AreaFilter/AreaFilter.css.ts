@@ -13,9 +13,17 @@ export const triggerWrapper = style({
   gap: '0.4rem',
   padding: '0.6rem 1rem 0.6rem 1.4rem',
   borderRadius: '1.2rem',
+  whiteSpace: 'nowrap',
   selectors: {
     '&:hover': {
       boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+    },
+  },
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      color: 'var(--trigger-color-mobile)',
+      backgroundColor: 'var(--trigger-bg-mobile)',
     },
   },
 });
@@ -70,6 +78,16 @@ export const verticalLine = style({
     },
     '&:last-child::after': {
       display: 'none',
+    },
+  },
+
+  '@media': {
+    'screen and (max-width: 768px)': {
+      selectors: {
+        '&::after': {
+          height: '2rem',
+        },
+      },
     },
   },
 });
