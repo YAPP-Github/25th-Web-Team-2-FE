@@ -49,18 +49,19 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   } = useCheckValidEmailInfoQuery(contactEmail);
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
-  const [isShowNextButton, setIsShowNextButton] = useState(false);
+  const [hasValidatedEmail, setHasValidatedEmail] = useState(false);
 
   const { open, close } = useOverlay();
 
   const isValidCheck = isTermOfService && isPrivacy;
+  const isShowNextButton = hasValidatedEmail || isValidCheck;
 
   const handleCheckValidEmail = async () => {
     const query = await refetch();
     setIsValidToastOpen(true);
 
     if (query.isSuccess) {
-      setIsShowNextButton(true);
+      setHasValidatedEmail(true);
       open(() => (
         <FormProvider {...methods}>
           <ServiceAgreeBottomSheet
