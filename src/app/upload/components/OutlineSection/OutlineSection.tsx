@@ -121,8 +121,14 @@ const OutlineSection = ({
                 {...field}
                 placeholder="실험 시작일 ~ 실험 종료일"
                 onDateChange={(dates) => {
-                  setValue('startDate', dates.from || null, { shouldValidate: true });
-                  setValue('endDate', dates.to || null, { shouldValidate: true });
+                  setValue('startDate', dates.from || null, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  });
+                  setValue('endDate', dates.to || null, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  });
                 }}
                 experimentDateChecked={isExperimentDateChecked}
                 error={fieldState.error}

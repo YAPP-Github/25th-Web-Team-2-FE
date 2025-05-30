@@ -9,9 +9,16 @@ import { STEP } from '../../JoinPage.constants';
 
 import { Participant } from '.';
 
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
 
-const ParticipantForm = () => {
+interface ParticipantFormProps {
+  onDirtyChange?: (dirty: boolean) => void;
+}
+
+const AUTO_INPUT_FIELDS: (keyof ParticipantJoinSchemaType)[] = ['oauthEmail'];
+
+const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
@@ -23,6 +30,14 @@ const ParticipantForm = () => {
       setStep(STEP.success);
     },
   });
+
+  const isUserInputDirty = Object.keys(participantMethods.formState.dirtyFields).some(
+    (key) => !AUTO_INPUT_FIELDS.includes(key as keyof ParticipantJoinSchemaType),
+  );
+
+  useEffect(() => {
+    onDirtyChange?.(isUserInputDirty);
+  }, [isUserInputDirty, onDirtyChange]);
 
   useEffect(() => {
     if (oauthEmail && provider) {

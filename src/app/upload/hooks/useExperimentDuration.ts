@@ -15,7 +15,7 @@ export const useExperimentDuration = (durationChecked: boolean) => {
     // 체크된 경우 값 초기화
 
     if (newCheckedState) {
-      setValue('timeRequired', null, { shouldValidate: true });
+      setValue('timeRequired', null, { shouldValidate: true, shouldDirty: true });
     } else {
       setValue('timeRequired', '');
     }
