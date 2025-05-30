@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 
 import useParticipantJoinMutation from '../hooks/useParticipantJoinMutation';
 
-import ParticipantJoinSchema, {
+import {
+  ParticipantJoinSchema,
   ParticipantJoinSchemaType,
+  ParticipantJoinSubmitSchema,
 } from '@/schema/join/ParticipantJoinSchema';
 
 interface UseParticipantJoinProps {
@@ -28,6 +30,8 @@ export const useParticipantJoin = ({ onSuccess, initialValues }: UseParticipantJ
       },
       adConsent: false,
       matchConsent: false,
+      isTermOfService: false,
+      isPrivacy: false,
     },
   });
 
@@ -35,9 +39,10 @@ export const useParticipantJoin = ({ onSuccess, initialValues }: UseParticipantJ
 
   const handleParticipantSubmit = () => {
     const formData = participantMethods.getValues();
+    const submitData = ParticipantJoinSubmitSchema().parse(formData);
 
-    const formattedData = {
-      ...formData,
+    const formattedSubmitData = {
+      ...submitData,
       birthDate: formData.birthDate.replaceAll('.', '-'),
       additionalAddressInfo:
         Object.values(formData.additionalAddressInfo ?? {}).filter(Boolean).length > 0
@@ -45,7 +50,7 @@ export const useParticipantJoin = ({ onSuccess, initialValues }: UseParticipantJ
           : null,
     };
 
-    joinParticipant(formattedData, {
+    joinParticipant(formattedSubmitData, {
       onSuccess,
     });
   };
