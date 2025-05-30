@@ -38,6 +38,8 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   const { control } = methods;
 
   const contactEmail = useWatch({ name: 'contactEmail', control });
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
 
   const {
     refetch,
@@ -47,16 +49,19 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
   } = useCheckValidEmailInfoQuery(contactEmail);
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
-  const [isShowNextButton, setIsShowNextButton] = useState(false);
+  const [hasValidatedEmail, setHasValidatedEmail] = useState(false);
 
   const { open, close } = useOverlay();
+
+  const isValidCheck = isTermOfService && isPrivacy;
+  const isShowNextButton = hasValidatedEmail || isValidCheck;
 
   const handleCheckValidEmail = async () => {
     const query = await refetch();
     setIsValidToastOpen(true);
 
     if (query.isSuccess) {
-      setIsShowNextButton(true);
+      setHasValidatedEmail(true);
       open(() => (
         <FormProvider {...methods}>
           <ServiceAgreeBottomSheet
@@ -109,7 +114,7 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
             variant="primary"
             size="small"
             height="56px"
-            disabled={!isEmailValid}
+            disabled={!isEmailValid || !isValidCheck}
             onClick={onNext}
           >
             다음

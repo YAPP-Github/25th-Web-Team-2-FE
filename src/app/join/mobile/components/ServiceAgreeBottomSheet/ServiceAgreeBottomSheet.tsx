@@ -3,7 +3,6 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import AgreeAccordion from '../../../components/JoinCheckboxContainer/AgreeAccordion/AgreeAccordion';
 import JoinCheckbox from '../../../components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Policy from '../../../components/JoinCheckboxContainer/Policy';
-import useServiceAgreeCheck from '../../../hooks/useServiceAgreeCheck';
 import {
   ADVERTISE_TEXT,
   PRIVACY_TEXT,
@@ -17,19 +16,20 @@ import {
 } from '../../page.css';
 
 import Button from '@/components/Button/Button';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface ServiceAgreeBottomSheetProps {
   onConfirm: () => void;
 }
 
 const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
+
   const matchConsent = useWatch({ name: 'matchConsent', control });
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
 
-  const { serviceAgreeCheck, handleChangeCheck } = useServiceAgreeCheck();
-
-  const { isTermOfService, isPrivacy } = serviceAgreeCheck;
-  const isValid = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
+  const isValid = isTermOfService && isPrivacy;
 
   return (
     <section className={serviceAgreeBottomSheetLayout}>
@@ -41,9 +41,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
               label="서비스 이용약관 동의"
               className={checkboxWrapper}
               isChecked={isTermOfService}
-              onChange={(e) => {
-                handleChangeCheck(e, 'isTermOfService');
-              }}
+              onChange={() => setValue('isTermOfService', !isTermOfService)}
               isRequired
             />
           }
@@ -57,7 +55,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
               label="개인정보 수집 및 이용 동의"
               className={checkboxWrapper}
               isChecked={isPrivacy}
-              onChange={(e) => handleChangeCheck(e, 'isPrivacy')}
+              onChange={() => setValue('isPrivacy', !isPrivacy)}
               isRequired
             />
           }
