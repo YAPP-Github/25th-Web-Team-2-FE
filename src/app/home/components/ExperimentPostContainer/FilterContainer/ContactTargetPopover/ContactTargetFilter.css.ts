@@ -24,8 +24,8 @@ export const popoverTrigger = style({
   padding: '0.6rem 1rem 0.6rem 1.4rem',
   border: 'none',
   borderRadius: '1.2rem',
-  color: 'var(--popover-trigger-color)',
-  backgroundColor: 'var(--popover-trigger-bg)',
+  color: 'var(--trigger-color)',
+  backgroundColor: 'var(--trigger-bg)',
   whiteSpace: 'nowrap',
   selectors: {
     '&:hover': {
