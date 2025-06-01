@@ -6,7 +6,6 @@ import { fonts } from '@/styles/fonts.css';
 export const postInfoLayout = style({
   marginTop: '1.6rem',
   width: '100%',
-  height: '6rem',
 });
 
 globalStyle(`${postInfoLayout} h2`, {
@@ -56,4 +55,8 @@ export const buttonStyles = style({
   ...fonts.label.large.M14,
   color: colors.text03,
   cursor: 'pointer',
+});
+
+export const postTitle = style({
+  flex: 1,
 });
