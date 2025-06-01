@@ -49,7 +49,7 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isHomePage) {
-    url.pathname = `/home/${deviceType}`;
+    url.pathname = `/home`;
     return NextResponse.rewrite(url);
   }
 
@@ -59,7 +59,7 @@ export async function middleware(request: NextRequest) {
     }
 
     // desktop, mobile 구분
-    if (!pathname.match(/\/(join|login|home)\/(desktop|mobile)(\/.*)?$/)) {
+    if (!pathname.match(/\/(join|login)\/(desktop|mobile)(\/.*)?$/)) {
       const segments = pathname.split('/').filter(Boolean);
       const basePath = segments[0];
       const restPath = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';

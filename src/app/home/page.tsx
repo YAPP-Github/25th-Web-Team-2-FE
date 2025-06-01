@@ -1,5 +1,5 @@
-import Banner from '../components/Banner/Banner';
-import ExperimentPostContainer from '../components/ExperimentPostContainer/ExperimentPostContainer';
+import Banner from './components/Banner/Banner';
+import ExperimentPostContainer from './components/ExperimentPostContainer/ExperimentPostContainer';
 
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 
