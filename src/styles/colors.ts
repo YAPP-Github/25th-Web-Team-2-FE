@@ -32,6 +32,7 @@ export const colors = {
   fieldAlert: '#FFEEEE',
   fieldToast: '#6D7B82',
   fieldDim: 'rgba(0, 22, 54, 0.31)',
+  fieldBg: '#ECEFF1',
 
   // Icon
   icon01: '#FFFFFF',
