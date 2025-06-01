@@ -46,7 +46,7 @@ export const postCardLayout = style({
   },
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       height: 'auto',
       padding: '1.6rem',
 
@@ -78,7 +78,7 @@ export const postHeader = style({
   `,
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       gap: '0.2rem',
       gridTemplateAreas: `
         "title"
@@ -96,7 +96,7 @@ export const postInfoContainer = style({
   gap: '1rem',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       gridArea: 'location',
       gridTemplateColumns: '1fr',
     },
@@ -110,7 +110,7 @@ export const postLocation = style([
     color: colors.text03,
 
     '@media': {
-      'screen and (max-width: 768px)': {
+      'screen and (max-width: 767px)': {
         ...fonts.label.large.R14,
       },
     },
@@ -123,7 +123,7 @@ export const postViewWrapperDesktop = style({
   gap: '0.4rem',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       display: 'none',
     },
   },
@@ -134,7 +134,7 @@ export const postViews = style({
   color: colors.text03,
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       ...fonts.label.large.R14,
     },
   },
@@ -158,7 +158,7 @@ export const postFooter = style({
   gridTemplateAreas: `"details"`,
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       // 모바일: 보상/일시 + 조회수
       gridTemplateColumns: '1fr auto',
       gridTemplateAreas: `"details views"`,
@@ -175,7 +175,7 @@ export const postDetailsContainer = style({
   gap: '0.4rem',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       gap: '0.3rem',
     },
   },
@@ -186,7 +186,7 @@ export const postViewWrapperMobile = style({
   display: 'none',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       display: 'flex',
       alignItems: 'center',
       gap: '0.4rem',
@@ -216,7 +216,7 @@ export const announceText = style({
   whiteSpace: 'nowrap',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       ...fonts.label.large.M14,
     },
   },
@@ -229,7 +229,7 @@ export const postReward = style([
     color: colors.primaryMint,
 
     '@media': {
-      'screen and (max-width: 768px)': {
+      'screen and (max-width: 767px)': {
         ...fonts.label.large.M14,
       },
     },
@@ -243,7 +243,7 @@ export const postDate = style([
     color: colors.text04,
 
     '@media': {
-      'screen and (max-width: 768px)': {
+      'screen and (max-width: 767px)': {
         ...fonts.label.large.M14,
         color: colors.text07,
       },

@@ -17,7 +17,7 @@ export const resetFilterButton = style({
   borderRadius: '1.2rem',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       backgroundColor: colors.field03,
     },
   },

@@ -6,7 +6,7 @@ export const experimentPostLayout = style({
   gap: '1.6rem 1.2rem',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       gap: '0',
       gridTemplateColumns: '1fr',
       gridTemplateAreas: `
