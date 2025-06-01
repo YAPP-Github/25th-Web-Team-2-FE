@@ -41,12 +41,12 @@ const ExperimentPostCardListContainer = ({
     fetchNextPage,
     isFetchingNextPage,
     isFetching,
-    isLoading: isListLoading,
+    isFetched,
   } = useExperimentPostListQuery(filters, isUserInfoLoading);
 
-  const hasData = postListData && postListData.pages && postListData.pages.length > 0;
+  const hasData = postListData && postListData.pages && postListData?.pages[0].content.length > 0;
 
-  if (!hasData || isUserInfoLoading || isListLoading) {
+  if (!isFetched || isUserInfoLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />
