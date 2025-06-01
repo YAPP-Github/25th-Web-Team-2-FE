@@ -37,6 +37,7 @@ export const popoverTrigger = style({
     'screen and (max-width: 768px)': {
       color: 'var(--trigger-color-mobile)',
       backgroundColor: 'var(--trigger-bg-mobile)',
+      padding: '0.8rem 1rem 0.8rem 1.4rem',
     },
   },
 });
