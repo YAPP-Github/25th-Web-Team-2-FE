@@ -1,23 +1,29 @@
 import { style } from '@vanilla-extract/css';
 
 export const bannerLayout = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '1.2rem',
-});
-
-export const bannerWrapper = style({
   position: 'relative',
   height: '15vh',
   display: 'flex',
   alignItems: 'center',
   width: '100%',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: 'auto',
+      padding: '1.2rem 1.6rem',
+    },
+  },
 });
 
 export const navigationLeft = style({
   position: 'absolute',
   left: '1.6rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const bannerCarousel = style({
@@ -30,11 +36,23 @@ export const carouselContainer = style({
   display: 'flex',
   transition: 'all 1s',
   width: '100%',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: '7rem',
+    },
+  },
 });
 
 export const navigationRight = style({
   position: 'absolute',
   right: '1.6rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const bannerImage = style({

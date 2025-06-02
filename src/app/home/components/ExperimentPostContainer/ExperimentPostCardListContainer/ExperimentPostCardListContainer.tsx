@@ -6,26 +6,34 @@ import {
   allPostsViewedTitle,
   loadingMoreButton,
   postCardContainer,
+  postCardContainerHeader,
   postCardContentContainer,
   totalPostCount,
   watchMoreButton,
 } from './ExperimentPostCardListContainer.css';
+import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostContainer.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
+import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostContainer/ExperimentPostContainer.css';
 import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
+import { colors } from '@/styles/colors';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
   isUserInfoLoading: boolean;
+  isRecruiting: boolean;
+  handleToggleRecruitStatus: () => void;
 }
 
 const ExperimentPostCardListContainer = ({
   filters,
   isUserInfoLoading,
+  isRecruiting,
+  handleToggleRecruitStatus,
 }: PostCardListContainerProps) => {
   const {
     data: postListData,
@@ -33,12 +41,12 @@ const ExperimentPostCardListContainer = ({
     fetchNextPage,
     isFetchingNextPage,
     isFetching,
-    isLoading: isListLoading,
+    isFetched,
   } = useExperimentPostListQuery(filters, isUserInfoLoading);
 
-  const hasData = postListData && postListData.pages && postListData.pages.length > 0;
+  const hasData = postListData && postListData.pages && postListData?.pages[0].content.length > 0;
 
-  if (!hasData || isUserInfoLoading || isListLoading) {
+  if (!isFetched || isUserInfoLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />
@@ -50,9 +58,22 @@ const ExperimentPostCardListContainer = ({
   return (
     <div className={postCardContentContainer}>
       <div className={postCardContainer}>
-        <span className={totalPostCount}>
-          {postListData ? `총 ${postListData?.pages[0].totalCount}개` : ''}
-        </span>
+        <div className={postCardContainerHeader}>
+          <span className={totalPostCount}>
+            {postListData && `총 ${postListData?.pages[0].totalCount}개`}
+          </span>
+          <div className={recruitCheckWrapper({ isMobile: true })}>
+            <JoinCheckbox
+              labelClassName={recruitCheckLabel}
+              label="모집 중인 공고만 보기"
+              isChecked={isRecruiting}
+              onChange={handleToggleRecruitStatus}
+              emptyCheckIcon={
+                <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+              }
+            />
+          </div>
+        </div>
         <ExperimentPost postListData={postListData} />
       </div>
 

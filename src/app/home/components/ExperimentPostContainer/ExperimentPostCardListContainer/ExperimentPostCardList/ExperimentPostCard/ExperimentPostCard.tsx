@@ -3,16 +3,19 @@ import Link from 'next/link';
 import {
   announceText,
   contactedPostTag,
-  postCardHeader,
   postCardLayout,
-  postCardRightHeader,
   postDate,
   postHeader,
+  postInfoContainer,
   postLocation,
   postReward,
   postRewardContainer,
   postTitle,
   postViews,
+  postFooter,
+  postDetailsContainer,
+  postViewWrapperDesktop,
+  postViewWrapperMobile,
 } from './ExperimentPostCard.css';
 
 import { formatPostDate } from '@/app/home/home.utils';
@@ -34,18 +37,19 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
     <li>
       <Link href={`/post/${experimentPostId}`} key={experimentPostId} className={postCardLayout}>
         <div className={postHeader}>
-          <div className={postCardHeader}>
+          <div className={postInfoContainer}>
             <span className={postLocation}>{place ? place : '비대면'}</span>
-            <div className={postCardRightHeader}>
+            <div className={postViewWrapperDesktop}>
               <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
               <span className={postViews}>{views}</span>
             </div>
           </div>
           <h3 className={postTitle}>{title}</h3>
         </div>
-        <div>
+
+        <div className={postFooter}>
           {recruitStatus ? (
-            <>
+            <div className={postDetailsContainer}>
               <div className={postRewardContainer}>
                 <span className={announceText}>보상</span>
                 <span className={postReward}>{reward}</span>
@@ -59,12 +63,17 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
                   })}
                 </span>
               </div>
-            </>
+            </div>
           ) : (
             <div className={contactedPostTag}>
               <span>모집 완료</span>
             </div>
           )}
+
+          <div className={postViewWrapperMobile}>
+            <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
+            <span className={postViews}>{views}</span>
+          </div>
         </div>
       </Link>
     </li>

@@ -16,11 +16,10 @@ import RegionContainer from './components/RegionContainer/RegionContainer';
 import useAreaFilter from './hooks/useAreaFilter';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import { getRegionFilterText } from '@/app/home/home.utils';
+import { getFilterColors, getRegionFilterText } from '@/app/home/home.utils';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
@@ -55,10 +54,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     <Popover.Root open={isFilterOpen} onOpenChange={setIsFilterOpen}>
       <Popover.Trigger
         className={triggerWrapper}
-        style={assignInlineVars({
-          '--trigger-color': isFiltered ? colors.text01 : colors.text06,
-          '--trigger-bg': isFiltered ? colors.field09 : colors.field01,
-        })}
+        style={assignInlineVars(getFilterColors(isFiltered))}
       >
         <span>{getRegionFilterText(filters.region, filters.areas)}</span>
         <Icon icon="Chevron" width={20} rotate={isFilterOpen ? -180 : 0} cursor="pointer" />
