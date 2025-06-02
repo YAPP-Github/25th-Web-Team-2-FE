@@ -11,6 +11,7 @@ export const defaultLayoutContainer = style({
   '@media': {
     'screen and (max-width: 767px)': {
       minHeight: '100dvh',
+      paddingBottom: '0',
     },
   },
 });
