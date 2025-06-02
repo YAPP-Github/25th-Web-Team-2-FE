@@ -2,10 +2,16 @@ import AreaFilter from './AreaFilter/AreaFilter';
 import { verticalLine } from './AreaFilter/AreaFilter.css';
 import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
 import { filterContainerLayout, resetFilterButton } from './FilterContainer.css';
-import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import Icon from '@/components/Icon';
+
+import dynamic from 'next/dynamic';
+
+const MatchTypeFilter = dynamic(() => import('./MatchTypeFilter/MatchTypeFilter'), {
+  ssr: false,
+  loading: () => <></>,
+});
 
 interface FilterContainerProps {
   filters: ExperimentPostListFilters;
