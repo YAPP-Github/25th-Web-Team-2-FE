@@ -110,6 +110,7 @@ const BottomSheet = ({
                     cursor="pointer"
                     color={colors.field04}
                     subcolor={colors.text06}
+                    onClick={onClose}
                   />
                 </div>
               )}
