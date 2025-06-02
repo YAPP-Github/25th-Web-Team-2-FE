@@ -8,9 +8,13 @@ import {
   delayVar,
   dragHandle,
   headerContainer,
+  headerContent,
+  headerTitle,
   sheet,
   sheetContainer,
 } from './BottomSheet.css';
+import Icon from '../Icon';
+import { colors } from '@/styles/colors';
 
 const CLOSE_THRESHOLD = 30;
 
@@ -18,13 +22,9 @@ interface BottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   content: React.ReactNode;
-  onConfirm?: () => void;
   title?: string;
-  cancelText?: string;
-  confirmText?: string;
-  confirmDisabled?: boolean;
+  isDraggable?: boolean;
   delay?: number;
-  subTitle?: string;
   onAnimationEnd?: () => void;
 }
 
@@ -32,6 +32,8 @@ const BottomSheet = ({
   isOpen,
   onClose,
   content,
+  title,
+  isDraggable = true,
   delay = 200,
   onAnimationEnd,
 }: BottomSheetProps) => {
@@ -95,8 +97,22 @@ const BottomSheet = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <header className={headerContainer}>
-              <div className={dragHandle} />
+            <header className={headerContainer({ isDraggable })}>
+              {isDraggable ? (
+                <div className={dragHandle} />
+              ) : (
+                <div className={headerContent}>
+                  <span className={headerTitle}>{title}</span>
+                  <Icon
+                    icon="CloseRound"
+                    width={28}
+                    height={28}
+                    cursor="pointer"
+                    color={colors.field04}
+                    subcolor={colors.text06}
+                  />
+                </div>
+              )}
             </header>
             <div className={contentContainer}>{content}</div>
           </div>
