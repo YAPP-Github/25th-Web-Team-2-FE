@@ -6,12 +6,7 @@ import { filterContainerLayout, resetFilterButton } from './FilterContainer.css'
 import { ExperimentPostListFilters } from '@/apis/post';
 import Icon from '@/components/Icon';
 
-import dynamic from 'next/dynamic';
-
-const MatchTypeFilter = dynamic(() => import('./MatchTypeFilter/MatchTypeFilter'), {
-  ssr: false,
-  loading: () => <></>,
-});
+import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
 interface FilterContainerProps {
   filters: ExperimentPostListFilters;

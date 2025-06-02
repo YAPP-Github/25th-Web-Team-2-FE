@@ -7,7 +7,6 @@ import { triggerWrapper, contentContainer, selectItem } from './MatchTypeFilter.
 import { ExperimentPostListFilters } from '@/apis/post';
 import { getFilterColors, getMatchTypeLabel } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
-import { isMobile } from '@/utils/deviceType';
 import useOverlay from '@/hooks/useOverlay';
 import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
 import MatchTypeBottomSheet from './MatchTypeBottomSheet/MatchTypeBottomSheet';
@@ -23,29 +22,19 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
 
   const isSelected = Boolean(filters.matchType);
 
-  if (isMobile()) {
-    return (
-      <button
-        className={triggerWrapper}
-        style={assignInlineVars(getFilterColors(isSelected))}
-        onClick={() =>
-          open(
-            () => (
-              <MatchTypeBottomSheet
-                initialValue={filters.matchType}
-                onChange={onChange}
-                onClose={close}
-              />
-            ),
-            { isDraggable: false, title: '진행 방식' },
-          )
-        }
-      >
-        <span>{getMatchTypeLabel(filters.matchType)}</span>
-        <Icon icon="Chevron" width={20} cursor="pointer" />
-      </button>
+  const handleOpenBottomSheet = (e: React.TouchEvent) => {
+    e.preventDefault();
+    open(
+      () => (
+        <MatchTypeBottomSheet
+          initialValue={filters.matchType}
+          onChange={onChange}
+          onClose={close}
+        />
+      ),
+      { isDraggable: false, title: '진행 방식' },
     );
-  }
+  };
 
   return (
     <Select.Root
@@ -56,6 +45,7 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
       <Select.Trigger
         className={triggerWrapper}
         style={assignInlineVars(getFilterColors(isSelected))}
+        onTouchEnd={handleOpenBottomSheet}
       >
         <span>{getMatchTypeLabel(filters.matchType)}</span>
         <Select.Icon>
