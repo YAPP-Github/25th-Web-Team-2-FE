@@ -11,6 +11,7 @@ import {
   totalPostCount,
   watchMoreButton,
 } from './ExperimentPostCardListContainer.css';
+import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostContainer.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
@@ -20,7 +21,6 @@ import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostC
 import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
-import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostContainer.css';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
