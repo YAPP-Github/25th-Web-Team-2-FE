@@ -1,13 +1,10 @@
 ## Issue Number
-
 <!-- #이슈번호 -->
 
 ## As-Is
-
 <!-- 문제 상황 정의 -->
 
 ## To-Be
-
 <!-- 변경 사항 -->
 
 ## Check List

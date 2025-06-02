@@ -2,7 +2,7 @@ import { fetchClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
 import { API_URL } from '@/constants/url';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { ParticipantJoinSubmitSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import { Role } from '@/types/user';
 
@@ -92,7 +92,7 @@ export const joinResearcher = async (params: ResearcherJoinSchemaType) => {
   return await fetchClient.post<JoinResponse>(API_URL.joinResearcher, { body: params });
 };
 
-export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
+export const joinParticipant = async (params: ParticipantJoinSubmitSchemaType) => {
   return await fetchClient.post<JoinResponse>(API_URL.joinParticipant, { body: params });
 };
 

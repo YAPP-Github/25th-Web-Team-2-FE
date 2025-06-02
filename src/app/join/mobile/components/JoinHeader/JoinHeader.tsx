@@ -31,7 +31,7 @@ const JoinHeader = ({ role }: { role?: Role }) => {
   return (
     <>
       <header className={headerWrapper}>
-        <Icon icon="Arrow" width={20} height={20} color={colors.text06} onClick={goToPrev} />
+        <Icon icon="Arrow" width={24} height={24} color={colors.text06} onClick={goToPrev} />
         <h1 className={headerTitle}>{headerTitleMap[role]}</h1>
       </header>
 
