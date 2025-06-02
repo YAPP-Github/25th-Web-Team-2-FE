@@ -24,6 +24,8 @@ import { GENDER } from '@/app/home/home.constants';
 import { GenderValue } from '@/app/home/home.types';
 import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
+import useOverlay from '@/hooks/useOverlay';
+import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBottomSheet';
 
 const AGE_MAX_LENGTH = 3;
 
@@ -34,11 +36,28 @@ interface ContactTargetFilterProps {
 }
 
 const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTargetFilterProps) => {
+  const { open, close } = useOverlay();
   const [isOpen, setIsOpen] = useState(false);
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
 
   const [filteredGender, setFilteredGender] = useState<GenderValue | null>(null);
   const [filteredAge, setFilteredAge] = useState('');
+
+  const handleOpenBottomSheet = (e: React.TouchEvent) => {
+    e.preventDefault();
+    open(
+      () => (
+        <ContactTargetBottomSheet
+          initialGender={filteredGender}
+          initialAge={filteredAge}
+          onReset={handleResetFilter}
+          onChange={onChange}
+          onClose={close}
+        />
+      ),
+      { isDraggable: false, title: '모집대상' },
+    );
+  };
 
   const handleChangeFilteredAge = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -79,6 +98,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
       <Popover.Trigger
         className={popoverTrigger}
         style={assignInlineVars(getFilterColors(isSelected))}
+        onTouchEnd={handleOpenBottomSheet}
       >
         <span>{getContactTargetFilterText(filterAge, filterGender)}</span>
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
