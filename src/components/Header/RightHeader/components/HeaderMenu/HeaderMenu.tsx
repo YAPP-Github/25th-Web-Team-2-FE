@@ -2,7 +2,7 @@ import * as Select from '@radix-ui/react-select';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { contentContainer, selectItem, triggerWrapper } from './Menu.css';
+import { contentContainer, selectItem, triggerWrapper } from './HeaderMenu.css';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import Icon from '@/components/Icon';
@@ -10,11 +10,11 @@ import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
-interface MenuProps {
+interface HeaderMenuProps {
   userInfo: ParticipantResponse | ResearcherResponse;
 }
 
-const Menu = ({ userInfo }: MenuProps) => {
+const HeaderMenu = ({ userInfo }: HeaderMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = async () => {
@@ -62,4 +62,4 @@ const Menu = ({ userInfo }: MenuProps) => {
   );
 };
 
-export default Menu;
+export default HeaderMenu;

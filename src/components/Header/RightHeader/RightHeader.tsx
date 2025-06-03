@@ -1,9 +1,11 @@
 import Link from 'next/link';
 
-import { buttonContainer, HeaderButton, loginButton } from '../Header.css';
-import Menu from '../Menu';
+import { buttonContainer, loginButton } from '../Header.css';
+import DesktopLoginHeader from './components/DesktopLoginHeader/DesktopLoginHeader';
+import MobileLoginHeader from './components/MobileLoginHeader/MobileLoginHeader';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+
 
 const RightHeader = () => {
   const { userInfo, isLoading, isResearcher } = useUserInfo();
@@ -16,12 +18,8 @@ const RightHeader = () => {
     <div className={buttonContainer}>
       {userInfo ? (
         <>
-          {isResearcher && (
-            <Link href="/upload" className={HeaderButton}>
-              실험 공고 등록
-            </Link>
-          )}
-          <Menu userInfo={userInfo} />
+          <DesktopLoginHeader isResearcher={isResearcher} userInfo={userInfo} />
+          <MobileLoginHeader />
         </>
       ) : (
         <Link href="/login" className={loginButton}>
