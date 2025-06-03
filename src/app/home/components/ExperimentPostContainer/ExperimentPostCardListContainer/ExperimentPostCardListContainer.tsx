@@ -21,6 +21,9 @@ import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostC
 import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
+import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
+import { useRef } from 'react';
+import { isMobile } from '@/utils/deviceType';
 
 interface PostCardListContainerProps {
   filters: ExperimentPostListFilters;
@@ -44,6 +47,8 @@ const ExperimentPostCardListContainer = ({
     isFetched,
   } = useExperimentPostListQuery(filters, isUserInfoLoading);
 
+  const observerRef = useRef<HTMLDivElement>(null);
+
   const hasData = postListData && postListData.pages && postListData?.pages[0].content.length > 0;
 
   if (!isFetched || isUserInfoLoading) {
@@ -56,47 +61,53 @@ const ExperimentPostCardListContainer = ({
   }
 
   return (
-    <div className={postCardContentContainer}>
-      <div className={postCardContainer}>
-        <div className={postCardContainerHeader}>
-          <span className={totalPostCount}>
-            {postListData && `총 ${postListData?.pages[0].totalCount}개`}
-          </span>
-          <div className={recruitCheckWrapper({ isMobile: true })}>
-            <JoinCheckbox
-              labelClassName={recruitCheckLabel}
-              label="모집 중인 공고만 보기"
-              isChecked={isRecruiting}
-              onChange={handleToggleRecruitStatus}
-              emptyCheckIcon={
-                <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
-              }
-            />
+    <IntersectionObserverScroll
+      observerRef={observerRef}
+      enabled={isMobile() && !isFetching && hasNextPage}
+      fetchNextPage={fetchNextPage}
+    >
+      <div className={postCardContentContainer}>
+        <div className={postCardContainer}>
+          <div className={postCardContainerHeader}>
+            <span className={totalPostCount}>
+              {postListData && `총 ${postListData?.pages[0].totalCount}개`}
+            </span>
+            <div className={recruitCheckWrapper({ isMobile: true })}>
+              <JoinCheckbox
+                labelClassName={recruitCheckLabel}
+                label="모집 중인 공고만 보기"
+                isChecked={isRecruiting}
+                onChange={handleToggleRecruitStatus}
+                emptyCheckIcon={
+                  <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
+                }
+              />
+            </div>
           </div>
+          <ExperimentPost postListData={postListData} />
         </div>
-        <ExperimentPost postListData={postListData} />
-      </div>
 
-      {isFetching && <div className={loadingMoreButton} />}
-      {!isFetching && hasNextPage && (
-        <button
-          className={watchMoreButton}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          더보기
-        </button>
-      )}
-      {!isFetching && !hasNextPage && hasData && (
-        <div className={allPostsViewedContainer}>
-          <Icon icon="Golf" width={40} height={40} />
-          <div className={allPostsViewedContentContainer}>
-            <span className={allPostsViewedTitle}>모든 공고를 다 확인했어요!</span>
-            <span className={allPostsViewedSubTitle}>새롭게 올라올 공고도 기대해 주세요</span>
+        {isFetching && <div className={loadingMoreButton} />}
+        {!isFetching && hasNextPage && (
+          <button
+            className={watchMoreButton}
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            더보기
+          </button>
+        )}
+        {!isFetching && !hasNextPage && hasData && (
+          <div className={allPostsViewedContainer}>
+            <Icon icon="Golf" width={40} height={40} />
+            <div className={allPostsViewedContentContainer}>
+              <span className={allPostsViewedTitle}>모든 공고를 다 확인했어요!</span>
+              <span className={allPostsViewedSubTitle}>새롭게 올라올 공고도 기대해 주세요</span>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </IntersectionObserverScroll>
   );
 };
 

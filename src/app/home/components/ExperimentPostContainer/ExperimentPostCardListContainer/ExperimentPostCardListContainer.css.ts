@@ -37,6 +37,12 @@ export const watchMoreButton = style({
   backgroundColor: colors.field04,
   padding: '1.2rem 0',
   borderRadius: '1.2rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const loadingMoreButton = style({
