@@ -50,7 +50,7 @@ const ExperimentPostCardListContainer = ({
 
   const observerRef = useRef<HTMLDivElement>(null);
 
-  const hasData = postListData && postListData.pages && postListData?.pages[0].content.length > 0;
+  const hasData = postListData && postListData.pages[0].content.length > 0;
 
   if (!isFetched || isUserInfoLoading) {
     return (
