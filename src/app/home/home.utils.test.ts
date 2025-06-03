@@ -3,6 +3,7 @@ import {
   calculateAgeFromBirthDate,
   formatPostDate,
   getContactTargetFilterText,
+  getRegionFilterText,
 } from './home.utils';
 
 describe('formatPostDate - 실험공고 날짜 형식 맞추는 유틸 함수', () => {
@@ -94,63 +95,131 @@ describe('calculateAgeFromBirthDate - 만 나이 계산 유틸 함수', () => {
 });
 
 describe('getContactTargetFilterText - 모집 대상 filter 텍스트 유틸 함수', () => {
-  it('나이와 성별이 모두 있는 경우', () => {
+  it('나이와 성별이 모두 있는 경우 모두 반환한다.', () => {
     // Given
     const age = 25;
     const gender = 'MALE';
+    const expected = '남성 · 만 25세';
 
     // When
     const result = getContactTargetFilterText(age, gender);
 
     // Then
-    expect(result).toBe('남성 · 만 25세');
+    expect(result).toBe(expected);
   });
 
-  it('나이와 성별이 모두 있지만 성별을 선택하지 않은 경우(ALL)', () => {
+  it('나이와 성별이 모두 있지만 성별을 선택하지 않은 경우(ALL) 나이만 반환한다.', () => {
     // Given
     const age = 25;
     const gender = 'ALL';
+    const expected = '만 25세';
 
     // When
     const result = getContactTargetFilterText(age, gender);
 
     // Then
-    expect(result).toBe('만 25세');
+    expect(result).toBe(expected);
   });
 
-  it('성별만 있는 경우', () => {
+  it('성별만 있는 경우 성별만 반환한다.', () => {
     // Given
     const age = undefined;
     const gender = 'FEMALE';
+    const expected = '여성';
 
     // When
     const result = getContactTargetFilterText(age, gender);
 
     // Then
-    expect(result).toBe('여성');
+    expect(result).toBe(expected);
   });
 
-  it('나이만 있는 경우', () => {
+  it('나이만 있는 경우 나이만 반환한다.', () => {
     // Given
     const age = 25;
     const gender = undefined;
+    const expected = '만 25세';
 
     // When
     const result = getContactTargetFilterText(age, gender);
 
     // Then
-    expect(result).toBe('만 25세');
+    expect(result).toBe(expected);
   });
 
-  it('나이와 성별이 모두 없는 경우', () => {
+  it('나이와 성별이 모두 없는 경우 "모집 대상" 문자열을 반환한다.', () => {
     // Given
     const age = undefined;
     const gender = undefined;
-
+    const expected = '모집 대상';
     // When
     const result = getContactTargetFilterText(age, gender);
 
     // Then
-    expect(result).toBe('모집 대상');
+    expect(result).toBe(expected);
+  });
+});
+
+describe('getRegionFilterText - 지역 filter 텍스트 유틸 함수', () => {
+  it('지역만 있고 세부 지역이 없는 경우 지역명만 반환한다.', () => {
+    // Given
+    const region = 'SEOUL';
+    const areas = undefined;
+    const expected = '서울';
+
+    // When
+    const result = getRegionFilterText(region, areas);
+
+    // Then
+    expect(result).toBe(expected);
+  });
+
+  it('지역과 세부 지역 1개 있는 경우, 지역과 세부 지역을 함께 반환한다.', () => {
+    // Given
+    const region = 'SEOUL';
+    const areas = ['GANGNAMGU'];
+    const expected = '서울 · 강남구';
+    // When
+    const result = getRegionFilterText(region, areas);
+
+    // Then
+    expect(result).toBe(expected);
+  });
+
+  it('지역과 세부 지역 2개 이상 있는 경우, 지역과 첫 번째 세부 지역과 나머지 개수를 반환한다.', () => {
+    // Given
+    const region = 'SEOUL';
+    const areas = ['GANGNAMGU', 'GANGDONGGU', 'MAPOGU'];
+    const expected = '서울 · 강남구 외 2';
+    // When
+    const result = getRegionFilterText(region, areas);
+
+    // Then
+    expect(result).toBe(expected);
+  });
+
+  it('지역만 설정한 경우 지역명만 반환한다.', () => {
+    // Given
+    const region = 'BUSAN';
+    const areas = undefined;
+    const expected = '부산';
+    // When
+    const result = getRegionFilterText(region, areas);
+
+    // Then
+    expect(result).toBe(expected);
+  });
+
+  it('지역이 없는 경우, 기본 메시지 "지역"을 반환한다.', () => {
+    // Given
+    const region = undefined;
+    const areas = ['GANGNAMGU'];
+    const expected = '지역';
+
+    // When
+    const result = getRegionFilterText(region, areas);
+
+    // Then
+    expect(result).toBe(expected);
   });
 });
