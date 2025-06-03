@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import {
   bannerCarousel,
@@ -15,90 +15,19 @@ import {
 import WebBanner from '@/assets/images/webBanner.png';
 import WebBannerSecond from '@/assets/images/webBanner2.png';
 import Icon from '@/components/Icon';
-
-const BANNER_LENGTH = 4;
-const AUTO_SLIDE_INTERVAL = 5000;
-const SLIDE_SPEED = 1.2;
-const SLIDE_THRESHOLD = 50;
+import { useSlide } from './hooks/useSlide';
+import { useTouchSlide } from './hooks/useTouchSlide';
+import { SLIDE_SPEED } from '../../home.constants';
 
 const Banner = () => {
-  const [bannerIdx, setBannerIdx] = useState(0);
+  const { bannerIdx, resetAutoSlide, moveSlide, handleClickPrev, handleClickNext } = useSlide();
+  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSlide({
+    bannerIdx,
+    resetAutoSlide,
+    moveSlide,
+  });
+
   const carouselRef = useRef<HTMLDivElement>(null);
-  const slideTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const [translateX, setTranslateX] = useState(0);
-  const startTouchRef = useRef<number | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    startTouchRef.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (startTouchRef.current === null) return;
-
-    const deltaX = startTouchRef.current - e.touches[0].clientX;
-
-    setTranslateX(deltaX);
-  };
-
-  const handleTouchEnd = () => {
-    if (translateX > SLIDE_THRESHOLD) {
-      resetAutoSlide();
-      const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
-      moveSlide(nextIndex);
-    }
-
-    startTouchRef.current = null;
-  };
-
-  const moveSlide = (index: number) => {
-    if (carouselRef.current) {
-      const width = carouselRef.current.clientWidth;
-      carouselRef.current.style.transition = `transform ${SLIDE_SPEED}s ease-in-out`;
-      carouselRef.current.style.transform = `translateX(-${width * index}px)`;
-      setBannerIdx(index);
-    }
-  };
-
-  const handleClickPrev = () => {
-    resetAutoSlide();
-    const prevIndex = bannerIdx === 0 ? BANNER_LENGTH - 1 : bannerIdx - 1;
-    moveSlide(prevIndex);
-  };
-
-  const handleClickNext = () => {
-    resetAutoSlide();
-    const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
-    moveSlide(nextIndex);
-  };
-
-  const startAutoSlide = useCallback(() => {
-    if (slideTimerRef.current) {
-      clearInterval(slideTimerRef.current);
-    }
-
-    slideTimerRef.current = setInterval(() => {
-      const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
-      moveSlide(nextIndex);
-    }, AUTO_SLIDE_INTERVAL);
-  }, [bannerIdx]);
-
-  const resetAutoSlide = () => {
-    if (slideTimerRef.current) {
-      clearInterval(slideTimerRef.current);
-    }
-    startAutoSlide();
-  };
-
-  useEffect(() => {
-    startAutoSlide();
-
-    return () => {
-      if (slideTimerRef.current) {
-        clearInterval(slideTimerRef.current);
-      }
-    };
-  }, [bannerIdx, startAutoSlide]);
 
   return (
     <div className={bannerLayout}>

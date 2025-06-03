@@ -348,3 +348,7 @@ export const MATCH_TYPE_OPTIONS = [
   { label: '대면', value: 'OFFLINE' },
   { label: '비대면', value: 'ONLINE' },
 ] as const;
+
+// Banner
+export const BANNER_LENGTH = 4;
+export const SLIDE_SPEED = 1.2;
