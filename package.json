@@ -9,7 +9,8 @@
     "lint": "next lint --fix",
     "mock": "npx tsx watch ./src/mocks/http.ts",
     "dev:mock": "concurrently --kill-others \"NEXT_PUBLIC_API_MOCKING=enable pnpm dev\" \"pnpm mock\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -45,13 +46,16 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4.5.1",
     "concurrently": "^9.1.1",
     "eslint": "^8",
     "eslint-config-next": "14.2.22",
     "express": "^4.21.2",
     "husky": "^9.1.7",
+    "jsdom": "^26.1.0",
     "msw": "^2.7.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.0"
   },
   "msw": {
     "workerDirectory": [
