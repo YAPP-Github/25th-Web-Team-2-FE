@@ -1,7 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { calculateAgeFromBirthDate, formatPostDate } from './home.utils';
+import {
+  calculateAgeFromBirthDate,
+  formatPostDate,
+  getContactTargetFilterText,
+} from './home.utils';
 
-describe('formatPostDate - 실험공고 날짜 형식 맞추는 유틸 함수 테스트', () => {
+describe('formatPostDate - 실험공고 날짜 형식 맞추는 유틸 함수', () => {
   it('시작일과 종료일이 모두 있는 경우 범위 형식으로 날짜 문자열을 반환한다.', () => {
     // Given
     const startDate = '2025-01-15';
@@ -55,7 +59,7 @@ describe('formatPostDate - 실험공고 날짜 형식 맞추는 유틸 함수 �
   });
 });
 
-describe('calculateAgeFromBirthDate - 만 나이 계산 유틸 함수 테스트', () => {
+describe('calculateAgeFromBirthDate - 만 나이 계산 유틸 함수', () => {
   beforeEach(() => {
     vi.setSystemTime(new Date('2025-01-15'));
   });
@@ -86,5 +90,67 @@ describe('calculateAgeFromBirthDate - 만 나이 계산 유틸 함수 테스트'
 
     // Then
     expect(result).toBe(expected);
+  });
+});
+
+describe('getContactTargetFilterText - 모집 대상 filter 텍스트 유틸 함수', () => {
+  it('나이와 성별이 모두 있는 경우', () => {
+    // Given
+    const age = 25;
+    const gender = 'MALE';
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe('남성 · 만 25세');
+  });
+
+  it('나이와 성별이 모두 있지만 성별을 선택하지 않은 경우(ALL)', () => {
+    // Given
+    const age = 25;
+    const gender = 'ALL';
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe('만 25세');
+  });
+
+  it('성별만 있는 경우', () => {
+    // Given
+    const age = undefined;
+    const gender = 'FEMALE';
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe('여성');
+  });
+
+  it('나이만 있는 경우', () => {
+    // Given
+    const age = 25;
+    const gender = undefined;
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe('만 25세');
+  });
+
+  it('나이와 성별이 모두 없는 경우', () => {
+    // Given
+    const age = undefined;
+    const gender = undefined;
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe('모집 대상');
   });
 });

@@ -76,7 +76,7 @@ export const getContactTargetFilterText = (age?: number, gender?: GenderFilterVa
   } else if (!age && gender) {
     return `${genderLabelMapper[gender]}`;
   } else if (age && !gender) {
-    return `만 ${age}세 `;
+    return `만 ${age}세`;
   }
 
   return '모집 대상';
