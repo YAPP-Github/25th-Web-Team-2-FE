@@ -57,5 +57,13 @@ export const useSlide = () => {
     };
   }, [bannerIdx, startAutoSlide]);
 
-  return { bannerIdx, handleClickPrev, handleClickNext, resetAutoSlide, startAutoSlide, moveSlide };
+  return {
+    bannerIdx,
+    carouselRef,
+    handleClickPrev,
+    handleClickNext,
+    resetAutoSlide,
+    startAutoSlide,
+    moveSlide,
+  };
 };
