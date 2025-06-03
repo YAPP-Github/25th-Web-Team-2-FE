@@ -14,6 +14,7 @@ import {
   sheetContainer,
 } from './BottomSheet.css';
 import Icon from '../Icon';
+
 import { colors } from '@/styles/colors';
 
 const CLOSE_THRESHOLD = 30;

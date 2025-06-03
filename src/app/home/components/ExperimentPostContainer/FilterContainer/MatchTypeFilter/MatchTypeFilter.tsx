@@ -2,14 +2,14 @@ import * as Select from '@radix-ui/react-select';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
+import MatchTypeBottomSheet from './MatchTypeBottomSheet/MatchTypeBottomSheet';
 import { triggerWrapper, contentContainer, selectItem } from './MatchTypeFilter.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
+import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
 import { getFilterColors, getMatchTypeLabel } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
-import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
-import MatchTypeBottomSheet from './MatchTypeBottomSheet/MatchTypeBottomSheet';
 
 interface MatchTypeFilterProps {
   filters: ExperimentPostListFilters;

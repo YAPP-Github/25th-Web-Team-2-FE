@@ -4,6 +4,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { ChangeEvent, useEffect, useState } from 'react';
 
+import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBottomSheet';
 import {
   genderSelectWrapper,
   ageSelectWrapper,
@@ -25,7 +26,6 @@ import { GenderValue } from '@/app/home/home.types';
 import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
-import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBottomSheet';
 
 const AGE_MAX_LENGTH = 3;
 

@@ -11,6 +11,7 @@ import {
   verticalLine,
 } from './AreaFilter.css';
 import AreaContainer from './components/AreaContainer/AreaContainer';
+import AreaFilterBottomSheet from './components/AreaFilterBottomSheet/AreaFilterBottomSheet';
 import FooterButtonContainer from './components/FooterButtonContainer/FooterButtonContainer';
 import RegionContainer from './components/RegionContainer/RegionContainer';
 import useAreaFilter from './hooks/useAreaFilter';
@@ -21,7 +22,6 @@ import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
-import AreaFilterBottomSheet from './components/AreaFilterBottomSheet/AreaFilterBottomSheet';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;

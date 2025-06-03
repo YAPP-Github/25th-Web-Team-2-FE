@@ -1,8 +1,5 @@
 import { ChangeEvent, useState } from 'react';
 
-import { GENDER } from '@/app/home/home.constants';
-import Button from '@/components/Button/Button';
-import { GenderValue } from '@/app/home/home.types';
 import {
   ageInput,
   ageInputContainer,
@@ -17,6 +14,10 @@ import {
   saveButton,
   contactTargetBottomSheetContainer,
 } from './ContactTargetBottomSheet.css';
+
+import { GENDER } from '@/app/home/home.constants';
+import { GenderValue } from '@/app/home/home.types';
+import Button from '@/components/Button/Button';
 
 const AGE_MAX_LENGTH = 3;
 
