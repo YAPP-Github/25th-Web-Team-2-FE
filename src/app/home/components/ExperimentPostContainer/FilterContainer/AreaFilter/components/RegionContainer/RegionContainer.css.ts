@@ -6,7 +6,7 @@ import { fonts } from '@/styles/fonts.css';
 
 // 지역 목록 컨테이너
 export const regionContainer = style({
-  flex: '0.5',
+  flex: 0.5,
   display: 'flex',
   flexDirection: 'column',
   gap: '0.4rem',
@@ -21,6 +21,7 @@ export const regionContainer = style({
       height: '40rem',
       gap: '0.8rem',
       padding: '0.8rem',
+      flex: 1,
     },
   },
 });

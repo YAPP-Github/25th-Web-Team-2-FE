@@ -76,4 +76,12 @@ export const placeholderArea = style({
   justifyContent: 'center',
   alignItems: 'center',
   height: '100%',
+  whiteSpace: 'nowrap',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      textAlign: 'center',
+      whiteSpace: 'pre-wrap',
+    },
+  },
 });

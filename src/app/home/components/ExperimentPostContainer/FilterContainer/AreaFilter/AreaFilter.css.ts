@@ -36,8 +36,6 @@ export const regionContentContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '1.2rem',
-  width: '36.4rem',
-  height: '35rem',
   padding: '1.2rem',
   borderRadius: '1.2rem',
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
