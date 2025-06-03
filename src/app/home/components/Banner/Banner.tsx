@@ -16,14 +16,40 @@ import WebBanner from '@/assets/images/webBanner.png';
 import WebBannerSecond from '@/assets/images/webBanner2.png';
 import Icon from '@/components/Icon';
 
-const BANNER_LENGTH = 3;
+const BANNER_LENGTH = 4;
 const AUTO_SLIDE_INTERVAL = 5000;
 const SLIDE_SPEED = 1.2;
+const SLIDE_THRESHOLD = 50;
 
 const Banner = () => {
   const [bannerIdx, setBannerIdx] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const slideTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [translateX, setTranslateX] = useState(0);
+  const startTouchRef = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    startTouchRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (startTouchRef.current === null) return;
+
+    const deltaX = startTouchRef.current - e.touches[0].clientX;
+
+    setTranslateX(deltaX);
+  };
+
+  const handleTouchEnd = () => {
+    if (translateX > SLIDE_THRESHOLD) {
+      resetAutoSlide();
+      const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
+      moveSlide(nextIndex);
+    }
+
+    startTouchRef.current = null;
+  };
 
   const moveSlide = (index: number) => {
     if (carouselRef.current) {
@@ -76,7 +102,12 @@ const Banner = () => {
 
   return (
     <div className={bannerLayout}>
-      <div className={bannerCarousel}>
+      <div
+        className={bannerCarousel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
           ref={carouselRef}
           className={carouselContainer}
