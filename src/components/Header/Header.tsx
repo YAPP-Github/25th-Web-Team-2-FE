@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <div className={headerLayout}>
       <Link href="/">
-        <Image src={Logo} alt="로고" className={image} width={100.5} height={30} priority />
+        <Image src={Logo} alt="로고" className={image} width={100} height={30} priority />
       </Link>
       <RightHeader />
     </div>
