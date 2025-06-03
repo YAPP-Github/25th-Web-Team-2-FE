@@ -28,10 +28,14 @@ export const useTouchSlide = ({ bannerIdx, resetAutoSlide, moveSlide }: UseTouch
   };
 
   const handleTouchEnd = () => {
-    if (translateX > SLIDE_THRESHOLD) {
+    if (Math.abs(translateX) > SLIDE_THRESHOLD) {
       resetAutoSlide();
-      const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
-      moveSlide(nextIndex);
+
+      const prevIdx = (bannerIdx - 1 + BANNER_LENGTH) % BANNER_LENGTH;
+      const nextIdx = (bannerIdx + 1) % BANNER_LENGTH;
+
+      const targetIdx = translateX > 0 ? nextIdx : prevIdx;
+      moveSlide(targetIdx);
     }
 
     startTouchRef.current = null;
