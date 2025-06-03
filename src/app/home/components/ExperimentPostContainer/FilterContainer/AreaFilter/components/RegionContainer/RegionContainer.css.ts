@@ -2,6 +2,7 @@ import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
 
 // 지역 목록 컨테이너
 export const regionContainer = style({
@@ -14,10 +15,24 @@ export const regionContainer = style({
   borderRadius: '1.2rem',
   height: '28rem',
   overflow: 'scroll',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: '40rem',
+      gap: '0.8rem',
+      padding: '0.8rem',
+    },
+  },
 });
 
 export const selectedRegionName = style({
   color: colors.textPrimary,
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      ...fonts.body.small.SB15,
+    },
+  },
 });
 
 export const areaButtonRecipe = recipe({
@@ -27,6 +42,13 @@ export const areaButtonRecipe = recipe({
     alignItems: 'center',
     padding: '0.6rem 1.2rem',
     borderRadius: '1.2rem',
+
+    '@media': {
+      'screen and (max-width: 767px)': {
+        padding: '0.8rem 1.2rem',
+        height: '4rem',
+      },
+    },
   },
   variants: {
     selected: {
