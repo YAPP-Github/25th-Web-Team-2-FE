@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import ExperimentPost from './ExperimentPostCardList/ExperimentPost';
 import {
   allPostsViewedContainer,
@@ -19,10 +21,9 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[post_id]/components/ExperimentPostContainer/ExperimentPostContainer.css';
 import Icon from '@/components/Icon';
+import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
-import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
-import { useRef } from 'react';
 import { isMobile } from '@/utils/deviceType';
 
 interface PostCardListContainerProps {

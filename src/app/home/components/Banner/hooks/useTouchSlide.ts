@@ -1,5 +1,6 @@
-import { BANNER_LENGTH } from '@/app/home/home.constants';
 import { useRef, useState } from 'react';
+
+import { BANNER_LENGTH } from '@/app/home/home.constants';
 
 const SLIDE_THRESHOLD = 50;
 

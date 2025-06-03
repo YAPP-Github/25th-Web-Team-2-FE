@@ -22,7 +22,6 @@ const IntersectionObserverScroll = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && enabled) {
-          console.log('fetchNextPage');
           fetchNextPage();
         }
       },
@@ -36,7 +35,7 @@ const IntersectionObserverScroll = ({
     return () => {
       if (observerElement) observer.unobserve(observerElement);
     };
-  }, [threshold, observerRef]);
+  }, [threshold, observerRef, enabled, fetchNextPage]);
 
   return (
     <Fragment>

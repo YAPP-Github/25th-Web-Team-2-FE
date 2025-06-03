@@ -10,13 +10,13 @@ import {
   navigationLeft,
   navigationRight,
 } from './Banner.css';
+import { useSlide } from './hooks/useSlide';
+import { useTouchSlide } from './hooks/useTouchSlide';
+import { SLIDE_SPEED } from '../../home.constants';
 
 import WebBanner from '@/assets/images/webBanner.png';
 import WebBannerSecond from '@/assets/images/webBanner2.png';
 import Icon from '@/components/Icon';
-import { useSlide } from './hooks/useSlide';
-import { useTouchSlide } from './hooks/useTouchSlide';
-import { SLIDE_SPEED } from '../../home.constants';
 
 const BannerMap = [
   {

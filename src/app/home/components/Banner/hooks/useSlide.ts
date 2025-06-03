@@ -1,5 +1,6 @@
-import { BANNER_LENGTH, SLIDE_SPEED } from '@/app/home/home.constants';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { BANNER_LENGTH, SLIDE_SPEED } from '@/app/home/home.constants';
 
 const AUTO_SLIDE_INTERVAL = 5000;
 
