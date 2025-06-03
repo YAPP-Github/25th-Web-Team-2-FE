@@ -62,3 +62,4 @@ export { default as AlertOutlined } from './AlertOutlined';
 export { default as Golf } from './Golf';
 export { default as Arrow } from './Arrow';
 export { default as Check } from './Check';
+export { default as Profile } from './Profile';
