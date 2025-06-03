@@ -66,7 +66,7 @@ const ExperimentPostCardListContainer = ({
       enabled={isMobile() && !isFetching && hasNextPage}
       fetchNextPage={fetchNextPage}
     >
-      <div className={postCardContentContainer}>
+      <main className={postCardContentContainer}>
         <div className={postCardContainer}>
           <div className={postCardContainerHeader}>
             <span className={totalPostCount}>
@@ -106,7 +106,7 @@ const ExperimentPostCardListContainer = ({
             </div>
           </div>
         )}
-      </div>
+      </main>
     </IntersectionObserverScroll>
   );
 };
