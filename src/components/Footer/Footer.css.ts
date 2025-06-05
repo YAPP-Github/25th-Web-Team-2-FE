@@ -13,7 +13,7 @@ export const footerLayout = style({
   padding: '2rem 0',
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       display: 'none',
     },
   },

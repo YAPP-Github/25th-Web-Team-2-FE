@@ -7,7 +7,6 @@ import { headerLayout, image } from './Header.css';
 import RightHeader from './RightHeader/RightHeader';
 import Logo from '../../assets/images/logo.svg';
 
-
 const Header = () => {
   return (
     <div className={headerLayout}>
