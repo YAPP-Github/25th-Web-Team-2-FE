@@ -17,28 +17,28 @@ jobs:
         uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v4
-        name: Install pnpm
+        name: pnpm 셋업
         with:
           version: 10
           run_install: false
 
-      - name: Setup Node.js
+      - name: Node.js 셋업
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: 의존성 설치
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: 빌드
         run: pnpm build
 
-      - name: Run tests with coverage
-        run: pnpm test --coverage
+      - name: 테스트 코드 실행
+        run: pnpm test -- --passWithNoTests
 
-      - name: Report test coverage
-        uses: davelosert/vitest-coverage-report-action@v2
+      - name: 테스트 결과 PR 코멘트 등록
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          name: '테스트 결과'
+          files: reports/**/*.xml

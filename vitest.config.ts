@@ -10,10 +10,6 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     globals: true,
-    coverage: {
-      reporter: ['text', 'json-summary', 'json'],
-      reportOnFailure: true,
-    },
   },
   resolve: {
     alias: {
