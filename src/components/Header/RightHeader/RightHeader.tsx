@@ -18,7 +18,7 @@ const RightHeader = () => {
       {userInfo ? (
         <>
           <DesktopLoginHeader isResearcher={isResearcher} userInfo={userInfo} />
-          <MobileLoginHeader />
+          <MobileLoginHeader isResearcher={isResearcher} />
         </>
       ) : (
         <Link href="/login" className={loginButton}>

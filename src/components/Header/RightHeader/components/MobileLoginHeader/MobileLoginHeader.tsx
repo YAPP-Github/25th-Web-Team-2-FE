@@ -4,13 +4,19 @@ import { mobileRightHeader } from './MobileLoginHeader.css';
 
 import Icon from '@/components/Icon';
 
-const MobileLoginHeader = () => {
+interface MobileLoginHeaderProps {
+  isResearcher: boolean;
+}
+
+const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
   return (
     <>
       <div className={mobileRightHeader}>
-        <Link href="/upload">
-          <Icon icon="Pen" width={24} height={24} cursor="pointer" />
-        </Link>
+        {isResearcher && (
+          <Link href="/upload">
+            <Icon icon="Pen" width={24} height={24} cursor="pointer" />
+          </Link>
+        )}
         <Link href="/user/profile">
           <Icon icon="Profile" width={24} height={24} cursor="pointer" />
         </Link>
