@@ -5,7 +5,7 @@ on:
     branches: [main, develop]
 
 permissions:
-  contents: read
+  checks: write
   pull-requests: write
 
 jobs:
@@ -38,7 +38,9 @@ jobs:
         run: pnpm test -- --passWithNoTests
 
       - name: 테스트 결과 PR 코멘트 등록
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: dorny/test-reporter@v1
         if: always()
         with:
-          files: reports/**/*.xml
+          name: Vitest Tests
+          path: '**/test-results.json'
+          reporter: 'json'
