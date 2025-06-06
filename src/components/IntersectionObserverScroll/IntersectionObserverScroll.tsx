@@ -15,13 +15,13 @@ const IntersectionObserverScroll = ({
   enabled = false,
 }: PropsWithChildren<IntersectionObserverScrollProps>) => {
   useEffect(() => {
-    if (!observerRef.current) return;
+    if (!observerRef.current || !enabled) return;
 
     const observerElement = observerRef.current;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && enabled) {
+        if (entry.isIntersecting) {
           fetchNextPage();
         }
       },
