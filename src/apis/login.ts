@@ -1,4 +1,4 @@
-import { fetchClient } from './config/fetchClient';
+import { fetchClient, refreshClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
 import { API_URL } from '@/constants/url';
@@ -97,7 +97,7 @@ export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
 };
 
 export const updateAccessToken = async (refreshToken: string) => {
-  return await fetchClient.post<LoginResponse>(API_URL.refresh, { body: { refreshToken } });
+  return await refreshClient.post<LoginResponse>(API_URL.refresh, { body: { refreshToken } });
 };
 
 export const validateContactEmailInfo = async ({ contactEmail }: ValidateContactEmailParams) => {

@@ -61,3 +61,9 @@ export const createSSRFetchClient = (accessToken?: string) => {
     },
   });
 };
+
+/**
+ * retryLogin 없는 fetchClient
+ * @description 토큰 재발급 시 무한 루프 방지를 위해 retryLogin 없는 fetchClient 생성
+ */
+export const refreshClient = createBaseFetchClient();
