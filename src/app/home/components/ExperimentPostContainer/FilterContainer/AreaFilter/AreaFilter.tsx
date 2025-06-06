@@ -58,8 +58,8 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     open(
       () => (
         <AreaFilterBottomSheet
-          initialRegion={selectedRegion}
-          initialAreas={selectedAreas}
+          initialRegion={filters.region}
+          initialAreas={filters.areas}
           onReset={handleReset}
           onChange={onChange}
           onClose={close}

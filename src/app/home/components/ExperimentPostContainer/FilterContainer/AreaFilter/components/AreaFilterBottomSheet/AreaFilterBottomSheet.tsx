@@ -16,9 +16,7 @@ import { AreaAll } from '@/app/home/home.types';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Button from '@/components/Button/Button';
-import { RegionType } from '@/types/filter';
-
-
+import { AreaType, RegionType } from '@/types/filter';
 
 const MAX_SELECTED_AREAS = 5;
 
@@ -34,8 +32,8 @@ interface AreaFilterBottomSheetProps {
   onChange: (key: string, value: string | string[] | number | null) => void;
   onReset: () => void;
   onClose: () => void;
-  initialRegion: RegionType | null;
-  initialAreas: Record<string, boolean>;
+  initialRegion?: RegionType;
+  initialAreas?: AreaType[];
 }
 
 const AreaFilterBottomSheet = ({
@@ -45,15 +43,19 @@ const AreaFilterBottomSheet = ({
   initialRegion,
   initialAreas,
 }: AreaFilterBottomSheetProps) => {
-  const [selectedRegion, setSelectedRegion] = useState(initialRegion);
-  const [selectedAreas, setSelectedAreas] = useState(initialAreas);
-
-  const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
-
-  const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
+  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(initialRegion ?? null);
+  const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>(() =>
+    [...(initialAreas ?? [])].reduce((acc, area) => {
+      acc[area] = true;
+      return acc;
+    }, {} as Record<string, boolean>),
+  );
 
   const { data: experimentPostRegion } = usePostRegionCountQuery(selectedRegion);
   const { data: experimentPostAreas } = usePostAreaCountQuery(selectedRegion);
+
+  const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
+  const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
 
   const handleSelectRegion = (region: RegionType) => {
     setSelectedRegion((prev) => (prev === region ? null : region));
