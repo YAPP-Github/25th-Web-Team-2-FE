@@ -34,6 +34,28 @@ jobs:
       - name: 빌드
         run: pnpm build
 
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: pnpm 셋업
+        with:
+          version: 10
+          run_install: false
+
+      - name: Node.js 셋업
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: 의존성 설치
+        run: pnpm install --frozen-lockfile
+
       - name: 테스트 코드 실행
         run: pnpm test -- --passWithNoTests
 
