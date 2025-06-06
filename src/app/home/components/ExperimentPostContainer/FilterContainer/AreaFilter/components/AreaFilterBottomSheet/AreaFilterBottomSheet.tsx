@@ -56,6 +56,7 @@ const AreaFilterBottomSheet = ({
 
   const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
   const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
+  const isValidSave = !selectedRegion || selectedAreaList.length > 0;
 
   const handleSelectRegion = (region: RegionType) => {
     setSelectedRegion((prev) => (prev === region ? null : region));
@@ -108,7 +109,13 @@ const AreaFilterBottomSheet = ({
         <Button variant="secondary" size="small" className={resetButton} onClick={handleReset}>
           초기화
         </Button>
-        <Button variant="primary" size="small" className={saveButton} onClick={handleConfirm}>
+        <Button
+          variant="primary"
+          size="small"
+          className={saveButton}
+          onClick={handleConfirm}
+          disabled={!isValidSave}
+        >
           저장
         </Button>
       </div>
