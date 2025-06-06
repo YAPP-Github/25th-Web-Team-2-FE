@@ -10,6 +10,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
     globals: true,
+    reporters: ['junit', 'default'],
+    outputFile: 'test-results.xml',
   },
   resolve: {
     alias: {
