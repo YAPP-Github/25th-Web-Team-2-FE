@@ -7,11 +7,10 @@ import { useState } from 'react';
 import { triggerWrapper, contentContainer, selectItem } from './MatchTypeFilter.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
+import { getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 const matchTypeMapper = { ALL: '전체', OFFLINE: '대면', ONLINE: '비대면' };
-
 interface MatchTypeFilterProps {
   filters: ExperimentPostListFilters;
   onChange: (value: string) => void;
@@ -34,10 +33,7 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
     >
       <Select.Trigger
         className={triggerWrapper}
-        style={assignInlineVars({
-          '--trigger-color': isSelected ? colors.text01 : colors.text06,
-          '--trigger-bg': isSelected ? colors.field09 : colors.field01,
-        })}
+        style={assignInlineVars(getFilterColors(isSelected))}
       >
         <span>{filters.matchType ? matchTypeMapper[filters.matchType] : '진행 방식'}</span>
         <Select.Icon>

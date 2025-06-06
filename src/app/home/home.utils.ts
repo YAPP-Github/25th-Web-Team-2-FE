@@ -2,6 +2,7 @@ import { AREA_ALL, REGION_MAPPER, AREA_MAPPER } from './home.constants';
 import { GenderFilterValue } from './home.types';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { colors } from '@/styles/colors';
 import { RegionType } from '@/types/filter';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
@@ -102,4 +103,22 @@ export const getRegionFilterText = (region?: RegionType | null, areas?: string[]
 // 서울 전체, 경기 전체 등 선택 시 나머지 선택 불가 처리
 export const isCheckedAreaAll = (selectedAreas: Record<string, boolean>) => {
   return !AREA_ALL.some((area) => selectedAreas[area]);
+};
+
+export const getFilterColors = (isSelected: boolean) => {
+  if (isSelected) {
+    return {
+      '--trigger-color': colors.text01,
+      '--trigger-bg': colors.field09,
+      '--trigger-color-mobile': colors.text01,
+      '--trigger-bg-mobile': colors.field09,
+    };
+  }
+
+  return {
+    '--trigger-color': colors.text06,
+    '--trigger-bg': colors.field01,
+    '--trigger-color-mobile': colors.text06,
+    '--trigger-bg-mobile': colors.field03,
+  };
 };

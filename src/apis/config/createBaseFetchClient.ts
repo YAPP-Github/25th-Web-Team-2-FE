@@ -26,7 +26,7 @@ interface BaseFetchClientOptions {
   retryLogin?: <T>({ config, code, status, url }: RetryLoginParams) => Promise<T>;
 }
 
-export const createBaseFetchClient = (options: BaseFetchClientOptions) => {
+export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
   return {
     onRequestCallback: (config: RequestProps) => config,
 

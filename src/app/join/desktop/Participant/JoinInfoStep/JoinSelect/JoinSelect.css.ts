@@ -30,7 +30,7 @@ export const triggerWrapper = style({
   },
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       ...fonts.body.small.M15,
       selectors: {
         '&[data-placeholder]': {
@@ -59,7 +59,7 @@ export const selectContent = style({
   },
 
   '@media': {
-    'screen and (max-width: 768px)': {
+    'screen and (max-width: 767px)': {
       maxHeight: '28.6rem',
     },
   },

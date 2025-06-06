@@ -13,10 +13,19 @@ export const triggerWrapper = style({
   gap: '0.4rem',
   borderRadius: '1.2rem',
   padding: '0.6rem 1rem 0.6rem 1.4rem',
+  whiteSpace: 'nowrap',
   cursor: 'pointer',
   selectors: {
     '&:hover': {
       boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+    },
+  },
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      color: 'var(--trigger-color-mobile)',
+      backgroundColor: 'var(--trigger-bg-mobile)',
+      padding: '0.8rem 1rem 0.8rem 1.4rem',
     },
   },
 });

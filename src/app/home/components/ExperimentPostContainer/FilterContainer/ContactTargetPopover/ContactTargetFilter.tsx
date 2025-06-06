@@ -22,9 +22,8 @@ import {
 
 import { GENDER } from '@/app/home/home.constants';
 import { GenderValue } from '@/app/home/home.types';
-import { getContactTargetFilterText } from '@/app/home/home.utils';
+import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 const AGE_MAX_LENGTH = 3;
 
@@ -79,10 +78,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
     <Popover.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
       <Popover.Trigger
         className={popoverTrigger}
-        style={assignInlineVars({
-          '--popover-trigger-color': isSelected ? colors.text01 : colors.text06,
-          '--popover-trigger-bg': isSelected ? colors.field09 : colors.field01,
-        })}
+        style={assignInlineVars(getFilterColors(isSelected))}
       >
         <span>{getContactTargetFilterText(filterAge, filterGender)}</span>
         <Icon icon="Chevron" width={20} rotate={isOpen ? -180 : 0} cursor="pointer" />
