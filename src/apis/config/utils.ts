@@ -24,13 +24,22 @@ export const getSessionRefreshToken = async () => {
   try {
     if (isServer) {
       const session = await getServerSession(authOptions);
-      return session?.refreshToken || null;
+      return {
+        refreshToken: session?.refreshToken || null,
+        isTempUser: session?.isTempUser || null,
+      };
     } else {
       const session = await getSession();
-      return session?.refreshToken || null;
+      return {
+        refreshToken: session?.refreshToken || null,
+        isTempUser: session?.isTempUser || null,
+      };
     }
   } catch (_) {
-    return null;
+    return {
+      refreshToken: null,
+      isTempUser: null,
+    };
   }
 };
 
@@ -55,9 +64,9 @@ export const retryLogin = async <T>({
       });
     }
 
-    const refreshToken = await getSessionRefreshToken();
+    const { refreshToken, isTempUser } = await getSessionRefreshToken();
 
-    if (!refreshToken) {
+    if (!refreshToken || isTempUser) {
       throw new CustomError({
         status,
         code,
