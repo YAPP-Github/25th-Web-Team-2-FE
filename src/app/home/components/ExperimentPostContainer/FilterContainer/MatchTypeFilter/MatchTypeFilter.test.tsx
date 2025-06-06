@@ -1,7 +1,10 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import MatchTypeFilter from './MatchTypeFilter';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import MatchTypeFilter from './MatchTypeFilter';
+
+import { customRender } from '@/tests/test-utils';
 
 describe('MatchTypeFilter 컴포넌트', () => {
   const mockOnChange = vi.fn();
@@ -14,7 +17,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const expected = '진행 방식';
 
     // Given & When
-    render(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
 
     // Then
     expect(screen.getByText(expected)).toBeInTheDocument();
@@ -25,7 +28,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const expected = '비대면';
 
     // Given & When
-    render(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
 
     // Then
     expect(screen.getByText(expected)).toBeInTheDocument();
@@ -36,7 +39,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const user = userEvent.setup();
     const filters = { recruitStatus: 'ALL' } as const;
     const defaultText = '진행 방식';
-    render(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
 
     // When
     await user.click(screen.getByText(defaultText));
@@ -54,7 +57,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const defaultText = '진행 방식';
     const targetOptionText = '비대면';
     const expected = 'ONLINE';
-    render(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
 
     // When
     await user.click(screen.getByText(defaultText));
