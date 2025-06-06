@@ -30,7 +30,7 @@ export const triggerWrapper = style({
 });
 
 export const regionContentContainer = style({
-  backgroundColor: colors.field01,
+  width: '36.4rem',
   position: 'relative',
   top: '0.8rem',
   display: 'flex',
@@ -38,6 +38,8 @@ export const regionContentContainer = style({
   gap: '1.2rem',
   padding: '1.2rem',
   borderRadius: '1.2rem',
+
+  backgroundColor: colors.field01,
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
 });
 
