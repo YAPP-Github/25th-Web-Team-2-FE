@@ -24,8 +24,6 @@ export const image = style({
 
 export const buttonContainer = style({
   height: '100%',
-  display: 'flex',
-  gap: '0.8rem',
 });
 
 export const contactButton = style({

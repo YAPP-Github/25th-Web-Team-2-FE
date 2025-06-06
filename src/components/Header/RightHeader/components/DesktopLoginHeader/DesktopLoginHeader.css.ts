@@ -4,6 +4,9 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const desktopRightHeader = style({
+  display: 'flex',
+  gap: '0.8rem',
+
   '@media': {
     'screen and (max-width: 767px)': {
       display: 'none',

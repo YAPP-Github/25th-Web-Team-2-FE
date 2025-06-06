@@ -6,7 +6,6 @@ import MobileLoginHeader from './components/MobileLoginHeader/MobileLoginHeader'
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 
-
 const RightHeader = () => {
   const { userInfo, isLoading, isResearcher } = useUserInfo();
 
