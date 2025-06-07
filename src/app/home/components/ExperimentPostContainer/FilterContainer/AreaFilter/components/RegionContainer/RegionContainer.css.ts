@@ -21,7 +21,7 @@ export const regionContainer = style({
       height: '40rem',
       gap: '0.8rem',
       padding: '0.8rem',
-      flex: 1,
+      maxWidth: '13.6rem',
     },
   },
 });
