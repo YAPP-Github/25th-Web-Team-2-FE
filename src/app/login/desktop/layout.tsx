@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 
+import LoginError from '../components/LoginError/LoginError';
 import { loginLayout } from '../LoginPage.css';
 
 export const metadata: Metadata = {
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function DesktopLoginLayout({ children }: { children: React.ReactNode }) {
-  return <div className={loginLayout}>{children}</div>;
+  return (
+    <LoginError>
+      <div className={loginLayout}>{children}</div>
+    </LoginError>
+  );
 }

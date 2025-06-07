@@ -122,3 +122,14 @@ export const getFilterColors = (isSelected: boolean) => {
     '--trigger-bg-mobile': colors.field03,
   };
 };
+
+export const getMatchTypeLabel = (matchType?: string) => {
+  if (matchType === 'ALL') {
+    return '전체';
+  } else if (matchType === 'OFFLINE') {
+    return '대면';
+  } else if (matchType === 'ONLINE') {
+    return '비대면';
+  }
+  return '진행 방식';
+};

@@ -15,6 +15,14 @@ export const subAreaListContainer = style({
   overflow: 'scroll',
   padding: '1.2rem 0.8rem',
   borderRadius: '1.2rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: '40rem',
+      gap: '0.8rem',
+      padding: '0.8rem',
+    },
+  },
 });
 
 export const subAreaItem = style({
@@ -24,6 +32,13 @@ export const subAreaItem = style({
   gap: '0.4rem',
   padding: '0.6rem 0.8rem',
   borderRadius: '1.2rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '0.8rem 1.2rem',
+      height: '4rem',
+    },
+  },
 });
 
 export const selectedSubAreaLabel = style({
@@ -46,6 +61,12 @@ export const subAreaInfo = style({
 
 export const selectedRegionName = style({
   color: colors.textPrimary,
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      ...fonts.body.small.SB15,
+    },
+  },
 });
 
 export const placeholderArea = style({
@@ -55,4 +76,12 @@ export const placeholderArea = style({
   justifyContent: 'center',
   alignItems: 'center',
   height: '100%',
+  whiteSpace: 'nowrap',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      textAlign: 'center',
+      whiteSpace: 'pre-wrap',
+    },
+  },
 });

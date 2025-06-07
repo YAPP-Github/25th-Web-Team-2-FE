@@ -1,0 +1,45 @@
+import { useRef, useState } from 'react';
+
+import { BANNER_LENGTH } from '@/app/home/home.constants';
+
+const SLIDE_THRESHOLD = 50;
+
+interface UseTouchSlideProps {
+  bannerIdx: number;
+  resetAutoSlide: () => void;
+  moveSlide: (idx: number) => void;
+}
+
+export const useTouchSlide = ({ bannerIdx, resetAutoSlide, moveSlide }: UseTouchSlideProps) => {
+  const [translateX, setTranslateX] = useState(0);
+  const startTouchRef = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    startTouchRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (startTouchRef.current === null) {
+      return;
+    }
+
+    const deltaX = startTouchRef.current - e.touches[0].clientX;
+    setTranslateX(deltaX);
+  };
+
+  const handleTouchEnd = () => {
+    if (Math.abs(translateX) > SLIDE_THRESHOLD) {
+      resetAutoSlide();
+
+      const prevIdx = (bannerIdx - 1 + BANNER_LENGTH) % BANNER_LENGTH;
+      const nextIdx = (bannerIdx + 1) % BANNER_LENGTH;
+
+      const targetIdx = translateX > 0 ? nextIdx : prevIdx;
+      moveSlide(targetIdx);
+    }
+
+    startTouchRef.current = null;
+  };
+
+  return { handleTouchStart, handleTouchMove, handleTouchEnd };
+};

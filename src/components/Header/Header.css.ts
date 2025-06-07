@@ -24,8 +24,6 @@ export const image = style({
 
 export const buttonContainer = style({
   height: '100%',
-  display: 'flex',
-  gap: '0.8rem',
 });
 
 export const contactButton = style({
@@ -40,14 +38,6 @@ export const contactButton = style({
       backgroundColor: colors.field05,
     },
   },
-});
-
-export const HeaderButton = style({
-  ...fonts.label.large.SB14,
-  backgroundColor: colors.primaryTinted,
-  color: colors.primaryMint,
-  padding: '0.6rem 1.4rem',
-  borderRadius: '1.2rem',
 });
 
 export const loginButton = style({

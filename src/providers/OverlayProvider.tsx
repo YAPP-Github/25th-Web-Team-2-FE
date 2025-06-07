@@ -4,7 +4,7 @@ import BottomSheet from '@/components/BottomSheet/BottomSheet';
 
 interface OverlayProps {
   title?: string;
-  subTitle?: string;
+  isDraggable?: boolean;
 }
 
 interface Overlay extends OverlayProps {
@@ -61,6 +61,8 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
           isOpen={overlay.isOpen}
           onClose={close}
           onAnimationEnd={exit}
+          title={overlay.title}
+          isDraggable={overlay.isDraggable}
           content={<overlay.Component {...overlay} />}
         />
       )}

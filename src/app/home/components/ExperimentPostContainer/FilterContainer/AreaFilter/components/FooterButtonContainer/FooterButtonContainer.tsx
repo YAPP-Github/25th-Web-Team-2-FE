@@ -1,12 +1,13 @@
 import {
   buttonContainer,
-  buttonRecipe,
+  footerButton,
   footerButtonContainer,
   footerContainer,
   infoText,
   infoTextContainer,
 } from './FooterButtonContainer.css';
 
+import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 
 interface FooterButtonContainerProps {
@@ -28,16 +29,18 @@ const FooterButtonContainer = ({
           <span className={infoText}>최대 5개까지 선택할 수 있어요</span>
         </div>
         <div className={buttonContainer}>
-          <button className={buttonRecipe({ type: 'reset' })} onClick={handleReset}>
+          <Button variant="secondary" size="small" className={footerButton} onClick={handleReset}>
             초기화
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
+            size="small"
             onClick={handleSave}
-            className={buttonRecipe({ type: 'save' })}
+            className={footerButton}
             disabled={!isValidSaveButton}
           >
             저장
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ export const postContainerLayout = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
+      marginTop: '0',
       gap: '0',
     },
   },
@@ -51,6 +52,7 @@ export const filterWrapper = style({
   '@media': {
     'screen and (max-width: 767px)': {
       padding: '1.6rem',
+      overflow: 'scroll',
     },
   },
 });

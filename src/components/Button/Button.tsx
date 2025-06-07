@@ -33,7 +33,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={className ? className : recipeClasses}
+        className={className ? `${recipeClasses} ${className}` : recipeClasses}
         disabled={disabled || isLoading}
         onClick={onClick}
         style={{ width, height }}

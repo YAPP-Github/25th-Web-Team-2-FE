@@ -2,6 +2,7 @@ import { createVar, keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
 
 const slideUp = keyframes({
   from: {
@@ -83,11 +84,31 @@ export const sheet = recipe({
   },
 });
 
-export const headerContainer = style({
-  height: '2.8rem',
+export const headerContainer = recipe({
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  variants: {
+    isDraggable: {
+      true: {
+        height: '2.8rem',
+      },
+    },
+  },
+});
+
+export const headerContent = style({
+  width: '100%',
   display: 'flex',
-  justifyContent: 'center',
   alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '1.6rem 2rem 0.8rem 2rem',
+});
+
+export const headerTitle = style({
+  ...fonts.title.small.SB18,
 });
 
 export const dragHandle = style({
