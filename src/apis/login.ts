@@ -66,9 +66,15 @@ export interface NaverLoginParams {
   state: string;
 }
 
-export const googleLogin = async (code: string, role: string) => {
+export interface GoogleLoginParams {
+  code: string;
+  role: string;
+  redirectUri: string;
+}
+
+export const googleLogin = async ({ code, role, redirectUri }: GoogleLoginParams) => {
   return await fetchClient.post<LoginResponse>(API_URL.google(role), {
-    body: { authorizationCode: code },
+    body: { authorizationCode: code, redirectUri },
   });
 };
 
