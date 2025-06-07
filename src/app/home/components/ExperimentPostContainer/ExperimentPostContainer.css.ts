@@ -14,6 +14,7 @@ export const postContainerLayout = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
+      marginTop: '0',
       gap: '0',
     },
   },
