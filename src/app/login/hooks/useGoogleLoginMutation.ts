@@ -10,7 +10,7 @@ import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
 
 const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || '';
 
-interface LoginParams extends Omit<GoogleLoginParams, 'redirectUri'> {}
+type LoginParams = Omit<GoogleLoginParams, 'redirectUri'>;
 
 interface UseGoogleLoginMutationProps {
   onSuccessLogin: () => void;
