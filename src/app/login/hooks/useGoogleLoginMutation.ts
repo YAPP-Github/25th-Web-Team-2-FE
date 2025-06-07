@@ -4,13 +4,14 @@ import { getAuthErrorMessage } from '../LoginPage.utils';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
-import { googleLogin, GoogleLoginParams, LoginResponse } from '@/apis/login';
+import { googleLogin, LoginResponse } from '@/apis/login';
 import { loginWithCredentials } from '@/lib/auth-utils';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
 
-const redirectUri = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || '';
-
-type LoginParams = Omit<GoogleLoginParams, 'redirectUri'>;
+interface GoogleLoginParams {
+  code: string;
+  role: string;
+}
 
 interface UseGoogleLoginMutationProps {
   onSuccessLogin: () => void;
@@ -25,8 +26,8 @@ const useGoogleLoginMutation = ({
 }: UseGoogleLoginMutationProps) => {
   const queryClient = useQueryClient();
 
-  return useMutation<LoginResponse, CustomError, LoginParams>({
-    mutationFn: ({ code, role }: LoginParams) => googleLogin({ code, role, redirectUri }),
+  return useMutation<LoginResponse, CustomError, GoogleLoginParams>({
+    mutationFn: ({ code, role }: GoogleLoginParams) => googleLogin(code, role),
     onSuccess: async ({ isRegistered, accessToken, refreshToken, memberInfo }) => {
       if (isRegistered) {
         fetchClient.onRequest((config) => {
