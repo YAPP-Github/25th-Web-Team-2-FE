@@ -2,10 +2,11 @@
 
 import { useFormContext } from 'react-hook-form';
 
+import JoinButton from '../JoinButton/JoinButton';
+
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import JoinButton from '../JoinButton/JoinButton';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;

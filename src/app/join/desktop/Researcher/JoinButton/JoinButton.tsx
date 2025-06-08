@@ -1,6 +1,7 @@
+import { useFormContext, useWatch } from 'react-hook-form';
+
 import Button from '@/components/Button/Button';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { useFormContext, useWatch } from 'react-hook-form';
 
 interface JoinButtonProps {
   onSubmit: () => void;
