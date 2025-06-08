@@ -1,5 +1,7 @@
+import ExperimentPostMobileContainer from './components/ExperimentPostMobileContainer/ExperimentPostMobileContainer';
+
 const ExperimentPostMobilePage = () => {
-  return <div>ExperimentPostMobilePage</div>;
+  return <ExperimentPostMobileContainer />;
 };
 
 export default ExperimentPostMobilePage;
