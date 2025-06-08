@@ -21,11 +21,8 @@ interface JoinEmailStepProps {
 }
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
-  const { control, setValue, getValues } = useFormContext<ResearcherJoinSchemaType>();
+  const { control, getValues } = useFormContext<ResearcherJoinSchemaType>();
   const { isEmailVerified, handleVerifyEmail, handleResetVerifyEmail } = useVerifyUnivEmail();
-  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck({
-    onCheckAdConsent: (checked) => setValue('adConsent', checked),
-  });
 
   const {
     mutate: checkValidEmail,
@@ -34,8 +31,6 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   } = useCheckValidEmailInfoMutation();
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
-
-  const isRequiredChecked = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
 
   const handleCheckValidEmail = async () => {
     checkValidEmail(getValues('contactEmail'), {
@@ -86,17 +81,9 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         />
 
         {/* 동의 체크 항목 */}
-        <JoinCheckboxContainer
-          serviceAgreeCheck={serviceAgreeCheck}
-          handleAllCheck={handleAllCheck}
-          handleChange={handleChangeCheck}
-        />
+        <JoinCheckboxContainer />
       </div>
-      <NextButton
-        onNext={onNext}
-        isRequiredChecked={isRequiredChecked}
-        isEmailVerified={isEmailVerified}
-      />
+      <NextButton onNext={onNext} isEmailVerified={isEmailVerified} />
     </section>
   );
 };

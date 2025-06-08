@@ -1,23 +1,25 @@
-import { useFormContext, useFormState } from 'react-hook-form';
+import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 
 import Button from '@/components/Button/Button';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface NextButtonProps {
   onNext: () => void;
-  isRequiredChecked: boolean;
   isEmailVerified: boolean;
 }
 
-const NextButton = ({ onNext, isRequiredChecked, isEmailVerified }: NextButtonProps) => {
+const NextButton = ({ onNext, isEmailVerified }: NextButtonProps) => {
   const { trigger, control } = useFormContext<ResearcherJoinSchemaType>();
   const { errors } = useFormState({
     control,
     name: ['contactEmail', 'univEmail'],
   });
 
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
+
   const isValidForm =
-    !errors.contactEmail && !errors.univEmail && isEmailVerified && isRequiredChecked;
+    !errors.contactEmail && !errors.univEmail && isEmailVerified && isTermOfService && isPrivacy;
 
   const handleNextStep = async () => {
     const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
