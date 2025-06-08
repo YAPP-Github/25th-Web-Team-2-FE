@@ -36,8 +36,10 @@ const UploadContainer = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
-  const [openAlertModal, setOpenAlertModal] = useState(false);
   const [successToast, setSuccessToast] = useState(false);
+
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
@@ -46,6 +48,7 @@ const UploadContainer = () => {
     images,
     isEdit: false,
     setSuccessToast,
+    setErrorMessage,
   });
 
   // 자동 입력 필드 제외 isDirty 체크
@@ -100,7 +103,7 @@ const UploadContainer = () => {
       {/* 공고 등록 실패 시 alert Modal */}
       <AlertModal
         title="공고 등록에 실패했어요"
-        description="시간을 두고 다시 시도해 주세요"
+        description={errorMessage ?? '시간을 두고 다시 시도해 주세요'}
         open={openAlertModal}
         onOpenChange={setOpenAlertModal}
         handleCloseModal={() => {

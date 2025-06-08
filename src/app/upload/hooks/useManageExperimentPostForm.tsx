@@ -11,6 +11,7 @@ import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 
 import useEditExperimentPostMutation from '@/app/edit/[post_id]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[post_id]/hooks/useOriginExperimentPostQuery';
+import { getErrorMessage } from '@/app/post/[post_id]/ExperimentPostPage.utils';
 import useApplyMethodQuery from '@/app/post/[post_id]/hooks/useApplyMethodQuery';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
@@ -74,6 +75,13 @@ const useManageExperimentPostForm = ({
     resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
     defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
+  useEffect(() => {
+    if (!setErrorMessage) return;
+    if (originExperimentError) {
+      const errorMessage = getErrorMessage(originExperimentError);
+      setErrorMessage(errorMessage);
+    }
+  }, [originExperimentError, setErrorMessage]);
 
   // 기존 공고 데이터로 form reset
   useEffect(() => {
@@ -114,7 +122,8 @@ const useManageExperimentPostForm = ({
             form.reset();
           },
           onError: (error) => {
-            setErrorMessage?.(error.message);
+            const errorMessage = getErrorMessage(error);
+            setErrorMessage?.(errorMessage);
             setOpenAlertModal(true);
           },
         },
@@ -129,7 +138,8 @@ const useManageExperimentPostForm = ({
           form.reset();
         },
         onError: (error) => {
-          setErrorMessage?.(error.message);
+          const errorMessage = getErrorMessage(error);
+          setErrorMessage?.(errorMessage);
           setOpenAlertModal(true);
         },
       });
