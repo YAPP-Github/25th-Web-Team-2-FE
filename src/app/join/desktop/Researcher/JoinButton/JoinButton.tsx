@@ -15,7 +15,7 @@ const JoinButton = ({ onSubmit }: JoinButtonProps) => {
   const values = useWatch({ name: ['name', 'univName', 'major'], control });
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
 
-  const isValidForm = !(isAllFilled && Object.keys(errors).length === 0);
+  const isValidForm = isAllFilled && Object.keys(errors).length === 0;
 
   return (
     <Button
