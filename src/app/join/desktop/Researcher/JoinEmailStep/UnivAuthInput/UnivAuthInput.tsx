@@ -29,7 +29,7 @@ const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
 };
 
 const UnivAuthInput = () => {
-  const { control, setValue, clearErrors } = useFormContext<ResearcherJoinSchemaType>();
+  const { control, setValue, clearErrors, trigger } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
     data: authCodeData,
@@ -83,7 +83,10 @@ const UnivAuthInput = () => {
           const isButtonDisabled =
             (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
 
-          console.log('error:', fieldState.error);
+          const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+            field.onChange(e);
+            await trigger('univEmail');
+          };
 
           return (
             <>
@@ -95,6 +98,7 @@ const UnivAuthInput = () => {
                   placeholder="학교 메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
                   disabled={isUnivEmailAuthenticated}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -108,7 +112,7 @@ const UnivAuthInput = () => {
               {fieldState.error ? (
                 <span className={errorMessage}>{fieldState.error.message}</span>
               ) : (
-                authCodeError && <span className={errorMessage}>{authCodeError.message}</span>
+                <span className={errorMessage}>{authCodeError && authCodeError.message}</span>
               )}
             </>
           );
