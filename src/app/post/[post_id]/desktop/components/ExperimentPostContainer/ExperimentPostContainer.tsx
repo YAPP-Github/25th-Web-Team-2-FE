@@ -3,8 +3,8 @@
 import { usePathname } from 'next/navigation';
 
 import { emptyViewLayout, postContentLayout } from './ExperimentPostContainer.css';
-import useApplyMethodQuery from '../../hooks/useApplyMethodQuery';
-import useExperimentDetailsQuery from '../../hooks/useExperimentDetailsQuery';
+import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
+import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';

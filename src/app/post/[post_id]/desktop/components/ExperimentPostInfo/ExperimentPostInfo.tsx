@@ -14,8 +14,8 @@ import {
   postTitle,
   viewsContainer,
 } from './ExperimentPostInfo.css';
-import { formatDate } from '../../ExperimentPostPage.utils';
-import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
+import { formatDate } from '../../../ExperimentPostPage.utils';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import {
   copyToastLayout,

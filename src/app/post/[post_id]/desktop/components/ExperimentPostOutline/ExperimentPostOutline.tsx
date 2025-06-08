@@ -19,9 +19,9 @@ import {
   getAreaLabel,
   getMatchTypeText,
   formatDate,
-} from '../../ExperimentPostPage.utils';
-import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
-import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
+} from '../../../ExperimentPostPage.utils';
+import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';

@@ -14,8 +14,8 @@ import {
   modalOverlay,
   closeButton,
 } from './ExperimentPostDetailContent.css';
-import { formattedContentText, isValidImageUrl } from '../../ExperimentPostPage.utils';
-import { UseQueryExperimentDetailsAPIResponse } from '../../hooks/useExperimentDetailsQuery';
+import { formattedContentText, isValidImageUrl } from '../../../ExperimentPostPage.utils';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 
 import { convertToWebpUrl } from '@/app/upload/upload.utils';
 import Icon from '@/components/Icon';

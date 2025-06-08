@@ -14,9 +14,9 @@ import {
   warningMessage,
   applyMethodContainer,
 } from './ParticipationGuideModal.css';
-import { closeButton, dialogOverlay } from '../../ExperimentPostPage.css';
-import { CommonModalProps } from '../../ExperimentPostPage.types';
-import { UseApplyMethodQueryResponse } from '../../hooks/useApplyMethodQuery';
+import { closeButton, dialogOverlay } from '../../../ExperimentPostPage.css';
+import { CommonModalProps } from '../../../ExperimentPostPage.types';
+import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 
 import Icon from '@/components/Icon';
 import { trackEvent } from '@/lib/mixpanelClient';
