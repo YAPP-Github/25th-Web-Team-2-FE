@@ -1,17 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
+import NextButton from './NextButton';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 import EmailToast from '../../../components/EmailToast/EmailToast';
 import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
-import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
+import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
 import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import useVerifyUnivEmail from '@/app/join/hooks/useVerifyUnivEmail';
-import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
+import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
@@ -20,49 +21,28 @@ interface JoinEmailStepProps {
 }
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
-  const {
-    control,
-    trigger,
-    setValue,
-    formState: { errors },
-  } = useFormContext<ResearcherJoinSchemaType>();
+  const { control, setValue, getValues } = useFormContext<ResearcherJoinSchemaType>();
+  const { isEmailVerified, handleVerifyEmail, handleResetVerifyEmail } = useVerifyUnivEmail();
   const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck({
     onCheckAdConsent: (checked) => setValue('adConsent', checked),
   });
 
-  const oauthEmail = useWatch({ name: 'oauthEmail', control });
-  const univEmail = useWatch({ name: 'univEmail', control });
-  const contactEmail = useWatch({ name: 'contactEmail', control });
-
-  const { isEmailVerified, handleVerifyEmail, handleResetVerifyEmail } = useVerifyUnivEmail();
-
-  const handleNextStep = async () => {
-    const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
-    if (isValid) {
-      onNext();
-    }
-  };
-
-  const allValid =
-    oauthEmail &&
-    univEmail &&
-    !errors.contactEmail &&
-    !errors.univEmail &&
-    isEmailVerified &&
-    serviceAgreeCheck.isTermOfService &&
-    serviceAgreeCheck.isPrivacy;
-
   const {
-    refetch,
-    isLoading: isLoadingCheck,
+    mutate: checkValidEmail,
+    isPending: isLoadingCheck,
     isError: isEmailDuplicateError,
-  } = useCheckValidEmailInfoQuery(contactEmail);
+  } = useCheckValidEmailInfoMutation();
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
+  const isRequiredChecked = serviceAgreeCheck.isTermOfService && serviceAgreeCheck.isPrivacy;
+
   const handleCheckValidEmail = async () => {
-    await refetch();
-    setIsValidToastOpen(true);
+    checkValidEmail(getValues('contactEmail'), {
+      onSettled: () => {
+        setIsValidToastOpen(true);
+      },
+    });
   };
 
   return (
@@ -73,7 +53,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           name="oauthEmail"
           control={control}
           label="소셜 로그인 아이디"
-          value={oauthEmail}
+          value={getValues('oauthEmail')}
           placeholder="이메일 입력"
           disabled
         />
@@ -112,9 +92,11 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           handleChange={handleChangeCheck}
         />
       </div>
-      <button className={nextButton} onClick={handleNextStep} disabled={!allValid}>
-        다음
-      </button>
+      <NextButton
+        onNext={onNext}
+        isRequiredChecked={isRequiredChecked}
+        isEmailVerified={isEmailVerified}
+      />
     </section>
   );
 };
