@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, FormProvider } from 'react-hook-form';
 
 import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
@@ -43,7 +43,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   };
 
   return (
-    <>
+    <FormProvider {...form}>
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
@@ -144,7 +144,7 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
         setIsToastOpen={setIsToastOpen}
         isError={isError}
       />
-    </>
+    </FormProvider>
   );
 };
 
