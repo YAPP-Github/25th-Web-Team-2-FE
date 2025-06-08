@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import NextButton from './NextButton';
@@ -28,9 +28,13 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   } = useCheckValidEmailInfoMutation();
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
+  const verifiedEmail = useRef('');
 
   const handleCheckValidEmail = async () => {
     checkValidEmail(getValues('contactEmail'), {
+      onSuccess: () => {
+        verifiedEmail.current = getValues('contactEmail');
+      },
       onSettled: () => {
         setIsValidToastOpen(true);
       },
@@ -76,7 +80,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         {/* 동의 체크 항목 */}
         <JoinCheckboxContainer />
       </div>
-      <NextButton onNext={onNext} />
+      <NextButton onNext={onNext} verifiedEmail={verifiedEmail.current} />
     </section>
   );
 };
