@@ -10,8 +10,7 @@ import { STEP } from '../../JoinPage.constants';
 
 import { Researcher } from '.';
 
-import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { LoginProvider } from '@/types/user';
+import { ResearcherJoinSchema, ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface ResearcherFormProps {
   onDirtyChange?: (dirty: boolean) => void;
@@ -33,7 +32,8 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: {
-      oauthEmail: '',
+      oauthEmail,
+      provider,
       contactEmail: '',
       univEmail: '',
       name: '',
@@ -55,13 +55,6 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
     const formData = researcherMethods.getValues();
     joinResearcher(formData, { onSuccess: () => setStep(STEP.success) });
   };
-
-  useEffect(() => {
-    if (oauthEmail && provider) {
-      researcherMethods.setValue('oauthEmail', oauthEmail);
-      researcherMethods.setValue('provider', provider as LoginProvider);
-    }
-  }, [researcherMethods, oauthEmail, provider]);
 
   return (
     <FormProvider {...researcherMethods}>
