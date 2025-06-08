@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
 
+import { ERROR_MESSAGES } from '@/apis/config/constants';
+import { CustomError } from '@/apis/config/error';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { durationMinutesOptions } from '@/app/upload/upload.constants';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
@@ -69,6 +71,13 @@ const formatDate = (hyphenDate: string): string => {
   return format(new Date(hyphenDate), 'yyyy. MM. dd') ?? '';
 };
 
+// 에러 메세지 가져오는 함수
+const getErrorMessage = (error: CustomError | null) => {
+  if (!error) return '';
+
+  return ERROR_MESSAGES[error.code] || error.message;
+};
+
 export {
   formattedContentText,
   getGenderLabel,
@@ -78,4 +87,5 @@ export {
   isValidImageUrl,
   getMatchTypeText,
   formatDate,
+  getErrorMessage,
 };

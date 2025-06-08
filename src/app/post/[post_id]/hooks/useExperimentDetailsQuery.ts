@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
@@ -53,7 +54,7 @@ const useExperimentDetailsQuery = ({ postId }: { postId: string }) => {
   const url = API_URL.viewExperimentDetails(postId);
   const queryFn = () => fetchClient.post(url);
 
-  return useQuery<UseQueryExperimentDetailsAPIResponse>({
+  return useQuery<UseQueryExperimentDetailsAPIResponse, CustomError>({
     queryKey: [QUERY_KEY.experimentPostDetail, postId],
     queryFn,
     enabled: !!postId && !isUserInfoLoading,
