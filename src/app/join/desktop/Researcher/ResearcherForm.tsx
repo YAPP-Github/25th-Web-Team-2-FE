@@ -10,7 +10,11 @@ import { STEP } from '../../JoinPage.constants';
 
 import { Researcher } from '.';
 
-import { ResearcherJoinSchema, ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import {
+  ResearcherJoinSchema,
+  ResearcherJoinSchemaType,
+  ResearcherJoinSubmitSchema,
+} from '@/schema/join/ResearcherJoinSchema';
 
 interface ResearcherFormProps {
   onDirtyChange?: (dirty: boolean) => void;
@@ -53,7 +57,9 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
 
   const handleResearcherSubmit = () => {
     const formData = researcherMethods.getValues();
-    joinResearcher(formData, { onSuccess: () => setStep(STEP.success) });
+    const submitData = ResearcherJoinSubmitSchema().parse(formData);
+
+    joinResearcher(submitData, { onSuccess: () => setStep(STEP.success) });
   };
 
   return (
