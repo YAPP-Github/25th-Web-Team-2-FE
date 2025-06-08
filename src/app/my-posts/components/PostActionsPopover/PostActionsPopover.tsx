@@ -17,7 +17,7 @@ import {
   copyToastLayout,
   copyToastTitle,
   copyToastViewport,
-} from '@/app/post/[post_id]/components/ParticipationGuideModal/ParticipationGuideModal.css';
+} from '@/app/post/[post_id]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { colors } from '@/styles/colors';
