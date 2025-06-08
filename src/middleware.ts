@@ -50,7 +50,13 @@ export async function middleware(request: NextRequest) {
 
   if (isHomePage) {
     url.pathname = `/home`;
-    return NextResponse.rewrite(url);
+    const response = NextResponse.rewrite(url);
+
+    if (isTempUser) {
+      clearAuthCookies(request, response);
+    }
+
+    return response;
   }
 
   if (isJoinPage || isLoginPage) {
