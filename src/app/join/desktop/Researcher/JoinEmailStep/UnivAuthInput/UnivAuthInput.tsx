@@ -29,7 +29,7 @@ const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
 };
 
 const UnivAuthInput = () => {
-  const { control, setValue, setError } = useFormContext<ResearcherJoinSchemaType>();
+  const { control, setValue, clearErrors } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
     data: authCodeData,
@@ -67,6 +67,7 @@ const UnivAuthInput = () => {
     setIsEmailSent(false);
     setValue('isEmailVerified', false);
     stopTimer();
+    clearErrors('univEmail');
   };
 
   return (
