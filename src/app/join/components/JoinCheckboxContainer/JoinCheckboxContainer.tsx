@@ -22,10 +22,13 @@ const JoinCheckboxContainer = () => {
   const isAllCheck = isTermOfService && isPrivacy && adConsent && (matchConsent ?? true);
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (matchConsent) {
+      setValue('matchConsent', e.target.checked);
+    }
+
     setValue('isTermOfService', e.target.checked);
     setValue('isPrivacy', e.target.checked);
     setValue('adConsent', e.target.checked);
-    matchConsent && setValue('matchConsent', e.target.checked);
   };
 
   return (

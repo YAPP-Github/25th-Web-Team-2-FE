@@ -10,7 +10,6 @@ import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/Joi
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
-import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import useVerifyUnivEmail from '@/app/join/hooks/useVerifyUnivEmail';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
