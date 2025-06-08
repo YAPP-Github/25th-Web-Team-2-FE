@@ -82,3 +82,19 @@ export const joinForm = style({
   alignItems: 'center',
   gap: '4rem',
 });
+
+export const nextButton = style({
+  ...fonts.body.normal.SB16,
+  backgroundColor: colors.primaryMint,
+  color: colors.text01,
+  borderRadius: '1.2rem',
+  padding: '1.2rem 0',
+  width: '20rem',
+  alignItems: 'center',
+  selectors: {
+    '&:disabled': {
+      color: colors.text02,
+      backgroundColor: colors.field04,
+    },
+  },
+});
