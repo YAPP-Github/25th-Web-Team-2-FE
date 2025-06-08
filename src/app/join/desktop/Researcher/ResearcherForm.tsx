@@ -44,6 +44,9 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
       univName: '',
       major: '',
       adConsent: false,
+      isTermOfService: false,
+      isPrivacy: false,
+      isEmailVerified: false,
     },
   });
 

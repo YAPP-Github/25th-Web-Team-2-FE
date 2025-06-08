@@ -10,7 +10,6 @@ import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/Joi
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
-import useVerifyUnivEmail from '@/app/join/hooks/useVerifyUnivEmail';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
@@ -21,7 +20,6 @@ interface JoinEmailStepProps {
 
 const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const { control, getValues } = useFormContext<ResearcherJoinSchemaType>();
-  const { isEmailVerified, handleVerifyEmail, handleResetVerifyEmail } = useVerifyUnivEmail();
 
   const {
     mutate: checkValidEmail,
@@ -73,16 +71,12 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         />
 
         {/* 학교 메일 인증 */}
-        <UnivAuthInput
-          isEmailVerified={isEmailVerified}
-          handleVerifyEmail={handleVerifyEmail}
-          handleResetVerifyEmail={handleResetVerifyEmail}
-        />
+        <UnivAuthInput />
 
         {/* 동의 체크 항목 */}
         <JoinCheckboxContainer />
       </div>
-      <NextButton onNext={onNext} isEmailVerified={isEmailVerified} />
+      <NextButton onNext={onNext} />
     </section>
   );
 };

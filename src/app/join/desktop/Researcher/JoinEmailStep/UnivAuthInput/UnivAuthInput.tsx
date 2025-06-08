@@ -22,24 +22,14 @@ import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-interface UnivAuthInputProps {
-  isEmailVerified: boolean;
-  handleVerifyEmail: () => void;
-  handleResetVerifyEmail: () => void;
-}
-
 const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
   if (isLoading) return '전송 중...';
   if (isAuthenticated) return '수정';
   return '인증번호 전송';
 };
 
-const UnivAuthInput = ({
-  isEmailVerified,
-  handleVerifyEmail,
-  handleResetVerifyEmail,
-}: UnivAuthInputProps) => {
-  const { control } = useFormContext<ResearcherJoinSchemaType>();
+const UnivAuthInput = () => {
+  const { control, setValue, setError } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
     data: authCodeData,
@@ -50,6 +40,8 @@ const UnivAuthInput = ({
 
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
+
+  const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
   const univEmail = useWatch({ name: 'univEmail', control });
@@ -65,7 +57,7 @@ const UnivAuthInput = ({
       },
       onError: (error) => {
         if (error.code === 'VE0007') {
-          handleVerifyEmail();
+          setValue('isEmailVerified', true);
         }
       },
     });
@@ -73,7 +65,7 @@ const UnivAuthInput = ({
 
   const handleClickEdit = () => {
     setIsEmailSent(false);
-    handleResetVerifyEmail();
+    setValue('isEmailVerified', false);
     stopTimer();
   };
 
@@ -89,6 +81,8 @@ const UnivAuthInput = ({
         render={({ field, fieldState }) => {
           const isButtonDisabled =
             (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
+
+          console.log('error:', fieldState.error);
 
           return (
             <>
@@ -121,11 +115,7 @@ const UnivAuthInput = ({
       />
 
       {isEmailSent && (
-        <AuthCodeInput
-          authTimer={authTimer}
-          handleVerifyEmail={handleVerifyEmail}
-          handleSendUnivAuthCode={handleSendUnivAuthCode}
-        />
+        <AuthCodeInput authTimer={authTimer} handleSendUnivAuthCode={handleSendUnivAuthCode} />
       )}
       <EmailToast
         title={`인증번호가 발송되었어요. (${authCodeData?.requestCount}회 / 하루 최대 3회)`}
