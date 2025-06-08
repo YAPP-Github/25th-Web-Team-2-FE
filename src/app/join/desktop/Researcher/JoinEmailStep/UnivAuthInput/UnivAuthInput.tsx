@@ -120,7 +120,11 @@ const UnivAuthInput = () => {
       />
 
       {isEmailSent && (
-        <AuthCodeInput authTimer={authTimer} handleSendUnivAuthCode={handleSendUnivAuthCode} />
+        <AuthCodeInput
+          authTimer={authTimer}
+          handleSendUnivAuthCode={handleSendUnivAuthCode}
+          stopTimer={stopTimer}
+        />
       )}
       <EmailToast
         title={`인증번호가 발송되었어요. (${authCodeData?.requestCount}회 / 하루 최대 3회)`}

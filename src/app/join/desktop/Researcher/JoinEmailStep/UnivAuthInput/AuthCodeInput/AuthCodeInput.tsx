@@ -24,9 +24,10 @@ const AUTH_CODE_VALID_LENGTH = 6;
 interface AuthCodeInputProps {
   authTimer: number;
   handleSendUnivAuthCode: () => void;
+  stopTimer: () => void;
 }
 
-const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode }: AuthCodeInputProps) => {
+const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode, stopTimer }: AuthCodeInputProps) => {
   const { getValues, setValue } = useFormContext<ResearcherJoinSchemaType>();
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
   const [isToastOpen, setIsToastOpen] = useState(false);
@@ -49,6 +50,7 @@ const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode }: AuthCodeInputProps
           setIsToastOpen(true);
           setValue('isEmailVerified', true);
           setError('');
+          stopTimer();
         },
         onError: (error) => {
           setError(error.message);
