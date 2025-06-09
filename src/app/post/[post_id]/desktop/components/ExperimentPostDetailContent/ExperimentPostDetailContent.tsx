@@ -14,10 +14,13 @@ import {
   modalOverlay,
   closeButton,
 } from './ExperimentPostDetailContent.css';
-import { formattedContentText, isValidImageUrl } from '../../../ExperimentPostPage.utils';
+import {
+  formattedContentText,
+  isValidImageUrl,
+  replaceImageListWithWebp,
+} from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 
-import { convertToWebpUrl } from '@/app/upload/upload.utils';
 import Icon from '@/components/Icon';
 import { a11yHidden } from '@/styles/a11y.css';
 import { colors } from '@/styles/colors';
@@ -31,44 +34,14 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageSources, setImageSources] = useState<string[]>([]);
 
-  /** 이미지가 접근 가능한지 확인하는 polling */
-  async function checkImageExists(url: string, retries = 10, delay = 2000): Promise<boolean> {
-    for (let i = 0; i < retries; i++) {
-      try {
-        const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
-        if (res.ok) return true;
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(`Image load failed: ${url}`, error);
-      }
-      await new Promise((resolve) => setTimeout(resolve, delay));
-    }
-    return false;
-  }
-
-  /** WebP 변환 이미지 polling 후 교체 */
+  /** WebP 변환 이미지 polling 후 존재하면 교체 */
   useEffect(() => {
     if (imageList.length === 0) return;
 
     const originalImages = [...imageList];
-    setImageSources(originalImages); // 원본 이미지 먼저 렌더링
+    setImageSources(originalImages);
 
-    async function checkAndReplaceWithWebp() {
-      const updatedImages = await Promise.all(
-        originalImages.map(async (originalUrl) => {
-          if (!isValidImageUrl(originalUrl)) return originalUrl;
-
-          const webpUrl = convertToWebpUrl(originalUrl);
-          const isWebpAvailable = await checkImageExists(webpUrl);
-
-          return isWebpAvailable ? webpUrl : originalUrl;
-        }),
-      );
-
-      setImageSources(updatedImages);
-    }
-
-    checkAndReplaceWithWebp();
+    replaceImageListWithWebp(originalImages).then(setImageSources);
   }, [imageList]);
 
   return (

@@ -4,6 +4,7 @@ import { ERROR_MESSAGES } from '@/apis/config/constants';
 import { CustomError } from '@/apis/config/error';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { durationMinutesOptions } from '@/app/upload/upload.constants';
+import { convertToWebpUrl } from '@/app/upload/upload.utils';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
 
 /**
@@ -49,7 +50,6 @@ const getAreaLabel = (region: string, area: string): string => {
 };
 
 // 유효한 이미지 URL인지 확인
-// todo 임시 데이터가 존재할 동안만 유효성 확인 -> 임시 데이터 제거 후 유효성 검사 제거
 const isValidImageUrl = (url: string) => {
   return typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://'));
 };
@@ -78,6 +78,33 @@ const getErrorMessage = (error: CustomError | null) => {
   return ERROR_MESSAGES[error.code] || error.message;
 };
 
+// 이미지 URL이 유효한지 확인하는 함수
+// 서버에 HEAD 요청을 보내 이미지가 존재하는지 확인하며 일정 횟수까지 재시도 함
+const checkImageExists = async (url: string, retries = 10, delay = 2000): Promise<boolean> => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+      if (res.ok) return true;
+    } catch (_) {}
+    await new Promise((resolve) => setTimeout(resolve, delay));
+  }
+  return false;
+};
+
+// WebP 이미지가 존재하면 이미지 URL 배열에 교체하는 함수
+const replaceImageListWithWebp = async (originalImages: string[]): Promise<string[]> => {
+  return await Promise.all(
+    originalImages.map(async (originalUrl) => {
+      if (!isValidImageUrl(originalUrl)) return originalUrl;
+
+      const webpUrl = convertToWebpUrl(originalUrl);
+      const isWebpAvailable = await checkImageExists(webpUrl);
+
+      return isWebpAvailable ? webpUrl : originalUrl;
+    }),
+  );
+};
+
 export {
   formattedContentText,
   getGenderLabel,
@@ -88,4 +115,6 @@ export {
   getMatchTypeText,
   formatDate,
   getErrorMessage,
+  checkImageExists,
+  replaceImageListWithWebp,
 };
