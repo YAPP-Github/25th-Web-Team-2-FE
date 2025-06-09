@@ -1,3 +1,4 @@
+import { ROLE } from '@/constants/config';
 import { FilterOption } from './JoinPage.types';
 
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
@@ -40,12 +41,31 @@ export const JOIN_SUB_REGION = JOIN_REGION.reduce(
 
 export const STEP = {
   email: 'email',
+  contactEmail: 'contactEmail',
+  univEmail: 'univEmail',
   info: 'info',
   additionalInfo: 'additionalInfo',
   success: 'success',
 } as const;
 
-export const MOBILE_JOIN_STEP_LIST = ['email', 'info', 'additionalInfo', 'success'] as const;
+export const MOBILE_PARTICIPANT_JOIN_STEP_LIST = [
+  'email',
+  'info',
+  'additionalInfo',
+  'success',
+] as const;
+
+export const MOBILE_RESEARCHER_JOIN_STEP_LIST = [
+  'contactEmail',
+  'univEmail',
+  'info',
+  'success',
+] as const;
+
+export const MOBILE_STEP_MAP = {
+  [ROLE.participant]: MOBILE_PARTICIPANT_JOIN_STEP_LIST,
+  [ROLE.researcher]: MOBILE_RESEARCHER_JOIN_STEP_LIST,
+} as const;
 
 export const SERVICE_TERM_TEXT = [
   `제1조 (목적)

@@ -49,7 +49,7 @@ const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   return (
     <FormProvider {...participantMethods}>
       <Funnel>
-        <Step name={STEP.email}>
+        <Step name={STEP.contactEmail}>
           <Participant.EmailStep onNext={() => setStep(STEP.info)} />
         </Step>
         <Step name={STEP.info}>
