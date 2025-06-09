@@ -1,6 +1,5 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-import { ServiceAgreeCheck } from '../../JoinPage.types';
 import AgreeAccordion from './AgreeAccordion/AgreeAccordion';
 import JoinCheckbox from './JoinCheckbox/JoinCheckbox';
 import { termContainer } from './JoinCheckboxContainer.css';
@@ -12,24 +11,25 @@ import {
   SERVICE_TERM_TEXT,
 } from '../../JoinPage.constants';
 
-interface JoinCheckboxContainerProps {
-  serviceAgreeCheck: ServiceAgreeCheck;
-  handleAllCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
-}
-
-const JoinCheckboxContainer = ({
-  serviceAgreeCheck,
-  handleAllCheck,
-  handleChange,
-}: JoinCheckboxContainerProps) => {
+const JoinCheckboxContainer = () => {
   const { control, setValue } = useFormContext();
+
   const adConsent = useWatch({ name: 'adConsent', control });
   const matchConsent = useWatch({ name: 'matchConsent', control });
-
-  const { isTermOfService, isPrivacy } = serviceAgreeCheck;
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
 
   const isAllCheck = isTermOfService && isPrivacy && adConsent && (matchConsent ?? true);
+
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (matchConsent) {
+      setValue('matchConsent', e.target.checked);
+    }
+
+    setValue('isTermOfService', e.target.checked);
+    setValue('isPrivacy', e.target.checked);
+    setValue('adConsent', e.target.checked);
+  };
 
   return (
     <div className={termContainer}>
@@ -47,7 +47,7 @@ const JoinCheckboxContainer = ({
           <JoinCheckbox
             label="서비스 이용약관 동의"
             isChecked={isTermOfService}
-            onChange={(e) => handleChange(e, 'isTermOfService')}
+            onChange={(e) => setValue('isTermOfService', e.target.checked)}
             isRequired
           />
         }
@@ -60,7 +60,7 @@ const JoinCheckboxContainer = ({
           <JoinCheckbox
             label="개인정보 수집 및 이용 동의"
             isChecked={isPrivacy}
-            onChange={(e) => handleChange(e, 'isPrivacy')}
+            onChange={(e) => setValue('isPrivacy', e.target.checked)}
             isRequired
           />
         }
@@ -70,18 +70,10 @@ const JoinCheckboxContainer = ({
       {/* 이메일/SMS 수신 동의 */}
       <AgreeAccordion
         trigger={
-          <Controller
-            name="adConsent"
-            control={control}
-            render={({ field }) => {
-              return (
-                <JoinCheckbox
-                  label="[선택] 광고성 정보 이메일/SMS 수신 동의"
-                  isChecked={field.value}
-                  onChange={() => setValue('adConsent', !field.value)}
-                />
-              );
-            }}
+          <JoinCheckbox
+            label="[선택] 광고성 정보 이메일/SMS 수신 동의"
+            isChecked={adConsent}
+            onChange={(e) => setValue('adConsent', e.target.checked)}
           />
         }
         content={<Policy content={ADVERTISE_TEXT} />}
@@ -91,18 +83,10 @@ const JoinCheckboxContainer = ({
       {matchConsent !== undefined && (
         <AgreeAccordion
           trigger={
-            <Controller
-              name="matchConsent"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <JoinCheckbox
-                    label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
-                    isChecked={field.value}
-                    onChange={() => setValue('matchConsent', !field.value)}
-                  />
-                );
-              }}
+            <JoinCheckbox
+              label="[선택] 개인정보 수집 및 이용 동의-실험 추천·혜택"
+              isChecked={matchConsent}
+              onChange={(e) => setValue('matchConsent', e.target.checked)}
             />
           }
           content={<Policy content={RECOMMEND_ALERT_TEXT} />}

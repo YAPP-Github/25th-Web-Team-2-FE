@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { useRef, useState } from 'react';
+import { Control, Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 import {
   inputContainer,
@@ -37,20 +37,9 @@ const ButtonInput = <T extends FieldValues>({
   className,
   tip,
 }: ButtonInputProps<T>) => {
+  const { trigger } = useFormContext<T>();
   const [isFocused, setIsFocused] = useState(false);
-  const validateButtonRef = useRef<HTMLButtonElement>(null);
-
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-    onBlur: () => void,
-  ) => {
-    if (validateButtonRef.current && validateButtonRef.current.contains(e.relatedTarget)) {
-      return;
-    }
-
-    onBlur();
-    setIsFocused(false);
-  };
+  const validateButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div className={inputContainer}>
@@ -65,6 +54,20 @@ const ButtonInput = <T extends FieldValues>({
         render={({ field, fieldState }) => {
           const isButtonDisabled = !field.value || fieldState.invalid;
 
+          const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+            field.onChange(e);
+            await trigger(name);
+          };
+
+          const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+            if (validateButtonRef.current && validateButtonRef.current.contains(e.relatedTarget)) {
+              return;
+            }
+
+            field.onBlur();
+            setIsFocused(false);
+          };
+
           return (
             <>
               <div className={inputWrapper}>
@@ -74,8 +77,9 @@ const ButtonInput = <T extends FieldValues>({
                   className={className ? className : joinInput}
                   placeholder="이메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
+                  onChange={handleChange}
                   onFocus={() => setIsFocused(true)}
-                  onBlur={(e) => handleBlur(e, field.onBlur)}
+                  onBlur={handleBlur}
                 />
                 {isFocused && field.value && (
                   <button

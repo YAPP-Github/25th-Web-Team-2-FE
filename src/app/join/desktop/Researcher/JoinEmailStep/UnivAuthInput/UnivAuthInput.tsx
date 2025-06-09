@@ -22,24 +22,14 @@ import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-interface UnivAuthInputProps {
-  isEmailVerified: boolean;
-  handleVerifyEmail: () => void;
-  handleResetVerifyEmail: () => void;
-}
-
 const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
   if (isLoading) return '전송 중...';
   if (isAuthenticated) return '수정';
   return '인증번호 전송';
 };
 
-const UnivAuthInput = ({
-  isEmailVerified,
-  handleVerifyEmail,
-  handleResetVerifyEmail,
-}: UnivAuthInputProps) => {
-  const { control } = useFormContext<ResearcherJoinSchemaType>();
+const UnivAuthInput = () => {
+  const { control, setValue, clearErrors, trigger } = useFormContext<ResearcherJoinSchemaType>();
 
   const {
     data: authCodeData,
@@ -50,6 +40,8 @@ const UnivAuthInput = ({
 
   const [isEmailSent, setIsEmailSent] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
+
+  const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
   const univEmail = useWatch({ name: 'univEmail', control });
@@ -65,7 +57,7 @@ const UnivAuthInput = ({
       },
       onError: (error) => {
         if (error.code === 'VE0007') {
-          handleVerifyEmail();
+          setValue('isEmailVerified', true);
         }
       },
     });
@@ -73,8 +65,9 @@ const UnivAuthInput = ({
 
   const handleClickEdit = () => {
     setIsEmailSent(false);
-    handleResetVerifyEmail();
+    setValue('isEmailVerified', false);
     stopTimer();
+    clearErrors('univEmail');
   };
 
   return (
@@ -90,6 +83,11 @@ const UnivAuthInput = ({
           const isButtonDisabled =
             (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
 
+          const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+            field.onChange(e);
+            await trigger('univEmail');
+          };
+
           return (
             <>
               <div className={univInputWrapper}>
@@ -100,6 +98,7 @@ const UnivAuthInput = ({
                   placeholder="학교 메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
                   disabled={isUnivEmailAuthenticated}
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -113,7 +112,7 @@ const UnivAuthInput = ({
               {fieldState.error ? (
                 <span className={errorMessage}>{fieldState.error.message}</span>
               ) : (
-                authCodeError && <span className={errorMessage}>{authCodeError.message}</span>
+                <span className={errorMessage}>{authCodeError && authCodeError.message}</span>
               )}
             </>
           );
@@ -123,8 +122,8 @@ const UnivAuthInput = ({
       {isEmailSent && (
         <AuthCodeInput
           authTimer={authTimer}
-          handleVerifyEmail={handleVerifyEmail}
           handleSendUnivAuthCode={handleSendUnivAuthCode}
+          stopTimer={stopTimer}
         />
       )}
       <EmailToast

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
@@ -10,8 +10,11 @@ import { STEP } from '../../JoinPage.constants';
 
 import { Researcher } from '.';
 
-import ResearcherJoinSchema, { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { LoginProvider } from '@/types/user';
+import {
+  ResearcherJoinSchema,
+  ResearcherJoinSchemaType,
+  ResearcherJoinSubmitSchema,
+} from '@/schema/join/ResearcherJoinSchema';
 
 interface ResearcherFormProps {
   onDirtyChange?: (dirty: boolean) => void;
@@ -33,13 +36,17 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues: {
-      oauthEmail: '',
+      oauthEmail,
+      provider,
       contactEmail: '',
       univEmail: '',
       name: '',
       univName: '',
       major: '',
       adConsent: false,
+      isTermOfService: false,
+      isPrivacy: false,
+      isEmailVerified: false,
     },
   });
 
@@ -53,15 +60,10 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
 
   const handleResearcherSubmit = () => {
     const formData = researcherMethods.getValues();
-    joinResearcher(formData, { onSuccess: () => setStep(STEP.success) });
-  };
+    const submitData = ResearcherJoinSubmitSchema().parse(formData);
 
-  useEffect(() => {
-    if (oauthEmail && provider) {
-      researcherMethods.setValue('oauthEmail', oauthEmail);
-      researcherMethods.setValue('provider', provider as LoginProvider);
-    }
-  }, [researcherMethods, oauthEmail, provider]);
+    joinResearcher(submitData, { onSuccess: () => setStep(STEP.success) });
+  };
 
   return (
     <FormProvider {...researcherMethods}>
