@@ -6,5 +6,5 @@ export const experimentPostMobileContainerLayout = style({
   minHeight: 'calc(100dvh - 5.4rem)',
   backgroundColor: colors.field01,
 
-  margin: '0 1.6rem',
+  padding: '0 1.6rem',
 });
