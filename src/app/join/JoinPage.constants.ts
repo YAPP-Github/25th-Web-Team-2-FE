@@ -48,6 +48,8 @@ export const STEP = {
   success: 'success',
 } as const;
 
+export const DESKTOP_RESEARCHER_JOIN_STEP_LIST = ['email', 'info', 'success'] as const;
+
 export const MOBILE_PARTICIPANT_JOIN_STEP_LIST = [
   'email',
   'info',

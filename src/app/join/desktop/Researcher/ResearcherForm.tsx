@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form';
 
 import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
-import { STEP } from '../../JoinPage.constants';
+import { DESKTOP_RESEARCHER_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
 
 import { Researcher } from '.';
 
@@ -23,7 +23,7 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
 
-  const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
+  const { Funnel, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
 
   const { researcherMethods, handleSubmit } = useResearcherJoin({
     initialValues: {
