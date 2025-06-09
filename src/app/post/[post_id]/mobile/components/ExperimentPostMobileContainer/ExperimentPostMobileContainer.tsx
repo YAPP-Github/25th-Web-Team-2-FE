@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import { experimentPostMobileContainerLayout } from './ExperimentPostMobileContainer.css';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
+import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
 
 const ExperimentPostMobileContainer = () => {
   const { post_id } = useParams();
@@ -24,6 +25,7 @@ const ExperimentPostMobileContainer = () => {
   return (
     <div className={experimentPostMobileContainerLayout}>
       <ExperimentPostInfo postDetailData={postDetailData} />
+      <ExperimentPostTabs />
     </div>
   );
 };
