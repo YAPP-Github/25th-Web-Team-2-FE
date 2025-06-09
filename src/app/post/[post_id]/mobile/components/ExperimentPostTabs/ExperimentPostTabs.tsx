@@ -1,8 +1,14 @@
 import * as Tabs from '@radix-ui/react-tabs';
 
 import { tabContent, tabList, tabsRoot, tabTrigger } from './ExperimentPostTabs.css';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import ExperimentPostSummary from '../ExperimentPostSummary/ExperimentPostSummary';
 
-const ExperimentPostTabs = () => {
+const ExperimentPostTabs = ({
+  postDetailData,
+}: {
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+}) => {
   return (
     <Tabs.Root className={tabsRoot} defaultValue="summary">
       <Tabs.List className={tabList}>
@@ -15,8 +21,7 @@ const ExperimentPostTabs = () => {
       </Tabs.List>
 
       <Tabs.Content className={tabContent} value="summary">
-        이 연구는 만 19세 이상 29세 이하 성인을 대상으로, 스마트폰 앱 및 웨어러블 기기를 통해
-        ‘자제력’ 요소를 연구합니다.
+        <ExperimentPostSummary postDetailData={postDetailData} />
       </Tabs.Content>
 
       <Tabs.Content className={tabContent} value="original">

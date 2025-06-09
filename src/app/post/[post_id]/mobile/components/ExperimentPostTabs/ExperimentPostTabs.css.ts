@@ -34,7 +34,6 @@ export const tabTrigger = style({
 });
 
 export const tabContent = style({
-  ...fonts.body.small.M15,
-  // R15 추가해야함
+  ...fonts.body.small.R15,
   padding: '1.6rem 0',
 });
