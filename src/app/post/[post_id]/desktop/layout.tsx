@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: '그라밋 | 실험 공고 조회',
 };
 
-function PostLayout({ children }: { children: React.ReactNode }) {
+function DesktopPostLayout({ children }: { children: React.ReactNode }) {
   return <DefaultLayout>{children}</DefaultLayout>;
 }
 
-export default PostLayout;
+export default DesktopPostLayout;
