@@ -16,26 +16,6 @@ export const fixedBottomButtonLayout = style({
   right: '1.6rem',
 });
 
-const fadeIn = keyframes({
-  '0%': {
-    opacity: 0,
-    transform: 'translateY(0.2rem)',
-  },
-  '20%': {
-    opacity: 0.6,
-  },
-  '100%': {
-    opacity: 1,
-    transform: 'translateY(0)',
-  },
-});
-
-export const fadeInWithDelay = style({
-  animation: `${fadeIn} 0.2s ease-in`,
-  animationDelay: '0.25s',
-  animationFillMode: 'both',
-});
-
 export const buttonGradientBackground = style({
   position: 'fixed',
   bottom: 0,

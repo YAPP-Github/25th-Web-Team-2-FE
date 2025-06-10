@@ -20,7 +20,6 @@ interface OverlayState {
 interface OverlayContextProps {
   open: (Component: React.FC<OverlayState> | null, props?: OverlayProps) => void;
   close: () => void;
-  isOpen: boolean;
 }
 
 export const OverlayContext = createContext<OverlayContextProps | null>(null);
@@ -53,10 +52,7 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
     }));
   }, []);
 
-  const dispatch = useMemo(
-    () => ({ open, close, isOpen: overlay.isOpen }),
-    [open, close, overlay.isOpen],
-  );
+  const dispatch = useMemo(() => ({ open, close }), [open, close]);
 
   return (
     <OverlayContext.Provider value={dispatch}>

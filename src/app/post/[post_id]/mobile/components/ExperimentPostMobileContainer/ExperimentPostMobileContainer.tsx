@@ -7,7 +7,6 @@ import { useState } from 'react';
 import {
   buttonGradientBackground,
   experimentPostMobileContainerLayout,
-  fadeInWithDelay,
   fixedBottomButtonLayout,
 } from './ExperimentPostMobileContainer.css';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
@@ -26,7 +25,7 @@ import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileContainer = () => {
-  const { open, close, isOpen } = useOverlay();
+  const { open, close } = useOverlay();
   const [isCopyToastOpen, setIsCopyToastOpen] = useState(false);
 
   const { post_id } = useParams();
@@ -62,15 +61,13 @@ const ExperimentPostMobileContainer = () => {
       <ExperimentPostInfo postDetailData={postDetailData} />
       <ExperimentPostTabs postDetailData={postDetailData} />
 
-      {!isOpen && (
-        <div className={buttonGradientBackground}>
-          <div className={`${fixedBottomButtonLayout} ${fadeInWithDelay}`}>
-            <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
-              참여 방법 확인하기
-            </Button>
-          </div>
+      <div className={buttonGradientBackground}>
+        <div className={fixedBottomButtonLayout}>
+          <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
+            참여 방법 확인하기
+          </Button>
         </div>
-      )}
+      </div>
 
       {/* 복사 성공 토스트 알림 */}
       <Toast.Provider swipeDirection="right">
