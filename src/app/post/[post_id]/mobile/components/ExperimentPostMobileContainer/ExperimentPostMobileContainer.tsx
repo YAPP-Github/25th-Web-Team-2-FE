@@ -7,11 +7,10 @@ import {
   fadeInWithDelay,
   fixedBottomButtonLayout,
 } from './ExperimentPostMobileContainer.css';
-import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
-import ApplyMethodBottomSheet from '../ApplyMethodBottomSheet/ApplyMethodBottomSheet';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
+import ParticipationGuideBottomSheet from '../ParticipationGuideBottomSheet/ParticipationGuideBottomSheet';
 
 import Button from '@/components/Button/Button';
 import useOverlay from '@/hooks/useOverlay';
@@ -25,17 +24,14 @@ const ExperimentPostMobileContainer = () => {
   /* 특정 공고 상세 조회 */
   const { data: postDetailData, isLoading: isLoadingPost } = useExperimentDetailsQuery({ postId });
 
-  /* 공고 지원 방법 조회 */
-  const { data: applyMethodData, isLoading: isLoadingApply } = useApplyMethodQuery({ postId });
-
   // todo 로딩 상태 및 EmptyView 추가 예정
-  if (isLoadingPost || isLoadingApply) {
+  if (isLoadingPost) {
     return <div>로딩 중...</div>;
   }
-  if (!postDetailData || !applyMethodData) return <div>데이터 없음</div>;
+  if (!postDetailData) return <div>데이터 없음</div>;
 
   const handleOpenBottomSheet = () => {
-    open(() => <ApplyMethodBottomSheet onConfirm={close} />, {
+    open(() => <ParticipationGuideBottomSheet onConfirm={close} postId={postId} />, {
       title: '참여 방법',
       isDraggable: true,
     });
