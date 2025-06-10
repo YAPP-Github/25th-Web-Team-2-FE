@@ -170,6 +170,7 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
         descriptionText="입력한 내용은 따로 저장되지 않아요"
         cancelText="취소"
         confirmText="나가기"
+        confirmButtonColor={colors.field09}
         onConfirm={() => handleConfirmLeave({ goHome: false })}
       />
     </FormProvider>

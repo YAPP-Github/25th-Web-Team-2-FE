@@ -23,6 +23,7 @@ import Logo from '@/assets/images/logo.svg';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { ROLE } from '@/constants/config';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
+import { colors } from '@/styles/colors';
 
 export default function JoinPage() {
   const { data: session } = useSession();
@@ -90,6 +91,7 @@ export default function JoinPage() {
         descriptionText="입력한 내용은 따로 저장되지 않아요"
         cancelText="취소"
         confirmText="나가기"
+        confirmButtonColor={colors.field09}
         onConfirm={() => handleConfirmLeave({ goHome: true })}
       />
     </section>
