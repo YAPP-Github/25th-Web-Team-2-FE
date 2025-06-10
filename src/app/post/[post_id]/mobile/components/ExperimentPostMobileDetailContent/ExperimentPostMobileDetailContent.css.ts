@@ -38,7 +38,6 @@ export const maximizeIcon = style({
   top: '1rem',
   right: '1rem',
   cursor: 'pointer',
-  zIndex: 10,
 });
 
 export const multiImageGrid = style({

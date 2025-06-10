@@ -1,13 +1,24 @@
 'use client';
 import { useParams } from 'next/navigation';
 
-import { experimentPostMobileContainerLayout } from './ExperimentPostMobileContainer.css';
+import {
+  buttonGradientBackground,
+  experimentPostMobileContainerLayout,
+  fadeInWithDelay,
+  fixedBottomButtonLayout,
+} from './ExperimentPostMobileContainer.css';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
+import ApplyMethodBottomSheet from '../ApplyMethodBottomSheet/ApplyMethodBottomSheet';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
 
+import Button from '@/components/Button/Button';
+import useOverlay from '@/hooks/useOverlay';
+
 const ExperimentPostMobileContainer = () => {
+  const { open, close, isOpen } = useOverlay();
+
   const { post_id } = useParams();
   const postId = Array.isArray(post_id) ? post_id[0] : post_id;
 
@@ -23,10 +34,27 @@ const ExperimentPostMobileContainer = () => {
   }
   if (!postDetailData || !applyMethodData) return <div>데이터 없음</div>;
 
+  const handleOpenBottomSheet = () => {
+    open(() => <ApplyMethodBottomSheet onConfirm={close} />, {
+      title: '참여 방법',
+      isDraggable: true,
+    });
+  };
+
   return (
     <div className={experimentPostMobileContainerLayout}>
       <ExperimentPostInfo postDetailData={postDetailData} />
       <ExperimentPostTabs postDetailData={postDetailData} />
+
+      {!isOpen && (
+        <div className={buttonGradientBackground}>
+          <div className={`${fixedBottomButtonLayout} ${fadeInWithDelay}`}>
+            <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
+              참여 방법 확인하기
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
