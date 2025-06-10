@@ -5,6 +5,7 @@ import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
 export const participationGuideBottomSheetLayout = style({
+  marginTop: '0.8rem',
   minWidth: '3.7rem',
 });
 
@@ -51,7 +52,7 @@ export const applyMethodContainer = style({
 
 export const warningMessage = style({
   width: 'fit-content',
-  marginTop: '1.6rem',
+  marginTop: '0.8rem',
   padding: '0.4rem 1.2rem',
   borderRadius: '1.2rem',
   backgroundColor: colors.fieldAlert,
