@@ -1,5 +1,4 @@
-import * as Toast from '@radix-ui/react-toast';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import {
   participationGuideBottomSheetLayout,
@@ -9,9 +8,6 @@ import {
   contactInfoRowContainer,
   contactInfoTitle,
   warningMessage,
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
 } from './ParticipationGuideBottomSheet.css';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 
@@ -23,12 +19,12 @@ import { colors } from '@/styles/colors';
 const ParticipationGuideBottomSheet = ({
   onConfirm,
   postId,
+  setIsCopyToastOpen,
 }: {
   onConfirm: VoidFunction;
   postId: string;
+  setIsCopyToastOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [isCopyToastOpen, setIsCopyToastOpen] = useState(false);
-
   /* 공고 지원 방법 조회 */
   const { data: applyMethodData, isLoading: isLoadingApply } = useApplyMethodQuery({ postId });
 
@@ -129,23 +125,6 @@ const ParticipationGuideBottomSheet = ({
       <Button onClick={onConfirm} variant="dark" size="small" height={'5.6rem'}>
         확인
       </Button>
-
-      {/* todo Toast 위치 변경 예정  */}
-      {/* 복사 성공 토스트 알림 */}
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={isCopyToastOpen}
-          onOpenChange={setIsCopyToastOpen}
-          duration={1500}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-            <p>복사되었어요</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
     </section>
   );
 };

@@ -65,16 +65,16 @@ export const warningMessage = style({
 });
 
 export const copyToastLayout = style({
-  height: '5.2rem',
-  backgroundColor: colors.fieldToast,
-  color: colors.text01,
+  ...fonts.body.small.SB15,
+  height: '4.4rem',
+  backgroundColor: colors.field01,
+  color: colors.text06,
   borderRadius: '8rem',
   padding: '1.4rem 2.4rem',
-  position: 'fixed',
-  top: '0',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: zIndex.toastContent,
+  display: 'flex',
+  alignItems: 'center',
+
+  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
 });
 
 export const copyToastTitle = style({
