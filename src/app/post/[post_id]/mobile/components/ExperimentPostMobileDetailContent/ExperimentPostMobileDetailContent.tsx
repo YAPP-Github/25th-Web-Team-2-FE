@@ -16,6 +16,7 @@ import {
   replaceImageListWithWebp,
 } from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import ExperimentImageViewer from '../ExperimentImageViewer/ExperimentImageViewer';
 
 import Icon from '@/components/Icon';
 
@@ -24,9 +25,11 @@ const ExperimentPostMobileDetailContent = ({
 }: {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
 }) => {
+  const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
+
   const { content, imageList = [] } = postDetailData;
   // todo 이미지 확대 창 생성 시 사용 예정
-  const [_, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageSources, setImageSources] = useState<string[]>([]);
 
   /** WebP 변환 이미지 polling 후 존재하면 교체 */
@@ -38,6 +41,11 @@ const ExperimentPostMobileDetailContent = ({
 
     replaceImageListWithWebp(originalImages).then(setImageSources);
   }, [imageList]);
+
+  const handleMaximize = (src: string) => {
+    setSelectedImage(src);
+    setIsImageViewerOpen(true);
+  };
 
   return (
     <div className={postMobileDetailContentLayout}>
@@ -60,7 +68,7 @@ const ExperimentPostMobileDetailContent = ({
                   priority
                   quality={100}
                 />
-                <button className={maximizeIcon} onClick={() => setSelectedImage(imageSources[0])}>
+                <button className={maximizeIcon} onClick={() => handleMaximize(imageSources[0])}>
                   <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
                 </button>
               </div>
@@ -79,7 +87,7 @@ const ExperimentPostMobileDetailContent = ({
                     priority
                     quality={100}
                   />
-                  <button className={maximizeIcon} onClick={() => setSelectedImage(src)}>
+                  <button className={maximizeIcon} onClick={() => handleMaximize(src)}>
                     <Icon icon="Maximize" width={20} height={20} cursor="pointer" />
                   </button>
                 </div>
@@ -87,6 +95,19 @@ const ExperimentPostMobileDetailContent = ({
             </div>
           )}
         </div>
+      )}
+
+      {/* 이미지 확대 뷰어 */}
+      {selectedImage && (
+        <ExperimentImageViewer
+          initialIndex={imageSources.indexOf(selectedImage)}
+          images={imageSources}
+          open={isImageViewerOpen}
+          onOpenChange={(open) => {
+            setIsImageViewerOpen(open);
+            if (!open) setSelectedImage(null);
+          }}
+        />
       )}
     </div>
   );
