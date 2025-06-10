@@ -2,7 +2,7 @@
 
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   viewerOverlay,
@@ -14,9 +14,9 @@ import {
   pageCurrent,
 } from './ExperimentImageViewer.css';
 
+import { useTouchSlide } from '@/app/home/components/Banner/hooks/useTouchSlide';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
-import { useTouchSlide } from '@/app/home/components/Banner/hooks/useTouchSlide';
 
 interface Props {
   images: string[];

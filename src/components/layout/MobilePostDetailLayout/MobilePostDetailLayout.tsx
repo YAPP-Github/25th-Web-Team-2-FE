@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+
 import { defaultLayout, defaultLayoutContainer } from '../DefaultLayout/DefaultLayout.css';
 
 const MobilePostDetailLayout = ({ children }: PropsWithChildren) => {

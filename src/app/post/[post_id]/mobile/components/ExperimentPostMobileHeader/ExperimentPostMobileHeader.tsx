@@ -1,14 +1,17 @@
 'use client';
 
-import RightHeader from '@/components/Header/RightHeader/RightHeader';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
+
 import { experimentPostMobileHeaderLayout } from './ExperimentPostMobileHeader.css';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 
+import RightHeader from '@/components/Header/RightHeader/RightHeader';
+import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
+
 const ExperimentPostMobileHeader = () => {
+  const router = useRouter();
   const { post_id } = useParams();
   const postId = Array.isArray(post_id) ? post_id[0] : post_id;
 
@@ -19,7 +22,6 @@ const ExperimentPostMobileHeader = () => {
 
   const isAuthor = postDetailData?.isAuthor ?? false;
 
-  const router = useRouter();
   return (
     <div className={experimentPostMobileHeaderLayout}>
       <button onClick={() => router.back()} aria-label="뒤로가기">
