@@ -23,46 +23,6 @@ export const image = style({
   height: 'auto',
 });
 
-export const imageWrapperRecipe = recipe({
-  base: {},
-  variants: {
-    isPostDetailPage: {
-      true: {
-        '@media': {
-          'screen and (max-width: 767px)': {
-            display: 'none',
-          },
-        },
-      },
-      false: {},
-    },
-  },
-  defaultVariants: {
-    isPostDetailPage: false,
-  },
-});
-
-export const backButtonRecipe = recipe({
-  base: {
-    display: 'none',
-  },
-  variants: {
-    isPostDetailPage: {
-      true: {
-        '@media': {
-          'screen and (max-width: 767px)': {
-            display: 'block',
-          },
-        },
-      },
-      false: {},
-    },
-  },
-  defaultVariants: {
-    isPostDetailPage: false,
-  },
-});
-
 export const buttonContainer = style({
   height: '100%',
 });
