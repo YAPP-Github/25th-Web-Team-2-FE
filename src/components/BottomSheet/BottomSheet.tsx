@@ -16,6 +16,7 @@ import {
 import Icon from '../Icon';
 
 import { colors } from '@/styles/colors';
+import { HeaderMode } from '@/types/bottomSheet';
 
 const CLOSE_THRESHOLD = 30;
 
@@ -24,9 +25,9 @@ interface BottomSheetProps {
   onClose: () => void;
   content: React.ReactNode;
   title?: string;
-  isDraggable?: boolean;
   delay?: number;
   onAnimationEnd?: () => void;
+  headerMode?: HeaderMode;
 }
 
 const BottomSheet = ({
@@ -34,7 +35,7 @@ const BottomSheet = ({
   onClose,
   content,
   title,
-  isDraggable = true,
+  headerMode = 'drag-handle',
   delay = 200,
   onAnimationEnd,
 }: BottomSheetProps) => {
@@ -98,10 +99,9 @@ const BottomSheet = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <header className={headerContainer({ isDraggable })}>
-              {isDraggable ? (
-                <div className={dragHandle} />
-              ) : (
+            <header className={headerContainer({ isDraggable: headerMode === 'drag-handle' })}>
+              {headerMode === 'drag-handle' && <div className={dragHandle} />}
+              {headerMode === 'title-close' && (
                 <div className={headerContent}>
                   <span className={headerTitle}>{title}</span>
                   <Icon
@@ -116,6 +116,7 @@ const BottomSheet = ({
                 </div>
               )}
             </header>
+
             <div className={contentContainer}>{content}</div>
           </div>
         </div>,

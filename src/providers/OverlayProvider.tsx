@@ -1,10 +1,11 @@
 import { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
+import { HeaderMode } from '@/types/bottomSheet';
 
 interface OverlayProps {
   title?: string;
-  isDraggable?: boolean;
+  headerMode?: HeaderMode;
 }
 
 interface Overlay extends OverlayProps {
@@ -66,7 +67,7 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
           onClose={close}
           onAnimationEnd={exit}
           title={overlay.title}
-          isDraggable={overlay.isDraggable}
+          headerMode={overlay.headerMode}
           content={<overlay.Component {...overlay} />}
         />
       )}

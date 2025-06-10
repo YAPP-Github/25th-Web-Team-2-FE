@@ -65,7 +65,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
           onClose={close}
         />
       ),
-      { isDraggable: false, title: '지역' },
+      { headerMode: 'title-close', title: '지역' },
     );
   };
 

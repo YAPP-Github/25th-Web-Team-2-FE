@@ -32,7 +32,7 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
           onClose={close}
         />
       ),
-      { isDraggable: false, title: '진행 방식' },
+      { headerMode: 'title-close', title: '진행 방식' },
     );
   };
 

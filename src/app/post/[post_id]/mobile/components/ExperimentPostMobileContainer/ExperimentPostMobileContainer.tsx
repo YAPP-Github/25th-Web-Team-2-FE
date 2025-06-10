@@ -33,7 +33,7 @@ const ExperimentPostMobileContainer = () => {
   const handleOpenBottomSheet = () => {
     open(() => <ParticipationGuideBottomSheet onConfirm={close} postId={postId} />, {
       title: '참여 방법',
-      isDraggable: true,
+      headerMode: 'none',
     });
   };
 
