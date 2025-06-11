@@ -1,7 +1,6 @@
 'use client';
 
 import * as Toast from '@radix-ui/react-toast';
-import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -25,7 +24,6 @@ import {
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import Icon from '@/components/Icon';
-import { QUERY_KEY } from '@/constants/queryKey';
 import { colors } from '@/styles/colors';
 
 interface ExperimentPostInfoProps {
@@ -38,7 +36,6 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
   const [toastMessage, setToastMessage] = useState('');
 
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   /* 공고 삭제 */
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
@@ -52,11 +49,6 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
       { postId: postDetailData.experimentPostId },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: [QUERY_KEY.experimentPostDetail],
-            refetchType: 'all',
-          });
-
           setTimeout(() => {
             router.push('/');
             setToastMessage('');
