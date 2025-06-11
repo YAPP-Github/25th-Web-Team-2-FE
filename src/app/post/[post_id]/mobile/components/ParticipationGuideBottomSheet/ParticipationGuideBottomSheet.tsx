@@ -31,7 +31,7 @@ const ParticipationGuideBottomSheet = ({
 
   const handleCopyContent = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      setIsToastOpen(true);
+      setIsToastOpen?.(true);
       trackEvent('ApplyMethod Interaction', {
         action: 'Link Copied',
       });

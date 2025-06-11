@@ -8,7 +8,7 @@ export interface CommonModalProps {
 export interface PostDetailBottomSheetProps {
   onConfirm: VoidFunction;
   postId: string;
-  setIsToastOpen: Dispatch<SetStateAction<boolean>>;
+  setIsToastOpen?: Dispatch<SetStateAction<boolean>>;
   onEditClick?: VoidFunction;
   onDeleteClick?: VoidFunction;
 }
