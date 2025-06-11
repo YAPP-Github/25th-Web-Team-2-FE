@@ -66,8 +66,9 @@ const ExperimentImageViewer = ({ images, initialIndex = 0, open, onOpenChange }:
                   src={src}
                   alt={`실험 안내 이미지 ${idx + 1}`}
                   className={imageStyle}
-                  width={440}
-                  height={550}
+                  fill
+                  priority
+                  sizes="(max-width: 767px) 100vw, 50vw"
                   quality={100}
                   style={{
                     objectFit: 'contain',

@@ -34,6 +34,8 @@ export const slideItem = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
+  position: 'relative',
 });
 
 export const imageStyle = style({
