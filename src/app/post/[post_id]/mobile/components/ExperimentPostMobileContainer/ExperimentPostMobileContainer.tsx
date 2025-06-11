@@ -1,11 +1,13 @@
 'use client';
 
 import * as Toast from '@radix-ui/react-toast';
-import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 import {
   buttonGradientBackground,
+  contactButton,
+  emptyView,
+  emptyViewTitle,
   experimentPostMobileContainerLayout,
   fixedBottomButtonLayout,
 } from './ExperimentPostMobileContainer.css';
@@ -23,22 +25,46 @@ import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
+import Spinner from '@/components/Spinner/Spinner';
+import { getErrorMessage } from '../../../ExperimentPostPage.utils';
 
-const ExperimentPostMobileContainer = () => {
+const ExperimentPostMobileContainer = ({
+  experimentDetailResponse,
+  postId,
+}: {
+  experimentDetailResponse: ReturnType<typeof useExperimentDetailsQuery>;
+  postId: string;
+}) => {
   const { open, close } = useOverlay();
   const [isCopyToastOpen, setIsCopyToastOpen] = useState(false);
 
-  const { post_id } = useParams();
-  const postId = Array.isArray(post_id) ? post_id[0] : post_id;
+  const postDetailData = experimentDetailResponse.data;
 
-  /* 특정 공고 상세 조회 */
-  const { data: postDetailData, isLoading: isLoadingPost } = useExperimentDetailsQuery({ postId });
-
-  // todo 로딩 상태 및 EmptyView 추가 예정
-  if (isLoadingPost) {
-    return <div>로딩 중...</div>;
+  if (experimentDetailResponse.isLoading) {
+    return (
+      <div className={emptyView}>
+        <Spinner />;
+      </div>
+    );
   }
-  if (!postDetailData) return <div>데이터 없음</div>;
+
+  if (experimentDetailResponse.isError) {
+    return (
+      <div className={emptyView}>
+        <p className={emptyViewTitle}>{getErrorMessage(experimentDetailResponse.error)}</p>
+        <button onClick={() => experimentDetailResponse.refetch()} className={contactButton}>
+          재시도
+        </button>
+      </div>
+    );
+  }
+
+  if (!postDetailData)
+    return (
+      <div className={emptyView}>
+        <div className={emptyViewTitle}>공고 상세 정보가 없습니다.</div>
+      </div>
+    );
 
   const handleOpenBottomSheet = () => {
     open(

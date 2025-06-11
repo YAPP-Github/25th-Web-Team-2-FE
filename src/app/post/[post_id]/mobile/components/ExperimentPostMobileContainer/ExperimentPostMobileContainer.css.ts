@@ -1,6 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
 
 export const experimentPostMobileContainerLayout = style({
   minHeight: 'calc(100dvh - 5.4rem)',
@@ -27,4 +28,32 @@ export const buttonGradientBackground = style({
   rgba(250, 250, 250, 0) 0%,
   rgba(250, 250, 250, 0.85) 100%
   )`,
+});
+
+export const emptyView = style({
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  gap: '2rem',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh',
+  width: '100%',
+});
+
+export const emptyViewTitle = style({
+  ...fonts.body.normal.M16,
+});
+
+export const contactButton = style({
+  ...fonts.label.medium.M13,
+  backgroundColor: colors.field04,
+  color: colors.text06,
+  padding: '0.6rem 1.4rem',
+  borderRadius: '1.2rem',
+
+  selectors: {
+    '&:hover': {
+      backgroundColor: colors.field05,
+    },
+  },
 });

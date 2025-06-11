@@ -19,6 +19,7 @@ import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
+import useExperimentDetailsQuery from '../hooks/useExperimentDetailsQuery';
 
 const ExperimentPostMobilePage = () => {
   const { open, close } = useOverlay();
@@ -30,6 +31,9 @@ const ExperimentPostMobilePage = () => {
   const { post_id } = useParams();
   const postId = Array.isArray(post_id) ? post_id[0] : post_id;
   const router = useRouter();
+
+  /* 특정 공고 상세 조회 */
+  const experimentDetailResponse = useExperimentDetailsQuery({ postId });
 
   /* 공고 삭제 */
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
@@ -76,11 +80,16 @@ const ExperimentPostMobilePage = () => {
     <>
       <div>
         <ExperimentPostMobileHeader
-          postId={postId}
           onOpenMenuBottomSheet={handleOpenMenuBottomSheet}
+          experimentDetailResponse={experimentDetailResponse}
         />
-        <ExperimentPostMobileContainer />
+        <ExperimentPostMobileContainer
+          experimentDetailResponse={experimentDetailResponse}
+          postId={postId}
+        />
       </div>
+
+      {/* 공고 수정 모바일 화면 준비중 모달 */}
       <EditNotReadyModal isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
 
       {/* 삭제 확인 모달 */}

@@ -6,6 +6,7 @@ import {
   contactInfoRowContainer,
   contactInfoTitle,
   warningMessage,
+  emptyView,
 } from './ParticipationGuideBottomSheet.css';
 import { PostDetailBottomSheetProps } from '../../../ExperimentPostPage.types';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
@@ -14,6 +15,7 @@ import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
+import Spinner from '@/components/Spinner/Spinner';
 
 const ParticipationGuideBottomSheet = ({
   onConfirm,
@@ -23,11 +25,18 @@ const ParticipationGuideBottomSheet = ({
   /* 공고 지원 방법 조회 */
   const { data: applyMethodData, isLoading: isLoadingApply } = useApplyMethodQuery({ postId });
 
-  // todo 로딩 상태 및 EmptyView 추가 예정
   if (isLoadingApply) {
-    return <div>로딩 중...</div>;
+    return <Spinner height={150} />;
   }
-  if (!applyMethodData) return <div>데이터 없음</div>;
+
+  if (!applyMethodData) {
+    return (
+      <div className={emptyView}>
+        <Icon icon="Alert" width={24} height={24} color={colors.textAlert} />
+        잠시 후 다시 시도해 주세요.
+      </div>
+    );
+  }
 
   const handleCopyContent = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {

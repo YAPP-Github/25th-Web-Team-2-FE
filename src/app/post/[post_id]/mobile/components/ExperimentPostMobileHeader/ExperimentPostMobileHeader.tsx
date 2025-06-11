@@ -12,18 +12,15 @@ import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileHeader = ({
   onOpenMenuBottomSheet,
-  postId,
+  experimentDetailResponse,
 }: {
   onOpenMenuBottomSheet: VoidFunction;
-  postId: string;
+  experimentDetailResponse: ReturnType<typeof useExperimentDetailsQuery>;
 }) => {
   const router = useRouter();
 
-  /* 특정 공고 상세 조회 */
-  const { data: postDetailData, isLoading: isLoadingPost } = useExperimentDetailsQuery({ postId });
-  const isAuthor = postDetailData?.isAuthor ?? false;
-
-  if (isLoadingPost) return null;
+  const isAuthor = experimentDetailResponse.data?.isAuthor ?? false;
+  if (experimentDetailResponse.isLoading) return null;
 
   return (
     <div className={experimentPostMobileHeaderLayout}>

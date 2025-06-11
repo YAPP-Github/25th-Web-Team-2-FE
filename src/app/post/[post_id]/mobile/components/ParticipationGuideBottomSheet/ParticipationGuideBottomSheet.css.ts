@@ -93,3 +93,13 @@ export const copyToastViewport = style({
   transform: 'translateX(-50%)',
   zIndex: zIndex.toastViewport,
 });
+
+export const emptyView = style({
+  ...fonts.body.normal.M16,
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  alignItems: 'center',
+  gap: '2rem',
+  height: '8rem',
+  padding: '0 1.8rem',
+});
