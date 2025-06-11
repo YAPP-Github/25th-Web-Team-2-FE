@@ -12,8 +12,9 @@ import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
 
-const ExperimentPostMobileHeader = () => {
+const ExperimentPostMobileHeader = ({ onEditClick }: { onEditClick: VoidFunction }) => {
   const { open, close } = useOverlay();
+
   // todo 삭제 시 토스트 알림 고민
   const [_, setIsToastOpen] = useState(false);
 
@@ -31,10 +32,14 @@ const ExperimentPostMobileHeader = () => {
   const handleOpenBottomSheet = () => {
     open(
       () => (
-        <PostMenuBottomSheet onConfirm={close} postId={postId} setIsToastOpen={setIsToastOpen} />
+        <PostMenuBottomSheet
+          onConfirm={close}
+          postId={postId}
+          setIsToastOpen={setIsToastOpen}
+          onEditClick={onEditClick}
+        />
       ),
       {
-        // title: '참여 방법',
         headerMode: 'drag-handle',
       },
     );
