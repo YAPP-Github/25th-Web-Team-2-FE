@@ -10,4 +10,5 @@ export interface PostDetailBottomSheetProps {
   postId: string;
   setIsToastOpen: Dispatch<SetStateAction<boolean>>;
   onEditClick?: VoidFunction;
+  onDeleteClick?: VoidFunction;
 }

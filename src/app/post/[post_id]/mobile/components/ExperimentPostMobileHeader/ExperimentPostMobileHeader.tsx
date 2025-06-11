@@ -12,7 +12,13 @@ import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
 
-const ExperimentPostMobileHeader = ({ onEditClick }: { onEditClick: VoidFunction }) => {
+const ExperimentPostMobileHeader = ({
+  onEditClick,
+  onDeleteClick,
+}: {
+  onEditClick: VoidFunction;
+  onDeleteClick: VoidFunction;
+}) => {
   const { open, close } = useOverlay();
 
   // todo 삭제 시 토스트 알림 고민
@@ -37,6 +43,7 @@ const ExperimentPostMobileHeader = ({ onEditClick }: { onEditClick: VoidFunction
           postId={postId}
           setIsToastOpen={setIsToastOpen}
           onEditClick={onEditClick}
+          onDeleteClick={onDeleteClick}
         />
       ),
       {

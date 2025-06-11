@@ -1,6 +1,8 @@
 'use client';
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import {
   editModalContent,
@@ -8,7 +10,6 @@ import {
   editModalTitle,
   editModalCloseButton,
   editModalButtonContainer,
-  editModalSecondaryButton,
   editModalImage,
 } from './EditNotReadyModal.css';
 
@@ -22,6 +23,9 @@ interface EditNotReadyModalProps {
 }
 
 const EditNotReadyModal = ({ isOpen, onOpenChange }: EditNotReadyModalProps) => {
+  const { post_id } = useParams();
+  const postId = Array.isArray(post_id) ? post_id[0] : post_id;
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -50,13 +54,16 @@ const EditNotReadyModal = ({ isOpen, onOpenChange }: EditNotReadyModalProps) => 
 
           <div className={editModalButtonContainer}>
             <Dialog.Close asChild>
-              <Button variant="primary" size="medium" height={'5.6rem'}>
-                그래도 둘러보기
-              </Button>
+              <Link href={`/edit/${postId}`} passHref>
+                <Button variant="primary" size="medium" height="5.6rem">
+                  그래도 둘러보기
+                </Button>
+              </Link>
             </Dialog.Close>
-            <Dialog.Close asChild>
+            {/* todo 하루 동안 안보기 추가 예정 */}
+            {/* <Dialog.Close asChild>
               <button className={editModalSecondaryButton}>하루 동안 그만 보기</button>
-            </Dialog.Close>
+            </Dialog.Close> */}
           </div>
         </Dialog.Content>
       </Dialog.Portal>
