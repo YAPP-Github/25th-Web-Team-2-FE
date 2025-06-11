@@ -4,6 +4,8 @@ import * as Toast from '@radix-ui/react-toast';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
+import EditNotReadyModal from '../EditNotReadyModal/EditNotReadyModal';
 import ExperimentPostMobileContainer from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer';
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader/ExperimentPostMobileHeader';
 import {
@@ -18,9 +20,6 @@ import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
-
-import EditNotReadyModal from '../EditNotReadyModal/EditNotReadyModal';
-import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 
 const ExperimentPostMobileContentContainer = () => {
   const { open, close } = useOverlay();

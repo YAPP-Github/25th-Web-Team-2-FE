@@ -11,6 +11,7 @@ import {
   experimentPostMobileContentContainerLayout,
   fixedBottomButtonLayout,
 } from './ExperimentPostMobileContentContainer.css';
+import { getErrorMessage } from '../../../ExperimentPostPage.utils';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
@@ -23,10 +24,9 @@ import {
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
+import Spinner from '@/components/Spinner/Spinner';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
-import Spinner from '@/components/Spinner/Spinner';
-import { getErrorMessage } from '../../../ExperimentPostPage.utils';
 
 const ExperimentPostMobileContentContainer = ({
   experimentDetailResponse,

@@ -13,9 +13,9 @@ import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
+import Spinner from '@/components/Spinner/Spinner';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
-import Spinner from '@/components/Spinner/Spinner';
 
 const ParticipationGuideBottomSheet = ({
   onConfirm,
