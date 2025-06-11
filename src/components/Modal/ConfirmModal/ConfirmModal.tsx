@@ -23,6 +23,8 @@ interface ConfirmModalProps {
   confirmText: string;
   onConfirm: VoidFunction;
   confirmButtonColor?: string;
+  closeIcon?: boolean;
+  isMobile?: boolean;
 }
 
 const ConfirmModal = ({
@@ -34,24 +36,28 @@ const ConfirmModal = ({
   confirmText,
   onConfirm,
   confirmButtonColor = colors.primaryMint,
+  closeIcon = true,
+  isMobile = false,
 }: ConfirmModalProps) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className={dialogOverlay} />
-        <Dialog.Content className={confirmContent} aria-describedby={undefined}>
-          <Dialog.Close asChild>
-            <button className={closeButton} aria-label="모달 닫기">
-              <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
-            </button>
-          </Dialog.Close>
+        <Dialog.Content className={confirmContent({ isMobile })} aria-describedby={undefined}>
+          {closeIcon && (
+            <Dialog.Close asChild>
+              <button className={closeButton} aria-label="모달 닫기">
+                <Icon icon="X" color={colors.icon03} width={10} height={10} cursor="pointer" />
+              </button>
+            </Dialog.Close>
+          )}
           <Dialog.Title asChild>
-            <div className={confirmTitleStyle}>
+            <div className={confirmTitleStyle({ isMobile })}>
               <h3>{confirmTitle}</h3>
               {descriptionText && <p className={confirmDescriptionStyle}>{descriptionText}</p>}
             </div>
           </Dialog.Title>
-          <div className={confirmButtonContainer}>
+          <div className={confirmButtonContainer({ isMobile })}>
             <Dialog.Close asChild>
               <button className={`${confirmButtonWrapper} ${cancelButton}`}>{cancelText}</button>
             </Dialog.Close>
