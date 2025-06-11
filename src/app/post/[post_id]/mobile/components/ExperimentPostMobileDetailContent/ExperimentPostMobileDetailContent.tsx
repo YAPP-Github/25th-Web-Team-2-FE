@@ -28,7 +28,6 @@ const ExperimentPostMobileDetailContent = ({
   const [isImageViewerOpen, setIsImageViewerOpen] = useState(false);
 
   const { content, imageList = [] } = postDetailData;
-  // todo 이미지 확대 창 생성 시 사용 예정
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [imageSources, setImageSources] = useState<string[]>([]);
 

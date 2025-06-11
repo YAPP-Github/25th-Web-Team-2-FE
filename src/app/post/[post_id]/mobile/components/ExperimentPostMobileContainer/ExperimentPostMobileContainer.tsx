@@ -46,7 +46,7 @@ const ExperimentPostMobileContainer = () => {
         <ParticipationGuideBottomSheet
           onConfirm={close}
           postId={postId}
-          setIsCopyToastOpen={setIsCopyToastOpen}
+          setIsToastOpen={setIsCopyToastOpen}
         />
       ),
       {
