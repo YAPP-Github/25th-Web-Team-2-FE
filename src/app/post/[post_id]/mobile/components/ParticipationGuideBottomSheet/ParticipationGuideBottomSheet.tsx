@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import {
   participationGuideBottomSheetLayout,
   bottomSheetTitle,
@@ -9,6 +7,7 @@ import {
   contactInfoTitle,
   warningMessage,
 } from './ParticipationGuideBottomSheet.css';
+import { PostDetailBottomSheetProps } from '../../../ExperimentPostPage.types';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 
 import Button from '@/components/Button/Button';
@@ -19,12 +18,8 @@ import { colors } from '@/styles/colors';
 const ParticipationGuideBottomSheet = ({
   onConfirm,
   postId,
-  setIsCopyToastOpen,
-}: {
-  onConfirm: VoidFunction;
-  postId: string;
-  setIsCopyToastOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
+  setIsToastOpen,
+}: PostDetailBottomSheetProps) => {
   /* 공고 지원 방법 조회 */
   const { data: applyMethodData, isLoading: isLoadingApply } = useApplyMethodQuery({ postId });
 
@@ -36,7 +31,7 @@ const ParticipationGuideBottomSheet = ({
 
   const handleCopyContent = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      setIsCopyToastOpen(true);
+      setIsToastOpen(true);
       trackEvent('ApplyMethod Interaction', {
         action: 'Link Copied',
       });
