@@ -6,8 +6,8 @@ const SLIDE_THRESHOLD = 50;
 
 interface UseTouchSlideProps {
   currentIdx: number;
-  resetAutoSlide?: () => void;
   moveSlide: (idx: number) => void;
+  resetAutoSlide?: () => void;
   loop?: boolean;
   totalLength?: number;
 }
@@ -36,21 +36,24 @@ export const useTouchSlide = ({
   };
 
   const handleTouchEnd = () => {
-    if (Math.abs(translateX) > SLIDE_THRESHOLD) {
-      resetAutoSlide?.();
-      if (loop) {
-        const prevIdx = (currentIdx - 1 + totalLength) % totalLength;
-        const nextIdx = (currentIdx + 1) % totalLength;
+    if (Math.abs(translateX) <= SLIDE_THRESHOLD) {
+      startTouchRef.current = null;
+      setTranslateX(0);
+      return;
+    }
 
-        const targetIdx = translateX > 0 ? nextIdx : prevIdx;
-        moveSlide(targetIdx);
-      } else {
-        // loop 없는 슬라이드
-        if (translateX > 0 && currentIdx < totalLength - 1) {
-          moveSlide(currentIdx + 1);
-        } else if (translateX < 0 && currentIdx > 0) {
-          moveSlide(currentIdx - 1);
-        }
+    resetAutoSlide?.();
+
+    if (loop) {
+      const prevIdx = (currentIdx - 1 + totalLength) % totalLength;
+      const nextIdx = (currentIdx + 1) % totalLength;
+      const targetIdx = translateX > 0 ? nextIdx : prevIdx;
+      moveSlide(targetIdx);
+    } else {
+      if (translateX > 0 && currentIdx < totalLength - 1) {
+        moveSlide(currentIdx + 1);
+      } else if (translateX < 0 && currentIdx > 0) {
+        moveSlide(currentIdx - 1);
       }
     }
 

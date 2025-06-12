@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import { API_URL } from '@/constants/url';
 
@@ -9,7 +8,7 @@ interface PresignedUrlResponse {
 }
 
 const useUploadImagesMutation = () => {
-  return useMutation<string, CustomError, File>({
+  return useMutation({
     mutationKey: [API_URL.uploadImage],
     mutationFn: async (file: File): Promise<string> => {
       const fileName = encodeURIComponent(file.name);

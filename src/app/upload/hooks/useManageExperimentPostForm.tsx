@@ -9,10 +9,10 @@ import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 
-import useEditExperimentPostMutation from '@/app/edit/[post_id]/hooks/useEditExperimentPostMutation';
-import useOriginExperimentPostQuery from '@/app/edit/[post_id]/hooks/useOriginExperimentPostQuery';
-import { getErrorMessage } from '@/app/post/[post_id]/ExperimentPostPage.utils';
-import useApplyMethodQuery from '@/app/post/[post_id]/hooks/useApplyMethodQuery';
+import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
+import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
+import { getErrorMessage } from '@/app/post/[postId]/ExperimentPostPage.utils';
+import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
