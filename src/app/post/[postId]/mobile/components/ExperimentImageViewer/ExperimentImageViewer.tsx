@@ -28,10 +28,18 @@ interface Props {
 
 const ExperimentImageViewer = ({ images, initialIndex = 0, open, onOpenChange }: Props) => {
   const [current, setCurrent] = useState(initialIndex);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    setCurrent(initialIndex);
-  }, [initialIndex]);
+    if (open) {
+      requestAnimationFrame(() => {
+        setCurrent(initialIndex);
+        setIsReady(true);
+      });
+    } else {
+      setIsReady(false);
+    }
+  }, [open, initialIndex]);
 
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSlide({
     loop: false,
@@ -61,30 +69,33 @@ const ExperimentImageViewer = ({ images, initialIndex = 0, open, onOpenChange }:
           >
             <Dialog.Title className={a11yHidden}>실험 안내 이미지 뷰어</Dialog.Title>
             <Dialog.Description aria-describedby={undefined} />
-            <div
-              className={slideTrack}
-              style={{
-                transform: `translateX(-${current * 100}%)`,
-                transition: 'transform 0.3s ease-in-out',
-              }}
-            >
-              {images.map((src, idx) => (
-                <div key={idx} className={slideItem}>
-                  <Image
-                    src={src}
-                    alt={`실험 안내 이미지 ${idx + 1}`}
-                    className={imageStyle}
-                    fill
-                    priority
-                    sizes="(max-width: 767px) 100vw, 50vw"
-                    quality={100}
-                    style={{
-                      objectFit: 'contain',
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+
+            {isReady && (
+              <div
+                className={slideTrack}
+                style={{
+                  transform: `translateX(-${current * 100}%)`,
+                  transition: 'transform 0.3s ease-in-out',
+                }}
+              >
+                {images.map((src, idx) => (
+                  <div key={idx} className={slideItem}>
+                    <Image
+                      src={src}
+                      alt={`실험 안내 이미지 ${idx + 1}`}
+                      className={imageStyle}
+                      fill
+                      priority
+                      sizes="(max-width: 767px) 100vw, 50vw"
+                      quality={100}
+                      style={{
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </Dialog.Content>
       </Dialog.Overlay>

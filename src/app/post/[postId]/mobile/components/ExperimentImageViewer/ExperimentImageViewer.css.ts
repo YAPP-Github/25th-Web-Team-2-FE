@@ -8,24 +8,27 @@ export const viewerOverlay = style({
   position: 'fixed',
   inset: 0,
   backgroundColor: colors.field10,
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-
   zIndex: zIndex.imageViewerModalOverlay,
 });
 
 export const slideContainer = style({
-  position: 'relative',
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+
   width: '100%',
-  height: '100%',
+  height: '100vh',
+
+  display: 'flex',
+  flexDirection: 'column',
   overflow: 'hidden',
+  zIndex: zIndex.dialogContent,
 });
 
 export const slideTrack = style({
   display: 'flex',
-  height: '100%',
+  flex: 1,
   touchAction: 'pan-y',
 });
 
@@ -34,7 +37,7 @@ export const slideItem = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
+  height: '100%',
   position: 'relative',
 });
 
