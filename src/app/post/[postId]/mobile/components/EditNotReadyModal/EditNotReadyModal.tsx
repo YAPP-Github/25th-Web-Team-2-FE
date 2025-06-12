@@ -15,7 +15,6 @@ import {
 } from './EditNotReadyModal.css';
 
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
-import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 
 export type NotReadyMenu = 'profile' | 'upload' | 'edit';
