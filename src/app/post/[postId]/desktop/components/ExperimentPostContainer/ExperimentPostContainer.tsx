@@ -3,7 +3,6 @@
 import { useParams } from 'next/navigation';
 
 import { emptyViewLayout, postContentLayout } from './ExperimentPostContainer.css';
-import { getErrorMessage } from '../../../ExperimentPostPage.utils';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
@@ -22,13 +21,12 @@ const ExperimentPostContainer = () => {
   const {
     data: postDetailData,
     isLoading,
-    isError: isPostError,
-    error,
+    error: postError,
     refetch,
   } = useExperimentDetailsQuery({ postId: normalizedPostId });
 
   /* 공고 지원 방법 조회 */
-  const { data: applyMethodData, isError: isMethodError } = useApplyMethodQuery({
+  const { data: applyMethodData, error: methodError } = useApplyMethodQuery({
     postId: normalizedPostId,
   });
 
@@ -41,10 +39,10 @@ const ExperimentPostContainer = () => {
     );
   }
 
-  if (isPostError || isMethodError) {
+  if (postError || methodError) {
     return (
       <div className={emptyViewLayout}>
-        <p className={emptySubTitle}>{getErrorMessage(error)}</p>
+        <p className={emptySubTitle}>{postError?.message ?? methodError?.message}</p>
         <button onClick={() => refetch()} className={contactButton}>
           재시도
         </button>

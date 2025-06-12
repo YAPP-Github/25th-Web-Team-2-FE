@@ -11,7 +11,6 @@ import {
   experimentPostMobileContentContainerLayout,
   fixedBottomButtonLayout,
 } from './ExperimentPostMobileContentContainer.css';
-import { getErrorMessage } from '../../../ExperimentPostPage.utils';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
@@ -51,7 +50,7 @@ const ExperimentPostMobileContentContainer = ({
   if (experimentDetailResponse.isError) {
     return (
       <div className={emptyView}>
-        <p className={emptyViewTitle}>{getErrorMessage(experimentDetailResponse.error)}</p>
+        <p className={emptyViewTitle}>{experimentDetailResponse.error.message}</p>
         <button onClick={() => experimentDetailResponse.refetch()} className={contactButton}>
           재시도
         </button>

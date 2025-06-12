@@ -1,7 +1,5 @@
 import { format } from 'date-fns';
 
-import { ERROR_MESSAGES } from '@/apis/config/constants';
-import { CustomError } from '@/apis/config/error';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { durationMinutesOptions } from '@/app/upload/upload.constants';
 import { convertToWebpUrl } from '@/app/upload/upload.utils';
@@ -71,13 +69,6 @@ const formatDate = (hyphenDate: string): string => {
   return format(new Date(hyphenDate), 'yyyy. MM. dd') ?? '';
 };
 
-// 에러 메세지 가져오는 함수
-const getErrorMessage = (error: CustomError | null) => {
-  if (!error) return '';
-
-  return ERROR_MESSAGES[error.code] || error.message;
-};
-
 // 이미지 URL이 유효한지 확인하는 함수
 // 서버에 HEAD 요청을 보내 이미지가 존재하는지 확인하며 일정 횟수까지 재시도 함
 const checkImageExists = async (url: string, retries = 10, delay = 600): Promise<boolean> => {
@@ -114,7 +105,6 @@ export {
   isValidImageUrl,
   getMatchTypeText,
   formatDate,
-  getErrorMessage,
   checkImageExists,
   replaceImageListWithWebp,
 };

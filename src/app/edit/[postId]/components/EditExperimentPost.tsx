@@ -28,7 +28,7 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 
-const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
+const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const pathname = usePathname();
   const isEdit = pathname.startsWith('/edit');
   const router = useRouter();
@@ -37,17 +37,17 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
   const [addContact, setAddContact] = useState<boolean>(false);
 
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
-  const [openUpdateAlertModal, setOenUpdateAlertModal] = useState<boolean>(false);
+  const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
 
   const [successToast, setSuccessToast] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
     useManageExperimentPostForm({
       isEdit,
-      postId: params.post_id,
+      postId: params.postId,
       addLink,
       addContact,
       setOpenAlertModal: setOpenSubmitAlertDialog,
@@ -64,13 +64,13 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
 
   useEffect(() => {
     if (originExperimentError) {
-      setOenUpdateAlertModal(true);
+      setOpenUpdateAlertModal(true);
     }
   }, [isLoading, originExperimentError]);
 
   // 모달 닫을 때 이전 페이지로 이동
   const handleCloseModal = () => {
-    setOenUpdateAlertModal(false);
+    setOpenUpdateAlertModal(false);
     router.back();
   };
 
@@ -125,16 +125,16 @@ const EditExperimentPost = ({ params }: { params: { post_id: string } }) => {
       {/* 공고 불러오기 실패 시 모달 */}
       <AlertModal
         open={openUpdateAlertModal}
-        onOpenChange={setOenUpdateAlertModal}
+        onOpenChange={setOpenUpdateAlertModal}
         handleCloseModal={handleCloseModal}
         title="공고를 불러오지 못했어요"
-        description={errorMessage ?? '시간을 두고 다시 시도해주세요'}
+        description={errorMessage}
       />
 
       {/* 공고 수정 실패 시 모달 */}
       <AlertModal
         title="공고 수정에 실패했어요"
-        description={errorMessage ?? '시간을 두고 다시 시도해주세요'}
+        description={errorMessage}
         open={openSubmitAlertDialog}
         onOpenChange={setOpenSubmitAlertDialog}
         handleCloseModal={() => {

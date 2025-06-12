@@ -11,7 +11,6 @@ import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
-import { getErrorMessage } from '@/app/post/[postId]/ExperimentPostPage.utils';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
@@ -27,7 +26,7 @@ interface useUploadExperimentPostProps {
   setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
-  setErrorMessage?: Dispatch<SetStateAction<string | null>>;
+  setErrorMessage: Dispatch<SetStateAction<string>>;
 }
 
 const useManageExperimentPostForm = ({
@@ -78,7 +77,7 @@ const useManageExperimentPostForm = ({
   useEffect(() => {
     if (!setErrorMessage) return;
     if (originExperimentError) {
-      const errorMessage = getErrorMessage(originExperimentError);
+      const errorMessage = originExperimentError.message;
       setErrorMessage(errorMessage);
     }
   }, [originExperimentError, setErrorMessage]);
@@ -122,8 +121,8 @@ const useManageExperimentPostForm = ({
             form.reset();
           },
           onError: (error) => {
-            const errorMessage = getErrorMessage(error);
-            setErrorMessage?.(errorMessage);
+            const errorMessage = error.message;
+            setErrorMessage(errorMessage);
             setOpenAlertModal(true);
           },
         },
@@ -138,8 +137,8 @@ const useManageExperimentPostForm = ({
           form.reset();
         },
         onError: (error) => {
-          const errorMessage = getErrorMessage(error);
-          setErrorMessage?.(errorMessage);
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
           setOpenAlertModal(true);
         },
       });
