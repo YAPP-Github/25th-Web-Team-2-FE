@@ -11,6 +11,7 @@ import {
   editModalCloseButton,
   editModalButtonContainer,
   editModalImage,
+  notReadyButton,
 } from './EditNotReadyModal.css';
 
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
@@ -62,9 +63,7 @@ const EditNotReadyModal = ({ isOpen, onOpenChange }: NotReadyModalProps) => {
             {normalizedPostId && (
               <Link href={`/edit/${normalizedPostId}`} passHref>
                 <Dialog.Close asChild>
-                  <Button variant="primary" size="medium" height="5.6rem">
-                    그래도 둘러보기
-                  </Button>
+                  <div className={notReadyButton}>그래도 둘러보기</div>
                 </Dialog.Close>
               </Link>
             )}

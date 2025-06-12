@@ -61,3 +61,23 @@ export const editModalSecondaryButton = style({
   backgroundColor: 'transparent',
   color: colors.text04,
 });
+
+export const notReadyButton = style({
+  ...fonts.body.normal.SB16,
+
+  width: '100%',
+  borderRadius: '1.2rem',
+  padding: '1.6rem 0',
+
+  backgroundColor: colors.primaryMint,
+  color: colors.text01,
+
+  cursor: 'pointer',
+  selectors: {
+    '&:disabled': {
+      color: colors.text02,
+      backgroundColor: colors.field04,
+      cursor: 'not-allowed',
+    },
+  },
+});
