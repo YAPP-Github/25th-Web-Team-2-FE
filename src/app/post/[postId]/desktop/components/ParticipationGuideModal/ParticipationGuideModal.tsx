@@ -35,14 +35,26 @@ const ParticipationGuideModal = ({
   applyMethodData,
 }: ParticipationGuideModalProps) => {
   const [isCopyToastOpen, setIsCopyToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setIsCopyToastOpen(true);
+    setTimeout(() => setIsCopyToastOpen(false), 1500);
+  };
 
   const handleCopyContent = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setIsCopyToastOpen(true);
-      trackEvent('ApplyMethod Interaction', {
-        action: 'Link Copied',
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        showToast('복사되었어요');
+        trackEvent('ApplyMethod Interaction', {
+          action: 'Link Copied',
+        });
+      })
+      .catch(() => {
+        showToast('복사에 실패했어요. 잠시 후 다시 시도해 주세요');
       });
-    });
   };
 
   if (!applyMethodData) return null;
@@ -150,8 +162,13 @@ const ParticipationGuideModal = ({
               duration={1500}
             >
               <Toast.Title className={copyToastTitle}>
-                <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-                <p>복사되었어요</p>
+                <Icon
+                  icon="CheckRound"
+                  color={toastMessage.includes('실패') ? colors.textAlert : colors.primaryMint}
+                  width={24}
+                  height={24}
+                />
+                <p>{toastMessage}</p>
               </Toast.Title>
             </Toast.Root>
             <Toast.Viewport className={copyToastViewport} />

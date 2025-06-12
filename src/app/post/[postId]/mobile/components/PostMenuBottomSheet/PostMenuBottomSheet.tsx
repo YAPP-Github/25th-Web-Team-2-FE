@@ -8,11 +8,11 @@ const PostMenuBottomSheet = ({
 }: PostDetailBottomSheetProps) => {
   const handleEdit = () => {
     onConfirm();
-    onEditClick?.();
+    onEditClick();
   };
   const handleDelete = () => {
     onConfirm();
-    onDeleteClick?.();
+    onDeleteClick();
   };
   return (
     <div className={postMenuBottomSheetLayout}>

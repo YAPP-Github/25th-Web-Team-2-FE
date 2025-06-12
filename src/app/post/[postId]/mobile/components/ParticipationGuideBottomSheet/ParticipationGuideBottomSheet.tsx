@@ -8,7 +8,7 @@ import {
   warningMessage,
   emptyView,
 } from './ParticipationGuideBottomSheet.css';
-import { PostDetailBottomSheetProps } from '../../../ExperimentPostPage.types';
+import { ParticipationGuideBottomSheetProps } from '../../../ExperimentPostPage.types';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 import {
   contactButton,
@@ -24,8 +24,8 @@ import { colors } from '@/styles/colors';
 const ParticipationGuideBottomSheet = ({
   onConfirm,
   postId,
-  setIsToastOpen,
-}: PostDetailBottomSheetProps) => {
+  showToast,
+}: ParticipationGuideBottomSheetProps) => {
   /* 공고 지원 방법 조회 */
   const {
     data: applyMethodData,
@@ -42,7 +42,7 @@ const ParticipationGuideBottomSheet = ({
     return (
       <div className={emptyView}>
         <p className={emptyViewTitle}>{errorApply.message}</p>
-        <button onClick={() => refetchApply} className={contactButton}>
+        <button onClick={() => refetchApply()} className={contactButton}>
           재시도
         </button>
       </div>
@@ -59,12 +59,17 @@ const ParticipationGuideBottomSheet = ({
   }
 
   const handleCopyContent = (text: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setIsToastOpen?.(true);
-      trackEvent('ApplyMethod Interaction', {
-        action: 'Link Copied',
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        showToast('복사되었어요');
+        trackEvent('ApplyMethod Interaction', {
+          action: 'Link Copied',
+        });
+      })
+      .catch(() => {
+        showToast('복사에 실패했어요. 잠시 후 다시 시도해 주세요');
       });
-    });
   };
 
   return (

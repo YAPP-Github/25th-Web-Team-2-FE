@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export interface CommonModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -8,7 +6,12 @@ export interface CommonModalProps {
 export interface PostDetailBottomSheetProps {
   onConfirm: VoidFunction;
   postId: string;
-  setIsToastOpen?: Dispatch<SetStateAction<boolean>>;
-  onEditClick?: VoidFunction;
-  onDeleteClick?: VoidFunction;
+  onEditClick: VoidFunction;
+  onDeleteClick: VoidFunction;
+}
+
+export interface ParticipationGuideBottomSheetProps {
+  onConfirm: VoidFunction;
+  postId: string;
+  showToast: (message: string) => void;
 }

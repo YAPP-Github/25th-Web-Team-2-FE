@@ -36,6 +36,13 @@ const ExperimentPostMobileContentContainer = ({
 }) => {
   const { open, close } = useOverlay();
   const [isCopyToastOpen, setIsCopyToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setIsCopyToastOpen(true);
+    setTimeout(() => setIsCopyToastOpen(false), 1500);
+  };
 
   const postDetailData = experimentDetailResponse.data;
 
@@ -68,11 +75,7 @@ const ExperimentPostMobileContentContainer = ({
   const handleOpenBottomSheet = () => {
     open(
       () => (
-        <ParticipationGuideBottomSheet
-          onConfirm={close}
-          postId={postId}
-          setIsToastOpen={setIsCopyToastOpen}
-        />
+        <ParticipationGuideBottomSheet onConfirm={close} postId={postId} showToast={showToast} />
       ),
       {
         title: '참여 방법',
@@ -103,8 +106,13 @@ const ExperimentPostMobileContentContainer = ({
           duration={1500}
         >
           <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-            <p>복사되었어요</p>
+            <Icon
+              icon="CheckRound"
+              color={toastMessage.includes('실패') ? colors.textAlert : colors.primaryMint}
+              width={24}
+              height={24}
+            />
+            <p>{toastMessage}</p>
           </Toast.Title>
         </Toast.Root>
         <Toast.Viewport className={copyToastViewport} />
