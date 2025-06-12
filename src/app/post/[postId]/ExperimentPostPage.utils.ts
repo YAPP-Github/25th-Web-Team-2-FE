@@ -80,7 +80,7 @@ const getErrorMessage = (error: CustomError | null) => {
 
 // 이미지 URL이 유효한지 확인하는 함수
 // 서버에 HEAD 요청을 보내 이미지가 존재하는지 확인하며 일정 횟수까지 재시도 함
-const checkImageExists = async (url: string, retries = 10, delay = 2000): Promise<boolean> => {
+const checkImageExists = async (url: string, retries = 10, delay = 600): Promise<boolean> => {
   for (let i = 0; i < retries; i++) {
     try {
       const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });

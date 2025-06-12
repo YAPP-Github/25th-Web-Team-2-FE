@@ -28,12 +28,12 @@ const ExperimentPostMobileContentContainer = () => {
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
-  const { post_id } = useParams();
-  const postId = Array.isArray(post_id) ? post_id[0] : post_id;
+  const { postId } = useParams();
+  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
   const router = useRouter();
 
   /* 특정 공고 상세 조회 */
-  const experimentDetailResponse = useExperimentDetailsQuery({ postId });
+  const experimentDetailResponse = useExperimentDetailsQuery({ postId: normalizedPostId });
 
   /* 공고 삭제 */
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
@@ -44,7 +44,7 @@ const ExperimentPostMobileContentContainer = () => {
     setIsToastOpen(true);
 
     deleteExperimentPostMutation(
-      { postId },
+      { postId: normalizedPostId },
       {
         onSuccess: () => {
           setTimeout(() => {
@@ -64,7 +64,7 @@ const ExperimentPostMobileContentContainer = () => {
     open(
       () => (
         <PostMenuBottomSheet
-          postId={postId}
+          postId={normalizedPostId}
           onConfirm={close}
           onEditClick={() => setIsEditModalOpen(true)}
           onDeleteClick={() => setIsDeleteModalOpen(true)}
@@ -85,7 +85,7 @@ const ExperimentPostMobileContentContainer = () => {
         />
         <ExperimentPostMobileContainer
           experimentDetailResponse={experimentDetailResponse}
-          postId={postId}
+          postId={normalizedPostId}
         />
       </div>
 

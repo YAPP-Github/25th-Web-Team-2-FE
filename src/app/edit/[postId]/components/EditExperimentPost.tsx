@@ -9,7 +9,7 @@ import {
   copyToastLayout,
   copyToastTitle,
   copyToastViewport,
-} from '@/app/post/[post_id]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
+} from '@/app/post/[postId]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import ApplyMethodSection from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '@/app/upload/components/DescriptionSection/DescriptionSection';
 import OutlineSection from '@/app/upload/components/OutlineSection/OutlineSection';

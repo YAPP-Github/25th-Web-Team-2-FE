@@ -23,8 +23,8 @@ interface EditNotReadyModalProps {
 }
 
 const EditNotReadyModal = ({ isOpen, onOpenChange }: EditNotReadyModalProps) => {
-  const { post_id } = useParams();
-  const postId = Array.isArray(post_id) ? post_id[0] : post_id;
+  const { postId } = useParams();
+  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
@@ -48,17 +48,23 @@ const EditNotReadyModal = ({ isOpen, onOpenChange }: EditNotReadyModalProps) => 
               alt="모바일 버전 화면 준비중"
               width={144}
               height={144}
+              style={{
+                objectFit: 'contain',
+                height: 'auto',
+              }}
               quality={100}
             />
           </div>
 
           <div className={editModalButtonContainer}>
             <Dialog.Close asChild>
-              <Link href={`/edit/${postId}`} passHref>
-                <Button variant="primary" size="medium" height="5.6rem">
-                  그래도 둘러보기
-                </Button>
-              </Link>
+              {normalizedPostId && (
+                <Link href={`/edit/${normalizedPostId}`} passHref>
+                  <Button variant="primary" size="medium" height="5.6rem">
+                    그래도 둘러보기
+                  </Button>
+                </Link>
+              )}
             </Dialog.Close>
             {/* todo 하루 동안 안보기 추가 예정 */}
             {/* <Dialog.Close asChild>

@@ -19,7 +19,7 @@ import { ExperimentPostListFilters } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
-import { emptyViewLayout } from '@/app/post/[post_id]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
+import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
 import Icon from '@/components/Icon';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import Spinner from '@/components/Spinner/Spinner';

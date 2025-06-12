@@ -15,8 +15,8 @@ import { contactButton } from '@/components/Header/Header.css';
 import Spinner from '@/components/Spinner/Spinner';
 
 const ExperimentPostContainer = () => {
-  const { post_id } = useParams();
-  const postId = Array.isArray(post_id) ? post_id[0] : post_id;
+  const { postId } = useParams();
+  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
 
   /* 특정 공고 상세 조회 */
   const {
@@ -25,10 +25,12 @@ const ExperimentPostContainer = () => {
     isError: isPostError,
     error,
     refetch,
-  } = useExperimentDetailsQuery({ postId });
+  } = useExperimentDetailsQuery({ postId: normalizedPostId });
 
   /* 공고 지원 방법 조회 */
-  const { data: applyMethodData, isError: isMethodError } = useApplyMethodQuery({ postId });
+  const { data: applyMethodData, isError: isMethodError } = useApplyMethodQuery({
+    postId: normalizedPostId,
+  });
 
   if (isLoading) {
     return (

@@ -2,7 +2,7 @@
 
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   viewerOverlay,
@@ -16,6 +16,7 @@ import {
 
 import { useTouchSlide } from '@/app/home/components/Banner/hooks/useTouchSlide';
 import Icon from '@/components/Icon';
+import { a11yHidden } from '@/styles/a11y.css';
 import { colors } from '@/styles/colors';
 
 interface Props {
@@ -27,6 +28,10 @@ interface Props {
 
 const ExperimentImageViewer = ({ images, initialIndex = 0, open, onOpenChange }: Props) => {
   const [current, setCurrent] = useState(initialIndex);
+
+  useEffect(() => {
+    setCurrent(initialIndex);
+  }, [initialIndex]);
 
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSlide({
     loop: false,
@@ -47,37 +52,41 @@ const ExperimentImageViewer = ({ images, initialIndex = 0, open, onOpenChange }:
           <span className={pageCurrent}>{`${current + 1} / ${images.length}`}</span>
         </div>
 
-        <div
-          className={slideContainer}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={() => handleTouchEnd()}
-        >
+        <Dialog.Content asChild>
           <div
-            className={slideTrack}
-            style={{
-              transform: `translateX(-${current * 100}%)`,
-              transition: 'transform 0.3s ease-in-out',
-            }}
+            className={slideContainer}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={() => handleTouchEnd()}
           >
-            {images.map((src, idx) => (
-              <div key={idx} className={slideItem}>
-                <Image
-                  src={src}
-                  alt={`실험 안내 이미지 ${idx + 1}`}
-                  className={imageStyle}
-                  fill
-                  priority
-                  sizes="(max-width: 767px) 100vw, 50vw"
-                  quality={100}
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                />
-              </div>
-            ))}
+            <Dialog.Title className={a11yHidden}>실험 안내 이미지 뷰어</Dialog.Title>
+            <Dialog.Description aria-describedby={undefined} />
+            <div
+              className={slideTrack}
+              style={{
+                transform: `translateX(-${current * 100}%)`,
+                transition: 'transform 0.3s ease-in-out',
+              }}
+            >
+              {images.map((src, idx) => (
+                <div key={idx} className={slideItem}>
+                  <Image
+                    src={src}
+                    alt={`실험 안내 이미지 ${idx + 1}`}
+                    className={imageStyle}
+                    fill
+                    priority
+                    sizes="(max-width: 767px) 100vw, 50vw"
+                    quality={100}
+                    style={{
+                      objectFit: 'contain',
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </Dialog.Content>
       </Dialog.Overlay>
     </Dialog.Root>
   );

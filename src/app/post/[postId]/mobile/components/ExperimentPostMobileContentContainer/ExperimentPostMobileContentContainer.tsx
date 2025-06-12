@@ -43,7 +43,7 @@ const ExperimentPostMobileContentContainer = ({
   if (experimentDetailResponse.isLoading) {
     return (
       <div className={emptyView}>
-        <Spinner />;
+        <Spinner />
       </div>
     );
   }
