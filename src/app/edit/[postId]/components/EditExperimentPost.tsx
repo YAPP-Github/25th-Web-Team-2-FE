@@ -5,6 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
+import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
+import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
 import {
   copyToastLayout,
   copyToastTitle,
@@ -25,6 +27,7 @@ import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentP
 import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import Spinner from '@/components/Spinner/Spinner';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 
@@ -66,7 +69,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     if (originExperimentError) {
       setOpenUpdateAlertModal(true);
     }
-  }, [isLoading, originExperimentError]);
+  }, [originExperimentError]);
 
   // 모달 닫을 때 이전 페이지로 이동
   const handleCloseModal = () => {
@@ -85,6 +88,14 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     form.getValues('startDate') === null && form.getValues('endDate') === null;
   const durationChecked = form.getValues('timeRequired') === null;
 
+  if (isLoading) {
+    return (
+      <div className={emptyViewLayout}>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중</p>
+      </div>
+    );
+  }
   return (
     <FormProvider {...form}>
       <div className={uploadLayout}>

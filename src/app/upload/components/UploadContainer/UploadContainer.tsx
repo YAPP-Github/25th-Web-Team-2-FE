@@ -39,7 +39,7 @@ const UploadContainer = () => {
   const [successToast, setSuccessToast] = useState(false);
 
   const [openAlertModal, setOpenAlertModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
