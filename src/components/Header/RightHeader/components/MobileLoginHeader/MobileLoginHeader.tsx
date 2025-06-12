@@ -1,7 +1,11 @@
-import Link from 'next/link';
+'use client';
+
+import { useState } from 'react';
 
 import { mobileRightHeader } from './MobileLoginHeader.css';
 
+import { NotReadyMenu } from '@/app/post/[postId]/mobile/components/EditNotReadyModal/EditNotReadyModal';
+import HeaderMenuNotReadyModal from '@/app/post/[postId]/mobile/components/HeaderMenuNotReadyModal/HeaderMenuNotReadyModal';
 import Icon from '@/components/Icon';
 
 interface MobileLoginHeaderProps {
@@ -9,18 +13,38 @@ interface MobileLoginHeaderProps {
 }
 
 const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
+  const [selectedMenu, setSelectedMenu] = useState<NotReadyMenu>('upload');
+  const [isNotReadyModalOpen, setIsNotReadyModalOpen] = useState(false);
+
+  const selectUpload = () => {
+    setIsNotReadyModalOpen(true);
+    setSelectedMenu('upload');
+  };
+
+  const selectProfile = () => {
+    setIsNotReadyModalOpen(true);
+    setSelectedMenu('profile');
+  };
+
   return (
     <>
       <div className={mobileRightHeader}>
         {isResearcher && (
-          <Link href="/upload">
+          <button onClick={selectUpload}>
             <Icon icon="Pen" width={24} height={24} cursor="pointer" />
-          </Link>
+          </button>
         )}
-        <Link href="/user/profile">
+        <button onClick={selectProfile}>
           <Icon icon="Profile" width={24} height={24} cursor="pointer" />
-        </Link>
+        </button>
       </div>
+
+      {/* 업로드 모달 */}
+      <HeaderMenuNotReadyModal
+        menu={selectedMenu}
+        isOpen={isNotReadyModalOpen}
+        onOpenChange={setIsNotReadyModalOpen}
+      />
     </>
   );
 };

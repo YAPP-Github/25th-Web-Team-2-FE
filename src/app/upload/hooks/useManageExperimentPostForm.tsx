@@ -9,9 +9,9 @@ import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 
-import useEditExperimentPostMutation from '@/app/edit/[post_id]/hooks/useEditExperimentPostMutation';
-import useOriginExperimentPostQuery from '@/app/edit/[post_id]/hooks/useOriginExperimentPostQuery';
-import useApplyMethodQuery from '@/app/post/[post_id]/hooks/useApplyMethodQuery';
+import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
+import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
+import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -26,7 +26,7 @@ interface useUploadExperimentPostProps {
   setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
-  setErrorMessage?: Dispatch<SetStateAction<string | null>>;
+  setErrorMessage: Dispatch<SetStateAction<string>>;
 }
 
 const useManageExperimentPostForm = ({
@@ -74,6 +74,13 @@ const useManageExperimentPostForm = ({
     resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
     defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
+  useEffect(() => {
+    if (!setErrorMessage) return;
+    if (originExperimentError) {
+      const errorMessage = originExperimentError.message;
+      setErrorMessage(errorMessage);
+    }
+  }, [originExperimentError, setErrorMessage]);
 
   // 기존 공고 데이터로 form reset
   useEffect(() => {
@@ -114,7 +121,8 @@ const useManageExperimentPostForm = ({
             form.reset();
           },
           onError: (error) => {
-            setErrorMessage?.(error.message);
+            const errorMessage = error.message;
+            setErrorMessage(errorMessage);
             setOpenAlertModal(true);
           },
         },
@@ -129,7 +137,8 @@ const useManageExperimentPostForm = ({
           form.reset();
         },
         onError: (error) => {
-          setErrorMessage?.(error.message);
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
           setOpenAlertModal(true);
         },
       });

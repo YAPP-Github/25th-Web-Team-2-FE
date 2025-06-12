@@ -16,6 +16,13 @@ export const fonts = {
         lineHeight: '2.4rem',
         letterSpacing: '0',
       },
+      R15: {
+        fontSize: '1.5rem',
+        fontStyle: 'normal',
+        fontWeight: '400',
+        lineHeight: '2.4rem',
+        letterSpacing: '0',
+      },
     },
     normal: {
       R16: {

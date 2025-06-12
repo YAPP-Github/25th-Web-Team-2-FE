@@ -25,9 +25,11 @@ export async function middleware(request: NextRequest) {
   const isLoginPage = pathname.startsWith('/login');
   const isJoinPage = pathname.startsWith('/join');
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
+  const isPostDetailPage = pathname.startsWith('/post');
+  const isPostDetailWithDevice = /^\/post\/[^/]+\/(mobile|desktop)$/.test(pathname);
 
   // 토큰이 없는 경우
-  if (!token && !isHomePage && !isLoginPage) {
+  if (!token && !isHomePage && !isLoginPage && !isPostDetailPage) {
     return goToLogin(request);
   }
 
@@ -77,6 +79,15 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  // 공고 상세 페이지
+  if (isPostDetailPage && !isPostDetailWithDevice) {
+    const segments = pathname.split('/').filter(Boolean);
+    const postId = segments[1];
+    const newPathname = `/post/${postId}/${deviceType}`;
+
+    url.pathname = newPathname;
+    return NextResponse.rewrite(url);
+  }
   return NextResponse.next();
 }
 
@@ -89,5 +100,6 @@ export const config = {
     '/my-posts/:path*',
     '/user/profile/:path*',
     '/user/leave/:path*',
+    '/post/:path*',
   ],
 };

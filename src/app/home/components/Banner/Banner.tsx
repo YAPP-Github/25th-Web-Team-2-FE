@@ -48,7 +48,7 @@ const Banner = () => {
     useSlide();
 
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSlide({
-    bannerIdx,
+    currentIdx: bannerIdx,
     resetAutoSlide,
     moveSlide,
   });

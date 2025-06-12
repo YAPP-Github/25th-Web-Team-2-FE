@@ -55,7 +55,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
           onClose={close}
         />
       ),
-      { isDraggable: false, title: '모집대상' },
+      { headerMode: 'title-close', title: '모집대상' },
     );
   };
 
