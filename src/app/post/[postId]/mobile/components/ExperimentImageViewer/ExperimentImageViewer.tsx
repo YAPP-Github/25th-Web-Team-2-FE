@@ -50,55 +50,54 @@ const ExperimentImageViewer = ({ images, initialIndex = 0, open, onOpenChange }:
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Overlay className={viewerOverlay}>
-        <div className={imageViewerHeader}>
-          <Dialog.Close asChild>
-            <button aria-label="이미지 뷰 닫기">
-              <Icon icon="Arrow" width={24} height={24} color={colors.icon01} />
-            </button>
-          </Dialog.Close>
-          <span className={pageCurrent}>{`${current + 1} / ${images.length}`}</span>
-        </div>
+      <Dialog.Overlay className={viewerOverlay} />
 
-        <Dialog.Content asChild>
-          <div
-            className={slideContainer}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={() => handleTouchEnd()}
-          >
-            <Dialog.Title className={a11yHidden}>실험 안내 이미지 뷰어</Dialog.Title>
-            <Dialog.Description aria-describedby={undefined} />
-
-            {isReady && (
-              <div
-                className={slideTrack}
-                style={{
-                  transform: `translateX(-${current * 100}%)`,
-                  transition: 'transform 0.3s ease-in-out',
-                }}
-              >
-                {images.map((src, idx) => (
-                  <div key={idx} className={slideItem}>
-                    <Image
-                      src={src}
-                      alt={`실험 안내 이미지 ${idx + 1}`}
-                      className={imageStyle}
-                      fill
-                      priority
-                      sizes="(max-width: 767px) 100vw, 50vw"
-                      quality={100}
-                      style={{
-                        objectFit: 'contain',
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+      <Dialog.Content asChild>
+        <div
+          className={slideContainer}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={() => handleTouchEnd()}
+        >
+          <div className={imageViewerHeader}>
+            <Dialog.Close asChild>
+              <button aria-label="이미지 뷰 닫기">
+                <Icon icon="Arrow" width={24} height={24} color={colors.icon01} />
+              </button>
+            </Dialog.Close>
+            <span className={pageCurrent}>{`${current + 1} / ${images.length}`}</span>
           </div>
-        </Dialog.Content>
-      </Dialog.Overlay>
+          <Dialog.Title className={a11yHidden}>실험 안내 이미지 뷰어</Dialog.Title>
+          <Dialog.Description aria-describedby={undefined} />
+
+          {isReady && (
+            <div
+              className={slideTrack}
+              style={{
+                transform: `translateX(-${current * 100}%)`,
+                transition: 'transform 0.3s ease-in-out',
+              }}
+            >
+              {images.map((src, idx) => (
+                <div key={idx} className={slideItem}>
+                  <Image
+                    src={src}
+                    alt={`실험 안내 이미지 ${idx + 1}`}
+                    className={imageStyle}
+                    fill
+                    priority
+                    sizes="(max-width: 767px) 100vw, 50vw"
+                    quality={100}
+                    style={{
+                      objectFit: 'contain',
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </Dialog.Content>
     </Dialog.Root>
   );
 };
