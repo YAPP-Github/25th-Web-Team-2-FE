@@ -8,7 +8,6 @@ import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/Joi
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
-import useServiceAgreeCheck from '@/app/join/hooks/useServiceAgreeCheck';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
@@ -21,17 +20,13 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   const {
     control,
     trigger,
-    setValue,
     formState: { errors },
   } = useFormContext<ParticipantJoinSchemaType>();
 
-  const { serviceAgreeCheck, handleAllCheck, handleChangeCheck } = useServiceAgreeCheck({
-    onCheckAdConsent: (checked) => setValue('adConsent', checked),
-    onCheckMatchConsent: (checked) => setValue('matchConsent', checked),
-  });
-
   const oauthEmail = useWatch({ name: 'oauthEmail', control });
   const contactEmail = useWatch({ name: 'contactEmail', control });
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
 
   const {
     refetch,
@@ -48,11 +43,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
   };
 
   const allValid =
-    isValidEmail &&
-    contactEmail &&
-    !errors.contactEmail &&
-    serviceAgreeCheck.isTermOfService &&
-    serviceAgreeCheck.isPrivacy;
+    isValidEmail && contactEmail && !errors.contactEmail && isTermOfService && isPrivacy;
 
   const handleNextStep = async () => {
     const isValid = await trigger(['oauthEmail', 'contactEmail']);
@@ -95,11 +86,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         />
 
         {/* 동의 체크 항목 */}
-        <JoinCheckboxContainer
-          serviceAgreeCheck={serviceAgreeCheck}
-          handleAllCheck={handleAllCheck}
-          handleChange={handleChangeCheck}
-        />
+        <JoinCheckboxContainer />
       </div>
       <button className={nextButton} onClick={handleNextStep} disabled={!allValid}>
         다음

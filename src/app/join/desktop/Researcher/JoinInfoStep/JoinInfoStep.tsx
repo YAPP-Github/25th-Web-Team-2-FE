@@ -1,9 +1,11 @@
 'use client';
 
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+
+import JoinButton from '../JoinButton/JoinButton';
 
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
+import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
@@ -11,17 +13,12 @@ interface JoinInfoStepProps {
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<ResearcherJoinSchemaType>();
-
-  const values = useWatch({ name: ['name', 'univName', 'major'], control });
-  const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
+  const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   return (
     <section className={joinForm}>
       <div className={joinContentContainer}>
+        {/* 이름 */}
         <JoinInput<ResearcherJoinSchemaType>
           name="name"
           control={control}
@@ -29,6 +26,8 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           required
           placeholder="이름(실명) 입력"
         />
+
+        {/* 학교명 */}
         <JoinInput<ResearcherJoinSchemaType>
           name="univName"
           control={control}
@@ -36,6 +35,8 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           required
           placeholder="학교명 입력"
         />
+
+        {/* 전공명 */}
         <JoinInput<ResearcherJoinSchemaType>
           name="major"
           control={control}
@@ -43,6 +44,8 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           required
           placeholder="전공명 입력"
         />
+
+        {/* 소속 연구실 정보 */}
         <JoinInput<ResearcherJoinSchemaType>
           name="labInfo"
           control={control}
@@ -52,13 +55,9 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           maxLength={100}
         />
       </div>
-      <button
-        className={nextButton}
-        onClick={handleSubmit}
-        disabled={!(isAllFilled && Object.keys(errors).length === 0)}
-      >
-        회원가입
-      </button>
+
+      {/* 회원가입 버튼 */}
+      <JoinButton onSubmit={handleSubmit} />
     </section>
   );
 };

@@ -3,7 +3,7 @@ import { ValidateContactEmailParams } from './user';
 
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSubmitSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { ResearcherJoinSubmitSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import { Role } from '@/types/user';
 
 export interface UnivAuthCodeResponse {
@@ -88,7 +88,7 @@ export const verifyUnivAuthCode = async (univEmail: string, inputCode: string) =
   });
 };
 
-export const joinResearcher = async (params: ResearcherJoinSchemaType) => {
+export const joinResearcher = async (params: ResearcherJoinSubmitSchemaType) => {
   return await fetchClient.post<JoinResponse>(API_URL.joinResearcher, { body: params });
 };
 
