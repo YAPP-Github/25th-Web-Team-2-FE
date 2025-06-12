@@ -29,7 +29,9 @@ const ExperimentPostMobileContentContainer = () => {
   const [toastMessage, setToastMessage] = useState('');
 
   const { postId } = useParams();
+
   const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
+
   const router = useRouter();
 
   /* 특정 공고 상세 조회 */
@@ -40,13 +42,15 @@ const ExperimentPostMobileContentContainer = () => {
 
   const handleDeletePost = () => {
     setIsDeleteModalOpen(false);
-    setToastMessage('공고를 삭제하였습니다.');
-    setIsToastOpen(true);
+    setIsToastOpen(false);
 
     deleteExperimentPostMutation(
       { postId: normalizedPostId },
       {
         onSuccess: () => {
+          setToastMessage('공고를 삭제하였습니다.');
+          setIsToastOpen(true);
+
           setTimeout(() => {
             router.push('/');
             setToastMessage('');

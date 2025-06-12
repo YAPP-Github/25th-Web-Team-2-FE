@@ -8,7 +8,7 @@ import { API_URL } from '@/constants/url';
 
 const useOriginExperimentPostQuery = ({ postId }: { postId?: string }) => {
   const url = API_URL.originExperimentPost(postId ?? '');
-  const queryFn = () => fetchClient.get(url);
+  const queryFn = () => fetchClient.get<UseQueryExperimentDetailsAPIResponse>(url);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, CustomError>({
     queryKey: [QUERY_KEY.originExperimentPost, postId],

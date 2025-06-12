@@ -47,7 +47,7 @@ const ExperimentPostMobileContentContainer = ({
     );
   }
 
-  if (experimentDetailResponse.isError) {
+  if (experimentDetailResponse.error) {
     return (
       <div className={emptyView}>
         <p className={emptyViewTitle}>{experimentDetailResponse.error.message}</p>

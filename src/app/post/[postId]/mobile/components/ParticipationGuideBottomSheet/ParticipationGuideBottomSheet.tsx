@@ -10,6 +10,10 @@ import {
 } from './ParticipationGuideBottomSheet.css';
 import { PostDetailBottomSheetProps } from '../../../ExperimentPostPage.types';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
+import {
+  contactButton,
+  emptyViewTitle,
+} from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer.css';
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
@@ -23,10 +27,26 @@ const ParticipationGuideBottomSheet = ({
   setIsToastOpen,
 }: PostDetailBottomSheetProps) => {
   /* 공고 지원 방법 조회 */
-  const { data: applyMethodData, isLoading: isLoadingApply } = useApplyMethodQuery({ postId });
+  const {
+    data: applyMethodData,
+    isLoading: isLoadingApply,
+    error: errorApply,
+    refetch: refetchApply,
+  } = useApplyMethodQuery({ postId });
 
   if (isLoadingApply) {
     return <Spinner height={150} />;
+  }
+
+  if (errorApply) {
+    return (
+      <div className={emptyView}>
+        <p className={emptyViewTitle}>{errorApply.message}</p>
+        <button onClick={() => refetchApply} className={contactButton}>
+          재시도
+        </button>
+      </div>
+    );
   }
 
   if (!applyMethodData) {

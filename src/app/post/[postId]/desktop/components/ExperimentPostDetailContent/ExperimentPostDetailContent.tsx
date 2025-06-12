@@ -38,10 +38,17 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
   useEffect(() => {
     if (imageList.length === 0) return;
 
+    let isMounted = true; // 마운트 상태 추적
     const originalImages = [...imageList];
     setImageSources(originalImages);
 
-    replaceImageListWithWebp(originalImages).then(setImageSources);
+    replaceImageListWithWebp(originalImages).then((src) => {
+      if (isMounted) setImageSources(src); // 마운트 상태 확인 후 setState
+    });
+
+    return () => {
+      isMounted = false; // 언마운트 시 플래그 변경
+    };
   }, [imageList]);
 
   return (

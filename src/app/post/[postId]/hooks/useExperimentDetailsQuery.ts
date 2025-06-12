@@ -49,9 +49,9 @@ export interface UseQueryExperimentDetailsAPIResponse {
   alarmAgree: boolean;
 }
 
-const useExperimentDetailsQuery = ({ postId }: { postId: string }) => {
+const useExperimentDetailsQuery = ({ postId }: { postId?: string }) => {
   const { isLoading: isUserInfoLoading } = useUserInfo();
-  const url = API_URL.viewExperimentDetails(postId);
+  const url = API_URL.viewExperimentDetails(postId!);
   const queryFn = () => fetchClient.post<UseQueryExperimentDetailsAPIResponse>(url);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, CustomError>({

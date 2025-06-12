@@ -26,6 +26,7 @@ export async function middleware(request: NextRequest) {
   const isJoinPage = pathname.startsWith('/join');
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
   const isPostDetailPage = pathname.startsWith('/post');
+  const isPostDetailWithDevice = /^\/post\/[^/]+\/(mobile|desktop)$/.test(pathname);
 
   // 토큰이 없는 경우
   if (!token && !isHomePage && !isLoginPage && !isPostDetailPage) {
@@ -79,7 +80,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // 공고 상세 페이지
-  if (isPostDetailPage) {
+  if (isPostDetailPage && !isPostDetailWithDevice) {
     const segments = pathname.split('/').filter(Boolean);
     const postId = segments[1];
     const newPathname = `/post/${postId}/${deviceType}`;
@@ -87,7 +88,6 @@ export async function middleware(request: NextRequest) {
     url.pathname = newPathname;
     return NextResponse.rewrite(url);
   }
-
   return NextResponse.next();
 }
 

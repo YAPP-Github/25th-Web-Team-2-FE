@@ -57,15 +57,15 @@ const EditNotReadyModal = ({ isOpen, onOpenChange }: EditNotReadyModalProps) => 
           </div>
 
           <div className={editModalButtonContainer}>
-            <Dialog.Close asChild>
-              {normalizedPostId && (
-                <Link href={`/edit/${normalizedPostId}`} passHref>
+            {normalizedPostId && (
+              <Link href={`/edit/${normalizedPostId}`} passHref>
+                <Dialog.Close asChild>
                   <Button variant="primary" size="medium" height="5.6rem">
                     그래도 둘러보기
                   </Button>
-                </Link>
-              )}
-            </Dialog.Close>
+                </Dialog.Close>
+              </Link>
+            )}
             {/* todo 하루 동안 안보기 추가 예정 */}
             {/* <Dialog.Close asChild>
               <button className={editModalSecondaryButton}>하루 동안 그만 보기</button>
