@@ -106,7 +106,7 @@ const ExperimentPostMobileDetailContent = ({
       {/* 이미지 확대 뷰어 */}
       {selectedImage && (
         <ExperimentImageViewer
-          initialIndex={imageSources.indexOf(selectedImage)}
+          initialIndex={imageSources.findIndex((s) => s === selectedImage)}
           images={imageSources}
           open={isImageViewerOpen}
           onOpenChange={(open) => {

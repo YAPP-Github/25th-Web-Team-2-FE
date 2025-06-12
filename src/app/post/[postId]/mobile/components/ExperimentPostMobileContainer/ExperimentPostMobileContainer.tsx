@@ -94,7 +94,7 @@ const ExperimentPostMobileContentContainer = () => {
       </div>
 
       {/* 공고 수정 모바일 화면 준비중 모달 */}
-      <EditNotReadyModal isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
+      <EditNotReadyModal menu="edit" isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
 
       {/* 삭제 확인 모달 */}
       <ConfirmModal
