@@ -3,7 +3,7 @@ import { Controller, FormProvider, useFormContext, useWatch } from 'react-hook-f
 
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
-import { mainContentLayout } from '../../page.css';
+import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import { errorMessage, joinInput } from '@/app/join/components/JoinInput/JoinInput.css';
@@ -15,6 +15,7 @@ import {
 } from '@/app/join/desktop/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
+import Button from '@/components/Button/Button';
 import { inputContainer } from '@/components/ButtonInput/ButtonInput.css';
 import useOverlay from '@/hooks/useOverlay';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
@@ -48,7 +49,10 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
-  const isUnivEmailAuthenticated = isEmailSent || isEmailVerified;
+  const isTermOfService = useWatch({ name: 'isTermOfService', control });
+  const isPrivacy = useWatch({ name: 'isPrivacy', control });
+
+  const isValidCheck = isTermOfService && isPrivacy;
 
   const handleSendUnivAuthCode = () => {
     sendEmail(getValues('univEmail'), {
@@ -110,16 +114,16 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
                   className={joinInput}
                   placeholder="학교 메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
-                  disabled={isUnivEmailAuthenticated}
+                  disabled={isEmailVerified}
                   onChange={handleChange}
                 />
                 <button
                   type="button"
-                  className={`${univAuthButton} ${isUnivEmailAuthenticated ? editButton : ''}`}
+                  className={`${univAuthButton} ${isEmailVerified ? editButton : ''}`}
                   disabled={isButtonDisabled}
-                  onClick={isUnivEmailAuthenticated ? handleClickEdit : handleSendUnivAuthCode}
+                  onClick={isEmailVerified ? handleClickEdit : handleSendUnivAuthCode}
                 >
-                  {getButtonText(isLoadingSend, isUnivEmailAuthenticated)}
+                  {getButtonText(isLoadingSend, isEmailVerified)}
                 </button>
               </div>
               {fieldState.error ? (
@@ -145,6 +149,20 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
         isToastOpen={isToastOpen}
         setIsToastOpen={setIsToastOpen}
       />
+
+      {isEmailVerified && (
+        <div className={bottomButtonLayout}>
+          <Button
+            variant="primary"
+            size="small"
+            height="56px"
+            disabled={!isEmailVerified || !isValidCheck}
+            onClick={onNext}
+          >
+            다음
+          </Button>
+        </div>
+      )}
     </main>
   );
 };
