@@ -54,6 +54,20 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
   const isPrivacy = useWatch({ name: 'isPrivacy', control });
 
   const isValidCheck = isTermOfService && isPrivacy;
+  const canNext = isEmailVerified && isValidCheck;
+
+  const openServiceAgreeBottomSheet = () => {
+    open(() => (
+      <FormProvider {...form}>
+        <ServiceAgreeBottomSheet
+          onConfirm={() => {
+            onNext();
+            close();
+          }}
+        />
+      </FormProvider>
+    ));
+  };
 
   const handleSendUnivAuthCode = () => {
     sendEmail(getValues('univEmail'), {
@@ -65,16 +79,7 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
       onError: (error) => {
         if (error.code === 'VE0007') {
           setValue('isEmailVerified', true);
-          open(() => (
-            <FormProvider {...form}>
-              <ServiceAgreeBottomSheet
-                onConfirm={() => {
-                  onNext();
-                  close();
-                }}
-              />
-            </FormProvider>
-          ));
+          openServiceAgreeBottomSheet();
         }
       },
     });
@@ -144,7 +149,7 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
             authTimer={authTimer}
             handleSendUnivAuthCode={handleSendUnivAuthCode}
             stopTimer={stopTimer}
-            onNext={onNext}
+            openServiceAgreeBottomSheet={openServiceAgreeBottomSheet}
           />
         )}
       </div>
@@ -160,8 +165,7 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
             variant="primary"
             size="small"
             height="56px"
-            disabled={!isEmailVerified || !isValidCheck}
-            onClick={onNext}
+            onClick={canNext ? onNext : openServiceAgreeBottomSheet}
           >
             다음
           </Button>
