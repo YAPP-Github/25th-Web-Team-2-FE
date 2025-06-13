@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+import useResearcherJoinMutation from './useResearcherJoinMutation';
+
 import {
   ResearcherJoinSchema,
   ResearcherJoinSchemaType,
   ResearcherJoinSubmitSchema,
 } from '@/schema/join/ResearcherJoinSchema';
-import useResearcherJoinMutation from './useResearcherJoinMutation';
 
 interface UseResearcherJoinProps {
   onSuccess: () => void;

@@ -4,12 +4,12 @@ import { FormProvider } from 'react-hook-form';
 
 import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
+import { useResearcherJoin } from '../../hooks/useResearcherJoin';
 import { DESKTOP_RESEARCHER_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
 
 import { Researcher } from '.';
 
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { useResearcherJoin } from '../../hooks/useResearcherJoin';
 import { LoginProvider } from '@/types/user';
 
 interface ResearcherFormProps {

@@ -1,10 +1,13 @@
-import { FormProvider } from 'react-hook-form';
-import useFunnel from '../../hooks/useFunnel';
-import { MOBILE_RESEARCHER_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
-import { Researcher } from '.';
-import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import { useSession } from 'next-auth/react';
+import { FormProvider } from 'react-hook-form';
+
+import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
+import useFunnel from '../../hooks/useFunnel';
 import { useResearcherJoin } from '../../hooks/useResearcherJoin';
+import { MOBILE_RESEARCHER_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
+
+import { Researcher } from '.';
+
 import { LoginProvider } from '@/types/user';
 
 const ResearcherForm = () => {
