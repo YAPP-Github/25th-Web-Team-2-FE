@@ -1,6 +1,6 @@
-import { ROLE } from '@/constants/config';
 import { FilterOption } from './JoinPage.types';
 
+import { ROLE } from '@/constants/config';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
 
 export const JOIN_REGION = [
@@ -48,10 +48,16 @@ export const STEP = {
   success: 'success',
 } as const;
 
+export const DESKTOP_PARTICIPANT_JOIN_STEP_LIST = ['email', 'info', 'success'] as const;
 export const DESKTOP_RESEARCHER_JOIN_STEP_LIST = ['email', 'info', 'success'] as const;
 
+export const DESKTOP_STEP_MAP = {
+  [ROLE.participant]: DESKTOP_PARTICIPANT_JOIN_STEP_LIST,
+  [ROLE.researcher]: DESKTOP_RESEARCHER_JOIN_STEP_LIST,
+} as const;
+
 export const MOBILE_PARTICIPANT_JOIN_STEP_LIST = [
-  'email',
+  'contactEmail',
   'info',
   'additionalInfo',
   'success',
