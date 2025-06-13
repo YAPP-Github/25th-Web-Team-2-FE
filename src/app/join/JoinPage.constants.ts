@@ -48,8 +48,8 @@ export const STEP = {
   success: 'success',
 } as const;
 
-export const DESKTOP_PARTICIPANT_JOIN_STEP_LIST = ['email', 'info', 'success'] as const;
-export const DESKTOP_RESEARCHER_JOIN_STEP_LIST = ['email', 'info', 'success'] as const;
+export const DESKTOP_PARTICIPANT_JOIN_STEP_LIST = [STEP.email, STEP.info, STEP.success] as const;
+export const DESKTOP_RESEARCHER_JOIN_STEP_LIST = [STEP.email, STEP.info, STEP.success] as const;
 
 export const DESKTOP_STEP_MAP = {
   [ROLE.participant]: DESKTOP_PARTICIPANT_JOIN_STEP_LIST,
@@ -57,17 +57,17 @@ export const DESKTOP_STEP_MAP = {
 } as const;
 
 export const MOBILE_PARTICIPANT_JOIN_STEP_LIST = [
-  'contactEmail',
-  'info',
-  'additionalInfo',
-  'success',
+  STEP.contactEmail,
+  STEP.info,
+  STEP.additionalInfo,
+  STEP.success,
 ] as const;
 
 export const MOBILE_RESEARCHER_JOIN_STEP_LIST = [
-  'contactEmail',
-  'univEmail',
-  'info',
-  'success',
+  STEP.contactEmail,
+  STEP.univEmail,
+  STEP.info,
+  STEP.success,
 ] as const;
 
 export const MOBILE_STEP_MAP = {
