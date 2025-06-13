@@ -1,22 +1,27 @@
-import { useFormContext, useWatch } from 'react-hook-form';
+import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
 import Button from '@/components/Button/Button';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-interface JoinButtonProps {
+interface JoinButtonProps<T extends FieldValues> {
+  validationFields: Path<T>[];
   onSubmit: () => void;
   width?: string;
   height?: string;
 }
 
-const JoinButton = ({ onSubmit, width = '100%', height = 'fit-content' }: JoinButtonProps) => {
+const JoinButton = <T extends FieldValues>({
+  validationFields,
+  onSubmit,
+  width = '100%',
+  height = 'fit-content',
+}: JoinButtonProps<T>) => {
   const {
     control,
     formState: { errors },
-  } = useFormContext<ResearcherJoinSchemaType>();
-  const values = useWatch({ name: ['name', 'univName', 'major'], control });
-  const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
+  } = useFormContext<T>();
+  const values = useWatch({ name: validationFields, control });
 
+  const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isValidForm = isAllFilled && Object.keys(errors).length === 0;
 
   return (

@@ -60,9 +60,14 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
           maxLength={100}
         />
       </div>
+
       {/* 회원가입 버튼 */}
       <div className={bottomButtonLayout}>
-        <JoinButton onSubmit={onSubmit} height="5.6rem" />
+        <JoinButton<ResearcherJoinSchemaType>
+          onSubmit={onSubmit}
+          validationFields={['name', 'univName', 'major']}
+          height="5.6rem"
+        />
       </div>
     </main>
   );
