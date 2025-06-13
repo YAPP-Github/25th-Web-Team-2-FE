@@ -27,7 +27,7 @@ interface AuthCodeInputProps {
   authTimer: number;
   handleSendUnivAuthCode: () => void;
   stopTimer: () => void;
-  onNext: () => void;
+  onNext?: () => void;
 }
 
 const AuthCodeInput = ({
@@ -88,7 +88,7 @@ const AuthCodeInput = ({
             <FormProvider {...form}>
               <ServiceAgreeBottomSheet
                 onConfirm={() => {
-                  onNext();
+                  onNext?.();
                   close();
                 }}
               />
