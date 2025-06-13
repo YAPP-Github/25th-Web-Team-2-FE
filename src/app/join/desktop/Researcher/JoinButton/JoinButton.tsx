@@ -5,9 +5,11 @@ import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinButtonProps {
   onSubmit: () => void;
+  width?: string;
+  height?: string;
 }
 
-const JoinButton = ({ onSubmit }: JoinButtonProps) => {
+const JoinButton = ({ onSubmit, width = '100%', height = 'fit-content' }: JoinButtonProps) => {
   const {
     control,
     formState: { errors },
@@ -24,7 +26,8 @@ const JoinButton = ({ onSubmit }: JoinButtonProps) => {
       size="medium"
       onClick={onSubmit}
       disabled={!isValidForm}
-      width="20rem"
+      width={width}
+      height={height}
     >
       회원가입
     </Button>
