@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller, FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
+import { univEmailVerificationContainer } from './UnivEmailStep.css';
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
@@ -20,9 +21,9 @@ import { inputContainer } from '@/components/ButtonInput/ButtonInput.css';
 import useOverlay from '@/hooks/useOverlay';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
-const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
+const getButtonText = ({ isLoading, canEdit }: { isLoading: boolean; canEdit: boolean }) => {
   if (isLoading) return '전송 중...';
-  if (isAuthenticated) return '수정';
+  if (canEdit) return '수정';
   return '인증번호 전송';
 };
 
@@ -93,57 +94,60 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
         description={`대학원생임을 인증하기 위해 필요해요\n추후 수정할 수 없으니 신중히 입력해 주세요`}
       />
 
-      <Controller
-        name="univEmail"
-        control={control}
-        render={({ field, fieldState }) => {
-          const isButtonDisabled =
-            (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
+      <div className={univEmailVerificationContainer}>
+        <Controller
+          name="univEmail"
+          control={control}
+          render={({ field, fieldState }) => {
+            const canEdit = isEmailSent || isEmailVerified;
+            const isButtonDisabled =
+              (!isEmailSent && !field.value) || isLoadingSend || fieldState.invalid;
 
-          const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-            field.onChange(e);
-            await trigger('univEmail');
-          };
+            const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+              field.onChange(e);
+              await trigger('univEmail');
+            };
 
-          return (
-            <div className={inputContainer}>
-              <div className={univInputWrapper}>
-                <input
-                  {...field}
-                  style={{ width: '100%' }}
-                  className={joinInput}
-                  placeholder="학교 메일 입력"
-                  aria-invalid={fieldState.invalid ? true : false}
-                  disabled={isEmailVerified}
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  className={`${univAuthButton} ${isEmailVerified ? editButton : ''}`}
-                  disabled={isButtonDisabled}
-                  onClick={isEmailVerified ? handleClickEdit : handleSendUnivAuthCode}
-                >
-                  {getButtonText(isLoadingSend, isEmailVerified)}
-                </button>
+            return (
+              <div className={inputContainer}>
+                <div className={univInputWrapper}>
+                  <input
+                    {...field}
+                    style={{ width: '100%' }}
+                    className={joinInput}
+                    placeholder="학교 메일 입력"
+                    aria-invalid={fieldState.invalid ? true : false}
+                    disabled={isEmailVerified || isEmailSent}
+                    onChange={handleChange}
+                  />
+                  <button
+                    type="button"
+                    className={`${univAuthButton} ${canEdit ? editButton : ''}`}
+                    disabled={isButtonDisabled}
+                    onClick={canEdit ? handleClickEdit : handleSendUnivAuthCode}
+                  >
+                    {getButtonText({ isLoading: isLoadingSend, canEdit })}
+                  </button>
+                </div>
+                {fieldState.error ? (
+                  <span className={errorMessage}>{fieldState.error.message}</span>
+                ) : (
+                  <span className={errorMessage}>{authCodeError && authCodeError.message}</span>
+                )}
               </div>
-              {fieldState.error ? (
-                <span className={errorMessage}>{fieldState.error.message}</span>
-              ) : (
-                <span className={errorMessage}>{authCodeError && authCodeError.message}</span>
-              )}
-            </div>
-          );
-        }}
-      />
-
-      {isEmailSent && (
-        <AuthCodeInput
-          authTimer={authTimer}
-          handleSendUnivAuthCode={handleSendUnivAuthCode}
-          stopTimer={stopTimer}
-          onNext={onNext}
+            );
+          }}
         />
-      )}
+
+        {isEmailSent && (
+          <AuthCodeInput
+            authTimer={authTimer}
+            handleSendUnivAuthCode={handleSendUnivAuthCode}
+            stopTimer={stopTimer}
+            onNext={onNext}
+          />
+        )}
+      </div>
       <EmailToast
         title={`인증번호가 발송되었어요. (${authCodeData?.requestCount}회 / 하루 최대 3회)`}
         isToastOpen={isToastOpen}
