@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { FormProvider, useFormContext } from 'react-hook-form';
 
 import {
   authInputLayout,
@@ -17,6 +17,8 @@ import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import { joinInput } from '@/app/join/components/JoinInput/JoinInput.css';
 import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
+import ServiceAgreeBottomSheet from '@/app/join/mobile/components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
+import useOverlay from '@/hooks/useOverlay';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const AUTH_CODE_VALID_LENGTH = 6;
@@ -25,10 +27,19 @@ interface AuthCodeInputProps {
   authTimer: number;
   handleSendUnivAuthCode: () => void;
   stopTimer: () => void;
+  onNext: () => void;
 }
 
-const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode, stopTimer }: AuthCodeInputProps) => {
-  const { getValues, setValue } = useFormContext<ResearcherJoinSchemaType>();
+const AuthCodeInput = ({
+  authTimer,
+  handleSendUnivAuthCode,
+  stopTimer,
+  onNext,
+}: AuthCodeInputProps) => {
+  const form = useFormContext<ResearcherJoinSchemaType>();
+  const { getValues, setValue } = form;
+  const { open, close } = useOverlay();
+
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [authCode, setAuthCode] = useState('');
@@ -59,6 +70,38 @@ const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode, stopTimer }: AuthCod
     );
   };
 
+  const handleTouchVerifyUnivEmail = async (e: React.TouchEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const univEmail = getValues('univEmail');
+
+    verifyEmail(
+      { univEmail, inputCode: authCode },
+      {
+        onSuccess: () => {
+          setIsToastOpen(true);
+          setValue('isEmailVerified', true);
+          setError('');
+          stopTimer();
+
+          open(() => (
+            <FormProvider {...form}>
+              <ServiceAgreeBottomSheet
+                onConfirm={() => {
+                  onNext();
+                  close();
+                }}
+              />
+            </FormProvider>
+          ));
+        },
+        onError: (error) => {
+          setError(error.message);
+        },
+      },
+    );
+  };
+
   return (
     <>
       <div className={authInputLayout}>
@@ -80,6 +123,7 @@ const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode, stopTimer }: AuthCod
                 className={authCodeButton}
                 disabled={!authCode || authCode.length < AUTH_CODE_VALID_LENGTH || Boolean(error)}
                 onClick={handleVerifyUniv}
+                onTouchEnd={handleTouchVerifyUnivEmail}
               >
                 인증
               </button>

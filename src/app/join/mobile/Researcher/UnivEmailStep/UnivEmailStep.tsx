@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, useFormContext, useWatch } from 'react-hook-form';
 
+import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { mainContentLayout } from '../../page.css';
 
@@ -15,6 +16,7 @@ import {
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
 import { inputContainer } from '@/components/ButtonInput/ButtonInput.css';
+import useOverlay from '@/hooks/useOverlay';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
@@ -28,8 +30,8 @@ interface UnivEmailStepProps {
 }
 
 const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
-  const { control, getValues, setValue, clearErrors, trigger } =
-    useFormContext<ResearcherJoinSchemaType>();
+  const form = useFormContext<ResearcherJoinSchemaType>();
+  const { control, getValues, setValue, clearErrors, trigger } = form;
 
   const {
     data: authCodeData,
@@ -37,6 +39,8 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
     error: authCodeError,
     isPending: isLoadingSend,
   } = useSendUnivAuthCodeMutation();
+
+  const { open, close } = useOverlay();
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
 
@@ -56,6 +60,16 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
       onError: (error) => {
         if (error.code === 'VE0007') {
           setValue('isEmailVerified', true);
+          open(() => (
+            <FormProvider {...form}>
+              <ServiceAgreeBottomSheet
+                onConfirm={() => {
+                  onNext();
+                  close();
+                }}
+              />
+            </FormProvider>
+          ));
         }
       },
     });
@@ -123,6 +137,7 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
           authTimer={authTimer}
           handleSendUnivAuthCode={handleSendUnivAuthCode}
           stopTimer={stopTimer}
+          onNext={onNext}
         />
       )}
       <EmailToast
