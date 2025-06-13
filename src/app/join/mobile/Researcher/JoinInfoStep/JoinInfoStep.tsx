@@ -4,8 +4,8 @@ import { joinContentContainer } from './JoinInfoStep.css';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
+import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import JoinButton from '@/app/join/desktop/Researcher/JoinButton/JoinButton';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
