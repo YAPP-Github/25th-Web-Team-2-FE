@@ -31,6 +31,12 @@ export const mainContentLayout = style({
   flexDirection: 'column',
   gap: '2rem',
   padding: '2.8rem 1.6rem 0 1.6rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      overflowY: 'auto',
+    },
+  },
 });
 
 export const emailWrapper = style({
