@@ -8,6 +8,8 @@ import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const ContactEmailInput = () => {
   const { control, getValues, setValue } = useFormContext<ResearcherJoinSchemaType>();
+  const verifiedEmail = useWatch({ name: 'verifiedEmail', control });
+  const contactEmail = useWatch({ name: 'contactEmail', control });
 
   const {
     mutate: checkValidEmail,
@@ -16,8 +18,7 @@ const ContactEmailInput = () => {
   } = useCheckValidEmailInfoMutation();
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
-  const verifiedEmail = useWatch({ name: 'verifiedEmail', control });
-  const contactEmail = useWatch({ name: 'contactEmail', control });
+
   const isVerified = Boolean(verifiedEmail) && verifiedEmail === contactEmail;
 
   const handleCheckValidEmail = async () => {
