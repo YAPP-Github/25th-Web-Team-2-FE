@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { bottomButtonLayout } from '../../page.css';
+import { bottomButtonLayout } from '../../../page.css';
 
 import Button from '@/components/Button/Button';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';

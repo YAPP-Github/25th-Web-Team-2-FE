@@ -5,7 +5,7 @@ import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/Se
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { email, emailWrapper, mainContentLayout } from '../../page.css';
 import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
-import NextButton from './NextButton';
+import NextButton from './NextButton/NextButton';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';

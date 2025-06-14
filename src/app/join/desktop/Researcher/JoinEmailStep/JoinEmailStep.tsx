@@ -3,7 +3,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
-import NextButton from './NextButton';
+import NextButton from './NextButton/NextButton';
 import UnivAuthInput from './UnivAuthInput/UnivAuthInput';
 import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../../components/JoinInput/JoinInput';
