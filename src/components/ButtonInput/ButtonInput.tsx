@@ -24,6 +24,7 @@ interface ButtonInputProps<T extends FieldValues> {
   required?: boolean;
   className?: string;
   tip?: string;
+  isButtonHidden?: boolean;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -36,6 +37,7 @@ const ButtonInput = <T extends FieldValues>({
   required,
   className,
   tip,
+  isButtonHidden = false,
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -79,16 +81,18 @@ const ButtonInput = <T extends FieldValues>({
                   onBlur={handleBlur}
                 />
 
-                <button
-                  type="button"
-                  className={confirmButton}
-                  disabled={isButtonDisabled || isLoading}
-                  onClick={onClick}
-                  onMouseDown={(e) => e.preventDefault()}
-                  ref={validateButtonRef}
-                >
-                  {isLoading ? '확인 중...' : '중복 확인'}
-                </button>
+                {!isButtonHidden && (
+                  <button
+                    type="button"
+                    className={confirmButton}
+                    disabled={isButtonDisabled || isLoading}
+                    onClick={onClick}
+                    onMouseDown={(e) => e.preventDefault()}
+                    ref={validateButtonRef}
+                  >
+                    {isLoading ? '확인 중...' : '중복 확인'}
+                  </button>
+                )}
               </div>
               <div className={infoContainer}>
                 {fieldState.error ? (

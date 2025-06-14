@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
@@ -16,6 +16,9 @@ const ContactEmailInput = () => {
   } = useCheckValidEmailInfoMutation();
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
+  const verifiedEmail = useWatch({ name: 'verifiedEmail', control });
+  const contactEmail = useWatch({ name: 'contactEmail', control });
+  const isVerified = Boolean(verifiedEmail) && verifiedEmail === contactEmail;
 
   const handleCheckValidEmail = async () => {
     checkValidEmail(getValues('contactEmail'), {
@@ -37,6 +40,7 @@ const ContactEmailInput = () => {
       onClick={handleCheckValidEmail}
       isLoading={isLoadingCheck}
       setIsValidToastOpen={setIsValidToastOpen}
+      isButtonHidden={isVerified}
       tip="로그인 아이디와 달라도 괜찮아요"
       toast={
         <EmailToast
