@@ -32,14 +32,13 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
     useFormParticipantUserInfo({
       userInfo,
     });
-
   const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });
   const contactEmail = useWatch({ name: 'contactEmail', control: form.control });
 
+  const [isToastOpen, setIsToastOpen] = useState(false);
+
   const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
   const isValidUpdate = Object.keys(form.formState.errors).length === 0 && isVerified;
-
-  const [isToastOpen, setIsToastOpen] = useState(false);
 
   return (
     <FormProvider {...form}>

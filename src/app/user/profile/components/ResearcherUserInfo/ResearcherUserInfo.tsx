@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { Controller, FormProvider } from 'react-hook-form';
+import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
-import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
 import {
   leaveButton,
@@ -11,60 +10,34 @@ import {
   updateInfoForm,
   termContainer,
 } from '../ParticipantUserInfo/ParticipantUserInfo.css';
+import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
 
 import { ResearcherResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 import { colors } from '@/styles/colors';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
-  const { form, contactEmail, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
+  const { form, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
     userInfo,
   });
-
-  const isValidUpdate = Object.keys(form.formState.errors).length === 0;
-
-  const {
-    refetch,
-    isLoading: isLoadingCheck,
-    isError: isEmailDuplicateError,
-  } = useCheckValidEmailQuery(contactEmail);
+  const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });
+  const contactEmail = useWatch({ name: 'contactEmail', control: form.control });
 
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
-  const handleCheckValidEmail = async () => {
-    await refetch();
-    setIsValidToastOpen(true);
-  };
+  const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
+  const isValidUpdate = Object.keys(form.formState.errors).length === 0 && isVerified;
 
   return (
     <FormProvider {...form}>
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
-          <ButtonInput<ResearcherUpdateSchemaType>
-            title="연락 받을 이메일"
-            required
-            control={form.control}
-            name="contactEmail"
-            onClick={handleCheckValidEmail}
-            isLoading={isLoadingCheck}
-            setIsValidToastOpen={setIsValidToastOpen}
-            tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
-            toast={
-              <EmailToast
-                title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
-                isToastOpen={isValidToastOpen}
-                setIsToastOpen={setIsValidToastOpen}
-                isError={isEmailDuplicateError}
-              />
-            }
-          />
+          <ContactEmailInput />
 
           {/* 이름 */}
           <JoinInput<ResearcherUpdateSchemaType>

@@ -42,8 +42,6 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
     },
   });
 
-  const contactEmail = useWatch({ control: form.control, name: 'contactEmail' });
-
   const region = useWatch({
     control: form.control,
     name: 'basicAddressInfo.region',
@@ -73,7 +71,6 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
 
   return {
     form,
-    contactEmail,
     region,
     additionalRegion,
     handleSubmit: (onSuccess: () => void) => form.handleSubmit(() => onSubmit(onSuccess)),
