@@ -4,8 +4,10 @@ import { useForm, useWatch } from 'react-hook-form';
 import useUpdateParticipantInfoMutation from './useUpdateParticipantInfoMutation';
 
 import { ParticipantResponse } from '@/apis/login';
-import ParticipantUpdateSchema, {
+import {
+  ParticipantUpdateSchema,
   ParticipantUpdateSchemaType,
+  ParticipantUpdateSubmitSchema,
 } from '@/schema/profile/ParticipantUpdateSchema';
 
 interface UseFormParticipantUserInfoProps {
@@ -36,6 +38,7 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
       matchType: matchType,
       adConsent: adConsent ?? false,
       matchConsent: matchConsent ?? false,
+      verifiedContactEmail: memberInfo.contactEmail,
     },
   });
 
@@ -53,9 +56,10 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
 
   const onSubmit = (onSuccess: () => void) => {
     const formData = form.getValues();
+    const submitData = ParticipantUpdateSubmitSchema().parse(formData);
 
     const formattedData = {
-      ...formData,
+      ...submitData,
       additionalAddressInfo:
         Object.values(formData.additionalAddressInfo ?? {}).filter(Boolean).length > 0
           ? formData.additionalAddressInfo
