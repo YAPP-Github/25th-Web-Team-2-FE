@@ -93,6 +93,7 @@ export const ParticipantJoinSubmitSchema = () => {
 export const ParticipantJoinSchema = () => {
   return z.object({
     ...requiredFields,
+    verifiedContactEmail: z.string(),
     isTermOfService: z.boolean(), // 이용약관 동의 여부
     isPrivacy: z.boolean(), // 개인정보 처리 동의 여부
   });
