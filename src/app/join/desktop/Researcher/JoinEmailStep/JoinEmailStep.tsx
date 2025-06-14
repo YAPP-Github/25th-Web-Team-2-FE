@@ -26,7 +26,7 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
           name="oauthEmail"
           control={control}
           label="소셜 로그인 아이디"
-          value={getValues('oauthEmail')}
+          value={getValues('oauthEmail') || ''}
           placeholder="이메일 입력"
           disabled
         />
