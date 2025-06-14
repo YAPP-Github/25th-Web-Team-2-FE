@@ -44,12 +44,6 @@ export async function middleware(request: NextRequest) {
   // 임시 사용자가 회원가입 이탈했을 경우
   const isTempUser = token?.isTempUser === true && token?.accessToken === 'temp-token';
 
-  if (isTempUser && !isJoinPage) {
-    const response = NextResponse.next();
-    clearAuthCookies(request, response);
-    return response;
-  }
-
   if (isHomePage) {
     url.pathname = `/home`;
     const response = NextResponse.rewrite(url);
@@ -58,6 +52,12 @@ export async function middleware(request: NextRequest) {
       clearAuthCookies(request, response);
     }
 
+    return response;
+  }
+
+  if (isTempUser && !isJoinPage) {
+    const response = NextResponse.next();
+    clearAuthCookies(request, response);
     return response;
   }
 

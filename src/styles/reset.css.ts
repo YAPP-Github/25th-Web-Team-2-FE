@@ -190,7 +190,6 @@ globalStyle(':where(dialog:modal)', {
 globalStyle('*', {
   '@layer': {
     [layers.reset]: {
-      scrollBehavior: 'smooth',
       boxSizing: 'border-box',
       fontFamily: 'var(--font-family)',
       fontWeight: 500,

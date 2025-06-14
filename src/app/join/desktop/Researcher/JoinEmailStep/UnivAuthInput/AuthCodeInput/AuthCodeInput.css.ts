@@ -6,6 +6,7 @@ import { fonts } from '@/styles/fonts.css';
 export const authInputLayout = style({
   display: 'flex',
   flexDirection: 'column',
+  gap: '0.4rem',
 });
 
 export const authTimerWrapper = style({

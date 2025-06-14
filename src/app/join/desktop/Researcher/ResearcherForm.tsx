@@ -1,20 +1,16 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
-import useResearcherJoinMutation from '../../hooks/useResearcherJoinMutation';
-import { STEP } from '../../JoinPage.constants';
+import { useResearcherJoin } from '../../hooks/useResearcherJoin';
+import { DESKTOP_RESEARCHER_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
 
 import { Researcher } from '.';
 
-import {
-  ResearcherJoinSchema,
-  ResearcherJoinSchemaType,
-  ResearcherJoinSubmitSchema,
-} from '@/schema/join/ResearcherJoinSchema';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { LoginProvider } from '@/types/user';
 
 interface ResearcherFormProps {
   onDirtyChange?: (dirty: boolean) => void;
@@ -23,30 +19,19 @@ interface ResearcherFormProps {
 const AUTO_INPUT_FIELDS: (keyof ResearcherJoinSchemaType)[] = ['oauthEmail'];
 
 const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
-  const { mutate: joinResearcher } = useResearcherJoinMutation();
-
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
 
-  const { Funnel, Step, setStep } = useFunnel(['email', 'info', 'success'] as const);
+  const { Funnel, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
 
-  const researcherMethods = useForm<ResearcherJoinSchemaType>({
-    resolver: zodResolver(ResearcherJoinSchema()),
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
-    defaultValues: {
-      oauthEmail,
-      provider,
-      contactEmail: '',
-      univEmail: '',
-      name: '',
-      univName: '',
-      major: '',
-      adConsent: false,
-      isTermOfService: false,
-      isPrivacy: false,
-      isEmailVerified: false,
+  const { researcherMethods, handleSubmit } = useResearcherJoin({
+    initialValues: {
+      provider: provider as LoginProvider,
+      oauthEmail: oauthEmail || '',
+    },
+    onSuccess: () => {
+      setStep(STEP.success);
     },
   });
 
@@ -58,13 +43,6 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
     onDirtyChange?.(isUserInputDirty);
   }, [isUserInputDirty, onDirtyChange]);
 
-  const handleResearcherSubmit = () => {
-    const formData = researcherMethods.getValues();
-    const submitData = ResearcherJoinSubmitSchema().parse(formData);
-
-    joinResearcher(submitData, { onSuccess: () => setStep(STEP.success) });
-  };
-
   return (
     <FormProvider {...researcherMethods}>
       <Funnel>
@@ -72,9 +50,7 @@ const ResearcherForm = ({ onDirtyChange }: ResearcherFormProps) => {
           <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
         </Step>
         <Step name={STEP.info}>
-          <Researcher.InfoStep
-            handleSubmit={researcherMethods.handleSubmit(handleResearcherSubmit)}
-          />
+          <Researcher.InfoStep handleSubmit={handleSubmit} />
         </Step>
         <Step name={STEP.success}>
           <JoinSuccessStep />

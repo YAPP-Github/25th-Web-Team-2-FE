@@ -19,8 +19,8 @@ interface ButtonInputProps<T extends FieldValues> {
   name: Path<T>;
   onClick: () => void;
   isLoading: boolean;
-  setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
+  setIsValidToastOpen?: (value: boolean) => void;
   title?: string;
   required?: boolean;
   className?: string;
