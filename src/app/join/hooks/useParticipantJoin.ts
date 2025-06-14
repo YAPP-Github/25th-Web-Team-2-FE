@@ -32,6 +32,7 @@ export const useParticipantJoin = ({ onSuccess, initialValues }: UseParticipantJ
       matchConsent: false,
       isTermOfService: false,
       isPrivacy: false,
+      verifiedContactEmail: '',
     },
   });
 
