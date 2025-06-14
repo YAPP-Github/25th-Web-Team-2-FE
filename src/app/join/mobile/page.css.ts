@@ -42,7 +42,7 @@ export const mainContentLayout = style({
 export const emailWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  width: '17.8rem',
+  width: 'fit-content',
 
   border: `1px solid ${colors.line01}`,
   borderRadius: '5.2rem',
