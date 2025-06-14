@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
-import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
 import {
   leaveButton,
   updateButton,
@@ -21,6 +20,7 @@ import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoSt
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { colors } from '@/styles/colors';
@@ -45,7 +45,13 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
-          <ContactEmailInput />
+          <ContactEmailInput<ParticipantUpdateSchemaType>
+            title="연락 받을 이메일"
+            required
+            contactEmailField="contactEmail"
+            verifiedEmailField="verifiedContactEmail"
+            helperText="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
+          />
 
           {/* 이름 */}
           <JoinInput

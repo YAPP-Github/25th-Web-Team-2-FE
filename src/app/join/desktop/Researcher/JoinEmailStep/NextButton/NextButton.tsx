@@ -15,14 +15,14 @@ const NextButton = ({ onNext }: NextButtonProps) => {
   });
 
   const contactEmail = useWatch({ name: 'contactEmail', control });
-  const verifiedEmail = useWatch({ name: 'verifiedEmail', control });
+  const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control });
   const isTermOfService = useWatch({ name: 'isTermOfService', control });
   const isPrivacy = useWatch({ name: 'isPrivacy', control });
   const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
 
   const isValidForm =
-    Boolean(verifiedEmail) &&
-    verifiedEmail === contactEmail &&
+    Boolean(verifiedContactEmail) &&
+    verifiedContactEmail === contactEmail &&
     !errors.contactEmail &&
     !errors.univEmail &&
     isEmailVerified &&

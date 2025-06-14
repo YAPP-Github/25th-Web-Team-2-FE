@@ -10,12 +10,12 @@ import {
   updateInfoForm,
   termContainer,
 } from '../ParticipantUserInfo/ParticipantUserInfo.css';
-import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
 
 import { ResearcherResponse } from '@/apis/login';
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 import { colors } from '@/styles/colors';
@@ -37,7 +37,13 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
-          <ContactEmailInput />
+          <ContactEmailInput<ResearcherUpdateSchemaType>
+            title="연락 받을 이메일"
+            required
+            contactEmailField="contactEmail"
+            verifiedEmailField="verifiedContactEmail"
+            helperText="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
+          />
 
           {/* 이름 */}
           <JoinInput<ResearcherUpdateSchemaType>

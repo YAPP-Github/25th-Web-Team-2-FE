@@ -2,12 +2,12 @@
 
 import { useFormContext } from 'react-hook-form';
 
-import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
 import NextButton from './NextButton/NextButton';
 import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer/JoinCheckboxContainer';
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinEmailStepProps {
@@ -31,7 +31,14 @@ const JoinEmailStep = ({ onNext }: JoinEmailStepProps) => {
         />
 
         {/* 연락 받을 이메일 */}
-        <ContactEmailInput />
+        <ContactEmailInput<ParticipantJoinSchemaType>
+          title="연락 받을 이메일"
+          required
+          contactEmailField="contactEmail"
+          verifiedEmailField="verifiedContactEmail"
+          helperText="로그인 아이디와 달라도 괜찮아요"
+          isTip
+        />
 
         {/* 동의 체크 항목 */}
         <JoinCheckboxContainer />
