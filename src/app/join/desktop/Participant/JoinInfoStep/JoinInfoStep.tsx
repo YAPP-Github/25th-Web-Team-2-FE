@@ -92,7 +92,10 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
               render={({ field, fieldState }) => (
                 <JoinSelect
                   value={field.value}
-                  onChange={(value) => setValue('basicAddressInfo.region', value)}
+                  onChange={(value) => {
+                    setValue('basicAddressInfo.region', value);
+                    setValue('basicAddressInfo.area', '');
+                  }}
                   placeholder="시·도"
                   options={JOIN_REGION}
                   isError={Boolean(fieldState.error) && !field.value}
@@ -129,7 +132,10 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
               render={({ field, fieldState }) => (
                 <JoinSelect
                   value={field.value}
-                  onChange={(value) => setValue('additionalAddressInfo.region', value)}
+                  onChange={(value) => {
+                    setValue('additionalAddressInfo.region', value);
+                    setValue('additionalAddressInfo.area', '');
+                  }}
                   placeholder="시·도"
                   options={JOIN_REGION}
                   isError={Boolean(fieldState.error)}

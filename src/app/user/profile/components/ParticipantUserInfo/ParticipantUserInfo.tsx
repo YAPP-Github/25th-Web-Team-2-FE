@@ -70,8 +70,13 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             area="basicAddressInfo.area"
             regionOptions={JOIN_REGION}
             areaOptions={JOIN_SUB_REGION[region || ''] || []}
-            onChangeRegion={(value: string) => form.setValue('basicAddressInfo.region', value)}
-            onChangeArea={(value: string) => form.setValue('basicAddressInfo.area', value)}
+            onChangeRegion={(value: string) => {
+              form.setValue('basicAddressInfo.region', value);
+              form.setValue('basicAddressInfo.area', '');
+            }}
+            onChangeArea={(value: string) => {
+              form.setValue('basicAddressInfo.area', value);
+            }}
             isRequired
           />
 
@@ -83,8 +88,13 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             area="additionalAddressInfo.area"
             regionOptions={JOIN_REGION}
             areaOptions={JOIN_SUB_REGION[additionalRegion || ''] || []}
-            onChangeRegion={(value: string) => form.setValue('additionalAddressInfo.region', value)}
-            onChangeArea={(value: string) => form.setValue('additionalAddressInfo.area', value)}
+            onChangeRegion={(value: string) => {
+              form.setValue('additionalAddressInfo.region', value);
+              form.setValue('additionalAddressInfo.area', '');
+            }}
+            onChangeArea={(value: string) => {
+              form.setValue('additionalAddressInfo.area', value);
+            }}
             tooltip={<AreaTooltip />}
           />
 
