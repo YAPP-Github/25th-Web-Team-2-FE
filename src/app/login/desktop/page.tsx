@@ -19,7 +19,7 @@ export default function LoginDesktopPage() {
     <div className={loginPageLayout}>
       <section className={sloganContainer}>
         <Link href="/" aria-label="홈 화면으로 이동">
-          <Image src={Logo} alt="로고" />
+          <Image src={Logo} alt="로고" priority />
         </Link>
         <h1 className={sloganWrapper}>{SLOGAN}</h1>
       </section>
