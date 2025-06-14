@@ -24,11 +24,7 @@ interface JoinInfoStepProps {
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const {
-    control,
-    setValue,
-    formState: { errors },
-  } = useFormContext<ParticipantJoinSchemaType>();
+  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
 
   const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
   const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
