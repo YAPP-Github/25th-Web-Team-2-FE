@@ -9,6 +9,7 @@ interface ContactEmailInputProps<T extends FieldValues> {
   contactEmailField: Path<T>;
   verifiedEmailField: Path<T>;
   helperText: string;
+  isTip?: boolean;
   title?: string;
   required?: boolean;
 }
@@ -17,11 +18,12 @@ const ContactEmailInput = <T extends FieldValues>({
   contactEmailField,
   verifiedEmailField,
   helperText,
+  isTip = false,
   title,
   required = false,
 }: ContactEmailInputProps<T>) => {
   const { control, getValues, setValue } = useFormContext<T>();
-  const verifiedEmail = useWatch({ name: verifiedEmailField, control });
+  const verifiedContactEmail = useWatch({ name: verifiedEmailField, control });
   const contactEmail = useWatch({ name: contactEmailField, control });
 
   const {
@@ -32,7 +34,7 @@ const ContactEmailInput = <T extends FieldValues>({
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
-  const isVerified = Boolean(verifiedEmail) && verifiedEmail === contactEmail;
+  const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
 
   const handleCheckValidEmail = async () => {
     checkValidEmail(getValues(contactEmailField), {
@@ -56,6 +58,7 @@ const ContactEmailInput = <T extends FieldValues>({
       setIsValidToastOpen={setIsValidToastOpen}
       isButtonHidden={isVerified}
       tip={helperText}
+      isTip={isTip}
       toast={
         <EmailToast
           title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
