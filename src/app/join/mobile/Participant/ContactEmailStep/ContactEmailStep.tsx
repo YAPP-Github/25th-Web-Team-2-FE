@@ -4,11 +4,11 @@ import { FormProvider, useFormContext } from 'react-hook-form';
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { email, emailWrapper, mainContentLayout } from '../../page.css';
-import ContactEmailInput from './ContactEmailInput/ContactEmailInput';
 import NextButton from './NextButton/NextButton';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import useOverlay from '@/hooks/useOverlay';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
@@ -57,7 +57,14 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
           </div>
         }
       />
-      <ContactEmailInput openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
+      <ContactEmailInput<ParticipantJoinSchemaType>
+        title="연락 받을 이메일"
+        required
+        contactEmailField="contactEmail"
+        verifiedEmailField="verifiedContactEmail"
+        helperText="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
+        openBottomSheet={openServiceAgreeBottomSheet}
+      />
       <NextButton onNext={onNext} openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
     </main>
   );

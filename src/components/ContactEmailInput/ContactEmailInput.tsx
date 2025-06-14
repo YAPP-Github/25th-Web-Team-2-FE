@@ -8,10 +8,11 @@ import ButtonInput from '@/components/ButtonInput/ButtonInput';
 interface ContactEmailInputProps<T extends FieldValues> {
   contactEmailField: Path<T>;
   verifiedEmailField: Path<T>;
-  helperText: string;
+  helperText?: string;
   isTip?: boolean;
   title?: string;
   required?: boolean;
+  openBottomSheet?: () => void;
 }
 
 const ContactEmailInput = <T extends FieldValues>({
@@ -21,6 +22,7 @@ const ContactEmailInput = <T extends FieldValues>({
   isTip = false,
   title,
   required = false,
+  openBottomSheet,
 }: ContactEmailInputProps<T>) => {
   const { control, getValues, setValue } = useFormContext<T>();
   const verifiedContactEmail = useWatch({ name: verifiedEmailField, control });
@@ -40,6 +42,7 @@ const ContactEmailInput = <T extends FieldValues>({
     checkValidEmail(getValues(contactEmailField), {
       onSuccess: () => {
         setValue(verifiedEmailField, getValues(contactEmailField));
+        openBottomSheet?.();
       },
       onSettled: () => {
         setIsValidToastOpen(true);
