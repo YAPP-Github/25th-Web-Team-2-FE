@@ -173,11 +173,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button
-        className={nextButton}
-        onClick={handleSubmit}
-        disabled={!(isAllFilled && Object.keys(errors).length === 0)}
-      >
+      <button className={nextButton} onClick={handleSubmit} disabled={!isAllFilled}>
         회원가입
       </button>
     </section>

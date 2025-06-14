@@ -74,7 +74,21 @@ const requiredFields = {
       region: z.string().optional(),
       area: z.string().optional(),
     })
-    .nullable(),
+    .nullable()
+    .refine(
+      (data) => {
+        // region에 값이 있을 경우, area도 선택해야함
+        if (data?.region) {
+          return !!data.area;
+        }
+
+        return true;
+      },
+      {
+        message: '추가 활동 지역의 시·군·구를 선택해주세요',
+        path: ['area'],
+      },
+    ),
 
   // 선호 실험 진행 방식. 선택. 대면/비대면/전체
   matchType: z.union([z.literal('OFFLINE'), z.literal('ONLINE'), z.literal('ALL')]).optional(),
