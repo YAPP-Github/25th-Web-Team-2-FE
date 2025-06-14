@@ -4,7 +4,7 @@ import { ParticipantResponse, ResearcherResponse } from './login';
 import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { ParticipantUpdateSubmitSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
-import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
+import { ResearcherUpdateSubmitSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 export type ReasonType =
   | `RESEARCH_STOPPED`
@@ -37,7 +37,7 @@ export const updateParticipantInfo = async (params: ParticipantUpdateSubmitSchem
   });
 };
 
-export const updateResearcherInfo = async (params: ResearcherUpdateSchemaType) => {
+export const updateResearcherInfo = async (params: ResearcherUpdateSubmitSchemaType) => {
   return await fetchClient.put<ResearcherResponse>(API_URL.me(ROLE.researcher.toLowerCase()), {
     body: params,
   });
