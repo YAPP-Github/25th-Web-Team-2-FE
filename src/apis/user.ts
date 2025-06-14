@@ -3,7 +3,7 @@ import { ParticipantResponse, ResearcherResponse } from './login';
 
 import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
-import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
+import { ParticipantUpdateSubmitSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 export type ReasonType =
@@ -31,7 +31,7 @@ export const getParticipantInfo = async () => {
   return await fetchClient.get<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()));
 };
 
-export const updateParticipantInfo = async (params: ParticipantUpdateSchemaType) => {
+export const updateParticipantInfo = async (params: ParticipantUpdateSubmitSchemaType) => {
   return await fetchClient.put<ParticipantResponse>(API_URL.me(ROLE.participant.toLowerCase()), {
     body: params,
   });
