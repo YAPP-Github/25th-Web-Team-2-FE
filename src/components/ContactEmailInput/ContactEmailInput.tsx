@@ -1,15 +1,28 @@
 import { useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
 import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
-const ContactEmailInput = () => {
-  const { control, getValues, setValue } = useFormContext<ParticipantJoinSchemaType>();
-  const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control });
-  const contactEmail = useWatch({ name: 'contactEmail', control });
+interface ContactEmailInputProps<T extends FieldValues> {
+  contactEmailField: Path<T>;
+  verifiedEmailField: Path<T>;
+  helperText: string;
+  title?: string;
+  required?: boolean;
+}
+
+const ContactEmailInput = <T extends FieldValues>({
+  contactEmailField,
+  verifiedEmailField,
+  helperText,
+  title,
+  required = false,
+}: ContactEmailInputProps<T>) => {
+  const { control, getValues, setValue } = useFormContext<T>();
+  const verifiedEmail = useWatch({ name: verifiedEmailField, control });
+  const contactEmail = useWatch({ name: contactEmailField, control });
 
   const {
     mutate: checkValidEmail,
@@ -19,12 +32,12 @@ const ContactEmailInput = () => {
 
   const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
-  const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
+  const isVerified = Boolean(verifiedEmail) && verifiedEmail === contactEmail;
 
   const handleCheckValidEmail = async () => {
-    checkValidEmail(getValues('contactEmail'), {
+    checkValidEmail(getValues(contactEmailField), {
       onSuccess: () => {
-        setValue('verifiedContactEmail', getValues('contactEmail'));
+        setValue(verifiedEmailField, getValues(contactEmailField));
       },
       onSettled: () => {
         setIsValidToastOpen(true);
@@ -33,16 +46,16 @@ const ContactEmailInput = () => {
   };
 
   return (
-    <ButtonInput<ParticipantJoinSchemaType>
-      title="연락 받을 이메일"
-      required
+    <ButtonInput<T>
+      title={title}
+      required={required}
       control={control}
-      name="contactEmail"
+      name={contactEmailField}
       onClick={handleCheckValidEmail}
       isLoading={isLoadingCheck}
       setIsValidToastOpen={setIsValidToastOpen}
       isButtonHidden={isVerified}
-      tip="로그인 아이디와 달라도 괜찮아요"
+      tip={helperText}
       toast={
         <EmailToast
           title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
