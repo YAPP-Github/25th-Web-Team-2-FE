@@ -2,7 +2,7 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 import React from 'react';
 
 import useFunnel from '../../../hooks/useFunnel';
-import { MOBILE_JOIN_STEP_LIST } from '../../../JoinPage.constants';
+import { MOBILE_STEP_MAP } from '../../../JoinPage.constants';
 import { progressBarFill } from '../../../JoinPage.css';
 import { headerTitle, headerWrapper, progressBar } from '../../page.css';
 
@@ -17,7 +17,7 @@ const headerTitleMap = {
 } as const;
 
 const JoinHeader = ({ role }: { role?: Role }) => {
-  const { steps, currentStepIdx, goToPrev } = useFunnel(MOBILE_JOIN_STEP_LIST);
+  const { steps, currentStepIdx, goToPrev } = useFunnel(MOBILE_STEP_MAP[role as Role]);
 
   const progressPercentage =
     currentStepIdx + 1 === steps.length

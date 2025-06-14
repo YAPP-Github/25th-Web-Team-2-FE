@@ -1,21 +1,27 @@
-'use client';
-
 import { useFormContext } from 'react-hook-form';
+
+import { joinContentContainer } from './JoinInfoStep.css';
+import TitleSection from '../../components/TitleSection/TitleSection';
+import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
 import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
-  handleSubmit: () => void;
+  onSubmit: () => void;
 }
 
-const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
+const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
   return (
-    <section className={joinForm}>
+    <main className={mainContentLayout}>
+      <TitleSection
+        title="연구자 정보를 입력해주세요"
+        description={`실험 공고를 등록할 때 노출될 정보예요\n구체적일수록 참여자가 신청할 확률이 높아져요`}
+      />
+
       <div className={joinContentContainer}>
         {/* 이름 */}
         <JoinInput<ResearcherJoinSchemaType>
@@ -56,12 +62,14 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
       </div>
 
       {/* 회원가입 버튼 */}
-      <JoinButton<ResearcherJoinSchemaType>
-        onSubmit={handleSubmit}
-        validationFields={['name', 'univName', 'major']}
-        width="20rem"
-      />
-    </section>
+      <div className={bottomButtonLayout}>
+        <JoinButton<ResearcherJoinSchemaType>
+          onSubmit={onSubmit}
+          validationFields={['name', 'univName', 'major']}
+          height="5.6rem"
+        />
+      </div>
+    </main>
   );
 };
 

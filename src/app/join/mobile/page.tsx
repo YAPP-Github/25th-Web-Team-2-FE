@@ -6,14 +6,16 @@ import JoinHeader from './components/JoinHeader/JoinHeader';
 import ParticipantForm from './Participant/ParticipantForm';
 import ResearcherForm from './Researcher/ResearcherForm';
 import useFunnel from '../hooks/useFunnel';
-import { MOBILE_JOIN_STEP_LIST, STEP } from '../JoinPage.constants';
+import { MOBILE_STEP_MAP, STEP } from '../JoinPage.constants';
 
 import { ROLE } from '@/constants/config';
+import { Role } from '@/types/user';
 
 export default function MobileJoinPage() {
-  const { step } = useFunnel(MOBILE_JOIN_STEP_LIST);
   const { data: session } = useSession();
   const role = session?.role;
+
+  const { step } = useFunnel(MOBILE_STEP_MAP[role as Role]);
 
   if (step === STEP.success) {
     return role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />;

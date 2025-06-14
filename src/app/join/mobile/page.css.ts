@@ -31,12 +31,18 @@ export const mainContentLayout = style({
   flexDirection: 'column',
   gap: '2rem',
   padding: '2.8rem 1.6rem 0 1.6rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      overflowY: 'auto',
+    },
+  },
 });
 
 export const emailWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  width: '17.8rem',
+  width: 'fit-content',
 
   border: `1px solid ${colors.line01}`,
   borderRadius: '5.2rem',

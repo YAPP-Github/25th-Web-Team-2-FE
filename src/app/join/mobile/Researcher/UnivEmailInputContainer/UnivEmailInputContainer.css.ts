@@ -3,6 +3,17 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
+export const univEmailInputContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.2rem',
+});
+
+export const errorMessage = style({
+  ...fonts.label.medium.R13,
+  color: colors.textAlert,
+});
+
 export const inputContainer = style({
   display: 'flex',
   flexDirection: 'column',
@@ -38,50 +49,4 @@ export const joinInput = style({
       outline: `0.1rem solid ${colors.textAlert}`,
     },
   },
-});
-
-export const requiredStar = style({
-  color: colors.textAlert,
-});
-
-export const inputWrapper = style({
-  position: 'relative',
-});
-
-export const inputResetButton = style({
-  position: 'absolute',
-  top: '50%',
-  transform: 'translateY(-50%)',
-  right: '1.7rem',
-});
-
-export const infoContainer = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  width: '100%',
-  height: '1.4rem',
-});
-
-export const errorMessage = style({
-  ...fonts.label.medium.R13,
-  color: colors.textAlert,
-});
-
-export const tipWrapper = style({
-  ...fonts.label.medium.R13,
-  display: 'flex',
-  gap: '0.4rem',
-  color: colors.text02,
-});
-
-export const textCount = style({
-  ...fonts.label.small.M12,
-  display: 'flex',
-  justifyContent: 'flex-end',
-  color: colors.text02,
-});
-
-export const tipAlert = style({
-  color: colors.textPrimary,
 });

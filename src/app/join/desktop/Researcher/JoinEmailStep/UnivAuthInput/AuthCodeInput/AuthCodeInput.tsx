@@ -25,10 +25,18 @@ interface AuthCodeInputProps {
   authTimer: number;
   handleSendUnivAuthCode: () => void;
   stopTimer: () => void;
+  openServiceAgreeBottomSheet?: () => void;
 }
 
-const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode, stopTimer }: AuthCodeInputProps) => {
-  const { getValues, setValue } = useFormContext<ResearcherJoinSchemaType>();
+const AuthCodeInput = ({
+  authTimer,
+  handleSendUnivAuthCode,
+  stopTimer,
+  openServiceAgreeBottomSheet,
+}: AuthCodeInputProps) => {
+  const form = useFormContext<ResearcherJoinSchemaType>();
+  const { getValues, setValue } = form;
+
   const { mutate: verifyEmail, isSuccess: isUnivVerify } = useVerifyUnivAuthCodeMutation();
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [authCode, setAuthCode] = useState('');
@@ -51,6 +59,8 @@ const AuthCodeInput = ({ authTimer, handleSendUnivAuthCode, stopTimer }: AuthCod
           setValue('isEmailVerified', true);
           setError('');
           stopTimer();
+
+          openServiceAgreeBottomSheet?.();
         },
         onError: (error) => {
           setError(error.message);
