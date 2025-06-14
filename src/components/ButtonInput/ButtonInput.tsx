@@ -47,10 +47,12 @@ const ButtonInput = <T extends FieldValues>({
 
   return (
     <div className={inputContainer}>
-      <label className={inputLabel}>
-        {title && <span>{title}</span>}
-        {required && <span className={requiredStar}>*</span>}
-      </label>
+      {title && (
+        <label className={inputLabel}>
+          <span>{title}</span>
+          {required && <span className={requiredStar}>*</span>}
+        </label>
+      )}
 
       <Controller
         name={name}
