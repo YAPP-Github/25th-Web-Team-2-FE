@@ -11,6 +11,7 @@ import {
   infoContainer,
   inputWrapper,
   confirmButton,
+  tipAlert,
 } from './ButtonInput.css';
 
 interface ButtonInputProps<T extends FieldValues> {
@@ -24,6 +25,7 @@ interface ButtonInputProps<T extends FieldValues> {
   required?: boolean;
   className?: string;
   tip?: string;
+  isTip?: boolean;
   isButtonHidden?: boolean;
 }
 
@@ -37,6 +39,7 @@ const ButtonInput = <T extends FieldValues>({
   required,
   className,
   tip,
+  isTip = false,
   isButtonHidden = false,
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
@@ -100,6 +103,7 @@ const ButtonInput = <T extends FieldValues>({
                 ) : (
                   tip && (
                     <div className={tipWrapper}>
+                      {isTip && <span className={tipAlert}>Tip</span>}
                       <span>{tip}</span>
                     </div>
                   )

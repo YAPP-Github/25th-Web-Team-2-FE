@@ -86,3 +86,7 @@ export const tipWrapper = style({
   gap: '0.4rem',
   color: colors.text02,
 });
+
+export const tipAlert = style({
+  color: colors.textPrimary,
+});
