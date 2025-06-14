@@ -15,7 +15,7 @@ export const updateInfoForm = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '0.8rem',
+  gap: '2.8rem',
   backgroundColor: colors.field02,
   borderRadius: '1.2rem',
   padding: '2.4rem 4rem',

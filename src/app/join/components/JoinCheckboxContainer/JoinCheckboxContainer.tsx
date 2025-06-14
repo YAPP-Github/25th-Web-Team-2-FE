@@ -22,8 +22,10 @@ const JoinCheckboxContainer = () => {
 
   const isAllCheck = isTermOfService && isPrivacy && adConsent && (matchConsent ?? true);
 
+  const existMatchConsent = matchConsent !== undefined;
+
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (matchConsent) {
+    if (existMatchConsent) {
       setValue('matchConsent', e.target.checked);
     }
 
@@ -85,7 +87,7 @@ const JoinCheckboxContainer = () => {
         />
 
         {/* 실험 추천 이메일 수신 동의 */}
-        {matchConsent !== undefined && (
+        {existMatchConsent && (
           <AgreeAccordion
             value="matchConsent"
             trigger={

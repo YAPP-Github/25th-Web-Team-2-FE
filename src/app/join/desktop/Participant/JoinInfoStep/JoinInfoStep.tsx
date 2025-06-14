@@ -24,11 +24,7 @@ interface JoinInfoStepProps {
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const {
-    control,
-    setValue,
-    formState: { errors },
-  } = useFormContext<ParticipantJoinSchemaType>();
+  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
 
   const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
   const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
@@ -74,7 +70,6 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           label="생년월일"
           required
           placeholder="YYYY.MM.DD"
-          maxLength={10}
           tip="나중에 수정할 수 없어요"
           isTip={false}
           inputType="date"
@@ -93,7 +88,10 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
               render={({ field, fieldState }) => (
                 <JoinSelect
                   value={field.value}
-                  onChange={(value) => setValue('basicAddressInfo.region', value)}
+                  onChange={(value) => {
+                    setValue('basicAddressInfo.region', value);
+                    setValue('basicAddressInfo.area', '');
+                  }}
                   placeholder="시·도"
                   options={JOIN_REGION}
                   isError={Boolean(fieldState.error) && !field.value}
@@ -130,7 +128,10 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
               render={({ field, fieldState }) => (
                 <JoinSelect
                   value={field.value}
-                  onChange={(value) => setValue('additionalAddressInfo.region', value)}
+                  onChange={(value) => {
+                    setValue('additionalAddressInfo.region', value);
+                    setValue('additionalAddressInfo.area', '');
+                  }}
                   placeholder="시·도"
                   options={JOIN_REGION}
                   isError={Boolean(fieldState.error)}
@@ -168,11 +169,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button
-        className={nextButton}
-        onClick={handleSubmit}
-        disabled={!(isAllFilled && Object.keys(errors).length === 0)}
-      >
+      <button className={nextButton} onClick={handleSubmit} disabled={!isAllFilled}>
         회원가입
       </button>
     </section>

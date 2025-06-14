@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Control, Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 import {
@@ -11,6 +11,7 @@ import {
   infoContainer,
   inputWrapper,
   confirmButton,
+  tipAlert,
 } from './ButtonInput.css';
 
 interface ButtonInputProps<T extends FieldValues> {
@@ -24,6 +25,8 @@ interface ButtonInputProps<T extends FieldValues> {
   required?: boolean;
   className?: string;
   tip?: string;
+  isTip?: boolean;
+  isButtonHidden?: boolean;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -36,17 +39,20 @@ const ButtonInput = <T extends FieldValues>({
   required,
   className,
   tip,
+  isTip = false,
+  isButtonHidden = false,
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
-  const [isFocused, setIsFocused] = useState(false);
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div className={inputContainer}>
-      <label className={inputLabel}>
-        {title && <span>{title}</span>}
-        {required && <span className={requiredStar}>*</span>}
-      </label>
+      {title && (
+        <label className={inputLabel}>
+          <span>{title}</span>
+          {required && <span className={requiredStar}>*</span>}
+        </label>
+      )}
 
       <Controller
         name={name}
@@ -65,7 +71,6 @@ const ButtonInput = <T extends FieldValues>({
             }
 
             field.onBlur();
-            setIsFocused(false);
           };
 
           return (
@@ -78,10 +83,10 @@ const ButtonInput = <T extends FieldValues>({
                   placeholder="이메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
                   onChange={handleChange}
-                  onFocus={() => setIsFocused(true)}
                   onBlur={handleBlur}
                 />
-                {isFocused && field.value && (
+
+                {!isButtonHidden && (
                   <button
                     type="button"
                     className={confirmButton}
@@ -100,6 +105,7 @@ const ButtonInput = <T extends FieldValues>({
                 ) : (
                   tip && (
                     <div className={tipWrapper}>
+                      {isTip && <span className={tipAlert}>Tip</span>}
                       <span>{tip}</span>
                     </div>
                   )

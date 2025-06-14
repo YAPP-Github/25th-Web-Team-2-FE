@@ -55,6 +55,7 @@ export const ResearcherJoinSubmitSchema = () => {
 export const ResearcherJoinSchema = () => {
   return z.object({
     ...requiredFields,
+    verifiedContactEmail: z.string(),
     isTermOfService: z.boolean(), // 이용약관 동의 여부
     isPrivacy: z.boolean(), // 개인정보 처리 동의 여부
     isEmailVerified: z.boolean(), // 학교 이메일 인증 여부

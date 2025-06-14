@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { Controller, FormProvider } from 'react-hook-form';
+import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
 import {
   leaveButton,
@@ -9,7 +9,6 @@ import {
   updateInfoFormContainer,
   updateInfoForm,
 } from './ParticipantUserInfo.css';
-import useCheckValidEmailQuery from '../../hooks/useCheckValidEmailQuery';
 import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
@@ -21,55 +20,37 @@ import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoSt
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
-import ButtonInput from '@/components/ButtonInput/ButtonInput';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { colors } from '@/styles/colors';
 
+// TODO: useFormParticipantUserInfo로 묶어서 내보내는 게 아니라
+// 각 컴포넌트에서 필요한 데이터만 FormContext에서 가져오는 방식으로 개선
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
-  const { form, contactEmail, region, additionalRegion, handleSubmit, isLoading, isError } =
+  const { form, region, additionalRegion, handleSubmit, isLoading, isError } =
     useFormParticipantUserInfo({
       userInfo,
     });
-
-  const isValidUpdate = Object.keys(form.formState.errors).length === 0;
-
-  const {
-    refetch,
-    isLoading: isLoadingCheck,
-    isError: isEmailDuplicateError,
-  } = useCheckValidEmailQuery(contactEmail);
+  const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });
+  const contactEmail = useWatch({ name: 'contactEmail', control: form.control });
 
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
 
-  const handleCheckValidEmail = async () => {
-    await refetch();
-    setIsValidToastOpen(true);
-  };
+  const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
+  const isValidUpdate = isVerified;
 
   return (
     <FormProvider {...form}>
       <div className={updateInfoFormContainer}>
         <section className={updateInfoForm}>
           {/* 연락 받을 이메일 */}
-          <ButtonInput<ParticipantUpdateSchemaType>
+          <ContactEmailInput<ParticipantUpdateSchemaType>
             title="연락 받을 이메일"
             required
-            control={form.control}
-            name="contactEmail"
-            onClick={handleCheckValidEmail}
-            isLoading={isLoadingCheck}
-            setIsValidToastOpen={setIsValidToastOpen}
-            tip="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
-            toast={
-              <EmailToast
-                title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
-                isToastOpen={isValidToastOpen}
-                setIsToastOpen={setIsValidToastOpen}
-                isError={isEmailDuplicateError}
-              />
-            }
+            contactEmailField="contactEmail"
+            verifiedEmailField="verifiedContactEmail"
+            helperText="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
           />
 
           {/* 이름 */}
@@ -89,8 +70,13 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             area="basicAddressInfo.area"
             regionOptions={JOIN_REGION}
             areaOptions={JOIN_SUB_REGION[region || ''] || []}
-            onChangeRegion={(value: string) => form.setValue('basicAddressInfo.region', value)}
-            onChangeArea={(value: string) => form.setValue('basicAddressInfo.area', value)}
+            onChangeRegion={(value: string) => {
+              form.setValue('basicAddressInfo.region', value);
+              form.setValue('basicAddressInfo.area', '');
+            }}
+            onChangeArea={(value: string) => {
+              form.setValue('basicAddressInfo.area', value);
+            }}
             isRequired
           />
 
@@ -102,8 +88,13 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             area="additionalAddressInfo.area"
             regionOptions={JOIN_REGION}
             areaOptions={JOIN_SUB_REGION[additionalRegion || ''] || []}
-            onChangeRegion={(value: string) => form.setValue('additionalAddressInfo.region', value)}
-            onChangeArea={(value: string) => form.setValue('additionalAddressInfo.area', value)}
+            onChangeRegion={(value: string) => {
+              form.setValue('additionalAddressInfo.region', value);
+              form.setValue('additionalAddressInfo.area', '');
+            }}
+            onChangeArea={(value: string) => {
+              form.setValue('additionalAddressInfo.area', value);
+            }}
             tooltip={<AreaTooltip />}
           />
 

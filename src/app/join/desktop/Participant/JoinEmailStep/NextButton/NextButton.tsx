@@ -1,36 +1,32 @@
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 
 import Button from '@/components/Button/Button';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface NextButtonProps {
   onNext: () => void;
-  verifiedEmail: string;
 }
 
-const NextButton = ({ onNext, verifiedEmail }: NextButtonProps) => {
-  const { trigger, control } = useFormContext<ResearcherJoinSchemaType>();
+const NextButton = ({ onNext }: NextButtonProps) => {
+  const { trigger, control } = useFormContext<ParticipantJoinSchemaType>();
   const { errors } = useFormState({
     control,
-    name: ['contactEmail', 'univEmail'],
+    name: ['contactEmail'],
   });
 
   const contactEmail = useWatch({ name: 'contactEmail', control });
   const isTermOfService = useWatch({ name: 'isTermOfService', control });
   const isPrivacy = useWatch({ name: 'isPrivacy', control });
-  const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
+  const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control });
+
+  const isVerifiedContactEmail =
+    Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
 
   const isValidForm =
-    Boolean(verifiedEmail) &&
-    verifiedEmail === contactEmail &&
-    !errors.contactEmail &&
-    !errors.univEmail &&
-    isEmailVerified &&
-    isTermOfService &&
-    isPrivacy;
+    isVerifiedContactEmail && !errors.contactEmail && isTermOfService && isPrivacy;
 
   const handleNextStep = async () => {
-    const isValid = await trigger(['oauthEmail', 'contactEmail', 'univEmail']);
+    const isValid = await trigger(['oauthEmail', 'contactEmail', 'isTermOfService', 'isPrivacy']);
     if (isValid) {
       onNext();
     }

@@ -6,7 +6,7 @@ import { fonts } from '@/styles/fonts.css';
 export const inputContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.6rem',
+  gap: '0.4rem',
   width: '100%',
 });
 
@@ -15,6 +15,7 @@ export const inputLabel = style({
   color: colors.text06,
   display: 'flex',
   gap: '0.4rem',
+  paddingBottom: '0.2rem',
 });
 
 export const joinInput = style({
@@ -85,4 +86,8 @@ export const tipWrapper = style({
   display: 'flex',
   gap: '0.4rem',
   color: colors.text02,
+});
+
+export const tipAlert = style({
+  color: colors.textPrimary,
 });
