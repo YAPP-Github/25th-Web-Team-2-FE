@@ -5,10 +5,9 @@ import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface NextButtonProps {
   onNext: () => void;
-  verifiedEmail: string;
 }
 
-const NextButton = ({ onNext, verifiedEmail }: NextButtonProps) => {
+const NextButton = ({ onNext }: NextButtonProps) => {
   const { trigger, control } = useFormContext<ResearcherJoinSchemaType>();
   const { errors } = useFormState({
     control,
@@ -16,6 +15,7 @@ const NextButton = ({ onNext, verifiedEmail }: NextButtonProps) => {
   });
 
   const contactEmail = useWatch({ name: 'contactEmail', control });
+  const verifiedEmail = useWatch({ name: 'verifiedEmail', control });
   const isTermOfService = useWatch({ name: 'isTermOfService', control });
   const isPrivacy = useWatch({ name: 'isPrivacy', control });
   const isEmailVerified = useWatch({ name: 'isEmailVerified', control });

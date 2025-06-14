@@ -55,6 +55,9 @@ export const ResearcherJoinSubmitSchema = () => {
 export const ResearcherJoinSchema = () => {
   return z.object({
     ...requiredFields,
+    verifiedEmail: z
+      .string({ required_error: '연락 받을 이메일을 입력해주세요' })
+      .email({ message: '이메일 형식이 올바르지 않아요' }),
     isTermOfService: z.boolean(), // 이용약관 동의 여부
     isPrivacy: z.boolean(), // 개인정보 처리 동의 여부
     isEmailVerified: z.boolean(), // 학교 이메일 인증 여부
