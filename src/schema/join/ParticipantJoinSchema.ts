@@ -58,12 +58,16 @@ const requiredFields = {
   // 거주 지역. 필수. 시.도(region), 시.군.구(area)
   basicAddressInfo: z.object(
     {
-      region: z.string({
-        required_error: '거주 지역의 시·도를 입력해주세요',
-      }),
-      area: z.string({
-        required_error: '거주 지역의 시·군·구를 입력해주세요',
-      }),
+      region: z
+        .string({
+          required_error: '거주 지역의 시·도를 입력해주세요',
+        })
+        .min(1),
+      area: z
+        .string({
+          required_error: '거주 지역의 시·군·구를 입력해주세요',
+        })
+        .min(1),
     },
     { required_error: '거주 지역을 입력해주세요' },
   ),

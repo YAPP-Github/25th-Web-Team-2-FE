@@ -38,7 +38,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
   const [isToastOpen, setIsToastOpen] = useState(false);
 
   const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
-  const isValidUpdate = Object.keys(form.formState.errors).length === 0 && isVerified;
+  const isValidUpdate = isVerified;
 
   return (
     <FormProvider {...form}>
