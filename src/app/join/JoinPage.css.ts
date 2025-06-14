@@ -49,7 +49,7 @@ export const joinContentContainer = style({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.8rem',
+  gap: '2rem',
   borderRadius: '1.2rem',
   padding: '3.2rem 4rem',
 });
