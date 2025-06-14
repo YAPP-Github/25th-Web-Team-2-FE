@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Control, Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 import {
@@ -38,7 +38,6 @@ const ButtonInput = <T extends FieldValues>({
   tip,
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
-  const [isFocused, setIsFocused] = useState(false);
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
@@ -65,7 +64,6 @@ const ButtonInput = <T extends FieldValues>({
             }
 
             field.onBlur();
-            setIsFocused(false);
           };
 
           return (
@@ -78,21 +76,19 @@ const ButtonInput = <T extends FieldValues>({
                   placeholder="이메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
                   onChange={handleChange}
-                  onFocus={() => setIsFocused(true)}
                   onBlur={handleBlur}
                 />
-                {isFocused && field.value && (
-                  <button
-                    type="button"
-                    className={confirmButton}
-                    disabled={isButtonDisabled || isLoading}
-                    onClick={onClick}
-                    onMouseDown={(e) => e.preventDefault()}
-                    ref={validateButtonRef}
-                  >
-                    {isLoading ? '확인 중...' : '중복 확인'}
-                  </button>
-                )}
+
+                <button
+                  type="button"
+                  className={confirmButton}
+                  disabled={isButtonDisabled || isLoading}
+                  onClick={onClick}
+                  onMouseDown={(e) => e.preventDefault()}
+                  ref={validateButtonRef}
+                >
+                  {isLoading ? '확인 중...' : '중복 확인'}
+                </button>
               </div>
               <div className={infoContainer}>
                 {fieldState.error ? (
