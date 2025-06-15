@@ -20,7 +20,7 @@ async function fetchAllPosts() {
         count: 100,
       });
 
-      if (response.content && response.content.length > 0) {
+      if (response.content.length > 0) {
         allPosts.push(...response.content);
       }
 
