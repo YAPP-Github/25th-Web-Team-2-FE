@@ -12,7 +12,6 @@ interface ContactEmailInputProps<T extends FieldValues> {
   isTip?: boolean;
   title?: string;
   required?: boolean;
-  openBottomSheet?: () => void;
   onSuccess?: () => void;
 }
 
@@ -23,7 +22,6 @@ const ContactEmailInput = <T extends FieldValues>({
   isTip = false,
   title,
   required = false,
-  openBottomSheet,
   onSuccess,
 }: ContactEmailInputProps<T>) => {
   const { control, getValues, setValue } = useFormContext<T>();
@@ -44,7 +42,6 @@ const ContactEmailInput = <T extends FieldValues>({
     checkValidEmail(getValues(contactEmailField), {
       onSuccess: () => {
         setValue(verifiedEmailField, getValues(contactEmailField));
-        openBottomSheet?.();
         onSuccess?.();
       },
       onSettled: () => {

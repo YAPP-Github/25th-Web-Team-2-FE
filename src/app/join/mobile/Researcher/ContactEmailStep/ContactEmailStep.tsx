@@ -8,6 +8,7 @@ import Naver from '@/assets/images/naver.svg';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import { LoginProvider } from '@/types/user';
 import NextButton from './NextButton/NextButton';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const logoMap = {
   NAVER: Naver,
@@ -37,7 +38,7 @@ const ContactEmailStep = ({ provider, oauthEmail, onNext }: ContactEmailStepProp
         }
       />
 
-      <ContactEmailInput
+      <ContactEmailInput<ResearcherJoinSchemaType>
         contactEmailField="contactEmail"
         verifiedEmailField="verifiedContactEmail"
         onSuccess={onNext}
