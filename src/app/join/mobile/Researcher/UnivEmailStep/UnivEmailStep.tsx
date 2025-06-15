@@ -1,4 +1,4 @@
-import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useFormContext } from 'react-hook-form';
 
 import NextButton from './NextButton';
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
@@ -16,7 +16,6 @@ interface UnivEmailStepProps {
 const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
   const { open, close } = useOverlay();
   const form = useFormContext<ResearcherJoinSchemaType>();
-  const isEmailVerified = useWatch({ name: 'isEmailVerified', control: form.control });
 
   const openServiceAgreeBottomSheet = () => {
     open(() => (
@@ -42,9 +41,7 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
       <UnivEmailInputContainer openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
 
       {/* 다음 버튼 */}
-      {isEmailVerified && (
-        <NextButton onNext={onNext} openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
-      )}
+      <NextButton onNext={onNext} openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
     </main>
   );
 };

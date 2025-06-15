@@ -1,24 +1,22 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { bottomButtonLayout } from '../../page.css';
+import { bottomButtonLayout } from '../../../page.css';
 
 import Button from '@/components/Button/Button';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface NextButtonProps {
   onNext: () => void;
-  openServiceAgreeBottomSheet: () => void;
 }
 
-const NextButton = ({ onNext, openServiceAgreeBottomSheet }: NextButtonProps) => {
+const NextButton = ({ onNext }: NextButtonProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
 
-  const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
-  const isTermOfService = useWatch({ name: 'isTermOfService', control });
-  const isPrivacy = useWatch({ name: 'isPrivacy', control });
+  const contactEmail = useWatch({ name: 'contactEmail', control });
+  const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control });
 
-  const isValidCheck = isTermOfService && isPrivacy;
-  const canNext = isEmailVerified && isValidCheck;
+  const isEmailVerified = Boolean(verifiedContactEmail);
+  const isVerified = isEmailVerified && verifiedContactEmail === contactEmail;
 
   return (
     <>
@@ -28,7 +26,8 @@ const NextButton = ({ onNext, openServiceAgreeBottomSheet }: NextButtonProps) =>
             variant="primary"
             size="small"
             height="56px"
-            onClick={canNext ? onNext : openServiceAgreeBottomSheet}
+            disabled={!isVerified}
+            onClick={onNext}
           >
             다음
           </Button>

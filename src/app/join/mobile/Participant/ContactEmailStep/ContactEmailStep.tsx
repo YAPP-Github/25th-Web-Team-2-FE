@@ -60,7 +60,7 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
       <ContactEmailInput<ParticipantJoinSchemaType>
         contactEmailField="contactEmail"
         verifiedEmailField="verifiedContactEmail"
-        openBottomSheet={openServiceAgreeBottomSheet}
+        onSuccess={openServiceAgreeBottomSheet}
       />
       <NextButton onNext={onNext} openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
     </main>

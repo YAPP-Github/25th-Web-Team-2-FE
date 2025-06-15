@@ -31,6 +31,7 @@ export const useResearcherJoin = ({ onSuccess, initialValues }: UseResearcherJoi
       isTermOfService: false,
       isPrivacy: false,
       isEmailVerified: false,
+      verifiedContactEmail: '',
     },
   });
 

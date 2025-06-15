@@ -15,14 +15,10 @@ const JoinButton = <T extends FieldValues>({
   width = '100%',
   height = 'fit-content',
 }: JoinButtonProps<T>) => {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<T>();
+  const { control } = useFormContext<T>();
   const values = useWatch({ name: validationFields, control });
 
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
-  const isValidForm = isAllFilled && Object.keys(errors).length === 0;
 
   return (
     <Button
@@ -30,7 +26,7 @@ const JoinButton = <T extends FieldValues>({
       variant="primary"
       size="medium"
       onClick={onSubmit}
-      disabled={!isValidForm}
+      disabled={!isAllFilled}
       width={width}
       height={height}
     >
