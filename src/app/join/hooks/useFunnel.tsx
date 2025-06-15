@@ -19,7 +19,7 @@ interface FunnelProps {
 const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentStep = searchParams.get('step') || DEFAULT_STEP;
+  const currentStep = searchParams.get('step') || steps?.[0] || DEFAULT_STEP;
 
   const currentStepIdx = useMemo(
     () => steps.findIndex((step) => step === currentStep),

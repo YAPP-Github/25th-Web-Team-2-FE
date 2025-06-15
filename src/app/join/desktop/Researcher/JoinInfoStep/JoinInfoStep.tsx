@@ -2,8 +2,7 @@
 
 import { useFormContext } from 'react-hook-form';
 
-import JoinButton from '../JoinButton/JoinButton';
-
+import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
@@ -57,7 +56,11 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
       </div>
 
       {/* 회원가입 버튼 */}
-      <JoinButton onSubmit={handleSubmit} />
+      <JoinButton<ResearcherJoinSchemaType>
+        onSubmit={handleSubmit}
+        validationFields={['name', 'univName', 'major']}
+        width="20rem"
+      />
     </section>
   );
 };

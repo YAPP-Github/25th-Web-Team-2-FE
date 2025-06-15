@@ -1,3 +1,4 @@
+import * as Accordion from '@radix-ui/react-accordion';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import AgreeAccordion from '../../../components/JoinCheckboxContainer/AgreeAccordion/AgreeAccordion';
@@ -33,9 +34,10 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
 
   return (
     <section className={serviceAgreeBottomSheetLayout}>
-      <div className={serviceAgreeContainer}>
+      <Accordion.Root type="single" collapsible className={serviceAgreeContainer}>
         {/* 서비스 이용약관 동의 */}
         <AgreeAccordion
+          value="isTermOfService"
           trigger={
             <JoinCheckbox
               label="서비스 이용약관 동의"
@@ -50,6 +52,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
 
         {/* 개인정보 수집 및 이용 동의 */}
         <AgreeAccordion
+          value="isPrivacy"
           trigger={
             <JoinCheckbox
               label="개인정보 수집 및 이용 동의"
@@ -64,6 +67,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
 
         {/* 이메일/SMS 수신 동의 */}
         <AgreeAccordion
+          value="adConsent"
           trigger={
             <Controller
               name="adConsent"
@@ -86,6 +90,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
         {/* 실험 추천 이메일 수신 동의 */}
         {matchConsent !== undefined && (
           <AgreeAccordion
+            value="matchConsent"
             trigger={
               <Controller
                 name="matchConsent"
@@ -106,7 +111,7 @@ const ServiceAgreeBottomSheet = ({ onConfirm }: ServiceAgreeBottomSheetProps) =>
             content={<Policy content={RECOMMEND_ALERT_TEXT} />}
           />
         )}
-      </div>
+      </Accordion.Root>
       <Button variant="primary" size="small" height="56px" disabled={!isValid} onClick={onConfirm}>
         동의하기
       </Button>

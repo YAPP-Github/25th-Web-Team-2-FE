@@ -7,23 +7,22 @@ import { accordionChevron, accordionContent, accordionTrigger } from './AgreeAcc
 import Icon from '@/components/Icon';
 
 interface AgreeAccordionProps {
+  value: string;
   trigger: React.ReactNode;
   content: React.ReactNode;
 }
 
-const AgreeAccordion = ({ trigger, content }: AgreeAccordionProps) => {
+const AgreeAccordion = ({ value, trigger, content }: AgreeAccordionProps) => {
   return (
-    <Accordion.Root type="single" collapsible>
-      <Accordion.Item value="item">
-        <Accordion.Header>
-          <Accordion.Trigger className={accordionTrigger}>
-            {trigger}
-            <Icon icon="Chevron" width={20} height={20} className={accordionChevron} aria-hidden />
-          </Accordion.Trigger>
-        </Accordion.Header>
-        <Accordion.Content className={accordionContent}>{content}</Accordion.Content>
-      </Accordion.Item>
-    </Accordion.Root>
+    <Accordion.Item value={value}>
+      <Accordion.Header>
+        <Accordion.Trigger className={accordionTrigger}>
+          {trigger}
+          <Icon icon="Chevron" width={20} height={20} className={accordionChevron} aria-hidden />
+        </Accordion.Trigger>
+      </Accordion.Header>
+      <Accordion.Content className={accordionContent}>{content}</Accordion.Content>
+    </Accordion.Item>
   );
 };
 

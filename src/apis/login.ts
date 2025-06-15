@@ -46,7 +46,7 @@ export interface ParticipantResponse {
     region: string;
     area: string;
   };
-  matchType: 'OFFLINE' | 'ONLINE' | 'ALL';
+  matchType: 'OFFLINE' | 'ONLINE' | 'ALL' | null;
   adConsent: boolean;
   matchConsent: boolean;
 }

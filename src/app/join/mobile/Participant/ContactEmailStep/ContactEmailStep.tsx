@@ -1,23 +1,14 @@
 import Image from 'next/image';
-import { useState } from 'react';
-import { FormProvider, useFormContext, useWatch } from 'react-hook-form';
+import { FormProvider, useFormContext } from 'react-hook-form';
 
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
-import {
-  email,
-  emailWrapper,
-  emailInput,
-  mainContentLayout,
-  bottomButtonLayout,
-} from '../../page.css';
+import { email, emailWrapper, mainContentLayout } from '../../page.css';
+import NextButton from './NextButton/NextButton';
 
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
-import useCheckValidEmailInfoQuery from '@/app/join/hooks/useCheckValidEmailInfoQuery';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
-import Button from '@/components/Button/Button';
-import ButtonInput from '@/components/ButtonInput/ButtonInput';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import useOverlay from '@/hooks/useOverlay';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
@@ -34,45 +25,20 @@ interface ContactEmailStepProps {
 }
 
 const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProps) => {
-  const methods = useFormContext<ParticipantJoinSchemaType>();
-  const { control } = methods;
-
-  const contactEmail = useWatch({ name: 'contactEmail', control });
-  const isTermOfService = useWatch({ name: 'isTermOfService', control });
-  const isPrivacy = useWatch({ name: 'isPrivacy', control });
-
-  const {
-    refetch,
-    isLoading: isLoadingCheck,
-    isError: isEmailDuplicateError,
-    isSuccess: isEmailValid,
-  } = useCheckValidEmailInfoQuery(contactEmail);
-
-  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
-  const [hasValidatedEmail, setHasValidatedEmail] = useState(false);
-
+  const form = useFormContext<ParticipantJoinSchemaType>();
   const { open, close } = useOverlay();
 
-  const isValidCheck = isTermOfService && isPrivacy;
-  const isShowNextButton = hasValidatedEmail || isValidCheck;
-
-  const handleCheckValidEmail = async () => {
-    const query = await refetch();
-    setIsValidToastOpen(true);
-
-    if (query.isSuccess) {
-      setHasValidatedEmail(true);
-      open(() => (
-        <FormProvider {...methods}>
-          <ServiceAgreeBottomSheet
-            onConfirm={() => {
-              onNext();
-              close();
-            }}
-          />
-        </FormProvider>
-      ));
-    }
+  const openServiceAgreeBottomSheet = () => {
+    open(() => (
+      <FormProvider {...form}>
+        <ServiceAgreeBottomSheet
+          onConfirm={() => {
+            onNext();
+            close();
+          }}
+        />
+      </FormProvider>
+    ));
   };
 
   if (!provider) {
@@ -91,36 +57,12 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
           </div>
         }
       />
-      <ButtonInput<ParticipantJoinSchemaType>
-        className={emailInput}
-        control={control}
-        name="contactEmail"
-        onClick={handleCheckValidEmail}
-        isLoading={isLoadingCheck}
-        setIsValidToastOpen={setIsValidToastOpen}
-        toast={
-          <EmailToast
-            title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
-            isToastOpen={isValidToastOpen}
-            setIsToastOpen={setIsValidToastOpen}
-            isError={isEmailDuplicateError}
-          />
-        }
+      <ContactEmailInput<ParticipantJoinSchemaType>
+        contactEmailField="contactEmail"
+        verifiedEmailField="verifiedContactEmail"
+        onSuccess={openServiceAgreeBottomSheet}
       />
-
-      {isShowNextButton && (
-        <div className={bottomButtonLayout}>
-          <Button
-            variant="primary"
-            size="small"
-            height="56px"
-            disabled={!isEmailValid || !isValidCheck}
-            onClick={onNext}
-          >
-            다음
-          </Button>
-        </div>
-      )}
+      <NextButton onNext={onNext} openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
     </main>
   );
 };

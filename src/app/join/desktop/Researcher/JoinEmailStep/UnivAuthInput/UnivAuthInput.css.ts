@@ -39,5 +39,4 @@ export const editButton = style({
 export const errorMessage = style({
   ...fonts.label.large.R14,
   color: colors.textAlert,
-  height: '2.2rem',
 });

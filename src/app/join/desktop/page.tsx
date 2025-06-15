@@ -9,7 +9,7 @@ import { useState } from 'react';
 import ParticipantForm from './Participant/ParticipantForm';
 import ResearcherForm from './Researcher/ResearcherForm';
 import useFunnel from '../hooks/useFunnel';
-import { STEP } from '../JoinPage.constants';
+import { DESKTOP_STEP_MAP, STEP } from '../JoinPage.constants';
 import {
   contentContainer,
   joinLayout,
@@ -24,12 +24,13 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { ROLE } from '@/constants/config';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
+import { Role } from '@/types/user';
 
 export default function JoinPage() {
   const { data: session } = useSession();
   const role = session?.role;
 
-  const { step } = useFunnel(['email', 'info', 'success'] as const);
+  const { step } = useFunnel(DESKTOP_STEP_MAP[role as Role]);
 
   const [joinFormDirty, setJoinFormDirty] = useState(false);
   const { isLeaveConfirmModalOpen, handleConfirmLeave, handleCancelLeave } = useLeaveConfirmModal({
@@ -56,7 +57,7 @@ export default function JoinPage() {
   return (
     <section className={joinLayout}>
       <Link href="/" aria-label="홈 화면으로 이동">
-        <Image src={Logo} alt="로고" />
+        <Image src={Logo} alt="로고" priority />
       </Link>
       <div className={contentContainer}>
         <div className={titleContainer}>
