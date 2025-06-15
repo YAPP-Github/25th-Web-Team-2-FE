@@ -33,5 +33,13 @@
         "newlines-between": "always"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/app/sitemap.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }
