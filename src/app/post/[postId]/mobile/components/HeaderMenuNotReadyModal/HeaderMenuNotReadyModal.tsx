@@ -3,6 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { HIDE_MODAL_COOKIE_KEYS } from '../../ExperimentPostPage.constants';
 import { NotReadyModalProps } from '../EditNotReadyModal/EditNotReadyModal';
 import {
   editModalButtonContainer,
@@ -10,12 +11,14 @@ import {
   editModalContent,
   editModalImage,
   editModalOverlay,
+  editModalSecondaryButton,
   editModalTitle,
   notReadyButton,
 } from '../EditNotReadyModal/EditNotReadyModal.css';
 
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
 import Icon from '@/components/Icon';
+import { setHideModalCookie } from '@/lib/cookies';
 
 //todo NotReadyModal(edit / upload / profile) 공통으로 쓸 수 있게 수정 예정
 // 임시 컴포넌트 위치 변경 예정
@@ -59,10 +62,18 @@ const HeaderMenuNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalPr
               </Link>
             </div>
           </Dialog.Close>
-          {/* todo 하루 동안 안보기 추가 예정 */}
-          {/* <Dialog.Close asChild>
+          <Dialog.Close asChild>
+            <Link
+              href={menu === 'profile' ? '/user/profile' : '/upload'}
+              passHref
+              onClick={() => {
+                const cookieKey = HIDE_MODAL_COOKIE_KEYS[menu];
+                setHideModalCookie(cookieKey);
+              }}
+            >
               <button className={editModalSecondaryButton}>하루 동안 그만 보기</button>
-              </Dialog.Close> */}
+            </Link>
+          </Dialog.Close>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

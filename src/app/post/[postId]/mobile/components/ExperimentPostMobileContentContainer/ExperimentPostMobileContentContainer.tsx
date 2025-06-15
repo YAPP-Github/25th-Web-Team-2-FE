@@ -91,9 +91,21 @@ const ExperimentPostMobileContentContainer = ({
 
       <div className={buttonGradientBackground}>
         <div className={fixedBottomButtonLayout}>
-          <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
-            참여 방법 확인하기
-          </Button>
+          {postDetailData.recruitStatus ? (
+            <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
+              참여 방법 확인하기
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              disabled
+              size="medium"
+              height={'5.6rem'}
+              onClick={handleOpenBottomSheet}
+            >
+              모집이 완료 되었어요
+            </Button>
+          )}
         </div>
       </div>
 

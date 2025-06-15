@@ -12,10 +12,13 @@ import {
   editModalButtonContainer,
   editModalImage,
   notReadyButton,
+  editModalSecondaryButton,
 } from './EditNotReadyModal.css';
+import { HIDE_MODAL_COOKIE_KEYS } from '../../ExperimentPostPage.constants';
 
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
 import Icon from '@/components/Icon';
+import { setHideModalCookie } from '@/lib/cookies';
 
 export type NotReadyMenu = 'profile' | 'upload' | 'edit';
 export interface NotReadyModalProps {
@@ -66,10 +69,16 @@ const EditNotReadyModal = ({ isOpen, onOpenChange }: NotReadyModalProps) => {
                 </Dialog.Close>
               </Link>
             )}
-            {/* todo 하루 동안 안보기 추가 예정 */}
-            {/* <Dialog.Close asChild>
-              <button className={editModalSecondaryButton}>하루 동안 그만 보기</button>
-            </Dialog.Close> */}
+            <Dialog.Close asChild>
+              <Link
+                href={`/edit/${normalizedPostId}`}
+                onClick={() => {
+                  setHideModalCookie(HIDE_MODAL_COOKIE_KEYS.edit);
+                }}
+              >
+                <button className={editModalSecondaryButton}>하루 동안 그만 보기</button>
+              </Link>
+            </Dialog.Close>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
