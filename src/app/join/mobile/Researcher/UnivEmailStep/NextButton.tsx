@@ -21,16 +21,20 @@ const NextButton = ({ onNext, openServiceAgreeBottomSheet }: NextButtonProps) =>
   const canNext = isEmailVerified && isValidCheck;
 
   return (
-    <div className={bottomButtonLayout}>
-      <Button
-        variant="primary"
-        size="small"
-        height="56px"
-        onClick={canNext ? onNext : openServiceAgreeBottomSheet}
-      >
-        다음
-      </Button>
-    </div>
+    <>
+      {isEmailVerified && (
+        <div className={bottomButtonLayout}>
+          <Button
+            variant="primary"
+            size="small"
+            height="56px"
+            onClick={canNext ? onNext : openServiceAgreeBottomSheet}
+          >
+            다음
+          </Button>
+        </div>
+      )}
+    </>
   );
 };
 
