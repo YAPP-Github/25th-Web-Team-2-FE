@@ -4,6 +4,7 @@ import mixpanel from 'mixpanel-browser';
 
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 const isClient = typeof window !== 'undefined';
+const isTestEnv = process.env.NODE_ENV === 'test';
 let isMixpanelInitialized = false;
 
 export const initMixpanel = () => {
@@ -28,7 +29,7 @@ export const initMixpanel = () => {
  */
 
 export const trackEvent = (event: string, properties?: Record<string, any>) => {
-  if (!isClient) return;
+  if (!isClient || isTestEnv) return;
 
   if (!MIXPANEL_TOKEN) {
     console.warn('Mixpanel Token is missing.');
