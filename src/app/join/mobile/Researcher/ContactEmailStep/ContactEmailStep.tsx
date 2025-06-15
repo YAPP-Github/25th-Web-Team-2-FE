@@ -1,17 +1,13 @@
 import Image from 'next/image';
-import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 
 import TitleSection from '../../components/TitleSection/TitleSection';
-import { email, emailWrapper, emailInput, mainContentLayout } from '../../page.css';
+import { email, emailWrapper, mainContentLayout } from '../../page.css';
 
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
-import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
-import ButtonInput from '@/components/ButtonInput/ButtonInput';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import { LoginProvider } from '@/types/user';
+import NextButton from './NextButton/NextButton';
 
 const logoMap = {
   NAVER: Naver,
@@ -24,27 +20,6 @@ interface ContactEmailStepProps {
 }
 
 const ContactEmailStep = ({ provider, oauthEmail, onNext }: ContactEmailStepProps) => {
-  const { control, getValues } = useFormContext<ResearcherJoinSchemaType>();
-
-  const {
-    mutate: checkValidEmail,
-    isPending: isLoadingCheck,
-    isError: isEmailDuplicateError,
-  } = useCheckValidEmailInfoMutation();
-
-  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
-
-  const handleCheckValidEmail = async () => {
-    checkValidEmail(getValues('contactEmail'), {
-      onSuccess: () => {
-        onNext();
-      },
-      onSettled: () => {
-        setIsValidToastOpen(true);
-      },
-    });
-  };
-
   if (!provider) {
     return null;
   }
@@ -62,21 +37,12 @@ const ContactEmailStep = ({ provider, oauthEmail, onNext }: ContactEmailStepProp
         }
       />
 
-      <ButtonInput<ResearcherJoinSchemaType>
-        className={emailInput}
-        control={control}
-        name="contactEmail"
-        onClick={handleCheckValidEmail}
-        isLoading={isLoadingCheck}
-        toast={
-          <EmailToast
-            title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
-            isToastOpen={isValidToastOpen}
-            setIsToastOpen={setIsValidToastOpen}
-            isError={isEmailDuplicateError}
-          />
-        }
+      <ContactEmailInput
+        contactEmailField="contactEmail"
+        verifiedEmailField="verifiedContactEmail"
+        onSuccess={onNext}
       />
+      <NextButton onNext={onNext} />
     </main>
   );
 };
