@@ -53,13 +53,13 @@ export const editModalTitle = style({
 export const editModalButtonContainer = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '1.2rem',
 });
 
 export const editModalSecondaryButton = style({
   ...fonts.body.normal.R16,
   backgroundColor: 'transparent',
   color: colors.text04,
+  marginTop: '1.6rem',
 });
 
 export const notReadyButton = style({
