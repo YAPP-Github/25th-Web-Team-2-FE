@@ -13,6 +13,7 @@ interface ContactEmailInputProps<T extends FieldValues> {
   title?: string;
   required?: boolean;
   openBottomSheet?: () => void;
+  onSuccess?: () => void;
 }
 
 const ContactEmailInput = <T extends FieldValues>({
@@ -23,6 +24,7 @@ const ContactEmailInput = <T extends FieldValues>({
   title,
   required = false,
   openBottomSheet,
+  onSuccess,
 }: ContactEmailInputProps<T>) => {
   const { control, getValues, setValue } = useFormContext<T>();
   const verifiedContactEmail = useWatch({ name: verifiedEmailField, control });
@@ -43,6 +45,7 @@ const ContactEmailInput = <T extends FieldValues>({
       onSuccess: () => {
         setValue(verifiedEmailField, getValues(contactEmailField));
         openBottomSheet?.();
+        onSuccess?.();
       },
       onSettled: () => {
         setIsValidToastOpen(true);
