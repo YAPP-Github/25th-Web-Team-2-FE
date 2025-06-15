@@ -63,7 +63,7 @@ const EditNotReadyModal = ({ isOpen, onOpenChange }: NotReadyModalProps) => {
 
           <div className={editModalButtonContainer}>
             {normalizedPostId && (
-              <Link href={`/edit/${normalizedPostId}`}>
+              <Link href={`/edit/${normalizedPostId}`} passHref>
                 <Dialog.Close asChild>
                   <div className={notReadyButton}>그래도 둘러보기</div>
                 </Dialog.Close>
