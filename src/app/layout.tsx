@@ -44,6 +44,11 @@ export const metadata: Metadata = {
     '대학생 알바',
     '대학원생 연구 참여자 매칭 플랫폼',
   ],
+  verification: {
+    other: {
+      'naver-site-verification': '30b0a9ec0a357ce934c3c90cf68aedd57b8ad2fd',
+    },
+  },
 };
 
 export default async function RootLayout({
