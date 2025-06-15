@@ -48,7 +48,7 @@ const ButtonInput = <T extends FieldValues>({
   return (
     <div className={inputContainer}>
       {title && (
-        <label className={inputLabel}>
+        <label className={inputLabel} htmlFor={name}>
           <span>{title}</span>
           {required && <span className={requiredStar}>*</span>}
         </label>
@@ -78,6 +78,7 @@ const ButtonInput = <T extends FieldValues>({
               <div className={inputWrapper}>
                 <input
                   {...field}
+                  id={name}
                   style={{ width: '100%' }}
                   className={className ? className : joinInput}
                   placeholder="이메일 입력"
