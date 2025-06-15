@@ -2,13 +2,13 @@ import Image from 'next/image';
 
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { email, emailWrapper, mainContentLayout } from '../../page.css';
+import NextButton from './NextButton/NextButton';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
-import { LoginProvider } from '@/types/user';
-import NextButton from './NextButton/NextButton';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { LoginProvider } from '@/types/user';
 
 const logoMap = {
   NAVER: Naver,
