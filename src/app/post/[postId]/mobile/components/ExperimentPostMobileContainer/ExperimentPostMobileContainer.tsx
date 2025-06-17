@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
+import { HIDE_MODAL_COOKIE_KEYS } from '../../ExperimentPostPage.constants';
 import EditNotReadyModal from '../EditNotReadyModal/EditNotReadyModal';
 import ExperimentPostMobileContainer from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer';
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader/ExperimentPostMobileHeader';
@@ -19,6 +20,7 @@ import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExper
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
+import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileContentContainer = () => {
@@ -64,13 +66,23 @@ const ExperimentPostMobileContentContainer = () => {
     );
   };
 
+  const handleEditPost = () => {
+    const shouldSkipModal = getHideModalCookie(HIDE_MODAL_COOKIE_KEYS.edit);
+
+    if (shouldSkipModal) {
+      router.push(`/edit/${postId}`);
+    } else {
+      setIsEditModalOpen(true);
+    }
+  };
+
   const handleOpenMenuBottomSheet = () => {
     open(
       () => (
         <PostMenuBottomSheet
           postId={normalizedPostId}
           onConfirm={close}
-          onEditClick={() => setIsEditModalOpen(true)}
+          onEditClick={handleEditPost}
           onDeleteClick={() => setIsDeleteModalOpen(true)}
         />
       ),
