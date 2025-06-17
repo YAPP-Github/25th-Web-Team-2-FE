@@ -82,7 +82,7 @@ const ExperimentPostMobileContentContainer = () => {
         <PostMenuBottomSheet
           postId={normalizedPostId}
           onConfirm={close}
-          onEditClick={() => handleEditPost()}
+          onEditClick={handleEditPost}
           onDeleteClick={() => setIsDeleteModalOpen(true)}
         />
       ),
