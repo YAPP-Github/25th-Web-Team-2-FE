@@ -57,7 +57,7 @@ const HeaderMenuNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalPr
 
           <Dialog.Close asChild>
             <div className={editModalButtonContainer}>
-              <Link href={menu === 'profile' ? '/user/profile' : '/upload'} passHref>
+              <Link href={menu === 'profile' ? '/user/profile' : '/upload'}>
                 <div className={notReadyButton}>그래도 둘러보기</div>
               </Link>
             </div>
@@ -65,13 +65,12 @@ const HeaderMenuNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalPr
           <Dialog.Close asChild>
             <Link
               href={menu === 'profile' ? '/user/profile' : '/upload'}
-              passHref
               onClick={() => {
                 const cookieKey = HIDE_MODAL_COOKIE_KEYS[menu];
                 setHideModalCookie(cookieKey);
               }}
             >
-              <button className={editModalSecondaryButton}>하루 동안 그만 보기</button>
+              <div className={editModalSecondaryButton}>하루 동안 그만 보기</div>
             </Link>
           </Dialog.Close>
         </Dialog.Content>
