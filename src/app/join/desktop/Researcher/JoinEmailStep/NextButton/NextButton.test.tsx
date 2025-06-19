@@ -21,8 +21,8 @@ const validValues = {
 describe('NextButton (Researcher - desktop)', () => {
   it('초기 상태는 버튼이 비활성화되어 있다.', () => {
     // given
-    const onNext = vi.fn();
-    renderWithForm(<NextButton onNext={onNext} />);
+    const spy = vi.fn();
+    renderWithForm(<NextButton onNext={spy} />);
 
     //when & then
     const nextButton = screen.getByRole('button', { name: '다음' });
@@ -33,9 +33,9 @@ describe('NextButton (Researcher - desktop)', () => {
 
   it('모든 필수 입력값이 존재하면 다음 버튼이 활성화된다.', () => {
     // given
-    const onNext = vi.fn();
+    const spy = vi.fn();
 
-    renderWithForm(<NextButton onNext={onNext} />, {
+    renderWithForm(<NextButton onNext={spy} />, {
       formProps: {
         resolver: zodResolver(ResearcherJoinSchema()),
         defaultValues: validValues,
@@ -52,9 +52,9 @@ describe('NextButton (Researcher - desktop)', () => {
   it('입력값이 유효하면 onNext 함수를 호출한다.', async () => {
     // given
     const user = userEvent.setup();
-    const onNext = vi.fn();
+    const spy = vi.fn();
 
-    renderWithForm(<NextButton onNext={onNext} />, {
+    renderWithForm(<NextButton onNext={spy} />, {
       formProps: {
         resolver: zodResolver(ResearcherJoinSchema()),
         defaultValues: validValues,
@@ -66,15 +66,15 @@ describe('NextButton (Researcher - desktop)', () => {
     await user.click(nextButton);
 
     // then
-    expect(onNext).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('입력값이 유효하지 않으면 버튼을 클릭해도 onNext 함수가 호출되지 않는다.', async () => {
     // given
     const user = userEvent.setup();
-    const onNext = vi.fn();
+    const spy = vi.fn();
 
-    renderWithForm(<NextButton onNext={onNext} />, {
+    renderWithForm(<NextButton onNext={spy} />, {
       formProps: {
         resolver: zodResolver(ResearcherJoinSchema()),
       },
@@ -86,6 +86,6 @@ describe('NextButton (Researcher - desktop)', () => {
 
     // then
     expect(nextButton).toBeDisabled();
-    expect(onNext).toHaveBeenCalledTimes(0);
+    expect(spy).toHaveBeenCalledTimes(0);
   });
 });

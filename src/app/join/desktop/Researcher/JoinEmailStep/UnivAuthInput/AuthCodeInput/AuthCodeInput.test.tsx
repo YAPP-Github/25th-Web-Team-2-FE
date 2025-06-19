@@ -59,14 +59,10 @@ describe('UnivAuthInput', () => {
     // given
     const user = userEvent.setup();
     const univEmail = 'school@cau.ac.kr';
-    const mockHandleSendUnivAuthCode = vi.fn();
+    const spy = vi.fn();
 
     renderWithForm(
-      <AuthCodeInput
-        authTimer={10}
-        handleSendUnivAuthCode={mockHandleSendUnivAuthCode}
-        stopTimer={vi.fn()}
-      />,
+      <AuthCodeInput authTimer={10} handleSendUnivAuthCode={spy} stopTimer={vi.fn()} />,
       {
         formProps: {
           resolver: zodResolver(ResearcherJoinSchema()),
@@ -83,6 +79,6 @@ describe('UnivAuthInput', () => {
     await user.click(resendAuthCodeButton);
 
     // then
-    expect(mockHandleSendUnivAuthCode).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
