@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import JoinCheckboxContainer from './JoinCheckboxContainer';
@@ -9,6 +9,7 @@ import { ParticipantJoinSchema } from '@/schema/join/ParticipantJoinSchema';
 import { renderWithForm } from '@/tests/test-utils';
 
 describe('JoinCheckboxContainer', () => {
+  let user: UserEvent;
   let allCheckbox: HTMLElement;
   let termsCheckbox: HTMLElement;
   let privacyCheckbox: HTMLElement;
@@ -16,6 +17,7 @@ describe('JoinCheckboxContainer', () => {
   let matchConsentCheckbox: HTMLElement;
 
   beforeEach(() => {
+    user = userEvent.setup();
     renderWithForm(<JoinCheckboxContainer />, {
       formProps: {
         resolver: zodResolver(ParticipantJoinSchema()),
@@ -50,9 +52,6 @@ describe('JoinCheckboxContainer', () => {
 
   describe('"모두 동의" 체크박스를 클릭했을 때', () => {
     it('모든 개별 체크박스가 선택된다.', async () => {
-      // given
-      const user = userEvent.setup();
-
       // when
       await user.click(allCheckbox);
 
@@ -64,9 +63,6 @@ describe('JoinCheckboxContainer', () => {
     });
 
     it('다시 클릭하면 모든 개별 체크박스가 해제된다.', async () => {
-      // given
-      const user = userEvent.setup();
-
       // when
       await user.click(allCheckbox); // 전체 선택
       await user.click(allCheckbox); // 전체 해제
@@ -80,9 +76,6 @@ describe('JoinCheckboxContainer', () => {
   });
   describe('개별 체크박스를 클릭했을 때', () => {
     it('모든 개별 체크박스가 선택되면, "모두 동의" 체크박스도 선택된다.', async () => {
-      // given
-      const user = userEvent.setup();
-
       // when
       await user.click(termsCheckbox);
       await user.click(privacyCheckbox);
@@ -95,7 +88,6 @@ describe('JoinCheckboxContainer', () => {
 
     it('전체가 선택된 상태에서 개별 체크박스 하나를 해제하면, "모두 동의" 체크박스도 해제된다.', async () => {
       // given
-      const user = userEvent.setup();
       await user.click(allCheckbox);
       expect(allCheckbox).toBeChecked();
 
