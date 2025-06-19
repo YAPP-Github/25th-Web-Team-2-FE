@@ -12,13 +12,13 @@ interface MypageBottomSheetProps {
 
 const MypageBottomSheet = ({ isResearcher, handleSelectMenu, onClose }: MypageBottomSheetProps) => {
   const handleClickProfile = () => {
-    handleSelectMenu('profile');
     onClose();
+    handleSelectMenu('profile');
   };
 
   const handleClickMyPosts = () => {
-    handleSelectMenu('myPosts');
     onClose();
+    handleSelectMenu('myPosts');
   };
 
   const handleLogout = async () => {
