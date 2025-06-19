@@ -10,6 +10,8 @@ import HeaderMenuNotReadyModal from '@/app/post/[postId]/mobile/components/Heade
 import { HIDE_MODAL_COOKIE_KEYS } from '@/app/post/[postId]/mobile/ExperimentPostPage.constants';
 import Icon from '@/components/Icon';
 import { getHideModalCookie } from '@/lib/cookies';
+import useOverlay from '@/hooks/useOverlay';
+import MypageBottomSheet from './MypageBottomSheet/MypageBottomSheet';
 
 interface MobileLoginHeaderProps {
   isResearcher: boolean;
@@ -20,6 +22,7 @@ const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
   const [isNotReadyModalOpen, setIsNotReadyModalOpen] = useState(false);
 
   const router = useRouter();
+  const { open, close } = useOverlay();
 
   const handleSelectMenu = (menu: NotReadyMenu) => {
     const cookieKey = HIDE_MODAL_COOKIE_KEYS[menu];
@@ -31,12 +34,24 @@ const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
         router.push('/user/profile');
       } else if (menu === 'upload') {
         router.push('/upload');
+      } else if (menu === 'myPosts') {
+        router.push('/my-posts');
       }
     } else {
       // 아니면 모달 띄우기
       setSelectedMenu(menu);
       setIsNotReadyModalOpen(true);
     }
+  };
+
+  const handleOpenMypageBottomSheet = () => {
+    open(() => (
+      <MypageBottomSheet
+        isResearcher={isResearcher}
+        handleSelectMenu={handleSelectMenu}
+        onClose={close}
+      />
+    ));
   };
 
   return (
@@ -47,7 +62,7 @@ const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
             <Icon icon="Pen" width={24} height={24} cursor="pointer" />
           </button>
         )}
-        <button onClick={() => handleSelectMenu('profile')}>
+        <button onClick={handleOpenMypageBottomSheet}>
           <Icon icon="Profile" width={24} height={24} cursor="pointer" />
         </button>
       </div>
