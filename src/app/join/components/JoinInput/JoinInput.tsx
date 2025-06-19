@@ -107,7 +107,7 @@ const JoinInput = <T extends FieldValues>({
   return (
     <div className={inputContainer}>
       {label && (
-        <label className={inputLabel}>
+        <label className={inputLabel} htmlFor={name}>
           <span>{label}</span>
           {required && <span className={requiredStar}>*</span>}
         </label>
@@ -123,6 +123,7 @@ const JoinInput = <T extends FieldValues>({
               {type === 'input' ? (
                 <input
                   {...field}
+                  id={name}
                   ref={inputRef}
                   placeholder={placeholder}
                   disabled={disabled}
@@ -140,6 +141,7 @@ const JoinInput = <T extends FieldValues>({
               ) : (
                 <textarea
                   {...field}
+                  id={name}
                   ref={textareaRef}
                   placeholder={placeholder}
                   disabled={disabled}

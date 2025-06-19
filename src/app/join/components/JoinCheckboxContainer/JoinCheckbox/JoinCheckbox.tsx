@@ -41,8 +41,14 @@ const JoinCheckbox = ({
 }: JoinCheckboxProps) => {
   return (
     <div className={`${checkboxLayout} ${isAllCheck ? allCheckWrapper : ''} ${className}`}>
-      <label className={checkboxWrapper}>
-        <input className={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
+      <label className={checkboxWrapper} htmlFor={label}>
+        <input
+          id={label}
+          className={checkbox}
+          type="checkbox"
+          checked={isChecked}
+          onChange={onChange}
+        />
         {isChecked ? (
           <Icon icon="CheckSquareFill" color={colors.primaryMint} cursor="pointer" />
         ) : (
