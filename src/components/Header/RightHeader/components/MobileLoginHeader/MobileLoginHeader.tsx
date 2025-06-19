@@ -13,30 +13,30 @@ import { getHideModalCookie } from '@/lib/cookies';
 import useOverlay from '@/hooks/useOverlay';
 import MypageBottomSheet from './MypageBottomSheet/MypageBottomSheet';
 
+const routeMap = {
+  profile: '/user/profile',
+  upload: '/upload',
+  myPosts: '/my-posts',
+};
+
 interface MobileLoginHeaderProps {
   isResearcher: boolean;
 }
 
 const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
-  const [selectedMenu, setSelectedMenu] = useState<NotReadyMenu>('upload');
+  const [selectedMenu, setSelectedMenu] = useState<Exclude<NotReadyMenu, 'edit'>>('upload');
   const [isNotReadyModalOpen, setIsNotReadyModalOpen] = useState(false);
 
   const router = useRouter();
   const { open, close } = useOverlay();
 
-  const handleSelectMenu = (menu: NotReadyMenu) => {
+  const handleSelectMenu = (menu: Exclude<NotReadyMenu, 'edit'>) => {
     const cookieKey = HIDE_MODAL_COOKIE_KEYS[menu];
     const shouldSkipModal = getHideModalCookie(cookieKey);
 
     if (shouldSkipModal) {
       //  하루동안 안보기 선택된 경우
-      if (menu === 'profile') {
-        router.push('/user/profile');
-      } else if (menu === 'upload') {
-        router.push('/upload');
-      } else if (menu === 'myPosts') {
-        router.push('/my-posts');
-      }
+      router.push(routeMap[menu]);
     } else {
       // 아니면 모달 띄우기
       setSelectedMenu(menu);

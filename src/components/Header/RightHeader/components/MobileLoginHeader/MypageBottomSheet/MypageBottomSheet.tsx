@@ -6,7 +6,7 @@ type NotReadyMenu = 'profile' | 'upload' | 'edit' | 'myPosts';
 
 interface MypageBottomSheetProps {
   isResearcher: boolean;
-  handleSelectMenu: (menu: NotReadyMenu) => void;
+  handleSelectMenu: (menu: Exclude<NotReadyMenu, 'edit'>) => void;
   onClose: () => void;
 }
 
