@@ -11,7 +11,7 @@ import { renderWithForm } from '@/tests/test-utils';
 const validValues = {
   oauthEmail: 'oauth@email.com',
   contactEmail: 'contact@email.com',
-  univEmail: 'univEmaill@cau.ac.kr',
+  univEmail: 'univEmail@cau.ac.kr',
   verifiedContactEmail: 'contact@email.com',
   isEmailVerified: true,
   isTermOfService: true,
