@@ -2,6 +2,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import { HIDE_MODAL_COOKIE_KEYS } from '../../ExperimentPostPage.constants';
 import { NotReadyModalProps } from '../EditNotReadyModal/EditNotReadyModal';
@@ -19,7 +20,6 @@ import {
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
 import Icon from '@/components/Icon';
 import { setHideModalCookie } from '@/lib/cookies';
-import { useParams } from 'next/navigation';
 
 //todo NotReadyModal(edit / upload / profile) 공통으로 쓸 수 있게 수정 예정
 // 임시 컴포넌트 위치 변경 예정
