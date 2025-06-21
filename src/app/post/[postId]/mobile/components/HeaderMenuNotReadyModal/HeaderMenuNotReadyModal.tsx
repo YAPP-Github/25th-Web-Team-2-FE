@@ -2,6 +2,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 import { HIDE_MODAL_COOKIE_KEYS } from '../../ExperimentPostPage.constants';
 import { NotReadyModalProps } from '../EditNotReadyModal/EditNotReadyModal';
@@ -23,7 +24,24 @@ import { setHideModalCookie } from '@/lib/cookies';
 //todo NotReadyModal(edit / upload / profile) 공통으로 쓸 수 있게 수정 예정
 // 임시 컴포넌트 위치 변경 예정
 
+const titleMap = {
+  upload: '모바일 버전 글쓰기 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
+  profile: '모바일 버전 내 정보 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
+  myPosts: '모바일 버전 내가 쓴 글 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
+  edit: '모바일 버전 공고 수정 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
+};
+
+const menuRouteMap = (id?: string) => ({
+  profile: '/user/profile',
+  upload: '/upload',
+  myPosts: '/my-posts',
+  edit: `/edit/${id}`,
+});
+
 const HeaderMenuNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalProps) => {
+  const { postId } = useParams();
+  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
+
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -35,12 +53,7 @@ const HeaderMenuNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalPr
             </button>
           </Dialog.Close>
 
-          <Dialog.Title className={editModalTitle}>
-            {menu === 'upload' && <div>모바일 버전 글쓰기 화면은 준비 중이에요</div>}
-            {menu === 'profile' && <div>모바일 버전 내 정보 화면은 준비 중이에요</div>}
-            <div>PC에서 더 편리하게 이용하실 수 있어요</div>
-          </Dialog.Title>
-
+          <Dialog.Title className={editModalTitle}>{titleMap[menu]}</Dialog.Title>
           <div className={editModalImage}>
             <Image
               src={NotReadyMobile}
@@ -57,14 +70,14 @@ const HeaderMenuNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalPr
 
           <Dialog.Close asChild>
             <div className={editModalButtonContainer}>
-              <Link href={menu === 'profile' ? '/user/profile' : '/upload'}>
+              <Link href={menuRouteMap(normalizedPostId)[menu]}>
                 <div className={notReadyButton}>그래도 둘러보기</div>
               </Link>
             </div>
           </Dialog.Close>
           <Dialog.Close asChild>
             <Link
-              href={menu === 'profile' ? '/user/profile' : '/upload'}
+              href={menuRouteMap(normalizedPostId)[menu]}
               onClick={() => {
                 const cookieKey = HIDE_MODAL_COOKIE_KEYS[menu];
                 setHideModalCookie(cookieKey);
