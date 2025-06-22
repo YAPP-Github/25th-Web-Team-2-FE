@@ -62,4 +62,6 @@ export const singleImageItem = style({
   position: 'relative',
   borderRadius: '1.2rem',
   overflow: 'hidden',
+
+  border: `0.1rem solid ${colors.line01}`,
 });
