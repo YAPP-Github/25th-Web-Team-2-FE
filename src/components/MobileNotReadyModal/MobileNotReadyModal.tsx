@@ -5,6 +5,11 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import {
+  HIDE_MODAL_COOKIE_KEYS,
+  modalMenuRouteMap,
+  modalTitleMap,
+} from './mobileNotReadyModal.constants';
+import {
   mobileNotReadyModalButtonContainer,
   mobileNotReadyModalCloseButton,
   mobileNotReadyModalContent,
@@ -17,7 +22,6 @@ import {
 
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
 import Icon from '@/components/Icon';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/hideModalCookieKey';
 import { setHideModalCookie } from '@/lib/cookies';
 
 export type NotReadyMenu = 'profile' | 'upload' | 'edit' | 'myPosts';
@@ -26,20 +30,6 @@ export interface NotReadyModalProps {
   onOpenChange: (open: boolean) => void;
   menu: NotReadyMenu;
 }
-
-const titleMap = {
-  upload: '모바일 버전 글쓰기 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
-  profile: '모바일 버전 내 정보 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
-  myPosts: '모바일 버전 내가 쓴 글 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
-  edit: '모바일 버전 공고 수정 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
-};
-
-const menuRouteMap = (id?: string) => ({
-  profile: '/user/profile',
-  upload: '/upload',
-  myPosts: '/my-posts',
-  edit: `/edit/${id}`,
-});
 
 const MobileNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalProps) => {
   const { postId } = useParams();
@@ -56,7 +46,7 @@ const MobileNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalProps)
             </button>
           </Dialog.Close>
 
-          <Dialog.Title className={mobileNotReadyModalTitle}>{titleMap[menu]}</Dialog.Title>
+          <Dialog.Title className={mobileNotReadyModalTitle}>{modalTitleMap[menu]}</Dialog.Title>
           <div className={mobileNotReadyModalImage}>
             <Image
               src={NotReadyMobile}
@@ -73,14 +63,14 @@ const MobileNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalProps)
 
           <Dialog.Close asChild>
             <div className={mobileNotReadyModalButtonContainer}>
-              <Link href={menuRouteMap(normalizedPostId)[menu]}>
+              <Link href={modalMenuRouteMap(normalizedPostId)[menu]}>
                 <div className={notReadyButton}>그래도 둘러보기</div>
               </Link>
             </div>
           </Dialog.Close>
           <Dialog.Close asChild>
             <Link
-              href={menuRouteMap(normalizedPostId)[menu]}
+              href={modalMenuRouteMap(normalizedPostId)[menu]}
               onClick={() => {
                 const cookieKey = HIDE_MODAL_COOKIE_KEYS[menu];
                 setHideModalCookie(cookieKey);

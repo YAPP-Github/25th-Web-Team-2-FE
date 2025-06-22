@@ -10,7 +10,7 @@ import Icon from '@/components/Icon';
 import MobileNotReadyModal, {
   NotReadyMenu,
 } from '@/components/MobileNotReadyModal/MobileNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/hideModalCookieKey';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 
