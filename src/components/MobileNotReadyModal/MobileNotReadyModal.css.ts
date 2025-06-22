@@ -4,14 +4,14 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 import { zIndex } from '@/styles/zIndex';
 
-export const editModalOverlay = style({
+export const mobileNotReadyModalOverlay = style({
   background: 'rgba(0, 22, 54, 0.31)',
   position: 'fixed',
   inset: 0,
   zIndex: zIndex.dialogOverlay,
 });
 
-export const editModalContent = style({
+export const mobileNotReadyModalContent = style({
   width: '92%',
   minWidth: '37rem',
 
@@ -29,20 +29,20 @@ export const editModalContent = style({
   textAlign: 'center',
 });
 
-export const editModalCloseButton = style({
+export const mobileNotReadyModalCloseButton = style({
   position: 'absolute',
   top: '1.2rem',
   right: '1.2rem',
   cursor: 'pointer',
 });
 
-export const editModalImage = style({
+export const mobileNotReadyModalImage = style({
   width: '14rem',
   height: 'auto',
   margin: '0 auto 2rem',
 });
 
-export const editModalTitle = style({
+export const mobileNotReadyModalTitle = style({
   ...fonts.body.normal.SB16,
   height: '4.8rem',
   color: colors.text06,
@@ -50,12 +50,12 @@ export const editModalTitle = style({
   whiteSpace: 'pre-wrap',
 });
 
-export const editModalButtonContainer = style({
+export const mobileNotReadyModalButtonContainer = style({
   display: 'flex',
   flexDirection: 'column',
 });
 
-export const editModalSecondaryButton = style({
+export const mobileNotReadyModalSecondaryButton = style({
   ...fonts.body.normal.R16,
   backgroundColor: 'transparent',
   color: colors.text04,

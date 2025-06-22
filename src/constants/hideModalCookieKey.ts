@@ -1,4 +1,4 @@
-import { NotReadyMenu } from './components/EditNotReadyModal/EditNotReadyModal';
+import { NotReadyMenu } from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 
 export const HIDE_MODAL_COOKIE_KEYS: Record<NotReadyMenu, string> = {
   upload: 'hide_upload_modal',

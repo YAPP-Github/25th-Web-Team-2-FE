@@ -5,8 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
-import { HIDE_MODAL_COOKIE_KEYS } from '../../ExperimentPostPage.constants';
-import EditNotReadyModal from '../EditNotReadyModal/EditNotReadyModal';
 import ExperimentPostMobileContainer from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer';
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader/ExperimentPostMobileHeader';
 import {
@@ -18,7 +16,9 @@ import PostMenuBottomSheet from '../PostMenuBottomSheet/PostMenuBottomSheet';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import Icon from '@/components/Icon';
+import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/hideModalCookieKey';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
@@ -106,7 +106,7 @@ const ExperimentPostMobileContentContainer = () => {
       </div>
 
       {/* 공고 수정 모바일 화면 준비중 모달 */}
-      <EditNotReadyModal menu="edit" isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
+      <MobileNotReadyModal menu="edit" isOpen={isEditModalOpen} onOpenChange={setIsEditModalOpen} />
 
       {/* 삭제 확인 모달 */}
       <ConfirmModal

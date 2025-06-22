@@ -6,10 +6,11 @@ import { useState } from 'react';
 import { mobileRightHeader } from './MobileLoginHeader.css';
 import MypageBottomSheet from './MypageBottomSheet/MypageBottomSheet';
 
-import { NotReadyMenu } from '@/app/post/[postId]/mobile/components/EditNotReadyModal/EditNotReadyModal';
-import HeaderMenuNotReadyModal from '@/app/post/[postId]/mobile/components/HeaderMenuNotReadyModal/HeaderMenuNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/app/post/[postId]/mobile/ExperimentPostPage.constants';
 import Icon from '@/components/Icon';
+import MobileNotReadyModal, {
+  NotReadyMenu,
+} from '@/components/MobileNotReadyModal/MobileNotReadyModal';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/hideModalCookieKey';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 
@@ -68,7 +69,7 @@ const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
       </div>
 
       {/* 업로드 모달 */}
-      <HeaderMenuNotReadyModal
+      <MobileNotReadyModal
         menu={selectedMenu}
         isOpen={isNotReadyModalOpen}
         onOpenChange={setIsNotReadyModalOpen}
