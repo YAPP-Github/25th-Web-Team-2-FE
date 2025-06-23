@@ -8,6 +8,13 @@ export const postContentLayout = style({
   marginBottom: '6rem',
   borderRadius: '1.2rem',
   position: 'relative',
+
+  '@media': {
+    'screen and (max-width: 1023px)': {
+      display: 'flex',
+      flexFlow: 'column nowrap',
+    },
+  },
 });
 
 export const emptyViewLayout = style({
