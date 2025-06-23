@@ -17,13 +17,20 @@ export const defaultLayoutContainer = style({
 });
 
 export const defaultLayout = style({
-  width: '100rem',
+  maxWidth: '100rem',
   margin: '0 auto',
+  width: '100%',
 
   '@media': {
+    'screen and (max-width: 1023px)': {
+      paddingLeft: '2rem',
+      paddingRight: '2rem',
+      backgroundColor: colors.field02,
+    },
+
     'screen and (max-width: 767px)': {
-      width: 'auto',
-      maxWidth: '100rem',
+      paddingLeft: '1.6rem',
+      paddingRight: '1.6rem',
       backgroundColor: colors.field01,
     },
   },
