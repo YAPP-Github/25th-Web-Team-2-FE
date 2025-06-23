@@ -9,6 +9,10 @@ export const defaultLayoutContainer = style({
   background: `linear-gradient(to bottom, ${colors.field01} 0%, ${colors.field01} 6%, ${colors.field02} 12%, ${colors.field02} 100%)`,
 
   '@media': {
+    'screen and (max-width: 1023px)': {
+      background: `linear-gradient(to bottom, ${colors.field01} 0%, ${colors.field01} 6%, ${colors.field02} 12%, ${colors.field02} 100%)`,
+    },
+
     'screen and (max-width: 767px)': {
       minHeight: '100dvh',
       paddingBottom: '0',
@@ -25,7 +29,6 @@ export const defaultLayout = style({
     'screen and (max-width: 1023px)': {
       paddingLeft: '2rem',
       paddingRight: '2rem',
-      backgroundColor: colors.field02,
     },
 
     'screen and (max-width: 767px)': {
