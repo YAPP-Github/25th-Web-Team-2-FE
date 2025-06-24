@@ -123,7 +123,7 @@ export const modalContent = style({
   borderRadius: '1.2rem',
   zIndex: zIndex.imageViewerModalContent,
 
-  border: `0.1em solid ${colors.fieldToast}`,
+  border: `0.1em solid ${colors.field08}`,
 
   '@media': {
     'screen and (max-width: 1023px)': {
