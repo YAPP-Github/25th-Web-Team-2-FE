@@ -13,7 +13,7 @@ export const postDetailContentLayout = style({
 
   '@media': {
     'screen and (max-width: 1023px)': {
-      minWidth: '30rem',
+      minWidth: '36rem',
     },
   },
 });
@@ -50,8 +50,11 @@ export const imageContainer = style({
 
 export const singleImageWrapper = style({
   position: 'relative',
-  width: '58.8rem',
-  height: '58.8rem',
+  maxWidth: '58.8rem',
+  maxHeight: '58.8rem',
+  width: '100%',
+  aspectRatio: '1',
+
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -80,12 +83,22 @@ export const multiImageGrid = style({
 });
 
 export const imageItem = style({
-  width: '18.5rem',
-  height: '18.5rem',
+  maxWidth: '18.5rem',
+  maxHeight: '18.5rem',
+  width: '100%',
+  aspectRatio: '1',
+
   borderRadius: '1.2rem',
   overflow: 'hidden',
 
   position: 'relative',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      minWidth: '14.5rem',
+      minHeight: '14.5rem',
+    },
+  },
 });
 
 export const modalOverlay = style({

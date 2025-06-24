@@ -9,13 +9,10 @@ export const defaultLayoutContainer = style({
   background: `linear-gradient(to bottom, ${colors.field01} 0%, ${colors.field01} 6%, ${colors.field02} 12%, ${colors.field02} 100%)`,
 
   '@media': {
-    'screen and (max-width: 1023px)': {
-      background: `linear-gradient(to bottom, ${colors.field01} 0%, ${colors.field01} 6%, ${colors.field02} 12%, ${colors.field02} 100%)`,
-    },
-
     'screen and (max-width: 767px)': {
       minHeight: '100dvh',
       paddingBottom: '0',
+      background: colors.field01,
     },
   },
 });
@@ -34,7 +31,6 @@ export const defaultLayout = style({
     'screen and (max-width: 767px)': {
       paddingLeft: '1.6rem',
       paddingRight: '1.6rem',
-      backgroundColor: colors.field01,
     },
   },
 });
