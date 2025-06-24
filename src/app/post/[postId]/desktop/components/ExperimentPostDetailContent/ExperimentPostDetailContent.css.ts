@@ -43,7 +43,7 @@ export const imageContainer = style({
     'screen and (max-width: 1023px)': {
       overflowY: 'auto',
       display: 'flex',
-      alignItems: 'start',
+      alignItems: 'flex-start',
     },
   },
 });
