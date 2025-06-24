@@ -20,16 +20,11 @@ export const defaultLayoutContainer = style({
 });
 
 export const defaultLayout = style({
-  maxWidth: '100rem',
+  width: '100rem',
   margin: '0 auto',
-  width: '100%',
   padding: '0 2rem',
 
   '@media': {
-    'screen and (max-width: 1000px) and (min-width: 768px)': {
-      width: '100rem',
-    },
-
     'screen and (max-width: 767px)': {
       width: '100%',
       padding: '0',
