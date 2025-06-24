@@ -30,7 +30,8 @@ export const subTitleText = style({
 });
 
 export const buttonContainer = style({
-  display: 'flex',
+  display: 'grid',
+  gridTemplateColumns: '1fr 0 1fr',
   backgroundColor: colors.field01,
   border: `1px solid ${colors.line01}`,
   borderRadius: '0.8rem',
