@@ -8,6 +8,8 @@ export const defaultLayoutContainer = style({
   minHeight: 'calc(100vh - 12.2rem)',
   background: `linear-gradient(to bottom, ${colors.field01} 0%, ${colors.field01} 6%, ${colors.field02} 12%, ${colors.field02} 100%)`,
 
+  overflowX: 'auto',
+
   '@media': {
     'screen and (max-width: 767px)': {
       minHeight: '100dvh',
@@ -21,16 +23,16 @@ export const defaultLayout = style({
   maxWidth: '100rem',
   margin: '0 auto',
   width: '100%',
+  padding: '0 2rem',
 
   '@media': {
-    'screen and (max-width: 1023px)': {
-      paddingLeft: '2rem',
-      paddingRight: '2rem',
+    'screen and (max-width: 1000px) and (min-width: 768px)': {
+      width: '100rem',
     },
 
     'screen and (max-width: 767px)': {
-      paddingLeft: '1.6rem',
-      paddingRight: '1.6rem',
+      width: '100%',
+      padding: '0',
     },
   },
 });

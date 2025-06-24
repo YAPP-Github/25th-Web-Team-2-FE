@@ -63,8 +63,8 @@ const MobileNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalProps)
 
           <Dialog.Close asChild>
             <div className={mobileNotReadyModalButtonContainer}>
-              <Link href={modalMenuRouteMap(normalizedPostId)[menu]}>
-                <div className={notReadyButton}>그래도 둘러보기</div>
+              <Link className={notReadyButton} href={modalMenuRouteMap(normalizedPostId)[menu]}>
+                그래도 둘러보기
               </Link>
             </div>
           </Dialog.Close>
