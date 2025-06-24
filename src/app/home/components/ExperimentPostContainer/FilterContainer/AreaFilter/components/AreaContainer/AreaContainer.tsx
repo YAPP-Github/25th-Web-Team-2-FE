@@ -17,6 +17,8 @@ import { AREA_MAPPER } from '@/app/home/home.constants';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
+const PLACEHOLDER_TEXT = '지역을 먼저\n선택해 주세요';
+
 interface AreaContainerProps {
   selectedRegion: string | null;
   handleSelectArea: (area: string) => void;
@@ -68,7 +70,7 @@ const AreaContainer = ({
         ))
       ) : (
         <div className={placeholderArea}>
-          <span>지역을 먼저 선택해 주세요</span>
+          <span>{PLACEHOLDER_TEXT}</span>
         </div>
       )}
     </div>

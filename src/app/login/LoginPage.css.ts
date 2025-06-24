@@ -46,3 +46,22 @@ export const loginCardContainer = style({
   gap: '2rem',
   minHeight: '37rem',
 });
+
+export const mobileLoginLayout = style({
+  height: '100dvh',
+  padding: '0 1.6rem',
+
+  backgroundColor: colors.field01,
+});
+
+export const loginRedirectLayout = style({
+  height: '100dvh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '0.4rem',
+
+  color: colors.text06,
+  fontSize: '1.6rem',
+});

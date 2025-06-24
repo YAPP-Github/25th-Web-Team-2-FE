@@ -7,6 +7,7 @@ import {
   labelWrapper,
   tipWrapper,
   tipAlert,
+  subLabelText,
 } from './JoinCheckbox.css';
 
 import Icon from '@/components/Icon';
@@ -22,6 +23,8 @@ interface JoinCheckboxProps {
   isAlert?: boolean;
   labelClassName?: string;
   emptyCheckIcon?: React.ReactNode;
+  className?: string;
+  subLabel?: string;
 }
 
 const JoinCheckbox = ({
@@ -33,11 +36,19 @@ const JoinCheckbox = ({
   isAlert,
   labelClassName,
   emptyCheckIcon = <Icon icon="CheckSquareEmpty" cursor="pointer" />,
+  className,
+  subLabel,
 }: JoinCheckboxProps) => {
   return (
-    <div className={`${checkboxLayout} ${isAllCheck ? allCheckWrapper : ''}`}>
-      <label className={checkboxWrapper}>
-        <input className={checkbox} type="checkbox" checked={isChecked} onChange={onChange} />
+    <div className={`${checkboxLayout} ${isAllCheck ? allCheckWrapper : ''} ${className}`}>
+      <label className={checkboxWrapper} htmlFor={label}>
+        <input
+          id={label}
+          className={checkbox}
+          type="checkbox"
+          checked={isChecked}
+          onChange={onChange}
+        />
         {isChecked ? (
           <Icon icon="CheckSquareFill" color={colors.primaryMint} cursor="pointer" />
         ) : (
@@ -46,7 +57,10 @@ const JoinCheckbox = ({
         <div>
           <div className={labelWrapper}>
             {isRequired && <span className={requiredCheckboxText}>[필수]</span>}
-            <span className={labelClassName}>{label}</span>
+            <p className={labelClassName}>
+              {label}
+              {subLabel && <span className={subLabelText}>&nbsp;{subLabel}</span>}
+            </p>
           </div>
           {isAlert && (
             <div className={tipWrapper}>

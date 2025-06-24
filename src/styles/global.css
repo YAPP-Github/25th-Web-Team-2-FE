@@ -27,3 +27,7 @@ html {
     --rdp-outline-selected: 0.1rem solid var(--primary-tinted);
   }
 }
+
+button {
+  white-space: nowrap;
+}

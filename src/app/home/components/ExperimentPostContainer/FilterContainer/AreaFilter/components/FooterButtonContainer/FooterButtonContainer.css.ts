@@ -1,5 +1,4 @@
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
@@ -35,30 +34,7 @@ export const buttonContainer = style({
   alignItems: 'center',
 });
 
-// 버튼 스타일을 recipe로 재사용
-export const buttonRecipe = recipe({
-  base: {
-    ...fonts.label.large.SB14,
-    padding: '0.6rem 1.4rem',
-    border: 'none',
-    borderRadius: '1.2rem',
-  },
-  variants: {
-    type: {
-      reset: {
-        backgroundColor: colors.field03,
-        color: colors.text06,
-      },
-      save: {
-        backgroundColor: colors.primaryMint,
-        color: colors.text01,
-        selectors: {
-          '&:disabled': {
-            opacity: 0.6,
-            cursor: 'not-allowed',
-          },
-        },
-      },
-    },
-  },
+export const footerButton = style({
+  ...fonts.label.large.SB14,
+  padding: '0.6rem 1.4rem',
 });

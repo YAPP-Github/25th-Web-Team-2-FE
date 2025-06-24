@@ -60,6 +60,7 @@ export const infoContainer = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
+  height: '1.4rem',
 });
 
 export const errorMessage = style({

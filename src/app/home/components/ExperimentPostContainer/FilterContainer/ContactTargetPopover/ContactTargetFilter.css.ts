@@ -24,11 +24,20 @@ export const popoverTrigger = style({
   padding: '0.6rem 1rem 0.6rem 1.4rem',
   border: 'none',
   borderRadius: '1.2rem',
-  color: 'var(--popover-trigger-color)',
-  backgroundColor: 'var(--popover-trigger-bg)',
+  color: 'var(--trigger-color)',
+  backgroundColor: 'var(--trigger-bg)',
+  whiteSpace: 'nowrap',
   selectors: {
     '&:hover': {
       boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+    },
+  },
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      color: 'var(--trigger-color-mobile)',
+      backgroundColor: 'var(--trigger-bg-mobile)',
+      padding: '0.8rem 1rem 0.8rem 1.4rem',
     },
   },
 });

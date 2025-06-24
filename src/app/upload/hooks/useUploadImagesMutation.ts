@@ -18,7 +18,7 @@ const useUploadImagesMutation = () => {
       });
 
       if (!data.preSignedUrl) {
-        throw new Error('❌ Presigned URL이 반환되지 않았습니다.');
+        throw new Error('Presigned URL이 반환되지 않았습니다.');
       }
 
       try {
@@ -32,7 +32,7 @@ const useUploadImagesMutation = () => {
         });
 
         if (!response.ok) {
-          throw new Error(`❌ 업로드 실패: ${response.statusText} (${response.status})`);
+          throw new Error(`업로드 실패: ${response.statusText} (${response.status})`);
         }
 
         const uploadedFileUrl = data.preSignedUrl.split('?')[0];

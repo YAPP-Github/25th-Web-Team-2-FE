@@ -9,6 +9,13 @@ export const headerLayout = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '2rem 0',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: '5.4rem',
+      padding: '1rem 1.6rem',
+    },
+  },
 });
 
 export const image = style({
@@ -17,8 +24,6 @@ export const image = style({
 
 export const buttonContainer = style({
   height: '100%',
-  display: 'flex',
-  gap: '0.8rem',
 });
 
 export const contactButton = style({
@@ -33,14 +38,6 @@ export const contactButton = style({
       backgroundColor: colors.field05,
     },
   },
-});
-
-export const HeaderButton = style({
-  ...fonts.label.large.SB14,
-  backgroundColor: colors.primaryTinted,
-  color: colors.primaryMint,
-  padding: '0.6rem 1.4rem',
-  borderRadius: '1.2rem',
 });
 
 export const loginButton = style({

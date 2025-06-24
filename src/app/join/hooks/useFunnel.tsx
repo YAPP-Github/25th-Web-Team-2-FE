@@ -19,15 +19,31 @@ interface FunnelProps {
 const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentStep = searchParams.get('step') || DEFAULT_STEP;
+  const currentStep = searchParams.get('step') || steps?.[0] || DEFAULT_STEP;
 
-  const isLast = steps.findIndex((step) => step === currentStep) === steps.length - 2;
+  const currentStepIdx = useMemo(
+    () => steps.findIndex((step) => step === currentStep),
+    [steps, currentStep],
+  );
+
+  const isLast = currentStepIdx === steps.length - 1;
 
   const setStep = (step: string) => {
-    if (isLast) {
-      router.replace(`?step=${step}`);
-    } else {
-      router.push(`?step=${step}`);
+    router.push(`?step=${step}`);
+  };
+
+  const goToPrev = () => {
+    if (currentStepIdx === 0) {
+      router.replace('/login');
+      return;
+    }
+
+    setStep(steps[currentStepIdx - 1]);
+  };
+
+  const goToNext = () => {
+    if (!isLast) {
+      setStep(steps[currentStepIdx + 1]);
     }
   };
 
@@ -51,7 +67,16 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
     return StepComponent;
   }, []);
 
-  return { Funnel, Step, setStep, step: currentStep } as const;
+  return {
+    Funnel,
+    Step,
+    setStep,
+    step: currentStep,
+    steps,
+    currentStepIdx,
+    goToPrev,
+    goToNext,
+  } as const;
 };
 
 export default useFunnel;

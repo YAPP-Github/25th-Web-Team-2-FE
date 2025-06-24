@@ -59,7 +59,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
             });
           }
 
-          throw new CustomError({ ...apiError, status: response.status });
+          throw new CustomError({ code: apiError.code, status: response.status });
         }
 
         return await response.json();

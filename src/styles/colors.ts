@@ -29,8 +29,11 @@ export const colors = {
   field07: '#B0B8C1',
   field08: '#8B95A1',
   field09: '#353B3D',
+  field10: '#121212',
   fieldAlert: '#FFEEEE',
   fieldToast: '#6D7B82',
+  fieldDim: 'rgba(0, 22, 54, 0.31)',
+  fieldBg: '#ECEFF1',
 
   // Icon
   icon01: '#FFFFFF',

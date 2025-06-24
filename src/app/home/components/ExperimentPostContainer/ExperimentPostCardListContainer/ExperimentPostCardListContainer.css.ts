@@ -16,6 +16,16 @@ export const postCardContainer = style({
   minHeight: '40rem',
 });
 
+export const postCardContainerHeader = style({
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '0.4rem 1.6rem',
+    },
+  },
+});
+
 export const totalPostCount = style({
   ...fonts.label.large.R14,
   color: colors.text03,
@@ -27,6 +37,12 @@ export const watchMoreButton = style({
   backgroundColor: colors.field04,
   padding: '1.2rem 0',
   borderRadius: '1.2rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const loadingMoreButton = style({

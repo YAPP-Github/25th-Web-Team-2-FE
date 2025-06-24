@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { useRef } from 'react';
+import { Control, Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 import {
   inputContainer,
@@ -11,6 +11,7 @@ import {
   infoContainer,
   inputWrapper,
   confirmButton,
+  tipAlert,
 } from './ButtonInput.css';
 
 interface ButtonInputProps<T extends FieldValues> {
@@ -18,10 +19,14 @@ interface ButtonInputProps<T extends FieldValues> {
   name: Path<T>;
   onClick: () => void;
   isLoading: boolean;
-  isSuccess: boolean;
-  setIsValidToastOpen: (value: boolean) => void;
   toast: React.ReactNode;
+  setIsValidToastOpen?: (value: boolean) => void;
+  title?: string;
+  required?: boolean;
+  className?: string;
   tip?: string;
+  isTip?: boolean;
+  isButtonHidden?: boolean;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -29,31 +34,25 @@ const ButtonInput = <T extends FieldValues>({
   name,
   onClick,
   isLoading,
-  isSuccess,
   toast,
+  title,
+  required,
+  className,
   tip,
+  isTip = false,
+  isButtonHidden = false,
 }: ButtonInputProps<T>) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const validateButtonRef = useRef<HTMLButtonElement>(null);
-
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-    onBlur: () => void,
-  ) => {
-    if (validateButtonRef.current && validateButtonRef.current.contains(e.relatedTarget)) {
-      return;
-    }
-
-    onBlur();
-    setIsFocused(false);
-  };
+  const { trigger } = useFormContext<T>();
+  const validateButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div className={inputContainer}>
-      <label className={inputLabel}>
-        <span>연락 받을 이메일</span>
-        <span className={requiredStar}>*</span>
-      </label>
+      {title && (
+        <label className={inputLabel} htmlFor={name}>
+          <span>{title}</span>
+          {required && <span className={requiredStar}>*</span>}
+        </label>
+      )}
 
       <Controller
         name={name}
@@ -61,23 +60,38 @@ const ButtonInput = <T extends FieldValues>({
         render={({ field, fieldState }) => {
           const isButtonDisabled = !field.value || fieldState.invalid;
 
+          const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+            field.onChange(e);
+            await trigger(name);
+          };
+
+          const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+            if (validateButtonRef.current && validateButtonRef.current.contains(e.relatedTarget)) {
+              return;
+            }
+
+            field.onBlur();
+          };
+
           return (
             <>
               <div className={inputWrapper}>
                 <input
                   {...field}
+                  id={name}
                   style={{ width: '100%' }}
-                  className={joinInput}
+                  className={className ? className : joinInput}
                   placeholder="이메일 입력"
                   aria-invalid={fieldState.invalid ? true : false}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={(e) => handleBlur(e, field.onBlur)}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                 />
-                {isFocused && field.value && (
+
+                {!isButtonHidden && (
                   <button
                     type="button"
                     className={confirmButton}
-                    disabled={isButtonDisabled || isLoading || isSuccess}
+                    disabled={isButtonDisabled || isLoading}
                     onClick={onClick}
                     onMouseDown={(e) => e.preventDefault()}
                     ref={validateButtonRef}
@@ -92,6 +106,7 @@ const ButtonInput = <T extends FieldValues>({
                 ) : (
                   tip && (
                     <div className={tipWrapper}>
+                      {isTip && <span className={tipAlert}>Tip</span>}
                       <span>{tip}</span>
                     </div>
                   )

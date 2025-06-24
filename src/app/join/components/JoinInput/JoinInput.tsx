@@ -61,6 +61,7 @@ interface JoinInputProps<T extends FieldValues> {
   isCount?: boolean;
   count?: number;
   inputType?: 'text' | 'date';
+  className?: string;
 }
 
 const JoinInput = <T extends FieldValues>({
@@ -79,6 +80,7 @@ const JoinInput = <T extends FieldValues>({
   isCount = false,
   count,
   inputType = 'text',
+  className,
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
@@ -105,7 +107,7 @@ const JoinInput = <T extends FieldValues>({
   return (
     <div className={inputContainer}>
       {label && (
-        <label className={inputLabel}>
+        <label className={inputLabel} htmlFor={name}>
           <span>{label}</span>
           {required && <span className={requiredStar}>*</span>}
         </label>
@@ -121,13 +123,14 @@ const JoinInput = <T extends FieldValues>({
               {type === 'input' ? (
                 <input
                   {...field}
+                  id={name}
                   ref={inputRef}
                   placeholder={placeholder}
                   disabled={disabled}
                   maxLength={maxLength}
                   aria-invalid={fieldState.invalid ? true : false}
                   style={{ width: '100%' }}
-                  className={joinInput}
+                  className={className ? className : joinInput}
                   onChange={(e) => {
                     const formattedValue = formatDateInput(inputType, e.target.value);
                     field.onChange(formattedValue);
@@ -138,6 +141,7 @@ const JoinInput = <T extends FieldValues>({
               ) : (
                 <textarea
                   {...field}
+                  id={name}
                   ref={textareaRef}
                   placeholder={placeholder}
                   disabled={disabled}

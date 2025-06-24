@@ -1,11 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import useUpdateResearcherInfoMutation from './useUpdateResearcherInfoMutation';
 
 import { ResearcherResponse } from '@/apis/login';
-import ResearcherUpdateSchema, {
+import {
+  ResearcherUpdateSchema,
   ResearcherUpdateSchemaType,
+  ResearcherUpdateSubmitSchema,
 } from '@/schema/profile/ResearcherUpdateSchema';
 
 interface UseFormResearcherUserInfoProps {
@@ -28,22 +30,21 @@ const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps)
       major: major,
       labInfo: labInfo ?? '',
       adConsent: adConsent ?? false,
+      verifiedContactEmail: memberInfo.contactEmail,
     },
   });
 
-  const contactEmail = useWatch({ control: form.control, name: 'contactEmail' });
-
   const onSubmit = (onSuccess: () => void) => {
     const formData = form.getValues();
+    const submitData = ResearcherUpdateSubmitSchema().parse(formData);
 
-    updateResearcherInfo(formData, {
+    updateResearcherInfo(submitData, {
       onSuccess,
     });
   };
 
   return {
     form,
-    contactEmail,
     handleSubmit: (onSuccess: () => void) => form.handleSubmit(() => onSubmit(onSuccess)),
     isLoading: isPending,
     isError,

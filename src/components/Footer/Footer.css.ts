@@ -11,6 +11,12 @@ export const footerLayout = style({
   justifyContent: 'center',
   gap: '1.6rem',
   padding: '2rem 0',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'none',
+    },
+  },
 });
 
 export const buttonContainer = style({

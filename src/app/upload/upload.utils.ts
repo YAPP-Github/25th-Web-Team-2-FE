@@ -2,8 +2,8 @@ import { format, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { DateRange } from 'react-day-picker';
 
-import { UseApplyMethodQueryResponse } from '../post/[post_id]/hooks/useApplyMethodQuery';
-import { UseQueryExperimentDetailsAPIResponse } from '../post/[post_id]/hooks/useExperimentDetailsQuery';
+import { UseApplyMethodQueryResponse } from '../post/[postId]/hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../post/[postId]/hooks/useExperimentDetailsQuery';
 
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';

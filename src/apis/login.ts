@@ -2,8 +2,8 @@ import { fetchClient, noRetryFetchClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
 import { API_URL } from '@/constants/url';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { ParticipantJoinSubmitSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { ResearcherJoinSubmitSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import { Role } from '@/types/user';
 
 export interface UnivAuthCodeResponse {
@@ -46,7 +46,7 @@ export interface ParticipantResponse {
     region: string;
     area: string;
   };
-  matchType: 'OFFLINE' | 'ONLINE' | 'ALL';
+  matchType: 'OFFLINE' | 'ONLINE' | 'ALL' | null;
   adConsent: boolean;
   matchConsent: boolean;
 }
@@ -88,11 +88,11 @@ export const verifyUnivAuthCode = async (univEmail: string, inputCode: string) =
   });
 };
 
-export const joinResearcher = async (params: ResearcherJoinSchemaType) => {
+export const joinResearcher = async (params: ResearcherJoinSubmitSchemaType) => {
   return await fetchClient.post<JoinResponse>(API_URL.joinResearcher, { body: params });
 };
 
-export const joinParticipant = async (params: ParticipantJoinSchemaType) => {
+export const joinParticipant = async (params: ParticipantJoinSubmitSchemaType) => {
   return await fetchClient.post<JoinResponse>(API_URL.joinParticipant, { body: params });
 };
 
