@@ -10,7 +10,7 @@ export const postContentLayout = style({
   position: 'relative',
 
   '@media': {
-    'screen and (max-width: 1023px)': {
+    'screen and (max-width: 767px)': {
       display: 'flex',
       flexFlow: 'column nowrap',
     },
