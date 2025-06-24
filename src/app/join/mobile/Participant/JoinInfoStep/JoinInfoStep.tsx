@@ -53,7 +53,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           control={control}
           label="생년월일"
           name="birthDate"
-          placeholder="YYYY.MM.DD"
+          placeholder="YYYY. MM. DD"
           required
         />
 
