@@ -5,7 +5,7 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const postOutlineLayout = style({
-  minWidth: '36rem',
+  minWidth: '34rem',
   height: 'min-content',
   maxHeight: '60rem',
   borderRadius: '1.2rem',

@@ -13,6 +13,10 @@ export const postDetailContentLayout = style({
 
   '@media': {
     'screen and (max-width: 1023px)': {
+      minWidth: '60.8rem',
+    },
+
+    'screen and (max-width: 767px)': {
       minWidth: '36rem',
     },
   },
