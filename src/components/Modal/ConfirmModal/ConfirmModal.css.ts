@@ -47,7 +47,7 @@ export const confirmTitleStyle = recipe({
   variants: {
     isMobile: {
       true: {
-        ...fonts.body.normal.SB16,
+        ...fonts.title.small.SB18,
         marginBottom: '2.6rem',
       },
       false: {},
