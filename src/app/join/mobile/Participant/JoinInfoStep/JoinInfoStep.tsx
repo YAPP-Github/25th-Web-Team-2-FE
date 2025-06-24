@@ -55,7 +55,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           name="birthDate"
           placeholder="YYYY. MM. DD"
           required
-          inputType="date"
         />
 
         {/* 성별 */}

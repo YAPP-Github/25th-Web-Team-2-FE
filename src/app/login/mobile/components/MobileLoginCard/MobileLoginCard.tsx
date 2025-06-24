@@ -45,14 +45,14 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
       <div className={buttonContainer}>
         <Link href={naverLoginUrl}>
           <div className={loginButton}>
-            <Image src={Naver} alt="naver" width={30} height={30} />
+            <Image src={Naver} alt="naver" width={24} height={24} />
             <span className={loginButtonText}>네이버 로그인</span>
           </div>
         </Link>
         <div className={verticalLine} />
         <Link href={googleLoginUrl}>
           <div className={loginButton}>
-            <Image src={Google} alt="google" width={30} height={30} />
+            <Image src={Google} alt="google" width={24} height={24} />
             <span className={loginButtonText}>구글 로그인</span>
           </div>
         </Link>
