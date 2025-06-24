@@ -18,7 +18,7 @@ export const slideContainer = style({
   transform: 'translate(-50%, -50%)',
 
   width: '100%',
-  height: '100vh',
+  height: '100dvh',
 
   display: 'flex',
   flexDirection: 'column',

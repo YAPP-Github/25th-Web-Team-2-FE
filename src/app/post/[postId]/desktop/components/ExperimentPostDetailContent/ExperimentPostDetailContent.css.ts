@@ -10,6 +10,12 @@ export const postDetailContentLayout = style({
   flex: 1,
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
+
+  '@media': {
+    'screen and (max-width: 1023px)': {
+      minWidth: '36rem',
+    },
+  },
 });
 
 globalStyle(`${postDetailContentLayout} h3`, {
@@ -32,12 +38,23 @@ export const imageContainer = style({
   gap: '1.6rem',
 
   marginTop: '3rem',
+
+  '@media': {
+    'screen and (max-width: 1023px)': {
+      overflowY: 'auto',
+      display: 'flex',
+      alignItems: 'flex-start',
+    },
+  },
 });
 
 export const singleImageWrapper = style({
   position: 'relative',
-  width: '58.8rem',
-  height: '58.8rem',
+  maxWidth: '58.8rem',
+  maxHeight: '58.8rem',
+  width: '100%',
+  aspectRatio: '1',
+
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -57,15 +74,31 @@ export const multiImageGrid = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 18.5rem)',
   gap: '1.6rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  },
 });
 
 export const imageItem = style({
-  width: '18.5rem',
-  height: '18.5rem',
+  maxWidth: '18.5rem',
+  maxHeight: '18.5rem',
+  width: '100%',
+  aspectRatio: '1',
+
   borderRadius: '1.2rem',
   overflow: 'hidden',
 
   position: 'relative',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      minWidth: '14.5rem',
+      minHeight: '14.5rem',
+    },
+  },
 });
 
 export const modalOverlay = style({
@@ -89,6 +122,19 @@ export const modalContent = style({
   boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.2)',
   borderRadius: '1.2rem',
   zIndex: zIndex.imageViewerModalContent,
+
+  border: `0.1em solid ${colors.field08}`,
+
+  '@media': {
+    'screen and (max-width: 1023px)': {
+      width: 'calc(100% - 20rem)',
+    },
+
+    'screen and (max-width: 767px)': {
+      width: 'calc(100% - 6rem)',
+      maxHeight: '40rem',
+    },
+  },
 });
 
 export const closeButton = style({
@@ -97,4 +143,16 @@ export const closeButton = style({
   right: '-3.6rem',
   cursor: 'pointer',
   zIndex: zIndex.imageViewerModalCloseButton,
+
+  '@media': {
+    'screen and (max-width: 1023px)': {
+      top: '2rem',
+      right: '2rem',
+    },
+
+    'screen and (max-width: 767px)': {
+      top: '2rem',
+      right: '2rem',
+    },
+  },
 });

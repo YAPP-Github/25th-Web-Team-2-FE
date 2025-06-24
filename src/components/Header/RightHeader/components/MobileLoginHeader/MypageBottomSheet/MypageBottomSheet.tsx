@@ -1,9 +1,8 @@
 import { listItem, mypageBottomSheetLayout } from './MypageBottomSheet.css';
 
+import { NotReadyMenu } from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
-
-type NotReadyMenu = 'profile' | 'upload' | 'edit' | 'myPosts';
 
 interface MypageBottomSheetProps {
   isResearcher: boolean;

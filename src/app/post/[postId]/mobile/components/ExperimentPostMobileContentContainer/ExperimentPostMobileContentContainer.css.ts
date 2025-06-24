@@ -36,7 +36,7 @@ export const emptyView = style({
   gap: '2rem',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '100vh',
+  height: '100dvh',
   width: '100%',
 });
 

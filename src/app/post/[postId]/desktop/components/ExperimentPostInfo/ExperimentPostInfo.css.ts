@@ -6,6 +6,12 @@ import { fonts } from '@/styles/fonts.css';
 export const postInfoLayout = style({
   marginTop: '1.6rem',
   width: '100%',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '0 1.6rem',
+    },
+  },
 });
 
 globalStyle(`${postInfoLayout} h2`, {
