@@ -9,6 +9,8 @@ export const loginLayout = style({
   paddingBottom: '20.6rem', // 12.2 + 8.4rem
   backgroundColor: colors.field01,
 
+  minHeight: '100vh',
+
   '@media': {
     'screen and (max-width: 767px)': {
       paddingBottom: '8.4rem',
