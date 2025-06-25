@@ -11,6 +11,12 @@ export const footerLayout = style({
   justifyContent: 'center',
   gap: '1.6rem',
   padding: '2rem 0',
+  width: '100%',
+
+  position: 'absolute',
+  // position: 'fixed',
+  left: 0,
+  bottom: 0,
 
   '@media': {
     'screen and (max-width: 767px)': {

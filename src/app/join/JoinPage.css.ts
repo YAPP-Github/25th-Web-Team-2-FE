@@ -6,10 +6,17 @@ import { fonts } from '@/styles/fonts.css';
 export const desktopJoinPageLayout = style({
   display: 'flex',
   backgroundColor: colors.field01,
-  width: '56rem',
-  minHeight: 'calc(100vh - 12.2rem)',
+  maxWidth: '56rem',
+  width: '100%',
   margin: '0 auto',
-  padding: '8rem 0',
+  paddingTop: '8rem',
+  paddingBottom: '20.2rem', // 12. 2 (footer) + 8 (footer와 버튼 사이 여백)
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      paddingBottom: '8rem',
+    },
+  },
 });
 
 export const mobileJoinPageLayout = style({

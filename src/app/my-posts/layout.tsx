@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react';
 import { myPostsLayout, myPostsLayoutContainer } from './MyPostsPage.css';
 
 import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export const metadata: Metadata = {
   title: '그라밋 | 작성 글 목록',
@@ -17,6 +18,7 @@ function MyPostsLayout({ children }: PropsWithChildren) {
         <Header />
         {children}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -4,12 +4,14 @@ import { colors } from '@/styles/colors';
 
 export const userLayoutContainer = style({
   backgroundColor: colors.field01,
-  paddingBottom: '5.6rem',
+  maxWidth: '100rem',
+  width: '100%',
+
+  margin: '0 auto',
   minHeight: 'calc(100vh - 12.2rem)',
 });
 
 export const userLayout = style({
-  width: '100rem',
   margin: '0 auto',
   backgroundColor: colors.field01,
 });
