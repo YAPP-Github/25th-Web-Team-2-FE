@@ -81,7 +81,7 @@ export const multiImageGrid = style({
 
   '@media': {
     'screen and (max-width: 1023px)': {
-      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridTemplateColumns: 'repeat(3, 16.5rem)',
     },
 
     'screen and (max-width: 767px)': {
@@ -93,6 +93,7 @@ export const multiImageGrid = style({
 export const imageItem = style({
   maxWidth: '18.5rem',
   width: '100%',
+  height: 'auto',
   aspectRatio: '1',
 
   borderRadius: '1.2rem',
