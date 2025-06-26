@@ -12,6 +12,10 @@ export const profilePageLayout = style({
   paddingBottom: '18.2rem', // 12.2 + 6
 
   '@media': {
+    'screen and (max-width: 1023px)': {
+      padding: '0 2rem 18.2rem',
+    },
+
     'screen and (max-width: 767px)': {
       paddingBottom: '6rem',
     },

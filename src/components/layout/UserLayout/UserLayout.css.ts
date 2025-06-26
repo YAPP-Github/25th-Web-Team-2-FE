@@ -9,6 +9,15 @@ export const userLayoutContainer = style({
 
   margin: '0 auto',
   minHeight: 'calc(100vh - 12.2rem)',
+
+  '@media': {
+    'screen and (max-width: 1023px)': {
+      padding: '0 2rem',
+    },
+    'screen and (max-width: 767px)': {
+      padding: '0',
+    },
+  },
 });
 
 export const userLayout = style({
