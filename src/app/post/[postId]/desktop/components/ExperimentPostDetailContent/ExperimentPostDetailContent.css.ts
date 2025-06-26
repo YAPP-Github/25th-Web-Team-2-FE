@@ -80,6 +80,10 @@ export const multiImageGrid = style({
   gap: '1.6rem',
 
   '@media': {
+    'screen and (max-width: 1023px)': {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+
     'screen and (max-width: 767px)': {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
