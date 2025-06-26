@@ -92,7 +92,6 @@ export const multiImageGrid = style({
 
 export const imageItem = style({
   maxWidth: '18.5rem',
-  maxHeight: '18.5rem',
   width: '100%',
   aspectRatio: '1',
 
