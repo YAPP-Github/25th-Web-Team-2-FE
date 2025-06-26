@@ -127,6 +127,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
               quality={100}
               style={{
                 objectFit: 'contain',
+                borderRadius: '1.2rem',
               }}
             />
           )}
