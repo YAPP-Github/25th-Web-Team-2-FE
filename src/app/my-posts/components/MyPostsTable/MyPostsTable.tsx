@@ -180,7 +180,7 @@ const MyPostsTable = ({
   ];
 
   const table = useReactTable({
-    data: data?.content ?? [],
+    data: [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

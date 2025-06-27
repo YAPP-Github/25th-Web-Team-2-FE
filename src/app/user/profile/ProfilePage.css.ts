@@ -7,7 +7,7 @@ export const profilePageLayout = style({
   width: '100%',
 
   margin: '0 auto',
-  minHeight: 'calc(100vh - 12.2rem)',
+  minHeight: '100vh',
 
   paddingBottom: '18.2rem', // 12.2 + 6
 

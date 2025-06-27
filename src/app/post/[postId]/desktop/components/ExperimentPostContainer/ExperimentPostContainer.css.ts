@@ -20,7 +20,7 @@ export const postContentLayout = style({
 });
 
 export const emptyViewLayout = style({
-  height: 'calc(100vh - 12.8rem)', // 25 - 12.2
+  minHeight: '100vh',
 
   display: 'flex',
   flexFlow: 'column nowrap',

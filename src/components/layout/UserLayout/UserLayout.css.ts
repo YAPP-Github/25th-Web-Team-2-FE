@@ -8,7 +8,7 @@ export const userLayoutContainer = style({
   width: '100%',
 
   margin: '0 auto',
-  minHeight: 'calc(100vh - 12.2rem)',
+  minHeight: '100vh',
 
   '@media': {
     'screen and (max-width: 1023px)': {

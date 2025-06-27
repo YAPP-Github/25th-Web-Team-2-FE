@@ -4,6 +4,7 @@ import { colors } from '@/styles/colors';
 
 export const myPostsLayoutContainer = style({
   width: '100%',
+  minHeight: '100vh',
   backgroundColor: colors.field01,
   padding: '0 2rem',
 
