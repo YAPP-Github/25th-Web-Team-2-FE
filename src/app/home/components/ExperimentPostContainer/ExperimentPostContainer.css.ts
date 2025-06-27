@@ -12,10 +12,13 @@ export const postContainerLayout = style({
 
   background: 'transparent',
 
+  paddingBottom: '12.2rem', // footer
+
   '@media': {
     'screen and (max-width: 767px)': {
       marginTop: '0',
       gap: '0',
+      paddingBottom: '0',
     },
   },
 });

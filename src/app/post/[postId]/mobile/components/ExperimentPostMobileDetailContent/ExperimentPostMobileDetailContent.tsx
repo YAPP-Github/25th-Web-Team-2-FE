@@ -89,7 +89,10 @@ const ExperimentPostMobileDetailContent = ({
                     alt={`실험 안내 이미지 ${index + 1}`}
                     sizes="(max-width: 767px) 50vw, 33vw"
                     fill
-                    style={{ objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }}
+                    style={{
+                      objectFit: 'cover',
+                      transition: 'opacity 0.3s ease-in-out',
+                    }}
                     priority
                     quality={100}
                   />

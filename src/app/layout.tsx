@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 
-import Footer from '@/components/Footer/Footer';
 import pretendard from '@/fonts/local-font';
 import '@/styles/reset.css';
 import '@/styles/global.css';
@@ -61,10 +60,7 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={pretendard.className}>
       <body suppressHydrationWarning={true}>
-        <Providers session={session}>
-          {children}
-          <Footer />
-        </Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );

@@ -19,7 +19,8 @@ export const descriptionFormLayout = style({
 
 export const descriptionContentContainer = recipe({
   base: {
-    width: '93.6rem',
+    maxWidth: '93.6rem',
+    width: '100%',
     border: `0.1rem solid ${colors.line01}`,
     borderRadius: '1.2rem',
     ':focus-within': {

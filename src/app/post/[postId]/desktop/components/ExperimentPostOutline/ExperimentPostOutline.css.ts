@@ -11,7 +11,7 @@ export const postOutlineLayout = style({
   borderRadius: '1.2rem',
   backgroundColor: colors.field01,
   position: 'sticky',
-  top: '12rem',
+  top: '0',
   padding: '2.4rem 3rem 0 3rem',
   display: 'flex',
   flexDirection: 'column',

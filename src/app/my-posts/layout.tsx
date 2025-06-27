@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 
 import { myPostsLayout, myPostsLayoutContainer } from './MyPostsPage.css';
 
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ function MyPostsLayout({ children }: PropsWithChildren) {
         <Header />
         {children}
       </div>
+      <Footer />
     </div>
   );
 }

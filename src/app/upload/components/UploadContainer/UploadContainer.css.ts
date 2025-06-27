@@ -9,6 +9,8 @@ export const uploadLayout = style({
   gap: '4rem',
   color: colors.text06,
   marginTop: '1.6rem',
+
+  paddingBottom: '12.2rem', // footer
 });
 
 export const headerTitle = style({

@@ -79,7 +79,7 @@ globalStyle(
 export const tableEmptyViewLayout = style({
   width: '100%',
   margin: '0 auto',
-  height: 'calc(100vh - 27.4rem)',
+  minHeight: '100vh',
 
   display: 'flex',
   flexFlow: 'column nowrap',
