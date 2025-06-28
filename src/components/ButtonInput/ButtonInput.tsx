@@ -19,8 +19,6 @@ interface ButtonInputProps<T extends FieldValues> {
   name: Path<T>;
   onClick: () => void;
   isLoading: boolean;
-  toast: React.ReactNode;
-  setIsValidToastOpen?: (value: boolean) => void;
   title?: string;
   required?: boolean;
   className?: string;
@@ -34,7 +32,6 @@ const ButtonInput = <T extends FieldValues>({
   name,
   onClick,
   isLoading,
-  toast,
   title,
   required,
   className,
@@ -116,7 +113,6 @@ const ButtonInput = <T extends FieldValues>({
           );
         }}
       />
-      {toast}
     </div>
   );
 };

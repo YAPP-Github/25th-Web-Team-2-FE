@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
 import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
@@ -12,22 +11,27 @@ import {
 } from '../ParticipantUserInfo/ParticipantUserInfo.css';
 
 import { ResearcherResponse } from '@/apis/login';
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
+import { useToast } from '@/hooks/useToast';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 import { colors } from '@/styles/colors';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
-  const { form, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
+  const { form, handleSubmit, isLoading } = useFormResearcherUserInfo({
     userInfo,
   });
   const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });
   const contactEmail = useWatch({ name: 'contactEmail', control: form.control });
 
-  const [isToastOpen, setIsToastOpen] = useState(false);
+  const toast = useToast();
+
+  const onSubmit = handleSubmit(
+    () => toast.open({ message: '저장되었어요' }),
+    () => toast.error({ message: '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.' }),
+  );
 
   const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
   const isValidUpdate = Object.keys(form.formState.errors).length === 0 && isVerified;
@@ -109,20 +113,9 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
         </Link>
       </div>
 
-      <button
-        className={updateButton}
-        onClick={handleSubmit(() => setIsToastOpen(true))}
-        disabled={isLoading || !isValidUpdate}
-      >
+      <button className={updateButton} onClick={onSubmit} disabled={isLoading || !isValidUpdate}>
         {isLoading ? '저장중...' : '저장하기'}
       </button>
-
-      <EmailToast
-        title={isError ? '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.' : '저장되었어요'}
-        isToastOpen={isToastOpen}
-        setIsToastOpen={setIsToastOpen}
-        isError={isError}
-      />
     </FormProvider>
   );
 };

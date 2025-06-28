@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
+import { useToast } from '@/hooks/useToast';
 
 interface ContactEmailInputProps<T extends FieldValues> {
   contactEmailField: Path<T>;
@@ -28,13 +27,8 @@ const ContactEmailInput = <T extends FieldValues>({
   const verifiedContactEmail = useWatch({ name: verifiedEmailField, control });
   const contactEmail = useWatch({ name: contactEmailField, control });
 
-  const {
-    mutate: checkValidEmail,
-    isPending: isLoadingCheck,
-    isError: isEmailDuplicateError,
-  } = useCheckValidEmailInfoMutation();
-
-  const [isValidToastOpen, setIsValidToastOpen] = useState(false);
+  const { mutate: checkValidEmail, isPending: isLoadingCheck } = useCheckValidEmailInfoMutation();
+  const toast = useToast();
 
   const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
 
@@ -42,10 +36,11 @@ const ContactEmailInput = <T extends FieldValues>({
     checkValidEmail(getValues(contactEmailField), {
       onSuccess: () => {
         setValue(verifiedEmailField, getValues(contactEmailField));
+        toast.open({ message: '사용 가능한 이메일이에요' });
         onSuccess?.();
       },
-      onSettled: () => {
-        setIsValidToastOpen(true);
+      onError: () => {
+        toast.error({ message: '중복된 이메일이에요' });
       },
     });
   };
@@ -58,18 +53,9 @@ const ContactEmailInput = <T extends FieldValues>({
       name={contactEmailField}
       onClick={handleCheckValidEmail}
       isLoading={isLoadingCheck}
-      setIsValidToastOpen={setIsValidToastOpen}
       isButtonHidden={isVerified}
       tip={helperText}
       isTip={isTip}
-      toast={
-        <EmailToast
-          title={isEmailDuplicateError ? '중복된 이메일이에요' : '사용 가능한 이메일이에요'}
-          isToastOpen={isValidToastOpen}
-          setIsToastOpen={setIsValidToastOpen}
-          isError={isEmailDuplicateError}
-        />
-      }
     />
   );
 };

@@ -1,35 +1,24 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
+import { useToast } from '@/hooks/useToast';
 
 const LoginError = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();
-
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const close = () => setIsOpen(false);
+  const toast = useToast();
 
   useEffect(() => {
     const storedErrorMessage = queryClient.getQueryData<string>(['loginError']);
 
     if (storedErrorMessage) {
-      setErrorMessage(storedErrorMessage);
-      setIsOpen(true);
+      toast.error({ message: storedErrorMessage, duration: 2000 });
       queryClient.removeQueries({ queryKey: ['loginError'] });
     }
-  }, [queryClient]);
+  }, [queryClient, toast]);
 
-  return (
-    <>
-      {children}
-      {isOpen && (
-        <EmailToast title={errorMessage} isToastOpen={isOpen} setIsToastOpen={close} isError />
-      )}
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default LoginError;

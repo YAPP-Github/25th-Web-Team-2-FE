@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 import CustomQueryClientProvider from './CustomQueryClientProvider';
 import { OverlayProvider } from './OverlayProvider';
+import ToastProvider from './ToastProvider';
 
 import { setUserProperties, trackEvent } from '@/lib/mixpanelClient';
 import MSWProvider from '@/providers/MSWProvider';
@@ -33,7 +34,9 @@ export default function Providers({
     <SessionProvider session={session}>
       <MSWProvider>
         <CustomQueryClientProvider session={session}>
-          <OverlayProvider>{children}</OverlayProvider>
+          <OverlayProvider>
+            <ToastProvider>{children}</ToastProvider>
+          </OverlayProvider>
         </CustomQueryClientProvider>
       </MSWProvider>
     </SessionProvider>

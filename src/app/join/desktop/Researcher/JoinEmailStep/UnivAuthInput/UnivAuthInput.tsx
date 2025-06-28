@@ -11,7 +11,6 @@ import {
   editButton,
   errorMessage,
 } from './UnivAuthInput.css';
-import EmailToast from '../../../../components/EmailToast/EmailToast';
 import {
   inputContainer,
   inputLabel,
@@ -20,6 +19,7 @@ import {
 
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
+import { useToast } from '@/hooks/useToast';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
@@ -30,29 +30,29 @@ const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
 
 const UnivAuthInput = () => {
   const { control, setValue, clearErrors, trigger } = useFormContext<ResearcherJoinSchemaType>();
+  const toast = useToast();
 
   const {
-    data: authCodeData,
     mutate: sendEmail,
     error: authCodeError,
     isPending: isLoadingSend,
   } = useSendUnivAuthCodeMutation();
 
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const [isToastOpen, setIsToastOpen] = useState(false);
-
-  const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
 
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
   const univEmail = useWatch({ name: 'univEmail', control });
+  const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
 
   const isUnivEmailAuthenticated = isEmailSent || isEmailVerified;
 
   const handleSendUnivAuthCode = () => {
     sendEmail(univEmail, {
-      onSuccess: () => {
+      onSuccess: ({ requestCount }) => {
         setIsEmailSent(true);
-        setIsToastOpen(true);
+        toast.open({
+          message: `인증번호가 발송되었어요. (${requestCount}회 / 하루 최대 3회)`,
+        });
         startTimer();
       },
       onError: (error) => {
@@ -126,11 +126,6 @@ const UnivAuthInput = () => {
           stopTimer={stopTimer}
         />
       )}
-      <EmailToast
-        title={`인증번호가 발송되었어요. (${authCodeData?.requestCount}회 / 하루 최대 3회)`}
-        isToastOpen={isToastOpen}
-        setIsToastOpen={setIsToastOpen}
-      />
     </div>
   );
 };
