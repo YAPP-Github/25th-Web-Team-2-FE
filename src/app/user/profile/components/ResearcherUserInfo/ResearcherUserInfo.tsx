@@ -15,12 +15,12 @@ import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckb
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
+import { useToast } from '@/hooks/useToast';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 import { colors } from '@/styles/colors';
-import { useToast } from '@/hooks/useToast';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
-  const { form, handleSubmit, isLoading, isError } = useFormResearcherUserInfo({
+  const { form, handleSubmit, isLoading } = useFormResearcherUserInfo({
     userInfo,
   });
   const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });

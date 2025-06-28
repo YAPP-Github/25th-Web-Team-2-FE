@@ -4,8 +4,8 @@ import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 import ContactEmailInput from './ContactEmailInput';
 
-import { renderWithForm } from '@/tests/test-utils';
 import type { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { renderWithForm } from '@/tests/test-utils';
 
 const mockToast = {
   open: vi.fn(),

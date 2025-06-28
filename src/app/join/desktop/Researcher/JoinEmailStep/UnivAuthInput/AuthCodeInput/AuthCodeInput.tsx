@@ -16,8 +16,8 @@ import { errorMessage, univInputWrapper } from '../UnivAuthInput.css';
 import { joinInput } from '@/app/join/components/JoinInput/JoinInput.css';
 import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';
 import { formatAuthTimer } from '@/app/join/JoinPage.utils';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import { useToast } from '@/hooks/useToast';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const AUTH_CODE_VALID_LENGTH = 6;
 

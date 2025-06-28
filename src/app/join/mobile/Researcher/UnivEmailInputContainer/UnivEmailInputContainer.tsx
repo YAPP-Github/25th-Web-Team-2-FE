@@ -16,8 +16,8 @@ import {
 } from '@/app/join/desktop/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import { useToast } from '@/hooks/useToast';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const getButtonText = ({ isLoading, canEdit }: { isLoading: boolean; canEdit: boolean }) => {
   if (isLoading) return '전송 중...';
