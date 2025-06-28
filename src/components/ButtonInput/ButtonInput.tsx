@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useTransition } from 'react';
 import { Control, Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 
 import {
@@ -44,6 +44,7 @@ const ButtonInput = <T extends FieldValues>({
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [_, startTransition] = useTransition();
 
   return (
     <div className={inputContainer}>
@@ -62,7 +63,10 @@ const ButtonInput = <T extends FieldValues>({
 
           const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
             field.onChange(e);
-            await trigger(name);
+
+            startTransition(() => {
+              trigger(name);
+            });
           };
 
           const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
