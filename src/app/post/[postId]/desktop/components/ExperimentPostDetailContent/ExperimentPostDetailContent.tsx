@@ -134,7 +134,6 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
                 width: '100%',
                 height: 'auto',
                 objectFit: 'contain',
-                // borderRadius: '1.2rem',
               }}
             />
           )}

@@ -14,7 +14,7 @@ export const defaultLayoutContainer = style({
     },
 
     'screen and (max-width: 767px)': {
-      width: 'auto',
+      width: '100%',
       minHeight: '100dvh',
       paddingBottom: '0',
       background: colors.field01,
