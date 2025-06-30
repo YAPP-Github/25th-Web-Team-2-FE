@@ -5,8 +5,19 @@ import { fonts } from '@/styles/fonts.css';
 
 export const leavePageLayout = style({
   display: 'flex',
-  width: '56rem',
+  maxWidth: '56rem',
+
+  width: '100%',
+
   margin: '0 auto',
+
+  paddingBottom: '17.8rem', // 12.2 + 5.6
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '0 2rem 5.6rem',
+    },
+  },
 });
 
 export const leaveFormLayout = style({

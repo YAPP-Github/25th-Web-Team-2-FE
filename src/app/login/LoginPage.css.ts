@@ -4,21 +4,32 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const loginLayout = style({
+  position: 'relative',
+  paddingTop: '8.4rem',
+  paddingBottom: '20.6rem', // 12.2 + 8.4rem
+  backgroundColor: colors.field01,
+
+  minHeight: '100vh',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      paddingBottom: '8.4rem',
+    },
+  },
+});
+
+export const contentLayout = style({
+  maxWidth: '56rem',
+  margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: colors.field01,
-  minWidth: '100rem',
-  margin: '0 auto',
-  padding: '8.4rem 0',
 });
 
 export const loginPageLayout = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '6.5rem',
-  minHeight: 'calc(100vh - 29rem)', // 29rem = footer(12.2rem) + padding 위/아래 (8.4rem * 2)
 });
 
 export const descriptionWrapper = style({

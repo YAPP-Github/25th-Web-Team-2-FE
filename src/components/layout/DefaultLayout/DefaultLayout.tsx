@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import { defaultLayout, defaultLayoutContainer } from './DefaultLayout.css';
 
 import BackToTopButton from '@/components/Button/BackToTopButton/BackToTopButton';
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 
 const DefaultLayout = ({ children }: PropsWithChildren) => {
@@ -11,6 +12,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
       <div className={defaultLayout}>
         <Header />
         {children}
+        <Footer />
         <BackToTopButton />
       </div>
     </div>

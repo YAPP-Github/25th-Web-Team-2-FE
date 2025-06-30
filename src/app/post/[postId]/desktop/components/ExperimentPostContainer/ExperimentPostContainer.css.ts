@@ -8,17 +8,20 @@ export const postContentLayout = style({
   marginBottom: '6rem',
   borderRadius: '1.2rem',
   position: 'relative',
+  paddingBottom: '8.4rem',
 
   '@media': {
     'screen and (max-width: 767px)': {
       display: 'flex',
       flexFlow: 'column nowrap',
+      paddingBottom: '0',
     },
   },
 });
 
 export const emptyViewLayout = style({
-  height: 'calc(100vh - 25rem)',
+  minHeight: '100vh',
+
   display: 'flex',
   flexFlow: 'column nowrap',
   justifyContent: 'center',
