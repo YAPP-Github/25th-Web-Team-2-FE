@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import {
@@ -40,6 +40,7 @@ const UnivEmailInputContainer = ({ openServiceAgreeBottomSheet }: UnivEmailInput
     error: authCodeError,
     isPending: isLoadingSend,
   } = useSendUnivAuthCodeMutation();
+  const [_, startTransition] = useTransition();
 
   const [isEmailSent, setIsEmailSent] = useState(false);
   const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
@@ -82,7 +83,10 @@ const UnivEmailInputContainer = ({ openServiceAgreeBottomSheet }: UnivEmailInput
 
             const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e);
-              await trigger('univEmail');
+
+              startTransition(() => {
+                trigger('univEmail');
+              });
             };
 
             return (
