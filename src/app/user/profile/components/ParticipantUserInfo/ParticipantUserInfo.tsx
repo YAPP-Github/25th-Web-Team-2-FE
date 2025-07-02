@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
 import {
@@ -13,7 +12,6 @@ import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
 import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
@@ -22,23 +20,28 @@ import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
+import { useToast } from '@/hooks/useToast';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { colors } from '@/styles/colors';
 
 // TODO: useFormParticipantUserInfo로 묶어서 내보내는 게 아니라
 // 각 컴포넌트에서 필요한 데이터만 FormContext에서 가져오는 방식으로 개선
 const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) => {
-  const { form, region, additionalRegion, handleSubmit, isLoading, isError } =
-    useFormParticipantUserInfo({
-      userInfo,
-    });
+  const { form, region, additionalRegion, handleSubmit, isLoading } = useFormParticipantUserInfo({
+    userInfo,
+  });
   const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });
   const contactEmail = useWatch({ name: 'contactEmail', control: form.control });
 
-  const [isToastOpen, setIsToastOpen] = useState(false);
+  const toast = useToast();
 
   const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
   const isValidUpdate = isVerified;
+
+  const onSubmit = handleSubmit(
+    () => toast.open({ message: '저장되었어요' }),
+    () => toast.error({ message: '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.' }),
+  );
 
   return (
     <FormProvider {...form}>
@@ -159,20 +162,9 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
         </Link>
       </div>
 
-      <button
-        className={updateButton}
-        onClick={handleSubmit(() => setIsToastOpen(true))}
-        disabled={isLoading || !isValidUpdate}
-      >
+      <button className={updateButton} onClick={onSubmit} disabled={isLoading || !isValidUpdate}>
         {isLoading ? '저장중...' : '저장하기'}
       </button>
-
-      <EmailToast
-        title={isError ? '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.' : '저장되었어요'}
-        isToastOpen={isToastOpen}
-        setIsToastOpen={setIsToastOpen}
-        isError={isError}
-      />
     </FormProvider>
   );
 };
