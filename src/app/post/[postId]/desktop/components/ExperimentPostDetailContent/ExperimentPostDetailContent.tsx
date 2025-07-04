@@ -86,9 +86,14 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
                   <Image
                     src={src}
                     alt={`실험 안내 이미지 ${index + 1}`}
-                    width={185}
-                    height={185}
-                    style={{ objectFit: 'cover', transition: 'opacity 0.3s ease-in-out' }}
+                    fill
+                    sizes="(max-width: 767px) 18.5rem, 18.5rem"
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      transition: 'opacity 0.3s ease-in-out',
+                    }}
                     priority
                     quality={100}
                   />
@@ -126,6 +131,8 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
               height={648}
               quality={100}
               style={{
+                width: '100%',
+                height: 'auto',
                 objectFit: 'contain',
               }}
             />

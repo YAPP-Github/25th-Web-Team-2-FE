@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import {
@@ -8,7 +8,6 @@ import {
   univEmailInputContainer,
 } from './UnivEmailInputContainer.css';
 
-import EmailToast from '@/app/join/components/EmailToast/EmailToast';
 import AuthCodeInput from '@/app/join/desktop/Researcher/JoinEmailStep/UnivAuthInput/AuthCodeInput/AuthCodeInput';
 import {
   editButton,
@@ -17,6 +16,7 @@ import {
 } from '@/app/join/desktop/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
 import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
 import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
+import { useToast } from '@/hooks/useToast';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const getButtonText = ({ isLoading, canEdit }: { isLoading: boolean; canEdit: boolean }) => {
@@ -33,24 +33,25 @@ const UnivEmailInputContainer = ({ openServiceAgreeBottomSheet }: UnivEmailInput
   const { authTimer, startTimer, stopTimer } = useAuthCodeTimer();
   const { control, getValues, setValue, clearErrors, trigger } =
     useFormContext<ResearcherJoinSchemaType>();
+  const toast = useToast();
 
   const {
-    data: authCodeData,
     mutate: sendEmail,
     error: authCodeError,
     isPending: isLoadingSend,
   } = useSendUnivAuthCodeMutation();
+  const [_, startTransition] = useTransition();
 
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const [isToastOpen, setIsToastOpen] = useState(false);
-
   const isEmailVerified = useWatch({ name: 'isEmailVerified', control });
 
   const handleSendUnivAuthCode = () => {
     sendEmail(getValues('univEmail'), {
-      onSuccess: () => {
+      onSuccess: ({ requestCount }) => {
         setIsEmailSent(true);
-        setIsToastOpen(true);
+        toast.open({
+          message: `인증번호가 발송되었어요. (${requestCount}회 / 하루 최대 3회)`,
+        });
         startTimer();
       },
       onError: (error) => {
@@ -82,7 +83,10 @@ const UnivEmailInputContainer = ({ openServiceAgreeBottomSheet }: UnivEmailInput
 
             const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
               field.onChange(e);
-              await trigger('univEmail');
+
+              startTransition(() => {
+                trigger('univEmail');
+              });
             };
 
             return (
@@ -125,11 +129,6 @@ const UnivEmailInputContainer = ({ openServiceAgreeBottomSheet }: UnivEmailInput
           />
         )}
       </div>
-      <EmailToast
-        title={`인증번호가 발송되었어요. (${authCodeData?.requestCount}회 / 하루 최대 3회)`}
-        isToastOpen={isToastOpen}
-        setIsToastOpen={setIsToastOpen}
-      />
     </>
   );
 };

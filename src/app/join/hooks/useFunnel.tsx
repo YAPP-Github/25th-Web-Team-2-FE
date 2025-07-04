@@ -19,14 +19,14 @@ interface FunnelProps {
 const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentStep = searchParams.get('step') || steps?.[0] || DEFAULT_STEP;
+  const currentStep = searchParams.get('step') ?? steps?.[0] ?? DEFAULT_STEP;
 
   const currentStepIdx = useMemo(
-    () => steps.findIndex((step) => step === currentStep),
+    () => steps?.findIndex((step) => step === currentStep) ?? 0,
     [steps, currentStep],
   );
 
-  const isLast = currentStepIdx === steps.length - 1;
+  const isLast = currentStepIdx === (Array.isArray(steps) ? steps.length - 1 : 0);
 
   const setStep = (step: string) => {
     router.push(`?step=${step}`);
