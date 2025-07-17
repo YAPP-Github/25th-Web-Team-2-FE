@@ -1,6 +1,7 @@
 'use client';
 
 import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
+import MobileProfileSection from './components/MobileProfileSection/MobileProfileSection';
 import MobileUserInfoSection from './components/MobileUserInfoSection/MobileUserInfoSection';
 
 const MobileProfilePage = () => {
@@ -8,6 +9,7 @@ const MobileProfilePage = () => {
     <>
       <MobileProfileHeader />
       <MobileUserInfoSection />
+      <MobileProfileSection />
     </>
   );
 };
