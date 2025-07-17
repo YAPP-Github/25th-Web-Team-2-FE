@@ -1,33 +1,14 @@
-'use client';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-import ParticipantUserInfo from './components/ParticipantUserInfo/ParticipantUserInfo';
-import ResearcherUserInfo from './components/ResearcherUserInfo/ResearcherUserInfo';
-import UserInfoHeader from './components/UserInfoHeader/UserInfoHeader';
-import { joinLayout } from './ProfilePage.css';
+export default function ProfilePage() {
+  const header = headers();
+  const userAgent = header.get('user-agent') || '';
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { isParticipantInfo } from '@/utils/typeGuard';
-
-const ProfilePage = () => {
-  const { userInfo } = useUserInfo();
-
-  if (!userInfo) return null;
-
-  if (isParticipantInfo(userInfo)) {
-    return (
-      <section className={joinLayout}>
-        <UserInfoHeader userInfo={userInfo} />
-        <ParticipantUserInfo userInfo={userInfo} />
-      </section>
-    );
+  if (isMobile) {
+    redirect('/user/profile/mobile');
+  } else {
+    redirect('/user/profile/desktop');
   }
-
-  return (
-    <section className={joinLayout}>
-      <UserInfoHeader userInfo={userInfo} />
-      <ResearcherUserInfo userInfo={userInfo} />
-    </section>
-  );
-};
-
-export default ProfilePage;
+}
