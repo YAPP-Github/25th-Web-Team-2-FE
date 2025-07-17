@@ -10,6 +10,7 @@ import {
   isExpiredToken,
 } from './middleware/utils';
 
+// TODO: 경로별 수행할 로직 리팩토링 필요
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const { searchParams, pathname } = url;
@@ -27,6 +28,8 @@ export async function middleware(request: NextRequest) {
   const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
   const isPostDetailPage = pathname.startsWith('/post');
   const isPostDetailWithDevice = /^\/post\/[^/]+\/(mobile|desktop)$/.test(pathname);
+  const isProfilePage = pathname.startsWith('/user/profile');
+  const isProfileWithDevice = /^\/user\/profile\/(mobile|desktop)(\/.*)?$/.test(pathname);
 
   // 토큰이 없는 경우
   if (!token && !isHomePage && !isLoginPage && !isPostDetailPage) {
@@ -88,6 +91,17 @@ export async function middleware(request: NextRequest) {
     url.pathname = newPathname;
     return NextResponse.rewrite(url);
   }
+
+  if (isProfilePage && !isProfileWithDevice) {
+    const segments = pathname.split('/').filter(Boolean);
+    const basePath = segments.slice(0, 2).join('/'); // 'user/profile'
+    const restPath = segments.length > 2 ? `/${segments.slice(2).join('/')}` : '';
+    const newPathname = `/${basePath}/${deviceType}${restPath}`;
+
+    url.pathname = newPathname;
+    return NextResponse.rewrite(url);
+  }
+
   return NextResponse.next();
 }
 
