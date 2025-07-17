@@ -52,7 +52,7 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
     name: 'additionalAddressInfo.region',
   });
 
-  const onSubmit = (onSuccess: () => void, onError: () => void) => {
+  const onSubmit = (onSuccess?: () => void, onError?: () => void) => {
     const formData = form.getValues();
     const submitData = ParticipantUpdateSubmitSchema().parse(formData);
 
@@ -74,7 +74,7 @@ const useFormParticipantUserInfo = ({ userInfo }: UseFormParticipantUserInfoProp
     form,
     region,
     additionalRegion,
-    handleSubmit: (onSuccess: () => void, onError: () => void) =>
+    handleSubmit: (onSuccess?: () => void, onError?: () => void) =>
       form.handleSubmit(() => onSubmit(onSuccess, onError)),
     isLoading: isPending,
     isError,
