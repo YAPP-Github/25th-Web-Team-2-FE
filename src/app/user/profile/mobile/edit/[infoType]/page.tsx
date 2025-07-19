@@ -1,9 +1,9 @@
 'use client';
 
+import BackHeader from '@/components/Header/BackHeader/BackHeader';
 import AddressEditForm from './components/AddressEditForm/AddressEditForm';
 import ContactEmailEditForm from './components/ContactEmailEditForm';
 import MatchTypeEditForm from './components/MatchTypeEditForm';
-import MobileProfileEditHeader from './components/MobileProfileEditHeader/MobileProfileEditHeader';
 import NameEditForm from './components/NameEditForm';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
@@ -31,7 +31,7 @@ const EditProfilePage = ({ params }: PageProps) => {
   if (isParticipantInfo(userInfo)) {
     return (
       <>
-        <MobileProfileEditHeader />
+        <BackHeader />
         <EditComponent userInfo={userInfo} />
       </>
     );
