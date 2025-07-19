@@ -1,6 +1,6 @@
 'use client';
 
-import AddressEditForm from './components/AddressEditForm';
+import AddressEditForm from './components/AddressEditForm/AddressEditForm';
 import ContactEmailEditForm from './components/ContactEmailEditForm';
 import MatchTypeEditForm from './components/MatchTypeEditForm';
 import MobileProfileEditHeader from './components/MobileProfileEditHeader/MobileProfileEditHeader';
