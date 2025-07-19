@@ -9,7 +9,7 @@ import ProfileItem from '../ProfileItem/ProfileItem';
 
 import { ParticipantResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
-import { isParticipantInfo } from '@/utils/typeGuard';
+import { PATH } from '@/constants/path';
 
 const MATCH_TYPE_MAP = {
   ALL: '전체',
@@ -84,11 +84,9 @@ const MobileProfileSection = ({ userInfo }: { userInfo: ParticipantResponse }) =
 
   const goToEditPage = (infoType?: string) => {
     if (infoType) {
-      router.push(`/user/profile/mobile/edit/${infoType}`);
+      router.push(PATH.editProfile(infoType));
     }
   };
-
-  if (!isParticipantInfo(userInfo)) return null;
 
   return (
     <section className={profileSectionLayout}>
