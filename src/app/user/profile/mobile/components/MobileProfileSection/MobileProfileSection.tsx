@@ -11,6 +11,18 @@ import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
+const MATCH_TYPE_MAP = {
+  ALL: '전체',
+  OFFLINE: '대면',
+  ONLINE: '비대면',
+} as const;
+
+const getMatchTypeLabel = (matchType: ParticipantResponse['matchType']) => {
+  if (matchType === null) return '-';
+
+  return MATCH_TYPE_MAP[matchType];
+};
+
 const MOBILE_PROFILE_FIELDS_MAP = {
   PARTICIPANT: [
     {
@@ -47,7 +59,7 @@ const MOBILE_PROFILE_FIELDS_MAP = {
     },
     {
       title: '선호 실험 진행 방식',
-      getLabel: (userInfo: ParticipantResponse) => userInfo.matchType ?? '-',
+      getLabel: (userInfo: ParticipantResponse) => getMatchTypeLabel(userInfo.matchType),
       infoType: 'match-type',
     },
     {
