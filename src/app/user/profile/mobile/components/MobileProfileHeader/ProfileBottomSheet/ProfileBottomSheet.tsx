@@ -1,11 +1,11 @@
+import { useRouter } from 'next/navigation';
+
 import ListBottomSheet, {
   ListBottomSheetItem,
 } from '@/components/BottomSheet/ListBottomSheet/ListBottomSheet';
-
 import { PATH } from '@/constants/path';
 import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
-import { useRouter } from 'next/navigation';
 
 interface ProfileBottomSheetProps {
   onClose: () => void;

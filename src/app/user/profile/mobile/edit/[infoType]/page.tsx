@@ -1,12 +1,12 @@
 'use client';
 
-import BackHeader from '@/components/Header/BackHeader/BackHeader';
 import AddressEditForm from './components/AddressEditForm/AddressEditForm';
 import ContactEmailEditForm from './components/ContactEmailEditForm';
 import MatchTypeEditForm from './components/MatchTypeEditForm';
 import NameEditForm from './components/NameEditForm';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import BackHeader from '@/components/Header/BackHeader/BackHeader';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 const INFO_TYPE_COMPONENT_MAP = {

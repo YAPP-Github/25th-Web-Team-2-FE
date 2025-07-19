@@ -1,7 +1,6 @@
 import ListBottomSheet, {
   ListBottomSheetItem,
 } from '@/components/BottomSheet/ListBottomSheet/ListBottomSheet';
-
 import { NotReadyMenu } from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';

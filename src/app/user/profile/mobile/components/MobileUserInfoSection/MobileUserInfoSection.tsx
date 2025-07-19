@@ -1,6 +1,5 @@
 'use client';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import {
   userInfoHeader,
   userInfoContent,
@@ -16,7 +15,7 @@ import {
   userID,
 } from './MobileUserInfoSection.css';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { colors } from '@/styles/colors';
 import { isParticipantInfo } from '@/utils/typeGuard';
 

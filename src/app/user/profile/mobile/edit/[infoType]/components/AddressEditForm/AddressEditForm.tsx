@@ -2,10 +2,6 @@
 
 import { FormProvider, useWatch } from 'react-hook-form';
 
-import EditFormLayout from '../EditFormLayout/EditFormLayout';
-
-import { ParticipantResponse } from '@/apis/login';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import {
   filterTitle,
   filterTitleWrapper,
@@ -13,10 +9,15 @@ import {
   joinAreaFilterWrapper,
   requiredStar,
 } from './AddressEditForm.css';
-import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
-import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
-import SaveButton from '../SaveButton';
 import { useFormProfileEdit } from '../../hooks/useFormProfileEdit';
+import EditFormLayout from '../EditFormLayout/EditFormLayout';
+import SaveButton from '../SaveButton';
+
+import { ParticipantResponse } from '@/apis/login';
+import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
+import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
+
 
 interface AddressEditFormProps {
   userInfo: ParticipantResponse;

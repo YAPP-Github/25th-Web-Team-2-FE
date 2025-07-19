@@ -3,11 +3,11 @@
 import { FormProvider } from 'react-hook-form';
 
 import EditFormLayout from './EditFormLayout/EditFormLayout';
+import SaveButton from './SaveButton';
+import { useFormProfileEdit } from '../hooks/useFormProfileEdit';
 
 import { ParticipantResponse } from '@/apis/login';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
-import SaveButton from './SaveButton';
-import { useFormProfileEdit } from '../hooks/useFormProfileEdit';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 
 interface NameEditFormProps {

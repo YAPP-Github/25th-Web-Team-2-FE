@@ -1,17 +1,16 @@
-import { Suspense } from 'react';
-import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
+import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
 import MobileProfileSection from './components/MobileProfileSection/MobileProfileSection';
 import MobileUserInfoSection from './components/MobileUserInfoSection/MobileUserInfoSection';
 
-import { authOptions } from '@/lib/auth-utils';
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
-import { API_URL } from '@/constants/url';
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { isParticipantInfo } from '@/utils/typeGuard';
 import { PATH } from '@/constants/path';
-import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
+import { API_URL } from '@/constants/url';
+import { authOptions } from '@/lib/auth-utils';
+import { isParticipantInfo } from '@/utils/typeGuard';
 
 const getUserInfo = async (role?: string, accessToken?: string) => {
   if (!role || !accessToken) {
@@ -25,7 +24,7 @@ const getUserInfo = async (role?: string, accessToken?: string) => {
     );
 
     return response;
-  } catch (error) {
+  } catch (_) {
     return null;
   }
 };
