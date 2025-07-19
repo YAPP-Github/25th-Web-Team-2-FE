@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-export const mobileProfileHeaderWrapper = style({
+export const backHeaderWrapper = style({
   display: 'grid',
   gridTemplateColumns: '24px 1fr 24px',
   alignItems: 'center',
