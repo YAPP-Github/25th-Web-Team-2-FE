@@ -34,11 +34,13 @@ const MobileUserInfoSection = () => {
   const isParticipant = isParticipantInfo(userInfo);
   const memberInfo = userInfo?.memberInfo;
 
+  if (!memberInfo) return null;
+
   return (
     <div className={userInfoHeader}>
       <div className={userInfoContent}>
         <div className={userName}>
-          <span>{memberInfo?.name} 님</span>
+          <span>{memberInfo.name} 님</span>
           <span
             className={userBadge}
             style={{
@@ -58,7 +60,7 @@ const MobileUserInfoSection = () => {
           )}
           <div className={userIDWrapper}>
             <span className={userIDLabel}>ID</span>
-            <span className={userID}>{memberInfo?.oauthEmail}</span>
+            <span className={userID}>{memberInfo.oauthEmail}</span>
           </div>
         </div>
       </div>
