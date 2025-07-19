@@ -9,8 +9,8 @@ import { mainContentLayout } from '@/app/join/mobile/page.css';
 
 interface EditFormLayoutProps {
   title: string;
-  description: string;
   children: ReactNode;
+  description?: string;
   emailBadge?: ReactNode;
 }
 
