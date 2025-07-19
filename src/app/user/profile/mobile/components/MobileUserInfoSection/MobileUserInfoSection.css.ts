@@ -63,7 +63,7 @@ export const verticalLine = style({
 });
 
 export const gender = style({
-  color: colors.text01,
+  color: colors.text02,
 });
 
 export const birthDate = style({
