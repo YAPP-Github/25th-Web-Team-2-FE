@@ -10,6 +10,10 @@ export const profileItemWrapper = style({
   alignItems: 'center',
   padding: '1.6rem 0',
   gap: '2rem',
+
+  ':active': {
+    backgroundColor: colors.field02,
+  },
 });
 
 export const itemTitleWrapper = style({

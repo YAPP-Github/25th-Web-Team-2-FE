@@ -1,13 +1,15 @@
-import ProfileItem from '../ProfileItem/ProfileItem';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 import { profileSectionLayout } from './MobileProfileSection.css';
+import AdConsentToggle from '../AdConsentToggle/AdConsentToggle';
+import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
+import ProfileItem from '../ProfileItem/ProfileItem';
+
+import { ParticipantResponse } from '@/apis/login';
+import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { isParticipantInfo } from '@/utils/typeGuard';
-import { ParticipantResponse } from '@/apis/login';
-import { useSession } from 'next-auth/react';
-import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
-import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
-import AdConsentToggle from '../AdConsentToggle/AdConsentToggle';
 
 const MOBILE_PROFILE_FIELDS_MAP = {
   PARTICIPANT: [
@@ -15,11 +17,13 @@ const MOBILE_PROFILE_FIELDS_MAP = {
       required: true,
       title: '연락 받을 이메일',
       getLabel: (userInfo: ParticipantResponse) => userInfo.memberInfo.contactEmail,
+      infoType: 'contact-email',
     },
     {
       required: true,
       title: '이름',
       getLabel: (userInfo: ParticipantResponse) => userInfo.memberInfo.name,
+      infoType: 'name',
     },
     {
       required: true,
@@ -39,10 +43,12 @@ const MOBILE_PROFILE_FIELDS_MAP = {
         return `${region} ${area}`;
       },
       isIcon: true,
+      infoType: 'address',
     },
     {
       title: '선호 실험 진행 방식',
       getLabel: (userInfo: ParticipantResponse) => userInfo.matchType ?? '-',
+      infoType: 'match-type',
     },
     {
       title: '광고성 정보 이메일/SMS 수신 동의',
@@ -61,9 +67,16 @@ const MOBILE_PROFILE_FIELDS_MAP = {
 const MobileProfileSection = () => {
   const { userInfo } = useUserInfo();
   const { data } = useSession();
+  const router = useRouter();
   const role = data?.role;
 
   const fields = role ? MOBILE_PROFILE_FIELDS_MAP[role] : [];
+
+  const goToEditPage = (infoType?: string) => {
+    if (infoType) {
+      router.push(`/user/profile/mobile/edit/${infoType}`);
+    }
+  };
 
   if (!isParticipantInfo(userInfo)) return null;
 
@@ -77,6 +90,7 @@ const MobileProfileSection = () => {
           label={typeof field.getLabel === 'function' ? field.getLabel(userInfo) : ''}
           isIcon={field.isIcon}
           isArrow={field.isArrow}
+          onClick={() => goToEditPage(field.infoType)}
           rightElement={
             typeof field.rightElement === 'function'
               ? field.rightElement(userInfo)

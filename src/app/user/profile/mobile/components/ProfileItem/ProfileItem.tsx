@@ -8,9 +8,9 @@ import {
   profileItemWrapper,
 } from './ProfileItem.css';
 
+import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
-import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 
 interface ProfileItemProps {
   title: string;
