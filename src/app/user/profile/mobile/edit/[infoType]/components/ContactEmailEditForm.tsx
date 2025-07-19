@@ -2,7 +2,7 @@
 
 import { FormProvider, useWatch } from 'react-hook-form';
 
-import EditFormLayout from './EditFormLayout';
+import EditFormLayout from './EditFormLayout/EditFormLayout';
 
 import { ParticipantResponse } from '@/apis/login';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';

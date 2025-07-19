@@ -2,10 +2,8 @@
 
 import { ReactNode } from 'react';
 
-import SaveButton from './SaveButton';
-
 import TitleSection from '@/app/join/mobile/components/TitleSection/TitleSection';
-import { mainContentLayout } from '@/app/join/mobile/page.css';
+import { mainContentLayout } from './EditFormLayout.css';
 
 interface EditFormLayoutProps {
   title: string;
