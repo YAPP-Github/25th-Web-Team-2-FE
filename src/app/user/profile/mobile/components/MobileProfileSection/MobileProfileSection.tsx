@@ -1,5 +1,6 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
 import { profileSectionLayout } from './MobileProfileSection.css';
 import AdConsentToggle from '../AdConsentToggle/AdConsentToggle';
@@ -8,7 +9,6 @@ import ProfileItem from '../ProfileItem/ProfileItem';
 
 import { ParticipantResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 const MATCH_TYPE_MAP = {
@@ -76,11 +76,9 @@ const MOBILE_PROFILE_FIELDS_MAP = {
   RESEARCHER: [],
 };
 
-const MobileProfileSection = () => {
-  const { userInfo } = useUserInfo();
-  const { data } = useSession();
+const MobileProfileSection = ({ userInfo }: { userInfo: ParticipantResponse }) => {
   const router = useRouter();
-  const role = data?.role;
+  const role = userInfo.memberInfo.role;
 
   const fields = role ? MOBILE_PROFILE_FIELDS_MAP[role] : [];
 

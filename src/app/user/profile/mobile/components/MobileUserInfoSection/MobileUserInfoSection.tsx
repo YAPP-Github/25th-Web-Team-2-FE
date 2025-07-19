@@ -1,5 +1,6 @@
 'use client';
 
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import {
   userInfoHeader,
   userInfoContent,
@@ -29,12 +30,13 @@ const GENDER_LABEL = {
   FEMALE: '여성',
 } as const;
 
-const MobileUserInfoSection = () => {
-  const { userInfo } = useUserInfo();
-  const isParticipant = isParticipantInfo(userInfo);
-  const memberInfo = userInfo?.memberInfo;
+interface MobileUserInfoSectionProps {
+  userInfo: ParticipantResponse | ResearcherResponse;
+}
 
-  if (!memberInfo) return null;
+const MobileUserInfoSection = ({ userInfo }: MobileUserInfoSectionProps) => {
+  const isParticipant = isParticipantInfo(userInfo);
+  const memberInfo = userInfo.memberInfo;
 
   return (
     <div className={userInfoHeader}>
@@ -51,7 +53,7 @@ const MobileUserInfoSection = () => {
           </span>
         </div>
         <div className={userDetails}>
-          {userInfo && 'gender' in userInfo && (
+          {isParticipant && (
             <div className={userDetailWrapper}>
               <span className={gender}>{GENDER_LABEL[userInfo.gender]}</span>
               <span className={verticalLine} />
