@@ -9,7 +9,6 @@ import { MatchType } from '@/app/join/JoinPage.types';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import SaveButton from './SaveButton';
 import { useFormProfileEdit } from '../hooks/useFormProfileEdit';
-import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
 
 interface MatchTypeEditFormProps {
   userInfo: ParticipantResponse;
