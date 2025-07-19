@@ -15,7 +15,7 @@ const useLeaveForm = () => {
       reason: '',
     },
   });
-  const { mutate: leave } = useLeaveMutation();
+  const { mutate: leave, isPending } = useLeaveMutation();
 
   const reasonType = useWatch({ name: 'reasonType', control });
   const reason = useWatch({ name: 'reason', control });
@@ -39,7 +39,13 @@ const useLeaveForm = () => {
     });
   };
 
-  return { control, reset, handleSubmit: handleSubmit(onSubmit), isValidLeave };
+  return {
+    control,
+    reset,
+    handleSubmit: handleSubmit(onSubmit),
+    isValidLeave,
+    isLoading: isPending,
+  };
 };
 
 export default useLeaveForm;

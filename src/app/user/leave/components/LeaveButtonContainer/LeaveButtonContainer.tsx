@@ -5,6 +5,7 @@ import { button, buttonContainer, leaveButton } from './LeaveButtonContainer.css
 interface LeaveButtonContainerProps {
   isValidLeave: boolean;
   isChecked: boolean;
+  isLoading: boolean;
   handleSubmit: () => void;
 }
 
@@ -12,6 +13,7 @@ const LeaveButtonContainer = ({
   isValidLeave,
   isChecked,
   handleSubmit,
+  isLoading,
 }: LeaveButtonContainerProps) => {
   const router = useRouter();
 
@@ -20,8 +22,12 @@ const LeaveButtonContainer = ({
       <button className={button} onClick={() => router.back()}>
         이전으로
       </button>
-      <button className={leaveButton} disabled={!isValidLeave || !isChecked} onClick={handleSubmit}>
-        탈퇴하기
+      <button
+        className={leaveButton}
+        disabled={!isValidLeave || !isChecked || isLoading}
+        onClick={handleSubmit}
+      >
+        {isLoading ? '처리중...' : '탈퇴하기'}
       </button>
     </div>
   );
