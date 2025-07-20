@@ -9,8 +9,8 @@ import ProfileItem from '../ProfileItem/ProfileItem';
 
 import { ParticipantResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
-import { PATH } from '@/constants/path';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { PATH } from '@/constants/path';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 const MATCH_TYPE_MAP = {

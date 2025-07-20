@@ -1,9 +1,11 @@
 import { getServerSession } from 'next-auth';
+
+import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
 import MobileProfileSection from './components/MobileProfileSection/MobileProfileSection';
 import MobileUserInfoSection from './components/MobileUserInfoSection/MobileUserInfoSection';
-import { authOptions } from '@/lib/auth-utils';
+
 import { ROLE } from '@/constants/config';
-import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
+import { authOptions } from '@/lib/auth-utils';
 
 const MobileProfilePage = async () => {
   const session = await getServerSession(authOptions);
