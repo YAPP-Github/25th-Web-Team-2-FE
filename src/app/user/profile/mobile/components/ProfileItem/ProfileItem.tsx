@@ -32,7 +32,7 @@ const ProfileItem = ({
   isArrow = true,
 }: ProfileItemProps) => {
   return (
-    <div className={profileItemWrapper} onClick={onClick}>
+    <li className={profileItemWrapper} onClick={onClick}>
       <div className={itemTitleWrapper}>
         <span className={itemTitle}>{title}</span>
         {isIcon && <AreaTooltip />}
@@ -43,7 +43,7 @@ const ProfileItem = ({
         {rightElement}
         {isArrow && <Icon icon="Chevron" rotate={-90} />}
       </div>
-    </div>
+    </li>
   );
 };
 

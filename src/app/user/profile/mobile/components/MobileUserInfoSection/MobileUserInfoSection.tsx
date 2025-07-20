@@ -16,6 +16,7 @@ import {
 } from './MobileUserInfoSection.css';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { colors } from '@/styles/colors';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
@@ -29,19 +30,18 @@ const GENDER_LABEL = {
   FEMALE: '여성',
 } as const;
 
-interface MobileUserInfoSectionProps {
-  userInfo: ParticipantResponse | ResearcherResponse;
-}
-
-const MobileUserInfoSection = ({ userInfo }: MobileUserInfoSectionProps) => {
+const MobileUserInfoSection = () => {
+  const { userInfo } = useUserInfo();
   const isParticipant = isParticipantInfo(userInfo);
-  const memberInfo = userInfo.memberInfo;
+  const memberInfo = userInfo?.memberInfo;
+
+  if (!userInfo) return null;
 
   return (
     <div className={userInfoHeader}>
       <div className={userInfoContent}>
         <div className={userName}>
-          <span>{memberInfo.name} 님</span>
+          <span>{memberInfo?.name} 님</span>
           <span
             className={userBadge}
             style={{
@@ -61,7 +61,7 @@ const MobileUserInfoSection = ({ userInfo }: MobileUserInfoSectionProps) => {
           )}
           <div className={userIDWrapper}>
             <span className={userIDLabel}>ID</span>
-            <span className={userID}>{memberInfo.oauthEmail}</span>
+            <span className={userID}>{memberInfo?.oauthEmail}</span>
           </div>
         </div>
       </div>

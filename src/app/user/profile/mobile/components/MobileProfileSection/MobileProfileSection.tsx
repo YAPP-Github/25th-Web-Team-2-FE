@@ -10,6 +10,8 @@ import ProfileItem from '../ProfileItem/ProfileItem';
 import { ParticipantResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
 import { PATH } from '@/constants/path';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
+import { isParticipantInfo } from '@/utils/typeGuard';
 
 const MATCH_TYPE_MAP = {
   ALL: '전체',
@@ -76,9 +78,10 @@ const MOBILE_PROFILE_FIELDS_MAP = {
   RESEARCHER: [],
 };
 
-const MobileProfileSection = ({ userInfo }: { userInfo: ParticipantResponse }) => {
+const MobileProfileSection = () => {
+  const { userInfo } = useUserInfo();
   const router = useRouter();
-  const role = userInfo.memberInfo.role;
+  const role = userInfo?.memberInfo.role;
 
   const fields = role ? MOBILE_PROFILE_FIELDS_MAP[role] : [];
 
@@ -87,6 +90,8 @@ const MobileProfileSection = ({ userInfo }: { userInfo: ParticipantResponse }) =
       router.push(PATH.editProfile(infoType));
     }
   };
+
+  if (!isParticipantInfo(userInfo)) return null;
 
   return (
     <section className={profileSectionLayout}>
