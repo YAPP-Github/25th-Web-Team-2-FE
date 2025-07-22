@@ -1,15 +1,14 @@
 'use client';
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
+
+import useQueryParams from './useQueryParams';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 
 export const useURLFilters = () => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { searchParams, updateURLParams } = useQueryParams();
 
   const filters = useMemo((): ExperimentPostListFilters => {
     const params = Object.fromEntries(searchParams.entries());
@@ -25,15 +24,6 @@ export const useURLFilters = () => {
   }, [searchParams]);
 
   const isRecruiting = filters.recruitStatus === 'OPEN';
-
-  const updateURLParams = useCallback(
-    (newParams: URLSearchParams) => {
-      const paramString = newParams.toString();
-      const newURL = paramString ? `${pathname}?${paramString}` : pathname;
-      router.replace(newURL, { scroll: false });
-    },
-    [pathname, router],
-  );
 
   const handleFilterChange = useCallback(
     (filters: Record<string, string | string[] | number | null>) => {

@@ -1,28 +1,17 @@
 'use client';
 
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { calculateAgeFromBirthDate, filterParticipantInfo } from '../home.utils';
+import useQueryParams from './useQueryParams';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 
 export const useParticipantAutoFilter = (userInfo?: ParticipantResponse | ResearcherResponse) => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { searchParams, updateURLParams } = useQueryParams();
   const participantInfo = filterParticipantInfo(userInfo);
 
-  const updateURLParams = useCallback(
-    (newParams: URLSearchParams) => {
-      const paramString = newParams.toString();
-      const newURL = paramString ? `${pathname}?${paramString}` : pathname;
-      router.replace(newURL, { scroll: false });
-    },
-    [pathname, router],
-  );
-
-  // 참여자 자동 필터 적용 (필터링이 없을 때만)
+  // 참여자 자동 필터링 적용
   useEffect(() => {
     if (!participantInfo) return;
 
