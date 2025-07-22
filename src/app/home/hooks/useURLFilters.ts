@@ -1,22 +1,15 @@
 'use client';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 
-import { calculateAgeFromBirthDate, filterParticipantInfo } from '../home.utils';
-
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { ExperimentPostListFilters } from '@/apis/post';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 
-export const useURLFilters = (
-  userInfo?: ParticipantResponse | ResearcherResponse,
-  isLoading?: boolean,
-) => {
+export const useURLFilters = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const participantInfo = filterParticipantInfo(userInfo);
 
   const filters = useMemo((): ExperimentPostListFilters => {
     const params = Object.fromEntries(searchParams.entries());
@@ -68,23 +61,6 @@ export const useURLFilters = (
     const newParams = new URLSearchParams();
     updateURLParams(newParams);
   }, [updateURLParams]);
-
-  // 참여자 자동 필터 적용 (필터링이 없을 때만)
-  useEffect(() => {
-    if (isLoading || !participantInfo) return;
-
-    const hasQueryParams = searchParams.toString().length > 0;
-
-    if (!hasQueryParams) {
-      const participantParams = new URLSearchParams();
-      participantParams.set('recruitStatus', 'ALL');
-      participantParams.set('gender', participantInfo.gender);
-      participantParams.set('age', calculateAgeFromBirthDate(participantInfo.birthDate).toString());
-      updateURLParams(participantParams);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [participantInfo, isLoading]);
 
   return {
     filters,

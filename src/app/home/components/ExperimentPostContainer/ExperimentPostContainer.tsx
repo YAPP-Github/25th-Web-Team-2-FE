@@ -10,6 +10,7 @@ import {
   recruitCheckWrapper,
 } from './ExperimentPostContainer.css';
 import FilterContainer from './FilterContainer/FilterContainer';
+import useParticipantAutoFilter from '../../hooks/useParticipantAutoFilter';
 import useURLFilters from '../../hooks/useURLFilters';
 import useUserInfo from '../../hooks/useUserInfo';
 
@@ -26,7 +27,9 @@ const ExperimentPostContainer = () => {
     handleFilterChange,
     handleToggleRecruitStatus,
     handleResetFilter,
-  } = useURLFilters(userInfo, isUserInfoLoading);
+  } = useURLFilters();
+
+  useParticipantAutoFilter(userInfo);
 
   return (
     <div className={postContainerLayout}>
