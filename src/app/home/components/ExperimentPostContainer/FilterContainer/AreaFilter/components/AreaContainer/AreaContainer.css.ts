@@ -12,7 +12,7 @@ export const subAreaListContainer = style({
   flexDirection: 'column',
   gap: '0.4rem',
   height: '28rem',
-  overflow: 'scroll',
+  overflow: 'auto',
   padding: '1.2rem 0.8rem',
   borderRadius: '1.2rem',
 

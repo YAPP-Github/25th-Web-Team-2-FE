@@ -55,7 +55,7 @@ export const filterWrapper = style({
   '@media': {
     'screen and (max-width: 767px)': {
       padding: '1.6rem',
-      overflow: 'scroll',
+      overflow: 'auto',
     },
   },
 });
