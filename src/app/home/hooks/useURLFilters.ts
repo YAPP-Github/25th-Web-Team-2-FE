@@ -49,6 +49,7 @@ export const useURLFilters = () => {
 
   const handleResetFilter = useCallback(() => {
     const newParams = new URLSearchParams();
+    newParams.set('recruitStatus', 'ALL');
     updateURLParams(newParams);
   }, [updateURLParams]);
 
