@@ -20,7 +20,7 @@ import { colors } from '@/styles/colors';
 
 const ExperimentPostContainer = () => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
-  const { filters, isRecruiting, handleToggleRecruitStatus } = useURLFilters();
+  const { isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
 
   return (
@@ -44,12 +44,7 @@ const ExperimentPostContainer = () => {
       </div>
 
       {/* 공고 목록 */}
-      <ExperimentPostCardListContainer
-        filters={filters}
-        isUserInfoLoading={!isAutoFilled}
-        isRecruiting={isRecruiting}
-        handleToggleRecruitStatus={handleToggleRecruitStatus}
-      />
+      <ExperimentPostCardListContainer isUserInfoLoading={!isAutoFilled} />
     </div>
   );
 };
