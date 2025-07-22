@@ -29,7 +29,7 @@ const ExperimentPostContainer = () => {
     handleResetFilter,
   } = useURLFilters();
 
-  useParticipantAutoFilter(userInfo);
+  const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
 
   return (
     <div className={postContainerLayout}>
@@ -58,7 +58,7 @@ const ExperimentPostContainer = () => {
       {/* 공고 목록 */}
       <ExperimentPostCardListContainer
         filters={filters}
-        isUserInfoLoading={isUserInfoLoading}
+        isUserInfoLoading={!isAutoFilled}
         isRecruiting={isRecruiting}
         handleToggleRecruitStatus={handleToggleRecruitStatus}
       />
