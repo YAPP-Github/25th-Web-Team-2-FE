@@ -20,15 +20,7 @@ import { colors } from '@/styles/colors';
 
 const ExperimentPostContainer = () => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
-
-  const {
-    filters,
-    isRecruiting,
-    handleFilterChange,
-    handleToggleRecruitStatus,
-    handleResetFilter,
-  } = useURLFilters();
-
+  const { filters, isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
 
   return (
@@ -37,11 +29,7 @@ const ExperimentPostContainer = () => {
       <div className={horizontalLineMobile} />
       <div className={filterWrapper}>
         {/* 필터링 */}
-        <FilterContainer
-          filters={filters}
-          handleFilterChange={handleFilterChange}
-          handleResetFilter={handleResetFilter}
-        />
+        <FilterContainer />
 
         <div className={recruitCheckWrapper({ isMobile: false })}>
           {/* 모집 중인 공고만 보기 */}

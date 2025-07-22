@@ -4,20 +4,12 @@ import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
 import { filterContainerLayout, resetFilterButton } from './FilterContainer.css';
 import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
-import { ExperimentPostListFilters } from '@/apis/post';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
 
-interface FilterContainerProps {
-  filters: ExperimentPostListFilters;
-  handleFilterChange: (filters: Record<string, string | string[] | number | null>) => void;
-  handleResetFilter: () => void;
-}
+const FilterContainer = () => {
+  const { filters, handleFilterChange, handleResetFilter } = useURLFilters();
 
-const FilterContainer = ({
-  filters,
-  handleFilterChange,
-  handleResetFilter,
-}: FilterContainerProps) => {
   const isFiltered =
     filters.age || filters.gender || filters.matchType || filters.region || filters.areas;
 
