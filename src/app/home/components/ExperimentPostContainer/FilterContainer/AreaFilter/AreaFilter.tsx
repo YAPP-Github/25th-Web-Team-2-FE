@@ -25,7 +25,7 @@ import useOverlay from '@/hooks/useOverlay';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
-  onChange: (key: string, value: string | string[] | number | null) => void;
+  onChange: (filters: Record<string, string | string[] | number | null>) => void;
 }
 
 const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
@@ -38,7 +38,10 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     handleReset,
     handleSelectRegion,
     handleSelectArea,
-  } = useAreaFilter();
+  } = useAreaFilter({
+    initialRegion: filters.region,
+    initialAreas: filters.areas,
+  });
   const { open, close } = useOverlay();
 
   const { data: experimentPostRegion } = usePostRegionCountQuery(selectedRegion);
@@ -49,8 +52,10 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
 
   const handleSave = () => {
     setIsFilterOpen(false);
-    onChange('region', selectedRegion);
-    onChange('areas', selectedAreaList.length > 0 ? selectedAreaList : null);
+    onChange({
+      region: selectedRegion,
+      areas: selectedAreaList.length > 0 ? selectedAreaList : null,
+    });
   };
 
   const handleOpenBottomSheet = (e: React.TouchEvent) => {

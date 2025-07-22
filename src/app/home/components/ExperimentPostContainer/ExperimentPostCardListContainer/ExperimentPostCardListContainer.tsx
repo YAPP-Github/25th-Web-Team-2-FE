@@ -88,7 +88,7 @@ const ExperimentPostCardListContainer = ({
           <ExperimentPost postListData={postListData} />
         </div>
 
-        {isFetching && <div className={loadingMoreButton} />}
+        {isFetching && hasNextPage && <div className={loadingMoreButton} />}
         {!isFetching && hasNextPage && (
           <button
             className={watchMoreButton}

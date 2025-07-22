@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { AREA_ALL } from '@/app/home/home.constants';
 import { AreaAll } from '@/app/home/home.types';
-import { RegionType } from '@/types/filter';
+import { RegionType, AreaType } from '@/types/filter';
 
 const MAX_SELECTED_AREAS = 5;
 
@@ -14,9 +14,21 @@ const hasSelectedAreaAll = (selectedAreas: Record<string, boolean>) => {
   return AREA_ALL.some((area) => selectedAreas[area]);
 };
 
-const useAreaFilter = () => {
-  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
-  const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
+const getInitialAreas = (initialAreas?: AreaType[]) => {
+  return initialAreas ? initialAreas.reduce((acc, area) => ({ ...acc, [area]: true }), {}) : {};
+};
+
+interface UseAreaFilterProps {
+  initialRegion?: RegionType;
+  initialAreas?: AreaType[];
+}
+
+const useAreaFilter = ({ initialRegion, initialAreas }: UseAreaFilterProps = {}) => {
+  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(initialRegion || null);
+  const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>(() =>
+    getInitialAreas(initialAreas),
+  );
+
   const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
 
   const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
@@ -46,6 +58,11 @@ const useAreaFilter = () => {
       [area]: !prev[area],
     }));
   };
+
+  useEffect(() => {
+    setSelectedRegion(initialRegion || null);
+    setSelectedAreas(getInitialAreas(initialAreas));
+  }, [initialRegion, initialAreas]);
 
   return {
     selectedRegion,

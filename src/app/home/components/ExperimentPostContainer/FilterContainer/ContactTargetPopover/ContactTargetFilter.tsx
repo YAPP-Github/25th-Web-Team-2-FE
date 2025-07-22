@@ -30,7 +30,7 @@ import useOverlay from '@/hooks/useOverlay';
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetFilterProps {
-  onChange: (key: string, value: string | number | null) => void;
+  onChange: (filters: Record<string, string | string[] | number | null>) => void;
   filterGender?: GenderValue;
   filterAge?: number;
 }
@@ -40,8 +40,8 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const [isOpen, setIsOpen] = useState(false);
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
 
-  const [filteredGender, setFilteredGender] = useState<GenderValue | null>(null);
-  const [filteredAge, setFilteredAge] = useState('');
+  const [filteredGender, setFilteredGender] = useState<GenderValue | null>(filterGender || null);
+  const [filteredAge, setFilteredAge] = useState(filterAge?.toString() || '');
 
   const handleOpenBottomSheet = (e: React.TouchEvent) => {
     e.preventDefault();
@@ -76,22 +76,16 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const handleSaveFilter = () => {
     setIsOpen(false);
 
-    onChange('gender', filteredGender);
-    onChange('age', filteredAge !== '' ? Number(filteredAge) : null);
+    onChange({
+      gender: filteredGender,
+      age: filteredAge !== '' ? Number(filteredAge) : null,
+    });
   };
 
-  // 참여자 성별/나이 자동 필터링
   useEffect(() => {
-    if (filterGender) {
-      setFilteredGender(filterGender);
-    }
-  }, [filterGender]);
-
-  useEffect(() => {
-    if (filterAge) {
-      setFilteredAge(filterAge.toString());
-    }
-  }, [filterAge]);
+    setFilteredGender(filterGender || null);
+    setFilteredAge(filterAge?.toString() || '');
+  }, [filterGender, filterAge]);
 
   return (
     <Popover.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>

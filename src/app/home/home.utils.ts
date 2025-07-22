@@ -54,8 +54,6 @@ export const filterParticipantInfo = (data?: ParticipantResponse | ResearcherRes
  * @returns 만 나이
  */
 export const calculateAgeFromBirthDate = (birthDate: string) => {
-  if (!birthDate) return;
-
   const today = new Date();
   const birth = new Date(birthDate);
 

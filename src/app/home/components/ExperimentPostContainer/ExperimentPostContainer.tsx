@@ -10,7 +10,7 @@ import {
   recruitCheckWrapper,
 } from './ExperimentPostContainer.css';
 import FilterContainer from './FilterContainer/FilterContainer';
-import useExperimentFilters from '../../hooks/useExperimentFilters';
+import useURLFilters from '../../hooks/useURLFilters';
 import useUserInfo from '../../hooks/useUserInfo';
 
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
@@ -26,7 +26,7 @@ const ExperimentPostContainer = () => {
     handleFilterChange,
     handleToggleRecruitStatus,
     handleResetFilter,
-  } = useExperimentFilters(isUserInfoLoading, userInfo);
+  } = useURLFilters(userInfo, isUserInfoLoading);
 
   return (
     <div className={postContainerLayout}>

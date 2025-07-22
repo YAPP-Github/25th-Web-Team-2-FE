@@ -22,7 +22,7 @@ import Button from '@/components/Button/Button';
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetBottomSheetProps {
-  onChange: (key: string, value: string | number | null) => void;
+  onChange: (filters: Record<string, string | string[] | number | null>) => void;
   onReset: () => void;
   onClose: () => void;
   initialGender: GenderValue | null;
@@ -55,8 +55,10 @@ const ContactTargetBottomSheet = ({
   };
 
   const handleConfirm = () => {
-    onChange('gender', filteredGender);
-    onChange('age', filteredAge !== '' ? Number(filteredAge) : null);
+    onChange({
+      gender: filteredGender,
+      age: filteredAge !== '' ? Number(filteredAge) : null,
+    });
     onClose();
   };
 

@@ -7,10 +7,9 @@ import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 import { ExperimentPostListFilters } from '@/apis/post';
 import Icon from '@/components/Icon';
 
-
 interface FilterContainerProps {
   filters: ExperimentPostListFilters;
-  handleFilterChange: (key: string, value: string | string[] | number | null) => void;
+  handleFilterChange: (filters: Record<string, string | string[] | number | null>) => void;
   handleResetFilter: () => void;
 }
 
@@ -37,7 +36,7 @@ const FilterContainer = ({
       {/* 진행 방식 필터링 */}
       <MatchTypeFilter
         filters={filters}
-        onChange={(value) => handleFilterChange('matchType', value)}
+        onChange={(matchType) => handleFilterChange({ matchType })}
       />
 
       {/* 모집 대상 필터링 */}
