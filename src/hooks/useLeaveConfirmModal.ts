@@ -52,7 +52,7 @@ const useLeaveConfirmModal = ({
   };
 
   useEffect(() => {
-    if (!isUserInputDirty) {
+    if (!isUserInputDirty || typeof window === 'undefined') {
       return;
     }
 

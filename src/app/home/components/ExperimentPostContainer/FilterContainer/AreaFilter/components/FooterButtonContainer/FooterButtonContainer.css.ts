@@ -3,12 +3,6 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-// Footer 영역들
-export const footerContainer = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-});
-
 export const footerButtonContainer = style({
   display: 'flex',
   gap: '0.8rem',

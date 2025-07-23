@@ -1,44 +1,46 @@
+'use client';
+
 import { ChangeEvent, useState } from 'react';
 
 import {
-  ageInput,
-  ageInputContainer,
-  ageSelectWrapper,
-  genderButton,
-  genderButtonGroup,
   genderSelectWrapper,
-  label,
+  ageSelectWrapper,
   labelWrapper,
+  label,
+  ageInputContainer,
   footerButtonContainer,
   resetButton,
   saveButton,
-  contactTargetBottomSheetContainer,
-} from './ContactTargetBottomSheet.css';
+  ageInput,
+  genderButton,
+  genderButtonGroup,
+} from './ContactTargetContent.css';
 
 import { GENDER } from '@/app/home/home.constants';
 import { GenderFilterValue } from '@/app/home/home.types';
-import Button from '@/components/Button/Button';
 import { ExperimentPostListFilterParams } from '@/types/filter';
 
 const AGE_MAX_LENGTH = 3;
 
-interface ContactTargetBottomSheetProps {
+interface ContactTargetContentProps {
+  initialGender?: GenderFilterValue;
+  initialAge?: number;
   onChange: (filters: ExperimentPostListFilterParams) => void;
   onClose: () => void;
-  initialGender: GenderFilterValue | null;
-  initialAge: string | null;
 }
 
-const ContactTargetBottomSheet = ({
-  onChange,
-  onClose,
+const ContactTargetContent = ({
   initialGender,
   initialAge,
-}: ContactTargetBottomSheetProps) => {
-  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(initialGender);
-  const [filteredAge, setFilteredAge] = useState<string | null>(initialAge);
+  onChange,
+  onClose,
+}: ContactTargetContentProps) => {
+  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(
+    initialGender || null,
+  );
+  const [filteredAge, setFilteredAge] = useState<string | null>(initialAge?.toString() || null);
 
-  const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFilteredAge = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const isValidNumber = /^\d*$/.test(value);
 
@@ -52,7 +54,7 @@ const ContactTargetBottomSheet = ({
     setFilteredAge(null);
   };
 
-  const handleConfirm = () => {
+  const handleSave = () => {
     onChange({
       gender: filteredGender,
       age: filteredAge !== null ? Number(filteredAge) : null,
@@ -61,7 +63,7 @@ const ContactTargetBottomSheet = ({
   };
 
   return (
-    <div className={contactTargetBottomSheetContainer}>
+    <>
       <div className={genderSelectWrapper}>
         <span className={label}>성별</span>
         <div className={genderButtonGroup}>
@@ -86,21 +88,21 @@ const ContactTargetBottomSheet = ({
             value={filteredAge || ''}
             type="text"
             maxLength={AGE_MAX_LENGTH}
-            onChange={handleChangeAge}
+            onChange={handleChangeFilteredAge}
             placeholder="만 나이 입력"
           />
         </div>
       </div>
       <div className={footerButtonContainer}>
-        <Button variant="secondary" size="small" className={resetButton} onClick={handleReset}>
+        <button onClick={handleReset} className={resetButton}>
           초기화
-        </Button>
-        <Button variant="primary" size="small" className={saveButton} onClick={handleConfirm}>
+        </button>
+        <button onClick={handleSave} className={saveButton}>
           저장
-        </Button>
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 
-export default ContactTargetBottomSheet;
+export default ContactTargetContent;

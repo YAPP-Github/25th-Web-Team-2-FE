@@ -10,7 +10,8 @@ import {
   recruitCheckWrapper,
 } from './ExperimentPostContainer.css';
 import FilterContainer from './FilterContainer/FilterContainer';
-import useExperimentFilters from '../../hooks/useExperimentFilters';
+import useParticipantAutoFilter from '../../hooks/useParticipantAutoFilter';
+import useURLFilters from '../../hooks/useURLFilters';
 import useUserInfo from '../../hooks/useUserInfo';
 
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
@@ -19,14 +20,8 @@ import { colors } from '@/styles/colors';
 
 const ExperimentPostContainer = () => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
-
-  const {
-    filters,
-    isRecruiting,
-    handleFilterChange,
-    handleToggleRecruitStatus,
-    handleResetFilter,
-  } = useExperimentFilters(isUserInfoLoading, userInfo);
+  const { isRecruiting, handleToggleRecruitStatus } = useURLFilters();
+  const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
 
   return (
     <div className={postContainerLayout}>
@@ -34,11 +29,7 @@ const ExperimentPostContainer = () => {
       <div className={horizontalLineMobile} />
       <div className={filterWrapper}>
         {/* 필터링 */}
-        <FilterContainer
-          filters={filters}
-          handleFilterChange={handleFilterChange}
-          handleResetFilter={handleResetFilter}
-        />
+        <FilterContainer />
 
         <div className={recruitCheckWrapper({ isMobile: false })}>
           {/* 모집 중인 공고만 보기 */}
@@ -53,12 +44,7 @@ const ExperimentPostContainer = () => {
       </div>
 
       {/* 공고 목록 */}
-      <ExperimentPostCardListContainer
-        filters={filters}
-        isUserInfoLoading={isUserInfoLoading}
-        isRecruiting={isRecruiting}
-        handleToggleRecruitStatus={handleToggleRecruitStatus}
-      />
+      <ExperimentPostCardListContainer isUserInfoLoading={!isAutoFilled} />
     </div>
   );
 };

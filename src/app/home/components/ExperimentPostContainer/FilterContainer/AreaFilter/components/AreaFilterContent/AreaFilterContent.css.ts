@@ -2,25 +2,10 @@ import { style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 
-export const filterContainerLayout = style({
-  display: 'flex',
-  gap: '0.8rem',
-  height: '3.2rem',
-});
-
-export const resetFilterButton = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: colors.field01,
-  padding: '0.8rem',
+export const contentWrapper = style({
+  backgroundColor: colors.field02,
   borderRadius: '1.2rem',
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      backgroundColor: colors.field03,
-    },
-  },
+  display: 'flex',
 });
 
 export const verticalLine = style({

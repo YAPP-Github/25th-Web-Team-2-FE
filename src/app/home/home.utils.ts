@@ -54,8 +54,6 @@ export const filterParticipantInfo = (data?: ParticipantResponse | ResearcherRes
  * @returns 만 나이
  */
 export const calculateAgeFromBirthDate = (birthDate: string) => {
-  if (!birthDate) return;
-
   const today = new Date();
   const birth = new Date(birthDate);
 
@@ -70,7 +68,7 @@ export const calculateAgeFromBirthDate = (birthDate: string) => {
 };
 
 export const getContactTargetFilterText = (age?: number, gender?: GenderFilterValue) => {
-  const genderLabelMapper = { MALE: '남성', FEMALE: '여성', ALL: '' };
+  const genderLabelMapper = { MALE: '남성', FEMALE: '여성', ALL: '전체' };
 
   if (age && gender) {
     return gender === 'ALL' ? `만 ${age}세` : `${genderLabelMapper[gender]} · 만 ${age}세`;

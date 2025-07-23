@@ -14,7 +14,7 @@ export const regionContainer = style({
   backgroundColor: colors.field02,
   borderRadius: '1.2rem',
   height: '28rem',
-  overflow: 'scroll',
+  overflow: 'auto',
 
   '@media': {
     'screen and (max-width: 767px)': {

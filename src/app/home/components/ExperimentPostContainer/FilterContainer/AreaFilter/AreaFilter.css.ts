@@ -43,12 +43,6 @@ export const regionContentContainer = style({
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
 });
 
-export const contentWrapper = style({
-  backgroundColor: colors.field02,
-  borderRadius: '1.2rem',
-  display: 'flex',
-});
-
 export const areaName = style({
   ...fonts.label.large.M14,
   color: colors.text06,
@@ -64,34 +58,4 @@ export const areaName = style({
 export const areaCount = style({
   ...fonts.label.medium.R13,
   color: colors.text03,
-});
-
-// 세로 구분선
-export const verticalLine = style({
-  position: 'relative',
-  selectors: {
-    '&::after': {
-      content: '""',
-      width: '0.1rem',
-      height: '100%',
-      position: 'absolute',
-      top: '50%',
-      right: '0',
-      transform: 'translateY(-50%)',
-      backgroundColor: colors.line01,
-    },
-    '&:last-child::after': {
-      display: 'none',
-    },
-  },
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      selectors: {
-        '&::after': {
-          height: '2rem',
-        },
-      },
-    },
-  },
 });

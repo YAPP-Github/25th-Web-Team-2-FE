@@ -15,8 +15,8 @@ import {
 } from './ExperimentPostCardListContainer.css';
 import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostContainer.css';
 
-import { ExperimentPostListFilters } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
@@ -27,18 +27,11 @@ import { colors } from '@/styles/colors';
 import { isMobile } from '@/utils/deviceType';
 
 interface PostCardListContainerProps {
-  filters: ExperimentPostListFilters;
   isUserInfoLoading: boolean;
-  isRecruiting: boolean;
-  handleToggleRecruitStatus: () => void;
 }
 
-const ExperimentPostCardListContainer = ({
-  filters,
-  isUserInfoLoading,
-  isRecruiting,
-  handleToggleRecruitStatus,
-}: PostCardListContainerProps) => {
+const ExperimentPostCardListContainer = ({ isUserInfoLoading }: PostCardListContainerProps) => {
+  const { filters, isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const {
     data: postListData,
     hasNextPage,
@@ -88,7 +81,7 @@ const ExperimentPostCardListContainer = ({
           <ExperimentPost postListData={postListData} />
         </div>
 
-        {isFetching && <div className={loadingMoreButton} />}
+        {isFetching && hasNextPage && <div className={loadingMoreButton} />}
         {!isFetching && hasNextPage && (
           <button
             className={watchMoreButton}

@@ -6,12 +6,12 @@ import { QUERY_KEY } from '@/constants/queryKey';
 const POST_PER_PAGE = 15;
 
 const useExperimentPostListQuery = (filters: ExperimentPostListFilters, isLoading: boolean) => {
-  const { matchType, gender, age, region, areas, recruitStatus } = filters;
+  const { recruitStatus, gender, age, region, areas, matchType } = filters;
 
   const isFilters = Object.keys(filters).length > 0;
 
   return useInfiniteQuery({
-    queryKey: [QUERY_KEY.post, matchType, gender, age, region, areas, recruitStatus],
+    queryKey: [QUERY_KEY.post, recruitStatus, gender, age, region, areas, matchType],
     queryFn: ({ pageParam }) =>
       fetchPostList({ ...filters, page: pageParam, count: POST_PER_PAGE }),
     enabled: isFilters && !isLoading,
