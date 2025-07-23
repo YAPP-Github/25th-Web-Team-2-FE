@@ -135,6 +135,19 @@ describe('getContactTargetFilterText - 모집 대상 filter 텍스트 유틸 함
     expect(result).toBe(expected);
   });
 
+  it('성별이 전체인 경우 "전체" 텍스트를 반환한다.', () => {
+    // Given
+    const age = undefined;
+    const gender = 'ALL';
+    const expected = '전체';
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe(expected);
+  });
+
   it('나이만 있는 경우 나이만 반환한다.', () => {
     // Given
     const age = 25;
