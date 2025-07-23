@@ -5,9 +5,5 @@ export type RegionType = (typeof REGIONS)[number];
 export type AreaType = (typeof AREAS)[number];
 
 export type ExperimentPostListFilterParams = {
-  [K in keyof Omit<ExperimentPostListFilters, 'recruitStatus'>]:
-    | ExperimentPostListFilters[K]
-    | null;
-} & {
-  recruitStatus?: ExperimentPostListFilters['recruitStatus'];
+  [K in keyof ExperimentPostListFilters]: ExperimentPostListFilters[K] | null;
 };
