@@ -1,7 +1,6 @@
 import AreaFilter from './AreaFilter/AreaFilter';
-import { verticalLine } from './AreaFilter/AreaFilter.css';
 import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
-import { filterContainerLayout, resetFilterButton } from './FilterContainer.css';
+import { filterContainerLayout, resetFilterButton, verticalLine } from './FilterContainer.css';
 import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
 import useURLFilters from '@/app/home/hooks/useURLFilters';
