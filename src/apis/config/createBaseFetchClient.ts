@@ -28,7 +28,7 @@ interface BaseFetchClientOptions {
 
 export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
   return {
-    onRequestCallback: (config: RequestProps) => config,
+    onRequestCallback: options.onRequest || ((config: RequestProps) => config),
 
     async request<T = any>(url: string, config: RequestProps): Promise<T> {
       try {

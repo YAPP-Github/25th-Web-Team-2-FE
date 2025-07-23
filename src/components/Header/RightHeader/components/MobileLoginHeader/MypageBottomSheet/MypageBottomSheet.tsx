@@ -1,5 +1,6 @@
-import { listItem, mypageBottomSheetLayout } from './MypageBottomSheet.css';
-
+import ListBottomSheet, {
+  ListBottomSheetItem,
+} from '@/components/BottomSheet/ListBottomSheet/ListBottomSheet';
 import { NotReadyMenu } from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
@@ -27,22 +28,24 @@ const MypageBottomSheet = ({ isResearcher, handleSelectMenu, onClose }: MypageBo
     await logout();
   };
 
-  return (
-    <section className={mypageBottomSheetLayout}>
-      <button className={listItem} onClick={handleClickProfile}>
-        내 정보
-      </button>
+  const items = [
+    {
+      text: '내 정보',
+      onClick: handleClickProfile,
+    },
+    {
+      text: '내가 쓴 글',
+      onClick: handleClickMyPosts,
+      condition: isResearcher,
+    },
+    {
+      text: '로그아웃',
+      onClick: handleLogout,
+      variant: 'danger',
+    },
+  ] satisfies ListBottomSheetItem[];
 
-      {isResearcher && (
-        <button className={listItem} onClick={handleClickMyPosts}>
-          내가 쓴 글
-        </button>
-      )}
-      <button className={listItem} onClick={handleLogout}>
-        로그아웃
-      </button>
-    </section>
-  );
+  return <ListBottomSheet items={items} />;
 };
 
 export default MypageBottomSheet;

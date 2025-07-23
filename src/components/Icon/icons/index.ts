@@ -63,3 +63,4 @@ export { default as Golf } from './Golf';
 export { default as Arrow } from './Arrow';
 export { default as Check } from './Check';
 export { default as Profile } from './Profile';
+export { default as AllMenu } from './AllMenu';

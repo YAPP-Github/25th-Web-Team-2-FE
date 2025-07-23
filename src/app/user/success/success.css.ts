@@ -7,7 +7,14 @@ export const leaveSuccessPageLayout = style({
   display: 'flex',
   width: '56rem',
   margin: '0 auto',
-  minHeight: 'calc(100vh - 12.2rem)',
+  minHeight: 'calc(100dvh - 12.2rem)',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      minHeight: '100dvh',
+      width: '100%',
+    },
+  },
 });
 
 export const leaveSuccessLayout = style({

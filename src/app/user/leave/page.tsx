@@ -18,7 +18,7 @@ import {
 import Icon from '@/components/Icon';
 
 const LeavePage = () => {
-  const { control, reset, handleSubmit, isValidLeave } = useLeaveForm();
+  const { control, reset, handleSubmit, isValidLeave, isLoading } = useLeaveForm();
   const [isAgree, toggle] = useReducer((prev) => !prev, false);
 
   return (
@@ -42,6 +42,7 @@ const LeavePage = () => {
         isValidLeave={isValidLeave}
         isChecked={isAgree}
         handleSubmit={handleSubmit}
+        isLoading={isLoading}
       />
     </section>
   );

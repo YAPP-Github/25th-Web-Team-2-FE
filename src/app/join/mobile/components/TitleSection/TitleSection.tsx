@@ -2,7 +2,7 @@ import { titleContainerLayout, titleWrapper, titleText, descriptionText } from '
 
 interface TitleSectionProps {
   title: string;
-  description: string;
+  description?: string;
   emailBadge?: React.ReactNode;
 }
 
