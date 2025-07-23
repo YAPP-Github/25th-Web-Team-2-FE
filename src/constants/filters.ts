@@ -185,7 +185,7 @@ export const AREAS = [
   'CHUNGJUSI',
 
   // 부산
-  'GANGSEOGU',
+  'BUSAN_GANGSEOGU',
   'GEUMJEONGGU',
   'GIJANGGUN',
   'NAMGU',

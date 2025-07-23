@@ -11,6 +11,7 @@ import { ParticipantResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { PATH } from '@/constants/path';
+import { AreaType, RegionType } from '@/types/filter';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 const MATCH_TYPE_MAP = {
@@ -43,13 +44,14 @@ const MOBILE_PROFILE_FIELDS_MAP = {
       required: true,
       title: '거주 지역',
       getLabel: (userInfo: ParticipantResponse) => {
-        const region = REGION_MAPPER[userInfo.basicAddressInfo.region];
-        const area = AREA_MAPPER[userInfo.basicAddressInfo.area];
+        const region = REGION_MAPPER[userInfo.basicAddressInfo.region as RegionType];
+        const area = AREA_MAPPER[userInfo.basicAddressInfo.area as AreaType];
         const isAdditionalAddress = userInfo.additionalAddressInfo.region !== 'NONE';
 
         if (isAdditionalAddress) {
-          const additionalRegion = REGION_MAPPER[userInfo.additionalAddressInfo.region];
-          const additionalArea = AREA_MAPPER[userInfo.additionalAddressInfo.area];
+          const additionalRegion =
+            REGION_MAPPER[userInfo.additionalAddressInfo.region as RegionType];
+          const additionalArea = AREA_MAPPER[userInfo.additionalAddressInfo.area as AreaType];
 
           return `${region} ${area} / ${additionalRegion} ${additionalArea}`;
         }
