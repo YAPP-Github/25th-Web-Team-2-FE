@@ -3,7 +3,7 @@ import { GenderFilterValue } from './home.types';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { colors } from '@/styles/colors';
-import { RegionType } from '@/types/filter';
+import { AreaType, RegionType } from '@/types/filter';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 export const formatPostDate = ({
@@ -81,7 +81,7 @@ export const getContactTargetFilterText = (age?: number, gender?: GenderFilterVa
   return '모집 대상';
 };
 
-export const getRegionFilterText = (region?: RegionType | null, areas?: string[]) => {
+export const getRegionFilterText = (region?: RegionType | null, areas?: AreaType[]) => {
   const isArea = areas && areas.length > 0;
 
   if (region) {
