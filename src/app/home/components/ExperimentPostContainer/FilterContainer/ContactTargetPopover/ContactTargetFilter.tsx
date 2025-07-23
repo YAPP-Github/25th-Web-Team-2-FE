@@ -2,33 +2,17 @@
 
 import * as Popover from '@radix-ui/react-popover';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBottomSheet';
-import {
-  genderSelectWrapper,
-  ageSelectWrapper,
-  popoverTrigger,
-  popoverContent,
-  labelWrapper,
-  label,
-  ageInputContainer,
-  footerButtonContainer,
-  resetButton,
-  saveButton,
-  ageInput,
-  genderButton,
-  genderButtonGroup,
-} from './ContactTargetFilter.css';
+import ContactTargetContent from './ContactTargetContent/ContactTargetContent';
+import { popoverContent, popoverTrigger } from './ContactTargetFilter.css';
 
-import { GENDER } from '@/app/home/home.constants';
 import { GenderFilterValue } from '@/app/home/home.types';
 import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 import { ExperimentPostListFilterParams } from '@/types/filter';
-
-const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetFilterProps {
   onChange: (filters: ExperimentPostListFilterParams) => void;
@@ -41,19 +25,13 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const [isOpen, setIsOpen] = useState(false);
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
 
-  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(
-    filterGender || null,
-  );
-  const [filteredAge, setFilteredAge] = useState<string | null>(filterAge?.toString() || null);
-
   const handleOpenBottomSheet = (e: React.TouchEvent) => {
     e.preventDefault();
     open(
       () => (
         <ContactTargetBottomSheet
-          initialGender={filteredGender}
-          initialAge={filteredAge}
-          onReset={handleResetFilter}
+          initialGender={filterGender || null}
+          initialAge={filterAge?.toString() || ''}
           onChange={onChange}
           onClose={close}
         />
@@ -62,36 +40,8 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
     );
   };
 
-  const handleChangeFilteredAge = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const isValidNumber = /^\d*$/.test(value);
-
-    if (isValidNumber) {
-      setFilteredAge(value);
-    }
-  };
-
-  const handleResetFilter = () => {
-    setFilteredGender(null);
-    setFilteredAge(null);
-  };
-
-  const handleSaveFilter = () => {
-    setIsOpen(false);
-
-    onChange({
-      gender: filteredGender,
-      age: filteredAge !== null ? Number(filteredAge) : null,
-    });
-  };
-
-  useEffect(() => {
-    setFilteredGender(filterGender || null);
-    setFilteredAge(filterAge?.toString() || '');
-  }, [filterGender, filterAge]);
-
   return (
-    <Popover.Root open={isOpen} onOpenChange={() => setIsOpen((prev) => !prev)}>
+    <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger
         className={popoverTrigger}
         style={assignInlineVars(getFilterColors(isSelected))}
@@ -102,43 +52,12 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className={popoverContent} align="start">
-          <div className={genderSelectWrapper}>
-            <span className={label}>성별</span>
-            <div className={genderButtonGroup}>
-              {GENDER.map((option) => (
-                <button
-                  key={option.value}
-                  className={`${genderButton} ${option.value === filteredGender ? 'active' : ''}`}
-                  onClick={() => setFilteredGender(option.value)}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className={ageSelectWrapper}>
-            <div className={labelWrapper}>
-              <span className={label}>나이</span>
-            </div>
-            <div className={ageInputContainer}>
-              <input
-                className={ageInput}
-                value={filteredAge ?? ''}
-                type="text"
-                maxLength={AGE_MAX_LENGTH}
-                onChange={handleChangeFilteredAge}
-                placeholder="만 나이 입력"
-              />
-            </div>
-          </div>
-          <div className={footerButtonContainer}>
-            <button onClick={handleResetFilter} className={resetButton}>
-              초기화
-            </button>
-            <button onClick={handleSaveFilter} className={saveButton}>
-              저장
-            </button>
-          </div>
+          <ContactTargetContent
+            initialGender={filterGender}
+            initialAge={filterAge}
+            onChange={onChange}
+            onClose={() => setIsOpen(false)}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
