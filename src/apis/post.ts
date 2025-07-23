@@ -37,7 +37,7 @@ export interface ExperimentPostArea {
 export interface ExperimentPostListFilters {
   recruitStatus: 'ALL' | 'OPEN';
   matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
-  gender?: 'MALE' | 'FEMALE';
+  gender?: 'MALE' | 'FEMALE' | 'ALL';
   age?: number;
   region?: RegionType;
   areas?: AreaType[];

@@ -6,7 +6,7 @@ export type URLFilterSchemaType = z.infer<ReturnType<typeof URLFilterSchema>>;
 
 export const URLFilterSchema = () =>
   z.object({
-    gender: z.enum(['MALE', 'FEMALE']).optional(),
+    gender: z.enum(['MALE', 'FEMALE', 'ALL']).optional(),
     age: z.coerce.number().int().min(1).max(100).optional(),
     region: z.enum(REGIONS).optional(),
     areas: z

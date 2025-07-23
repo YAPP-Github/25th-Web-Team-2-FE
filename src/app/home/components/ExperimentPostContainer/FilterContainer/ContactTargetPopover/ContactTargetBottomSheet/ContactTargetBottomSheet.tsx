@@ -16,7 +16,7 @@ import {
 } from './ContactTargetBottomSheet.css';
 
 import { GENDER } from '@/app/home/home.constants';
-import { GenderValue } from '@/app/home/home.types';
+import { GenderFilterValue } from '@/app/home/home.types';
 import Button from '@/components/Button/Button';
 
 const AGE_MAX_LENGTH = 3;
@@ -25,7 +25,7 @@ interface ContactTargetBottomSheetProps {
   onChange: (filters: Record<string, string | string[] | number | null>) => void;
   onReset: () => void;
   onClose: () => void;
-  initialGender: GenderValue | null;
+  initialGender: GenderFilterValue | null;
   initialAge: string;
 }
 
@@ -36,7 +36,7 @@ const ContactTargetBottomSheet = ({
   initialGender,
   initialAge,
 }: ContactTargetBottomSheetProps) => {
-  const [filteredGender, setFilteredGender] = useState<GenderValue | null>(initialGender);
+  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(initialGender);
   const [filteredAge, setFilteredAge] = useState(initialAge ?? '');
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {

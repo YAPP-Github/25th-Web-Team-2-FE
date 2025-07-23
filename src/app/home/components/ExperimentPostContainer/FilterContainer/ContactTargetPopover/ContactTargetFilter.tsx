@@ -22,7 +22,7 @@ import {
 } from './ContactTargetFilter.css';
 
 import { GENDER } from '@/app/home/home.constants';
-import { GenderValue } from '@/app/home/home.types';
+import { GenderFilterValue } from '@/app/home/home.types';
 import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
@@ -31,7 +31,7 @@ const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetFilterProps {
   onChange: (filters: Record<string, string | string[] | number | null>) => void;
-  filterGender?: GenderValue;
+  filterGender?: GenderFilterValue;
   filterAge?: number;
 }
 
@@ -40,7 +40,9 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const [isOpen, setIsOpen] = useState(false);
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
 
-  const [filteredGender, setFilteredGender] = useState<GenderValue | null>(filterGender || null);
+  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(
+    filterGender || null,
+  );
   const [filteredAge, setFilteredAge] = useState(filterAge?.toString() || '');
 
   const handleOpenBottomSheet = (e: React.TouchEvent) => {
