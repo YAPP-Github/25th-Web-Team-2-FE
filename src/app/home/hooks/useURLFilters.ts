@@ -6,6 +6,7 @@ import useQueryParams from './useQueryParams';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
+import { ExperimentPostListFilterParams } from '@/types/filter';
 
 export const useURLFilters = () => {
   const { searchParams, updateURLParams } = useQueryParams();
@@ -26,11 +27,11 @@ export const useURLFilters = () => {
   const isRecruiting = filters.recruitStatus === 'OPEN';
 
   const handleFilterChange = useCallback(
-    (filters: Record<string, string | string[] | number | null>) => {
+    (filters: ExperimentPostListFilterParams) => {
       const newParams = new URLSearchParams(searchParams);
 
       Object.entries(filters).forEach(([key, value]) => {
-        if (value === null || value === '' || (Array.isArray(value) && value.length === 0)) {
+        if (value === null || (Array.isArray(value) && value.length === 0)) {
           newParams.delete(key);
         } else {
           const stringValue = Array.isArray(value) ? value.join(',') : String(value);

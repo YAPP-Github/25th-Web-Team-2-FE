@@ -22,10 +22,11 @@ import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
+import { AreaType, ExperimentPostListFilterParams } from '@/types/filter';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
-  onChange: (filters: Record<string, string | string[] | number | null>) => void;
+  onChange: (filters: ExperimentPostListFilterParams) => void;
 }
 
 const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
@@ -54,7 +55,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
     setIsFilterOpen(false);
     onChange({
       region: selectedRegion,
-      areas: selectedAreaList.length > 0 ? selectedAreaList : null,
+      areas: selectedAreaList.length > 0 ? (selectedAreaList as AreaType[]) : null,
     });
   };
 

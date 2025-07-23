@@ -26,11 +26,12 @@ import { GenderFilterValue } from '@/app/home/home.types';
 import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
+import { ExperimentPostListFilterParams } from '@/types/filter';
 
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetFilterProps {
-  onChange: (filters: Record<string, string | string[] | number | null>) => void;
+  onChange: (filters: ExperimentPostListFilterParams) => void;
   filterGender?: GenderFilterValue;
   filterAge?: number;
 }
@@ -43,7 +44,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
   const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(
     filterGender || null,
   );
-  const [filteredAge, setFilteredAge] = useState(filterAge?.toString() || '');
+  const [filteredAge, setFilteredAge] = useState<string | null>(filterAge?.toString() || null);
 
   const handleOpenBottomSheet = (e: React.TouchEvent) => {
     e.preventDefault();
@@ -72,7 +73,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
 
   const handleResetFilter = () => {
     setFilteredGender(null);
-    setFilteredAge('');
+    setFilteredAge(null);
   };
 
   const handleSaveFilter = () => {
@@ -80,7 +81,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
 
     onChange({
       gender: filteredGender,
-      age: filteredAge !== '' ? Number(filteredAge) : null,
+      age: filteredAge !== null ? Number(filteredAge) : null,
     });
   };
 
@@ -122,7 +123,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
             <div className={ageInputContainer}>
               <input
                 className={ageInput}
-                value={filteredAge}
+                value={filteredAge ?? ''}
                 type="text"
                 maxLength={AGE_MAX_LENGTH}
                 onChange={handleChangeFilteredAge}

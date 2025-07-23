@@ -18,15 +18,16 @@ import {
 import { GENDER } from '@/app/home/home.constants';
 import { GenderFilterValue } from '@/app/home/home.types';
 import Button from '@/components/Button/Button';
+import { ExperimentPostListFilterParams } from '@/types/filter';
 
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetBottomSheetProps {
-  onChange: (filters: Record<string, string | string[] | number | null>) => void;
+  onChange: (filters: ExperimentPostListFilterParams) => void;
   onReset: () => void;
   onClose: () => void;
   initialGender: GenderFilterValue | null;
-  initialAge: string;
+  initialAge: string | null;
 }
 
 const ContactTargetBottomSheet = ({
@@ -37,7 +38,7 @@ const ContactTargetBottomSheet = ({
   initialAge,
 }: ContactTargetBottomSheetProps) => {
   const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(initialGender);
-  const [filteredAge, setFilteredAge] = useState(initialAge ?? '');
+  const [filteredAge, setFilteredAge] = useState<string | null>(initialAge ?? null);
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -50,14 +51,14 @@ const ContactTargetBottomSheet = ({
 
   const handleReset = () => {
     setFilteredGender(null);
-    setFilteredAge('');
+    setFilteredAge(null);
     onReset();
   };
 
   const handleConfirm = () => {
     onChange({
       gender: filteredGender,
-      age: filteredAge !== '' ? Number(filteredAge) : null,
+      age: filteredAge !== null ? Number(filteredAge) : null,
     });
     onClose();
   };
@@ -85,7 +86,7 @@ const ContactTargetBottomSheet = ({
         <div className={ageInputContainer}>
           <input
             className={ageInput}
-            value={filteredAge}
+            value={filteredAge ?? ''}
             type="text"
             maxLength={AGE_MAX_LENGTH}
             onChange={handleChangeAge}
