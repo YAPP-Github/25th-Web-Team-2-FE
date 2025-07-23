@@ -16,14 +16,15 @@ import { ExperimentPostArea } from '@/apis/post';
 import { AREA_MAPPER } from '@/app/home/home.constants';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import { AreaType } from '@/types/filter';
 
 const PLACEHOLDER_TEXT = '지역을 먼저\n선택해 주세요';
 
 interface AreaContainerProps {
   selectedRegion: string | null;
-  handleSelectArea: (area: string) => void;
+  handleSelectArea: (area: AreaType) => void;
   isValidAreas: boolean;
-  selectedAreas: Record<string, boolean>;
+  selectedAreas: Partial<Record<AreaType, boolean>>;
   experimentPostAreas?: ExperimentPostArea[];
 }
 
