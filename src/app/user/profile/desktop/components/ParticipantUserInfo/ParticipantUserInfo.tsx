@@ -8,7 +8,7 @@ import {
   updateInfoFormContainer,
   updateInfoForm,
 } from './ParticipantUserInfo.css';
-import useFormParticipantUserInfo from '../../hooks/useFormParticipantUserInfo';
+import useFormParticipantUserInfo from '../../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
 import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';

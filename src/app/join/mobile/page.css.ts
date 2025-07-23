@@ -39,21 +39,6 @@ export const mainContentLayout = style({
   },
 });
 
-export const emailWrapper = style({
-  display: 'flex',
-  alignItems: 'center',
-  width: 'fit-content',
-
-  border: `1px solid ${colors.line01}`,
-  borderRadius: '5.2rem',
-  padding: '0.2rem 0.8rem 0.2rem 0.6rem',
-});
-
-export const email = style({
-  ...fonts.label.small.R12,
-  color: colors.text03,
-});
-
 export const emailInput = style({
   ...fonts.body.small.M15,
   color: colors.text06,

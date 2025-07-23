@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
-import useFormResearcherUserInfo from '../../hooks/useFormResearcherUserInfo';
+import useFormResearcherUserInfo from '../../../hooks/useFormResearcherUserInfo';
 import {
   leaveButton,
   updateButton,
