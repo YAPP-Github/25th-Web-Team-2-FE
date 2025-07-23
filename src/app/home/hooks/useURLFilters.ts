@@ -21,8 +21,7 @@ export const useURLFilters = () => {
 
     if (!parsedFilters.success) {
       toast.error({ message: INVALID_FILTER_MESSAGE });
-      const newParams = new URLSearchParams();
-      newParams.set('recruitStatus', 'ALL');
+      const newParams = new URLSearchParams({ recruitStatus: 'ALL' });
       updateURLParams(newParams);
 
       return {
@@ -58,8 +57,7 @@ export const useURLFilters = () => {
   };
 
   const handleResetFilter = useCallback(() => {
-    const newParams = new URLSearchParams();
-    newParams.set('recruitStatus', 'ALL');
+    const newParams = new URLSearchParams({ recruitStatus: 'ALL' });
     updateURLParams(newParams);
   }, [updateURLParams]);
 
