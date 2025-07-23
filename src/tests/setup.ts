@@ -31,3 +31,23 @@ Object.defineProperty(Element.prototype, 'scrollIntoView', {
   value: vi.fn(),
   writable: true,
 });
+
+// 공통 모킹 설정
+const mockSearchParams = new URLSearchParams();
+
+// useQueryParams 모킹
+vi.mock('@/app/home/hooks/useQueryParams', () => ({
+  default: () => ({
+    searchParams: new URLSearchParams(mockSearchParams),
+    updateURLParams: vi.fn((newParams: URLSearchParams) => {
+      Array.from(mockSearchParams.keys()).forEach((key) => {
+        mockSearchParams.delete(key);
+      });
+      newParams.forEach((value, key) => {
+        mockSearchParams.set(key, value);
+      });
+    }),
+  }),
+}));
+
+export { mockSearchParams };

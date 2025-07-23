@@ -3,37 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { useURLFilters } from '../useURLFilters';
 
-const mockRouter = {
-  replace: vi.fn(),
-  push: vi.fn(),
-  back: vi.fn(),
-  forward: vi.fn(),
-  refresh: vi.fn(),
-  prefetch: vi.fn(),
-};
-
-const mockSearchParams = new URLSearchParams();
-const mockPathname = '/home';
-
-vi.mock('next/navigation', () => ({
-  useRouter: () => mockRouter,
-  useSearchParams: () => mockSearchParams,
-  usePathname: () => mockPathname,
-}));
-
-vi.mock('../useQueryParams', () => ({
-  default: () => ({
-    searchParams: new URLSearchParams(mockSearchParams),
-    updateURLParams: vi.fn((newParams: URLSearchParams) => {
-      Array.from(mockSearchParams.keys()).forEach((key) => {
-        mockSearchParams.delete(key);
-      });
-      newParams.forEach((value, key) => {
-        mockSearchParams.set(key, value);
-      });
-    }),
-  }),
-}));
+import { mockSearchParams } from '@/tests/setup';
 
 describe('useURLFilters', () => {
   beforeEach(() => {

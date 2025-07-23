@@ -4,79 +4,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useParticipantAutoFilter } from '../useParticipantAutoFilter';
 import useQueryParams from '../useQueryParams';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-
-const mockRouter = {
-  replace: vi.fn(),
-  push: vi.fn(),
-  back: vi.fn(),
-  forward: vi.fn(),
-  refresh: vi.fn(),
-  prefetch: vi.fn(),
-};
-
-const mockSearchParams = new URLSearchParams();
-const mockPathname = '/home';
-
-vi.mock('next/navigation', () => ({
-  useRouter: () => mockRouter,
-  useSearchParams: () => mockSearchParams,
-  usePathname: () => mockPathname,
-}));
-
-vi.mock('../useQueryParams', () => ({
-  default: () => ({
-    searchParams: new URLSearchParams(mockSearchParams),
-    updateURLParams: vi.fn((newParams: URLSearchParams) => {
-      Array.from(mockSearchParams.keys()).forEach((key) => {
-        mockSearchParams.delete(key);
-      });
-      newParams.forEach((value, key) => {
-        mockSearchParams.set(key, value);
-      });
-    }),
-  }),
-}));
-
-const mockParticipant: ParticipantResponse = {
-  memberInfo: {
-    memberId: 1,
-    name: '테스트',
-    oauthEmail: 'test@example.com',
-    provider: 'GOOGLE',
-    contactEmail: 'test@example.com',
-    role: 'PARTICIPANT',
-  },
-  gender: 'MALE',
-  birthDate: '2000-01-01',
-  basicAddressInfo: {
-    region: 'SEOUL_ALL',
-    area: 'GANGNAMGU',
-  },
-  additionalAddressInfo: {
-    region: 'GYEONGGI_ALL',
-    area: 'SUWON_GWONSEONGU',
-  },
-  matchType: 'ALL',
-  adConsent: true,
-  matchConsent: true,
-};
-
-const mockResearcher: ResearcherResponse = {
-  memberInfo: {
-    memberId: 2,
-    name: '연구자',
-    oauthEmail: 'researcher@example.com',
-    provider: 'GOOGLE',
-    contactEmail: 'researcher@example.com',
-    role: 'RESEARCHER',
-  },
-  univEmail: 'researcher@univ.ac.kr',
-  univName: '테스트 대학교',
-  major: '컴퓨터공학과',
-  labInfo: 'AI 연구실',
-  adConsent: true,
-};
+import { mockParticipant, mockResearcher } from '@/tests/mocks/userData';
+import { mockSearchParams } from '@/tests/setup';
 
 describe('useParticipantAutoFilter', () => {
   beforeEach(() => {
