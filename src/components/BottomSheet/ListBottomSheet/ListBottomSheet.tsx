@@ -2,7 +2,6 @@ import { listBottomSheetLayout, listItem } from './ListBottomSheet.css';
 
 import { colors } from '@/styles/colors';
 
-
 export interface ListBottomSheetItem {
   text: string;
   onClick: () => void;
@@ -19,9 +18,9 @@ const ListBottomSheet = ({ items }: ListBottomSheetProps) => {
     <section className={listBottomSheetLayout}>
       {items
         .filter((item) => item.condition !== false)
-        .map((item, idx) => (
+        .map((item) => (
           <button
-            key={idx}
+            key={item.text}
             className={listItem}
             onClick={item.onClick}
             style={{
