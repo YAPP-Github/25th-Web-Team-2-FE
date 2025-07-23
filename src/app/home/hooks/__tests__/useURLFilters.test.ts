@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useURLFilters } from '../useURLFilters';
 
 import { mockSearchParams } from '@/tests/setup';
+import { customWrapper } from '@/tests/test-utils';
 
 describe('useURLFilters', () => {
   beforeEach(() => {
@@ -15,7 +16,9 @@ describe('useURLFilters', () => {
 
   describe('기본 동작', () => {
     it('쿼리 파라미터가 없을 때 기본 필터를 반환한다.', () => {
-      const { result } = renderHook(() => useURLFilters());
+      const { result } = renderHook(() => useURLFilters(), {
+        wrapper: customWrapper,
+      });
 
       expect(result.current.filters).toEqual({
         recruitStatus: 'ALL',
@@ -27,7 +30,9 @@ describe('useURLFilters', () => {
       mockSearchParams.set('gender', 'MALE');
       mockSearchParams.set('age', '25');
 
-      const { result } = renderHook(() => useURLFilters());
+      const { result } = renderHook(() => useURLFilters(), {
+        wrapper: customWrapper,
+      });
 
       expect(result.current.filters).toEqual({
         recruitStatus: 'OPEN',
@@ -40,7 +45,9 @@ describe('useURLFilters', () => {
 
   describe('필터 변경', () => {
     it('handleFilterChange로 필터를 변경할 수 있다.', () => {
-      const { result, rerender } = renderHook(() => useURLFilters());
+      const { result, rerender } = renderHook(() => useURLFilters(), {
+        wrapper: customWrapper,
+      });
 
       act(() => {
         result.current.handleFilterChange({
@@ -64,7 +71,9 @@ describe('useURLFilters', () => {
     });
 
     it('배열 값을 인자로 넘겨주면 쿼리 파라미터에는 쉼표로 구분하여 저장된다.', () => {
-      const { result, rerender } = renderHook(() => useURLFilters());
+      const { result, rerender } = renderHook(() => useURLFilters(), {
+        wrapper: customWrapper,
+      });
 
       act(() => {
         result.current.handleFilterChange({
@@ -85,7 +94,9 @@ describe('useURLFilters', () => {
 
   describe('모집 상태 토글', () => {
     it('handleToggleRecruitStatus로 모집 상태를 변경할 수 있다.', () => {
-      const { result, rerender } = renderHook(() => useURLFilters());
+      const { result, rerender } = renderHook(() => useURLFilters(), {
+        wrapper: customWrapper,
+      });
 
       expect(result.current.filters).toEqual({ recruitStatus: 'ALL' });
 
@@ -107,7 +118,9 @@ describe('useURLFilters', () => {
       mockSearchParams.set('gender', 'MALE');
       mockSearchParams.set('age', '25');
 
-      const { result, rerender } = renderHook(() => useURLFilters());
+      const { result, rerender } = renderHook(() => useURLFilters(), {
+        wrapper: customWrapper,
+      });
 
       expect(mockSearchParams.get('age')).toBe('25');
       expect(mockSearchParams.get('gender')).toBe('MALE');
