@@ -17,7 +17,7 @@ interface ProfileItemProps {
   required?: boolean;
   label?: React.ReactNode;
   onClick?: () => void;
-  isIcon?: React.ReactNode;
+  isIcon?: boolean;
   rightElement?: React.ReactNode;
   isArrow?: boolean;
 }
