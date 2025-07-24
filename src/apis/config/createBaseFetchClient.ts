@@ -8,7 +8,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export interface RequestProps {
   method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
   body?: Record<string, any>;
-  headers?: Record<string, unknown>;
+  headers?: HeadersInit;
   next?: { revalidate?: number; tags?: string[] };
   isRetry?: boolean;
 }
@@ -38,10 +38,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
         const response = await fetch(`${BASE_URL}${url}`, {
           method,
           body: body && JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json',
-            ...headers,
-          },
+          headers,
           ...(next && { next }),
         });
 
@@ -85,25 +82,41 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
       return this.request<T>(url, {
         method: 'POST',
         body: options.body,
-        headers: options.headers,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
       });
     },
     delete<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'DELETE',
         body: options.body,
-        headers: options.headers,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
       });
     },
     patch<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'PATCH',
         body: options.body,
-        headers: options.headers,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
       });
     },
     put<T = any>(url: string, options: FetchProps = {}) {
-      return this.request<T>(url, { method: 'PUT', body: options.body, headers: options.headers });
+      return this.request<T>(url, {
+        method: 'PUT',
+        body: options.body,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+      });
     },
 
     onRequest(callback: (config: RequestProps) => RequestProps) {
