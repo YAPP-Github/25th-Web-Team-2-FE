@@ -18,6 +18,7 @@ import { isParticipantInfo } from '@/utils/typeGuard';
 const GENDER_LABEL = {
   MALE: '남성',
   FEMALE: '여성',
+  ALL: '전체',
 } as const;
 
 const UserInfoHeader = ({ userInfo }: { userInfo: ParticipantResponse | ResearcherResponse }) => {
