@@ -36,7 +36,7 @@ interface Member {
 
 export interface ParticipantResponse {
   memberInfo: Member;
-  gender: 'MALE' | 'FEMALE';
+  gender: 'MALE' | 'FEMALE' | 'ALL';
   birthDate: string;
   basicAddressInfo: {
     region: string;

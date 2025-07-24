@@ -16,6 +16,7 @@ import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
 import { MatchType } from '@/types/uploadExperimentPost';
+import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -109,12 +110,14 @@ const useManageExperimentPostForm = ({
         { postId, data: updatedData },
         {
           onSuccess: async () => {
+            setSuccessToast(true);
+
             await Promise.allSettled([
               queryClient.invalidateQueries({ queryKey: ['experimentPostDetail', postId] }),
               queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
+              revalidateExperimentPosts(),
             ]);
 
-            setSuccessToast(true);
             setTimeout(() => {
               router.push(`/post/${postId}`);
             }, 1000);
@@ -129,8 +132,9 @@ const useManageExperimentPostForm = ({
       );
     } else {
       uploadExperimentPost(updatedData, {
-        onSuccess: (response) => {
+        onSuccess: async (response) => {
           setSuccessToast(true);
+          await revalidateExperimentPosts();
           setTimeout(() => {
             router.push(`/post/${response.postInfo.experimentPostId}`);
           }, 1000);

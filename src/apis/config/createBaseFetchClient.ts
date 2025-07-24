@@ -8,7 +8,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export interface RequestProps {
   method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
   body?: Record<string, any>;
-  headers?: Record<string, string>;
+  headers?: Record<string, unknown>;
+  next?: { revalidate?: number; tags?: string[] };
   isRetry?: boolean;
 }
 
@@ -32,7 +33,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
 
     async request<T = any>(url: string, config: RequestProps): Promise<T> {
       try {
-        const { method, body, headers } = this.onRequestCallback(config);
+        const { method, body, headers, next } = this.onRequestCallback(config);
 
         const response = await fetch(`${BASE_URL}${url}`, {
           method,
@@ -41,6 +42,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
             'Content-Type': 'application/json',
             ...headers,
           },
+          ...(next && { next }),
         });
 
         if (response.status === 204) {

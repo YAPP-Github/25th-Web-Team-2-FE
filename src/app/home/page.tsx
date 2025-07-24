@@ -4,13 +4,12 @@ import ExperimentPostContainer from './components/ExperimentPostContainer/Experi
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
 import type { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
-import { QUERY_KEY, queryKey } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 import { getQueryParamsToString } from '@/utils/getQueryParamsString';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/lib/getQueryClient';
-import { ROLE } from '@/constants/config';
 import type { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth-utils';
@@ -55,7 +54,12 @@ export default async function Home({ searchParams }: HomePageProps) {
     : { recruitStatus: 'ALL', count: POST_PER_PAGE };
 
   const queryParams = getQueryParamsToString({ ...filters });
-  const initialPosts = await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams));
+  const initialPosts = await fetchClient.get<ExperimentPostResponse>(
+    API_URL.postList(queryParams),
+    {
+      next: { tags: ['experiment-posts'] },
+    },
+  );
 
   if (session?.role) {
     await queryClient.prefetchQuery({

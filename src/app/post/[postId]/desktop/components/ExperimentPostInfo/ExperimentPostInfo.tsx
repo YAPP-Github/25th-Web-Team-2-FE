@@ -25,6 +25,7 @@ import {
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 
 interface ExperimentPostInfoProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -48,7 +49,8 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
     deleteExperimentPostMutation(
       { postId: postDetailData.experimentPostId },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await revalidateExperimentPosts();
           setTimeout(() => {
             router.push('/');
             setToastMessage('');

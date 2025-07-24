@@ -55,6 +55,7 @@ export const createSSRFetchClient = (accessToken?: string) => {
             ...config.headers,
             Authorization: `Bearer ${accessToken}`,
           },
+          ...(config.next && { next: config.next }),
         };
       }
       return config;
