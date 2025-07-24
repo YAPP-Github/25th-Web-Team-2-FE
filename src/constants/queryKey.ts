@@ -1,3 +1,5 @@
+import type { ExperimentPostListFilters } from '@/apis/post';
+
 export const QUERY_KEY = {
   post: 'experiment-posts',
   postRegion: 'postRegion',
@@ -12,4 +14,17 @@ export const QUERY_KEY = {
   editPost: 'editPost',
   originExperimentPost: 'originExperimentPost',
   applyMethod: 'applyMethod',
+};
+
+export const queryKey = {
+  post: (filters: ExperimentPostListFilters) =>
+    [
+      'experiment-posts',
+      filters.recruitStatus ?? 'ALL',
+      filters.gender ?? null,
+      filters.age ?? null,
+      filters.region ?? null,
+      filters.areas ?? null,
+      filters.matchType ?? null,
+    ] as const,
 };

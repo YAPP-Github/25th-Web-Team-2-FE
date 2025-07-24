@@ -1,7 +1,7 @@
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 
 import { fetchPostList, ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 
 const POST_PER_PAGE = 15;
 
@@ -10,12 +10,10 @@ const useExperimentPostListQuery = (
   isLoading: boolean,
   initialData?: ExperimentPostResponse,
 ) => {
-  const { matchType, gender, age, region, areas, recruitStatus } = filters;
-
   const isFilters = Object.keys(filters).length > 0;
 
   return useInfiniteQuery({
-    queryKey: [QUERY_KEY.post, recruitStatus, gender, age, region, areas, matchType],
+    queryKey: queryKey.post(filters),
     queryFn: ({ pageParam }) =>
       fetchPostList({ ...filters, page: pageParam, count: POST_PER_PAGE }),
     enabled: isFilters && !isLoading,
