@@ -33,7 +33,7 @@ export default async function Home({ searchParams }: HomePageProps) {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: queryKey.post(filters),
-    queryFn: () => fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams)),
+    queryFn: () => Promise.resolve(initialPosts),
     initialData: {
       pages: [initialPosts],
       pageParams: [1],
