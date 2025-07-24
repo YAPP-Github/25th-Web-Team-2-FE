@@ -1,19 +1,20 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { getServerSession } from 'next-auth';
+
 import Banner from './components/Banner/Banner';
 import ExperimentPostContainer from './components/ExperimentPostContainer/ExperimentPostContainer';
+import { calculateAgeFromBirthDate } from './home.utils';
 
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
+import type { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import type { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
+import { authOptions } from '@/lib/auth-utils';
+import { getQueryClient } from '@/lib/getQueryClient';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 import { getQueryParamsToString } from '@/utils/getQueryParamsString';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/lib/getQueryClient';
-import type { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth-utils';
-import { calculateAgeFromBirthDate } from './home.utils';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 const POST_PER_PAGE = 15;

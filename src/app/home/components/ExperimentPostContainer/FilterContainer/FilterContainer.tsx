@@ -3,9 +3,9 @@ import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
 import { filterContainerLayout, resetFilterButton, verticalLine } from './FilterContainer.css';
 import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
+import { ExperimentPostListFilters } from '@/apis/post';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
-import { ExperimentPostListFilters } from '@/apis/post';
 
 interface FilterContainerProps {
   initialGender?: ExperimentPostListFilters['gender'];
