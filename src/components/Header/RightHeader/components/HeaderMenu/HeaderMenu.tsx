@@ -1,3 +1,5 @@
+'use client';
+
 import * as Select from '@radix-ui/react-select';
 import Link from 'next/link';
 import { useState } from 'react';
