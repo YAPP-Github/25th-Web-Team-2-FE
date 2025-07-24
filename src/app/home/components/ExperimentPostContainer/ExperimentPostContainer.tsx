@@ -14,16 +14,22 @@ import useParticipantAutoFilter from '../../hooks/useParticipantAutoFilter';
 import useURLFilters from '../../hooks/useURLFilters';
 import useUserInfo from '../../hooks/useUserInfo';
 
-import { ExperimentPostResponse } from '@/apis/post';
+import { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
 interface ExperimentPostContainerProps {
   initialPosts: ExperimentPostResponse;
+  initialGender?: ExperimentPostListFilters['gender'];
+  initialAge?: ExperimentPostListFilters['age'];
 }
 
-const ExperimentPostContainer = ({ initialPosts }: ExperimentPostContainerProps) => {
+const ExperimentPostContainer = ({
+  initialPosts,
+  initialGender,
+  initialAge,
+}: ExperimentPostContainerProps) => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
   const { isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
@@ -34,7 +40,7 @@ const ExperimentPostContainer = ({ initialPosts }: ExperimentPostContainerProps)
       <div className={horizontalLineMobile} />
       <div className={filterWrapper}>
         {/* 필터링 */}
-        <FilterContainer />
+        <FilterContainer initialGender={initialGender} initialAge={initialAge} />
 
         <div className={recruitCheckWrapper({ isMobile: false })}>
           {/* 모집 중인 공고만 보기 */}

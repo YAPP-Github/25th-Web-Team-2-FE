@@ -5,12 +5,24 @@ import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
+import { ExperimentPostListFilters } from '@/apis/post';
 
-const FilterContainer = () => {
+interface FilterContainerProps {
+  initialGender?: ExperimentPostListFilters['gender'];
+  initialAge?: ExperimentPostListFilters['age'];
+}
+
+const FilterContainer = ({ initialGender, initialAge }: FilterContainerProps) => {
   const { filters, handleFilterChange, handleResetFilter } = useURLFilters();
 
   const isFiltered =
-    filters.age || filters.gender || filters.matchType || filters.region || filters.areas;
+    initialGender ||
+    initialAge ||
+    filters.age ||
+    filters.gender ||
+    filters.matchType ||
+    filters.region ||
+    filters.areas;
 
   return (
     <div className={filterContainerLayout}>
@@ -33,8 +45,8 @@ const FilterContainer = () => {
       {/* 모집 대상 필터링 */}
       <ContactTargetFilter
         onChange={handleFilterChange}
-        filterGender={filters.gender}
-        filterAge={filters.age}
+        filterGender={initialGender ?? filters.gender}
+        filterAge={initialAge ?? filters.age}
       />
 
       {/* 지역 필터링 */}

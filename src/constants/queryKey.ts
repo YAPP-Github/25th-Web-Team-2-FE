@@ -1,4 +1,5 @@
 import type { ExperimentPostListFilters } from '@/apis/post';
+import { Role } from '@/types/user';
 
 export const QUERY_KEY = {
   post: 'experiment-posts',
@@ -27,4 +28,6 @@ export const queryKey = {
       filters.areas ?? null,
       filters.matchType ?? null,
     ] as const,
+
+  userInfo: (role?: Role) => ['userInfo', role ?? null] as const,
 };
