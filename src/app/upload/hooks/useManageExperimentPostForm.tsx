@@ -17,6 +17,7 @@ import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
 import { MatchType } from '@/types/uploadExperimentPost';
+import { queryKey } from '@/constants/queryKey';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -113,8 +114,8 @@ const useManageExperimentPostForm = ({
             setSuccessToast(true);
 
             await Promise.allSettled([
-              queryClient.invalidateQueries({ queryKey: ['experimentPostDetail', postId] }),
-              queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
+              queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(postId) }),
+              queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) }),
               revalidateExperimentPosts(),
             ]);
 

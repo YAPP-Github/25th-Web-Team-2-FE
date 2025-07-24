@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { fetchClient } from '@/apis/config/fetchClient';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 export interface UseUpdateRecruitStatusMutationParams {
@@ -24,7 +24,7 @@ const useUpdateRecruitStatusMutation = () => {
   };
 
   return useMutation({
-    mutationKey: [QUERY_KEY.updateRecruitStatus],
+    mutationKey: queryKey.updateRecruitStatus,
     mutationFn,
   });
 };

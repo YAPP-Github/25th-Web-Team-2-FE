@@ -1,17 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateResearcherInfo } from '@/apis/user';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
+import { ROLE } from '@/constants/config';
 
-const useUpdateParticipantInfoMutation = () => {
+const useUpdateResearcherInfoMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: updateResearcherInfo,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.researcherInfo] });
+      queryClient.invalidateQueries({ queryKey: queryKey.userInfo(ROLE.researcher) });
     },
   });
 };
 
-export default useUpdateParticipantInfoMutation;
+export default useUpdateResearcherInfoMutation;

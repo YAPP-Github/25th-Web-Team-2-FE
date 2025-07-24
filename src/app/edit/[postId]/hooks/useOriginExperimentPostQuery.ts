@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import { UseQueryExperimentDetailsAPIResponse } from '@/app/post/[postId]/hooks/useExperimentDetailsQuery';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 const useOriginExperimentPostQuery = ({ postId }: { postId?: string }) => {
@@ -11,7 +11,7 @@ const useOriginExperimentPostQuery = ({ postId }: { postId?: string }) => {
   const queryFn = () => fetchClient.get<UseQueryExperimentDetailsAPIResponse>(url);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, CustomError>({
-    queryKey: [QUERY_KEY.originExperimentPost, postId],
+    queryKey: queryKey.originExperimentPost(postId ?? ''),
     queryFn,
     enabled: !!postId,
     retry: false,

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 interface UseApplyMethodQueryParams {
@@ -21,7 +21,7 @@ const useApplyMethodQuery = ({ postId }: UseApplyMethodQueryParams) => {
   const queryFn = () => fetchClient.get<UseApplyMethodQueryResponse>(url);
 
   return useQuery<UseApplyMethodQueryResponse, CustomError>({
-    queryKey: [QUERY_KEY.applyMethod, postId],
+    queryKey: queryKey.applyMethod(postId ?? ''),
     queryFn,
     enabled: !!postId,
   });

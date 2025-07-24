@@ -4,7 +4,7 @@ import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';
 
@@ -55,7 +55,7 @@ const useExperimentDetailsQuery = ({ postId }: { postId?: string }) => {
   const queryFn = () => fetchClient.post<UseQueryExperimentDetailsAPIResponse>(url);
 
   return useQuery<UseQueryExperimentDetailsAPIResponse, CustomError>({
-    queryKey: [QUERY_KEY.experimentPostDetail, postId],
+    queryKey: queryKey.experimentPostDetail(postId ?? ''),
     queryFn,
     enabled: !!postId && !isUserInfoLoading,
   });
