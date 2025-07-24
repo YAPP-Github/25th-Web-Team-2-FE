@@ -3,6 +3,7 @@ import { fetchClient } from './config/fetchClient';
 import { API_URL } from '@/constants/url';
 import { AreaType, RegionType } from '@/types/filter';
 import { ExperimentPost } from '@/types/post';
+import { getQueryParamsToString } from '@/utils/getQueryParamsString';
 
 export interface ExperimentPostResponse {
   content: ExperimentPost[];
@@ -46,21 +47,8 @@ export interface ExperimentPostListFilters {
 }
 
 export const fetchPostList = async (params: ExperimentPostListFilters) => {
-  const queryParams = new URLSearchParams();
-
-  Object.entries(params).forEach(([key, value]) => {
-    if (Number.isInteger(value)) {
-      queryParams.append(key, String(value));
-    } else if (Array.isArray(value) && value.length > 0) {
-      value.forEach((v) => {
-        queryParams.append(key, String(v));
-      });
-    } else if (value !== undefined && value !== null && Object.keys(value).length > 0) {
-      queryParams.append(key, String(value));
-    }
-  });
-
-  return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams.toString()));
+  const queryParams = getQueryParamsToString({ ...params });
+  return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams));
 };
 
 export const fetchPostCount = async <T>(region?: string | null) => {

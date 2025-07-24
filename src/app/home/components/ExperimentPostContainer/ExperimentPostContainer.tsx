@@ -14,11 +14,16 @@ import useParticipantAutoFilter from '../../hooks/useParticipantAutoFilter';
 import useURLFilters from '../../hooks/useURLFilters';
 import useUserInfo from '../../hooks/useUserInfo';
 
+import { ExperimentPostResponse } from '@/apis/post';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-const ExperimentPostContainer = () => {
+interface ExperimentPostContainerProps {
+  initialPosts: ExperimentPostResponse;
+}
+
+const ExperimentPostContainer = ({ initialPosts }: ExperimentPostContainerProps) => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
   const { isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
@@ -44,7 +49,10 @@ const ExperimentPostContainer = () => {
       </div>
 
       {/* 공고 목록 */}
-      <ExperimentPostCardListContainer isUserInfoLoading={!isAutoFilled} />
+      <ExperimentPostCardListContainer
+        isUserInfoLoading={!isAutoFilled}
+        initialPosts={initialPosts}
+      />
     </div>
   );
 };
