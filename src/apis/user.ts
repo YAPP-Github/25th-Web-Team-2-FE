@@ -43,10 +43,6 @@ export const updateResearcherInfo = async (params: ResearcherUpdateSubmitSchemaT
   });
 };
 
-export const validateContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
-  return await fetchClient.get(API_URL.validateContactEmail(contactEmail));
-};
-
 export const leaveUser = async ({ reasonType, reason }: LeaveUserParams) => {
   return await fetchClient.delete<ResearcherResponse>(API_URL.leave, {
     body: { reasonType, reason },
