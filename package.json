@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "preview": "next build && next start",
     "lint": "next lint --fix",
     "mock": "npx tsx watch ./src/mocks/http.ts",
     "dev:mock": "concurrently --kill-others \"NEXT_PUBLIC_API_MOCKING=enable pnpm dev\" \"pnpm mock\"",
