@@ -13,11 +13,11 @@ import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExpe
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
+import { queryKey } from '@/constants/queryKey';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
 import { MatchType } from '@/types/uploadExperimentPost';
-import { queryKey } from '@/constants/queryKey';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
