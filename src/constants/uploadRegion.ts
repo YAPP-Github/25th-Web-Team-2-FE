@@ -177,7 +177,7 @@ export const UPLOAD_REGION = [
     value: 'BUSAN',
     label: '부산',
     children: [
-      { value: 'GANGSEOGU', label: '강서구' },
+      { value: 'BUSAN_GANGSEOGU', label: '강서구(부산)' },
       { value: 'GEUMJEONGGU', label: '금정구' },
       { value: 'GIJANGGUN', label: '기장군' },
       { value: 'NAMGU', label: '남구' },
