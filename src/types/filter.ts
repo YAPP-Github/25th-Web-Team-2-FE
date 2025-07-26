@@ -88,7 +88,7 @@ export type AreaType =
   | 'POCHEONSI'
   | 'HANAMSI'
   | 'HWASEONGSI'
-  | 'INCHOEN_ALL'
+  | 'INCHEON_ALL'
   | 'GANGHWAGUN'
   | 'GYEYANGGU'
   | 'NAMDONGGU'
