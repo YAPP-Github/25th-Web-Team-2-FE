@@ -10,7 +10,6 @@ import {
   isExpiredToken,
 } from './middleware/utils';
 
-// TODO: 경로별 수행할 로직 리팩토링 필요
 export async function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   const { searchParams, pathname } = url;
@@ -31,12 +30,12 @@ export async function middleware(request: NextRequest) {
   const isProfilePage = pathname.startsWith('/user/profile');
   const isProfileWithDevice = /^\/user\/profile\/(mobile|desktop)(\/.*)?$/.test(pathname);
 
-  // 토큰이 없는 경우
+  // 토큰 X + (홈 & 로그인 & 상세보기) 외에 페이지를 접속했을 때 → 로그인 페이지로 리다이렉트
   if (!token && !isHomePage && !isLoginPage && !isPostDetailPage) {
     return goToLogin(request);
   }
 
-  // 토큰이 만료된 경우
+  // 토큰 O + (홈 & 로그인) 외에 페이지를 접속했을 때 → 쿠키 삭제 후  로그인 페이지로 리다이렉트
   if (token && isExpiredToken(token) && !isHomePage && !isLoginPage) {
     const response = goToLogin(request);
     clearAuthCookies(request, response);
@@ -47,6 +46,7 @@ export async function middleware(request: NextRequest) {
   // 임시 사용자가 회원가입 이탈했을 경우
   const isTempUser = token?.isTempUser === true && token?.accessToken === 'temp-token';
 
+  // 홈 페이지 접속할 때 rewrite 하는데, 회원가입 중인 유저(isTempUser)일 경우 쿠키 삭제 후 반환
   if (isHomePage) {
     url.pathname = `/home`;
     const response = NextResponse.rewrite(url);
@@ -58,13 +58,16 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
+  // 회원가입 중인 유저(isTempUser) + 회원가입 외 페이지에 접속할 경우 쿠키 삭제 후 반환
   if (isTempUser && !isJoinPage) {
     const response = NextResponse.next();
     clearAuthCookies(request, response);
     return response;
   }
 
+  // 회원가입 페이지 또는 로그인 페이지에 접속할 경우
   if (isJoinPage || isLoginPage) {
+    // 회원가입 성공 페이지에서 홈으로 리다이렉트 되는 것 방지 (성공 후 isTempUser가 삭제되기 때문)
     if (!isJoinSuccessPage && token && !token.isTempUser) {
       return goToHome(request);
     }
