@@ -83,7 +83,7 @@ export const UPLOAD_REGION = [
     label: '인천',
     children: [
       { value: 'GANGHWAGUN', label: '강화군' },
-      { value: 'GYEGU', label: '계양구' },
+      { value: 'GYEYANGGU', label: '계양구' },
       { value: 'NAMDONGGU', label: '남동구' },
       { value: 'DONGGU', label: '동구' },
       { value: 'MICHUHOLGU', label: '미추홀구' },
@@ -177,7 +177,7 @@ export const UPLOAD_REGION = [
     value: 'BUSAN',
     label: '부산',
     children: [
-      { value: 'GANGSEOGU', label: '강서구' },
+      { value: 'BUSAN_GANGSEOGU', label: '강서구(부산)' },
       { value: 'GEUMJEONGGU', label: '금정구' },
       { value: 'GIJANGGUN', label: '기장군' },
       { value: 'NAMGU', label: '남구' },

@@ -94,7 +94,7 @@ export const AREA_MAPPER: Record<string, string> = {
   HWASEONGSI: '화성시',
 
   // 인천
-  INCHOEN_ALL: '전체',
+  INCHEON_ALL: '전체',
   GANGHWAGUN: '강화군',
   GYEYANGGU: '계양구',
   NAMDONGGU: '남동구',
@@ -323,7 +323,7 @@ export const AREA_MAPPER: Record<string, string> = {
 export const AREA_ALL = [
   'SEOUL_ALL',
   'GYEONGGI_ALL',
-  'INCHOEN_ALL',
+  'INCHEON_ALL',
   'GANGWON_ALL',
   'DAEJEON_ALL',
   'CHUNGNAM_ALL',
