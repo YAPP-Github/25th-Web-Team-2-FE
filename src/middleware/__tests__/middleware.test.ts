@@ -1,9 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import * as nextAuthJwt from 'next-auth/jwt';
 import type { JWT } from 'next-auth/jwt';
-import * as utils from '../utils';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
 import { middleware } from '../../middleware';
+import * as utils from '../utils';
 
 const BASE_URL = 'http://localhost:3000';
 

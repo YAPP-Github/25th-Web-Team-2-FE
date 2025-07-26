@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
+
 import { clearAuthCookies, getDeviceType } from '../utils';
 
 export function profileHandler(request: NextRequest, token: JWT | null) {
