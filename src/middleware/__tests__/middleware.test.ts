@@ -14,7 +14,7 @@ const createMockRequest = (url: string, userAgent?: string): NextRequest => {
   return new NextRequest(new URL(url, BASE_URL), { headers });
 };
 
-describe('middleware if문 분기별 동작', () => {
+describe('middleware', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
