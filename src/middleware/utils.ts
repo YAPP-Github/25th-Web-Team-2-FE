@@ -20,7 +20,7 @@ export const goToLogin = (request: NextRequest) => {
  * 홈 페이지로 리다이렉트
  */
 export const goToHome = (request: NextRequest) => {
-  return NextResponse.redirect(new URL('/', request.url));
+  return NextResponse.redirect(new URL('/home', request.url));
 };
 
 /**
