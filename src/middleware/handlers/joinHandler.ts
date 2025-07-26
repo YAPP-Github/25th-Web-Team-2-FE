@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
 import { getDeviceType, goToHome } from '../utils';
 
-export async function joinHandler(request: NextRequest, token: JWT | null) {
+export function joinHandler(request: NextRequest, token: JWT | null) {
   const url = request.nextUrl.clone();
   const { searchParams, pathname } = url;
   const userAgent = request.headers.get('user-agent') || '';

@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
 import { clearAuthCookies, goToLogin, isExpiredToken } from '../utils';
 
-export async function authHandler(request: NextRequest, token: JWT | null) {
+export function authHandler(request: NextRequest, token: JWT | null) {
   const { pathname } = request.nextUrl;
 
   const isHomePage = pathname === '/';

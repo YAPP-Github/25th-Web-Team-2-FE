@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
   });
 
   // 인증 체크 먼저 수행
-  const authResult = await authHandler(request, token);
+  const authResult = authHandler(request, token);
   if (authResult) {
     return authResult;
   }
@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
   // 핸들러 배열을 순회하면서 매칭되는 핸들러 실행하고 매칭되면 반복문 종료
   for (const { test, handler } of handlerMap) {
     if (test(pathname)) {
-      const result = await handler(request, token);
+      const result = handler(request, token);
 
       if (result) {
         return result;
