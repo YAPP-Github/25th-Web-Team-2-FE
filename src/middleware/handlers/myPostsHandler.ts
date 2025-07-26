@@ -15,8 +15,8 @@ export function myPostsHandler(request: NextRequest, token: JWT | null) {
     return response;
   }
 
-  // 참여자가 내가 쓴 글 페이지에 접근 시 홈으로 리다이렉트
-  if (token && token?.role === ROLE.participant) {
+  // 연구자가 아닌 유저가 내가 쓴 글 페이지에 접근 시 홈으로 리다이렉트
+  if (token?.role !== ROLE.researcher) {
     return goToHome(request);
   }
 
