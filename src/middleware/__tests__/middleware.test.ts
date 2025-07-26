@@ -227,17 +227,19 @@ describe('middleware', () => {
     expect(response?.headers.get('x-middleware-rewrite')).toBeNull();
   });
 
-  it('정상 토큰을 가진 사용자가 보호된 페이지 접근 시 정상적으로 처리된다.', async () => {
+  it('연구자가 아닌 사용자가 내가 쓴 글 페이지에 접근 시 홈으로 redirect된다.', async () => {
     // given
-    const requestUrl = `${BASE_URL}/my-posts`;
-    const request = createMockRequest(requestUrl);
     const normalUserToken = { isTempUser: false } as JWT;
     vi.spyOn(nextAuthJwt, 'getToken').mockResolvedValue(normalUserToken);
+    const requestUrl = `${BASE_URL}/my-posts`;
+    const homeUrl = `${BASE_URL}/home`;
+    const request = createMockRequest(requestUrl);
 
     // when
     const response = await middleware(request);
 
     // then
-    expect(response?.status).toBe(200);
+    expect(response?.status).toBe(307);
+    expect(response?.headers.get('location')).toBe(homeUrl);
   });
 });
