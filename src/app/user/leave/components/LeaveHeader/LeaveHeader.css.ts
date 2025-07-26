@@ -18,4 +18,10 @@ export const title = style({
 export const description = style({
   ...fonts.label.large.R14,
   color: colors.text03,
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      whiteSpace: 'pre-wrap',
+    },
+  },
 });

@@ -7,6 +7,8 @@ import {
   getRegionFilterText,
 } from './home.utils';
 
+import { AreaType } from '@/types/filter';
+
 describe('formatPostDate - 실험공고 날짜 형식 맞추는 유틸 함수', () => {
   it('시작일과 종료일이 모두 있는 경우 범위 형식으로 날짜 문자열을 반환한다.', () => {
     // Given
@@ -135,6 +137,19 @@ describe('getContactTargetFilterText - 모집 대상 filter 텍스트 유틸 함
     expect(result).toBe(expected);
   });
 
+  it('성별이 전체인 경우 "전체" 텍스트를 반환한다.', () => {
+    // Given
+    const age = undefined;
+    const gender = 'ALL';
+    const expected = '전체';
+
+    // When
+    const result = getContactTargetFilterText(age, gender);
+
+    // Then
+    expect(result).toBe(expected);
+  });
+
   it('나이만 있는 경우 나이만 반환한다.', () => {
     // Given
     const age = 25;
@@ -178,7 +193,7 @@ describe('getRegionFilterText - 지역 filter 텍스트 유틸 함수', () => {
   it('지역과 세부 지역 1개 있는 경우, 지역과 세부 지역을 함께 반환한다.', () => {
     // Given
     const region = 'SEOUL';
-    const areas = ['GANGNAMGU'];
+    const areas: AreaType[] = ['GANGNAMGU'];
     const expected = '서울 · 강남구';
     // When
     const result = getRegionFilterText(region, areas);
@@ -190,7 +205,7 @@ describe('getRegionFilterText - 지역 filter 텍스트 유틸 함수', () => {
   it('지역과 세부 지역 2개 이상 있는 경우, 지역과 첫 번째 세부 지역과 나머지 개수를 반환한다.', () => {
     // Given
     const region = 'SEOUL';
-    const areas = ['GANGNAMGU', 'GANGDONGGU', 'MAPOGU'];
+    const areas: AreaType[] = ['GANGNAMGU', 'GANGDONGGU', 'MAPOGU'];
     const expected = '서울 · 강남구 외 2';
     // When
     const result = getRegionFilterText(region, areas);
@@ -214,7 +229,7 @@ describe('getRegionFilterText - 지역 filter 텍스트 유틸 함수', () => {
   it('지역이 없는 경우, 기본 메시지 "지역"을 반환한다.', () => {
     // Given
     const region = undefined;
-    const areas = ['GANGNAMGU'];
+    const areas: AreaType[] = ['GANGNAMGU'];
     const expected = '지역';
 
     // When

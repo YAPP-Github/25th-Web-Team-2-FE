@@ -4,54 +4,26 @@ import * as Popover from '@radix-ui/react-popover';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
-import {
-  triggerWrapper,
-  regionContentContainer,
-  contentWrapper,
-  verticalLine,
-} from './AreaFilter.css';
-import AreaContainer from './components/AreaContainer/AreaContainer';
+import { triggerWrapper, regionContentContainer } from './AreaFilter.css';
 import AreaFilterBottomSheet from './components/AreaFilterBottomSheet/AreaFilterBottomSheet';
-import FooterButtonContainer from './components/FooterButtonContainer/FooterButtonContainer';
-import RegionContainer from './components/RegionContainer/RegionContainer';
-import useAreaFilter from './hooks/useAreaFilter';
+import AreaFilterContent from './components/AreaFilterContent/AreaFilterContent';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import { getFilterColors, getRegionFilterText } from '@/app/home/home.utils';
-import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
-import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
+import { ExperimentPostListFilterParams } from '@/types/filter';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
-  onChange: (key: string, value: string | string[] | number | null) => void;
+  onChange: (filters: ExperimentPostListFilterParams) => void;
 }
 
 const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
-  const {
-    selectedRegion,
-    selectedAreas,
-    selectedAreaList,
-    isValidAreas,
-    isValidSaveButton,
-    handleReset,
-    handleSelectRegion,
-    handleSelectArea,
-  } = useAreaFilter();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { open, close } = useOverlay();
 
-  const { data: experimentPostRegion } = usePostRegionCountQuery(selectedRegion);
-  const { data: experimentPostAreas } = usePostAreaCountQuery(selectedRegion);
-
   const isFiltered = Boolean(filters.region) || Boolean(filters.areas);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const handleSave = () => {
-    setIsFilterOpen(false);
-    onChange('region', selectedRegion);
-    onChange('areas', selectedAreaList.length > 0 ? selectedAreaList : null);
-  };
 
   const handleOpenBottomSheet = (e: React.TouchEvent) => {
     e.preventDefault();
@@ -60,7 +32,6 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
         <AreaFilterBottomSheet
           initialRegion={filters.region}
           initialAreas={filters.areas}
-          onReset={handleReset}
           onChange={onChange}
           onClose={close}
         />
@@ -81,25 +52,11 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className={regionContentContainer} align="start">
-          <div className={contentWrapper}>
-            <RegionContainer
-              experimentPostRegion={experimentPostRegion}
-              selectedRegion={selectedRegion}
-              handleSelectRegion={handleSelectRegion}
-            />
-            <span className={verticalLine} />
-            <AreaContainer
-              experimentPostAreas={experimentPostAreas}
-              selectedRegion={selectedRegion}
-              handleSelectArea={handleSelectArea}
-              isValidAreas={isValidAreas}
-              selectedAreas={selectedAreas}
-            />
-          </div>
-          <FooterButtonContainer
-            handleReset={handleReset}
-            handleSave={handleSave}
-            isValidSaveButton={isValidSaveButton}
+          <AreaFilterContent
+            initialRegion={filters.region}
+            initialAreas={filters.areas}
+            onChange={onChange}
+            onClose={() => setIsFilterOpen(false)}
           />
         </Popover.Content>
       </Popover.Portal>

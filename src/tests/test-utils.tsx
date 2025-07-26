@@ -3,7 +3,7 @@ import { FormProvider, useForm, UseFormProps } from 'react-hook-form';
 
 import Providers from '@/providers/Providers';
 
-const customWrapper = ({ children }: { children: React.ReactNode }) => {
+export const customWrapper = ({ children }: { children: React.ReactNode }) => {
   return <Providers session={null}>{children}</Providers>;
 };
 

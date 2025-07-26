@@ -1,24 +1,14 @@
 import AreaFilter from './AreaFilter/AreaFilter';
-import { verticalLine } from './AreaFilter/AreaFilter.css';
 import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
-import { filterContainerLayout, resetFilterButton } from './FilterContainer.css';
+import { filterContainerLayout, resetFilterButton, verticalLine } from './FilterContainer.css';
 import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
-import { ExperimentPostListFilters } from '@/apis/post';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
 
+const FilterContainer = () => {
+  const { filters, handleFilterChange, handleResetFilter } = useURLFilters();
 
-interface FilterContainerProps {
-  filters: ExperimentPostListFilters;
-  handleFilterChange: (key: string, value: string | string[] | number | null) => void;
-  handleResetFilter: () => void;
-}
-
-const FilterContainer = ({
-  filters,
-  handleFilterChange,
-  handleResetFilter,
-}: FilterContainerProps) => {
   const isFiltered =
     filters.age || filters.gender || filters.matchType || filters.region || filters.areas;
 
@@ -37,7 +27,7 @@ const FilterContainer = ({
       {/* 진행 방식 필터링 */}
       <MatchTypeFilter
         filters={filters}
-        onChange={(value) => handleFilterChange('matchType', value)}
+        onChange={(matchType) => handleFilterChange({ matchType })}
       />
 
       {/* 모집 대상 필터링 */}

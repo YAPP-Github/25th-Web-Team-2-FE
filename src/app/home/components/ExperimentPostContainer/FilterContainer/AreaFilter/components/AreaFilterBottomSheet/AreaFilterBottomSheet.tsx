@@ -29,8 +29,7 @@ const hasSelectedAreaAll = (selectedAreas: Record<string, boolean>) => {
 };
 
 interface AreaFilterBottomSheetProps {
-  onChange: (key: string, value: string | string[] | number | null) => void;
-  onReset: () => void;
+  onChange: (filters: Record<string, string | string[] | number | null>) => void;
   onClose: () => void;
   initialRegion?: RegionType;
   initialAreas?: AreaType[];
@@ -38,7 +37,6 @@ interface AreaFilterBottomSheetProps {
 
 const AreaFilterBottomSheet = ({
   onChange,
-  onReset,
   onClose,
   initialRegion,
   initialAreas,
@@ -79,12 +77,13 @@ const AreaFilterBottomSheet = ({
   const handleReset = () => {
     setSelectedRegion(null);
     setSelectedAreas({});
-    onReset();
   };
 
   const handleConfirm = () => {
-    onChange('region', selectedRegion);
-    onChange('areas', selectedAreaList.length > 0 ? selectedAreaList : null);
+    onChange({
+      region: selectedRegion,
+      areas: selectedAreaList.length > 0 ? selectedAreaList : null,
+    });
     onClose();
   };
 

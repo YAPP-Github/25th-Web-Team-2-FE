@@ -1,5 +1,6 @@
-export const REGION_MAPPER: Record<string, string> = {
-  ALL: '전국',
+import { AreaType, RegionType } from '@/types/filter';
+
+export const REGION_MAPPER: Record<RegionType, string> = {
   SEOUL: '서울',
   GYEONGGI: '경기',
   INCHEON: '인천',
@@ -17,9 +18,10 @@ export const REGION_MAPPER: Record<string, string> = {
   JEONNAM: '전남',
   JEONBUK: '전북',
   JEJU: '제주',
+  NONE: '전체',
 } as const;
 
-export const AREA_MAPPER: Record<string, string> = {
+export const AREA_MAPPER: Record<AreaType, string> = {
   // 서울 부분 (기존 항목)
   SEOUL_ALL: '전체',
   GEUMCHEONGU: '금천구',
@@ -316,8 +318,7 @@ export const AREA_MAPPER: Record<string, string> = {
   JEJU_SEOGWIPOSI: '제주 서귀포시',
   JEJU_JEJUSI: '제주 제주시',
 
-  // 기타
-  NONE: '없음',
+  NONE: '전체',
 } as const;
 
 export const AREA_ALL = [

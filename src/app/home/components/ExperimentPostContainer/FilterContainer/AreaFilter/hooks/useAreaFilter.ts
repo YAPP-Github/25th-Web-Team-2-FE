@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { AREA_ALL } from '@/app/home/home.constants';
 import { AreaAll } from '@/app/home/home.types';
-import { RegionType } from '@/types/filter';
+import { AREAS } from '@/constants/filters';
+import { RegionType, AreaType } from '@/types/filter';
 
 const MAX_SELECTED_AREAS = 5;
+
+const isAreaType = (area: string): area is AreaType => {
+  return AREAS.includes(area as AreaType);
+};
 
 const isAreaAllType = (area: string) => {
   return AREA_ALL.includes(area as AreaAll);
@@ -14,10 +19,28 @@ const hasSelectedAreaAll = (selectedAreas: Record<string, boolean>) => {
   return AREA_ALL.some((area) => selectedAreas[area]);
 };
 
-const useAreaFilter = () => {
-  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(null);
-  const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>({});
-  const selectedAreaList = Object.keys(selectedAreas).filter((key) => selectedAreas[key]);
+const getInitialAreas = (initialAreas?: AreaType[]): Partial<Record<AreaType, boolean>> => {
+  const areas: Partial<Record<AreaType, boolean>> = {};
+
+  return initialAreas
+    ? initialAreas.reduce((acc, area) => ({ ...acc, [area]: true }), areas)
+    : areas;
+};
+
+interface UseAreaFilterProps {
+  initialRegion?: RegionType;
+  initialAreas?: AreaType[];
+}
+
+const useAreaFilter = ({ initialRegion, initialAreas }: UseAreaFilterProps = {}) => {
+  const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(initialRegion || null);
+  const [selectedAreas, setSelectedAreas] = useState<Partial<Record<AreaType, boolean>>>(() =>
+    getInitialAreas(initialAreas),
+  );
+
+  const selectedAreaList = Object.keys(selectedAreas)
+    .filter(isAreaType)
+    .filter((key) => selectedAreas[key]);
 
   const isValidAreas = selectedAreaList.length < MAX_SELECTED_AREAS;
 
@@ -34,7 +57,7 @@ const useAreaFilter = () => {
     setSelectedAreas({});
   };
 
-  const handleSelectArea = (area: string) => {
+  const handleSelectArea = (area: AreaType) => {
     // 전체 지역을 클릭한 경우 | 전체 지역이 이미 선택되어 있는데 다른 지역을 클릭한 경우
     if (isAreaAllType(area) || hasSelectedAreaAll(selectedAreas)) {
       setSelectedAreas({ [area]: !selectedAreas[area] });
@@ -46,6 +69,11 @@ const useAreaFilter = () => {
       [area]: !prev[area],
     }));
   };
+
+  useEffect(() => {
+    setSelectedRegion(initialRegion || null);
+    setSelectedAreas(getInitialAreas(initialAreas));
+  }, [initialRegion, initialAreas]);
 
   return {
     selectedRegion,

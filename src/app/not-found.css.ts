@@ -11,6 +11,12 @@ export const notFoundLayout = style({
   flexFlow: 'column nowrap',
   justifyContent: 'center',
   alignItems: 'center',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      height: '100dvh',
+    },
+  },
 });
 
 export const h2 = style({

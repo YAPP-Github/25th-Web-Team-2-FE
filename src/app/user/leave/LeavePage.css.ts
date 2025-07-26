@@ -26,6 +26,12 @@ export const leaveFormLayout = style({
   gap: '4.6rem',
   paddingTop: '6rem',
   flexGrow: 1,
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      paddingTop: '0',
+    },
+  },
 });
 
 export const leaveReasonContainer = style({

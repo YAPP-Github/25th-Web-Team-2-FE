@@ -25,6 +25,7 @@ interface ButtonInputProps<T extends FieldValues> {
   tip?: string;
   isTip?: boolean;
   isButtonHidden?: boolean;
+  placeholder?: string;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -38,6 +39,7 @@ const ButtonInput = <T extends FieldValues>({
   tip,
   isTip = false,
   isButtonHidden = false,
+  placeholder = '이메일 입력',
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -82,7 +84,7 @@ const ButtonInput = <T extends FieldValues>({
                   id={name}
                   style={{ width: '100%' }}
                   className={className ? className : joinInput}
-                  placeholder="이메일 입력"
+                  placeholder={placeholder}
                   aria-invalid={fieldState.invalid ? true : false}
                   onChange={handleChange}
                   onBlur={handleBlur}

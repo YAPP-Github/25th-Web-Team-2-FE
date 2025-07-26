@@ -16,28 +16,27 @@ import {
 } from './ContactTargetBottomSheet.css';
 
 import { GENDER } from '@/app/home/home.constants';
-import { GenderValue } from '@/app/home/home.types';
+import { GenderFilterValue } from '@/app/home/home.types';
 import Button from '@/components/Button/Button';
+import { ExperimentPostListFilterParams } from '@/types/filter';
 
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetBottomSheetProps {
-  onChange: (key: string, value: string | number | null) => void;
-  onReset: () => void;
+  onChange: (filters: ExperimentPostListFilterParams) => void;
   onClose: () => void;
-  initialGender: GenderValue | null;
-  initialAge: string;
+  initialGender: GenderFilterValue | null;
+  initialAge: string | null;
 }
 
 const ContactTargetBottomSheet = ({
   onChange,
-  onReset,
   onClose,
   initialGender,
   initialAge,
 }: ContactTargetBottomSheetProps) => {
-  const [filteredGender, setFilteredGender] = useState<GenderValue | null>(initialGender);
-  const [filteredAge, setFilteredAge] = useState(initialAge ?? '');
+  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(initialGender);
+  const [filteredAge, setFilteredAge] = useState<string | null>(initialAge);
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -50,13 +49,14 @@ const ContactTargetBottomSheet = ({
 
   const handleReset = () => {
     setFilteredGender(null);
-    setFilteredAge('');
-    onReset();
+    setFilteredAge(null);
   };
 
   const handleConfirm = () => {
-    onChange('gender', filteredGender);
-    onChange('age', filteredAge !== '' ? Number(filteredAge) : null);
+    onChange({
+      gender: filteredGender,
+      age: filteredAge !== null ? Number(filteredAge) : null,
+    });
     onClose();
   };
 
@@ -83,7 +83,7 @@ const ContactTargetBottomSheet = ({
         <div className={ageInputContainer}>
           <input
             className={ageInput}
-            value={filteredAge}
+            value={filteredAge || ''}
             type="text"
             maxLength={AGE_MAX_LENGTH}
             onChange={handleChangeAge}
