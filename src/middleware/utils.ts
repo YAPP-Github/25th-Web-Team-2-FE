@@ -48,3 +48,30 @@ export const clearAuthCookies = (request: NextRequest, response: NextResponse) =
     }
   });
 };
+
+/**
+ * 디바이스 경로가 pathname에 존재하는지 확인
+ */
+export const hasDevicePath = (pathname: string, basePath: string) => {
+  const devicePathRegex = new RegExp(`^/${basePath}/(mobile|desktop)(/.*)?$`);
+  return devicePathRegex.test(pathname);
+};
+
+/**
+ * 디바이스 경로로 rewrite
+ */
+export const rewriteToDevicePath = (request: NextRequest, basePath: string, pathname: string) => {
+  const url = request.nextUrl.clone();
+  const userAgent = request.headers.get('user-agent') || '';
+  const deviceType = getDeviceType(userAgent);
+
+  const segments = pathname.split('/').filter(Boolean);
+  const basePathCount = basePath.split('/').filter(Boolean).length;
+  const isMorePath = segments.length > basePathCount;
+
+  const restPath = isMorePath ? `/${segments.slice(basePathCount).join('/')}` : '';
+  const newPathname = `/${basePath}/${deviceType}${restPath}`;
+
+  url.pathname = newPathname;
+  return NextResponse.rewrite(url);
+};
