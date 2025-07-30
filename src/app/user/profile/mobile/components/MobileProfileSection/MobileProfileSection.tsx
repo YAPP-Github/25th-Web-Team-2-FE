@@ -3,16 +3,17 @@
 import { useRouter } from 'next/navigation';
 
 import { profileSectionLayout } from './MobileProfileSection.css';
-import AdConsentToggle from '../AdConsentToggle/AdConsentToggle';
+import ParticipantAdConsentToggle from '../AdConsentToggle/ParticipantAdConsentToggle';
 import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
 import ProfileItem from '../ProfileItem/ProfileItem';
 
-import { ParticipantResponse } from '@/apis/login';
+import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { PATH } from '@/constants/path';
 import { AreaType, RegionType } from '@/types/filter';
-import { isParticipantInfo } from '@/utils/typeGuard';
+import { isParticipantInfo, isResearcherInfo } from '@/utils/typeGuard';
+import ResearcherAdConsentToggle from '../AdConsentToggle/ResearcherAdConsentToggle';
 
 const MATCH_TYPE_MAP = {
   ALL: '전체',
@@ -68,7 +69,9 @@ const MOBILE_PROFILE_FIELDS_MAP = {
     },
     {
       title: '광고성 정보 이메일/SMS 수신 동의',
-      rightElement: (userInfo: ParticipantResponse) => <AdConsentToggle userInfo={userInfo} />,
+      rightElement: (userInfo: ParticipantResponse) => (
+        <ParticipantAdConsentToggle userInfo={userInfo} />
+      ),
       isArrow: false,
     },
     {
@@ -77,7 +80,44 @@ const MOBILE_PROFILE_FIELDS_MAP = {
       isArrow: false,
     },
   ],
-  RESEARCHER: [],
+  RESEARCHER: [
+    {
+      required: true,
+      title: '연락 받을 이메일',
+      getLabel: (userInfo: ResearcherResponse) => userInfo.memberInfo.contactEmail,
+      infoType: 'contact-email',
+    },
+    {
+      required: true,
+      title: '이름',
+      getLabel: (userInfo: ResearcherResponse) => userInfo.memberInfo.name,
+      infoType: 'name',
+    },
+    {
+      required: true,
+      title: '소속 학교',
+      getLabel: (userInfo: ResearcherResponse) => userInfo.univName,
+      infoType: 'univ-name',
+    },
+    {
+      required: true,
+      title: '소속 학과',
+      getLabel: (userInfo: ResearcherResponse) => userInfo.major,
+      infoType: 'major',
+    },
+    {
+      title: '소속 연구실 정보',
+      getLabel: (userInfo: ResearcherResponse) => userInfo.labInfo,
+      infoType: 'lab-info',
+    },
+    {
+      title: '광고성 정보 이메일/SMS 수신 동의',
+      rightElement: (userInfo: ResearcherResponse) => (
+        <ResearcherAdConsentToggle userInfo={userInfo} />
+      ),
+      isArrow: false,
+    },
+  ],
 };
 
 const MobileProfileSection = () => {
@@ -85,7 +125,10 @@ const MobileProfileSection = () => {
   const router = useRouter();
   const role = userInfo?.memberInfo.role;
 
-  const fields = role ? MOBILE_PROFILE_FIELDS_MAP[role] : [];
+  const participantFields = isParticipantInfo(userInfo)
+    ? MOBILE_PROFILE_FIELDS_MAP.PARTICIPANT
+    : [];
+  const researcherFields = isResearcherInfo(userInfo) ? MOBILE_PROFILE_FIELDS_MAP.RESEARCHER : [];
 
   const goToEditPage = (infoType?: string) => {
     if (infoType) {
@@ -93,17 +136,39 @@ const MobileProfileSection = () => {
     }
   };
 
-  if (!isParticipantInfo(userInfo)) return null;
+  if (!userInfo) return null;
+
+  if (isParticipantInfo(userInfo)) {
+    return (
+      <section className={profileSectionLayout}>
+        {participantFields.map((field) => (
+          <ProfileItem
+            key={field.title}
+            required={field.required}
+            title={field.title}
+            label={typeof field.getLabel === 'function' ? field.getLabel(userInfo) : ''}
+            isIcon={field.isIcon}
+            isArrow={field.isArrow}
+            onClick={() => goToEditPage(field.infoType)}
+            rightElement={
+              typeof field.rightElement === 'function'
+                ? field.rightElement(userInfo)
+                : field.rightElement
+            }
+          />
+        ))}
+      </section>
+    );
+  }
 
   return (
     <section className={profileSectionLayout}>
-      {fields.map((field) => (
+      {researcherFields.map((field) => (
         <ProfileItem
           key={field.title}
           required={field.required}
           title={field.title}
           label={typeof field.getLabel === 'function' ? field.getLabel(userInfo) : ''}
-          isIcon={field.isIcon}
           isArrow={field.isArrow}
           onClick={() => goToEditPage(field.infoType)}
           rightElement={

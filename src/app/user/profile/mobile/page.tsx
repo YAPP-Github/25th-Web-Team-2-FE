@@ -17,6 +17,7 @@ const MobileProfilePage = async () => {
       <>
         <MobileProfileHeader />
         <MobileUserInfoSection />
+        <MobileProfileSection />
       </>
     );
   }
