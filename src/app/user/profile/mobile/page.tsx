@@ -6,11 +6,16 @@ import MobileUserInfoSection from './components/MobileUserInfoSection/MobileUser
 
 import { ROLE } from '@/constants/config';
 import { authOptions } from '@/lib/auth-utils';
+import { redirect } from 'next/navigation';
 
 const MobileProfilePage = async () => {
   const session = await getServerSession(authOptions);
 
   const role = session?.role;
+
+  if (role === ROLE.researcher) {
+    redirect('/user/profile/desktop');
+  }
 
   if (role === ROLE.participant) {
     return (
