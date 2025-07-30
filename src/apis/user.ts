@@ -48,3 +48,7 @@ export const leaveUser = async ({ reasonType, reason }: LeaveUserParams) => {
     body: { reasonType, reason },
   });
 };
+
+export const validateProfileContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
+  return await fetchClient.get(API_URL.validateProfileContactEmail(contactEmail));
+};

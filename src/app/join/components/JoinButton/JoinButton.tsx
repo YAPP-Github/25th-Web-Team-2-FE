@@ -15,7 +15,10 @@ const JoinButton = <T extends FieldValues>({
   width = '100%',
   height = 'fit-content',
 }: JoinButtonProps<T>) => {
-  const { control } = useFormContext<T>();
+  const {
+    control,
+    formState: { isSubmitting },
+  } = useFormContext<T>();
   const values = useWatch({ name: validationFields, control });
 
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
@@ -26,11 +29,11 @@ const JoinButton = <T extends FieldValues>({
       variant="primary"
       size="medium"
       onClick={onSubmit}
-      disabled={!isAllFilled}
+      disabled={!isAllFilled || isSubmitting}
       width={width}
       height={height}
     >
-      회원가입
+      {isSubmitting ? '처리중...' : '회원가입'}
     </Button>
   );
 };

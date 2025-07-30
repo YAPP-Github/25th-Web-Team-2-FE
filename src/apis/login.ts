@@ -100,6 +100,6 @@ export const updateAccessToken = async (refreshToken: string) => {
   return await noRetryFetchClient.post<LoginResponse>(API_URL.refresh, { body: { refreshToken } });
 };
 
-export const validateContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
-  return await fetchClient.get(API_URL.validateContactEmail(contactEmail));
+export const validateJoinContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
+  return await fetchClient.get(API_URL.validateJoinContactEmail(contactEmail));
 };

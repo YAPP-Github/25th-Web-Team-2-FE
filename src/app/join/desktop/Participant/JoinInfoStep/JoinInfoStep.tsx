@@ -24,7 +24,11 @@ interface JoinInfoStepProps {
 }
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
-  const { control, setValue } = useFormContext<ParticipantJoinSchemaType>();
+  const {
+    control,
+    setValue,
+    formState: { isSubmitting },
+  } = useFormContext<ParticipantJoinSchemaType>();
 
   const selectedArea = useWatch({ name: 'basicAddressInfo.region', control });
   const selectedAdditionalArea = useWatch({ name: 'additionalAddressInfo.region', control });
@@ -169,8 +173,8 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button className={nextButton} onClick={handleSubmit} disabled={!isAllFilled}>
-        회원가입
+      <button className={nextButton} onClick={handleSubmit} disabled={!isAllFilled || isSubmitting}>
+        {isSubmitting ? '처리중...' : '회원가입'}
       </button>
     </section>
   );

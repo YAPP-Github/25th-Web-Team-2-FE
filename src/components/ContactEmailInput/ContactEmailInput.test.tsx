@@ -18,7 +18,7 @@ vi.mock('@/hooks/useToast', () => ({
   useToast: () => mockToast,
 }));
 
-vi.mock('@/app/join/hooks/useCheckValidEmailInfoMutation', () => ({
+vi.mock('@/app/join/hooks/useCheckValidJoinEmailMutation', () => ({
   default: () => ({
     mutate: mockCheckValidEmailMutate,
   }),

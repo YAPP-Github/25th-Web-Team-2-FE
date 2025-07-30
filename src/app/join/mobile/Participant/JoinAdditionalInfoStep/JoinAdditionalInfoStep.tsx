@@ -28,7 +28,7 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
   const {
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<ParticipantJoinSchemaType>();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -157,9 +157,9 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
           variant="primary"
           size="small"
           onClick={matchConsent ? onSubmit : openModal}
-          disabled={!isValid || isError}
+          disabled={!isValid || isError || isSubmitting}
         >
-          회원가입
+          {isSubmitting ? '처리중...' : '회원가입'}
         </Button>
       </div>
 

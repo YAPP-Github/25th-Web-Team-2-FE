@@ -9,7 +9,7 @@ export const joinSuccessLayout = style({
   alignItems: 'center',
   justifyContent: 'center',
   gap: '3.2rem',
-  height: '100dvh',
+  height: 'calc(100dvh - 28.2rem)', // 20.2rem + 8rem
 });
 
 export const joinContentContainer = style({
