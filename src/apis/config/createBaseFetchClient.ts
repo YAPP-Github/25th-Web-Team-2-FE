@@ -38,22 +38,17 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
 
         // NOTE: config 커스텀 설정 적용 (onRequest 기반으로 config 설정 덮어쓰기)
         const parsedConfig = { ...(onRequestConfig && { ...onRequestConfig }), ...config };
-        const parsedHeaders = {
-          ...(onRequestConfig?.headers ?? {}),
-          ...(config?.headers ?? {}),
-        };
-
-        const { method, body, next, requireAuth = true } = parsedConfig;
+        const { method, body, next, headers = {}, requireAuth = true } = parsedConfig;
 
         // NOTE: 불필요한 preflight 요청 방지를 위한 Authorization 헤더 제거
-        if (!requireAuth && 'Authorization' in parsedHeaders) {
-          delete parsedHeaders.Authorization;
+        if (!requireAuth && 'Authorization' in headers) {
+          delete headers.Authorization;
         }
 
         const response = await fetch(`${BASE_URL}${url}`, {
           method,
           body: body && JSON.stringify(body),
-          headers: parsedHeaders,
+          headers,
           ...(next && { next }),
         });
 
