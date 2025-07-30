@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
-import { isAuthError } from './utils';
+import { getDefaultHeader, isAuthError } from './utils';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -11,9 +11,10 @@ export interface RequestProps {
   headers?: HeadersInit;
   next?: { revalidate?: number; tags?: string[] };
   isRetry?: boolean;
+  requireAuth?: boolean;
 }
 
-type FetchProps = Omit<RequestProps, 'method'>;
+export type FetchProps = Omit<RequestProps, 'method'>;
 
 interface RetryLoginParams {
   config: RequestProps;
@@ -29,16 +30,25 @@ interface BaseFetchClientOptions {
 
 export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
   return {
-    onRequestCallback: options.onRequest || ((config: RequestProps) => config),
+    onRequestCallback: options.onRequest,
 
     async request<T = any>(url: string, config: RequestProps): Promise<T> {
       try {
-        const { method, body, headers, next } = this.onRequestCallback(config);
+        const onRequestConfig = this.onRequestCallback?.(config);
+
+        // NOTE: config 커스텀 설정 적용 (onRequest 기반으로 config 설정 덮어쓰기)
+        const parsedConfig = { ...(onRequestConfig && { ...onRequestConfig }), ...config };
+        const parsedHeaders = {
+          ...(onRequestConfig?.headers ?? {}),
+          ...(config?.headers ?? {}),
+        };
+
+        const { method, body, next } = parsedConfig;
 
         const response = await fetch(`${BASE_URL}${url}`, {
           method,
           body: body && JSON.stringify(body),
-          headers,
+          headers: parsedHeaders,
           ...(next && { next }),
         });
 
@@ -76,46 +86,37 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
     },
 
     get<T = any>(url: string, options: FetchProps = {}) {
-      return this.request<T>(url, { method: 'GET', headers: options.headers });
+      return this.request<T>(url, {
+        method: 'GET',
+        ...options,
+      });
     },
     post<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'POST',
-        body: options.body,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
     delete<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'DELETE',
-        body: options.body,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
     patch<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'PATCH',
-        body: options.body,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
     put<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'PUT',
-        body: options.body,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
 
