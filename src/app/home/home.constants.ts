@@ -324,7 +324,7 @@ export const AREA_MAPPER: Record<AreaType, string> = {
 export const AREA_ALL = [
   'SEOUL_ALL',
   'GYEONGGI_ALL',
-  'INCHOEN_ALL',
+  'INCHEON_ALL',
   'GANGWON_ALL',
   'DAEJEON_ALL',
   'CHUNGNAM_ALL',
