@@ -2,6 +2,7 @@ import { style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const userInfoHeader = style({
   backgroundColor: colors.field10,
@@ -24,11 +25,24 @@ export const userName = style({
   gap: '0.8rem',
 });
 
-export const userBadge = style({
-  ...fonts.label.large.B14,
-  backgroundColor: 'rgba(38,181,190,0.3)',
-  borderRadius: '1.2rem',
-  padding: '0.4rem 0.8rem',
-  display: 'inline-flex',
-  alignItems: 'center',
+export const userBadge = recipe({
+  base: {
+    ...fonts.label.large.B14,
+    borderRadius: '1.2rem',
+    padding: '0.4rem 0.8rem',
+    display: 'inline-flex',
+    alignItems: 'center',
+  },
+  variants: {
+    role: {
+      PARTICIPANT: {
+        color: colors.primaryMint,
+        backgroundColor: colors.badgePrimaryTinted,
+      },
+      RESEARCHER: {
+        color: colors.secondaryPink,
+        backgroundColor: colors.badgeSecondaryTinted,
+      },
+    },
+  },
 });
