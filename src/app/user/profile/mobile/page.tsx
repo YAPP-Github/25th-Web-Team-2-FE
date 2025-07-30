@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
@@ -11,6 +12,10 @@ const MobileProfilePage = async () => {
   const session = await getServerSession(authOptions);
 
   const role = session?.role;
+
+  if (role === ROLE.researcher) {
+    redirect('/user/profile/desktop');
+  }
 
   if (role === ROLE.participant) {
     return (
