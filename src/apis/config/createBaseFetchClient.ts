@@ -43,7 +43,12 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           ...(config?.headers ?? {}),
         };
 
-        const { method, body, next } = parsedConfig;
+        const { method, body, next, requireAuth = true } = parsedConfig;
+
+        // NOTE: 불필요한 preflight 요청 방지를 위한 Authorization 헤더 제거
+        if (!requireAuth && 'Authorization' in parsedHeaders) {
+          delete parsedHeaders.Authorization;
+        }
 
         const response = await fetch(`${BASE_URL}${url}`, {
           method,
