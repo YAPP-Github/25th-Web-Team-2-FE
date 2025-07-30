@@ -27,6 +27,7 @@ export const formatBirthDate = (date: string) => {
 const GENDER_LABEL = {
   MALE: '남성',
   FEMALE: '여성',
+  ALL: '전체',
 } as const;
 
 const MobileUserInfoSection = () => {

@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getResearcherInfo } from '@/apis/user';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { ROLE } from '@/constants/config';
+import { queryKey } from '@/constants/queryKey';
 
 interface useResearcherInfoQueryProps {
   enabled: boolean;
@@ -9,7 +10,7 @@ interface useResearcherInfoQueryProps {
 
 const useResearcherInfoQuery = ({ enabled }: useResearcherInfoQueryProps) => {
   return useQuery({
-    queryKey: [QUERY_KEY.researcherInfo],
+    queryKey: queryKey.userInfo(ROLE.researcher),
     queryFn: getResearcherInfo,
     enabled,
     retry: 0,

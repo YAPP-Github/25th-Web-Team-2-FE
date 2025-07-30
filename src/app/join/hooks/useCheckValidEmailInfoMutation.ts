@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { validateContactEmailInfo } from '@/apis/login';
+import { validateContactEmail } from '@/apis/login';
 
 const useCheckValidEmailInfoMutation = () => {
   return useMutation({
-    mutationFn: (contactEmail: string) => validateContactEmailInfo({ contactEmail }),
+    mutationFn: (contactEmail: string) => validateContactEmail({ contactEmail }),
   });
 };
 

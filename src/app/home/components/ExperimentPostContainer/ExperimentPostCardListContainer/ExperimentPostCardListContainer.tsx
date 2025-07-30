@@ -15,6 +15,7 @@ import {
 } from './ExperimentPostCardListContainer.css';
 import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostContainer.css';
 
+import { ExperimentPostResponse } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
@@ -28,9 +29,13 @@ import { isMobile } from '@/utils/deviceType';
 
 interface PostCardListContainerProps {
   isUserInfoLoading: boolean;
+  initialPosts: ExperimentPostResponse;
 }
 
-const ExperimentPostCardListContainer = ({ isUserInfoLoading }: PostCardListContainerProps) => {
+const ExperimentPostCardListContainer = ({
+  isUserInfoLoading,
+  initialPosts,
+}: PostCardListContainerProps) => {
   const { filters, isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const {
     data: postListData,
@@ -38,14 +43,17 @@ const ExperimentPostCardListContainer = ({ isUserInfoLoading }: PostCardListCont
     fetchNextPage,
     isFetchingNextPage,
     isFetching,
-    isFetched,
-  } = useExperimentPostListQuery(filters, isUserInfoLoading);
+  } = useExperimentPostListQuery(filters, isUserInfoLoading, initialPosts);
 
   const observerRef = useRef<HTMLDivElement>(null);
 
-  const hasData = postListData && postListData.pages[0].content.length > 0;
+  const hasPost = postListData && postListData.pages[0].content.length > 0;
+  const hasInitialPosts = initialPosts && initialPosts.content.length > 0;
 
-  if (!isFetched || isUserInfoLoading) {
+  const hasPostList = hasPost || hasInitialPosts;
+  const showLoading = !hasPostList && (isUserInfoLoading || isFetching);
+
+  if (showLoading) {
     return (
       <div className={emptyViewLayout}>
         <Spinner />
@@ -91,7 +99,7 @@ const ExperimentPostCardListContainer = ({ isUserInfoLoading }: PostCardListCont
             더보기
           </button>
         )}
-        {!isFetching && !hasNextPage && hasData && (
+        {!isFetching && !hasNextPage && hasPost && (
           <div className={allPostsViewedContainer}>
             <Icon icon="Golf" width={40} height={40} />
             <div className={allPostsViewedContentContainer}>

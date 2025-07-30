@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { buttonContainer, loginButton } from '../Header.css';
