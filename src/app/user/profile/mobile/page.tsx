@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
 import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
@@ -6,7 +7,6 @@ import MobileUserInfoSection from './components/MobileUserInfoSection/MobileUser
 
 import { ROLE } from '@/constants/config';
 import { authOptions } from '@/lib/auth-utils';
-import { redirect } from 'next/navigation';
 
 const MobileProfilePage = async () => {
   const session = await getServerSession(authOptions);
