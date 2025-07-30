@@ -8,7 +8,6 @@ export const desktopJoinPageLayout = style({
   backgroundColor: colors.field01,
   maxWidth: '56rem',
   width: '100%',
-  height: '100dvh',
   margin: '0 auto',
   paddingTop: '8rem',
   paddingBottom: '20.2rem', // 12. 2 (footer) + 8 (footer와 버튼 사이 여백)
