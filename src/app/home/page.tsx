@@ -58,6 +58,7 @@ export default async function Home({ searchParams }: HomePageProps) {
   const initialPosts = await fetchClient.get<ExperimentPostResponse>(
     API_URL.postList(queryParams),
     {
+      requireAuth: false,
       next: { tags: ['experiment-posts'] },
     },
   );

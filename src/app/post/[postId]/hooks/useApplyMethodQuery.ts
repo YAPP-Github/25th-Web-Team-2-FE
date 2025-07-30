@@ -18,7 +18,10 @@ export interface UseApplyMethodQueryResponse {
 
 const useApplyMethodQuery = ({ postId }: UseApplyMethodQueryParams) => {
   const url = API_URL.applyMethod(postId ?? '');
-  const queryFn = () => fetchClient.get<UseApplyMethodQueryResponse>(url);
+  const queryFn = () =>
+    fetchClient.get<UseApplyMethodQueryResponse>(url, {
+      requireAuth: false,
+    });
 
   return useQuery<UseApplyMethodQueryResponse, CustomError>({
     queryKey: queryKey.applyMethod(postId ?? ''),

@@ -48,9 +48,11 @@ export interface ExperimentPostListFilters {
 
 export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = getQueryParamsToString({ ...params });
-  return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams));
+  return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams), {
+    requireAuth: false,
+  });
 };
 
 export const fetchPostCount = async <T>(region?: string | null) => {
-  return await fetchClient.get<T>(API_URL.postArea(region));
+  return await fetchClient.get<T>(API_URL.postArea(region), { requireAuth: false });
 };
