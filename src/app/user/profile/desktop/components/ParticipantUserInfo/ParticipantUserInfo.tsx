@@ -54,6 +54,7 @@ const ParticipantUserInfo = ({ userInfo }: { userInfo: ParticipantResponse }) =>
             contactEmailField="contactEmail"
             verifiedEmailField="verifiedContactEmail"
             helperText="주요 안내 사항을 전달받을 이메일을 입력해 주세요. 이메일 ID와 달라도 괜찮아요"
+            joinedUser
           />
 
           {/* 이름 */}

@@ -38,6 +38,7 @@ const ContactEmailEditForm = ({ userInfo }: ContactEmailEditFormProps) => {
         <ContactEmailInput<ParticipantUpdateSchemaType>
           contactEmailField="contactEmail"
           verifiedEmailField="verifiedContactEmail"
+          joinedUser
         />
         <SaveButton
           onSave={onSubmit}

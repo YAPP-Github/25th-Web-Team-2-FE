@@ -1,8 +1,9 @@
 import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
-import useCheckValidEmailInfoMutation from '@/app/join/hooks/useCheckValidEmailInfoMutation';
+import useCheckValidJoinEmailMutation from '@/app/join/hooks/useCheckValidJoinEmailMutation';
 import ButtonInput from '@/components/ButtonInput/ButtonInput';
 import { useToast } from '@/hooks/useToast';
+import useCheckValidProfileEmailMutation from '@/app/join/hooks/useCheckValidProfileEmailMutation';
 
 interface ContactEmailInputProps<T extends FieldValues> {
   contactEmailField: Path<T>;
@@ -12,6 +13,7 @@ interface ContactEmailInputProps<T extends FieldValues> {
   title?: string;
   required?: boolean;
   onSuccess?: () => void;
+  joinedUser?: boolean;
 }
 
 const ContactEmailInput = <T extends FieldValues>({
@@ -21,19 +23,25 @@ const ContactEmailInput = <T extends FieldValues>({
   isTip = false,
   title,
   required = false,
+  joinedUser = false,
   onSuccess,
 }: ContactEmailInputProps<T>) => {
+  const toast = useToast();
   const { control, getValues, setValue } = useFormContext<T>();
   const verifiedContactEmail = useWatch({ name: verifiedEmailField, control });
   const contactEmail = useWatch({ name: contactEmailField, control });
 
-  const { mutate: checkValidEmail, isPending: isLoadingCheck } = useCheckValidEmailInfoMutation();
-  const toast = useToast();
+  const { mutate: checkValidJoinEmail, isPending: isLoadingCheck } =
+    useCheckValidJoinEmailMutation();
+  const { mutate: checkValidProfileEmail, isPending: isLoadingCheckProfile } =
+    useCheckValidProfileEmailMutation();
 
   const isVerified = Boolean(verifiedContactEmail) && verifiedContactEmail === contactEmail;
 
   const handleCheckValidEmail = async () => {
-    checkValidEmail(getValues(contactEmailField), {
+    const checkValidEmailFn = joinedUser ? checkValidProfileEmail : checkValidJoinEmail;
+
+    checkValidEmailFn(getValues(contactEmailField), {
       onSuccess: () => {
         setValue(verifiedEmailField, getValues(contactEmailField));
         toast.open({ message: '사용 가능한 이메일이에요' });
@@ -52,7 +60,7 @@ const ContactEmailInput = <T extends FieldValues>({
       control={control}
       name={contactEmailField}
       onClick={handleCheckValidEmail}
-      isLoading={isLoadingCheck}
+      isLoading={isLoadingCheck || isLoadingCheckProfile}
       isButtonHidden={isVerified}
       tip={helperText}
       isTip={isTip}
