@@ -76,18 +76,18 @@ export const MOBILE_RESEARCHER_PROFILE_FIELDS_MAP = [
     required: true,
     title: '소속 학교',
     getLabel: (userInfo: ResearcherResponse) => userInfo.univName,
-    infoType: 'univ',
+    infoType: 'univ-info',
   },
   {
     required: true,
     title: '소속 학과',
     getLabel: (userInfo: ResearcherResponse) => userInfo.major,
-    infoType: 'univ',
+    infoType: 'univ-info',
   },
   {
     title: '소속 연구실 정보',
     getLabel: (userInfo: ResearcherResponse) => userInfo.labInfo,
-    infoType: 'univ',
+    infoType: 'univ-info',
   },
   {
     title: '광고성 정보 이메일/SMS 수신 동의',
