@@ -14,12 +14,15 @@ interface NameEditFormProps {
   userInfo: ResearcherResponse;
 }
 
+const DESCRIPTION =
+  '실험 공고를 등록할 때 노출될 정보예요\n구체적일수록 참여자가 신청할 확률이 높아져요';
+
 const NameEditForm = ({ userInfo }: NameEditFormProps) => {
   const { form, isLoading, onSubmit } = useFormResearcherProfileEdit(userInfo);
 
   return (
     <FormProvider {...form}>
-      <EditFormLayout title="연구자 정보를 입력해 주세요">
+      <EditFormLayout title="연구자 정보를 입력해 주세요" description={DESCRIPTION}>
         <JoinInput<ResearcherUpdateSchemaType>
           name="name"
           control={form.control}
@@ -28,7 +31,11 @@ const NameEditForm = ({ userInfo }: NameEditFormProps) => {
           placeholder="이름을 입력해주세요"
           type="input"
         />
-        <SaveButton onSave={onSubmit} fields={['name']} isLoading={isLoading} />
+        <SaveButton<ResearcherUpdateSchemaType>
+          onSave={onSubmit}
+          fields={['name']}
+          isLoading={isLoading}
+        />
       </EditFormLayout>
     </FormProvider>
   );

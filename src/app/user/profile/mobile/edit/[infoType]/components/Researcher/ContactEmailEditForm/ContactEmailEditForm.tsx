@@ -9,7 +9,7 @@ import SaveButton from '../../SaveButton';
 import { ResearcherResponse } from '@/apis/login';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import EmailBadge from '@/components/EmailBadge/EmailBadge';
-import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
+import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 interface ContactEmailEditFormProps {
   userInfo: ResearcherResponse;
@@ -35,12 +35,12 @@ const ContactEmailEditForm = ({ userInfo }: ContactEmailEditFormProps) => {
           />
         }
       >
-        <ContactEmailInput<ParticipantUpdateSchemaType>
+        <ContactEmailInput<ResearcherUpdateSchemaType>
           contactEmailField="contactEmail"
           verifiedEmailField="verifiedContactEmail"
           joinedUser
         />
-        <SaveButton
+        <SaveButton<ResearcherUpdateSchemaType>
           onSave={onSubmit}
           fields={['contactEmail']}
           isLoading={isLoading}
