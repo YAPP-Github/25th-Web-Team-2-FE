@@ -1,6 +1,8 @@
-import { ParticipantResponse } from '@/apis/login';
-import ProfileItem from '../ProfileItem/ProfileItem';
+import { profileSectionLayout } from './ParticipantProfileSection.css';
 import { MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP } from '../MobileProfileSectionMap';
+import ProfileItem from '../ProfileItem/ProfileItem';
+
+import { ParticipantResponse } from '@/apis/login';
 
 interface ParticipantProfileSectionProps {
   userInfo: ParticipantResponse;
@@ -9,7 +11,7 @@ interface ParticipantProfileSectionProps {
 
 const ParticipantProfileSection = ({ userInfo, goToEditPage }: ParticipantProfileSectionProps) => {
   return (
-    <>
+    <section className={profileSectionLayout}>
       {MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP.map((field) => (
         <ProfileItem
           key={field.title}
@@ -26,7 +28,7 @@ const ParticipantProfileSection = ({ userInfo, goToEditPage }: ParticipantProfil
           }
         />
       ))}
-    </>
+    </section>
   );
 };
 

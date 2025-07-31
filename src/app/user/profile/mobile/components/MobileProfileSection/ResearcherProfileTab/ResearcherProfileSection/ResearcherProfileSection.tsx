@@ -1,6 +1,7 @@
+import { MOBILE_RESEARCHER_PROFILE_FIELDS_MAP } from '../../MobileProfileSectionMap';
+import ProfileItem from '../../ProfileItem/ProfileItem';
+
 import { ResearcherResponse } from '@/apis/login';
-import ProfileItem from '../ProfileItem/ProfileItem';
-import { MOBILE_RESEARCHER_PROFILE_FIELDS_MAP } from '../MobileProfileSectionMap';
 
 interface ResearcherProfileSectionProps {
   userInfo: ResearcherResponse;
