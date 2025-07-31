@@ -22,7 +22,11 @@ export const getMatchTypeLabel = (matchType: ParticipantResponse['matchType']) =
   return MATCH_TYPE_MAP[matchType];
 };
 
-const MobileProfileSection = () => {
+interface MobileProfileSectionProps {
+  defaultTab?: string;
+}
+
+const MobileProfileSection = ({ defaultTab }: MobileProfileSectionProps) => {
   const { userInfo } = useUserInfo();
   const router = useRouter();
 
@@ -38,7 +42,9 @@ const MobileProfileSection = () => {
     return <ParticipantProfileSection userInfo={userInfo} goToEditPage={goToEditPage} />;
   }
 
-  return <ResearcherProfileTab userInfo={userInfo} goToEditPage={goToEditPage} />;
+  return (
+    <ResearcherProfileTab userInfo={userInfo} goToEditPage={goToEditPage} defaultTab={defaultTab} />
+  );
 };
 
 export default MobileProfileSection;

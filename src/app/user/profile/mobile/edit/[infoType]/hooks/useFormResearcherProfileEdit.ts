@@ -17,7 +17,7 @@ export const useFormResearcherProfileEdit = (userInfo: ResearcherResponse) => {
 
   const onSubmit = handleSubmit(
     async () => {
-      router.replace(PATH.profile);
+      router.replace(`${PATH.profile}?tab=profile`);
       toast.open({ message: SUCCESS_UPDATE_MESSAGE });
     },
     () => {

@@ -9,11 +9,16 @@ import { ResearcherResponse } from '@/apis/login';
 interface ResearcherProfileTabProps {
   userInfo: ResearcherResponse;
   goToEditPage: (infoType?: string) => void;
+  defaultTab?: string;
 }
 
-const ResearcherProfileTab = ({ userInfo, goToEditPage }: ResearcherProfileTabProps) => {
+const ResearcherProfileTab = ({
+  userInfo,
+  goToEditPage,
+  defaultTab,
+}: ResearcherProfileTabProps) => {
   return (
-    <Tabs.Root className={tabsRoot} defaultValue="myPosts">
+    <Tabs.Root className={tabsRoot} defaultValue={defaultTab ?? 'myPosts'}>
       <Tabs.List className={tabList}>
         <Tabs.Trigger className={tabTrigger} value="myPosts">
           내가 쓴 글
