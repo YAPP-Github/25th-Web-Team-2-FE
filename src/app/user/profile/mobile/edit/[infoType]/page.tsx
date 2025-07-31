@@ -1,24 +1,21 @@
 'use client';
 
-import AddressEditForm from './components/AddressEditForm/AddressEditForm';
-import ContactEmailEditForm from './components/ContactEmailEditForm';
-import MatchTypeEditForm from './components/MatchTypeEditForm';
-import NameEditForm from './components/NameEditForm';
+import { Participant } from './components/Participant';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import BackHeader from '@/components/Header/BackHeader/BackHeader';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
-const INFO_TYPE_COMPONENT_MAP = {
-  'contact-email': ContactEmailEditForm,
-  name: NameEditForm,
-  address: AddressEditForm,
-  'match-type': MatchTypeEditForm,
+const PARTICIPANT_EDIT_COMPONENT_MAP = {
+  'participant-contact-email': Participant.ContactEmail,
+  'participant-name': Participant.Name,
+  address: Participant.Address,
+  'match-type': Participant.MatchType,
 } as const;
 
 interface PageProps {
   params: {
-    infoType: keyof typeof INFO_TYPE_COMPONENT_MAP;
+    infoType: keyof typeof PARTICIPANT_EDIT_COMPONENT_MAP;
   };
 }
 
@@ -26,7 +23,7 @@ const EditProfilePage = ({ params }: PageProps) => {
   const { infoType } = params;
   const { userInfo } = useUserInfo();
 
-  const EditComponent = INFO_TYPE_COMPONENT_MAP[infoType];
+  const EditComponent = PARTICIPANT_EDIT_COMPONENT_MAP[infoType];
 
   if (isParticipantInfo(userInfo)) {
     return (

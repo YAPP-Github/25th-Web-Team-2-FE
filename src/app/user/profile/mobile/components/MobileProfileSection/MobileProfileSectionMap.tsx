@@ -1,23 +1,24 @@
+import { getMatchTypeLabel } from './MobileProfileSection';
+import ParticipantAdConsentToggle from '../AdConsentToggle/ParticipantAdConsentToggle';
+import ResearcherAdConsentToggle from '../AdConsentToggle/ResearcherAdConsentToggle';
+import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
+
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
 import { AreaType, RegionType } from '@/types/filter';
-import { getMatchTypeLabel } from './MobileProfileSection';
-import ParticipantAdConsentToggle from '../AdConsentToggle/ParticipantAdConsentToggle';
-import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
-import ResearcherAdConsentToggle from '../AdConsentToggle/ResearcherAdConsentToggle';
 
 export const MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP = [
   {
     required: true,
     title: '연락 받을 이메일',
     getLabel: (userInfo: ParticipantResponse) => userInfo.memberInfo.contactEmail,
-    infoType: 'contact-email',
+    infoType: 'participant-contact-email',
   },
   {
     required: true,
     title: '이름',
     getLabel: (userInfo: ParticipantResponse) => userInfo.memberInfo.name,
-    infoType: 'name',
+    infoType: 'participant-name',
   },
   {
     required: true,
@@ -63,30 +64,30 @@ export const MOBILE_RESEARCHER_PROFILE_FIELDS_MAP = [
     required: true,
     title: '연락 받을 이메일',
     getLabel: (userInfo: ResearcherResponse) => userInfo.memberInfo.contactEmail,
-    infoType: 'contact-email',
+    infoType: 'researcher-contact-email',
   },
   {
     required: true,
     title: '이름',
     getLabel: (userInfo: ResearcherResponse) => userInfo.memberInfo.name,
-    infoType: 'name',
+    infoType: 'researcher-name',
   },
   {
     required: true,
     title: '소속 학교',
     getLabel: (userInfo: ResearcherResponse) => userInfo.univName,
-    infoType: 'univ-name',
+    infoType: 'univ',
   },
   {
     required: true,
     title: '소속 학과',
     getLabel: (userInfo: ResearcherResponse) => userInfo.major,
-    infoType: 'major',
+    infoType: 'univ',
   },
   {
     title: '소속 연구실 정보',
     getLabel: (userInfo: ResearcherResponse) => userInfo.labInfo,
-    infoType: 'lab-info',
+    infoType: 'univ',
   },
   {
     title: '광고성 정보 이메일/SMS 수신 동의',
