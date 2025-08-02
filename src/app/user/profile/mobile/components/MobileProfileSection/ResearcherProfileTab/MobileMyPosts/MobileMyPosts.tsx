@@ -15,11 +15,16 @@ import {
 import useMyPostsQuery from '@/app/my-posts/hooks/useMyPostsQuery';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import EmptyMyPosts from './EmptyMyPosts/EmptyMyPosts';
 
 const MobileMyPosts = () => {
   const { data } = useMyPostsQuery();
 
   const posts = data?.content ?? [];
+
+  if (posts && posts.length === 0) {
+    return <EmptyMyPosts />;
+  }
 
   return (
     <ul className={myPostsLayout}>
