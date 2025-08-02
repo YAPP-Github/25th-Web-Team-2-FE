@@ -22,10 +22,13 @@ export const queryKey = {
   updateRecruitStatus: ['updateRecruitStatus'] as const,
   deletePost: ['deletePost'] as const,
   editPost: ['editPost'] as const,
-  myPosts: ({
-    page = 1,
-    count = 10,
-    order = 'DESC',
-  }: { page?: number; count?: number; order?: string } = {}) =>
-    ['myPosts', page ?? null, count ?? null, order ?? null] as const,
+  myPosts: {
+    all: ['myPosts'] as const,
+    filter: ({
+      page = 1,
+      count = 10,
+      order = 'DESC',
+    }: { page?: number; count?: number; order?: string } = {}) =>
+      [queryKey.myPosts.all, page ?? null, count ?? null, order ?? null] as const,
+  },
 };

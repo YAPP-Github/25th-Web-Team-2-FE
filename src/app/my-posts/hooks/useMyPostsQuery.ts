@@ -31,7 +31,7 @@ const useMyPostsQuery = ({ page = 1, count = 10, order = 'DESC' }: UseMyPostsQue
   const queryFn = () => fetchClient.get<UseMyPostsQueryResponse>(url);
 
   return useQuery<UseMyPostsQueryResponse>({
-    queryKey: queryKey.myPosts({ page, count, order }),
+    queryKey: queryKey.myPosts.filter({ page, count, order }),
     queryFn,
   });
 };
