@@ -11,6 +11,7 @@ interface AllMenuBottomSheetProps {
   recruitStatus: boolean;
   onClickEdit: (postId: string) => void;
   onClickDelete: (postId: string) => void;
+  onClickRecruitComplete: (postId: string) => void;
 }
 
 const AllMenuBottomSheet = ({
@@ -19,12 +20,12 @@ const AllMenuBottomSheet = ({
   recruitStatus,
   onClickEdit,
   onClickDelete,
+  onClickRecruitComplete,
 }: AllMenuBottomSheetProps) => {
   const router = useRouter();
-  const [recruitStatusState, setRecruitStatusState] = useState(recruitStatus);
 
-  const handleUpdateRecruitStatus = () => {
-    setRecruitStatusState((prev) => !prev);
+  const handleClickRecruitStatus = () => {
+    onClickRecruitComplete(postId);
   };
 
   const handleClickEditPost = () => {
@@ -49,8 +50,8 @@ const AllMenuBottomSheet = ({
       <div className={listItem}>
         <span>모집 중</span>
         <Toggle
-          value={recruitStatusState}
-          onChange={handleUpdateRecruitStatus}
+          value={recruitStatus}
+          onChange={handleClickRecruitStatus}
           disabled={!recruitStatus}
         />
       </div>

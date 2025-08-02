@@ -23,6 +23,7 @@ import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReady
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import { useToast } from '@/hooks/useToast';
+import useUpdateRecruitStatusMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusMutation';
 
 // NOTE: 바텀시트가 닫히고 모달이 열려야되는 상황
 // 바텀시트 내에 모달을 선언할 경우 바텀시트가 닫힐 때 모달도 함께 닫히는 문제
@@ -35,9 +36,11 @@ const MobileMyPosts = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isRecruitCompleteModalOpen, setIsRecruitCompleteModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState('');
 
   const { mutate: deletePost } = useDeleteExperimentPostMutation();
+  const { mutate: updateRecruitStatus } = useUpdateRecruitStatusMutation();
 
   const posts = data?.content ?? [];
 
@@ -57,6 +60,17 @@ const MobileMyPosts = () => {
     );
   };
 
+  const handleRecruitComplete = () => {
+    updateRecruitStatus(
+      { postId: selectedPostId },
+      {
+        onSuccess: () => {
+          toast.open({ message: '모집 완료 처리되었습니다.' });
+        },
+      },
+    );
+  };
+
   const handleClickMenu = (postId: string, recruitStatus: boolean) => {
     open(() => (
       <AllMenuBottomSheet
@@ -70,6 +84,10 @@ const MobileMyPosts = () => {
         onClickDelete={(postId) => {
           setSelectedPostId(postId);
           setIsDeleteModalOpen(true);
+        }}
+        onClickRecruitComplete={(postId) => {
+          setSelectedPostId(postId);
+          setIsRecruitCompleteModalOpen(true);
         }}
       />
     ));
@@ -125,6 +143,17 @@ const MobileMyPosts = () => {
         onConfirm={handleDeletePost}
         isMobile
         closeIcon={false}
+      />
+
+      {/* 모집 완료 처리 확인 모달 */}
+      <ConfirmModal
+        isOpen={isRecruitCompleteModalOpen}
+        onOpenChange={setIsRecruitCompleteModalOpen}
+        confirmTitle={`모집 완료를 누르면\n다시 모집 상태를 바꿀 수 없어요`}
+        cancelText="닫기"
+        confirmText="변경하기"
+        onConfirm={handleRecruitComplete}
+        isMobile
       />
     </>
   );
