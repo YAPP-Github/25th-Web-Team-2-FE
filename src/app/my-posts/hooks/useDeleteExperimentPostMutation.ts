@@ -25,7 +25,7 @@ const useDeleteExperimentPostMutation = () => {
     mutationKey: queryKey.deletePost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKey.post() });
-      queryClient.invalidateQueries({ queryKey: queryKey.myPosts });
+      queryClient.invalidateQueries({ queryKey: queryKey.myPosts() });
     },
   });
 };
