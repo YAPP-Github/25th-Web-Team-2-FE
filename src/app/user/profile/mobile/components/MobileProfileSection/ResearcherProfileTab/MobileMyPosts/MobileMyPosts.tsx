@@ -16,13 +16,22 @@ import useMyPostsQuery from '@/app/my-posts/hooks/useMyPostsQuery';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 import EmptyMyPosts from './EmptyMyPosts/EmptyMyPosts';
+import useOverlay from '@/hooks/useOverlay';
+import AllMenuBottomSheet from './AllMenuBottomSheet/AllMenuBottomSheet';
 
 const MobileMyPosts = () => {
-  const { data } = useMyPostsQuery();
+  const { data, isFetched } = useMyPostsQuery();
+  const { open, close } = useOverlay();
 
   const posts = data?.content ?? [];
 
-  if (posts && posts.length === 0) {
+  const handleClickMenu = (postId: string, recruitStatus: boolean) => {
+    open(() => (
+      <AllMenuBottomSheet onClose={close} postId={postId} recruitStatus={recruitStatus} />
+    ));
+  };
+
+  if (posts.length === 0 && isFetched) {
     return <EmptyMyPosts />;
   }
 
@@ -35,7 +44,10 @@ const MobileMyPosts = () => {
             <span className={postViews}>{post.views}</span>
           </div>
 
-          <button className={menuArea}>
+          <button
+            className={menuArea}
+            onClick={() => handleClickMenu(post.experimentPostId, post.recruitStatus)}
+          >
             <Icon icon="AllMenu" width={20} height={20} />
           </button>
 
