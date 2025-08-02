@@ -9,14 +9,16 @@ interface AllMenuBottomSheetProps {
   onClose: () => void;
   postId: string;
   recruitStatus: boolean;
-  onEditPost: (postId: string) => void;
+  onClickEdit: (postId: string) => void;
+  onClickDelete: (postId: string) => void;
 }
 
 const AllMenuBottomSheet = ({
   onClose,
   postId,
   recruitStatus,
-  onEditPost,
+  onClickEdit,
+  onClickDelete,
 }: AllMenuBottomSheetProps) => {
   const router = useRouter();
   const [recruitStatusState, setRecruitStatusState] = useState(recruitStatus);
@@ -33,12 +35,13 @@ const AllMenuBottomSheet = ({
     if (shouldSkipModal) {
       router.push(`/edit/${postId}`);
     } else {
-      onEditPost(postId);
+      onClickEdit(postId);
     }
   };
 
   const handleClickDeletePost = () => {
     onClose();
+    onClickDelete(postId);
   };
 
   return (

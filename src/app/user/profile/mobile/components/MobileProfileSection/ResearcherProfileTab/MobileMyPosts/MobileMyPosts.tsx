@@ -20,6 +20,9 @@ import useOverlay from '@/hooks/useOverlay';
 import AllMenuBottomSheet from './AllMenuBottomSheet/AllMenuBottomSheet';
 import { useState } from 'react';
 import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
+import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
+import { useToast } from '@/hooks/useToast';
 
 // NOTE: 바텀시트가 닫히고 모달이 열려야되는 상황
 // 바텀시트 내에 모달을 선언할 경우 바텀시트가 닫힐 때 모달도 함께 닫히는 문제
@@ -28,10 +31,31 @@ import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReady
 const MobileMyPosts = () => {
   const { data, isFetched } = useMyPostsQuery();
   const { open, close } = useOverlay();
+  const toast = useToast();
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editPostId, setEditPostId] = useState('');
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState('');
+
+  const { mutate: deletePost } = useDeleteExperimentPostMutation();
 
   const posts = data?.content ?? [];
+
+  const handleDeletePost = () => {
+    setIsDeleteModalOpen(false);
+
+    deletePost(
+      { postId: selectedPostId },
+      {
+        onSuccess: () => {
+          toast.open({ message: '공고를 삭제하였습니다.' });
+        },
+        onError: () => {
+          toast.error({ message: '공고 삭제를 실패하였습니다. 잠시 후 다시 시도해주세요.' });
+        },
+      },
+    );
+  };
 
   const handleClickMenu = (postId: string, recruitStatus: boolean) => {
     open(() => (
@@ -39,9 +63,13 @@ const MobileMyPosts = () => {
         onClose={close}
         postId={postId}
         recruitStatus={recruitStatus}
-        onEditPost={(postId) => {
-          setEditPostId(postId);
+        onClickEdit={(postId) => {
+          setSelectedPostId(postId);
           setIsEditModalOpen(true);
+        }}
+        onClickDelete={(postId) => {
+          setSelectedPostId(postId);
+          setIsDeleteModalOpen(true);
         }}
       />
     ));
@@ -82,7 +110,21 @@ const MobileMyPosts = () => {
         menu="edit"
         isOpen={isEditModalOpen}
         onOpenChange={setIsEditModalOpen}
-        editPostId={editPostId}
+        editPostId={selectedPostId}
+      />
+
+      {/* 삭제 확인 모달 */}
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        onOpenChange={setIsDeleteModalOpen}
+        confirmTitle="정말 삭제하시겠어요?"
+        descriptionText="공고를 삭제하면 다시 되돌릴 수 없어요"
+        cancelText="닫기"
+        confirmText="삭제하기"
+        confirmButtonColor={colors.field09}
+        onConfirm={handleDeletePost}
+        isMobile
+        closeIcon={false}
       />
     </>
   );
