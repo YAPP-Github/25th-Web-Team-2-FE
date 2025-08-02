@@ -41,7 +41,7 @@ const MobileMyPosts = () => {
 
           <Link href={`/post/${post.experimentPostId}`} className={contentArea}>
             <div className={contentWrapper}>
-              {post.recruitStatus && <span className={recruitStatusBadge}>모집 완료</span>}
+              {!post.recruitStatus && <span className={recruitStatusBadge}>모집 완료</span>}
               <span className={postTitle}>{post.title}</span>
             </div>
           </Link>
