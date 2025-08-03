@@ -48,6 +48,7 @@ export const colors = {
   lineTinted: '#7ECACF',
 
   // badge
+  badgeResearcher: '#FF8CCD',
   badgePrimaryTinted: 'rgba(38,181,190,0.3)',
   badgeSecondaryTinted: 'rgba(190,38,124,0.3)',
 };

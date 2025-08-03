@@ -40,7 +40,7 @@ export const userBadge = recipe({
         backgroundColor: colors.badgePrimaryTinted,
       },
       RESEARCHER: {
-        color: colors.secondaryPink,
+        color: colors.badgeResearcher,
         backgroundColor: colors.badgeSecondaryTinted,
       },
     },
