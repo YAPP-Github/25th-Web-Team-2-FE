@@ -38,7 +38,7 @@ const MobileMyPosts = () => {
       <AllMenuBottomSheet
         onClose={close}
         postId={postId}
-        recruitStatus={recruitStatus}
+        initialRecruitStatus={recruitStatus}
         onRecruitComplete={{
           onSuccess: () => {
             toast.open({ message: '모집 완료 처리되었습니다.' });

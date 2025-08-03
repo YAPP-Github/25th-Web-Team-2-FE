@@ -13,7 +13,7 @@ import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReady
 interface AllMenuBottomSheetProps {
   onClose: () => void;
   postId: string;
-  recruitStatus: boolean;
+  initialRecruitStatus: boolean;
   onRecruitComplete?: { onSuccess?: () => void; onError?: () => void };
   onDelete?: { onSuccess?: () => void; onError?: () => void };
 }
@@ -21,7 +21,7 @@ interface AllMenuBottomSheetProps {
 const AllMenuBottomSheet = ({
   onClose,
   postId,
-  recruitStatus,
+  initialRecruitStatus,
   onRecruitComplete,
   onDelete,
 }: AllMenuBottomSheetProps) => {
@@ -29,6 +29,7 @@ const AllMenuBottomSheet = ({
   const { mutate: updateRecruitStatus } = useUpdateRecruitStatusMutation();
   const { mutate: deletePost } = useDeleteExperimentPostMutation();
 
+  const [recruitStatus, setRecruitStatus] = useState(initialRecruitStatus);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isRecruitCompleteModalOpen, setIsRecruitCompleteModalOpen] = useState(false);
@@ -37,7 +38,8 @@ const AllMenuBottomSheet = ({
     updateRecruitStatus(
       { postId },
       {
-        onSuccess: () => {
+        onSuccess: ({ recruitStatus }) => {
+          setRecruitStatus(recruitStatus);
           onRecruitComplete?.onSuccess?.();
         },
         onError: () => {
