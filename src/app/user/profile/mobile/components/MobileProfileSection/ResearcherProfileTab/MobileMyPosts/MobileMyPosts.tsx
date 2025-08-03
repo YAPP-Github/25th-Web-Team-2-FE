@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRef } from 'react';
 
 import {
   contentArea,
@@ -12,21 +13,24 @@ import {
   viewsArea,
 } from './MobileMyPosts.css';
 
-import useMyPostsQuery from '@/app/my-posts/hooks/useMyPostsQuery';
+import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 import EmptyMyPosts from './EmptyMyPosts/EmptyMyPosts';
 import useOverlay from '@/hooks/useOverlay';
 import AllMenuBottomSheet from './AllMenuBottomSheet/AllMenuBottomSheet';
 import { useToast } from '@/hooks/useToast';
+import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
+import { isMobile } from '@/utils/deviceType';
 
 // NOTE: Toast를 바텀시트 내부에서 띄우면 페이지에 보이지 않는 문제로 인해 상위에서 주입
 const MobileMyPosts = () => {
-  const { data, isFetched } = useMyPostsQuery();
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetched } = useMyPostsInfiniteQuery();
   const { open, close } = useOverlay();
   const toast = useToast();
+  const observerRef = useRef<HTMLDivElement>(null);
 
-  const posts = data?.content ?? [];
+  const posts = data?.pages.flatMap((page) => page.content) ?? [];
 
   const handleClickMenu = (postId: string, recruitStatus: boolean) => {
     open(() => (
@@ -61,30 +65,36 @@ const MobileMyPosts = () => {
   }
 
   return (
-    <ul className={myPostsLayout}>
-      {posts.map((post) => (
-        <li key={post.experimentPostId} className={listItem}>
-          <div className={viewsArea}>
-            <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
-            <span className={postViews}>{post.views}</span>
-          </div>
-
-          <button
-            className={menuArea}
-            onClick={() => handleClickMenu(post.experimentPostId, post.recruitStatus)}
-          >
-            <Icon icon="AllMenu" width={20} height={20} />
-          </button>
-
-          <Link href={`/post/${post.experimentPostId}`} className={contentArea}>
-            <div className={contentWrapper}>
-              {!post.recruitStatus && <span className={recruitStatusBadge}>모집 완료</span>}
-              <span className={postTitle}>{post.title}</span>
+    <IntersectionObserverScroll
+      observerRef={observerRef}
+      fetchNextPage={fetchNextPage}
+      enabled={isMobile() && !isFetching && hasNextPage}
+    >
+      <ul className={myPostsLayout}>
+        {posts.map((post) => (
+          <li key={post.experimentPostId} className={listItem}>
+            <div className={viewsArea}>
+              <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
+              <span className={postViews}>{post.views}</span>
             </div>
-          </Link>
-        </li>
-      ))}
-    </ul>
+
+            <button
+              className={menuArea}
+              onClick={() => handleClickMenu(post.experimentPostId, post.recruitStatus)}
+            >
+              <Icon icon="AllMenu" width={20} height={20} />
+            </button>
+
+            <Link href={`/post/${post.experimentPostId}`} className={contentArea}>
+              <div className={contentWrapper}>
+                {!post.recruitStatus && <span className={recruitStatusBadge}>모집 완료</span>}
+                <span className={postTitle}>{post.title}</span>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </IntersectionObserverScroll>
   );
 };
 
