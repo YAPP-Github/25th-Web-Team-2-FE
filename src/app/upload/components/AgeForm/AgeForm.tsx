@@ -6,7 +6,7 @@ interface AgeFormProps {
   id: string;
   field: {
     name: string;
-    value: string | null;
+    value: string | number | null;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur: VoidFunction;
   };
@@ -32,7 +32,7 @@ const AgeForm = forwardRef<HTMLInputElement, AgeFormProps>(
           id={id}
           className={ageInput}
           placeholder={placeholder}
-          value={field.value || ''}
+          value={field.value?.toString() ?? ''}
           onChange={handleChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
