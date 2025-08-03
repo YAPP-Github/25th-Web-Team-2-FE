@@ -41,7 +41,7 @@ const useUpdateRecruitStatusInfiniteMutation = () => {
     mutationKey: queryKey.updateRecruitStatus,
     mutationFn,
     onMutate: async ({ postId, params }) => {
-      const targetQueryKey = queryKey.myPosts.filter(params);
+      const targetQueryKey = queryKey.myPosts.infinite(params);
       const previousData =
         queryClient.getQueryData<UseMyPostsInfiniteQueryResponse>(targetQueryKey);
 
@@ -63,7 +63,7 @@ const useUpdateRecruitStatusInfiniteMutation = () => {
     },
     onError: (_, variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(queryKey.myPosts.filter(variables.params), context.previousData);
+        queryClient.setQueryData(queryKey.myPosts.infinite(variables.params), context.previousData);
       }
     },
   });

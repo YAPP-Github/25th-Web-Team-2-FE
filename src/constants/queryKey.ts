@@ -33,5 +33,7 @@ export const queryKey = {
       order = 'DESC',
     }: { page?: number; count?: number; order?: string } = {}) =>
       [...queryKey.myPosts.all, page, count, order] as const,
+    infinite: ({ count = 10, order = 'DESC' }: { count?: number; order?: string } = {}) =>
+      [...queryKey.myPosts.all, 'infinite', count, order] as const,
   },
 };

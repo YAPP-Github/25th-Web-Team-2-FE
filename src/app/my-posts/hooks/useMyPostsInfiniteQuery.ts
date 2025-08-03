@@ -15,18 +15,16 @@ interface UseMyPostsQueryResponse {
 }
 
 interface UseMyPostsInfiniteQueryParams {
-  page?: number;
   count?: number;
   order?: string;
 }
 
 const useMyPostsInfiniteQuery = ({
-  page = 1,
   count = 10,
   order = 'DESC',
 }: UseMyPostsInfiniteQueryParams = {}) => {
   return useInfiniteQuery({
-    queryKey: queryKey.myPosts.filter({ page, count, order }),
+    queryKey: queryKey.myPosts.infinite({ count, order }),
     queryFn: ({ pageParam }) => {
       const url = API_URL.myPosts(pageParam, count, order);
       return fetchClient.get<UseMyPostsQueryResponse>(url);
