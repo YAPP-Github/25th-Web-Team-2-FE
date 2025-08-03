@@ -8,8 +8,7 @@ import { API_URL } from '@/constants/url';
 
 interface UseUpdateRecruitStatusInfiniteMutationParams {
   postId: string;
-  params: {
-    page: number;
+  params?: {
     count: number;
     order: 'ASC' | 'DESC';
   };

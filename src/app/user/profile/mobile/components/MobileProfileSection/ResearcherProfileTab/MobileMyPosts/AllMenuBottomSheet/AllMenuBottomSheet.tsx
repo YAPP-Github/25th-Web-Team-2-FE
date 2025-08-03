@@ -42,7 +42,7 @@ const AllMenuBottomSheet = ({
 
   const handleRecruitComplete = () => {
     updateRecruitStatus(
-      { postId, params: { page: currentPage, count: PAGE_SIZE, order: 'DESC' } },
+      { postId, params: { count: PAGE_SIZE, order: 'DESC' } },
       {
         onSuccess: ({ recruitStatus }) => {
           setRecruitStatus(recruitStatus);
