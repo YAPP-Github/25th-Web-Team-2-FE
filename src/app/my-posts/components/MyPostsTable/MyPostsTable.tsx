@@ -83,7 +83,7 @@ const MyPostsTable = ({
     if (!selectedPostId) return;
 
     updateRecruitStatusMutation(
-      { postId: selectedPostId },
+      { postId: selectedPostId, params: { page: currentPage, count: PAGE_SIZE, order } },
       {
         onSettled: () => {
           setUpdateStatusConfirmOpen(false);

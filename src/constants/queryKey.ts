@@ -32,6 +32,6 @@ export const queryKey = {
       count = 10,
       order = 'DESC',
     }: { page?: number; count?: number; order?: string } = {}) =>
-      [...queryKey.myPosts.all, page ?? null, count ?? null, order ?? null] as const,
+      [...queryKey.myPosts.all, page, count, order] as const,
   },
 };

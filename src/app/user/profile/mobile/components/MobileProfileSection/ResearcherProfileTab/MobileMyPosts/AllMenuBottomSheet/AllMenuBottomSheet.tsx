@@ -11,11 +11,15 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import Toggle from '@/components/Toggle/Toggle';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
+import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
+
+const PAGE_SIZE = 10;
 
 interface AllMenuBottomSheetProps {
   onClose: () => void;
   postId: string;
   initialRecruitStatus: boolean;
+  currentPage: number;
   onRecruitComplete?: { onSuccess?: () => void; onError?: () => void };
   onDelete?: { onSuccess?: () => void; onError?: () => void };
 }
@@ -24,11 +28,12 @@ const AllMenuBottomSheet = ({
   onClose,
   postId,
   initialRecruitStatus,
+  currentPage,
   onRecruitComplete,
   onDelete,
 }: AllMenuBottomSheetProps) => {
   const router = useRouter();
-  const { mutate: updateRecruitStatus } = useUpdateRecruitStatusMutation();
+  const { mutate: updateRecruitStatus } = useUpdateRecruitStatusInfiniteMutation();
   const { mutate: deletePost } = useDeleteExperimentPostMutation();
 
   const [recruitStatus, setRecruitStatus] = useState(initialRecruitStatus);
@@ -38,7 +43,7 @@ const AllMenuBottomSheet = ({
 
   const handleRecruitComplete = () => {
     updateRecruitStatus(
-      { postId },
+      { postId, params: { page: currentPage, count: PAGE_SIZE, order: 'DESC' } },
       {
         onSuccess: ({ recruitStatus }) => {
           setRecruitStatus(recruitStatus);
