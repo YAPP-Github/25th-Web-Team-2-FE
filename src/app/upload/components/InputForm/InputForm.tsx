@@ -7,13 +7,12 @@ import {
   textCounter,
   formMessage,
 } from './InputForm.css';
-import useCountTextLength from '../../hooks/useCountTextLength';
 
 interface InputFormProps {
   id: string;
   field: {
     name: string;
-    value: string | number | null;
+    value: string | null;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur: VoidFunction;
   };
@@ -43,7 +42,7 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
     },
     ref,
   ) => {
-    const { textLength, handleChange } = useCountTextLength<HTMLInputElement>(field.value);
+    const textLength = (field.value ?? '').length;
 
     return (
       <div className={textInputContainer[size]}>
@@ -55,10 +54,6 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
           type={type}
           placeholder={placeholder}
           value={field.value ?? ''}
-          onChange={(e) => {
-            handleChange(e);
-            field.onChange(e);
-          }}
           maxLength={maxLength}
         />
 

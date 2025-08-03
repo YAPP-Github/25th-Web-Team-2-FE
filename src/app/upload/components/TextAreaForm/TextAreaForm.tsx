@@ -1,6 +1,5 @@
 import { ChangeEvent, forwardRef } from 'react';
 
-import useCountTextLength from '../../hooks/useCountTextLength';
 import {
   formMessage,
   textCounter,
@@ -13,7 +12,7 @@ interface TextAreaFormProps {
   id: string;
   field: {
     name: string;
-    value: string | number | null;
+    value: string | null;
     onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     onBlur: VoidFunction;
   };
@@ -28,7 +27,7 @@ interface TextAreaFormProps {
 
 const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
   ({ field, fieldState, placeholder, id, showErrorMessage = true, maxLength, height }, ref) => {
-    const { textLength, handleChange } = useCountTextLength<HTMLTextAreaElement>(field.value);
+    const textLength = (field.value ?? '').length;
 
     return (
       <div className={textInputContainer['full']}>
@@ -40,10 +39,6 @@ const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
           placeholder={placeholder}
           maxLength={maxLength}
           value={field.value ?? ''}
-          onChange={(e) => {
-            handleChange(e);
-            field.onChange(e);
-          }}
           style={{
             height: `${height}px`,
           }}

@@ -6,7 +6,7 @@ interface AgeFormProps {
   id: string;
   field: {
     name: string;
-    value: string | number | null;
+    value: string | null;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     onBlur: VoidFunction;
   };
