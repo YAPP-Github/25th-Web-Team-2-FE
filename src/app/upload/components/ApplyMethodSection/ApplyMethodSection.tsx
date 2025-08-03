@@ -19,6 +19,7 @@ import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
+import TextAreaForm from '../TextAreaForm.tsx/TextAreaForm';
 import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
@@ -70,15 +71,15 @@ const ApplyMethodSection = ({
             name="applyMethodInfo.content"
             control={control}
             render={({ field, fieldState }) => (
-              <InputForm
+              <TextAreaForm
                 {...field}
                 id="applyMethodInfo.content"
                 placeholder="참여자에게 신청 방법을 알려주세요 (예: 링크로 폼 제출해 주세요)"
                 maxLength={200}
-                size="full"
                 field={{ ...field, value: field.value ?? '' }}
                 fieldState={fieldState}
                 showErrorMessage
+                height={98}
               />
             )}
           />
@@ -133,7 +134,6 @@ const ApplyMethodSection = ({
                     {...field}
                     id="applyMethodInfo.phoneNum"
                     placeholder="연락처, 이메일 등"
-                    size="full"
                     field={field}
                     fieldState={fieldState}
                     showErrorMessage={true}
@@ -225,14 +225,14 @@ const ApplyMethodSection = ({
               name="targetGroupInfo.otherCondition"
               control={control}
               render={({ field, fieldState }) => (
-                <InputForm
+                <TextAreaForm
                   {...field}
                   id="targetGroupInfo.otherCondition"
                   placeholder="기타 조건을 입력해 주세요 (선택)"
                   maxLength={300}
-                  size="full"
                   field={{ ...field, value: field.value ?? '' }}
                   fieldState={fieldState}
+                  height={98}
                   showErrorMessage
                 />
               )}

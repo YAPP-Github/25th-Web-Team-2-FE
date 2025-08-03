@@ -19,14 +19,14 @@ interface TextAreaFormProps {
   fieldState: {
     error?: { message?: string };
   };
-  maxHeight: number;
+  height: number;
   placeholder?: string;
   showErrorMessage?: boolean;
   maxLength?: number;
 }
 
 const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
-  ({ field, fieldState, placeholder, id, showErrorMessage = true, maxLength, maxHeight }, ref) => {
+  ({ field, fieldState, placeholder, id, showErrorMessage = true, maxLength, height }, ref) => {
     const [textLength, setTextLength] = useState(
       typeof field.value === 'string' ? field.value.length : 0,
     );
@@ -48,7 +48,7 @@ const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
           value={field.value ?? ''}
           onChange={handleChange}
           style={{
-            minHeight: `${maxHeight}px`,
+            minHeight: `${height}px`,
             maxWidth: '93.6rem',
             overflowY: 'auto',
           }}
