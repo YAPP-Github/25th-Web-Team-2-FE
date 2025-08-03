@@ -19,7 +19,7 @@ import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
-import TextAreaForm from '../TextAreaForm.tsx/TextAreaForm';
+import TextAreaForm from '../TextAreaForm/TextAreaForm';
 import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
@@ -37,6 +37,8 @@ interface ApplyMethodSectionProps {
   addContact: boolean;
   setAddContact: Dispatch<SetStateAction<boolean>>;
 }
+
+const TEXTAREA_HEIGHT = 98;
 
 const ApplyMethodSection = ({
   addLink,
@@ -79,7 +81,7 @@ const ApplyMethodSection = ({
                 field={{ ...field, value: field.value ?? '' }}
                 fieldState={fieldState}
                 showErrorMessage
-                height={98}
+                height={TEXTAREA_HEIGHT}
               />
             )}
           />
@@ -232,7 +234,7 @@ const ApplyMethodSection = ({
                   maxLength={300}
                   field={{ ...field, value: field.value ?? '' }}
                   fieldState={fieldState}
-                  height={98}
+                  height={TEXTAREA_HEIGHT}
                   showErrorMessage
                 />
               )}

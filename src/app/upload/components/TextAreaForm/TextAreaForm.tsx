@@ -41,8 +41,8 @@ const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
           maxLength={maxLength}
           value={field.value ?? ''}
           onChange={(e) => {
-            const event = handleChange(e);
-            field.onChange(event);
+            handleChange(e);
+            field.onChange(e);
           }}
           style={{
             height: `${height}px`,
@@ -56,7 +56,7 @@ const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
               {textLength}/{maxLength}
             </div>
           )}
-          {fieldState?.error?.message && showErrorMessage && (
+          {fieldState?.error && showErrorMessage && fieldState.error.message !== '' && (
             <p className={formMessage} role="alert" aria-live="polite">
               {fieldState.error.message}
             </p>

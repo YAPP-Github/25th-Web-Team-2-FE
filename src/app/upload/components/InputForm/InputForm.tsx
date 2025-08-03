@@ -56,8 +56,8 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
           placeholder={placeholder}
           value={field.value ?? ''}
           onChange={(e) => {
-            const event = handleChange(e);
-            field.onChange(event);
+            handleChange(e);
+            field.onChange(e);
           }}
           maxLength={maxLength}
         />
