@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { createContext, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 
 import BottomSheet from '@/components/BottomSheet/BottomSheet';
 import { HeaderMode } from '@/types/bottomSheet';
@@ -30,6 +31,8 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
     isOpen: false,
   });
 
+  const pathname = usePathname();
+
   const open = useCallback((Component: React.FC<OverlayState> | null, props?: OverlayProps) => {
     setOverlay({
       ...props,
@@ -51,6 +54,12 @@ export const OverlayProvider = ({ children }: PropsWithChildren) => {
       Component: null,
     }));
   }, []);
+
+  // 라우터 이동 또는 브라우저 뒤로가기 발생 시 바텀시트 닫음
+  useEffect(() => {
+    close();
+    exit();
+  }, [close, exit, pathname]);
 
   const dispatch = useMemo(() => ({ open, close }), [open, close]);
 
