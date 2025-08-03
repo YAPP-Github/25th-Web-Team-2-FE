@@ -20,12 +20,7 @@ import useOverlay from '@/hooks/useOverlay';
 import AllMenuBottomSheet from './AllMenuBottomSheet/AllMenuBottomSheet';
 import { useToast } from '@/hooks/useToast';
 
-// NOTE: 바텀시트가 닫히고 모달이 열려야되는 상황
-// 바텀시트 내에 모달을 선언할 경우 바텀시트가 닫힐 때 모달도 함께 닫히는 문제
-// 상위 컴포넌트가 불필요하게 모달을 의존하게 되는 상황이 발생함
-// 모달도 overlay처럼 portal로 관리 필요
-
-// TODO: 모집 완료 처리 시 바텀시트 닫지 않고, 모집중 상태 낙관적 업데이트로 변경하기
+// NOTE: Toast를 바텀시트 내부에서 띄우면 페이지에 보이지 않는 문제로 인해 상위에서 주입
 const MobileMyPosts = () => {
   const { data, isFetched } = useMyPostsQuery();
   const { open, close } = useOverlay();
