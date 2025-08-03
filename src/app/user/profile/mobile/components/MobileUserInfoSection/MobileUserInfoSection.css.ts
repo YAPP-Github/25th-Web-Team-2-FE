@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
-import { recipe } from '@vanilla-extract/recipes';
 
 export const userInfoHeader = style({
   backgroundColor: colors.field10,

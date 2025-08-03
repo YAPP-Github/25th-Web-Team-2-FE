@@ -3,9 +3,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/uploadExperimentPost';
-import { queryKey } from '@/constants/queryKey';
 
 export interface ExperimentPostData {
   startDate?: string | null;
