@@ -33,16 +33,11 @@ const MobileMyPosts = () => {
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
 
   const handleClickMenu = (postId: string, recruitStatus: boolean) => {
-    const currentPage =
-      data?.pages.find((page) => page.content.find((post) => post.experimentPostId === postId))
-        ?.page ?? 1;
-
     open(() => (
       <AllMenuBottomSheet
         onClose={close}
         postId={postId}
         initialRecruitStatus={recruitStatus}
-        currentPage={currentPage}
         onRecruitComplete={{
           onSuccess: () => {
             toast.open({ message: '모집 완료 처리되었습니다.' });

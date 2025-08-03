@@ -18,7 +18,6 @@ interface AllMenuBottomSheetProps {
   onClose: () => void;
   postId: string;
   initialRecruitStatus: boolean;
-  currentPage: number;
   onRecruitComplete?: { onSuccess?: () => void; onError?: () => void };
   onDelete?: { onSuccess?: () => void; onError?: () => void };
 }
@@ -27,7 +26,6 @@ const AllMenuBottomSheet = ({
   onClose,
   postId,
   initialRecruitStatus,
-  currentPage,
   onRecruitComplete,
   onDelete,
 }: AllMenuBottomSheetProps) => {
