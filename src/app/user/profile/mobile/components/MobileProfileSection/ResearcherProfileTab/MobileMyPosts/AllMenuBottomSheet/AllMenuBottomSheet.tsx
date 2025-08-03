@@ -4,14 +4,13 @@ import { useState } from 'react';
 import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMenuBottomSheet.css';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
-import useUpdateRecruitStatusMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusMutation';
+import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
 import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import Toggle from '@/components/Toggle/Toggle';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
-import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
 
 const PAGE_SIZE = 10;
 
