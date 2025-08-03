@@ -64,7 +64,7 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     title: z
       .string()
       .min(5, '최소 5자 이상으로 입력해 주세요')
-      .max(70, '최대 70자 이하로 입력해 주세요'),
+      .max(150, '최대 150자 이하로 입력해 주세요'),
     // 실험 본문
     content: z
       .string()
