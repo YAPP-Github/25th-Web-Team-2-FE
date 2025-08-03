@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, useState } from 'react';
+import React, { ChangeEvent, forwardRef } from 'react';
 
 import {
   textInputContainer,
@@ -7,6 +7,7 @@ import {
   textCounter,
   formMessage,
 } from './InputForm.css';
+import useCountTextLength from '../../hooks/useCountTextLength';
 
 interface InputFormProps {
   id: string;
@@ -42,14 +43,7 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
     },
     ref,
   ) => {
-    const [textLength, setTextLength] = useState(
-      typeof field.value === 'string' ? field.value.length : 0,
-    );
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      field.onChange(e);
-      setTextLength(e.target.value.length);
-    };
+    const { textLength, handleChange } = useCountTextLength<HTMLInputElement>(field.value);
 
     return (
       <div className={textInputContainer[size]}>
@@ -61,7 +55,10 @@ const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
           type={type}
           placeholder={placeholder}
           value={field.value ?? ''}
-          onChange={handleChange}
+          onChange={(e) => {
+            const event = handleChange(e);
+            field.onChange(event);
+          }}
           maxLength={maxLength}
         />
 
