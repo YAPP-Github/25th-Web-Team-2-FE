@@ -6,7 +6,7 @@ export const queryKey = {
     all: ['experiment-posts'] as const,
     filter: (filters: ExperimentPostListFilters = {}) =>
       [
-        queryKey.post.all,
+        ...queryKey.post.all,
         filters.recruitStatus ?? 'ALL',
         filters.gender ?? null,
         filters.age ?? null,
@@ -32,6 +32,6 @@ export const queryKey = {
       count = 10,
       order = 'DESC',
     }: { page?: number; count?: number; order?: string } = {}) =>
-      [queryKey.myPosts.all, page ?? null, count ?? null, order ?? null] as const,
+      [...queryKey.myPosts.all, page ?? null, count ?? null, order ?? null] as const,
   },
 };
