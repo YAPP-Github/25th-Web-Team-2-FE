@@ -34,10 +34,6 @@ const ParticipationGuideBottomSheet = ({
     refetch: refetchApply,
   } = useApplyMethodQuery({ postId });
 
-  if (isLoadingApply) {
-    return <Spinner height={150} />;
-  }
-
   if (errorApply) {
     return (
       <div className={emptyView}>
@@ -49,13 +45,8 @@ const ParticipationGuideBottomSheet = ({
     );
   }
 
-  if (!applyMethodData) {
-    return (
-      <div className={emptyView}>
-        <Icon icon="Alert" width={24} height={24} color={colors.textAlert} />
-        잠시 후 다시 시도해 주세요.
-      </div>
-    );
+  if (isLoadingApply || !applyMethodData) {
+    return <Spinner height={150} />;
   }
 
   const handleCopyContent = (text: string) => {

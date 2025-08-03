@@ -27,6 +27,7 @@ export const contactInfoRowContainer = style({
 export const contactInfoTitle = style({
   ...fonts.label.large.M14,
   width: '3.7rem',
+  minWidth: 'fit-content',
   color: colors.text03,
 });
 

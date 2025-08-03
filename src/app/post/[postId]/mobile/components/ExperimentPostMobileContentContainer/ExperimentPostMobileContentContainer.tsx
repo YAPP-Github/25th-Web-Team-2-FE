@@ -21,6 +21,7 @@ import {
   copyToastViewport,
 } from '../ParticipationGuideBottomSheet/ParticipationGuideBottomSheet.css';
 
+import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
@@ -46,14 +47,6 @@ const ExperimentPostMobileContentContainer = ({
 
   const postDetailData = experimentDetailResponse.data;
 
-  if (experimentDetailResponse.isLoading) {
-    return (
-      <div className={emptyView}>
-        <Spinner />
-      </div>
-    );
-  }
-
   if (experimentDetailResponse.error) {
     return (
       <div className={emptyView}>
@@ -65,12 +58,14 @@ const ExperimentPostMobileContentContainer = ({
     );
   }
 
-  if (!postDetailData)
+  if (experimentDetailResponse.isLoading || !postDetailData) {
     return (
       <div className={emptyView}>
-        <div className={emptyViewTitle}>공고 상세 정보가 없습니다.</div>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중</p>
       </div>
     );
+  }
 
   const handleOpenBottomSheet = () => {
     open(
