@@ -32,12 +32,11 @@ const MobileMyPosts = () => {
 
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
 
-  const handleClickMenu = (postId: string, recruitStatus: boolean) => {
+  const handleClickMenu = (postId: string) => {
     open(() => (
       <AllMenuBottomSheet
         onClose={close}
         postId={postId}
-        initialRecruitStatus={recruitStatus}
         onRecruitComplete={{
           onSuccess: () => {
             toast.open({ message: '모집 완료 처리되었습니다.' });
@@ -78,10 +77,7 @@ const MobileMyPosts = () => {
               <span className={postViews}>{post.views}</span>
             </div>
 
-            <button
-              className={menuArea}
-              onClick={() => handleClickMenu(post.experimentPostId, post.recruitStatus)}
-            >
+            <button className={menuArea} onClick={() => handleClickMenu(post.experimentPostId)}>
               <Icon icon="AllMenu" width={20} height={20} />
             </button>
 

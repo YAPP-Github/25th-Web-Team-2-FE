@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMenuBottomSheet.css';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
+import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
 import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
 import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
 import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
@@ -17,7 +18,6 @@ const PAGE_SIZE = 10;
 interface AllMenuBottomSheetProps {
   onClose: () => void;
   postId: string;
-  initialRecruitStatus: boolean;
   onRecruitComplete?: { onSuccess?: () => void; onError?: () => void };
   onDelete?: { onSuccess?: () => void; onError?: () => void };
 }
@@ -25,25 +25,27 @@ interface AllMenuBottomSheetProps {
 const AllMenuBottomSheet = ({
   onClose,
   postId,
-  initialRecruitStatus,
   onRecruitComplete,
   onDelete,
 }: AllMenuBottomSheetProps) => {
   const router = useRouter();
   const { mutate: updateRecruitStatus } = useUpdateRecruitStatusInfiniteMutation();
   const { mutate: deletePost } = useDeleteExperimentPostMutation();
+  const { data } = useMyPostsInfiniteQuery();
 
-  const [recruitStatus, setRecruitStatus] = useState(initialRecruitStatus);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isRecruitCompleteModalOpen, setIsRecruitCompleteModalOpen] = useState(false);
+
+  const posts = data?.pages?.flatMap((page) => page.content) ?? [];
+  const currentRecruitStatus =
+    posts.find((post) => post.experimentPostId === postId)?.recruitStatus ?? false;
 
   const handleRecruitComplete = () => {
     updateRecruitStatus(
       { postId, params: { count: PAGE_SIZE, order: 'DESC' } },
       {
-        onSuccess: ({ recruitStatus }) => {
-          setRecruitStatus(recruitStatus);
+        onSuccess: () => {
           onRecruitComplete?.onSuccess?.();
         },
         onError: () => {
@@ -91,9 +93,9 @@ const AllMenuBottomSheet = ({
         <div className={listItem}>
           <span>모집 중</span>
           <Toggle
-            value={recruitStatus}
+            value={currentRecruitStatus}
             onChange={() => setIsRecruitCompleteModalOpen(true)}
-            disabled={!recruitStatus}
+            disabled={!currentRecruitStatus}
           />
         </div>
         <button className={listItem} onClick={handleClickEditPost}>

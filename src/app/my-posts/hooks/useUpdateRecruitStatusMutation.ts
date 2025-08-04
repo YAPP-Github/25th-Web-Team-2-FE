@@ -57,9 +57,9 @@ const useUpdateRecruitStatusMutation = () => {
 
       return { previousData };
     },
-    onError: (_, __, context) => {
+    onError: (_, variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(queryKey.myPosts.all, context.previousData);
+        queryClient.setQueryData(queryKey.myPosts.filter(variables.params), context.previousData);
       }
     },
   });

@@ -39,6 +39,10 @@ const useUpdateRecruitStatusInfiniteMutation = () => {
   return useMutation({
     mutationKey: queryKey.updateRecruitStatus,
     mutationFn,
+    onSuccess: ({ experimentPostId }) => {
+      queryClient.invalidateQueries({ queryKey: queryKey.myPosts.infinite() });
+      queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(experimentPostId) });
+    },
     onMutate: async ({ postId, params }) => {
       const targetQueryKey = queryKey.myPosts.infinite(params);
       const previousData =
