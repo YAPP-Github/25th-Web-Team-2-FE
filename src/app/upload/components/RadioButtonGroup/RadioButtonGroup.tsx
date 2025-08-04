@@ -25,7 +25,7 @@ const RadioButtonGroup = ({
       {options.map((option) => (
         <button
           key={option.value}
-          ref={selectedValue === option.value ? ref : undefined}
+          ref={ref}
           type="button"
           className={customRadioButton({
             active: selectedValue === option.value,
