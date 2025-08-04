@@ -27,6 +27,7 @@ import {
   tableInfoRow,
   tableBody,
   tableRow,
+  titleColumn,
 } from './MyPostsTable.css';
 import { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
 import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
@@ -126,9 +127,7 @@ const MyPostsTable = ({
             href={`/post/${experimentPostId}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <div style={{ width: '100%', height: '100%', padding: '1rem 0' }}>
-              {row.getValue('title')}
-            </div>
+            <div className={titleColumn}>{row.getValue('title')}</div>
           </Link>
         );
       },
