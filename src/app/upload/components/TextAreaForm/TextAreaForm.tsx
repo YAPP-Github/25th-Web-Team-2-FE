@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef } from 'react';
+import { ControllerRenderProps, FieldError } from 'react-hook-form';
 
 import {
   formMessage,
@@ -8,60 +8,51 @@ import {
   textSubMessageLayout,
 } from '../InputForm/InputForm.css';
 
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
+
 interface TextAreaFormProps {
   id: string;
-  field: {
-    name: string;
-    value: string | null;
-    onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-    onBlur: VoidFunction;
-  };
-  fieldState: {
-    error?: { message?: string };
-  };
+  field: ControllerRenderProps<
+    UploadExperimentPostSchemaType,
+    'targetGroupInfo.otherCondition' | 'applyMethodInfo.content'
+  >;
+  error?: FieldError;
   height: number;
   placeholder?: string;
-  showErrorMessage?: boolean;
   maxLength?: number;
 }
 
-const TextAreaForm = forwardRef<HTMLTextAreaElement, TextAreaFormProps>(
-  ({ field, fieldState, placeholder, id, showErrorMessage = true, maxLength, height }, ref) => {
-    const textLength = (field.value ?? '').length;
+const TextAreaForm = ({ field, placeholder, id, error, maxLength, height }: TextAreaFormProps) => {
+  const textLength = (field.value ?? '').length;
 
-    return (
-      <div className={textInputContainer['full']}>
-        <textarea
-          id={id}
-          {...field}
-          ref={ref}
-          className={`${textInput.default} ${fieldState?.error ? textInput.error : ''}`}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          value={field.value ?? ''}
-          style={{
-            height: `${height}px`,
-          }}
-        />
-        <div
-          className={maxLength ? textSubMessageLayout.withCounter : textSubMessageLayout.noCounter}
-        >
-          {maxLength && (
-            <div className={textCounter}>
-              {textLength}/{maxLength}
-            </div>
-          )}
-          {fieldState?.error && showErrorMessage && fieldState.error.message !== '' && (
-            <p className={formMessage} role="alert" aria-live="polite">
-              {fieldState.error.message}
-            </p>
-          )}
-        </div>
+  return (
+    <div className={textInputContainer['full']}>
+      <textarea
+        {...field}
+        id={id}
+        className={`${textInput.default} ${error ? textInput.error : ''}`}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        style={{
+          height: `${height}px`,
+        }}
+      />
+      <div
+        className={maxLength ? textSubMessageLayout.withCounter : textSubMessageLayout.noCounter}
+      >
+        {maxLength && (
+          <div className={textCounter}>
+            {textLength}/{maxLength}
+          </div>
+        )}
+        {error && (
+          <p className={formMessage} role="alert" aria-live="polite">
+            {error.message}
+          </p>
+        )}
       </div>
-    );
-  },
-);
-
-TextAreaForm.displayName = 'TextAreaForm';
+    </div>
+  );
+};
 
 export default TextAreaForm;

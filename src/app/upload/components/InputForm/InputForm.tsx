@@ -1,4 +1,5 @@
-import React, { ChangeEvent, forwardRef } from 'react';
+import React from 'react';
+import { ControllerRenderProps, FieldError } from 'react-hook-form';
 
 import {
   textInputContainer,
@@ -8,19 +9,21 @@ import {
   formMessage,
 } from './InputForm.css';
 
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
+
 interface InputFormProps {
   id: string;
-  field: {
-    name: string;
-    value: string | null;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-    onBlur: VoidFunction;
-  };
-  fieldState: {
-    error?: {
-      message?: string;
-    };
-  };
+  field: ControllerRenderProps<
+    UploadExperimentPostSchemaType,
+    | 'leadResearcher'
+    | 'reward'
+    | 'place'
+    | 'detailedAddress'
+    | 'title'
+    | 'applyMethodInfo.formUrl'
+    | 'applyMethodInfo.phoneNum'
+  >;
+  error?: FieldError;
   placeholder?: string;
   type?: string;
   showErrorMessage?: boolean;
@@ -28,54 +31,46 @@ interface InputFormProps {
   maxLength?: number;
 }
 
-const InputForm = forwardRef<HTMLInputElement, InputFormProps>(
-  (
-    {
-      field,
-      fieldState,
-      placeholder,
-      type = 'text',
-      id,
-      showErrorMessage = true,
-      size = 'half',
-      maxLength,
-    },
-    ref,
-  ) => {
-    const textLength = (field.value ?? '').length;
+const InputForm = ({
+  id,
+  field,
+  error,
+  placeholder,
+  type = 'text',
+  showErrorMessage = true,
+  size = 'half',
+  maxLength,
+}: InputFormProps) => {
+  const textLength = (field.value ?? '').length;
 
-    return (
-      <div className={textInputContainer[size]}>
-        <input
-          {...field}
-          ref={ref}
-          id={id}
-          className={`${textInput.default} ${fieldState?.error ? textInput.error : ''}`}
-          type={type}
-          placeholder={placeholder}
-          value={field.value ?? ''}
-          maxLength={maxLength}
-        />
+  return (
+    <div className={textInputContainer[size]}>
+      <input
+        {...field}
+        value={field.value ?? ''}
+        id={id}
+        className={`${textInput.default} ${error ? textInput.error : ''}`}
+        type={type}
+        placeholder={placeholder}
+        maxLength={maxLength}
+      />
 
-        <div
-          className={maxLength ? textSubMessageLayout.withCounter : textSubMessageLayout.noCounter}
-        >
-          {maxLength && (
-            <div className={textCounter}>
-              {textLength}/{maxLength}
-            </div>
-          )}
-          {fieldState?.error && showErrorMessage && fieldState.error.message !== '' && (
-            <p className={formMessage} role="alert" aria-live="polite">
-              {fieldState.error.message}
-            </p>
-          )}
-        </div>
+      <div
+        className={maxLength ? textSubMessageLayout.withCounter : textSubMessageLayout.noCounter}
+      >
+        {maxLength && (
+          <div className={textCounter}>
+            {textLength}/{maxLength}
+          </div>
+        )}
+        {error && showErrorMessage && (
+          <p className={formMessage} role="alert" aria-live="polite">
+            {error.message}
+          </p>
+        )}
       </div>
-    );
-  },
-);
-
-InputForm.displayName = 'InputForm';
+    </div>
+  );
+};
 
 export default InputForm;

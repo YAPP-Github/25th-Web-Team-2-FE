@@ -119,12 +119,11 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
-                {...field}
+                field={field}
                 type="text"
                 id="title"
                 placeholder="제목을 입력해 주세요"
-                field={field}
-                fieldState={fieldState}
+                error={fieldState.error}
                 size="full"
               />
             )}

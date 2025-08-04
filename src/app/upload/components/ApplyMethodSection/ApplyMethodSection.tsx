@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import {
@@ -48,7 +48,6 @@ const ApplyMethodSection = ({
 }: ApplyMethodSectionProps) => {
   const pathname = usePathname();
   const isEdit = pathname.startsWith('/edit');
-  const [isAgeFormFocused, setIsAgeFormFocused] = useState<boolean>(false);
 
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -74,13 +73,11 @@ const ApplyMethodSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <TextAreaForm
-                {...field}
                 id="applyMethodInfo.content"
                 placeholder="참여자에게 신청 방법을 알려주세요 (예: 링크로 폼 제출해 주세요)"
                 maxLength={200}
-                field={{ ...field, value: field.value ?? '' }}
-                fieldState={fieldState}
-                showErrorMessage
+                field={field}
+                error={fieldState.error}
                 height={TEXTAREA_HEIGHT}
               />
             )}
@@ -103,14 +100,12 @@ const ApplyMethodSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    {...field}
+                    field={field}
                     id="applyMethodInfo.formUrl"
                     placeholder="https://"
                     maxLength={100}
                     size="full"
-                    field={field}
-                    fieldState={fieldState}
-                    showErrorMessage={true}
+                    error={fieldState.error}
                   />
                 )}
               />
@@ -133,12 +128,10 @@ const ApplyMethodSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    {...field}
+                    field={field}
                     id="applyMethodInfo.phoneNum"
                     placeholder="연락처, 이메일 등"
-                    field={field}
-                    fieldState={fieldState}
-                    showErrorMessage={true}
+                    error={fieldState.error}
                   />
                 )}
               />
@@ -157,34 +150,18 @@ const ApplyMethodSection = ({
           {/* 나이 */}
           <div>
             <p className={label}>나이</p>
-            <div className={ageInputContainer({ isError: ageError, isFocused: isAgeFormFocused })}>
+            <div className={ageInputContainer({ isError: ageError })}>
               <span className={textStyle}>만</span>
               <Controller
                 name="targetGroupInfo.startAge"
                 control={control}
-                render={({ field }) => (
-                  <AgeForm
-                    {...field}
-                    id="startAge"
-                    placeholder="00"
-                    field={field}
-                    setIsFocused={setIsAgeFormFocused}
-                  />
-                )}
+                render={({ field }) => <AgeForm id="startAge" placeholder="00" field={field} />}
               />
               <span className={textStyle}>~</span>
               <Controller
                 name="targetGroupInfo.endAge"
                 control={control}
-                render={({ field }) => (
-                  <AgeForm
-                    {...field}
-                    id="endAge"
-                    placeholder="00"
-                    field={field}
-                    setIsFocused={setIsAgeFormFocused}
-                  />
-                )}
+                render={({ field }) => <AgeForm id="endAge" placeholder="00" field={field} />}
               />
               <span className={textStyle}>세</span>
             </div>
@@ -204,12 +181,12 @@ const ApplyMethodSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <RadioButtonGroup
+                  field={field}
                   options={[
                     { value: GenderType.MALE, label: '남성' },
                     { value: GenderType.FEMALE, label: '여성' },
                     { value: GenderType.ALL, label: '무관' },
                   ]}
-                  selectedValue={field.value}
                   onChange={(value) => field.onChange(value)}
                   isError={!!fieldState.error}
                 />
@@ -228,14 +205,12 @@ const ApplyMethodSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <TextAreaForm
-                  {...field}
                   id="targetGroupInfo.otherCondition"
                   placeholder="기타 조건을 입력해 주세요 (선택)"
                   maxLength={300}
                   field={{ ...field, value: field.value ?? '' }}
-                  fieldState={fieldState}
+                  error={fieldState.error}
                   height={TEXTAREA_HEIGHT}
-                  showErrorMessage
                 />
               )}
             />
