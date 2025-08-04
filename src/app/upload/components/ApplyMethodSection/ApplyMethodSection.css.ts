@@ -50,15 +50,9 @@ export const ageInputContainer = recipe({
         border: `0.1rem solid ${colors.textAlert}`,
       },
     },
-    isFocused: {
-      true: {
-        border: `0.1rem solid ${colors.primaryMint}`,
-      },
-    },
   },
   defaultVariants: {
     isError: false,
-    isFocused: false,
   },
 });
 

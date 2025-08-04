@@ -1,60 +1,42 @@
-import React from 'react';
 import { ControllerRenderProps, FieldError } from 'react-hook-form';
 
 import {
-  textInputContainer,
-  textInput,
-  textSubMessageLayout,
-  textCounter,
   formMessage,
-} from './InputForm.css';
+  textCounter,
+  textInput,
+  textInputContainer,
+  textSubMessageLayout,
+} from '../InputForm/InputForm.css';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 
-interface InputFormProps {
+interface TextAreaFormProps {
   id: string;
   field: ControllerRenderProps<
     UploadExperimentPostSchemaType,
-    | 'leadResearcher'
-    | 'reward'
-    | 'place'
-    | 'detailedAddress'
-    | 'title'
-    | 'applyMethodInfo.formUrl'
-    | 'applyMethodInfo.phoneNum'
+    'targetGroupInfo.otherCondition' | 'applyMethodInfo.content'
   >;
   error?: FieldError;
+  height: number;
   placeholder?: string;
-  type?: string;
-  showErrorMessage?: boolean;
-  size?: 'half' | 'full';
   maxLength?: number;
 }
 
-const InputForm = ({
-  id,
-  field,
-  error,
-  placeholder,
-  type = 'text',
-  showErrorMessage = true,
-  size = 'half',
-  maxLength,
-}: InputFormProps) => {
+const TextAreaForm = ({ field, placeholder, id, error, maxLength, height }: TextAreaFormProps) => {
   const textLength = (field.value ?? '').length;
 
   return (
-    <div className={textInputContainer[size]}>
-      <input
+    <div className={textInputContainer['full']}>
+      <textarea
         {...field}
-        value={field.value ?? ''}
         id={id}
         className={`${textInput.default} ${error ? textInput.error : ''}`}
-        type={type}
         placeholder={placeholder}
         maxLength={maxLength}
+        style={{
+          height: `${height}px`,
+        }}
       />
-
       <div
         className={maxLength ? textSubMessageLayout.withCounter : textSubMessageLayout.noCounter}
       >
@@ -63,7 +45,7 @@ const InputForm = ({
             {textLength}/{maxLength}
           </div>
         )}
-        {error && showErrorMessage && (
+        {error && (
           <p className={formMessage} role="alert" aria-live="polite">
             {error.message}
           </p>
@@ -73,4 +55,4 @@ const InputForm = ({
   );
 };
 
-export default InputForm;
+export default TextAreaForm;

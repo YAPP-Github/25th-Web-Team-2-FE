@@ -26,6 +26,7 @@ import {
 } from '../UploadContainer/UploadContainer.css';
 
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
+import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/uploadExperimentPost';
 
@@ -40,7 +41,7 @@ const OutlineSection = ({
   durationChecked = false,
   isRecruitStatus = true,
 }: OutlineSectionProps) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
 
   // 공고 등록 시 연구자 정보 자동 채우기
   useUserResearcherInfo();
@@ -97,12 +98,11 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
-                {...field}
-                id="leadResearcher"
                 field={field}
+                id="leadResearcher"
                 type="text"
                 placeholder="OO대학교 OO학과 OO연구실 OOO"
-                fieldState={fieldState}
+                error={fieldState.error}
               />
             )}
           />
@@ -118,7 +118,6 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <DatePickerForm
-                {...field}
                 placeholder="실험 시작일 ~ 실험 종료일"
                 onDateChange={(dates) => {
                   setValue('startDate', dates.from || null, {
@@ -164,19 +163,17 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <RadioButtonGroup
-                {...field}
+                field={field}
                 options={[
                   { value: MatchType.OFFLINE, label: '대면' },
                   { value: MatchType.ONLINE, label: '비대면' },
                   { value: MatchType.ALL, label: '대면+비대면' },
                 ]}
-                selectedValue={field.value}
                 onChange={(value) => {
                   field.onChange(value);
                   handleMatchTypeChange(value as MatchType | null);
                 }}
                 isError={!!fieldState.error}
-                ref={field.ref}
               />
             )}
           />
@@ -192,13 +189,11 @@ const OutlineSection = ({
             control={control}
             render={({ field, fieldState }) => (
               <InputForm
-                {...field}
                 id="reward"
                 field={field}
-                fieldState={fieldState}
+                error={fieldState.error}
                 placeholder="예) 현금 10,000원"
                 type="text"
-                showErrorMessage={true}
               />
             )}
           />
@@ -218,11 +213,10 @@ const OutlineSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    {...field}
                     id="place"
-                    field={field}
+                    field={{ ...field }}
                     placeholder="장소 입력"
-                    fieldState={fieldState}
+                    error={fieldState.error}
                     showErrorMessage={false}
                   />
                 )}
@@ -258,10 +252,10 @@ const OutlineSection = ({
                 render={({ field, fieldState }) => (
                   <InputForm
                     id="detailedAddress"
-                    field={field}
+                    field={{ ...field }}
                     placeholder="상세 주소 입력 (선택)"
                     maxLength={70}
-                    fieldState={fieldState}
+                    error={fieldState.error}
                   />
                 )}
               />
@@ -282,12 +276,11 @@ const OutlineSection = ({
                 render={({ field, fieldState }) => (
                   <SelectForm
                     field={field}
-                    fieldState={fieldState}
                     options={countSelectOptions}
                     placeholder="실험 횟수 입력"
                     disabled={false}
+                    error={fieldState.error}
                     showErrorMessage={false}
-                    ref={field.ref}
                   />
                 )}
               />
@@ -302,12 +295,11 @@ const OutlineSection = ({
                   render={({ field, fieldState }) => (
                     <SelectForm
                       field={field}
-                      fieldState={fieldState}
                       options={durationMinutesOptions}
                       placeholder="1회당 시간 입력"
                       disabled={isDurationChecked}
+                      error={fieldState.error}
                       showErrorMessage={false}
-                      ref={field.ref}
                     />
                   )}
                 />
