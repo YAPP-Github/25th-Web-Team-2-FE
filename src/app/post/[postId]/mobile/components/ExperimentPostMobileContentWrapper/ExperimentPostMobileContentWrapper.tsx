@@ -5,13 +5,11 @@ import { useState } from 'react';
 
 import {
   buttonGradientBackground,
-  contactButton,
-  emptyView,
-  emptyViewTitle,
   experimentPostMobileContentWrapperLayout,
   fixedBottomButtonLayout,
 } from './ExperimentPostMobileContentWrapper.css';
-import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
+import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
 import ParticipationGuideBottomSheet from '../ParticipationGuideBottomSheet/ParticipationGuideBottomSheet';
@@ -21,19 +19,17 @@ import {
   copyToastViewport,
 } from '../ParticipationGuideBottomSheet/ParticipationGuideBottomSheet.css';
 
-import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
-import Spinner from '@/components/Spinner/Spinner';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileContentWrapper = ({
-  experimentDetailResponse,
-  postId,
+  postDetailData,
+  applyMethodData,
 }: {
-  experimentDetailResponse: ReturnType<typeof useExperimentDetailsQuery>;
-  postId: string;
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+  applyMethodData: UseApplyMethodQueryResponse;
 }) => {
   const { open, close } = useOverlay();
   const [isCopyToastOpen, setIsCopyToastOpen] = useState(false);
@@ -45,32 +41,14 @@ const ExperimentPostMobileContentWrapper = ({
     setTimeout(() => setIsCopyToastOpen(false), 1500);
   };
 
-  const postDetailData = experimentDetailResponse.data;
-
-  if (experimentDetailResponse.error) {
-    return (
-      <div className={emptyView}>
-        <p className={emptyViewTitle}>{experimentDetailResponse.error.message}</p>
-        <button onClick={() => experimentDetailResponse.refetch()} className={contactButton}>
-          재시도
-        </button>
-      </div>
-    );
-  }
-
-  if (experimentDetailResponse.isLoading || !postDetailData) {
-    return (
-      <div className={emptyView}>
-        <Spinner />
-        <p className={emptySubTitle}>로딩중</p>
-      </div>
-    );
-  }
-
   const handleOpenBottomSheet = () => {
     open(
       () => (
-        <ParticipationGuideBottomSheet onConfirm={close} postId={postId} showToast={showToast} />
+        <ParticipationGuideBottomSheet
+          onConfirm={close}
+          showToast={showToast}
+          applyMethodData={applyMethodData}
+        />
       ),
       {
         title: '참여 방법',

@@ -1,10 +1,11 @@
 'use client';
 
 import * as Toast from '@radix-ui/react-toast';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
+import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostMobileContentWrapper from '../ExperimentPostMobileContentWrapper/ExperimentPostMobileContentWrapper';
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader/ExperimentPostMobileHeader';
 import {
@@ -23,21 +24,24 @@ import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
 
-const ExperimentPostMobileContentContainer = () => {
+interface ExperimentPostMobileContainerProps {
+  postId: string;
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+  applyMethodData: UseApplyMethodQueryResponse;
+}
+
+const ExperimentPostMobileContainer = ({
+  postId,
+  postDetailData,
+  applyMethodData,
+}: ExperimentPostMobileContainerProps) => {
   const { open, close } = useOverlay();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
-  const { postId } = useParams();
-
-  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
-
   const router = useRouter();
-
-  /* 특정 공고 상세 조회 */
-  const experimentDetailResponse = useExperimentDetailsQuery({ postId: normalizedPostId });
 
   /* 공고 삭제 */
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
@@ -47,7 +51,7 @@ const ExperimentPostMobileContentContainer = () => {
     setIsToastOpen(false);
 
     deleteExperimentPostMutation(
-      { postId: normalizedPostId },
+      { postId },
       {
         onSuccess: () => {
           setToastMessage('공고를 삭제하였습니다.');
@@ -80,7 +84,7 @@ const ExperimentPostMobileContentContainer = () => {
     open(
       () => (
         <PostMenuBottomSheet
-          postId={normalizedPostId}
+          postId={postId}
           onConfirm={close}
           onEditClick={handleEditPost}
           onDeleteClick={() => setIsDeleteModalOpen(true)}
@@ -97,11 +101,11 @@ const ExperimentPostMobileContentContainer = () => {
       <div>
         <ExperimentPostMobileHeader
           onOpenMenuBottomSheet={handleOpenMenuBottomSheet}
-          experimentDetailResponse={experimentDetailResponse}
+          postDetailData={postDetailData}
         />
         <ExperimentPostMobileContentWrapper
-          experimentDetailResponse={experimentDetailResponse}
-          postId={normalizedPostId}
+          postDetailData={postDetailData}
+          applyMethodData={applyMethodData}
         />
       </div>
 
@@ -140,4 +144,4 @@ const ExperimentPostMobileContentContainer = () => {
   );
 };
 
-export default ExperimentPostMobileContentContainer;
+export default ExperimentPostMobileContainer;

@@ -13,6 +13,9 @@ export const experimentPostInfoLayout = style({
 
 export const postTitle = style({
   ...fonts.title.medium.B20,
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 });
 
 export const postSubInfo = style({
