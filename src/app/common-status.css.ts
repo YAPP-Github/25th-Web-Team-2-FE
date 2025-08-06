@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-export const loadingLayout = style({
+export const commonStatusLayout = style({
   minHeight: 'calc(100dvh - 12.2rem)',
 
   display: 'flex',
@@ -13,7 +13,7 @@ export const loadingLayout = style({
   alignItems: 'center',
 });
 
-export const loadingText = style({
+export const commonStatusText = style({
   ...fonts.label.small.M12,
   color: colors.text04,
   marginBottom: '1.6rem',

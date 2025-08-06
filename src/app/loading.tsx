@@ -1,4 +1,4 @@
-import { loadingLayout, loadingText } from './loading.css';
+import { commonStatusLayout, commonStatusText } from './common-status.css';
 
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 import Spinner from '@/components/Spinner/Spinner';
@@ -6,9 +6,9 @@ import Spinner from '@/components/Spinner/Spinner';
 export default function Loading() {
   return (
     <DefaultLayout>
-      <div className={loadingLayout}>
+      <div className={commonStatusLayout}>
         <Spinner />
-        <p className={loadingText}>로딩중</p>
+        <p className={commonStatusText}>로딩중</p>
       </div>
     </DefaultLayout>
   );
