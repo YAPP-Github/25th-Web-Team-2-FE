@@ -93,10 +93,12 @@ export const emptyTitle = style({
   color: colors.text04,
   marginTop: '0.8rem',
 });
+
 export const emptySubTitle = style({
   ...fonts.label.small.M12,
   color: colors.text04,
   marginBottom: '1.6rem',
+  textAlign: 'center',
 });
 
 export const titleColumn = style({

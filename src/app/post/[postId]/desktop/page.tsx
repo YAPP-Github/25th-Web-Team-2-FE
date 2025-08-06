@@ -1,7 +1,53 @@
+import { notFound } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+
+import { UseApplyMethodQueryResponse } from '../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
 import ExperimentPostContainer from './components/ExperimentPostContainer/ExperimentPostContainer';
 
-const ExperimentPostDesktopPage = () => {
-  return <ExperimentPostContainer />;
-};
+import { createSSRFetchClient } from '@/apis/config/fetchClient';
+import { API_URL } from '@/constants/url';
+import { authOptions } from '@/lib/auth-utils';
 
-export default ExperimentPostDesktopPage;
+interface DesktopPageProps {
+  params: { postId: string };
+}
+
+export default async function ExperimentPostDesktopPage({ params }: DesktopPageProps) {
+  const { postId } = params;
+
+  const session = await getServerSession(authOptions);
+  const accessToken = session?.accessToken;
+  const fetchClient = createSSRFetchClient(accessToken);
+
+  /* 공고 상세 및 참여 방법 API 응답 결과 */
+  const [postDetailResult, applyMethodResult] = await Promise.allSettled([
+    fetchClient.post<UseQueryExperimentDetailsAPIResponse>(API_URL.viewExperimentDetails(postId)),
+    fetchClient.get<UseApplyMethodQueryResponse>(API_URL.applyMethod(postId), {
+      requireAuth: false,
+    }),
+  ]);
+
+  /* 해당하는 공고가 없을 때 */
+  if (
+    postDetailResult.status === 'rejected' &&
+    (postDetailResult.reason?.status === 404 || postDetailResult.reason?.code === 'EP0001')
+  )
+    return notFound();
+
+  const postDetailData = postDetailResult.status === 'fulfilled' ? postDetailResult.value : null;
+  const applyMethodData = applyMethodResult.status === 'fulfilled' ? applyMethodResult.value : null;
+
+  /* 공고 없을 때 외의 에러 발생시 */
+  const hasError =
+    postDetailResult.status === 'rejected' || applyMethodResult.status === 'rejected';
+
+  return (
+    <ExperimentPostContainer
+      postId={postId}
+      postDetailData={postDetailData}
+      applyMethodData={applyMethodData}
+      hasError={hasError}
+    />
+  );
+}
