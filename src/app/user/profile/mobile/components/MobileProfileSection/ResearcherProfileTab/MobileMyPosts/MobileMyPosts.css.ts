@@ -46,11 +46,6 @@ export const postViews = style({
   color: colors.text03,
 });
 
-export const viewsText = style({
-  fontSize: '14px',
-  color: '#666',
-});
-
 export const menuArea = style({
   gridArea: 'menu',
   justifySelf: 'end',

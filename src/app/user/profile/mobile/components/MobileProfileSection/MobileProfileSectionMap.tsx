@@ -1,10 +1,10 @@
-import { getMatchTypeLabel } from './MobileProfileSection';
 import ParticipantAdConsentToggle from '../AdConsentToggle/ParticipantAdConsentToggle';
 import ResearcherAdConsentToggle from '../AdConsentToggle/ResearcherAdConsentToggle';
 import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
+import { getMatchTypeLabel } from '@/app/user/profile/ProfilePage.utils';
 import { AreaType, RegionType } from '@/types/filter';
 
 export const MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP = [

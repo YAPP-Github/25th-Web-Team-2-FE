@@ -5,22 +5,9 @@ import { useRouter } from 'next/navigation';
 import ParticipantProfileSection from './ParticipantProfileSection/ParticipantProfileSection';
 import ResearcherProfileTab from './ResearcherProfileTab/ResearcherProfileTab';
 
-import { ParticipantResponse } from '@/apis/login';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { PATH } from '@/constants/path';
 import { isParticipantInfo } from '@/utils/typeGuard';
-
-const MATCH_TYPE_MAP = {
-  ALL: '전체',
-  OFFLINE: '대면',
-  ONLINE: '비대면',
-} as const;
-
-export const getMatchTypeLabel = (matchType: ParticipantResponse['matchType']) => {
-  if (matchType === null) return '-';
-
-  return MATCH_TYPE_MAP[matchType];
-};
 
 interface MobileProfileSectionProps {
   defaultTab?: string;
