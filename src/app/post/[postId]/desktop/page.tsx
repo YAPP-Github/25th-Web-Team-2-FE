@@ -20,7 +20,6 @@ export default async function ExperimentPostDesktopPage({ params }: DesktopPageP
   const accessToken = session?.accessToken;
   const fetchClient = createSSRFetchClient(accessToken);
 
-  /* 공고 상세 및 참여 방법 API 응답 결과 */
   const [postDetailResult, applyMethodResult] = await Promise.allSettled([
     fetchClient.post<UseQueryExperimentDetailsAPIResponse>(API_URL.viewExperimentDetails(postId), {
       next: { tags: [`experiment-post-${postId}`] },
@@ -35,22 +34,20 @@ export default async function ExperimentPostDesktopPage({ params }: DesktopPageP
   if (
     postDetailResult.status === 'rejected' &&
     (postDetailResult.reason?.status === 404 || postDetailResult.reason?.code === 'EP0001')
-  )
+  ) {
     return notFound();
-
-  const postDetailData = postDetailResult.status === 'fulfilled' ? postDetailResult.value : null;
-  const applyMethodData = applyMethodResult.status === 'fulfilled' ? applyMethodResult.value : null;
+  }
 
   /* 공고 없을 때 외의 에러 발생시 */
-  const hasError =
-    postDetailResult.status === 'rejected' || applyMethodResult.status === 'rejected';
+  if (postDetailResult.status === 'rejected' || applyMethodResult.status === 'rejected') {
+    throw new Error('공고 요청 실패');
+  }
 
   return (
     <ExperimentPostContainer
       postId={postId}
-      postDetailData={postDetailData}
-      applyMethodData={applyMethodData}
-      hasError={hasError}
+      postDetailData={postDetailResult.value}
+      applyMethodData={applyMethodResult.value}
     />
   );
 }
