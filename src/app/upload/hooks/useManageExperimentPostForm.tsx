@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,7 +12,6 @@ import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExpe
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
-import { queryKey } from '@/constants/queryKey';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -43,7 +41,6 @@ const useManageExperimentPostForm = ({
   setErrorMessage,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
@@ -113,11 +110,7 @@ const useManageExperimentPostForm = ({
           onSuccess: async () => {
             setSuccessToast(true);
 
-            await Promise.allSettled([
-              queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(postId) }),
-              queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) }),
-              revalidateExperimentPosts(),
-            ]);
+            await revalidateExperimentPosts(postId);
 
             setTimeout(() => {
               router.push(`/post/${postId}`);
