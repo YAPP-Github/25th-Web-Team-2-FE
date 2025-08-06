@@ -1,3 +1,5 @@
+import { UseApplyMethodQueryResponse } from './hooks/useApplyMethodQuery';
+
 export interface CommonModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -12,6 +14,6 @@ export interface PostDetailBottomSheetProps {
 
 export interface ParticipationGuideBottomSheetProps {
   onConfirm: VoidFunction;
-  postId: string;
   showToast: (message: string) => void;
+  applyMethodData: UseApplyMethodQueryResponse;
 }
