@@ -22,9 +22,12 @@ export default async function ExperimentPostDesktopPage({ params }: DesktopPageP
 
   /* 공고 상세 및 참여 방법 API 응답 결과 */
   const [postDetailResult, applyMethodResult] = await Promise.allSettled([
-    fetchClient.post<UseQueryExperimentDetailsAPIResponse>(API_URL.viewExperimentDetails(postId)),
+    fetchClient.post<UseQueryExperimentDetailsAPIResponse>(API_URL.viewExperimentDetails(postId), {
+      next: { tags: [`experiment-post-${postId}`] },
+    }),
     fetchClient.get<UseApplyMethodQueryResponse>(API_URL.applyMethod(postId), {
       requireAuth: false,
+      next: { tags: [`experiment-post-${postId}-method`] },
     }),
   ]);
 
