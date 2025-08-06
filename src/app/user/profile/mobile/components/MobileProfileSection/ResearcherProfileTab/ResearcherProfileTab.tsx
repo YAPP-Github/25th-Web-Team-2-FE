@@ -1,4 +1,5 @@
 import * as Tabs from '@radix-ui/react-tabs';
+import { useRouter } from 'next/navigation';
 
 import MobileMyPosts from './MobileMyPosts/MobileMyPosts';
 import ResearcherProfileSection from './ResearcherProfileSection/ResearcherProfileSection';
@@ -17,8 +18,18 @@ const ResearcherProfileTab = ({
   goToEditPage,
   defaultTab,
 }: ResearcherProfileTabProps) => {
+  const router = useRouter();
+
+  const handleTabChange = (tab: string) => {
+    router.replace(`/user/profile?tab=${tab}`);
+  };
+
   return (
-    <Tabs.Root className={tabsRoot} defaultValue={defaultTab ?? 'myPosts'}>
+    <Tabs.Root
+      className={tabsRoot}
+      defaultValue={defaultTab ?? 'myPosts'}
+      onValueChange={handleTabChange}
+    >
       <Tabs.List className={tabList}>
         <Tabs.Trigger className={tabTrigger} value="myPosts">
           내가 쓴 글
