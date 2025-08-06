@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
-
+import ExperimentPostMobileContentWrapper from '../ExperimentPostMobileContentWrapper/ExperimentPostMobileContentWrapper';
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader/ExperimentPostMobileHeader';
 import {
   copyToastLayout,
@@ -22,7 +22,6 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
-import ExperimentPostMobileContentWrapper from '../ExperimentPostMobileContentWrapper/ExperimentPostMobileContentWrapper';
 
 const ExperimentPostMobileContentContainer = () => {
   const { open, close } = useOverlay();
