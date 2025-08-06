@@ -13,7 +13,7 @@ import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
 import {
   contactButton,
   emptyViewTitle,
-} from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer.css';
+} from '../ExperimentPostMobileContentWrapper/ExperimentPostMobileContentWrapper.css';
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';

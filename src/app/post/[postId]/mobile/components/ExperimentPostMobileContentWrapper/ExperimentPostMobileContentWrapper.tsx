@@ -3,14 +3,6 @@
 import * as Toast from '@radix-ui/react-toast';
 import { useState } from 'react';
 
-import {
-  buttonGradientBackground,
-  contactButton,
-  emptyView,
-  emptyViewTitle,
-  experimentPostMobileContentContainerLayout,
-  fixedBottomButtonLayout,
-} from './ExperimentPostMobileContentContainer.css';
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs/ExperimentPostTabs';
@@ -27,8 +19,16 @@ import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
 import useOverlay from '@/hooks/useOverlay';
 import { colors } from '@/styles/colors';
+import {
+  buttonGradientBackground,
+  contactButton,
+  emptyView,
+  emptyViewTitle,
+  experimentPostMobileContentWrapperLayout,
+  fixedBottomButtonLayout,
+} from './ExperimentPostMobileContentWrapper.css';
 
-const ExperimentPostMobileContentContainer = ({
+const ExperimentPostMobileContentWrapper = ({
   experimentDetailResponse,
   postId,
 }: {
@@ -80,7 +80,7 @@ const ExperimentPostMobileContentContainer = ({
   };
 
   return (
-    <div className={experimentPostMobileContentContainerLayout}>
+    <div className={experimentPostMobileContentWrapperLayout}>
       <ExperimentPostInfo postDetailData={postDetailData} />
       <ExperimentPostTabs postDetailData={postDetailData} />
 
@@ -128,4 +128,4 @@ const ExperimentPostMobileContentContainer = ({
   );
 };
 
-export default ExperimentPostMobileContentContainer;
+export default ExperimentPostMobileContentWrapper;

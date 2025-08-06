@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
-import ExperimentPostMobileContainer from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer';
+
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader/ExperimentPostMobileHeader';
 import {
   copyToastLayout,
@@ -22,6 +22,7 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
+import ExperimentPostMobileContentWrapper from '../ExperimentPostMobileContentWrapper/ExperimentPostMobileContentWrapper';
 
 const ExperimentPostMobileContentContainer = () => {
   const { open, close } = useOverlay();
@@ -99,7 +100,7 @@ const ExperimentPostMobileContentContainer = () => {
           onOpenMenuBottomSheet={handleOpenMenuBottomSheet}
           experimentDetailResponse={experimentDetailResponse}
         />
-        <ExperimentPostMobileContainer
+        <ExperimentPostMobileContentWrapper
           experimentDetailResponse={experimentDetailResponse}
           postId={normalizedPostId}
         />

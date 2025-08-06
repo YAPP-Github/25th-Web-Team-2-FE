@@ -3,7 +3,7 @@ import { style } from '@vanilla-extract/css';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
-export const experimentPostMobileContentContainerLayout = style({
+export const experimentPostMobileContentWrapperLayout = style({
   minHeight: 'calc(100dvh - 5.4rem)',
   backgroundColor: colors.field01,
 
