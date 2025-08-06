@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMenuBottomSheet.css';
@@ -6,11 +5,8 @@ import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMen
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
 import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
-import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import Toggle from '@/components/Toggle/Toggle';
-import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
 
 const PAGE_SIZE = 10;
@@ -18,6 +14,7 @@ const PAGE_SIZE = 10;
 interface AllMenuBottomSheetProps {
   onClose: () => void;
   postId: string;
+  handleClickEditPost: (postId: string) => void;
   onRecruitComplete?: { onSuccess?: () => void; onError?: () => void };
   onDelete?: { onSuccess?: () => void; onError?: () => void };
 }
@@ -25,16 +22,15 @@ interface AllMenuBottomSheetProps {
 const AllMenuBottomSheet = ({
   onClose,
   postId,
+  handleClickEditPost,
   onRecruitComplete,
   onDelete,
 }: AllMenuBottomSheetProps) => {
-  const router = useRouter();
   const { mutate: updateRecruitStatus } = useUpdateRecruitStatusInfiniteMutation();
   const { mutate: deletePost } = useDeleteExperimentPostMutation();
   const { data } = useMyPostsInfiniteQuery();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isRecruitCompleteModalOpen, setIsRecruitCompleteModalOpen] = useState(false);
 
   const posts = data?.pages?.flatMap((page) => page.content) ?? [];
@@ -71,18 +67,6 @@ const AllMenuBottomSheet = ({
     );
   };
 
-  const handleClickEditPost = () => {
-    const shouldSkipModal = getHideModalCookie(HIDE_MODAL_COOKIE_KEYS.edit);
-
-    onClose();
-
-    if (shouldSkipModal) {
-      router.push(`/edit/${postId}`);
-    } else {
-      setIsEditModalOpen(true);
-    }
-  };
-
   const handleClickDeletePost = () => {
     setIsDeleteModalOpen(true);
   };
@@ -98,7 +82,7 @@ const AllMenuBottomSheet = ({
             disabled={!currentRecruitStatus}
           />
         </div>
-        <button className={listItem} onClick={handleClickEditPost}>
+        <button className={listItem} onClick={() => handleClickEditPost(postId)}>
           글 수정하기
         </button>
         <span className={divider} />
@@ -106,14 +90,6 @@ const AllMenuBottomSheet = ({
           삭제하기
         </button>
       </section>
-
-      {/* 공고 수정 모바일 준비중 모딜 */}
-      <MobileNotReadyModal
-        menu="edit"
-        isOpen={isEditModalOpen}
-        onOpenChange={setIsEditModalOpen}
-        editPostId={postId}
-      />
 
       {/* 삭제 확인 모달 */}
       <ConfirmModal

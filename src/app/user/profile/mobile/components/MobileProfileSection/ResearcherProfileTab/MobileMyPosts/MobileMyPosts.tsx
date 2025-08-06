@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
 
 import AllMenuBottomSheet from './AllMenuBottomSheet/AllMenuBottomSheet';
 import EmptyMyPosts from './EmptyMyPosts/EmptyMyPosts';
@@ -18,25 +19,46 @@ import {
 import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
 import Icon from '@/components/Icon';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
+import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
 import useOverlay from '@/hooks/useOverlay';
 import { useToast } from '@/hooks/useToast';
+import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
 import { isMobile } from '@/utils/deviceType';
 
 // NOTE: Toast를 바텀시트 내부에서 띄우면 페이지에 보이지 않는 문제로 인해 상위에서 주입
 const MobileMyPosts = () => {
+  const router = useRouter();
   const { data, fetchNextPage, hasNextPage, isFetching, isFetched } = useMyPostsInfiniteQuery();
-  const { open, close } = useOverlay();
+  const { open, close: closeBottomSheet } = useOverlay();
   const toast = useToast();
+
   const observerRef = useRef<HTMLDivElement>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editPostId, setEditPostId] = useState('');
 
   const posts = data?.pages.flatMap((page) => page.content) ?? [];
+
+  const handleClickEditPost = (postId: string) => {
+    closeBottomSheet();
+
+    const shouldSkipModal = getHideModalCookie(HIDE_MODAL_COOKIE_KEYS.edit);
+
+    if (shouldSkipModal) {
+      router.push(`/edit/${postId}`);
+    } else {
+      setEditPostId(postId);
+      setIsEditModalOpen(true);
+    }
+  };
 
   const handleClickMenu = (postId: string) => {
     open(() => (
       <AllMenuBottomSheet
         onClose={close}
         postId={postId}
+        handleClickEditPost={handleClickEditPost}
         onRecruitComplete={{
           onSuccess: () => {
             toast.open({ message: '모집 완료 처리되었습니다.' });
@@ -64,33 +86,45 @@ const MobileMyPosts = () => {
   }
 
   return (
-    <IntersectionObserverScroll
-      observerRef={observerRef}
-      fetchNextPage={fetchNextPage}
-      enabled={isMobile() && !isFetching && hasNextPage}
-    >
-      <ul className={myPostsLayout}>
-        {posts.map((post) => (
-          <li key={post.experimentPostId} className={listItem}>
-            <div className={viewsArea}>
-              <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
-              <span className={postViews}>{post.views}</span>
-            </div>
-
-            <button className={menuArea} onClick={() => handleClickMenu(post.experimentPostId)}>
-              <Icon icon="AllMenu" width={20} height={20} />
-            </button>
-
-            <Link href={`/post/${post.experimentPostId}`} className={contentArea}>
-              <div className={contentWrapper}>
-                {!post.recruitStatus && <span className={recruitStatusBadge}>모집 완료</span>}
-                <span className={postTitle}>{post.title}</span>
+    <>
+      <IntersectionObserverScroll
+        observerRef={observerRef}
+        fetchNextPage={fetchNextPage}
+        enabled={isMobile() && !isFetching && hasNextPage}
+      >
+        <ul className={myPostsLayout}>
+          {posts.map((post) => (
+            <li key={post.experimentPostId} className={listItem}>
+              <div className={viewsArea}>
+                <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
+                <span className={postViews}>{post.views}</span>
               </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </IntersectionObserverScroll>
+
+              <button className={menuArea} onClick={() => handleClickMenu(post.experimentPostId)}>
+                <Icon icon="AllMenu" width={20} height={20} />
+              </button>
+
+              <Link href={`/post/${post.experimentPostId}`} className={contentArea}>
+                <div className={contentWrapper}>
+                  {!post.recruitStatus && <span className={recruitStatusBadge}>모집 완료</span>}
+                  <span className={postTitle}>{post.title}</span>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </IntersectionObserverScroll>
+
+      {/* 공고 수정 모바일 준비중 모달 */}
+      {isEditModalOpen && (
+        <MobileNotReadyModal
+          menu="edit"
+          isOpen={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+          editPostId={editPostId}
+        />
+      )}
+    </>
   );
 };
 
