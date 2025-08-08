@@ -5,9 +5,10 @@ import { colors } from '@/styles/colors';
 interface ToggleProps {
   value: boolean;
   onChange: () => void;
+  disabled?: boolean;
 }
 
-const Toggle = ({ value, onChange }: ToggleProps) => {
+const Toggle = ({ value, onChange, disabled = false }: ToggleProps) => {
   return (
     <button
       type="button"
@@ -17,6 +18,7 @@ const Toggle = ({ value, onChange }: ToggleProps) => {
       }}
       onClick={onChange}
       aria-pressed={value}
+      disabled={disabled}
     >
       <span
         className={switchButton}

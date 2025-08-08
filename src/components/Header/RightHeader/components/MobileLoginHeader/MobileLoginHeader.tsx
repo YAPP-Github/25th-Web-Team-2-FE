@@ -15,9 +15,7 @@ import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 
 const routeMap = {
-  profile: '/user/profile',
   upload: '/upload',
-  myPosts: '/my-posts',
 };
 
 interface MobileLoginHeaderProps {
@@ -46,13 +44,7 @@ const MobileLoginHeader = ({ isResearcher }: MobileLoginHeaderProps) => {
   };
 
   const handleOpenMypageBottomSheet = () => {
-    open(() => (
-      <MypageBottomSheet
-        isResearcher={isResearcher}
-        handleSelectMenu={handleSelectMenu}
-        onClose={close}
-      />
-    ));
+    open(() => <MypageBottomSheet onClose={close} />);
   };
 
   return (

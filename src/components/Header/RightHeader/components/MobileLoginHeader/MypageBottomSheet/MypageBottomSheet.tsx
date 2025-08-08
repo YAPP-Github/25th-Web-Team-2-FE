@@ -1,25 +1,22 @@
+import { useRouter } from 'next/navigation';
+
 import ListBottomSheet, {
   ListBottomSheetItem,
 } from '@/components/BottomSheet/ListBottomSheet/ListBottomSheet';
-import { NotReadyMenu } from '@/components/MobileNotReadyModal/MobileNotReadyModal';
+import { PATH } from '@/constants/path';
 import { logout } from '@/lib/auth-utils';
 import { logoutUser } from '@/lib/mixpanelClient';
 
 interface MypageBottomSheetProps {
-  isResearcher: boolean;
-  handleSelectMenu: (menu: Exclude<NotReadyMenu, 'edit'>) => void;
   onClose: () => void;
 }
 
-const MypageBottomSheet = ({ isResearcher, handleSelectMenu, onClose }: MypageBottomSheetProps) => {
+const MypageBottomSheet = ({ onClose }: MypageBottomSheetProps) => {
+  const router = useRouter();
+
   const handleClickProfile = () => {
     onClose();
-    handleSelectMenu('profile');
-  };
-
-  const handleClickMyPosts = () => {
-    onClose();
-    handleSelectMenu('myPosts');
+    router.push(PATH.profile);
   };
 
   const handleLogout = async () => {
@@ -30,13 +27,8 @@ const MypageBottomSheet = ({ isResearcher, handleSelectMenu, onClose }: MypageBo
 
   const items = [
     {
-      text: '내 정보',
+      text: '내 정보 수정',
       onClick: handleClickProfile,
-    },
-    {
-      text: '내가 쓴 글',
-      onClick: handleClickMyPosts,
-      condition: isResearcher,
     },
     {
       text: '로그아웃',
