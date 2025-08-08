@@ -30,15 +30,6 @@ const ExperimentPostContainer = () => {
     postId: normalizedPostId,
   });
 
-  if (isLoading) {
-    return (
-      <div className={emptyViewLayout}>
-        <Spinner />
-        <p className={emptySubTitle}>로딩중</p>
-      </div>
-    );
-  }
-
   if (postError || methodError) {
     return (
       <div className={emptyViewLayout}>
@@ -50,10 +41,11 @@ const ExperimentPostContainer = () => {
     );
   }
 
-  if (!postDetailData) {
+  if (isLoading || !postDetailData) {
     return (
       <div className={emptyViewLayout}>
-        <p className={emptySubTitle}>공고 상세 정보가 없습니다.</p>
+        <Spinner />
+        <p className={emptySubTitle}>로딩중</p>
       </div>
     );
   }

@@ -5,6 +5,10 @@ import { fonts } from '@/styles/fonts.css';
 
 export const loginLayout = style({
   position: 'relative',
+
+  display: 'flex',
+  alignItems: 'center',
+
   paddingTop: '8.4rem',
   paddingBottom: '20.6rem', // 12.2 + 8.4rem
   backgroundColor: colors.field01,

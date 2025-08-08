@@ -12,6 +12,12 @@ export const toggle = style({
   transition: 'background 0.2s',
   cursor: 'pointer',
   boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+
+  selectors: {
+    '&:disabled': {
+      cursor: 'not-allowed',
+    },
+  },
 });
 
 export const switchButton = style({

@@ -6,7 +6,7 @@ import {
   ExperimentPostData,
   UploadedPostInfo,
 } from '@/app/upload/hooks/useUploadExperimentPostMutation';
-import { QUERY_KEY } from '@/constants/queryKey';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 export interface UseEditExperimentPostMutationResponse {
@@ -24,7 +24,7 @@ const useEditExperimentPostMutation = () => {
     CustomError,
     { postId: string; data: ExperimentPostData }
   >({
-    mutationKey: [QUERY_KEY.editPost],
+    mutationKey: queryKey.editPost,
     mutationFn,
   });
 };

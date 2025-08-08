@@ -18,10 +18,11 @@ interface ConfirmModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   confirmTitle: string;
-  descriptionText?: string;
   cancelText: string;
   confirmText: string;
   onConfirm: VoidFunction;
+  descriptionText?: string;
+  descriptionTextColor?: string;
   confirmButtonColor?: string;
   closeIcon?: boolean;
   isMobile?: boolean;
@@ -32,6 +33,7 @@ const ConfirmModal = ({
   onOpenChange,
   confirmTitle,
   descriptionText,
+  descriptionTextColor = colors.text03,
   cancelText,
   confirmText,
   onConfirm,
@@ -54,7 +56,11 @@ const ConfirmModal = ({
           <Dialog.Title asChild>
             <div className={confirmTitleStyle({ isMobile })}>
               <h3>{confirmTitle}</h3>
-              {descriptionText && <p className={confirmDescriptionStyle}>{descriptionText}</p>}
+              {descriptionText && (
+                <p className={confirmDescriptionStyle} style={{ color: descriptionTextColor }}>
+                  {descriptionText}
+                </p>
+              )}
             </div>
           </Dialog.Title>
           <div className={confirmButtonContainer({ isMobile })}>

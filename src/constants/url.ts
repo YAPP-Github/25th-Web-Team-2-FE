@@ -18,9 +18,9 @@ export const API_URL = {
     `/v1/experiment-posts/my-posts?page=${page}&count=${count}&order=${order}`,
   updateRecruitStatus: (postId: string) => `/v1/experiment-posts/${postId}/recruit-status`,
   deletePost: (postId: string) => `/v1/experiment-posts/${postId}`,
-  validateContactEmail: (contactEmail: string) =>
+  validateProfileContactEmail: (contactEmail: string) =>
     `/v1/members/me/validation/contact-email?contactEmail=${contactEmail}`,
-  validateContactEmailInfo: (contactEmail: string) =>
+  validateJoinContactEmail: (contactEmail: string) =>
     `/v1/members/signup/validation/contact-email?contactEmail=${contactEmail}`,
   editPost: (postId: string) => `/v1/experiment-posts/${postId}`,
   originExperimentPost: (postId: string) => `/v1/experiment-posts/${postId}/edit`,

@@ -98,3 +98,10 @@ export const emptySubTitle = style({
   color: colors.text04,
   marginBottom: '1.6rem',
 });
+
+export const titleColumn = style({
+  padding: '1rem 0',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+});

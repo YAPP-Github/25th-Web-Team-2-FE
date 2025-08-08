@@ -11,7 +11,9 @@ import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
+import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
+import { queryKey } from '@/constants/queryKey';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -109,12 +111,14 @@ const useManageExperimentPostForm = ({
         { postId, data: updatedData },
         {
           onSuccess: async () => {
+            setSuccessToast(true);
+
             await Promise.allSettled([
-              queryClient.invalidateQueries({ queryKey: ['experimentPostDetail', postId] }),
-              queryClient.invalidateQueries({ queryKey: ['applyMethod', postId] }),
+              queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(postId) }),
+              queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) }),
+              revalidateExperimentPosts(),
             ]);
 
-            setSuccessToast(true);
             setTimeout(() => {
               router.push(`/post/${postId}`);
             }, 1000);
@@ -129,8 +133,9 @@ const useManageExperimentPostForm = ({
       );
     } else {
       uploadExperimentPost(updatedData, {
-        onSuccess: (response) => {
+        onSuccess: async (response) => {
           setSuccessToast(true);
+          await revalidateExperimentPosts();
           setTimeout(() => {
             router.push(`/post/${response.postInfo.experimentPostId}`);
           }, 1000);

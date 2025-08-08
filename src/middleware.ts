@@ -2,104 +2,34 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-import {
-  clearAuthCookies,
-  getDeviceType,
-  goToHome,
-  goToLogin,
-  isExpiredToken,
-} from './middleware/utils';
+import { authHandler } from './middleware/handlers/authHandler';
+import { handlerMap } from './middleware/handlers/handlerMap';
 
-// TODO: 경로별 수행할 로직 리팩토링 필요
 export async function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone();
-  const { searchParams, pathname } = url;
-  const userAgent = request.headers.get('user-agent') || '';
-  const deviceType = getDeviceType(userAgent);
+  const { pathname } = request.nextUrl;
 
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  const isHomePage = pathname === '/';
-  const isLoginPage = pathname.startsWith('/login');
-  const isJoinPage = pathname.startsWith('/join');
-  const isJoinSuccessPage = isJoinPage && searchParams.get('step') === 'success';
-  const isPostDetailPage = pathname.startsWith('/post');
-  const isPostDetailWithDevice = /^\/post\/[^/]+\/(mobile|desktop)$/.test(pathname);
-  const isProfilePage = pathname.startsWith('/user/profile');
-  const isProfileWithDevice = /^\/user\/profile\/(mobile|desktop)(\/.*)?$/.test(pathname);
-
-  // 토큰이 없는 경우
-  if (!token && !isHomePage && !isLoginPage && !isPostDetailPage) {
-    return goToLogin(request);
+  // 인증 체크 먼저 수행
+  const authResult = authHandler(request, token);
+  if (authResult) {
+    return authResult;
   }
 
-  // 토큰이 만료된 경우
-  if (token && isExpiredToken(token) && !isHomePage && !isLoginPage) {
-    const response = goToLogin(request);
-    clearAuthCookies(request, response);
+  // 핸들러 배열을 순회하면서 매칭되는 핸들러 실행하고 매칭되면 반복문 종료
+  for (const { test, handler } of handlerMap) {
+    if (test(pathname)) {
+      const result = handler(request, token);
 
-    return response;
-  }
+      if (result) {
+        return result;
+      }
 
-  // 임시 사용자가 회원가입 이탈했을 경우
-  const isTempUser = token?.isTempUser === true && token?.accessToken === 'temp-token';
-
-  if (isHomePage) {
-    url.pathname = `/home`;
-    const response = NextResponse.rewrite(url);
-
-    if (isTempUser) {
-      clearAuthCookies(request, response);
+      break;
     }
-
-    return response;
-  }
-
-  if (isTempUser && !isJoinPage) {
-    const response = NextResponse.next();
-    clearAuthCookies(request, response);
-    return response;
-  }
-
-  if (isJoinPage || isLoginPage) {
-    if (!isJoinSuccessPage && token && !token.isTempUser) {
-      return goToHome(request);
-    }
-
-    // desktop, mobile 구분
-    if (!pathname.match(/\/(join|login)\/(desktop|mobile)(\/.*)?$/)) {
-      const segments = pathname.split('/').filter(Boolean);
-      const basePath = segments[0];
-      const restPath = segments.length > 1 ? `/${segments.slice(1).join('/')}` : '';
-
-      const newPathname = `/${basePath}/${deviceType}${restPath}`;
-      url.pathname = newPathname;
-
-      return NextResponse.rewrite(url);
-    }
-  }
-
-  // 공고 상세 페이지
-  if (isPostDetailPage && !isPostDetailWithDevice) {
-    const segments = pathname.split('/').filter(Boolean);
-    const postId = segments[1];
-    const newPathname = `/post/${postId}/${deviceType}`;
-
-    url.pathname = newPathname;
-    return NextResponse.rewrite(url);
-  }
-
-  if (isProfilePage && !isProfileWithDevice) {
-    const segments = pathname.split('/').filter(Boolean);
-    const basePath = segments.slice(0, 2).join('/'); // 'user/profile'
-    const restPath = segments.length > 2 ? `/${segments.slice(2).join('/')}` : '';
-    const newPathname = `/${basePath}/${deviceType}${restPath}`;
-
-    url.pathname = newPathname;
-    return NextResponse.rewrite(url);
   }
 
   return NextResponse.next();

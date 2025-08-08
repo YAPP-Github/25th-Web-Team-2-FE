@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import {
@@ -19,6 +19,7 @@ import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
+import TextAreaForm from '../TextAreaForm/TextAreaForm';
 import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
@@ -37,6 +38,8 @@ interface ApplyMethodSectionProps {
   setAddContact: Dispatch<SetStateAction<boolean>>;
 }
 
+const TEXTAREA_HEIGHT = 98;
+
 const ApplyMethodSection = ({
   addLink,
   setAddLink,
@@ -45,7 +48,6 @@ const ApplyMethodSection = ({
 }: ApplyMethodSectionProps) => {
   const pathname = usePathname();
   const isEdit = pathname.startsWith('/edit');
-  const [isAgeFormFocused, setIsAgeFormFocused] = useState<boolean>(false);
 
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -70,15 +72,13 @@ const ApplyMethodSection = ({
             name="applyMethodInfo.content"
             control={control}
             render={({ field, fieldState }) => (
-              <InputForm
-                {...field}
+              <TextAreaForm
                 id="applyMethodInfo.content"
                 placeholder="참여자에게 신청 방법을 알려주세요 (예: 링크로 폼 제출해 주세요)"
                 maxLength={200}
-                size="full"
-                field={{ ...field, value: field.value ?? '' }}
-                fieldState={fieldState}
-                showErrorMessage
+                field={field}
+                error={fieldState.error}
+                height={TEXTAREA_HEIGHT}
               />
             )}
           />
@@ -100,14 +100,12 @@ const ApplyMethodSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    {...field}
+                    field={field}
                     id="applyMethodInfo.formUrl"
                     placeholder="https://"
                     maxLength={100}
                     size="full"
-                    field={field}
-                    fieldState={fieldState}
-                    showErrorMessage={true}
+                    error={fieldState.error}
                   />
                 )}
               />
@@ -130,13 +128,10 @@ const ApplyMethodSection = ({
                 control={control}
                 render={({ field, fieldState }) => (
                   <InputForm
-                    {...field}
+                    field={field}
                     id="applyMethodInfo.phoneNum"
                     placeholder="연락처, 이메일 등"
-                    size="full"
-                    field={field}
-                    fieldState={fieldState}
-                    showErrorMessage={true}
+                    error={fieldState.error}
                   />
                 )}
               />
@@ -155,34 +150,18 @@ const ApplyMethodSection = ({
           {/* 나이 */}
           <div>
             <p className={label}>나이</p>
-            <div className={ageInputContainer({ isError: ageError, isFocused: isAgeFormFocused })}>
+            <div className={ageInputContainer({ isError: ageError })}>
               <span className={textStyle}>만</span>
               <Controller
                 name="targetGroupInfo.startAge"
                 control={control}
-                render={({ field }) => (
-                  <AgeForm
-                    {...field}
-                    id="startAge"
-                    placeholder="00"
-                    field={field}
-                    setIsFocused={setIsAgeFormFocused}
-                  />
-                )}
+                render={({ field }) => <AgeForm id="startAge" placeholder="00" field={field} />}
               />
               <span className={textStyle}>~</span>
               <Controller
                 name="targetGroupInfo.endAge"
                 control={control}
-                render={({ field }) => (
-                  <AgeForm
-                    {...field}
-                    id="endAge"
-                    placeholder="00"
-                    field={field}
-                    setIsFocused={setIsAgeFormFocused}
-                  />
-                )}
+                render={({ field }) => <AgeForm id="endAge" placeholder="00" field={field} />}
               />
               <span className={textStyle}>세</span>
             </div>
@@ -202,12 +181,12 @@ const ApplyMethodSection = ({
               control={control}
               render={({ field, fieldState }) => (
                 <RadioButtonGroup
+                  field={field}
                   options={[
                     { value: GenderType.MALE, label: '남성' },
                     { value: GenderType.FEMALE, label: '여성' },
                     { value: GenderType.ALL, label: '무관' },
                   ]}
-                  selectedValue={field.value}
                   onChange={(value) => field.onChange(value)}
                   isError={!!fieldState.error}
                 />
@@ -225,15 +204,13 @@ const ApplyMethodSection = ({
               name="targetGroupInfo.otherCondition"
               control={control}
               render={({ field, fieldState }) => (
-                <InputForm
-                  {...field}
+                <TextAreaForm
                   id="targetGroupInfo.otherCondition"
                   placeholder="기타 조건을 입력해 주세요 (선택)"
                   maxLength={300}
-                  size="full"
                   field={{ ...field, value: field.value ?? '' }}
-                  fieldState={fieldState}
-                  showErrorMessage
+                  error={fieldState.error}
+                  height={TEXTAREA_HEIGHT}
                 />
               )}
             />

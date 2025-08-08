@@ -20,7 +20,7 @@ export const goToLogin = (request: NextRequest) => {
  * 홈 페이지로 리다이렉트
  */
 export const goToHome = (request: NextRequest) => {
-  return NextResponse.redirect(new URL('/', request.url));
+  return NextResponse.redirect(new URL('/home', request.url));
 };
 
 /**
@@ -47,4 +47,31 @@ export const clearAuthCookies = (request: NextRequest, response: NextResponse) =
       response.cookies.delete(cookieName);
     }
   });
+};
+
+/**
+ * 디바이스 경로가 pathname에 존재하는지 확인
+ */
+export const hasDevicePath = (pathname: string, basePath: string) => {
+  const devicePathRegex = new RegExp(`^/${basePath}/(mobile|desktop)(/.*)?$`);
+  return devicePathRegex.test(pathname);
+};
+
+/**
+ * 디바이스 경로로 rewrite
+ */
+export const rewriteToDevicePath = (request: NextRequest, basePath: string, pathname: string) => {
+  const url = request.nextUrl.clone();
+  const userAgent = request.headers.get('user-agent') || '';
+  const deviceType = getDeviceType(userAgent);
+
+  const segments = pathname.split('/').filter(Boolean);
+  const basePathCount = basePath.split('/').filter(Boolean).length;
+  const isMorePath = segments.length > basePathCount;
+
+  const restPath = isMorePath ? `/${segments.slice(basePathCount).join('/')}` : '';
+  const newPathname = `/${basePath}/${deviceType}${restPath}`;
+
+  url.pathname = newPathname;
+  return NextResponse.rewrite(url);
 };

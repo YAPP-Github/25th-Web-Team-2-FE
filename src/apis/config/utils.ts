@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
-import { createBaseFetchClient, RequestProps } from './createBaseFetchClient';
+import { createBaseFetchClient, FetchProps, RequestProps } from './createBaseFetchClient';
 import { CustomError } from './error';
 import { AuthErrorCode } from './types';
 import { updateAccessToken } from '../login';
@@ -100,4 +100,13 @@ export const retryLogin = async <T>({
       code,
     });
   }
+};
+
+export const getDefaultHeader = (options: FetchProps) => {
+  return options.body
+    ? {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      }
+    : options.headers;
 };

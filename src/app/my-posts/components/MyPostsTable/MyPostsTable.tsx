@@ -1,6 +1,6 @@
 'use client';
 
-import { useQueryClient, UseQueryResult } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import {
   ColumnDef,
   SortingState,
@@ -27,6 +27,7 @@ import {
   tableInfoRow,
   tableBody,
   tableRow,
+  titleColumn,
 } from './MyPostsTable.css';
 import { MyPosts, UseMyPostsQueryResponse } from '../../hooks/useMyPostsQuery';
 import useUpdateRecruitStatusMutation from '../../hooks/useUpdateRecruitStatusMutation';
@@ -66,7 +67,6 @@ const MyPostsTable = ({
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
   const { isLoading: isUserInfoLoading } = useUserInfo();
-  const queryClient = useQueryClient();
 
   const { data, isLoading, error, refetch: refetchMyPosts } = myPostAPIResponse;
 
@@ -83,36 +83,14 @@ const MyPostsTable = ({
   const confirmRecruitStatusUpdate = () => {
     if (!selectedPostId) return;
 
-    const queryKey = ['myPosts', currentPage, PAGE_SIZE, order];
-
-    const previousData = queryClient.getQueryData<UseMyPostsQueryResponse>(queryKey);
-
-    queryClient.setQueryData<UseMyPostsQueryResponse>(queryKey, (oldData) => {
-      if (!oldData) return oldData;
-      return {
-        ...oldData,
-        content: oldData.content.map((post) =>
-          post.experimentPostId === selectedPostId ? { ...post, recruitStatus: false } : post,
-        ),
-      };
-    });
-
     updateRecruitStatusMutation(
-      { postId: selectedPostId },
+      { postId: selectedPostId, params: { page: currentPage, count: PAGE_SIZE, order } },
       {
-        onSuccess: () => {
-          refetchMyPosts();
+        onSettled: () => {
           setUpdateStatusConfirmOpen(false);
-        },
-        onError: () => {
-          if (previousData) {
-            queryClient.setQueryData(queryKey, previousData);
-          }
         },
       },
     );
-
-    setUpdateStatusConfirmOpen(false);
   };
 
   const columns: ColumnDef<MyPosts>[] = [
@@ -126,9 +104,7 @@ const MyPostsTable = ({
             href={`/post/${experimentPostId}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <div style={{ width: '100%', height: '100%', padding: '1rem 0' }}>
-              {row.getValue('title')}
-            </div>
+            <div className={titleColumn}>{row.getValue('title')}</div>
           </Link>
         );
       },

@@ -10,7 +10,6 @@ export const textInputContainer = styleVariants({
 
     position: 'relative',
     width: '100%',
-    maxWidth: '45.2rem',
   },
   full: {
     display: 'flex',

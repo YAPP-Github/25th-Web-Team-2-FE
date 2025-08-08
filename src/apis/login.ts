@@ -36,7 +36,7 @@ interface Member {
 
 export interface ParticipantResponse {
   memberInfo: Member;
-  gender: 'MALE' | 'FEMALE';
+  gender: 'MALE' | 'FEMALE' | 'ALL';
   birthDate: string;
   basicAddressInfo: {
     region: string;
@@ -100,6 +100,6 @@ export const updateAccessToken = async (refreshToken: string) => {
   return await noRetryFetchClient.post<LoginResponse>(API_URL.refresh, { body: { refreshToken } });
 };
 
-export const validateContactEmailInfo = async ({ contactEmail }: ValidateContactEmailParams) => {
-  return await fetchClient.get(API_URL.validateContactEmailInfo(contactEmail));
+export const validateJoinContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
+  return await fetchClient.get(API_URL.validateJoinContactEmail(contactEmail));
 };

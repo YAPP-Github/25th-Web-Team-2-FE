@@ -23,6 +23,7 @@ import {
 } from '../ParticipationGuideModal/ParticipationGuideModal.css';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
+import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
@@ -48,7 +49,8 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
     deleteExperimentPostMutation(
       { postId: postDetailData.experimentPostId },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await revalidateExperimentPosts();
           setTimeout(() => {
             router.push('/');
             setToastMessage('');

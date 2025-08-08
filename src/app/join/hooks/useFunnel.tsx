@@ -7,8 +7,8 @@ type NonEmptyArray<T> = [T, ...T[]];
 
 type StepsType = Readonly<NonEmptyArray<string>>;
 
-interface StepProps {
-  name: string;
+interface StepProps<T extends string = string> {
+  name: T;
   children: ReactNode;
 }
 
@@ -28,7 +28,7 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
 
   const isLast = currentStepIdx === (Array.isArray(steps) ? steps.length - 1 : 0);
 
-  const setStep = (step: string) => {
+  const setStep = (step: Steps[number]) => {
     router.push(`?step=${step}`);
   };
 
@@ -59,7 +59,7 @@ const useFunnel = <Steps extends StepsType>(steps: Steps) => {
   }, [currentStep]);
 
   const Step = useMemo(() => {
-    const StepComponent = (props: StepProps) => {
+    const StepComponent = (props: StepProps<Steps[number]>) => {
       return <>{props.children}</>;
     };
 

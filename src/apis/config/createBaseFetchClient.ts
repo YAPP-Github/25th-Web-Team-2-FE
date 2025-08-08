@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
-import { isAuthError } from './utils';
+import { getDefaultHeader, isAuthError } from './utils';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export interface RequestProps {
   method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
   body?: Record<string, any>;
-  headers?: Record<string, string>;
+  headers?: HeadersInit;
+  next?: { revalidate?: number; tags?: string[] };
   isRetry?: boolean;
+  requireAuth?: boolean;
 }
 
-type FetchProps = Omit<RequestProps, 'method'>;
+export type FetchProps = Omit<RequestProps, 'method'>;
 
 interface RetryLoginParams {
   config: RequestProps;
@@ -28,19 +30,26 @@ interface BaseFetchClientOptions {
 
 export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
   return {
-    onRequestCallback: options.onRequest || ((config: RequestProps) => config),
+    onRequestCallback: options.onRequest,
 
     async request<T = any>(url: string, config: RequestProps): Promise<T> {
       try {
-        const { method, body, headers } = this.onRequestCallback(config);
+        const onRequestConfig = this.onRequestCallback?.(config);
+
+        // NOTE: config 커스텀 설정 적용 (onRequest 기반으로 config 설정 덮어쓰기)
+        const parsedConfig = { ...(onRequestConfig && { ...onRequestConfig }), ...config };
+        const { method, body, next, headers = {}, requireAuth = true } = parsedConfig;
+
+        // NOTE: 불필요한 preflight 요청 방지를 위한 Authorization 헤더 제거
+        if (!requireAuth && 'Authorization' in headers) {
+          delete headers.Authorization;
+        }
 
         const response = await fetch(`${BASE_URL}${url}`, {
           method,
           body: body && JSON.stringify(body),
-          headers: {
-            'Content-Type': 'application/json',
-            ...headers,
-          },
+          headers,
+          ...(next && { next }),
         });
 
         if (response.status === 204) {
@@ -77,31 +86,38 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
     },
 
     get<T = any>(url: string, options: FetchProps = {}) {
-      return this.request<T>(url, { method: 'GET', headers: options.headers });
+      return this.request<T>(url, {
+        method: 'GET',
+        ...options,
+      });
     },
     post<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'POST',
-        body: options.body,
-        headers: options.headers,
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
     delete<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'DELETE',
-        body: options.body,
-        headers: options.headers,
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
     patch<T = any>(url: string, options: FetchProps = {}) {
       return this.request<T>(url, {
         method: 'PATCH',
-        body: options.body,
-        headers: options.headers,
+        ...options,
+        headers: getDefaultHeader(options),
       });
     },
     put<T = any>(url: string, options: FetchProps = {}) {
-      return this.request<T>(url, { method: 'PUT', body: options.body, headers: options.headers });
+      return this.request<T>(url, {
+        method: 'PUT',
+        ...options,
+        headers: getDefaultHeader(options),
+      });
     },
 
     onRequest(callback: (config: RequestProps) => RequestProps) {
