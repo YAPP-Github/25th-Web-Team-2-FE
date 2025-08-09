@@ -13,7 +13,7 @@ const useExperimentPostListQuery = (
   const isFilters = Object.keys(filters).length > 0;
 
   return useInfiniteQuery({
-    queryKey: queryKey.post(filters),
+    queryKey: queryKey.post.filter(filters),
     queryFn: ({ pageParam }) =>
       fetchPostList({ ...filters, page: pageParam, count: POST_PER_PAGE }),
     enabled: isFilters && !isLoading,
