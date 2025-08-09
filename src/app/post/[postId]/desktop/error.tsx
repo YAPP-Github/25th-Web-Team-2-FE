@@ -2,7 +2,7 @@
 
 import { commonStatusLayout, commonStatusText } from '@/app/common-status.css';
 
-export default function Error() {
+export default function DesktopPostDetailError() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className={commonStatusLayout}>

@@ -10,7 +10,7 @@ import Icon from '@/components/Icon';
 import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout/MobilePostDetailLayout';
 import { colors } from '@/styles/colors';
 
-export default function Error() {
+export default function MobilePostDetailError() {
   const router = useRouter();
 
   const handleGoBack = () => {

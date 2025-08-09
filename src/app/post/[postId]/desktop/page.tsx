@@ -35,7 +35,7 @@ export default async function ExperimentPostDesktopPage({ params }: DesktopPageP
     postDetailResult.status === 'rejected' &&
     (postDetailResult.reason?.status === 404 || postDetailResult.reason?.code === 'EP0001')
   ) {
-    return notFound();
+    notFound();
   }
 
   /* 공고 없을 때 외의 에러 발생시 */
@@ -45,7 +45,6 @@ export default async function ExperimentPostDesktopPage({ params }: DesktopPageP
 
   return (
     <ExperimentPostContainer
-      postId={postId}
       postDetailData={postDetailResult.value}
       applyMethodData={applyMethodResult.value}
     />

@@ -34,7 +34,7 @@ export default async function ExperimentDetailPostMobilePage({ params }: MobileP
     postDetailResult.status === 'rejected' &&
     (postDetailResult.reason?.status === 404 || postDetailResult.reason?.code === 'EP0001')
   ) {
-    return notFound();
+    notFound();
   }
 
   if (postDetailResult.status === 'rejected' || applyMethodResult.status === 'rejected') {

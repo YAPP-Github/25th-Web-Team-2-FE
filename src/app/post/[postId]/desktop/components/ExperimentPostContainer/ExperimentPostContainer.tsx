@@ -6,7 +6,6 @@ import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';
 
 interface ExperimentPostContainerProps {
-  postId: string;
   postDetailData: UseQueryExperimentDetailsAPIResponse;
   applyMethodData: UseApplyMethodQueryResponse;
 }
