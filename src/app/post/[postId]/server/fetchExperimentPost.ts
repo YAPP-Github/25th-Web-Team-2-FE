@@ -22,7 +22,7 @@ const REVALIDATE_TAGS = {
   method: (id: string) => `experiment-post-${id}-method`,
 };
 
-type fetchResult = {
+type FetchResult = {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
   applyMethodData: UseApplyMethodQueryResponse;
 };
@@ -38,7 +38,7 @@ function isNotFoundError(error: ApiError): boolean {
   return status === 404 || code === 'EP0001';
 }
 
-export async function fetchExperimentPost(postId: string): Promise<fetchResult> {
+export async function fetchExperimentPost(postId: string): Promise<FetchResult> {
   const session = await getServerSession(authOptions);
   const accessToken = session?.accessToken;
   const fetchClient = createSSRFetchClient(accessToken);
