@@ -6,10 +6,9 @@ import { fetchClient } from '@/apis/config/fetchClient';
 import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
-interface UseUpdateRecruitStatusMutationParams {
+interface UseUpdateRecruitStatusInfiniteMutationParams {
   postId: string;
   params?: {
-    page: number;
     count: number;
     order: 'ASC' | 'DESC';
   };
@@ -24,10 +23,15 @@ interface UseUpdateRecruitStatusMutationResponse {
   uploadDate: string;
 }
 
-const useUpdateRecruitStatusMutation = () => {
+interface UseMyPostsInfiniteQueryResponse {
+  pageParams: number[];
+  pages: UseMyPostsQueryResponse[];
+}
+
+const useUpdateRecruitStatusInfiniteMutation = () => {
   const queryClient = useQueryClient();
 
-  const mutationFn = async ({ postId }: UseUpdateRecruitStatusMutationParams) => {
+  const mutationFn = async ({ postId }: UseUpdateRecruitStatusInfiniteMutationParams) => {
     const url = API_URL.updateRecruitStatus(postId);
     return await fetchClient.patch<UseUpdateRecruitStatusMutationResponse>(url);
   };
@@ -36,22 +40,25 @@ const useUpdateRecruitStatusMutation = () => {
     mutationKey: queryKey.updateRecruitStatus,
     mutationFn,
     onSuccess: ({ experimentPostId }) => {
-      queryClient.invalidateQueries({ queryKey: queryKey.post.all });
+      queryClient.invalidateQueries({ queryKey: queryKey.myPosts.infinite() });
       queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(experimentPostId) });
     },
     onMutate: async ({ postId, params }) => {
-      const targetQueryKey = queryKey.myPosts.filter(params);
+      const targetQueryKey = queryKey.myPosts.infinite(params);
+      const previousData =
+        queryClient.getQueryData<UseMyPostsInfiniteQueryResponse>(targetQueryKey);
 
-      const previousData = queryClient.getQueryData<UseMyPostsQueryResponse>(targetQueryKey);
-
-      queryClient.setQueryData<UseMyPostsQueryResponse>(targetQueryKey, (oldData) => {
+      queryClient.setQueryData<UseMyPostsInfiniteQueryResponse>(targetQueryKey, (oldData) => {
         if (!oldData) return oldData;
 
         return {
           ...oldData,
-          content: oldData.content.map((post) =>
-            post.experimentPostId === postId ? { ...post, recruitStatus: false } : post,
-          ),
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            content: page.content.map((post) =>
+              post.experimentPostId === postId ? { ...post, recruitStatus: false } : post,
+            ),
+          })),
         };
       });
 
@@ -59,10 +66,10 @@ const useUpdateRecruitStatusMutation = () => {
     },
     onError: (_, variables, context) => {
       if (context?.previousData) {
-        queryClient.setQueryData(queryKey.myPosts.filter(variables.params), context.previousData);
+        queryClient.setQueryData(queryKey.myPosts.infinite(variables.params), context.previousData);
       }
     },
   });
 };
 
-export default useUpdateRecruitStatusMutation;
+export default useUpdateRecruitStatusInfiniteMutation;

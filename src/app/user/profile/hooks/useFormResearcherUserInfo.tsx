@@ -34,7 +34,7 @@ const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps)
     },
   });
 
-  const onSubmit = (onSuccess: () => void, onError: () => void) => {
+  const onSubmit = (onSuccess?: () => void, onError?: () => void) => {
     const formData = form.getValues();
     const submitData = ResearcherUpdateSubmitSchema().parse(formData);
 
@@ -46,7 +46,7 @@ const useFormResearcherUserInfo = ({ userInfo }: UseFormResearcherUserInfoProps)
 
   return {
     form,
-    handleSubmit: (onSuccess: () => void, onError: () => void) =>
+    handleSubmit: (onSuccess?: () => void, onError?: () => void) =>
       form.handleSubmit(() => onSubmit(onSuccess, onError)),
     isLoading: isPending,
     isError,

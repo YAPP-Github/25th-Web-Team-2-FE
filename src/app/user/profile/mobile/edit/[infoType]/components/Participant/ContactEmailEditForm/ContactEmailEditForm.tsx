@@ -2,9 +2,9 @@
 
 import { FormProvider, useWatch } from 'react-hook-form';
 
-import EditFormLayout from './EditFormLayout/EditFormLayout';
-import SaveButton from './SaveButton';
-import { useFormProfileEdit } from '../hooks/useFormProfileEdit';
+import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipantProfileEdit';
+import EditFormLayout from '../../EditFormLayout/EditFormLayout';
+import SaveButton from '../../SaveButton';
 
 import { ParticipantResponse } from '@/apis/login';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
@@ -16,7 +16,7 @@ interface ContactEmailEditFormProps {
 }
 
 const ContactEmailEditForm = ({ userInfo }: ContactEmailEditFormProps) => {
-  const { form, isLoading, onSubmit } = useFormProfileEdit(userInfo);
+  const { form, isLoading, onSubmit } = useFormParticipantProfileEdit(userInfo);
 
   const contactEmail = useWatch({ name: 'contactEmail', control: form.control });
   const verifiedContactEmail = useWatch({ name: 'verifiedContactEmail', control: form.control });

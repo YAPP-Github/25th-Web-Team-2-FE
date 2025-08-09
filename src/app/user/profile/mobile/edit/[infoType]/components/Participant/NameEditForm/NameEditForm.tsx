@@ -2,9 +2,9 @@
 
 import { FormProvider } from 'react-hook-form';
 
-import EditFormLayout from './EditFormLayout/EditFormLayout';
-import SaveButton from './SaveButton';
-import { useFormProfileEdit } from '../hooks/useFormProfileEdit';
+import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipantProfileEdit';
+import EditFormLayout from '../../EditFormLayout/EditFormLayout';
+import SaveButton from '../../SaveButton';
 
 import { ParticipantResponse } from '@/apis/login';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
@@ -15,7 +15,7 @@ interface NameEditFormProps {
 }
 
 const NameEditForm = ({ userInfo }: NameEditFormProps) => {
-  const { form, isLoading, onSubmit } = useFormProfileEdit(userInfo);
+  const { form, isLoading, onSubmit } = useFormParticipantProfileEdit(userInfo);
 
   return (
     <FormProvider {...form}>

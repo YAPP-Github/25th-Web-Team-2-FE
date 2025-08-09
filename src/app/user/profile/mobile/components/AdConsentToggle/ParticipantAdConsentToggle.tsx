@@ -5,11 +5,11 @@ import useFormParticipantUserInfo from '../../../hooks/useFormParticipantUserInf
 import { ParticipantResponse } from '@/apis/login';
 import Toggle from '@/components/Toggle/Toggle';
 
-interface AdConsentToggleProps {
+interface ParticipantAdConsentToggleProps {
   userInfo: ParticipantResponse;
 }
 
-const AdConsentToggle = ({ userInfo }: AdConsentToggleProps) => {
+const ParticipantAdConsentToggle = ({ userInfo }: ParticipantAdConsentToggleProps) => {
   const { form, handleSubmit } = useFormParticipantUserInfo({ userInfo });
   const adConsent = useWatch({ name: 'adConsent', control: form.control });
 
@@ -23,4 +23,4 @@ const AdConsentToggle = ({ userInfo }: AdConsentToggleProps) => {
   return <Toggle value={adConsent} onChange={handleChange} />;
 };
 
-export default AdConsentToggle;
+export default ParticipantAdConsentToggle;

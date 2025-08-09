@@ -9,22 +9,21 @@ import {
   joinAreaFilterWrapper,
   requiredStar,
 } from './AddressEditForm.css';
-import { useFormProfileEdit } from '../../hooks/useFormProfileEdit';
-import EditFormLayout from '../EditFormLayout/EditFormLayout';
-import SaveButton from '../SaveButton';
+import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipantProfileEdit';
+import EditFormLayout from '../../EditFormLayout/EditFormLayout';
+import SaveButton from '../../SaveButton';
 
 import { ParticipantResponse } from '@/apis/login';
 import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 
-
 interface AddressEditFormProps {
   userInfo: ParticipantResponse;
 }
 
 const AddressEditForm = ({ userInfo }: AddressEditFormProps) => {
-  const { form, isLoading, onSubmit } = useFormProfileEdit(userInfo);
+  const { form, isLoading, onSubmit } = useFormParticipantProfileEdit(userInfo);
 
   const selectedRegion = useWatch({ name: 'basicAddressInfo.region', control: form.control });
   const selectedAdditionalRegion = useWatch({

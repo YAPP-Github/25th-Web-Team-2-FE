@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/useToast';
 const SUCCESS_UPDATE_MESSAGE = '저장되었어요';
 const ERROR_UPDATE_MESSAGE = '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.';
 
-export const useFormProfileEdit = (userInfo: ParticipantResponse) => {
+export const useFormParticipantProfileEdit = (userInfo: ParticipantResponse) => {
   const router = useRouter();
   const toast = useToast();
   const { form, handleSubmit, isLoading } = useFormParticipantUserInfo({
