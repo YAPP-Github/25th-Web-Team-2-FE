@@ -11,11 +11,11 @@ import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
+import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -100,7 +100,7 @@ const useManageExperimentPostForm = ({
       imageListInfo: {
         images: updatedImages as string[],
       },
-      place: data.matchType === MatchType.ONLINE ? null : data.place,
+      place: data.matchType === MATCH_TYPE.ONLINE ? null : data.place,
     };
 
     if (isEdit && postId) {

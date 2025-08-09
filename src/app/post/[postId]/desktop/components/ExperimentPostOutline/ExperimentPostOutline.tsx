@@ -14,6 +14,7 @@ import {
   dynamicSpacing,
   divider,
 } from './ExperimentPostOutline.css';
+import { GENDER_TYPE, MATCH_TYPE } from '../../../ExperimentPostPage.types';
 import {
   getGenderLabel,
   getDurationLabel,
@@ -26,9 +27,7 @@ import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery'
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { trackEvent } from '@/lib/mixpanelClient';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -52,7 +51,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <td>
                 <p>
                   만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
-                  {targetGroup.genderType === GenderType.ALL
+                  {targetGroup.genderType === GENDER_TYPE.ALL
                     ? '성별 무관'
                     : getGenderLabel(targetGroup.genderType)}
                 </p>
@@ -107,7 +106,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <th>실험 장소</th>
               <td>
                 <p>
-                  {summary.matchType === MatchType.ONLINE
+                  {summary.matchType === MATCH_TYPE.ONLINE
                     ? '비대면'
                     : address.place && address.region && address.area
                     ? `${getRegionLabel(address.region)} ${getAreaLabel(

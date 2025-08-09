@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
-import { MatchType } from '@/types/uploadExperimentPost';
+import { GENDER_TYPE, MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 
 export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExperimentPostSchema>>;
 
@@ -18,7 +17,7 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     endDate: z.union([z.string(), z.null()]),
 
     // 진행 방식
-    matchType: z.nativeEnum(MatchType),
+    matchType: z.enum([MATCH_TYPE.OFFLINE, MATCH_TYPE.ONLINE, MATCH_TYPE.ALL]),
 
     // 실험 횟수
     count: z.preprocess(
@@ -102,7 +101,9 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
         .number({ message: '' })
         .min(0, { message: '0세 이상이어야 합니다' })
         .max(100, { message: '100세 이하로 입력해주세요' }),
-      genderType: z.nativeEnum(GenderType), // 성별
+
+      genderType: z.enum([GENDER_TYPE.MALE, GENDER_TYPE.FEMALE, GENDER_TYPE.ALL]),
+
       otherCondition: z.string().max(300, '최대 300자 이하로 입력해 주세요').optional(), // 기타조건
     }),
 
