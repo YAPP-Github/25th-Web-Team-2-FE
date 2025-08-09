@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -12,12 +11,11 @@ import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
+import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
-import { queryKey } from '@/constants/queryKey';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -43,7 +41,6 @@ const useManageExperimentPostForm = ({
   setErrorMessage,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
@@ -103,7 +100,7 @@ const useManageExperimentPostForm = ({
       imageListInfo: {
         images: updatedImages as string[],
       },
-      place: data.matchType === MatchType.ONLINE ? null : data.place,
+      place: data.matchType === MATCH_TYPE.ONLINE ? null : data.place,
     };
 
     if (isEdit && postId) {
@@ -113,11 +110,7 @@ const useManageExperimentPostForm = ({
           onSuccess: async () => {
             setSuccessToast(true);
 
-            await Promise.allSettled([
-              queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(postId) }),
-              queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) }),
-              revalidateExperimentPosts(),
-            ]);
+            await revalidateExperimentPosts(postId);
 
             setTimeout(() => {
               router.push(`/post/${postId}`);

@@ -27,9 +27,16 @@ export default function Icon({
   className,
   color,
   subcolor,
+  style: customStyle,
+
   ...props
 }: IconProps) {
   const IconComponent = icons[icon];
+
+  const inlineVars = assignInlineVars({
+    [dynamicVars.width]: `${width}px`,
+    [dynamicVars.height]: `${height}px`,
+  });
 
   return (
     <div
@@ -41,10 +48,7 @@ export default function Icon({
       <IconComponent
         {...props}
         className={`${iconDynamicStyle} ${className || ''}`.trim()}
-        style={assignInlineVars({
-          [dynamicVars.width]: `${width}px`,
-          [dynamicVars.height]: `${height}px`,
-        })}
+        style={{ ...inlineVars, ...(customStyle ?? {}) }}
         color={color}
         subcolor={subcolor}
       />

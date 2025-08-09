@@ -37,7 +37,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
         const onRequestConfig = this.onRequestCallback?.(config);
 
         // NOTE: config 커스텀 설정 적용 (onRequest 기반으로 config 설정 덮어쓰기)
-        const parsedConfig = { ...(onRequestConfig && { ...onRequestConfig }), ...config };
+        const parsedConfig = { ...config, ...(onRequestConfig && { ...onRequestConfig }) };
         const { method, body, next, headers = {}, requireAuth = true } = parsedConfig;
 
         // NOTE: 불필요한 preflight 요청 방지를 위한 Authorization 헤더 제거

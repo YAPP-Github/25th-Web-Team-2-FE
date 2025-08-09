@@ -22,14 +22,9 @@ import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import TextAreaForm from '../TextAreaForm/TextAreaForm';
 import { headingIcon, label, uploadSectionLayout } from '../UploadContainer/UploadContainer.css';
 
+import { GENDER_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
-
-export enum GenderType {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  ALL = 'ALL',
-}
 
 interface ApplyMethodSectionProps {
   addLink: boolean;
@@ -183,9 +178,9 @@ const ApplyMethodSection = ({
                 <RadioButtonGroup
                   field={field}
                   options={[
-                    { value: GenderType.MALE, label: '남성' },
-                    { value: GenderType.FEMALE, label: '여성' },
-                    { value: GenderType.ALL, label: '무관' },
+                    { value: GENDER_TYPE.MALE, label: '남성' },
+                    { value: GENDER_TYPE.FEMALE, label: '여성' },
+                    { value: GENDER_TYPE.ALL, label: '무관' },
                   ]}
                   onChange={(value) => field.onChange(value)}
                   isError={!!fieldState.error}

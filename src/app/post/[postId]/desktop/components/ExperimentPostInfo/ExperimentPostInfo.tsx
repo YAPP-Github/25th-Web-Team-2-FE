@@ -23,7 +23,6 @@ import {
 } from '../ParticipationGuideModal/ParticipationGuideModal.css';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
-import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
@@ -43,14 +42,14 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
 
   const handleDeletePost = () => {
     setIsDeleteModalOpen(false);
-    setToastMessage('공고를 삭제하였습니다.');
-    setOpenToast(true);
 
     deleteExperimentPostMutation(
       { postId: postDetailData.experimentPostId },
       {
-        onSuccess: async () => {
-          await revalidateExperimentPosts();
+        onSuccess: () => {
+          setToastMessage('공고를 삭제하였습니다.');
+          setOpenToast(true);
+
           setTimeout(() => {
             router.push('/');
             setToastMessage('');

@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { GenderType, MatchType } from '../ExperimentPostPage.types';
+
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 interface TargetGroup {
   startAge: number | null;
