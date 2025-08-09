@@ -41,10 +41,12 @@ export default function Icon({
       <IconComponent
         {...props}
         className={`${iconDynamicStyle} ${className || ''}`.trim()}
-        style={assignInlineVars({
-          [dynamicVars.width]: `${width}px`,
-          [dynamicVars.height]: `${height}px`,
-        })}
+        style={{
+          ...assignInlineVars({
+            [dynamicVars.width]: `${width}px`,
+            [dynamicVars.height]: `${height}px`,
+          }),
+        }}
         color={color}
         subcolor={subcolor}
       />
