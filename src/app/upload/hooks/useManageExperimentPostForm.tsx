@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -13,6 +14,7 @@ import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExp
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
+import { queryKey } from '@/constants/queryKey';
 import { useToast } from '@/hooks/useToast';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
@@ -41,6 +43,7 @@ const useManageExperimentPostForm = ({
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
@@ -110,12 +113,15 @@ const useManageExperimentPostForm = ({
         {
           onSuccess: async () => {
             toast.open({ message: '공고가 수정되었어요!', duration: 1000 });
-
             await revalidateExperimentPosts(postId);
 
-            setTimeout(() => {
-              router.push(`/post/${postId}`);
-            }, 1000);
+            // 다시 공고 수정 페이지로 이동했을 때 기존 데이터 남지 않도록 캐시 무효화
+            await queryClient.invalidateQueries({
+              queryKey: queryKey.originExperimentPost(postId),
+              refetchType: 'active',
+            });
+            await queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) });
+            router.push(`/post/${postId}`);
             form.reset();
           },
           onError: (error) => {
@@ -130,9 +136,7 @@ const useManageExperimentPostForm = ({
         onSuccess: async (response) => {
           toast.open({ message: '공고가 등록되었어요!', duration: 1000 });
           await revalidateExperimentPosts();
-          setTimeout(() => {
-            router.push(`/post/${response.postInfo.experimentPostId}`);
-          }, 1000);
+          router.push(`/post/${response.postInfo.experimentPostId}`);
           form.reset();
         },
         onError: (error) => {

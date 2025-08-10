@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import revalidateExperimentPosts from '../../../actions';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostMobileContentWrapper from '../ExperimentPostMobileContentWrapper/ExperimentPostMobileContentWrapper';
@@ -45,11 +46,9 @@ const ExperimentPostMobileContainer = ({
       { postId },
       {
         onSuccess: () => {
-          toast.open({ message: '공고를 삭제하였습니다.' });
-
-          setTimeout(() => {
-            router.push('/');
-          }, 1500);
+          toast.open({ message: '공고를 삭제하였습니다.', duration: 1700 });
+          revalidateExperimentPosts();
+          router.push('/');
         },
         onError: () => {
           toast.error({

@@ -12,6 +12,7 @@ import {
   postTitle,
   viewsContainer,
 } from './ExperimentPostInfo.css';
+import revalidateExperimentPosts from '../../../actions';
 import { formatDate } from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
@@ -41,16 +42,13 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
       { postId: postDetailData.experimentPostId },
       {
         onSuccess: () => {
-          toast.open({ message: '공고를 삭제하였습니다.', duration: 1500 });
-
-          setTimeout(() => {
-            router.push('/');
-          }, 1500);
+          toast.open({ message: '공고를 삭제하였습니다.', duration: 1700 });
+          revalidateExperimentPosts();
+          router.push('/');
         },
         onError: () => {
           toast.error({
             message: '공고 삭제를 실패하였습니다. 잠시 후 다시 시도해주세요.',
-            duration: 1500,
           });
         },
       },
