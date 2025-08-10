@@ -11,25 +11,26 @@ import { ParticipationGuideBottomSheetProps } from '../../../ExperimentPostPage.
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
+import { useToast } from '@/hooks/useToast';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 
 const ParticipationGuideBottomSheet = ({
   onConfirm,
-  showToast,
   applyMethodData,
 }: ParticipationGuideBottomSheetProps) => {
+  const toast = useToast();
   const handleCopyContent = (text: string) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        showToast('복사되었어요');
+        toast.open({ message: '복사되었어요' });
         trackEvent('ApplyMethod Interaction', {
           action: 'Link Copied',
         });
       })
       .catch(() => {
-        showToast('복사에 실패했어요. 잠시 후 다시 시도해 주세요');
+        toast.error({ message: '복사에 실패했어요. 잠시 후 다시 시도해 주세요' });
       });
   };
 

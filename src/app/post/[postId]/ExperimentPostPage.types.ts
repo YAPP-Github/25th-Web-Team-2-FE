@@ -14,7 +14,6 @@ export interface PostDetailBottomSheetProps {
 
 export interface ParticipationGuideBottomSheetProps {
   onConfirm: VoidFunction;
-  showToast: (message: string) => void;
   applyMethodData: UseApplyMethodQueryResponse;
 }
 

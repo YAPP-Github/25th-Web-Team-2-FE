@@ -13,6 +13,7 @@ import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExp
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
+import { useToast } from '@/hooks/useToast';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -23,7 +24,6 @@ interface useUploadExperimentPostProps {
   addLink: boolean;
   addContact: boolean;
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
-  setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
   setErrorMessage: Dispatch<SetStateAction<string>>;
@@ -35,12 +35,12 @@ const useManageExperimentPostForm = ({
   addLink,
   addContact,
   setOpenAlertModal,
-  setSuccessToast,
   images,
   setImages,
   setErrorMessage,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
+  const toast = useToast();
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
@@ -73,6 +73,7 @@ const useManageExperimentPostForm = ({
     resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
     defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
+
   useEffect(() => {
     if (!setErrorMessage) return;
     if (originExperimentError) {
@@ -108,7 +109,7 @@ const useManageExperimentPostForm = ({
         { postId, data: updatedData },
         {
           onSuccess: async () => {
-            setSuccessToast(true);
+            toast.open({ message: '공고가 수정되었어요!', duration: 1000 });
 
             await revalidateExperimentPosts(postId);
 
@@ -127,7 +128,7 @@ const useManageExperimentPostForm = ({
     } else {
       uploadExperimentPost(updatedData, {
         onSuccess: async (response) => {
-          setSuccessToast(true);
+          toast.open({ message: '공고가 등록되었어요!', duration: 1000 });
           await revalidateExperimentPosts();
           setTimeout(() => {
             router.push(`/post/${response.postInfo.experimentPostId}`);

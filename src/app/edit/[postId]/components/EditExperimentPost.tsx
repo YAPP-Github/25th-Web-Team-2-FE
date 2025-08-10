@@ -1,17 +1,11 @@
 'use client';
 
-import * as Toast from '@radix-ui/react-toast';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
-import {
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
-} from '@/app/post/[postId]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import ApplyMethodSection from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '@/app/upload/components/DescriptionSection/DescriptionSection';
 import OutlineSection from '@/app/upload/components/OutlineSection/OutlineSection';
@@ -24,7 +18,6 @@ import {
   headerTitle,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
-import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import Spinner from '@/components/Spinner/Spinner';
@@ -44,7 +37,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   const [images, setImages] = useState<(File | string)[]>([]);
 
-  const [successToast, setSuccessToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
@@ -54,7 +46,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
       addLink,
       addContact,
       setOpenAlertModal: setOpenSubmitAlertDialog,
-      setSuccessToast,
       images,
       setImages,
       setErrorMessage,
@@ -152,22 +143,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
           setOpenSubmitAlertDialog(false);
         }}
       />
-
-      {/* 공고 수정 성공 시 successToast */}
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={successToast}
-          onOpenChange={setSuccessToast}
-          duration={1000}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-            <p>공고가 수정되었어요!</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
 
       {/* 공고 수정 중 이탈 시 ConfirmModal */}
       <ConfirmModal
