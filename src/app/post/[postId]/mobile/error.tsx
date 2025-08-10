@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
+import { commonStatusLayout, commonStatusText } from '../common-status.css';
 import { experimentPostMobileHeaderLayout } from './components/ExperimentPostMobileHeader/ExperimentPostMobileHeader.css';
 
-import { commonStatusLayout, commonStatusText } from '@/app/common-status.css';
 import RightHeader from '@/components/Header/RightHeader/RightHeader';
 import Icon from '@/components/Icon';
 import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout/MobilePostDetailLayout';

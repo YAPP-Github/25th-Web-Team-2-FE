@@ -1,6 +1,6 @@
 'use client';
 
-import { commonStatusLayout, commonStatusText } from '@/app/common-status.css';
+import { commonStatusLayout, commonStatusText } from '../common-status.css';
 
 export default function DesktopPostDetailError() {
   return (
