@@ -2,12 +2,12 @@ import { format, parseISO } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { DateRange } from 'react-day-picker';
 
+import { MatchType } from '../post/[postId]/ExperimentPostPage.types';
 import { UseApplyMethodQueryResponse } from '../post/[postId]/hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../post/[postId]/hooks/useExperimentDetailsQuery';
 
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 // date 포맷 변환
 const formatRange = (range: DateRange) => {

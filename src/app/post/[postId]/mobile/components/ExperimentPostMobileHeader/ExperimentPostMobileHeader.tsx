@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { experimentPostMobileHeaderLayout } from './ExperimentPostMobileHeader.css';
-import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 
 import RightHeader from '@/components/Header/RightHeader/RightHeader';
 import Icon from '@/components/Icon';
@@ -12,15 +12,14 @@ import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileHeader = ({
   onOpenMenuBottomSheet,
-  experimentDetailResponse,
+  postDetailData,
 }: {
   onOpenMenuBottomSheet: VoidFunction;
-  experimentDetailResponse: ReturnType<typeof useExperimentDetailsQuery>;
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
 }) => {
   const router = useRouter();
 
-  const isAuthor = experimentDetailResponse.data?.isAuthor ?? false;
-  if (experimentDetailResponse.isLoading) return null;
+  const isAuthor = postDetailData.isAuthor ?? false;
 
   const handleGoBack = () => {
     if (window.history.length > 1) {

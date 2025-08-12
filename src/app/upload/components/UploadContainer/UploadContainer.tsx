@@ -1,6 +1,5 @@
 'use client';
 
-import * as Toast from '@radix-ui/react-toast';
 import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
@@ -17,12 +16,6 @@ import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
-import {
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
-} from '@/app/post/[postId]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
-import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
@@ -36,7 +29,6 @@ const UploadContainer = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
-  const [successToast, setSuccessToast] = useState(false);
 
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -47,7 +39,6 @@ const UploadContainer = () => {
     setOpenAlertModal,
     images,
     isEdit: false,
-    setSuccessToast,
     setErrorMessage,
   });
 
@@ -110,22 +101,6 @@ const UploadContainer = () => {
           setOpenAlertModal(false);
         }}
       />
-
-      {/* 공고 등록 성공 시 successToast */}
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={successToast}
-          onOpenChange={setSuccessToast}
-          duration={1000}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
-            <p>공고가 등록되었어요!</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
 
       {/* 공고 등록 중 이탈 시 confirmModal */}
       <ConfirmModal

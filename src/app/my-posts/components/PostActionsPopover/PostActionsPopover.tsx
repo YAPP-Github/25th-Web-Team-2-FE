@@ -1,7 +1,6 @@
 'use client';
 
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
-import * as Toast from '@radix-ui/react-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -13,13 +12,9 @@ import {
 } from './PostActionsPopover.css';
 import useDeleteExperimentPostMutation from '../../hooks/useDeleteExperimentPostMutation';
 
-import {
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
-} from '@/app/post/[postId]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import Icon from '@/components/Icon';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import { useToast } from '@/hooks/useToast';
 import { colors } from '@/styles/colors';
 
 interface PostActionsPopoverProps {
@@ -29,9 +24,9 @@ interface PostActionsPopoverProps {
 const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [openToast, setOpenToast] = useState(false);
 
   const router = useRouter();
+  const toast = useToast();
 
   const queryClient = useQueryClient();
   const { mutate: deleteExperimentPostMutation } = useDeleteExperimentPostMutation();
@@ -52,10 +47,13 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
       { postId: experimentPostId },
       {
         onSuccess: () => {
+          toast.open({ message: '공고를 삭제하였습니다.', duration: 1500 });
           queryClient.invalidateQueries({ queryKey: ['myPosts'], refetchType: 'all' });
         },
         onError: () => {
-          setOpenToast(true);
+          toast.error({
+            message: '공고 삭제를 실패하였습니다. 잠시 후 다시 시도해주세요.',
+          });
         },
       },
     );
@@ -95,22 +93,6 @@ const PostActionsPopover = ({ experimentPostId }: PostActionsPopoverProps) => {
         confirmButtonColor={colors.field09}
         onConfirm={handleConfirmDelete}
       />
-
-      {/* 삭제 실패 Toast 알림 */}
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={openToast}
-          onOpenChange={setOpenToast}
-          duration={2500}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
-            <p>공고 삭제를 실패하였습니다. 잠시 후 다시 시도해주세요.</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
     </>
   );
 };
