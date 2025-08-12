@@ -2,7 +2,7 @@ import { usePathname } from 'next/navigation';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { MatchType } from '@/types/uploadExperimentPost';
+import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
 const useMatchType = () => {
@@ -17,7 +17,7 @@ const useMatchType = () => {
   const handleMatchTypeChange = (value: MatchType | null) => {
     setValue('matchType', value);
 
-    if (value === MatchType.ONLINE) {
+    if (value === MATCH_TYPE.ONLINE) {
       setValue('region', null);
       setValue('area', null);
       setValue('place', null);

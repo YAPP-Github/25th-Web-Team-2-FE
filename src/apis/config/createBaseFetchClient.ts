@@ -92,10 +92,11 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
       });
     },
     post<T = any>(url: string, options: FetchProps = {}) {
+      const defaultHeaders = getDefaultHeader(options);
       return this.request<T>(url, {
         method: 'POST',
         ...options,
-        headers: getDefaultHeader(options),
+        ...(defaultHeaders && { headers: defaultHeaders }),
       });
     },
     delete<T = any>(url: string, options: FetchProps = {}) {

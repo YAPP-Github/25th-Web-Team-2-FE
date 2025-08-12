@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { GENDER_TYPE, GenderType } from './ExperimentPostPage.types';
+
 import { durationMinutesOptions } from '@/app/upload/upload.constants';
 import { convertToWebpUrl } from '@/app/upload/upload.utils';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';
@@ -17,11 +18,11 @@ const formattedContentText = (text: string) => {
 
 const getGenderLabel = (gender: GenderType): string => {
   switch (gender) {
-    case GenderType.MALE:
+    case GENDER_TYPE.MALE:
       return '남성';
-    case GenderType.FEMALE:
+    case GENDER_TYPE.FEMALE:
       return '여성';
-    case GenderType.ALL:
+    case GENDER_TYPE.ALL:
       return '무관';
     default:
       return '무관';

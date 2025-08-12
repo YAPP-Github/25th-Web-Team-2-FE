@@ -1,6 +1,5 @@
-import * as Toast from '@radix-ui/react-toast';
 import Image from 'next/image';
-import { ChangeEvent, DragEvent, useEffect, useState } from 'react';
+import { ChangeEvent, DragEvent, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import {
@@ -21,12 +20,8 @@ import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
-import {
-  copyToastLayout,
-  copyToastTitle,
-  copyToastViewport,
-} from '@/app/post/[postId]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
 import Icon from '@/components/Icon';
+import { useToast } from '@/hooks/useToast';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
@@ -46,8 +41,8 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
 
+  const toast = useToast();
   const contentError = errors.content;
-  const [openToast, setOpenToast] = useState(false);
 
   useEffect(() => {
     const existingImages = getValues('imageListInfo.images') || [];
@@ -65,7 +60,9 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
 
     for (const file of Array.from(files)) {
       if (!VALID_IMAGE_TYPES.includes(file.type)) {
-        setOpenToast(true);
+        toast.error({
+          message: '지원되지 않는 파일 형식이에요. JPG 또는 PNG를 업로드 해주세요.',
+        });
         continue;
       }
 
@@ -215,22 +212,6 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
           )}
         </div>
       </div>
-
-      {/* 잘못된 확장자 파일 업로드 시 Toast 알림 */}
-      <Toast.Provider swipeDirection="right">
-        <Toast.Root
-          className={copyToastLayout}
-          open={openToast}
-          onOpenChange={setOpenToast}
-          duration={3500}
-        >
-          <Toast.Title className={copyToastTitle}>
-            <Icon icon="Alert" color={colors.textAlert} width={24} height={24} />
-            <p>지원되지 않는 파일 형식이에요. JPG 또는 PNG를 업로드 해주세요.</p>
-          </Toast.Title>
-        </Toast.Root>
-        <Toast.Viewport className={copyToastViewport} />
-      </Toast.Provider>
     </>
   );
 };
