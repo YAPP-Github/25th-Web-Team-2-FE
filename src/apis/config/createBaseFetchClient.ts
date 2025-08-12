@@ -37,7 +37,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
         const onRequestConfig = this.onRequestCallback?.(config);
 
         // NOTE: config 커스텀 설정 적용 (onRequest 기반으로 config 설정 덮어쓰기)
-        const parsedConfig = { ...config, ...(onRequestConfig && { ...onRequestConfig }) };
+        const parsedConfig = { ...(onRequestConfig && { ...onRequestConfig }), ...config };
         const { method, body, next, headers = {}, requireAuth = true } = parsedConfig;
 
         // NOTE: 불필요한 preflight 요청 방지를 위한 Authorization 헤더 제거
@@ -92,10 +92,11 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
       });
     },
     post<T = any>(url: string, options: FetchProps = {}) {
+      const defaultHeaders = getDefaultHeader(options);
       return this.request<T>(url, {
         method: 'POST',
         ...options,
-        headers: getDefaultHeader(options),
+        ...(defaultHeaders && { headers: defaultHeaders }),
       });
     },
     delete<T = any>(url: string, options: FetchProps = {}) {
