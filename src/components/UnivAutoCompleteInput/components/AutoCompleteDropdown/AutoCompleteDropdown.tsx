@@ -6,6 +6,7 @@ import {
   emptyAutoCompleteText,
 } from './AutoCompleteDropdown.css';
 import { useSearchUnivNamesQuery } from '../../hooks/useSearchUnivNamesQuery';
+import { useDebounce } from '@/hooks/useDebounce';
 
 interface AutoCompleteDropdownProps {
   showDropdown: boolean;
@@ -14,13 +15,22 @@ interface AutoCompleteDropdownProps {
 }
 
 const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDropdownProps) => {
-  const { data } = useSearchUnivNamesQuery(query);
+  const { value: debouncedQuery, isPending } = useDebounce(query);
+  const { data, isLoading } = useSearchUnivNamesQuery(debouncedQuery);
 
   const univNames = data?.result || [];
 
   const isInitialOpen = showDropdown && univNames.length === 0 && query.length === 0;
   const hasEmptyResult = showDropdown && univNames.length === 0 && query.length > 0;
   const hasResult = showDropdown && univNames.length > 0;
+
+  if (isPending || isLoading) {
+    return (
+      <div className={autoCompleteDropdown}>
+        <span className={emptyAutoCompleteItem}>검색중...</span>
+      </div>
+    );
+  }
 
   if (isInitialOpen) {
     return (
