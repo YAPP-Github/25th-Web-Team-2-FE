@@ -6,6 +6,7 @@ import {
   emptyAutoCompleteText,
 } from './AutoCompleteDropdown.css';
 import { useSearchUnivNamesQuery } from '../../hooks/useSearchUnivNamesQuery';
+
 import { useDebounce } from '@/hooks/useDebounce';
 
 interface AutoCompleteDropdownProps {
@@ -28,18 +29,18 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
     return null;
   }
 
-  if (isPending || isLoading) {
-    return (
-      <div className={autoCompleteDropdown}>
-        <span className={emptyAutoCompleteItem}>검색중...</span>
-      </div>
-    );
-  }
-
   if (isInitialOpen) {
     return (
       <div className={emptyAutoComplete}>
         <span className={emptyAutoCompleteText}>학교명을 검색해 보세요</span>
+      </div>
+    );
+  }
+
+  if (isPending || isLoading) {
+    return (
+      <div className={autoCompleteDropdown}>
+        <span className={emptyAutoCompleteItem}>검색중...</span>
       </div>
     );
   }
