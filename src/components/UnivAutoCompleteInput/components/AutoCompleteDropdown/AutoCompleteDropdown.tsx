@@ -24,6 +24,10 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
   const hasEmptyResult = showDropdown && univNames.length === 0 && query.length > 0;
   const hasResult = showDropdown && univNames.length > 0;
 
+  if (!showDropdown) {
+    return null;
+  }
+
   if (isPending || isLoading) {
     return (
       <div className={autoCompleteDropdown}>
