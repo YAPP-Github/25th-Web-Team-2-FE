@@ -25,6 +25,7 @@ export const API_URL = {
   editPost: (postId: string) => `/v1/experiment-posts/${postId}`,
   originExperimentPost: (postId: string) => `/v1/experiment-posts/${postId}/edit`,
   leave: '/v1/members',
+  univSearch: (query: string) => `/v1/members/universities/search?query=${query}`,
 };
 
 export const MOCK_API_URL = {
