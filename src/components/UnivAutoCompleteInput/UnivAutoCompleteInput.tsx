@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import { inputContainer } from './UnivAutoCompleteInput.css';
@@ -30,6 +30,8 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
 }: UnivAutoCompleteInputProps<T>) => {
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resetButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <Controller
@@ -42,6 +44,10 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
         };
 
         const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+          if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
+            return;
+          }
+
           if (!e.relatedTarget?.closest('[data-suggestion]')) {
             setShowDropdown(false);
           }
@@ -52,6 +58,12 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
           field.onChange(univName);
           setQuery(univName);
           setShowDropdown(false);
+        };
+
+        const handleReset = () => {
+          field.onChange('');
+          setQuery('');
+          inputRef.current?.focus();
         };
 
         return (
@@ -67,6 +79,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
               <input
                 {...field}
                 id={name}
+                ref={inputRef}
                 placeholder={placeholder}
                 className={joinInput}
                 aria-invalid={fieldState.invalid ? true : false}
@@ -76,7 +89,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
                 onBlur={handleBlur}
               />
               {showDropdown ? (
-                <button className={inputResetButton} onClick={() => setQuery('')}>
+                <button className={inputResetButton} onClick={handleReset}>
                   <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
                 </button>
               ) : (
