@@ -30,7 +30,11 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
 }: UnivAutoCompleteInputProps<T>) => {
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+
+  // 리셋 후 인풋 포커스 유지
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // 리셋 버튼 클릭 시 blur 방지
   const resetButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
