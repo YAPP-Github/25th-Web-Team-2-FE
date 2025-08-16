@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
@@ -45,12 +46,11 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
 
         {/* 소속 연구실 정보 */}
-        <JoinInput<ResearcherJoinSchemaType>
+        <JoinTextarea<ResearcherJoinSchemaType>
           name="labInfo"
           control={control}
           label="소속 연구실 정보"
           placeholder="연구실 정보 입력"
-          type="textarea"
           maxLength={100}
         />
       </div>

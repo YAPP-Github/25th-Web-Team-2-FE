@@ -13,6 +13,7 @@ import {
 import { ResearcherResponse } from '@/apis/login';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';
@@ -79,12 +80,11 @@ const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
           />
 
           {/* 소속 연구실 정보 */}
-          <JoinInput<ResearcherUpdateSchemaType>
+          <JoinTextarea<ResearcherUpdateSchemaType>
             name="labInfo"
             control={form.control}
             label="소속 연구실 정보"
             placeholder="연구실 정보 입력"
-            type="textarea"
             maxLength={100}
           />
 

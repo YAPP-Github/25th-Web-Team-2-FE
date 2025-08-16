@@ -6,6 +6,7 @@ import SaveButton from '../../SaveButton';
 
 import { ResearcherResponse } from '@/apis/login';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 const DESCRIPTION =
@@ -27,7 +28,6 @@ const UnivInfoEditForm = ({ userInfo }: UnivInfoEditFormProps) => {
           label="소속 학교"
           required
           placeholder="학교명 입력"
-          type="input"
         />
         <JoinInput<ResearcherUpdateSchemaType>
           name="major"
@@ -35,14 +35,12 @@ const UnivInfoEditForm = ({ userInfo }: UnivInfoEditFormProps) => {
           label="소속 학과"
           required
           placeholder="전공명 입력"
-          type="input"
         />
-        <JoinInput<ResearcherUpdateSchemaType>
+        <JoinTextarea<ResearcherUpdateSchemaType>
           name="labInfo"
           control={form.control}
           label="소속 연구실 정보"
           placeholder="연구실 정보 입력"
-          type="textarea"
           maxLength={100}
         />
         <SaveButton<ResearcherUpdateSchemaType>
