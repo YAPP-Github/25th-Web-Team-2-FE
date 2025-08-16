@@ -34,9 +34,11 @@ export default function Providers({
     <SessionProvider session={session}>
       <MSWProvider>
         <CustomQueryClientProvider session={session}>
+          <ToastProvider>
           <OverlayProvider>
-            <ToastProvider>{children}</ToastProvider>
+            {children}
           </OverlayProvider>
+          </ToastProvider>
         </CustomQueryClientProvider>
       </MSWProvider>
     </SessionProvider>
