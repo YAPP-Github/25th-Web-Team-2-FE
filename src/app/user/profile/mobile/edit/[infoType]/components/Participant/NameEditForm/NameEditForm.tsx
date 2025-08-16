@@ -26,7 +26,6 @@ const NameEditForm = ({ userInfo }: NameEditFormProps) => {
           label="이름"
           required
           placeholder="이름을 입력해주세요"
-          type="input"
         />
         <SaveButton onSave={onSubmit} fields={['name']} isLoading={isLoading} />
       </EditFormLayout>

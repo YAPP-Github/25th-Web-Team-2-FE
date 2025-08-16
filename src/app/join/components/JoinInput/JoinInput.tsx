@@ -46,7 +46,6 @@ const formatDateInput = (inputType: string, value: string) => {
 };
 
 interface JoinInputProps<T extends FieldValues> {
-  type?: 'input' | 'textarea';
   name: Path<T>;
   control: Control<T>;
   rules?: object;
@@ -58,14 +57,11 @@ interface JoinInputProps<T extends FieldValues> {
   value?: PathValue<T, Path<T>>;
   maxLength?: number;
   isTip?: boolean;
-  isCount?: boolean;
-  count?: number;
   inputType?: 'text' | 'date';
   className?: string;
 }
 
 const JoinInput = <T extends FieldValues>({
-  type = 'input',
   name,
   control,
   rules = {},
@@ -77,20 +73,14 @@ const JoinInput = <T extends FieldValues>({
   value,
   maxLength,
   isTip = true,
-  isCount = false,
-  count,
   inputType = 'text',
   className,
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-    onBlur: () => void,
-  ) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>, onBlur: () => void) => {
     if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
       return;
     }
@@ -101,7 +91,6 @@ const JoinInput = <T extends FieldValues>({
   const handleReset = (onChange: (value: string) => void) => {
     onChange('');
     inputRef.current?.focus();
-    textareaRef.current?.focus();
   };
 
   return (
@@ -120,40 +109,23 @@ const JoinInput = <T extends FieldValues>({
         render={({ field, fieldState }) => (
           <>
             <div className={inputWrapper}>
-              {type === 'input' ? (
-                <input
-                  {...field}
-                  id={name}
-                  ref={inputRef}
-                  placeholder={placeholder}
-                  disabled={disabled}
-                  maxLength={maxLength}
-                  aria-invalid={fieldState.invalid ? true : false}
-                  style={{ width: '100%' }}
-                  className={className ? className : joinInput}
-                  onChange={(e) => {
-                    const formattedValue = formatDateInput(inputType, e.target.value);
-                    field.onChange(formattedValue);
-                  }}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={(e) => handleBlur(e, field.onBlur)}
-                />
-              ) : (
-                <textarea
-                  {...field}
-                  id={name}
-                  ref={textareaRef}
-                  placeholder={placeholder}
-                  disabled={disabled}
-                  aria-invalid={fieldState.invalid ? true : false}
-                  rows={3}
-                  maxLength={maxLength}
-                  style={{ width: '100%' }}
-                  className={joinInput}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={(e) => handleBlur(e, field.onBlur)}
-                />
-              )}
+              <input
+                {...field}
+                id={name}
+                ref={inputRef}
+                placeholder={placeholder}
+                disabled={disabled}
+                maxLength={maxLength}
+                aria-invalid={fieldState.invalid ? true : false}
+                style={{ width: '100%' }}
+                className={className ? className : joinInput}
+                onChange={(e) => {
+                  const formattedValue = formatDateInput(inputType, e.target.value);
+                  field.onChange(formattedValue);
+                }}
+                onFocus={() => setIsFocused(true)}
+                onBlur={(e) => handleBlur(e, field.onBlur)}
+              />
               {isFocused && field.value && !disabled && (
                 <button className={inputResetButton} ref={resetButtonRef}>
                   <Icon
@@ -186,11 +158,6 @@ const JoinInput = <T extends FieldValues>({
                 {maxLength && (
                   <span className={textCount}>
                     {field.value?.length || 0}/{maxLength}
-                  </span>
-                )}
-                {isCount && count && (
-                  <span className={textCount}>
-                    {field.value?.length || 0}/{count}
                   </span>
                 )}
               </div>

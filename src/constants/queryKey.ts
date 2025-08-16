@@ -36,4 +36,5 @@ export const queryKey = {
     infinite: ({ count = 10, order = 'DESC' }: { count?: number; order?: string } = {}) =>
       [...queryKey.myPosts.all, 'infinite', count, order] as const,
   },
+  univSearch: (query: string) => ['univSearch', query] as const,
 };
