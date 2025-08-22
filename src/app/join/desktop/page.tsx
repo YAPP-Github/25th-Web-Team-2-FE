@@ -4,7 +4,7 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ParticipantForm from './Participant/ParticipantForm';
 import ResearcherForm from './Researcher/ResearcherForm';
@@ -25,6 +25,7 @@ import { ROLE } from '@/constants/config';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 import { Role } from '@/types/user';
+import { startRecording } from '@/lib/mixpanelClient';
 
 export default function JoinPage() {
   const { data: session } = useSession();
@@ -36,6 +37,10 @@ export default function JoinPage() {
   const { isLeaveConfirmModalOpen, handleConfirmLeave, handleCancelLeave } = useLeaveConfirmModal({
     isUserInputDirty: joinFormDirty,
   });
+
+  useEffect(() => {
+    startRecording();
+  }, []);
 
   // TODO: 추후 스켈레톤 처리
   if (!role) return null;

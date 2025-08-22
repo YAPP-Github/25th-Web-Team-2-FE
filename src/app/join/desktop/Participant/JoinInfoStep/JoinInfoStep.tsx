@@ -18,6 +18,7 @@ import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { stopRecording } from '@/lib/mixpanelClient';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;
@@ -39,6 +40,11 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   });
 
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
+
+  const handleClickJoin = () => {
+    stopRecording();
+    handleSubmit();
+  };
 
   return (
     <section className={joinForm}>
@@ -173,7 +179,11 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
         />
       </div>
 
-      <button className={nextButton} onClick={handleSubmit} disabled={!isAllFilled || isSubmitting}>
+      <button
+        className={nextButton}
+        onClick={handleClickJoin}
+        disabled={!isAllFilled || isSubmitting}
+      >
         {isSubmitting ? '처리중...' : '회원가입'}
       </button>
     </section>
