@@ -18,6 +18,7 @@ import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
 import { MatchType } from '@/types/uploadExperimentPost';
+import { stopRecording } from '@/lib/mixpanelClient';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -148,6 +149,8 @@ const useManageExperimentPostForm = ({
         },
       });
     }
+
+    stopRecording();
   };
 
   return {
