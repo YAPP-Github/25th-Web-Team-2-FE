@@ -17,9 +17,28 @@ export const initMixpanel = () => {
     mixpanel.init(MIXPANEL_TOKEN, {
       track_pageview: false,
       persistence: 'localStorage',
+      record_heatmap_data: true,
+      record_max_ms: 10 * 60 * 1000, // 10분 이상 기록 시 자동 종료
+      record_idle_timeout_ms: 5 * 60 * 1000, // 5분 이상 화면 이탈 시 기록 종료
     });
     isMixpanelInitialized = true;
   }
+};
+
+export const startRecording = () => {
+  if (!isClient) {
+    return;
+  }
+
+  mixpanel.start_session_recording();
+};
+
+export const stopRecording = () => {
+  if (!isClient) {
+    return;
+  }
+
+  mixpanel.stop_session_recording();
 };
 
 /**
