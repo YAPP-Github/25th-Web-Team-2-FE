@@ -2,7 +2,7 @@
 
 import * as Toast from '@radix-ui/react-toast';
 import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useExperimentDetailsQuery from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostMobileContainer from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer';
@@ -22,6 +22,7 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 import { colors } from '@/styles/colors';
+import { stopRecording } from '@/lib/mixpanelClient';
 
 const ExperimentPostMobileContentContainer = () => {
   const { open, close } = useOverlay();
@@ -91,6 +92,12 @@ const ExperimentPostMobileContentContainer = () => {
       },
     );
   };
+
+  useEffect(() => {
+    return () => {
+      stopRecording();
+    };
+  }, []);
 
   return (
     <>

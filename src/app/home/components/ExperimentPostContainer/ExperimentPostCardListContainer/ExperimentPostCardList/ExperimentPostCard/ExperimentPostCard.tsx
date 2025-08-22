@@ -22,6 +22,7 @@ import { formatPostDate } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 import { ExperimentPost } from '@/types/post';
+import { startRecording } from '@/lib/mixpanelClient';
 
 interface ExperimentPostCardProps {
   experimentPost: ExperimentPost;
@@ -33,9 +34,18 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
     recruitStatus,
   } = experimentPost;
 
+  const goToPost = () => {
+    startRecording();
+  };
+
   return (
     <li>
-      <Link href={`/post/${experimentPostId}`} key={experimentPostId} className={postCardLayout}>
+      <Link
+        href={`/post/${experimentPostId}`}
+        key={experimentPostId}
+        className={postCardLayout}
+        onClick={goToPost}
+      >
         <div className={postHeader}>
           <div className={postInfoContainer}>
             <span className={postLocation}>{place ? place : '비대면'}</span>

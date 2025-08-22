@@ -12,6 +12,8 @@ import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutlin
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { contactButton } from '@/components/Header/Header.css';
 import Spinner from '@/components/Spinner/Spinner';
+import { stopRecording } from '@/lib/mixpanelClient';
+import { useEffect } from 'react';
 
 const ExperimentPostContainer = () => {
   const { postId } = useParams();
@@ -24,6 +26,12 @@ const ExperimentPostContainer = () => {
     error: postError,
     refetch,
   } = useExperimentDetailsQuery({ postId: normalizedPostId });
+
+  useEffect(() => {
+    return () => {
+      stopRecording();
+    };
+  }, []);
 
   /* 공고 지원 방법 조회 */
   const { data: applyMethodData, error: methodError } = useApplyMethodQuery({
