@@ -20,9 +20,9 @@ import {
 
 import { formatPostDate } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
+import { startRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 import { ExperimentPost } from '@/types/post';
-import { startRecording } from '@/lib/mixpanelClient';
 
 interface ExperimentPostCardProps {
   experimentPost: ExperimentPost;

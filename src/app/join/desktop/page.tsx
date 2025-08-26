@@ -23,9 +23,9 @@ import Logo from '@/assets/images/logo.svg';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { ROLE } from '@/constants/config';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
+import { startRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 import { Role } from '@/types/user';
-import { startRecording } from '@/lib/mixpanelClient';
 
 export default function JoinPage() {
   const { data: session } = useSession();

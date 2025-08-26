@@ -1,6 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { emptyViewLayout, postContentLayout } from './ExperimentPostContainer.css';
 import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
@@ -13,7 +14,6 @@ import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTab
 import { contactButton } from '@/components/Header/Header.css';
 import Spinner from '@/components/Spinner/Spinner';
 import { stopRecording } from '@/lib/mixpanelClient';
-import { useEffect } from 'react';
 
 const ExperimentPostContainer = () => {
   const { postId } = useParams();

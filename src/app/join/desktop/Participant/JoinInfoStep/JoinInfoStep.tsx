@@ -17,8 +17,8 @@ import JoinInput from '../../../components/JoinInput/JoinInput';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { stopRecording } from '@/lib/mixpanelClient';
+import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 import JoinHeader from './components/JoinHeader/JoinHeader';
 import ParticipantForm from './Participant/ParticipantForm';
@@ -9,9 +10,8 @@ import useFunnel from '../hooks/useFunnel';
 import { MOBILE_STEP_MAP, STEP } from '../JoinPage.constants';
 
 import { ROLE } from '@/constants/config';
-import { Role } from '@/types/user';
-import { useEffect } from 'react';
 import { startRecording } from '@/lib/mixpanelClient';
+import { Role } from '@/types/user';
 
 export default function MobileJoinPage() {
   const { data: session } = useSession();

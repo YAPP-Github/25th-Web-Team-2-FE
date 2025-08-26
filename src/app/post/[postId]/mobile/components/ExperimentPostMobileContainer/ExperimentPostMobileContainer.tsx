@@ -21,8 +21,8 @@ import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileN
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
-import { colors } from '@/styles/colors';
 import { stopRecording } from '@/lib/mixpanelClient';
+import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileContentContainer = () => {
   const { open, close } = useOverlay();

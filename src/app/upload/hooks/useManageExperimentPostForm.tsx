@@ -14,11 +14,11 @@ import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExp
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { queryKey } from '@/constants/queryKey';
+import { stopRecording } from '@/lib/mixpanelClient';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
 import { MatchType } from '@/types/uploadExperimentPost';
-import { stopRecording } from '@/lib/mixpanelClient';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
