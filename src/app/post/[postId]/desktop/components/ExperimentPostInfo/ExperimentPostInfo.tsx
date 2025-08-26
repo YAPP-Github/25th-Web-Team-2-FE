@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   buttonStyles,
@@ -21,6 +21,7 @@ import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExper
 import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';
 import { colors } from '@/styles/colors';
+import { stopRecording } from '@/lib/mixpanelClient';
 
 interface ExperimentPostInfoProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -54,6 +55,12 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
       },
     );
   };
+
+  useEffect(() => {
+    return () => {
+      stopRecording();
+    };
+  }, []);
 
   return (
     <>
