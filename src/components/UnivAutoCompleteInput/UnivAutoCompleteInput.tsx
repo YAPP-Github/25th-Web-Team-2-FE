@@ -96,7 +96,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
             {/* 자동완성 드롭다운 */}
             <AutoCompleteDropdown
               showDropdown={showDropdown}
-              query={field.value ?? ''}
+              query={field.value}
               onClick={handleClickAutoComplete}
             />
           </div>

@@ -56,18 +56,20 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
   return (
     <>
       {hasResult && (
-        <div className={autoCompleteDropdown}>
+        <ul className={autoCompleteDropdown}>
           {univNames.map((univName) => (
-            <button
-              key={univName}
-              data-suggestion
-              className={autoCompleteItem}
-              onClick={() => onClick(univName)}
-            >
-              {univName}
-            </button>
+            <li key={univName}>
+              <button
+                type="button"
+                data-suggestion
+                className={autoCompleteItem}
+                onClick={() => onClick(univName)}
+              >
+                {univName}
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </>
   );
