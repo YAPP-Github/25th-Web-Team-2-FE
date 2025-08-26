@@ -4,6 +4,8 @@ import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperime
 import ExperimentPostDetailContent from '../ExperimentPostDetailContent/ExperimentPostDetailContent';
 import ExperimentPostInfo from '../ExperimentPostInfo/ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline/ExperimentPostOutline';
+import { stopRecording } from '@/lib/mixpanelClient';
+import { useEffect } from 'react';
 
 interface ExperimentPostContainerProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -14,6 +16,10 @@ const ExperimentPostContainer = ({
   postDetailData,
   applyMethodData,
 }: ExperimentPostContainerProps) => {
+  useEffect(() => {
+    stopRecording();
+  }, []);
+
   return (
     <>
       <ExperimentPostInfo postDetailData={postDetailData} />
