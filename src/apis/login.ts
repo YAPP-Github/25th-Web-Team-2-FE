@@ -109,5 +109,7 @@ export const validateJoinContactEmail = async ({ contactEmail }: ValidateContact
 };
 
 export const searchUnivNames = async (query: string) => {
-  return await fetchClient.get<SearchUnivNameResponse>(API_URL.univSearch(query));
+  return await fetchClient.get<SearchUnivNameResponse>(API_URL.univSearch(query), {
+    requireAuth: false,
+  });
 };
