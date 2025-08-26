@@ -27,7 +27,6 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
   required,
   placeholder,
 }: UnivAutoCompleteInputProps<T>) => {
-  const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
   // 리셋 후 인풋 포커스 유지
@@ -41,11 +40,6 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => {
-        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          field.onChange(e.target.value);
-          setQuery(e.target.value);
-        };
-
         const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
           if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
             return;
@@ -59,13 +53,11 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
 
         const handleClickAutoComplete = (univName: string) => {
           field.onChange(univName);
-          setQuery(univName);
           setShowDropdown(false);
         };
 
         const handleReset = () => {
           field.onChange('');
-          setQuery('');
           inputRef.current?.focus();
         };
 
@@ -87,7 +79,6 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
                 className={joinInput}
                 aria-invalid={fieldState.invalid ? true : false}
                 style={{ width: '100%' }}
-                onChange={handleChange}
                 onFocus={() => setShowDropdown(true)}
                 onBlur={handleBlur}
               />
@@ -105,7 +96,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
             {/* 자동완성 드롭다운 */}
             <AutoCompleteDropdown
               showDropdown={showDropdown}
-              query={query}
+              query={field.value ?? ''}
               onClick={handleClickAutoComplete}
             />
           </div>
