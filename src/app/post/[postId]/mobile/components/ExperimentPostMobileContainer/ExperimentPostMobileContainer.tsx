@@ -1,6 +1,7 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import revalidateExperimentPosts from '../../../actions';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
@@ -16,6 +17,7 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useOverlay from '@/hooks/useOverlay';
 import { useToast } from '@/hooks/useToast';
 import { getHideModalCookie } from '@/lib/cookies';
+import { stopRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 
 interface ExperimentPostMobileContainerProps {
@@ -85,6 +87,12 @@ const ExperimentPostMobileContainer = ({
       },
     );
   };
+
+  useEffect(() => {
+    return () => {
+      stopRecording();
+    };
+  }, []);
 
   return (
     <>

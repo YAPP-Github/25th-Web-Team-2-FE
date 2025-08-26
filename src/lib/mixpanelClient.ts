@@ -5,6 +5,7 @@ import mixpanel from 'mixpanel-browser';
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 const isClient = typeof window !== 'undefined';
 const isTestEnv = process.env.NODE_ENV === 'test';
+const isProduction = process.env.NODE_ENV === 'production';
 let isMixpanelInitialized = false;
 
 export const initMixpanel = () => {
@@ -17,9 +18,28 @@ export const initMixpanel = () => {
     mixpanel.init(MIXPANEL_TOKEN, {
       track_pageview: false,
       persistence: 'localStorage',
+      record_heatmap_data: true,
+      record_max_ms: 10 * 60 * 1000, // 10분 이상 기록 시 자동 종료
+      record_idle_timeout_ms: 5 * 60 * 1000, // 5분 이상 화면 이탈 시 기록 종료
     });
     isMixpanelInitialized = true;
   }
+};
+
+export const startRecording = () => {
+  if (!isClient || !isProduction) {
+    return;
+  }
+
+  mixpanel.start_session_recording();
+};
+
+export const stopRecording = () => {
+  if (!isClient || !isProduction) {
+    return;
+  }
+
+  mixpanel.stop_session_recording();
 };
 
 /**

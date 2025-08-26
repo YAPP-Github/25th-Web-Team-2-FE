@@ -1,6 +1,7 @@
 import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
 import Button from '@/components/Button/Button';
+import { stopRecording } from '@/lib/mixpanelClient';
 
 interface JoinButtonProps<T extends FieldValues> {
   validationFields: Path<T>[];
@@ -23,12 +24,17 @@ const JoinButton = <T extends FieldValues>({
 
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
 
+  const handleClickJoin = () => {
+    stopRecording();
+    onSubmit();
+  };
+
   return (
     <Button
       type="submit"
       variant="primary"
       size="medium"
-      onClick={onSubmit}
+      onClick={handleClickJoin}
       disabled={!isAllFilled || isSubmitting}
       width={width}
       height={height}
