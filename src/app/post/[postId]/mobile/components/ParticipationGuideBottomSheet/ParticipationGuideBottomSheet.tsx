@@ -6,60 +6,31 @@ import {
   contactInfoRowContainer,
   contactInfoTitle,
   warningMessage,
-  emptyView,
 } from './ParticipationGuideBottomSheet.css';
 import { ParticipationGuideBottomSheetProps } from '../../../ExperimentPostPage.types';
-import useApplyMethodQuery from '../../../hooks/useApplyMethodQuery';
-import {
-  contactButton,
-  emptyViewTitle,
-} from '../ExperimentPostMobileContentContainer/ExperimentPostMobileContentContainer.css';
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
-import Spinner from '@/components/Spinner/Spinner';
+import { useToast } from '@/hooks/useToast';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 
 const ParticipationGuideBottomSheet = ({
   onConfirm,
-  postId,
-  showToast,
+  applyMethodData,
 }: ParticipationGuideBottomSheetProps) => {
-  /* 공고 지원 방법 조회 */
-  const {
-    data: applyMethodData,
-    isLoading: isLoadingApply,
-    error: errorApply,
-    refetch: refetchApply,
-  } = useApplyMethodQuery({ postId });
-
-  if (errorApply) {
-    return (
-      <div className={emptyView}>
-        <p className={emptyViewTitle}>{errorApply.message}</p>
-        <button onClick={() => refetchApply()} className={contactButton}>
-          재시도
-        </button>
-      </div>
-    );
-  }
-
-  if (isLoadingApply || !applyMethodData) {
-    return <Spinner height={150} />;
-  }
-
+  const toast = useToast();
   const handleCopyContent = (text: string) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        showToast('복사되었어요');
+        toast.open({ message: '복사되었어요' });
         trackEvent('ApplyMethod Interaction', {
           action: 'Link Copied',
         });
       })
       .catch(() => {
-        showToast('복사에 실패했어요. 잠시 후 다시 시도해 주세요');
+        toast.error({ message: '복사에 실패했어요. 잠시 후 다시 시도해 주세요' });
       });
   };
 

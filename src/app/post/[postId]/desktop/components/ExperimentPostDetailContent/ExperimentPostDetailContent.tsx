@@ -1,3 +1,5 @@
+'use client';
+
 import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';

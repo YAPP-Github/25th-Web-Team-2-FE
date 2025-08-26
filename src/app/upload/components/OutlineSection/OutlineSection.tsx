@@ -25,10 +25,10 @@ import {
   uploadSectionLayout,
 } from '../UploadContainer/UploadContainer.css';
 
+import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 interface OutlineSectionProps {
   experimentDateChecked?: boolean;
@@ -165,9 +165,9 @@ const OutlineSection = ({
               <RadioButtonGroup
                 field={field}
                 options={[
-                  { value: MatchType.OFFLINE, label: '대면' },
-                  { value: MatchType.ONLINE, label: '비대면' },
-                  { value: MatchType.ALL, label: '대면+비대면' },
+                  { value: MATCH_TYPE.OFFLINE, label: '대면' },
+                  { value: MATCH_TYPE.ONLINE, label: '비대면' },
+                  { value: MATCH_TYPE.ALL, label: '대면+비대면' },
                 ]}
                 onChange={(value) => {
                   field.onChange(value);
@@ -204,7 +204,7 @@ const OutlineSection = ({
           <label className={label} htmlFor="location">
             실험 장소
           </label>
-          {selectedMatchType === MatchType.ONLINE ? (
+          {selectedMatchType === MATCH_TYPE.ONLINE ? (
             <div className={disabledInput}>비대면</div>
           ) : (
             <div className={uploadInputContainer}>
@@ -233,7 +233,6 @@ const OutlineSection = ({
                     rules={{ required: '지역구를 선택해 주세요' }}
                     render={({ fieldState: areaFieldState }) => (
                       <RegionPopover
-                        {...field}
                         regionPopoverProps={{
                           ...regionPopoverProps,
                           error: fieldState.error || areaFieldState.error,

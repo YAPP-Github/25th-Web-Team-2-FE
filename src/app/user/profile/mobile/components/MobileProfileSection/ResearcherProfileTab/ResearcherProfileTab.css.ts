@@ -1,0 +1,39 @@
+import { style } from '@vanilla-extract/css';
+
+import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
+
+export const tabsRoot = style({
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  padding: '0 1.6rem',
+});
+
+export const tabList = style({
+  display: 'flex',
+  flexFlow: 'row nowrap',
+});
+
+export const tabTrigger = style({
+  ...fonts.body.normal.SB16,
+  width: '100%',
+  padding: '1.6rem',
+  cursor: 'pointer',
+  borderBottom: '0.2rem solid transparent',
+  transition: 'color 0.2s, border-color 0.2s',
+  selectors: {
+    '&[data-state="active"]': {
+      color: colors.text07,
+      borderBottomColor: colors.text07,
+    },
+    '&[data-state="inactive"]': {
+      color: colors.text03,
+      borderBottomColor: colors.line01,
+    },
+  },
+});
+
+export const tabContent = style({
+  ...fonts.body.small.R15,
+  padding: '1.6rem 0',
+});

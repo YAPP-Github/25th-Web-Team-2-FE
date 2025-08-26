@@ -24,16 +24,17 @@ import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
 import Icon from '@/components/Icon';
 import { setHideModalCookie } from '@/lib/cookies';
 
-export type NotReadyMenu = 'profile' | 'upload' | 'edit' | 'myPosts';
+export type NotReadyMenu = 'upload' | 'edit';
 export interface NotReadyModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   menu: NotReadyMenu;
+  editPostId?: string;
 }
 
-const MobileNotReadyModal = ({ menu, isOpen, onOpenChange }: NotReadyModalProps) => {
+const MobileNotReadyModal = ({ menu, isOpen, onOpenChange, editPostId }: NotReadyModalProps) => {
   const { postId } = useParams();
-  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId;
+  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId ?? editPostId;
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>

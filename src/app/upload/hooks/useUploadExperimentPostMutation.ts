@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
+import { GenderType, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 export interface ExperimentPostData {
   startDate?: string | null;
@@ -64,6 +64,7 @@ export interface UseUploadExperimentPostMutationResponse {
 }
 
 const useUploadExperimentPostMutation = () => {
+  const queryClient = useQueryClient();
   const mutationKey = API_URL.uploadPost;
   const mutationFn = async (data: ExperimentPostData) =>
     await fetchClient.post<UseUploadExperimentPostMutationResponse>(mutationKey, {
@@ -73,6 +74,10 @@ const useUploadExperimentPostMutation = () => {
   return useMutation<UseUploadExperimentPostMutationResponse, CustomError, ExperimentPostData>({
     mutationKey: [mutationKey],
     mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey.post.all });
+      queryClient.invalidateQueries({ queryKey: queryKey.myPosts.all });
+    },
   });
 };
 

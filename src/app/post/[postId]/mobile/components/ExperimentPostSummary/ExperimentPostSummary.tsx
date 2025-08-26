@@ -5,6 +5,7 @@ import {
   postSummaryContent,
   postSummaryLayout,
 } from './ExperimentPostSummary.css';
+import { GENDER_TYPE, MATCH_TYPE } from '../../../ExperimentPostPage.types';
 import {
   getGenderLabel,
   getMatchTypeText,
@@ -14,9 +15,6 @@ import {
   formatDate,
 } from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
-
-import { GenderType } from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 const ExperimentPostSummary = ({
   postDetailData,
@@ -34,7 +32,7 @@ const ExperimentPostSummary = ({
             <td>
               <p>
                 만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
-                {targetGroup.genderType === GenderType.ALL
+                {targetGroup.genderType === GENDER_TYPE.ALL
                   ? '성별 무관'
                   : getGenderLabel(targetGroup.genderType)}
               </p>
@@ -83,7 +81,7 @@ const ExperimentPostSummary = ({
             <th>실험 장소</th>
             <td>
               <p>
-                {summary.matchType === MatchType.ONLINE
+                {summary.matchType === MATCH_TYPE.ONLINE
                   ? '비대면'
                   : address.place && address.region && address.area
                   ? `${getRegionLabel(address.region)} ${getAreaLabel(

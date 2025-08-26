@@ -12,13 +12,14 @@ import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
+import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { queryKey } from '@/constants/queryKey';
 import { stopRecording } from '@/lib/mixpanelClient';
+import { useToast } from '@/hooks/useToast';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
-import { MatchType } from '@/types/uploadExperimentPost';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -26,7 +27,6 @@ interface useUploadExperimentPostProps {
   addLink: boolean;
   addContact: boolean;
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
-  setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
   setErrorMessage: Dispatch<SetStateAction<string>>;
@@ -38,12 +38,12 @@ const useManageExperimentPostForm = ({
   addLink,
   addContact,
   setOpenAlertModal,
-  setSuccessToast,
   images,
   setImages,
   setErrorMessage,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
+  const toast = useToast();
   const queryClient = useQueryClient();
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
@@ -77,6 +77,7 @@ const useManageExperimentPostForm = ({
     resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
     defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
+
   useEffect(() => {
     if (!setErrorMessage) return;
     if (originExperimentError) {
@@ -104,7 +105,7 @@ const useManageExperimentPostForm = ({
       imageListInfo: {
         images: updatedImages as string[],
       },
-      place: data.matchType === MatchType.ONLINE ? null : data.place,
+      place: data.matchType === MATCH_TYPE.ONLINE ? null : data.place,
     };
 
     if (isEdit && postId) {
@@ -112,17 +113,16 @@ const useManageExperimentPostForm = ({
         { postId, data: updatedData },
         {
           onSuccess: async () => {
-            setSuccessToast(true);
+            toast.open({ message: '공고가 수정되었어요!', duration: 1000 });
+            await revalidateExperimentPosts(postId);
 
-            await Promise.allSettled([
-              queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(postId) }),
-              queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) }),
-              revalidateExperimentPosts(),
-            ]);
-
-            setTimeout(() => {
-              router.push(`/post/${postId}`);
-            }, 1000);
+            // 다시 공고 수정 페이지로 이동했을 때 기존 데이터 남지 않도록 캐시 무효화
+            await queryClient.invalidateQueries({
+              queryKey: queryKey.originExperimentPost(postId),
+              refetchType: 'active',
+            });
+            await queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) });
+            router.push(`/post/${postId}`);
             form.reset();
           },
           onError: (error) => {
@@ -135,11 +135,9 @@ const useManageExperimentPostForm = ({
     } else {
       uploadExperimentPost(updatedData, {
         onSuccess: async (response) => {
-          setSuccessToast(true);
+          toast.open({ message: '공고가 등록되었어요!', duration: 1000 });
           await revalidateExperimentPosts();
-          setTimeout(() => {
-            router.push(`/post/${response.postInfo.experimentPostId}`);
-          }, 1000);
+          router.push(`/post/${response.postInfo.experimentPostId}`);
           form.reset();
         },
         onError: (error) => {
