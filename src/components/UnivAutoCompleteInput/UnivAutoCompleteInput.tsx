@@ -82,7 +82,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
                 onFocus={() => setShowDropdown(true)}
                 onBlur={handleBlur}
               />
-              {showDropdown ? (
+              {field.value.length > 0 ? (
                 <button className={inputResetButton} ref={resetButtonRef} onClick={handleReset}>
                   <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
                 </button>
