@@ -20,8 +20,8 @@ import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';
-import { colors } from '@/styles/colors';
 import { stopRecording } from '@/lib/mixpanelClient';
+import { colors } from '@/styles/colors';
 
 interface ExperimentPostInfoProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
