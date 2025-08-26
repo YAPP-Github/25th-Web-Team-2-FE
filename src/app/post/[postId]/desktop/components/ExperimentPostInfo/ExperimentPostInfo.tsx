@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   buttonStyles,
@@ -20,6 +20,7 @@ import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';
+import { stopRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 
 interface ExperimentPostInfoProps {
@@ -54,6 +55,12 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
       },
     );
   };
+
+  useEffect(() => {
+    return () => {
+      stopRecording();
+    };
+  }, []);
 
   return (
     <>

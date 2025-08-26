@@ -66,6 +66,10 @@ export interface NaverLoginParams {
   state: string;
 }
 
+export interface SearchUnivNameResponse {
+  result: string[];
+}
+
 export const googleLogin = async (code: string, role: string) => {
   return await fetchClient.post<LoginResponse>(API_URL.google(role), {
     body: { authorizationCode: code },
@@ -102,4 +106,10 @@ export const updateAccessToken = async (refreshToken: string) => {
 
 export const validateJoinContactEmail = async ({ contactEmail }: ValidateContactEmailParams) => {
   return await fetchClient.get(API_URL.validateJoinContactEmail(contactEmail));
+};
+
+export const searchUnivNames = async (query: string) => {
+  return await fetchClient.get<SearchUnivNameResponse>(API_URL.univSearch(query), {
+    requireAuth: false,
+  });
 };

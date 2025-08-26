@@ -19,7 +19,7 @@ interface MatchConsentConfirmModalProps {
   onClose: () => void;
   title: string;
   description: string;
-  onSubmit: () => Promise<void>;
+  onSubmit: () => void;
   onConsent: () => void;
 }
 

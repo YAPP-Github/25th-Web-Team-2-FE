@@ -16,6 +16,7 @@ import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { queryKey } from '@/constants/queryKey';
 import { useToast } from '@/hooks/useToast';
+import { stopRecording } from '@/lib/mixpanelClient';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -146,6 +147,8 @@ const useManageExperimentPostForm = ({
         },
       });
     }
+
+    stopRecording();
   };
 
   return {

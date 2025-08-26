@@ -2,7 +2,7 @@ import { Control, Controller, UseFormReset } from 'react-hook-form';
 
 import { checkFormContainer, checkFormItem } from './LeaveReasonForm.css';
 
-import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 
 const LEAVE_REASONS = [
@@ -47,13 +47,11 @@ const LeaveReasonForm = ({ control, reset }: LeaveReasonFormProps) => {
               );
             })}
             {field.value === 'OTHER' && (
-              <JoinInput<LeaveSchemaType>
+              <JoinTextarea<LeaveSchemaType>
                 name="reason"
                 control={control}
                 placeholder="사유를 입력해주세요"
-                type="textarea"
-                isCount
-                count={300}
+                maxLength={300}
               />
             )}
           </>

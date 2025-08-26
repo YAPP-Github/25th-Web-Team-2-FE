@@ -6,6 +6,7 @@ import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
 import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
+import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
@@ -51,12 +52,11 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
         />
 
         {/* 소속 연구실 정보 */}
-        <JoinInput<ResearcherJoinSchemaType>
+        <JoinTextarea<ResearcherJoinSchemaType>
           name="labInfo"
           control={control}
           label="소속 연구실 정보"
           placeholder="연구실 정보 입력"
-          type="textarea"
           maxLength={100}
         />
       </div>

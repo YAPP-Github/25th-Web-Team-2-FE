@@ -18,6 +18,7 @@ import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoSt
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
+import { stopRecording } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinAdditionalInfoStepProps {
@@ -47,9 +48,14 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
 
+  const handleClickJoin = () => {
+    stopRecording();
+    onSubmit();
+  };
+
   const handleSubmitAfterConsent = () => {
     setValue('matchConsent', true);
-    onSubmit();
+    handleClickJoin();
   };
 
   return (
@@ -156,7 +162,7 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
         <Button
           variant="primary"
           size="small"
-          onClick={matchConsent ? onSubmit : openModal}
+          onClick={matchConsent ? handleClickJoin : openModal}
           disabled={!isValid || isError || isSubmitting}
         >
           {isSubmitting ? '처리중...' : '회원가입'}
@@ -169,7 +175,7 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
         open={isOpen}
         onOpenChange={setIsOpen}
         onClose={closeModal}
-        onSubmit={onSubmit}
+        onSubmit={handleClickJoin}
         onConsent={handleSubmitAfterConsent}
       />
     </main>
