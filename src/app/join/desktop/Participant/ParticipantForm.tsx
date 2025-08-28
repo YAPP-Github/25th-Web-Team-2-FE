@@ -26,6 +26,10 @@ const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   const { Funnel, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
+    initialValues: {
+      oauthEmail: oauthEmail || '',
+      provider: provider as LoginProvider,
+    },
     onSuccess: () => {
       setStep(STEP.success);
     },
@@ -38,13 +42,6 @@ const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   useEffect(() => {
     onDirtyChange?.(isUserInputDirty);
   }, [isUserInputDirty, onDirtyChange]);
-
-  useEffect(() => {
-    if (oauthEmail && provider) {
-      participantMethods.setValue('oauthEmail', oauthEmail);
-      participantMethods.setValue('provider', provider as LoginProvider);
-    }
-  }, [participantMethods, oauthEmail, provider]);
 
   return (
     <FormProvider {...participantMethods}>
