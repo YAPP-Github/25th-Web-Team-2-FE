@@ -1,12 +1,13 @@
 'use client';
 
+import { PropsWithChildren } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 
-const FormGuard = ({ children }: { children: React.ReactNode }) => {
+const FormGuard = ({ children }: PropsWithChildren) => {
   const { formState } = useFormContext();
   const { isLeaveConfirmModalOpen, handleConfirmLeave, handleCancelLeave } = useLeaveConfirmModal({
     isUserInputDirty: formState.isDirty,
