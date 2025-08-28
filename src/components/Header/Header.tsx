@@ -1,7 +1,7 @@
 'use client';
 
-import Logo from '../Logo/Logo';
 import { headerLayout, image } from './Header.css';
+import Logo from '../Logo/Logo';
 import RightHeader from './RightHeader/RightHeader';
 
 const Header = () => {
