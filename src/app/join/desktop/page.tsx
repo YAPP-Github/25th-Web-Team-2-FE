@@ -38,6 +38,8 @@ export default function JoinPage() {
     isUserInputDirty: joinFormDirty,
   });
 
+  const isResearcher = role === ROLE.researcher;
+
   useEffect(() => {
     startRecording();
   }, []);
@@ -49,7 +51,7 @@ export default function JoinPage() {
     return (
       <section className={joinLayout}>
         <div className={contentContainer}>
-          {role === ROLE.researcher ? (
+          {isResearcher ? (
             <ResearcherForm onDirtyChange={setJoinFormDirty} />
           ) : (
             <ParticipantForm onDirtyChange={setJoinFormDirty} />
@@ -66,9 +68,7 @@ export default function JoinPage() {
       </Link>
       <div className={contentContainer}>
         <div className={titleContainer}>
-          <h2 className={joinTitle}>
-            {role === ROLE.researcher ? '연구자 회원가입' : '참여자 회원가입'}
-          </h2>
+          <h2 className={joinTitle}>{isResearcher ? '연구자 회원가입' : '참여자 회원가입'}</h2>
           <div className={progressBarContainer}>
             <div
               className={progressBarFill}
@@ -78,7 +78,7 @@ export default function JoinPage() {
             />
           </div>
         </div>
-        {role === ROLE.researcher ? (
+        {isResearcher ? (
           <ResearcherForm onDirtyChange={setJoinFormDirty} />
         ) : (
           <ParticipantForm onDirtyChange={setJoinFormDirty} />
