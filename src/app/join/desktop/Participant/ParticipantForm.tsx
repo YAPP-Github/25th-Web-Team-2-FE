@@ -1,5 +1,4 @@
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import { JoinLayout } from '../../components/JoinLayout/JoinLayout';
@@ -10,21 +9,14 @@ import { DESKTOP_PARTICIPANT_JOIN_STEP_LIST, STEP } from '../../JoinPage.constan
 
 import { Participant } from '.';
 
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
 
-interface ParticipantFormProps {
-  onDirtyChange?: (dirty: boolean) => void;
-}
+const ParticipantForm = () => {
+  const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
 
-const AUTO_INPUT_FIELDS: (keyof ParticipantJoinSchemaType)[] = ['oauthEmail'];
-
-const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
-
-  const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
     initialValues: {
@@ -35,14 +27,6 @@ const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
       setStep(STEP.success);
     },
   });
-
-  const isUserInputDirty = Object.keys(participantMethods.formState.dirtyFields).some(
-    (key) => !AUTO_INPUT_FIELDS.includes(key as keyof ParticipantJoinSchemaType),
-  );
-
-  useEffect(() => {
-    onDirtyChange?.(isUserInputDirty);
-  }, [isUserInputDirty, onDirtyChange]);
 
   return (
     <FormProvider {...participantMethods}>
