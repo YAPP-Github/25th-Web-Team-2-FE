@@ -2,6 +2,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
 
+import { JoinLayout } from '../../components/JoinLayout/JoinLayout';
 import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
 import { useParticipantJoin } from '../../hooks/useParticipantJoin';
@@ -23,7 +24,7 @@ const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
   const oauthEmail = session?.oauthEmail;
   const provider = session?.provider;
 
-  const { Funnel, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
+  const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
     initialValues: {
@@ -45,17 +46,29 @@ const ParticipantForm = ({ onDirtyChange }: ParticipantFormProps) => {
 
   return (
     <FormProvider {...participantMethods}>
-      <Funnel>
-        <Step name={STEP.email}>
-          <Participant.EmailStep onNext={() => setStep(STEP.info)} />
-        </Step>
-        <Step name={STEP.info}>
-          <Participant.InfoStep handleSubmit={handleSubmit} />
-        </Step>
-        <Step name={STEP.success}>
-          <JoinSuccessStep />
-        </Step>
-      </Funnel>
+      <JoinLayout.FormGuard>
+        <Funnel>
+          <Step name={STEP.email}>
+            <JoinLayout.Header />
+            <JoinLayout.Container>
+              <JoinLayout.Title title="참여자 회원가입" step={step} />
+              <Participant.EmailStep onNext={() => setStep(STEP.info)} />
+            </JoinLayout.Container>
+          </Step>
+          <Step name={STEP.info}>
+            <JoinLayout.Header />
+            <JoinLayout.Container>
+              <JoinLayout.Title title="참여자 회원가입" step={step} />
+              <Participant.InfoStep handleSubmit={handleSubmit} />
+            </JoinLayout.Container>
+          </Step>
+          <Step name={STEP.success}>
+            <JoinLayout.Container>
+              <JoinSuccessStep />
+            </JoinLayout.Container>
+          </Step>
+        </Funnel>
+      </JoinLayout.FormGuard>
     </FormProvider>
   );
 };
