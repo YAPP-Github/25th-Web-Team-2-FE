@@ -1,9 +1,9 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import React from 'react';
 
+import { progressBarFill } from './JoinHeader.css';
 import useFunnel from '../../../hooks/useFunnel';
 import { MOBILE_STEP_MAP } from '../../../JoinPage.constants';
-import { progressBarFill } from '../../../JoinPage.css';
 import { headerTitle, headerWrapper, progressBar } from '../../page.css';
 
 import Icon from '@/components/Icon';
