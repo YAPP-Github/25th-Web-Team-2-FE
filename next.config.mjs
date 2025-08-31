@@ -38,21 +38,23 @@ const nextConfig = {
 
 const withVanillaExtract = createVanillaExtractPlugin();
 
+const isProd = process.env.NODE_ENV === 'production';
+
 // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 export default withSentryConfig(withVanillaExtract(nextConfig), {
   org: 'gradmeet',
   project: 'gradmeet-front',
 
-  // Only print logs for uploading source maps in CI
+  // 빌드 메세지 출력 숨김 여부 (CI 환경에서는 출력)
   silent: !process.env.CI,
 
-  // Upload a larger set of source maps for prettier stack traces (increases build time)
+  // 소스맵 확장 (빌드 시간 증가)
   widenClientFileUpload: true,
 
   // ad-blocker 방지를 위해 사용 (서버 비용 증가 시 제거)
-  tunnelRoute: true,
+  tunnelRoute: isProd,
 
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
+  // Sentry.captureMessage 등 로깅 함수들을 번들 크기 감소를 위해 사용
+  disableLogger: isProd,
 });
