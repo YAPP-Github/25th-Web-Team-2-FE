@@ -3,7 +3,10 @@ import { CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
 import { getDefaultHeader, isAuthError } from './utils';
 
+import { logAPIError, logNetworkError, logUnhandledError } from '@/lib/log';
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const SERVER_STATUS_CODE = 500;
 
 export interface RequestProps {
   method?: 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
@@ -68,12 +71,21 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
             });
           }
 
+          logAPIError({
+            level: response.status >= SERVER_STATUS_CODE ? 'error' : 'warning',
+            errorCode: apiError.code,
+            httpStatus: response.status,
+            errorMessage: apiError.message,
+            url,
+          });
+
           throw new CustomError({ code: apiError.code, status: response.status });
         }
 
         return await response.json();
       } catch (error) {
         if (typeof window !== 'undefined' && !navigator.onLine) {
+          logNetworkError({ url });
           throw new NetworkError();
         }
 
@@ -81,6 +93,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           throw error;
         }
 
+        logUnhandledError({ url });
         throw new UnhandledError();
       }
     },
