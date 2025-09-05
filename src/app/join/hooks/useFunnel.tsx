@@ -1,11 +1,12 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, ReactNode, useMemo } from 'react';
+import { StepType } from '../JoinPage.types';
 
 const DEFAULT_STEP = 'email';
 
 type NonEmptyArray<T> = [T, ...T[]];
 
-type StepsType = Readonly<NonEmptyArray<string>>;
+type Steps = Readonly<NonEmptyArray<StepType>>;
 
 interface StepProps<T extends string = string> {
   name: T;
@@ -16,10 +17,10 @@ interface FunnelProps {
   children: Array<ReactElement<StepProps>>;
 }
 
-const useFunnel = <Steps extends StepsType>(steps: Steps) => {
+const useFunnel = <T extends Steps>(steps: T) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const currentStep = searchParams.get('step') ?? steps?.[0] ?? DEFAULT_STEP;
+  const currentStep = (searchParams.get('step') ?? steps?.at(0) ?? DEFAULT_STEP) as T[number];
 
   const currentStepIdx = useMemo(
     () => steps?.findIndex((step) => step === currentStep) ?? 0,
