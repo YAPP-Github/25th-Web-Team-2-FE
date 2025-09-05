@@ -7,10 +7,11 @@ import {
   progressBarFill,
 } from './JoinTitleSection.css';
 import { STEP } from '../../JoinPage.constants';
+import { StepType } from '../../JoinPage.types';
 
 interface JoinTitleSectionProps {
   title: string;
-  step: string;
+  step: StepType;
 }
 
 const JoinTitleSection = ({ title, step }: JoinTitleSectionProps) => {
