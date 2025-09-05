@@ -1,11 +1,11 @@
 import { PropsWithChildren } from 'react';
 
 import { contentContainer } from '../../JoinPage.css';
+import { StepType } from '../../JoinPage.types';
 import FormGuard from '../FormGuard/FormGuard';
 import JoinTitleSection from '../JoinTitleSection/JoinTitleSection';
 
 import Logo from '@/components/Logo/Logo';
-import { StepType } from '../../JoinPage.types';
 
 interface JoinLayoutTitleProps {
   title: string;
