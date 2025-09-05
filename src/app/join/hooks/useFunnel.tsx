@@ -1,5 +1,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, ReactNode, useMemo } from 'react';
+
 import { StepType } from '../JoinPage.types';
 
 const DEFAULT_STEP = 'email';
