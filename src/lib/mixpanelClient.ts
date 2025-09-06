@@ -14,7 +14,7 @@ export const initMixpanel = () => {
     return;
   }
 
-  if (!isMixpanelInitialized) {
+  if (!isMixpanelInitialized && isProductionDomain) {
     mixpanel.init(MIXPANEL_TOKEN, {
       track_pageview: false,
       persistence: 'localStorage',
@@ -49,7 +49,7 @@ export const stopRecording = () => {
  */
 
 export const trackEvent = (event: string, properties?: Record<string, any>) => {
-  if (!isClient || isTestEnv) return;
+  if (!isClient || isTestEnv || !isProductionDomain) return;
 
   if (!MIXPANEL_TOKEN) {
     console.warn('Mixpanel Token is missing.');
@@ -66,7 +66,7 @@ export const trackEvent = (event: string, properties?: Record<string, any>) => {
  * @param userId 사용자 ID
  */
 export const identifyUser = (userId: string) => {
-  if (!MIXPANEL_TOKEN || !isClient) return;
+  if (!MIXPANEL_TOKEN || !isClient || !isProductionDomain) return;
 
   try {
     mixpanel.identify(userId);
@@ -83,8 +83,7 @@ export const identifyUser = (userId: string) => {
  * @param properties 사용자 속성 데이터
  */
 export const setUserProperties = (properties: Record<string, string>) => {
-  if (!isClient) return;
-  if (!MIXPANEL_TOKEN) return;
+  if (!MIXPANEL_TOKEN || !isClient || !isProductionDomain) return;
 
   try {
     mixpanel.people.set(properties);
@@ -97,7 +96,7 @@ export const setUserProperties = (properties: Record<string, string>) => {
  * 사용자 로그아웃 (로그아웃 시 호출)
  */
 export const logoutUser = () => {
-  if (!MIXPANEL_TOKEN || !isClient) return;
+  if (!MIXPANEL_TOKEN || !isClient || !isProductionDomain) return;
 
   try {
     mixpanel.reset();
