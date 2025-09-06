@@ -5,7 +5,7 @@ import mixpanel from 'mixpanel-browser';
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 const isClient = typeof window !== 'undefined';
 const isTestEnv = process.env.NODE_ENV === 'test';
-const isProduction = process.env.NODE_ENV === 'production';
+const isProductionDomain = process.env.VERCEL_ENV === 'production';
 let isMixpanelInitialized = false;
 
 export const initMixpanel = () => {
@@ -27,7 +27,7 @@ export const initMixpanel = () => {
 };
 
 export const startRecording = () => {
-  if (!isClient || !isProduction) {
+  if (!isClient || !isProductionDomain) {
     return;
   }
 
@@ -35,7 +35,7 @@ export const startRecording = () => {
 };
 
 export const stopRecording = () => {
-  if (!isClient || !isProduction) {
+  if (!isClient || !isProductionDomain) {
     return;
   }
 

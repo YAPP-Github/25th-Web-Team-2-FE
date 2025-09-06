@@ -16,7 +16,7 @@ interface LogUnhandledErrorProps {
   url: string;
 }
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProductionDomain = process.env.VERCEL_ENV === 'production';
 
 export const logAPIError = ({
   level,
@@ -25,7 +25,7 @@ export const logAPIError = ({
   url,
   errorMessage,
 }: LogAPIErrorProps) => {
-  if (!isProduction) return;
+  if (!isProductionDomain) return;
 
   Sentry.withScope((scope) => {
     scope.setLevel(level);
@@ -39,7 +39,7 @@ export const logAPIError = ({
 };
 
 export const logNetworkError = ({ url }: LogNetworkErrorProps) => {
-  if (!isProduction) return;
+  if (!isProductionDomain) return;
 
   Sentry.withScope((scope) => {
     scope.setLevel('warning');
@@ -51,7 +51,7 @@ export const logNetworkError = ({ url }: LogNetworkErrorProps) => {
 };
 
 export const logUnhandledError = ({ url }: LogUnhandledErrorProps) => {
-  if (!isProduction) return;
+  if (!isProductionDomain) return;
 
   Sentry.withScope((scope) => {
     scope.setLevel('fatal');
