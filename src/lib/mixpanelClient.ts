@@ -5,7 +5,7 @@ import mixpanel from 'mixpanel-browser';
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN;
 const isClient = typeof window !== 'undefined';
 const isTestEnv = process.env.NODE_ENV === 'test';
-const isProduction = process.env.NODE_ENV === 'production';
+const isProductionDomain = process.env.VERCEL_ENV === 'production';
 let isMixpanelInitialized = false;
 
 export const initMixpanel = () => {
@@ -14,7 +14,7 @@ export const initMixpanel = () => {
     return;
   }
 
-  if (!isMixpanelInitialized) {
+  if (!isMixpanelInitialized && isProductionDomain) {
     mixpanel.init(MIXPANEL_TOKEN, {
       track_pageview: false,
       persistence: 'localStorage',
@@ -27,7 +27,7 @@ export const initMixpanel = () => {
 };
 
 export const startRecording = () => {
-  if (!isClient || !isProduction) {
+  if (!isClient || !isProductionDomain) {
     return;
   }
 
@@ -35,7 +35,7 @@ export const startRecording = () => {
 };
 
 export const stopRecording = () => {
-  if (!isClient || !isProduction) {
+  if (!isClient || !isProductionDomain) {
     return;
   }
 
@@ -49,7 +49,7 @@ export const stopRecording = () => {
  */
 
 export const trackEvent = (event: string, properties?: Record<string, any>) => {
-  if (!isClient || isTestEnv) return;
+  if (!isClient || isTestEnv || !isProductionDomain) return;
 
   if (!MIXPANEL_TOKEN) {
     console.warn('Mixpanel Token is missing.');
@@ -66,7 +66,7 @@ export const trackEvent = (event: string, properties?: Record<string, any>) => {
  * @param userId 사용자 ID
  */
 export const identifyUser = (userId: string) => {
-  if (!MIXPANEL_TOKEN || !isClient) return;
+  if (!MIXPANEL_TOKEN || !isClient || !isProductionDomain) return;
 
   try {
     mixpanel.identify(userId);
@@ -83,8 +83,7 @@ export const identifyUser = (userId: string) => {
  * @param properties 사용자 속성 데이터
  */
 export const setUserProperties = (properties: Record<string, string>) => {
-  if (!isClient) return;
-  if (!MIXPANEL_TOKEN) return;
+  if (!MIXPANEL_TOKEN || !isClient || !isProductionDomain) return;
 
   try {
     mixpanel.people.set(properties);
@@ -97,7 +96,7 @@ export const setUserProperties = (properties: Record<string, string>) => {
  * 사용자 로그아웃 (로그아웃 시 호출)
  */
 export const logoutUser = () => {
-  if (!MIXPANEL_TOKEN || !isClient) return;
+  if (!MIXPANEL_TOKEN || !isClient || !isProductionDomain) return;
 
   try {
     mixpanel.reset();
