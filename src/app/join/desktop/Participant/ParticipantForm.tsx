@@ -15,14 +15,11 @@ const ParticipantForm = () => {
   const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
 
   const { data: session } = useSession();
-  const oauthEmail = session?.oauthEmail;
-  const provider = session?.provider;
+  const oauthEmail = session?.oauthEmail ?? '';
+  const provider = session?.provider as LoginProvider;
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
-    initialValues: {
-      oauthEmail: oauthEmail || '',
-      provider: provider as LoginProvider,
-    },
+    initialValues: { oauthEmail, provider },
     onSuccess: () => {
       setStep(STEP.success);
     },

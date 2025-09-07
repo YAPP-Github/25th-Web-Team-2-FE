@@ -15,14 +15,11 @@ const ResearcherForm = () => {
   const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
 
   const { data: session } = useSession();
-  const oauthEmail = session?.oauthEmail;
-  const provider = session?.provider;
+  const oauthEmail = session?.oauthEmail ?? '';
+  const provider = session?.provider as LoginProvider;
 
   const { researcherMethods, handleSubmit } = useResearcherJoin({
-    initialValues: {
-      oauthEmail: oauthEmail || '',
-      provider: provider as LoginProvider,
-    },
+    initialValues: { oauthEmail, provider },
     onSuccess: () => {
       setStep(STEP.success);
     },

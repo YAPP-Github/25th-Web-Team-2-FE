@@ -12,16 +12,13 @@ import { LoginProvider } from '@/types/user';
 
 const ResearcherForm = () => {
   const { data: session } = useSession();
-  const provider = session?.provider;
-  const oauthEmail = session?.oauthEmail;
+  const oauthEmail = session?.oauthEmail ?? '';
+  const provider = session?.provider as LoginProvider;
 
   const { Funnel, Step, setStep, goToNext } = useFunnel(MOBILE_RESEARCHER_JOIN_STEP_LIST);
 
   const { researcherMethods, handleSubmit } = useResearcherJoin({
-    initialValues: {
-      provider: provider as LoginProvider,
-      oauthEmail: oauthEmail || '',
-    },
+    initialValues: { oauthEmail, provider },
     onSuccess: () => {
       setStep(STEP.success);
     },
