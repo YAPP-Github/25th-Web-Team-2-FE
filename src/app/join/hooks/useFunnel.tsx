@@ -61,7 +61,7 @@ const useFunnel = <T extends Steps>(steps: T) => {
   }, [currentStep]);
 
   const Step = useMemo(() => {
-    const StepComponent = (props: StepProps<Steps[number]>) => {
+    const StepComponent = (props: StepProps<T[number]>) => {
       return <>{props.children}</>;
     };
 
