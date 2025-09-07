@@ -52,7 +52,7 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
                   type="button"
                   data-suggestion
                   className={autoCompleteItem}
-                  onMouseDown={() => onClick(univName)}
+                  onClick={() => onClick(univName)}
                 >
                   {parts.map((part, idx) =>
                     part.toLowerCase() === query.toLowerCase() ? (
@@ -73,7 +73,7 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
       </ul>
 
       {query && (
-        <div data-suggestion className={autoCompleteCustomItem} onMouseDown={() => onClick(query)}>
+        <div data-suggestion className={autoCompleteCustomItem} onClick={() => onClick(query)}>
           <div>
             “<span className={autoCompleteHighlight}>{query}</span>”
             <span style={{ marginLeft: '0.8rem' }}>직접 등록하기</span>
