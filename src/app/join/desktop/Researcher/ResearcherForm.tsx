@@ -12,7 +12,7 @@ import { Researcher } from '.';
 import { LoginProvider } from '@/types/user';
 
 const ResearcherForm = () => {
-  const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
+  const { Funnel, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
 
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail ?? '';
@@ -32,14 +32,14 @@ const ResearcherForm = () => {
           <Step name={STEP.email}>
             <JoinLayout.Header />
             <JoinLayout.Container>
-              <JoinLayout.Title title="연구자 회원가입" step={step} />
+              <JoinLayout.Title title="연구자 회원가입" />
               <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
             </JoinLayout.Container>
           </Step>
           <Step name={STEP.info}>
             <JoinLayout.Header />
             <JoinLayout.Container>
-              <JoinLayout.Title title="연구자 회원가입" step={step} />
+              <JoinLayout.Title title="연구자 회원가입" />
               <Researcher.InfoStep handleSubmit={handleSubmit} />
             </JoinLayout.Container>
           </Step>

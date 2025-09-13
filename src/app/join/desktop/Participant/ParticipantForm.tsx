@@ -12,7 +12,7 @@ import { Participant } from '.';
 import { LoginProvider } from '@/types/user';
 
 const ParticipantForm = () => {
-  const { Funnel, step, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
+  const { Funnel, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
 
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail ?? '';
@@ -32,14 +32,14 @@ const ParticipantForm = () => {
           <Step name={STEP.email}>
             <JoinLayout.Header />
             <JoinLayout.Container>
-              <JoinLayout.Title title="참여자 회원가입" step={step} />
+              <JoinLayout.Title title="참여자 회원가입" />
               <Participant.EmailStep onNext={() => setStep(STEP.info)} />
             </JoinLayout.Container>
           </Step>
           <Step name={STEP.info}>
             <JoinLayout.Header />
             <JoinLayout.Container>
-              <JoinLayout.Title title="참여자 회원가입" step={step} />
+              <JoinLayout.Title title="참여자 회원가입" />
               <Participant.InfoStep handleSubmit={handleSubmit} />
             </JoinLayout.Container>
           </Step>
