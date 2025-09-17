@@ -15,6 +15,7 @@ import useUserResearcherInfo from '../../hooks/useUserResearcherInfo';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import InputForm from '../InputForm/InputForm';
+import { textInput } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
@@ -27,6 +28,7 @@ import {
 
 import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
+import UnivAutoCompleteInput from '@/components/UnivAutoCompleteInput/UnivAutoCompleteInput';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
@@ -201,26 +203,21 @@ const OutlineSection = ({
 
         {/* 실험 장소 */}
         <div>
-          <label className={label} htmlFor="location">
+          <label className={label} htmlFor="place">
             실험 장소
           </label>
           {selectedMatchType === MATCH_TYPE.ONLINE ? (
             <div className={disabledInput}>비대면</div>
           ) : (
             <div className={uploadInputContainer}>
-              <Controller
+              <UnivAutoCompleteInput<UploadExperimentPostSchemaType>
                 name="place"
                 control={control}
-                render={({ field, fieldState }) => (
-                  <InputForm
-                    id="place"
-                    field={{ ...field }}
-                    placeholder="장소 입력"
-                    error={fieldState.error}
-                    showErrorMessage={false}
-                  />
-                )}
+                required
+                placeholder="학교명 검색"
+                inputClassName={textInput.autoInput}
               />
+
               {/* 지역구 선택 */}
               <Controller
                 name="region"
