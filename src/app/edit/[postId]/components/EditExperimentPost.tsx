@@ -31,7 +31,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
-  const [isOnCampus, setIsOnCampus] = useState<boolean>(false);
+  const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
 
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
