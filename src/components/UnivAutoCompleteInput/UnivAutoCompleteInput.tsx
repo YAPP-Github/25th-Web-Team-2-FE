@@ -80,7 +80,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
                 id={name}
                 ref={inputRef}
                 placeholder={placeholder}
-                className={`${joinInput} ${inputClassName ?? ''}`}
+                className={inputClassName ?? joinInput}
                 aria-invalid={fieldState.invalid ? true : false}
                 style={{ width: '100%' }}
                 onFocus={() => setShowDropdown(true)}

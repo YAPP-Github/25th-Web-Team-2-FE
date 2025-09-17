@@ -21,37 +21,31 @@ export const textInputContainer = styleVariants({
   },
 });
 
-const baseInput = style({
-  ...fonts.label.large.R14,
-  width: '100%',
-  height: '4.8rem',
-  padding: '0.8rem 1.6rem',
-  border: `0.1rem solid ${colors.line01}`,
-  borderRadius: '1.2rem',
-  color: colors.text06,
-  '::placeholder': {
-    color: colors.text02,
-    ...fonts.label.large.R14,
-  },
-});
-
 export const textInput = styleVariants({
-  default: [
-    baseInput,
-    {
-      ':focus': {
-        borderColor: colors.lineTinted,
-        outline: 'none',
-      },
+  default: {
+    ...fonts.label.large.R14,
+    width: '100%',
+    maxWidth: '45rem',
+    height: '4.8rem',
+    padding: '0.8rem 1.6rem',
+    border: `0.1rem solid ${colors.line01}`,
+    borderRadius: '1.2rem',
+    color: colors.text06,
+    '::placeholder': {
+      color: colors.text02,
+      ...fonts.label.large.R14,
     },
-  ],
+    ':focus': {
+      borderColor: colors.lineTinted,
+      outline: 'none',
+    },
+  },
   error: {
     border: `0.1rem solid ${colors.textAlert}`,
     ':focus': {
       borderColor: colors.textAlert,
     },
   },
-  autoInput: [baseInput],
 });
 
 export const textCounter = style({

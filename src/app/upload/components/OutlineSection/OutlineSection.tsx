@@ -243,7 +243,7 @@ const OutlineSection = ({
                   control={control}
                   required
                   placeholder="학교명 검색"
-                  inputClassName={textInput.autoInput}
+                  inputClassName={textInput.default}
                 />
               )}
 
