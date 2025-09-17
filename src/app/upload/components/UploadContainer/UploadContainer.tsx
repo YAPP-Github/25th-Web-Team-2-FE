@@ -27,6 +27,7 @@ const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResear
 const UploadContainer = () => {
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
+  const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
 
   const [images, setImages] = useState<(File | string)[]>([]);
 
@@ -36,6 +37,7 @@ const UploadContainer = () => {
   const { form, handleSubmit } = useManageExperimentPostForm({
     addLink,
     addContact,
+    isOnCampus,
     setOpenAlertModal,
     images,
     isEdit: false,
@@ -65,7 +67,7 @@ const UploadContainer = () => {
           <DescriptionSection images={images} setImages={setImages} />
 
           {/* 실험 개요 */}
-          <OutlineSection />
+          <OutlineSection setIsOnCampus={setIsOnCampus} />
 
           {/* 실험 참여 방법 */}
           <ApplyMethodSection

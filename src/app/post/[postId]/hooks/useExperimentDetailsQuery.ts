@@ -47,6 +47,7 @@ export interface UseQueryExperimentDetailsAPIResponse {
   imageList: string[];
   isAuthor: boolean;
   alarmAgree: boolean;
+  isOnCampus: boolean;
 }
 
 const useExperimentDetailsQuery = ({ postId }: { postId?: string }) => {

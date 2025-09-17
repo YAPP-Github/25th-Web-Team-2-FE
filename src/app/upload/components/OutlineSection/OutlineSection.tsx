@@ -1,4 +1,5 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Dispatch, SetStateAction } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import {
   disabledInput,
@@ -36,12 +37,14 @@ interface OutlineSectionProps {
   experimentDateChecked?: boolean;
   durationChecked?: boolean;
   isRecruitStatus?: boolean;
+  setIsOnCampus?: Dispatch<SetStateAction<boolean>>;
 }
 
 const OutlineSection = ({
   experimentDateChecked = false,
   durationChecked = false,
   isRecruitStatus = true,
+  setIsOnCampus,
 }: OutlineSectionProps) => {
   const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -81,6 +84,8 @@ const OutlineSection = ({
     onRegionSelect: handleRegionSelect,
     onSubRegionSelect: handleSubRegionSelect,
   };
+
+  const isOnCampus = useWatch({ name: 'isOnCampus', control });
 
   return (
     <div className={uploadSectionLayout}>
@@ -203,20 +208,44 @@ const OutlineSection = ({
 
         {/* 실험 장소 */}
         <div>
-          <label className={label} htmlFor="place">
-            실험 장소
-          </label>
+          <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'row nowrap' }}>
+            <label className={label} htmlFor="place">
+              실험 장소
+            </label>
+            <div>
+              <Controller
+                name="isOnCampus"
+                control={control}
+                render={({ field }) => (
+                  <CheckboxWithIcon
+                    checked={field.value}
+                    onChange={() => {
+                      const newValue = !field.value;
+                      field.onChange(newValue);
+                      setIsOnCampus?.(newValue);
+                    }}
+                    label="교내 실험"
+                    align="left"
+                    size="large"
+                  />
+                )}
+              />
+            </div>
+          </div>
+
           {selectedMatchType === MATCH_TYPE.ONLINE ? (
             <div className={disabledInput}>비대면</div>
           ) : (
             <div className={uploadInputContainer}>
-              <UnivAutoCompleteInput<UploadExperimentPostSchemaType>
-                name="place"
-                control={control}
-                required
-                placeholder="학교명 검색"
-                inputClassName={textInput.autoInput}
-              />
+              {isOnCampus && (
+                <UnivAutoCompleteInput<UploadExperimentPostSchemaType>
+                  name="place"
+                  control={control}
+                  required
+                  placeholder="학교명 검색"
+                  inputClassName={textInput.autoInput}
+                />
+              )}
 
               {/* 지역구 선택 */}
               <Controller
@@ -249,7 +278,7 @@ const OutlineSection = ({
                   <InputForm
                     id="detailedAddress"
                     field={{ ...field }}
-                    placeholder="상세 주소 입력 (선택)"
+                    placeholder={isOnCampus ? '상세 주소 입력' : '상세 주소 입력 (선택)'}
                     maxLength={70}
                     error={fieldState.error}
                   />

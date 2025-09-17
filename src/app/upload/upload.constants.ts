@@ -82,4 +82,5 @@ export const EXPERIMENT_POST_DEFAULT_VALUES = {
     images: [],
   },
   alarmAgree: false,
+  isOnCampus: true,
 };

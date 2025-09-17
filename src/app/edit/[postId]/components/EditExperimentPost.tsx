@@ -31,6 +31,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
+  const [isOnCampus, setIsOnCampus] = useState<boolean>(false);
 
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
@@ -45,6 +46,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
       postId: params.postId,
       addLink,
       addContact,
+      isOnCampus,
       setOpenAlertModal: setOpenSubmitAlertDialog,
       images,
       setImages,
@@ -101,6 +103,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
             experimentDateChecked={experimentDateChecked}
             durationChecked={durationChecked}
             isRecruitStatus={isRecruitStatus}
+            setIsOnCampus={setIsOnCampus}
           />
           <ApplyMethodSection
             addLink={addLink}
