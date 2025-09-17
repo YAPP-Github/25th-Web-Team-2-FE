@@ -73,6 +73,7 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
 
       {query && (
         <button
+          type="button"
           data-suggestion
           className={autoCompleteCustomItem}
           onClick={() => onClick(query)}
