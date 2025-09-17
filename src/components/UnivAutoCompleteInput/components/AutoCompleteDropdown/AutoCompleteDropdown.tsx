@@ -39,7 +39,7 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
 
   return (
     <div className={autoCompleteDropdown}>
-      <ul className={autoCompleteList}>
+      <ul className={autoCompleteList} role="listbox" aria-label="학교 검색 결과">
         {isPending || isLoading ? (
           <li className={emptyAutoCompleteItem}>검색중...</li>
         ) : univNames.length > 0 ? (
@@ -49,7 +49,6 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
             return (
               <li key={univName}>
                 <button
-                  type="button"
                   data-suggestion
                   className={autoCompleteItem}
                   onClick={() => onClick(univName)}
@@ -68,18 +67,23 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
             );
           })
         ) : (
-          <div className={emptyAutoCompleteItem}>일치하는 학교명이 없어요</div>
+          <li className={emptyAutoCompleteItem}>일치하는 학교명이 없어요</li>
         )}
       </ul>
 
       {query && (
-        <div data-suggestion className={autoCompleteCustomItem} onClick={() => onClick(query)}>
+        <button
+          data-suggestion
+          className={autoCompleteCustomItem}
+          onClick={() => onClick(query)}
+          aria-label={`입력한 학교명 “${query}” 직접 등록하기`}
+        >
           <div>
             “<span className={autoCompleteHighlight}>{query}</span>”
             <span style={{ marginLeft: '0.8rem' }}>직접 등록하기</span>
           </div>
           <Icon icon="Chevron" rotate={270} />
-        </div>
+        </button>
       )}
     </div>
   );

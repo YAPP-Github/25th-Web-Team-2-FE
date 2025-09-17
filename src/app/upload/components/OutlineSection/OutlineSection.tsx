@@ -203,7 +203,7 @@ const OutlineSection = ({
 
         {/* 실험 장소 */}
         <div>
-          <label className={label} htmlFor="location">
+          <label className={label} htmlFor="place">
             실험 장소
           </label>
           {selectedMatchType === MATCH_TYPE.ONLINE ? (
@@ -215,7 +215,7 @@ const OutlineSection = ({
                 control={control}
                 required
                 placeholder="학교명 검색"
-                inputClassName={textInput.default}
+                inputClassName={textInput.autoInput}
               />
 
               {/* 지역구 선택 */}
