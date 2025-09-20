@@ -22,6 +22,7 @@ interface FunnelProps {
 }
 
 interface UseFunnelReturn<T extends Steps> extends FunnelState<T> {
+  FunnelProvider: ({ children }: { children: ReactNode }) => JSX.Element;
   Funnel: ({ children }: FunnelProps) => JSX.Element;
   Step: (props: StepProps<T[number]>) => JSX.Element;
 }
@@ -42,9 +43,6 @@ interface FunnelState<T extends Steps = Steps> {
  */
 const FunnelContext = createContext<FunnelState | null>(null);
 
-/**
- * Hook
- */
 const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -88,10 +86,8 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
     }
   }, [isLast, targetSteps, currentStepIdx, setStep]);
 
-  const Funnel = useMemo(() => {
-    const FunnelComponent = ({ children }: FunnelProps) => {
-      const targetStep = children.find((childStep) => childStep.props.name === currentStep);
-
+  const FunnelProvider = useMemo(() => {
+    const ProviderComponent = ({ children }: { children: ReactNode }) => {
       const contextValue = {
         step: currentStep,
         steps: targetSteps,
@@ -103,12 +99,25 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
         goToNext,
       };
 
-      return <FunnelContext.Provider value={contextValue}>{targetStep}</FunnelContext.Provider>;
+      return <FunnelContext.Provider value={contextValue}>{children}</FunnelContext.Provider>;
+    };
+
+    ProviderComponent.displayName = 'FunnelProvider';
+    return ProviderComponent;
+    // FunnelProvider의 참조를 유지하여 자식 컴포넌트가 리렌더링되지 않도록 처리 (Title의 애니메이션 처리)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const Funnel = useMemo(() => {
+    const FunnelComponent = ({ children }: FunnelProps) => {
+      const targetStep = children.find((childStep) => childStep.props.name === currentStep);
+
+      return <>{targetStep}</>;
     };
 
     FunnelComponent.displayName = 'Funnel';
     return FunnelComponent;
-  }, [currentStep, targetSteps, currentStepIdx, totalSteps, progress, setStep, goToPrev, goToNext]);
+  }, [currentStep]);
 
   const Step = useMemo(() => {
     const StepComponent = (props: StepProps<T[number]>) => {
@@ -120,6 +129,7 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
   }, []);
 
   return {
+    FunnelProvider,
     Funnel,
     Step,
     setStep,
