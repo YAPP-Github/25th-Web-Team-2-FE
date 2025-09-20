@@ -5,6 +5,7 @@ import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
 import { useParticipantJoin } from '../../hooks/useParticipantJoin';
 import { MOBILE_PARTICIPANT_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
+import MobileFunnelLayout from '../components/MobileFunnelLayout/MobileFunnelLayout';
 
 import { Participant } from '.';
 
@@ -15,7 +16,9 @@ const ParticipantForm = () => {
   const oauthEmail = session?.oauthEmail ?? '';
   const provider = session?.provider as LoginProvider;
 
-  const { Funnel, Step, setStep, goToNext } = useFunnel(MOBILE_PARTICIPANT_JOIN_STEP_LIST);
+  const { FunnelProvider, Funnel, Step, setStep, goToNext } = useFunnel(
+    MOBILE_PARTICIPANT_JOIN_STEP_LIST,
+  );
 
   const { participantMethods, handleSubmit } = useParticipantJoin({
     initialValues: { oauthEmail, provider },
@@ -26,24 +29,28 @@ const ParticipantForm = () => {
 
   return (
     <FormProvider {...participantMethods}>
-      <Funnel>
-        <Step name={STEP.contactEmail}>
-          <Participant.ContactEmailStep
-            provider={provider}
-            oauthEmail={oauthEmail}
-            onNext={goToNext}
-          />
-        </Step>
-        <Step name={STEP.info}>
-          <Participant.JoinInfoStep onNext={goToNext} />
-        </Step>
-        <Step name={STEP.additionalInfo}>
-          <Participant.JoinAdditionalInfoStep onSubmit={handleSubmit} />
-        </Step>
-        <Step name={STEP.success}>
-          <JoinSuccessStep />
-        </Step>
-      </Funnel>
+      <FunnelProvider>
+        <MobileFunnelLayout title="참여자 회원가입">
+          <Funnel>
+            <Step name={STEP.contactEmail}>
+              <Participant.ContactEmailStep
+                provider={provider}
+                oauthEmail={oauthEmail}
+                onNext={goToNext}
+              />
+            </Step>
+            <Step name={STEP.info}>
+              <Participant.JoinInfoStep onNext={goToNext} />
+            </Step>
+            <Step name={STEP.additionalInfo}>
+              <Participant.JoinAdditionalInfoStep onSubmit={handleSubmit} />
+            </Step>
+            <Step name={STEP.success}>
+              <JoinSuccessStep />
+            </Step>
+          </Funnel>
+        </MobileFunnelLayout>
+      </FunnelProvider>
     </FormProvider>
   );
 };
