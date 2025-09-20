@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { FormProvider } from 'react-hook-form';
 
+import FunnelLayout from '../../components/FunnelLayout/FunnelLayout';
 import { JoinLayout } from '../../components/JoinLayout/JoinLayout';
 import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '../../hooks/useFunnel';
@@ -12,7 +13,7 @@ import { Researcher } from '.';
 import { LoginProvider } from '@/types/user';
 
 const ResearcherForm = () => {
-  const { Funnel, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
+  const { FunnelProvider, Funnel, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);
 
   const { data: session } = useSession();
   const oauthEmail = session?.oauthEmail ?? '';
@@ -28,27 +29,21 @@ const ResearcherForm = () => {
   return (
     <FormProvider {...researcherMethods}>
       <JoinLayout.FormGuard>
-        <Funnel>
-          <Step name={STEP.email}>
-            <JoinLayout.Header />
-            <JoinLayout.Container>
-              <JoinLayout.Title title="연구자 회원가입" />
-              <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
-            </JoinLayout.Container>
-          </Step>
-          <Step name={STEP.info}>
-            <JoinLayout.Header />
-            <JoinLayout.Container>
-              <JoinLayout.Title title="연구자 회원가입" />
-              <Researcher.InfoStep handleSubmit={handleSubmit} />
-            </JoinLayout.Container>
-          </Step>
-          <Step name={STEP.success}>
-            <JoinLayout.Container>
-              <JoinSuccessStep />
-            </JoinLayout.Container>
-          </Step>
-        </Funnel>
+        <FunnelProvider>
+          <FunnelLayout title="연구자 회원가입">
+            <Funnel>
+              <Step name={STEP.email}>
+                <Researcher.EmailStep onNext={() => setStep(STEP.info)} />
+              </Step>
+              <Step name={STEP.info}>
+                <Researcher.InfoStep handleSubmit={handleSubmit} />
+              </Step>
+              <Step name={STEP.success}>
+                <JoinSuccessStep />
+              </Step>
+            </Funnel>
+          </FunnelLayout>
+        </FunnelProvider>
       </JoinLayout.FormGuard>
     </FormProvider>
   );
