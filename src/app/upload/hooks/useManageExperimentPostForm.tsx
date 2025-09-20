@@ -105,7 +105,7 @@ const useManageExperimentPostForm = ({
       imageListInfo: {
         images: updatedImages as string[],
       },
-      place: data.matchType === MATCH_TYPE.ONLINE ? null : data.place,
+      place: data.matchType === MATCH_TYPE.ONLINE || data.place === '' ? null : data.place,
     };
 
     if (isEdit && postId) {

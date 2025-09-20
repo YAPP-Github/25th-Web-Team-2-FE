@@ -18,6 +18,8 @@ interface UnivAutoCompleteInputProps<T extends FieldValues> {
   label?: string;
   required?: boolean;
   placeholder?: string;
+
+  inputClassName?: string;
 }
 
 const UnivAutoCompleteInput = <T extends FieldValues>({
@@ -26,6 +28,8 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
   label,
   required,
   placeholder,
+
+  inputClassName,
 }: UnivAutoCompleteInputProps<T>) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -76,13 +80,13 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
                 id={name}
                 ref={inputRef}
                 placeholder={placeholder}
-                className={joinInput}
+                className={`${joinInput} ${inputClassName ?? ''}`}
                 aria-invalid={fieldState.invalid ? true : false}
                 style={{ width: '100%' }}
                 onFocus={() => setShowDropdown(true)}
                 onBlur={handleBlur}
               />
-              {field.value.length > 0 ? (
+              {field.value?.length > 0 ? (
                 <button className={inputResetButton} ref={resetButtonRef} onClick={handleReset}>
                   <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
                 </button>
@@ -93,7 +97,6 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
               )}
             </div>
 
-            {/* 자동완성 드롭다운 */}
             <AutoCompleteDropdown
               showDropdown={showDropdown}
               query={field.value}
