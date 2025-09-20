@@ -43,6 +43,18 @@ interface FunnelState<T extends Steps = Steps> {
  */
 const FunnelContext = createContext<FunnelState | null>(null);
 
+/**
+ * @param steps - Funnel 컴포넌트 외부에서 선언할 땐 필수고, Funnel 컴포넌트 내부에서 선언할 땐 optional. Funnel 컴포넌트 내부에서는 외부에서 선언한 Funnel step을 따름.
+ * @returns FunnelProvider: useFunnel 반환값을 context로 전달
+ * @returns Funnel: currentStep과 Funnel의 children으로 있는 Step 컴포넌트를 맵핑하는 컴포넌트
+ * @returns Step: name을 props로 받아 자식 컴포넌트를 렌더링하는 wrapper 컴포넌트
+ * @returns setStep: currentStep 설정하는 함수
+ * @returns goToPrev: 이전 step으로 이동하는 함수
+ * @returns goToNext: 다음 step으로 이동하는 함수
+ * @returns step: currentStep
+ * @returns steps: 모든 step 배열
+ * @returns currentStepIdx: 현재 단계 idx
+ */
 const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
   const router = useRouter();
   const searchParams = useSearchParams();
