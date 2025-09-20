@@ -1,36 +1,19 @@
-'use client';
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
-
-import JoinHeader from './components/JoinHeader/JoinHeader';
 import ParticipantForm from './Participant/ParticipantForm';
 import ResearcherForm from './Researcher/ResearcherForm';
-import useFunnel from '../hooks/useFunnel';
-import { MOBILE_STEP_MAP, STEP } from '../JoinPage.constants';
 
 import { ROLE } from '@/constants/config';
-import { startRecording } from '@/lib/mixpanelClient';
-import { Role } from '@/types/user';
+import { authOptions } from '@/lib/auth-utils';
 
-export default function MobileJoinPage() {
-  const { data: session } = useSession();
+export default async function MobileJoinPage() {
+  const session = await getServerSession(authOptions);
   const role = session?.role;
 
-  const { step } = useFunnel(MOBILE_STEP_MAP[role as Role]);
-
-  useEffect(() => {
-    startRecording();
-  }, []);
-
-  if (step === STEP.success) {
-    return role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />;
+  if (!role) {
+    redirect('/login');
   }
 
-  return (
-    <>
-      <JoinHeader role={role} />
-      {role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}
-    </>
-  );
+  return <>{role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}</>;
 }

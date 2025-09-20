@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
 import Toasts from '@/components/Toast/Toasts';
