@@ -11,8 +11,8 @@ interface JoinLayoutTitleProps {
 }
 
 export const JoinLayout = {
-  Header: () => <Logo />,
-  Title: ({ title }: JoinLayoutTitleProps) => <JoinTitleSection title={title} />,
+  Logo: () => <Logo />,
+  Header: ({ title }: JoinLayoutTitleProps) => <JoinTitleSection title={title} />,
   Container: ({ children }: PropsWithChildren) => (
     <div className={contentContainer}>{children}</div>
   ),
