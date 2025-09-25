@@ -65,4 +65,8 @@ export const buttonStyles = style({
 
 export const postTitle = style({
   flex: 1,
+  overflow: 'hidden',
+  wordBreak: 'break-word',
+  whiteSpace: 'normal',
+  marginRight: '1rem',
 });
