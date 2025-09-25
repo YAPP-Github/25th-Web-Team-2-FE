@@ -25,7 +25,7 @@ const AutoCompleteDropdown = ({ showDropdown, query, onClick }: AutoCompleteDrop
 
   const univNames = data?.result || [];
 
-  const isInitialOpen = showDropdown && univNames.length === 0 && query.length === 0;
+  const isInitialOpen = showDropdown && univNames.length === 0 && query?.length === 0;
 
   if (!showDropdown) return null;
 

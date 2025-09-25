@@ -78,6 +78,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
               <input
                 {...field}
                 id={name}
+                value={field.value ?? ''}
                 ref={inputRef}
                 placeholder={placeholder}
                 className={inputClassName ?? joinInput}
