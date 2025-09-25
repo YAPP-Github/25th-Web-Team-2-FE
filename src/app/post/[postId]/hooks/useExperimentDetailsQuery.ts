@@ -30,6 +30,7 @@ interface Address {
   region: string | null;
   area: string | null;
   detailedAddress: string;
+  isOnCampus: boolean;
 }
 
 export interface UseQueryExperimentDetailsAPIResponse {
@@ -47,7 +48,6 @@ export interface UseQueryExperimentDetailsAPIResponse {
   imageList: string[];
   isAuthor: boolean;
   alarmAgree: boolean;
-  isOnCampus: boolean;
 }
 
 const useExperimentDetailsQuery = ({ postId }: { postId?: string }) => {

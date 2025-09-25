@@ -37,7 +37,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
-
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
@@ -57,6 +56,11 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
     useLeaveConfirmModal({ isUserInputDirty });
+
+  useEffect(() => {
+    const formIsOnCampus = form.getValues('isOnCampus');
+    setIsOnCampus(formIsOnCampus);
+  }, [form, isUserInputDirty]);
 
   useEffect(() => {
     if (originExperimentError) {

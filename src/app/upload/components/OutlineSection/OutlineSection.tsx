@@ -278,7 +278,7 @@ const OutlineSection = ({
                   <InputForm
                     id="detailedAddress"
                     field={{ ...field }}
-                    placeholder={isOnCampus ? '상세 주소 입력' : '상세 주소 입력 (선택)'}
+                    placeholder={isOnCampus ? '상세 주소 입력 (선택)' : '상세 주소 입력'}
                     maxLength={70}
                     error={fieldState.error}
                   />
