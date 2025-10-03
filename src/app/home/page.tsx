@@ -11,7 +11,7 @@ import type { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/p
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
 import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
-import { authOptions } from '@/lib/auth-utils';
+import { authOptions, isUnauthorizedUser } from '@/lib/auth-utils';
 import { getQueryClient } from '@/lib/getQueryClient';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 import { getQueryParamsToString } from '@/utils/getQueryParamsString';
@@ -31,11 +31,12 @@ export default async function Home({ searchParams }: HomePageProps) {
   const fetchClient = createSSRFetchClient(session?.accessToken);
   const hasQueryParams = Object.keys(searchParams).length > 0;
 
-  const initialUserInfo = session?.role
-    ? await fetchClient.get<ParticipantResponse | ResearcherResponse>(
-        API_URL.me(session.role.toLowerCase()),
-      )
-    : null;
+  const initialUserInfo =
+    !isUnauthorizedUser(session) && session?.role
+      ? await fetchClient.get<ParticipantResponse | ResearcherResponse>(
+          API_URL.me(session.role.toLowerCase()),
+        )
+      : null;
 
   const initialGender =
     initialUserInfo && isParticipantInfo(initialUserInfo) ? initialUserInfo.gender : undefined;
@@ -63,7 +64,7 @@ export default async function Home({ searchParams }: HomePageProps) {
     },
   );
 
-  if (session?.role) {
+  if (!isUnauthorizedUser(session) && session?.role) {
     await queryClient.prefetchQuery({
       queryKey: queryKey.userInfo(session.role),
       queryFn: () => Promise.resolve(initialUserInfo),

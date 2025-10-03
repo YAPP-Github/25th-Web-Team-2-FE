@@ -59,7 +59,7 @@ export const EXPERIMENT_POST_DEFAULT_VALUES = {
   endDate: undefined,
   matchType: undefined,
   reward: '',
-  place: undefined,
+  place: '',
   detailedAddress: '',
   region: undefined,
   area: undefined,

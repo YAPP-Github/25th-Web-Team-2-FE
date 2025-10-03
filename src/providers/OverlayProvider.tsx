@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 import { createContext, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 

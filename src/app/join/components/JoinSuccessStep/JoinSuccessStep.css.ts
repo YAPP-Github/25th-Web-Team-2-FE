@@ -13,7 +13,7 @@ export const joinSuccessLayout = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
-      height: 'calc(100dvh - 16rem)', // JoinPage padding(8rem + 8rem)
+      height: '100%', // NOTE: 모바일 대응. desktop 좁을 때 레이아웃 깨지지만 모바일 우선 고려.
     },
   },
 });

@@ -1,4 +1,4 @@
-import { NextAuthOptions } from 'next-auth';
+import type { NextAuthOptions, Session } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { signIn, signOut } from 'next-auth/react';
 
@@ -50,6 +50,10 @@ export const joinWithCredentials = async ({
 // 로그아웃 처리 함수
 export const logout = async () => {
   await signOut({ callbackUrl: '/' });
+};
+
+export const isUnauthorizedUser = (session: Session | null) => {
+  return Boolean(session?.isTempUser) && session?.accessToken === 'temp-token';
 };
 
 export const authOptions: NextAuthOptions = {

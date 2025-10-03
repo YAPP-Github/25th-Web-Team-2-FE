@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useTransition } from 'react';
 import { Control, Controller, FieldValues, Path, useFormContext } from 'react-hook-form';
 

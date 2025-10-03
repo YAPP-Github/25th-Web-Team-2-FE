@@ -42,12 +42,17 @@ export const autoCompleteDropdown = style({
   maxHeight: '25.2rem',
   padding: '0.8rem',
 
+  display: 'flex',
+  flexDirection: 'column',
   borderRadius: '1.2rem',
   border: `0.1rem solid ${colors.line02}`,
   backgroundColor: colors.field01,
   boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
-  overflowY: 'auto',
   zIndex: 1,
+});
+
+export const autoCompleteList = style({
+  overflowY: 'auto',
 
   '::-webkit-scrollbar': {
     width: '2.2rem',
@@ -58,7 +63,6 @@ export const autoCompleteDropdown = style({
   '::-webkit-scrollbar-thumb': {
     backgroundColor: colors.icon02,
     borderRadius: '3rem',
-
     border: '0.8rem solid transparent',
     backgroundClip: 'padding-box',
   },
@@ -77,4 +81,23 @@ export const autoCompleteItem = style({
       backgroundColor: colors.field02,
     },
   },
+});
+
+export const autoCompleteCustomItem = style({
+  ...fonts.body.normal.M16,
+  color: colors.text06,
+  cursor: 'pointer',
+
+  height: '4.8rem',
+  padding: '1.2rem 0.8rem 0',
+  borderTop: `0.1rem solid ${colors.line01}`,
+
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
+
+export const autoCompleteHighlight = style({
+  color: colors.primaryMint,
 });
