@@ -1,6 +1,8 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
+import { useEffect, useRef } from 'react';
 
 import useParticipantInfoQuery from './useParticipantInfoQuery';
 import useResearcherInfoQuery from './useResearcherInfoQuery';
@@ -10,6 +12,8 @@ import { isUnauthorizedUser } from '@/lib/auth-utils';
 
 const useUserInfo = () => {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
+  const isExecuted = useRef(false);
 
   const role = session?.role;
   const isSessionReady = status !== 'loading';
@@ -20,6 +24,15 @@ const useUserInfo = () => {
   const researcherQuery = useResearcherInfoQuery({ enabled: isResearcher });
 
   const isLoading = !isSessionReady || participantQuery.isLoading || researcherQuery.isLoading;
+
+  useEffect(() => {
+    if (isExecuted.current) return;
+
+    if (isUnauthorizedUser(session) && !pathname.startsWith('/join')) {
+      signOut({ redirect: false });
+      isExecuted.current = true;
+    }
+  }, [session, pathname]);
 
   return {
     userInfo: isParticipant ? participantQuery.data : researcherQuery.data,
