@@ -1,28 +1,19 @@
-'use client';
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
 
-import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
-
-import { joinLayout } from '../JoinPage.css';
 import ParticipantForm from './Participant/ParticipantForm';
 import ResearcherForm from './Researcher/ResearcherForm';
 
 import { ROLE } from '@/constants/config';
-import { startRecording } from '@/lib/mixpanelClient';
+import { authOptions } from '@/lib/auth-utils';
 
-export default function JoinPage() {
-  const { data: session } = useSession();
-
+export default async function JoinPage() {
+  const session = await getServerSession(authOptions);
   const role = session?.role;
-  const isResearcher = role === ROLE.researcher;
 
-  useEffect(() => {
-    startRecording();
-  }, []);
+  if (!role) {
+    redirect('/login');
+  }
 
-  return (
-    <section className={joinLayout}>
-      {isResearcher ? <ResearcherForm /> : <ParticipantForm />}
-    </section>
-  );
+  return <>{role === ROLE.researcher ? <ResearcherForm /> : <ParticipantForm />}</>;
 }

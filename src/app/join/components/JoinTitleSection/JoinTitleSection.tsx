@@ -6,15 +6,15 @@ import {
   progressBarContainer,
   progressBarFill,
 } from './JoinTitleSection.css';
-import { STEP } from '../../JoinPage.constants';
-import { StepType } from '../../JoinPage.types';
+import useFunnel from '../../hooks/useFunnel';
 
 interface JoinTitleSectionProps {
   title: string;
-  step: StepType;
 }
 
-const JoinTitleSection = ({ title, step }: JoinTitleSectionProps) => {
+const JoinTitleSection = ({ title }: JoinTitleSectionProps) => {
+  const { progress } = useFunnel();
+
   return (
     <div className={titleContainer}>
       <h2 className={joinTitle}>{title}</h2>
@@ -22,7 +22,7 @@ const JoinTitleSection = ({ title, step }: JoinTitleSectionProps) => {
         <div
           className={progressBarFill}
           style={assignInlineVars({
-            '--progress-width': step === STEP.email ? '50%' : '100%',
+            '--progress-width': `${progress}%`,
           })}
         />
       </div>
