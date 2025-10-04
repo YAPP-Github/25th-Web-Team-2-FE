@@ -28,6 +28,7 @@ interface ButtonInputProps<T extends FieldValues> {
   isTip?: boolean;
   isButtonHidden?: boolean;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -42,6 +43,7 @@ const ButtonInput = <T extends FieldValues>({
   isTip = false,
   isButtonHidden = false,
   placeholder = '이메일 입력',
+  autoFocus = false,
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -90,6 +92,7 @@ const ButtonInput = <T extends FieldValues>({
                   aria-invalid={fieldState.invalid ? true : false}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  autoFocus={autoFocus}
                 />
 
                 {!isButtonHidden && (
