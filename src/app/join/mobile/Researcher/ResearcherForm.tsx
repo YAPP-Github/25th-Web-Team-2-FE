@@ -3,16 +3,15 @@
 import { useSession } from 'next-auth/react';
 import { FormProvider } from 'react-hook-form';
 
-import JoinSuccessStep from '../../components/JoinSuccessStep/JoinSuccessStep';
-import useFunnel from '../../hooks/useFunnel';
-import { useResearcherJoin } from '../../hooks/useResearcherJoin';
-import { MOBILE_RESEARCHER_JOIN_STEP_LIST, STEP } from '../../JoinPage.constants';
-import MobileFunnelLayout from '../components/MobileFunnelLayout/MobileFunnelLayout';
-
 import { Researcher } from '.';
 
+import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
+import JoinSuccessStep from '@/app/join/components/JoinSuccessStep/JoinSuccessStep';
+import useFunnel from '@/app/join/hooks/useFunnel';
+import { useResearcherJoin } from '@/app/join/hooks/useResearcherJoin';
+import { MOBILE_RESEARCHER_JOIN_STEP_LIST, STEP } from '@/app/join/JoinPage.constants';
+import MobileFunnelLayout from '@/app/join/mobile/components/MobileFunnelLayout/MobileFunnelLayout';
 import { LoginProvider } from '@/types/user';
-import FunnelStepGuard from '../components/FunnelStepGuard/FunnelStepGuard';
 
 const ResearcherForm = () => {
   const { data: session } = useSession();
