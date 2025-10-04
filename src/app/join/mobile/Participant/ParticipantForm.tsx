@@ -12,6 +12,7 @@ import MobileFunnelLayout from '../components/MobileFunnelLayout/MobileFunnelLay
 import { Participant } from '.';
 
 import { LoginProvider } from '@/types/user';
+import FunnelStepGuard from '../components/FunnelStepGuard/FunnelStepGuard';
 
 const ParticipantForm = () => {
   const { data: session } = useSession();
@@ -32,26 +33,28 @@ const ParticipantForm = () => {
   return (
     <FormProvider {...participantMethods}>
       <FunnelProvider>
-        <MobileFunnelLayout title="참여자 회원가입">
-          <Funnel>
-            <Step name={STEP.contactEmail}>
-              <Participant.ContactEmailStep
-                provider={provider}
-                oauthEmail={oauthEmail}
-                onNext={goToNext}
-              />
-            </Step>
-            <Step name={STEP.info}>
-              <Participant.JoinInfoStep onNext={goToNext} />
-            </Step>
-            <Step name={STEP.additionalInfo}>
-              <Participant.JoinAdditionalInfoStep onSubmit={handleSubmit} />
-            </Step>
-            <Step name={STEP.success}>
-              <JoinSuccessStep />
-            </Step>
-          </Funnel>
-        </MobileFunnelLayout>
+        <FunnelStepGuard isDirty={participantMethods.formState.isDirty}>
+          <MobileFunnelLayout title="참여자 회원가입">
+            <Funnel>
+              <Step name={STEP.contactEmail}>
+                <Participant.ContactEmailStep
+                  provider={provider}
+                  oauthEmail={oauthEmail}
+                  onNext={goToNext}
+                />
+              </Step>
+              <Step name={STEP.info}>
+                <Participant.JoinInfoStep onNext={goToNext} />
+              </Step>
+              <Step name={STEP.additionalInfo}>
+                <Participant.JoinAdditionalInfoStep onSubmit={handleSubmit} />
+              </Step>
+              <Step name={STEP.success}>
+                <JoinSuccessStep />
+              </Step>
+            </Funnel>
+          </MobileFunnelLayout>
+        </FunnelStepGuard>
       </FunnelProvider>
     </FormProvider>
   );

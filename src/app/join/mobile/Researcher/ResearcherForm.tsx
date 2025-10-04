@@ -12,6 +12,7 @@ import MobileFunnelLayout from '../components/MobileFunnelLayout/MobileFunnelLay
 import { Researcher } from '.';
 
 import { LoginProvider } from '@/types/user';
+import FunnelStepGuard from '../components/FunnelStepGuard/FunnelStepGuard';
 
 const ResearcherForm = () => {
   const { data: session } = useSession();
@@ -32,26 +33,28 @@ const ResearcherForm = () => {
   return (
     <FormProvider {...researcherMethods}>
       <FunnelProvider>
-        <MobileFunnelLayout title="연구자 회원가입">
-          <Funnel>
-            <Step name={STEP.contactEmail}>
-              <Researcher.ContactEmailStep
-                provider={provider}
-                oauthEmail={oauthEmail}
-                onNext={goToNext}
-              />
-            </Step>
-            <Step name={STEP.univEmail}>
-              <Researcher.UnivEmailStep onNext={goToNext} />
-            </Step>
-            <Step name={STEP.info}>
-              <Researcher.JoinInfoStep onSubmit={handleSubmit} />
-            </Step>
-            <Step name={STEP.success}>
-              <JoinSuccessStep />
-            </Step>
-          </Funnel>
-        </MobileFunnelLayout>
+        <FunnelStepGuard isDirty={researcherMethods.formState.isDirty}>
+          <MobileFunnelLayout title="연구자 회원가입">
+            <Funnel>
+              <Step name={STEP.contactEmail}>
+                <Researcher.ContactEmailStep
+                  provider={provider}
+                  oauthEmail={oauthEmail}
+                  onNext={goToNext}
+                />
+              </Step>
+              <Step name={STEP.univEmail}>
+                <Researcher.UnivEmailStep onNext={goToNext} />
+              </Step>
+              <Step name={STEP.info}>
+                <Researcher.JoinInfoStep onSubmit={handleSubmit} />
+              </Step>
+              <Step name={STEP.success}>
+                <JoinSuccessStep />
+              </Step>
+            </Funnel>
+          </MobileFunnelLayout>
+        </FunnelStepGuard>
       </FunnelProvider>
     </FormProvider>
   );
