@@ -143,14 +143,15 @@ const JoinInput = <T extends FieldValues>({
                 onKeyDown={onKeyDown}
               />
               {isFocused && field.value && !disabled && (
-                <button className={inputResetButton} ref={resetButtonRef}>
-                  <Icon
-                    icon="CloseRound"
-                    width={22}
-                    height={22}
-                    onClick={() => handleReset(field.onChange)}
-                    cursor="pointer"
-                  />
+                <button
+                  className={inputResetButton}
+                  ref={resetButtonRef}
+                  onMouseDown={(e) => {
+                    e.preventDefault(); // blur 방지
+                    handleReset(field.onChange);
+                  }}
+                >
+                  <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
                 </button>
               )}
             </div>
