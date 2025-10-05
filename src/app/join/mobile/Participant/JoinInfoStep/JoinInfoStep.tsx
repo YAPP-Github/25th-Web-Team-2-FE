@@ -11,6 +11,8 @@ import { Gender } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
+const inputOrder = ['name', 'birthDate'];
+
 interface JoinInfoStepProps {
   onNext: () => void;
 }
@@ -21,6 +23,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
     setValue,
     formState: { errors },
   } = useFormContext<ParticipantJoinSchemaType>();
+  const { handleKeyDown, setInputRef } = useFocusNavigation(inputOrder);
 
   const values = useWatch({
     name: ['name', 'birthDate', 'gender'],
@@ -29,8 +32,6 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
 
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
-  const inputOrder = ['name', 'birthDate'];
-  const { handleKeyDown, setInputRef } = useFocusNavigation(inputOrder);
 
   return (
     <main className={mainContentLayout}>
