@@ -38,6 +38,7 @@ interface FunnelState<T extends Steps = Steps> {
   setStep: (step: T[number]) => void;
   goToPrev: () => void;
   goToNext: () => void;
+  goToFirstStep: () => void;
 }
 
 /**
@@ -53,6 +54,7 @@ const FunnelContext = createContext<FunnelState | null>(null);
  * @returns setStep: currentStep 설정하는 함수
  * @returns goToPrev: 이전 step으로 이동하는 함수
  * @returns goToNext: 다음 step으로 이동하는 함수
+ * @returns goToFirstStep: 첫 번째 step으로 이동하는 함수
  * @returns step: currentStep
  * @returns steps: 모든 step 배열
  * @returns currentStepIdx: 현재 단계 idx
@@ -100,6 +102,12 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
     }
   }, [isLast, targetSteps, currentStepIdx, setStep]);
 
+  const goToFirstStep = useCallback(() => {
+    if (targetSteps.length > 0) {
+      setStep(targetSteps[0]);
+    }
+  }, [targetSteps, setStep]);
+
   const FunnelProvider = useMemo(() => {
     const ProviderComponent = ({ children }: { children: ReactNode }) => {
       const contextValue = {
@@ -111,6 +119,7 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
         setStep,
         goToPrev,
         goToNext,
+        goToFirstStep,
       };
 
       return <FunnelContext.Provider value={contextValue}>{children}</FunnelContext.Provider>;
@@ -154,6 +163,7 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
     progress,
     goToPrev,
     goToNext,
+    goToFirstStep,
   } as const;
 };
 

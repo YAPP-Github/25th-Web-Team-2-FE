@@ -59,8 +59,13 @@ interface JoinInputProps<T extends FieldValues> {
   isTip?: boolean;
   inputType?: 'text' | 'date';
   className?: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  inputPropRef?:
+    | React.MutableRefObject<HTMLInputElement | null>
+    | ((el: HTMLInputElement | null) => void);
 }
 
+// NOTE: forwardRef 사용하면 제네릭이 원하는대로 정의할 수 없어 inputPropRef로 관리
 const JoinInput = <T extends FieldValues>({
   name,
   control,
@@ -75,10 +80,12 @@ const JoinInput = <T extends FieldValues>({
   isTip = true,
   inputType = 'text',
   className,
+  onKeyDown,
+  inputPropRef,
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>, onBlur: () => void) => {
     if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
@@ -112,29 +119,39 @@ const JoinInput = <T extends FieldValues>({
               <input
                 {...field}
                 id={name}
-                ref={inputRef}
+                ref={(el) => {
+                  field.ref(el);
+                  inputRef.current = el;
+                  if (typeof inputPropRef === 'function') {
+                    inputPropRef(el);
+                  } else if (inputPropRef) {
+                    inputPropRef.current = el;
+                  }
+                }}
                 placeholder={placeholder}
                 disabled={disabled}
                 maxLength={maxLength}
                 aria-invalid={fieldState.invalid ? true : false}
                 style={{ width: '100%' }}
-                className={className ? className : joinInput}
+                className={`${joinInput} ${className ?? ''}`}
                 onChange={(e) => {
                   const formattedValue = formatDateInput(inputType, e.target.value);
                   field.onChange(formattedValue);
                 }}
                 onFocus={() => setIsFocused(true)}
                 onBlur={(e) => handleBlur(e, field.onBlur)}
+                onKeyDown={onKeyDown}
               />
               {isFocused && field.value && !disabled && (
-                <button className={inputResetButton} ref={resetButtonRef}>
-                  <Icon
-                    icon="CloseRound"
-                    width={22}
-                    height={22}
-                    onClick={() => handleReset(field.onChange)}
-                    cursor="pointer"
-                  />
+                <button
+                  className={inputResetButton}
+                  ref={resetButtonRef}
+                  onMouseDown={(e) => {
+                    e.preventDefault(); // blur 방지
+                    handleReset(field.onChange);
+                  }}
+                >
+                  <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
                 </button>
               )}
             </div>

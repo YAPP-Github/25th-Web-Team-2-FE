@@ -30,6 +30,7 @@ const ContactEmailStep = ({ provider, oauthEmail, onNext }: ContactEmailStepProp
         contactEmailField="contactEmail"
         verifiedEmailField="verifiedContactEmail"
         onSuccess={onNext}
+        autoFocus
       />
       <NextButton onNext={onNext} />
     </main>

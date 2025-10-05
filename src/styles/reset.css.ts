@@ -1,5 +1,6 @@
 import { globalStyle } from '@vanilla-extract/css';
 
+import { colors } from './colors';
 import * as layers from './layers.css';
 
 /**
@@ -56,6 +57,15 @@ globalStyle('button', {
       background: 'none',
       outline: 'none',
       cursor: 'pointer',
+      color: 'inherit',
+    },
+  },
+});
+
+globalStyle('button:enabled', {
+  '@layer': {
+    [layers.reset]: {
+      color: colors.text06,
     },
   },
 });
