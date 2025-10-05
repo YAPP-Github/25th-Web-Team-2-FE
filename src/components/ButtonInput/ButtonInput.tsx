@@ -47,6 +47,7 @@ const ButtonInput = <T extends FieldValues>({
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [_, startTransition] = useTransition();
 
   return (
@@ -82,6 +83,7 @@ const ButtonInput = <T extends FieldValues>({
 
           const handleClick = () => {
             onClick(); // 중복 확인 로직 실행
+            inputRef.current?.blur(); //실제 DOM 포커스 해제하여 가상키보드 닫기
             field.onBlur(); // 모바일에서 버튼 클릭 시 인풋 포커스 해제하여 가상키보드 닫기
           };
 
@@ -91,6 +93,10 @@ const ButtonInput = <T extends FieldValues>({
                 <input
                   {...field}
                   id={name}
+                  ref={(el) => {
+                    field.ref(el);
+                    inputRef.current = el;
+                  }}
                   style={{ width: '100%' }}
                   className={`${joinInput} ${className ?? ''}`}
                   placeholder={placeholder}
