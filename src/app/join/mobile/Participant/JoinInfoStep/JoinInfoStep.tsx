@@ -6,6 +6,7 @@ import { bottomButtonLayout, emailInput, mainContentLayout } from '../../page.cs
 
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
+import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
 import { Gender } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
@@ -28,6 +29,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
 
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
+  const inputOrder = ['name', 'birthDate'];
+  const { handleKeyDown, setInputRef } = useFocusNavigation(inputOrder);
 
   return (
     <main className={mainContentLayout}>
@@ -45,6 +48,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           name="name"
           placeholder="이름을 입력해 주세요"
           required
+          inputPropRef={setInputRef('name')}
+          onKeyDown={handleKeyDown('name')}
         />
 
         {/* 생년월일 */}
@@ -55,6 +60,8 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           name="birthDate"
           placeholder="YYYY. MM. DD"
           required
+          inputPropRef={setInputRef('birthDate')}
+          onKeyDown={handleKeyDown('birthDate')}
         />
 
         {/* 성별 */}
