@@ -8,28 +8,28 @@ import {
   postContainerTitleDesktop,
   recruitCheckLabel,
   recruitCheckWrapper,
-} from './ExperimentPostContainer.css';
+} from './ExperimentPostSection.css';
 import FilterContainer from './FilterContainer/FilterContainer';
-import useParticipantAutoFilter from '../../hooks/useParticipantAutoFilter';
-import useURLFilters from '../../hooks/useURLFilters';
-import useUserInfo from '../../hooks/useUserInfo';
 
 import { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
+import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
-interface ExperimentPostContainerProps {
+interface ExperimentPostSectionProps {
   initialPosts: ExperimentPostResponse;
   initialGender?: ExperimentPostListFilters['gender'];
   initialAge?: ExperimentPostListFilters['age'];
 }
 
-const ExperimentPostContainer = ({
+const ExperimentPostSection = ({
   initialPosts,
   initialGender,
   initialAge,
-}: ExperimentPostContainerProps) => {
+}: ExperimentPostSectionProps) => {
   const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
   const { isRecruiting, handleToggleRecruitStatus } = useURLFilters();
   const { isAutoFilled } = useParticipantAutoFilter({ userInfo, isUserInfoLoading });
@@ -63,4 +63,4 @@ const ExperimentPostContainer = ({
   );
 };
 
-export default ExperimentPostContainer;
+export default ExperimentPostSection;

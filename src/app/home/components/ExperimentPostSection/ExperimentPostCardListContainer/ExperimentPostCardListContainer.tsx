@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import ExperimentPost from './ExperimentPostCardList/ExperimentPost';
+import ExperimentPostCardList from './ExperimentPostCardList/ExperimentPostCardList';
 import {
   allPostsViewedContainer,
   allPostsViewedContentContainer,
@@ -13,7 +13,7 @@ import {
   totalPostCount,
   watchMoreButton,
 } from './ExperimentPostCardListContainer.css';
-import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostContainer.css';
+import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostSection.css';
 
 import { ExperimentPostResponse } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
@@ -86,7 +86,7 @@ const ExperimentPostCardListContainer = ({
               />
             </div>
           </div>
-          <ExperimentPost postListData={postListData} />
+          <ExperimentPostCardList postListData={postListData} />
         </div>
 
         {isFetching && hasNextPage && <div className={loadingMoreButton} />}
