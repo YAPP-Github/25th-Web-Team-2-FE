@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react';
 
 export const useFocusNavigation = (inputOrder: string[]) => {
-  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const inputRefs = useRef<Record<string, HTMLInputElement | HTMLTextAreaElement | null>>({});
 
   const focusNextInput = useCallback(
     (currentInputName: string) => {
@@ -17,7 +17,7 @@ export const useFocusNavigation = (inputOrder: string[]) => {
   );
 
   const handleKeyDown = useCallback(
-    (inputName: string) => (e: React.KeyboardEvent<HTMLInputElement>) => {
+    (inputName: string) => (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (e.key === 'Enter') {
         e.preventDefault();
         focusNextInput(inputName);
@@ -27,7 +27,7 @@ export const useFocusNavigation = (inputOrder: string[]) => {
   );
 
   const setInputRef = useCallback(
-    (inputName: string) => (el: HTMLInputElement | null) => {
+    (inputName: string) => (el: HTMLInputElement | HTMLTextAreaElement | null) => {
       inputRefs.current[inputName] = el;
     },
     [],
