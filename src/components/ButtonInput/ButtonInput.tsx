@@ -80,6 +80,11 @@ const ButtonInput = <T extends FieldValues>({
             field.onBlur();
           };
 
+          const handleClick = () => {
+            onClick(); // 중복 확인 로직 실행
+            field.onBlur(); // 모바일에서 버튼 클릭 시 인풋 포커스 해제하여 가상키보드 닫기
+          };
+
           return (
             <>
               <div className={inputWrapper}>
@@ -100,7 +105,7 @@ const ButtonInput = <T extends FieldValues>({
                     type="button"
                     className={confirmButton}
                     disabled={isButtonDisabled || isLoading}
-                    onClick={onClick}
+                    onClick={handleClick}
                     onMouseDown={(e) => e.preventDefault()}
                     ref={validateButtonRef}
                   >
