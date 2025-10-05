@@ -92,9 +92,9 @@ const ButtonInput = <T extends FieldValues>({
                   {...field}
                   id={name}
                   style={{ width: '100%' }}
-                  className={className ? className : joinInput}
+                  className={`${joinInput} ${className ?? ''}`}
                   placeholder={placeholder}
-                  aria-invalid={fieldState.invalid ? true : false}
+                  aria-invalid={fieldState.invalid}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   autoFocus={autoFocus}
