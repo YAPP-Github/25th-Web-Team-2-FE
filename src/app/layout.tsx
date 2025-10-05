@@ -48,6 +48,10 @@ export const metadata: Metadata = {
       'naver-site-verification': '30b0a9ec0a357ce934c3c90cf68aedd57b8ad2fd',
     },
   },
+  formatDetection: {
+    telephone: false,
+    email: false,
+  },
 };
 
 export default async function RootLayout({
