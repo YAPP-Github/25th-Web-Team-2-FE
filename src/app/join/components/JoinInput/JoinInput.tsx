@@ -118,7 +118,7 @@ const JoinInput = <T extends FieldValues>({
                 maxLength={maxLength}
                 aria-invalid={fieldState.invalid ? true : false}
                 style={{ width: '100%' }}
-                className={className ? className : joinInput}
+                className={`${joinInput} ${className ?? ''}`}
                 onChange={(e) => {
                   const formattedValue = formatDateInput(inputType, e.target.value);
                   field.onChange(formattedValue);
