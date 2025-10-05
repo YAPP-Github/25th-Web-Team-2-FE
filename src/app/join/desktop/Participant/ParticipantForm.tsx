@@ -3,17 +3,16 @@
 import { useSession } from 'next-auth/react';
 import { FormProvider } from 'react-hook-form';
 
+import { Participant } from '.';
+
 import FunnelLayout from '@/app/join/components/FunnelLayout/FunnelLayout';
+import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
 import { JoinLayout } from '@/app/join/components/JoinLayout/JoinLayout';
 import JoinSuccessStep from '@/app/join/components/JoinSuccessStep/JoinSuccessStep';
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { useParticipantJoin } from '@/app/join/hooks/useParticipantJoin';
 import { DESKTOP_PARTICIPANT_JOIN_STEP_LIST, STEP } from '@/app/join/JoinPage.constants';
-
-import { Participant } from '.';
-
 import { LoginProvider } from '@/types/user';
-import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
 
 const ParticipantForm = () => {
   const { FunnelProvider, Funnel, Step, setStep } = useFunnel(DESKTOP_PARTICIPANT_JOIN_STEP_LIST);
