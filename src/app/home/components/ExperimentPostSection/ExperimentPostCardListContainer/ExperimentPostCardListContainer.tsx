@@ -2,18 +2,12 @@ import { useRef } from 'react';
 
 import ExperimentPostCardList from './ExperimentPostCardList/ExperimentPostCardList';
 import {
-  allPostsViewedContainer,
-  allPostsViewedContentContainer,
-  allPostsViewedSubTitle,
-  allPostsViewedTitle,
-  loadingMoreButton,
   postCardContainer,
   postCardContainerHeader,
-  postCardContentContainer,
   totalPostCount,
-  watchMoreButton,
 } from './ExperimentPostCardListContainer.css';
 import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostSection.css';
+import ExperimentPostContainerLayout from './ExperimentPostContainerLayout/ExperimentPostContainerLayout';
 
 import { ExperimentPostResponse } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
@@ -68,7 +62,13 @@ const ExperimentPostCardListContainer = ({
       enabled={isMobile() && !isFetching && hasNextPage}
       fetchNextPage={fetchNextPage}
     >
-      <main className={postCardContentContainer}>
+      <ExperimentPostContainerLayout
+        isFetching={isFetching}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        hasPost={hasPost}
+        fetchNextPage={fetchNextPage}
+      >
         <div className={postCardContainer}>
           <div className={postCardContainerHeader}>
             <span className={totalPostCount}>
@@ -88,27 +88,7 @@ const ExperimentPostCardListContainer = ({
           </div>
           <ExperimentPostCardList postListData={postListData} />
         </div>
-
-        {isFetching && hasNextPage && <div className={loadingMoreButton} />}
-        {!isFetching && hasNextPage && (
-          <button
-            className={watchMoreButton}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            더보기
-          </button>
-        )}
-        {!isFetching && !hasNextPage && hasPost && (
-          <div className={allPostsViewedContainer}>
-            <Icon icon="Golf" width={40} height={40} />
-            <div className={allPostsViewedContentContainer}>
-              <span className={allPostsViewedTitle}>모든 공고를 다 확인했어요!</span>
-              <span className={allPostsViewedSubTitle}>새롭게 올라올 공고도 기대해 주세요</span>
-            </div>
-          </div>
-        )}
-      </main>
+      </ExperimentPostContainerLayout>
     </IntersectionObserverScroll>
   );
 };
