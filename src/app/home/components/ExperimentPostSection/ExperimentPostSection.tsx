@@ -10,6 +10,7 @@ import {
   recruitCheckLabel,
   recruitCheckWrapper,
   totalPostCountWrapper,
+  totalPostCount,
 } from './ExperimentPostSection.css';
 import FilterContainer from './FilterContainer/FilterContainer';
 
@@ -19,7 +20,6 @@ import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter'
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
-import { totalPostCount } from './ExperimentPostCardListContainer/ExperimentPostCardListContainer.css';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 

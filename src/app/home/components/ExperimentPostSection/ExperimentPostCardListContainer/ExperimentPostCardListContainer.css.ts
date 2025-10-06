@@ -10,7 +10,19 @@ export const postCardContainer = style({
   minHeight: '40rem',
 });
 
-export const totalPostCount = style({
-  ...fonts.label.large.R14,
-  color: colors.text03,
+export const emptyViewLayout = style({
+  minHeight: 'calc(100dvh - 12.2rem)',
+
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  justifyContent: 'center',
+  gap: '0.8rem',
+  alignItems: 'center',
+});
+
+export const emptySubTitle = style({
+  ...fonts.label.small.M12,
+  color: colors.text04,
+  marginBottom: '1.6rem',
+  textAlign: 'center',
 });
