@@ -7,14 +7,8 @@ export const experimentPostLayout = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
-      gap: '0',
       gridTemplateColumns: '1fr',
-      gridTemplateAreas: `
-        "title"
-        "location"
-        "reward"
-        "date views"
-      `,
+      gap: '0',
     },
   },
 });

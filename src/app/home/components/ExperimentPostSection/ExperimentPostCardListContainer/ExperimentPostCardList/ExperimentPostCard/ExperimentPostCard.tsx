@@ -5,17 +5,13 @@ import {
   contactedPostTag,
   postCardLayout,
   postDate,
-  postHeader,
-  postInfoContainer,
   postLocation,
   postReward,
   postRewardContainer,
   postTitle,
   postViews,
-  postFooter,
   postDetailsContainer,
-  postViewWrapperDesktop,
-  postViewWrapperMobile,
+  postViewsContainer,
 } from './ExperimentPostCard.css';
 
 import { formatPostDate } from '@/app/home/home.utils';
@@ -46,45 +42,40 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
         className={postCardLayout}
         onClick={goToPost}
       >
-        <div className={postHeader}>
-          <div className={postInfoContainer}>
-            <span className={postLocation}>{place ? place : '비대면'}</span>
-            <div className={postViewWrapperDesktop}>
-              <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
-              <span className={postViews}>{views}</span>
-            </div>
-          </div>
-          <h3 className={postTitle}>{title}</h3>
+        {/* location */}
+        <span className={postLocation}>{place ? place : '비대면'}</span>
+
+        {/* views */}
+        <div className={postViewsContainer}>
+          <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
+          <span className={postViews}>{views}</span>
         </div>
 
-        <div className={postFooter}>
-          {recruitStatus ? (
-            <div className={postDetailsContainer}>
-              <div className={postRewardContainer}>
-                <span className={announceText}>보상</span>
-                <span className={postReward}>{reward}</span>
-              </div>
-              <div className={postRewardContainer}>
-                <span className={announceText}>일시</span>
-                <span className={postDate}>
-                  {formatPostDate({
-                    startDate: durationInfo.startDate,
-                    endDate: durationInfo.endDate,
-                  })}
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className={contactedPostTag}>
-              <span>모집 완료</span>
-            </div>
-          )}
+        {/* title */}
+        <h3 className={postTitle}>{title}</h3>
 
-          <div className={postViewWrapperMobile}>
-            <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
-            <span className={postViews}>{views}</span>
+        {/* details */}
+        {recruitStatus ? (
+          <div className={postDetailsContainer}>
+            <div className={postRewardContainer}>
+              <span className={announceText}>보상</span>
+              <span className={postReward}>{reward}</span>
+            </div>
+            <div className={postRewardContainer}>
+              <span className={announceText}>일시</span>
+              <span className={postDate}>
+                {formatPostDate({
+                  startDate: durationInfo.startDate,
+                  endDate: durationInfo.endDate,
+                })}
+              </span>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className={contactedPostTag}>
+            <span>모집 완료</span>
+          </div>
+        )}
       </Link>
     </li>
   );
