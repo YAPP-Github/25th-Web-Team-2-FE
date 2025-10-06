@@ -24,6 +24,10 @@ interface JoinTextareaProps<T extends FieldValues> {
   value?: PathValue<T, Path<T>>;
   maxLength?: number;
   rows?: number;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  inputPropRef?:
+    | React.MutableRefObject<HTMLTextAreaElement | null>
+    | ((el: HTMLTextAreaElement | null) => void);
 }
 
 const JoinTextarea = <T extends FieldValues>({
@@ -36,6 +40,8 @@ const JoinTextarea = <T extends FieldValues>({
   value,
   maxLength,
   rows = 3,
+  onKeyDown,
+  inputPropRef,
 }: JoinTextareaProps<T>) => {
   const resetButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -64,6 +70,14 @@ const JoinTextarea = <T extends FieldValues>({
               <textarea
                 {...field}
                 id={name}
+                ref={(el) => {
+                  field.ref(el);
+                  if (typeof inputPropRef === 'function') {
+                    inputPropRef(el);
+                  } else if (inputPropRef) {
+                    inputPropRef.current = el;
+                  }
+                }}
                 placeholder={placeholder}
                 disabled={disabled}
                 aria-invalid={fieldState.invalid ? true : false}
@@ -72,6 +86,7 @@ const JoinTextarea = <T extends FieldValues>({
                 style={{ width: '100%' }}
                 className={joinInput}
                 onBlur={(e) => handleBlur(e, field.onBlur)}
+                onKeyDown={onKeyDown}
               />
             </div>
             <div className={infoContainer}>

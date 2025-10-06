@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
@@ -74,6 +74,10 @@ export const checkboxWrapper = style({
   padding: '0.6rem 0',
   textAlign: 'left',
   wordBreak: 'keep-all',
+});
+
+globalStyle(`${checkboxWrapper} label`, {
+  alignItems: 'flex-start',
 });
 
 export const bottomButtonLayout = style({
