@@ -5,14 +5,17 @@ import { fonts } from '@/styles/fonts.css';
 
 export const postContainerLayout = style({
   display: 'grid',
+  gridTemplateRows: 'auto 1.6rem auto 1.6rem auto 0.6rem auto',
   gridTemplateAreas: `
-  "title title"
-  "filters checkbox"
-  "count count"
-  "posts posts"
+    "title title"
+    ". ."
+    "filters checkbox"
+    ". ."
+    "count count"
+    ". ."
+    "posts posts"
   `,
   gridTemplateColumns: '1fr auto',
-  gridGap: '1.6rem',
 
   marginTop: '2rem',
   background: 'transparent',
@@ -20,14 +23,17 @@ export const postContainerLayout = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
+      gridTemplateRows: 'auto 0rem auto 0rem auto 0.6rem auto',
       gridTemplateAreas: `
         "divider divider"
+        ". ."
         "filters filters"
+        ". ."
         "count checkbox"
+        ". ."
         "posts posts"
       `,
       marginTop: '0',
-      gap: '0',
       paddingBottom: '0',
     },
   },
@@ -110,11 +116,4 @@ export const totalPostCount = style({
 
 export const postListContainer = style({
   gridArea: 'posts',
-  marginTop: '-1rem', // 1.6rem(grid gap) - 1rem = 0.6rem
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      marginTop: '0.6rem',
-    },
-  },
 });
