@@ -10,16 +10,6 @@ export const postCardContainer = style({
   minHeight: '40rem',
 });
 
-export const postCardContainerHeader = style({
-  '@media': {
-    'screen and (max-width: 767px)': {
-      display: 'flex',
-      justifyContent: 'space-between',
-      padding: '0.4rem 1.6rem',
-    },
-  },
-});
-
 export const totalPostCount = style({
   ...fonts.label.large.R14,
   color: colors.text03,
