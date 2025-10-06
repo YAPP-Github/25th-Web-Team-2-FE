@@ -20,7 +20,6 @@ import MobileBannerSecond from '@/assets/images/mobileBanner2.webp';
 import WebBanner from '@/assets/images/webBanner.png';
 import WebBannerSecond from '@/assets/images/webBanner2.png';
 import Icon from '@/components/Icon';
-import Spinner from '@/components/Spinner/Spinner';
 
 const BannerMap = [
   {
@@ -55,8 +54,6 @@ const Banner = () => {
     moveSlide,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-
   return (
     <div className={bannerLayout}>
       <div
@@ -75,22 +72,15 @@ const Banner = () => {
           {BannerMap.map((banner, idx) => (
             <picture key={idx} style={{ display: 'block', flex: '0 0 100%' }}>
               <source media="(max-width: 767px)" srcSet={banner.mobileSrc.src} />
-              {isLoading ? (
-                <Spinner />
-              ) : (
-                <Image
-                  key={idx}
-                  src={banner.webSrc}
-                  alt={banner.alt}
-                  className={bannerImage}
-                  priority
-                  width={1000}
-                  height={80}
-                  onLoad={() => {
-                    setIsLoading(false);
-                  }}
-                />
-              )}
+              <Image
+                key={idx}
+                src={banner.webSrc}
+                alt={banner.alt}
+                className={bannerImage}
+                priority
+                width={1000}
+                height={80}
+              />
             </picture>
           ))}
         </div>
