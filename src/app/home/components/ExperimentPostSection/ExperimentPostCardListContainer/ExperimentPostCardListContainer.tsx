@@ -1,24 +1,16 @@
 import { useRef } from 'react';
 
 import ExperimentPostCardList from './ExperimentPostCardList/ExperimentPostCardList';
-import {
-  postCardContainer,
-  postCardContainerHeader,
-  totalPostCount,
-} from './ExperimentPostCardListContainer.css';
-import { recruitCheckLabel, recruitCheckWrapper } from '../ExperimentPostSection.css';
+import { postCardContainer } from './ExperimentPostCardListContainer.css';
 import ExperimentPostContainerLayout from './ExperimentPostContainerLayout/ExperimentPostContainerLayout';
 
 import { ExperimentPostResponse } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
-import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
-import Icon from '@/components/Icon';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import Spinner from '@/components/Spinner/Spinner';
-import { colors } from '@/styles/colors';
 import { isMobile } from '@/utils/deviceType';
 
 interface PostCardListContainerProps {
@@ -30,7 +22,7 @@ const ExperimentPostCardListContainer = ({
   isUserInfoLoading,
   initialPosts,
 }: PostCardListContainerProps) => {
-  const { filters, isRecruiting, handleToggleRecruitStatus } = useURLFilters();
+  const { filters } = useURLFilters();
   const {
     data: postListData,
     hasNextPage,
@@ -70,22 +62,6 @@ const ExperimentPostCardListContainer = ({
         fetchNextPage={fetchNextPage}
       >
         <div className={postCardContainer}>
-          <div className={postCardContainerHeader}>
-            <span className={totalPostCount}>
-              {postListData && `총 ${postListData?.pages[0].totalCount}개`}
-            </span>
-            <div className={recruitCheckWrapper({ isMobile: true })}>
-              <JoinCheckbox
-                labelClassName={recruitCheckLabel}
-                label="모집 중인 공고만 보기"
-                isChecked={isRecruiting}
-                onChange={handleToggleRecruitStatus}
-                emptyCheckIcon={
-                  <Icon icon="CheckSquareFill" cursor="pointer" color={colors.icon02} />
-                }
-              />
-            </div>
-          </div>
           <ExperimentPostCardList postListData={postListData} />
         </div>
       </ExperimentPostContainerLayout>

@@ -1,21 +1,31 @@
 import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const postContainerLayout = style({
+  display: 'grid',
+  gridTemplateAreas: `
+  "title title"
+  "filters checkbox"
+  "count count"
+  "posts posts"
+  `,
+  gridTemplateColumns: '1fr auto',
+  gridGap: '1.6rem',
+
   marginTop: '2rem',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1.6rem',
-
   background: 'transparent',
-
   paddingBottom: '12.2rem', // footer
 
   '@media': {
     'screen and (max-width: 767px)': {
+      gridTemplateAreas: `
+        "divider divider"
+        "filters filters"
+        "count checkbox"
+        "posts posts"
+      `,
       marginTop: '0',
       gap: '0',
       paddingBottom: '0',
@@ -26,6 +36,7 @@ export const postContainerLayout = style({
 export const postContainerTitleDesktop = style({
   ...fonts.title.medium.SB20,
   color: colors.text06,
+  gridArea: 'title',
 
   '@media': {
     'screen and (max-width: 767px)': {
@@ -36,6 +47,7 @@ export const postContainerTitleDesktop = style({
 
 export const horizontalLineMobile = style({
   display: 'none',
+  gridArea: 'divider',
 
   '@media': {
     'screen and (max-width: 767px)': {
@@ -50,7 +62,7 @@ export const horizontalLineMobile = style({
 export const filterWrapper = style({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  gridArea: 'filters',
 
   '@media': {
     'screen and (max-width: 767px)': {
@@ -65,23 +77,39 @@ export const recruitCheckLabel = style({
   color: colors.text06,
 });
 
-export const recruitCheckWrapper = recipe({
-  variants: {
-    isMobile: {
-      true: {
-        '@media': {
-          'screen and (min-width: 768px)': {
-            display: 'none',
-          },
-        },
-      },
-      false: {
-        '@media': {
-          'screen and (max-width: 767px)': {
-            display: 'none',
-          },
-        },
-      },
+export const recruitCheckWrapper = style({
+  gridArea: 'checkbox',
+  display: 'flex',
+  alignItems: 'center',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '0.4rem 1.6rem',
+      justifyContent: 'flex-end',
+    },
+  },
+});
+
+export const totalPostCountWrapper = style({
+  gridArea: 'count',
+  display: 'flex',
+  alignItems: 'center',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      padding: '0.4rem 1.6rem',
+      justifyContent: 'flex-start',
+    },
+  },
+});
+
+export const postListContainer = style({
+  gridArea: 'posts',
+  marginTop: '-1rem', // 1.6rem(grid gap) - 1rem = 0.6rem
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      marginTop: '0.6rem',
     },
   },
 });
