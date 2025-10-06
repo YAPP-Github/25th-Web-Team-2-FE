@@ -14,7 +14,6 @@ import Icon from '@/components/Icon';
 
 interface ExperimentPostAdditionalLayoutProps {
   children: React.ReactNode;
-  isFetching: boolean;
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   hasPost: boolean;
@@ -23,7 +22,6 @@ interface ExperimentPostAdditionalLayoutProps {
 
 const ExperimentPostContainerLayout = ({
   children,
-  isFetching,
   isFetchingNextPage,
   hasNextPage,
   hasPost,
@@ -32,8 +30,8 @@ const ExperimentPostContainerLayout = ({
   return (
     <main className={postCardContentContainer}>
       {children}
-      {isFetching && hasNextPage && <div className={loadingMoreButton} />}
-      {!isFetching && hasNextPage && (
+      {isFetchingNextPage && hasNextPage && <div className={loadingMoreButton} />}
+      {!isFetchingNextPage && hasNextPage && (
         <button
           className={watchMoreButton}
           onClick={() => fetchNextPage()}
@@ -42,7 +40,7 @@ const ExperimentPostContainerLayout = ({
           더보기
         </button>
       )}
-      {!isFetching && !hasNextPage && hasPost && (
+      {!isFetchingNextPage && !hasNextPage && hasPost && (
         <div className={allPostsViewedContainer}>
           <Icon icon="Golf" width={40} height={40} />
           <div className={allPostsViewedContentContainer}>

@@ -53,11 +53,10 @@ const ExperimentPostCardListContainer = ({
   return (
     <IntersectionObserverScroll
       observerRef={observerRef}
-      enabled={isMobile() && !isFetching && hasNextPage}
+      enabled={isMobile() && !isFetchingNextPage && hasNextPage}
       fetchNextPage={fetchNextPage}
     >
       <ExperimentPostContainerLayout
-        isFetching={isFetching}
         isFetchingNextPage={isFetchingNextPage}
         hasNextPage={hasNextPage}
         hasPost={hasPost}
