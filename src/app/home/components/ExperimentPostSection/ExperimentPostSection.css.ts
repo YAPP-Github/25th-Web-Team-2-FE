@@ -103,6 +103,11 @@ export const totalPostCountWrapper = style({
   },
 });
 
+export const totalPostCount = style({
+  ...fonts.label.large.R14,
+  color: colors.text03,
+});
+
 export const postListContainer = style({
   gridArea: 'posts',
   marginTop: '-1rem', // 1.6rem(grid gap) - 1rem = 0.6rem

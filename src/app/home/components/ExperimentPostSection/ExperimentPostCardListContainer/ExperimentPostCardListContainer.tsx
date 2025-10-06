@@ -1,14 +1,16 @@
 import { useRef } from 'react';
 
 import ExperimentPostCardList from './ExperimentPostCardList/ExperimentPostCardList';
-import { postCardContainer } from './ExperimentPostCardListContainer.css';
 import ExperimentPostContainerLayout from './ExperimentPostContainerLayout/ExperimentPostContainerLayout';
 
 import { ExperimentPostResponse } from '@/apis/post';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
-import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
-import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
+import {
+  postCardContainer,
+  emptySubTitle,
+  emptyViewLayout,
+} from './ExperimentPostCardListContainer.css';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import Spinner from '@/components/Spinner/Spinner';
 import { isMobile } from '@/utils/deviceType';
