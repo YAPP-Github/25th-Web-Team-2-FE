@@ -16,31 +16,36 @@ import {
   inputLabel,
   infoContainer,
 } from './JoinInput.css';
-import { formatDateInput } from './JoinInput.utils';
+import { formatBirthdate, formatDateInput } from './JoinInput.utils';
 
 import Icon from '@/components/Icon';
 
 // 온점 뒤 백스페이스 처리 함수
-const handleSpecialBackspace = (
+const getBackspaceAfterDotResult = (
   previousValue: string,
   currentValue: string,
   previousCursor: number | null,
 ) => {
-  // 값이 줄어들지 않았으면 백스페이스가 아님
   if (!previousValue || currentValue.length >= previousValue.length) {
     return null;
   }
 
-  // 온점 뒤에서 백스페이스 감지
+  // 온점 뒤에서 발생한 백스페이스 입력한 경우
   if (previousCursor && previousValue[previousCursor - 1] === '.') {
-    const deletePos = previousCursor - 2;
-    if (deletePos >= 0 && /\d/.test(previousValue[deletePos])) {
-      // 온점 앞 숫자 삭제
-      const newValue = previousValue.slice(0, deletePos) + previousValue.slice(deletePos + 1);
-      const { formattedValue } = formatDateInput('date', newValue, deletePos);
-      return { newValue: formattedValue, newCursor: deletePos };
+    const numbers = previousValue.replace(/\D/g, '');
+    const digitsBeforeDot = previousValue.slice(0, previousCursor - 1).replace(/\D/g, '').length;
+
+    if (digitsBeforeDot > 0) {
+      // 온점 바로 앞 숫자 제거
+      const newNumbers = numbers.slice(0, digitsBeforeDot - 1) + numbers.slice(digitsBeforeDot);
+
+      const formattedValue = formatBirthdate(newNumbers);
+      const cursorPosition = formatBirthdate(newNumbers.slice(0, digitsBeforeDot - 1)).length;
+
+      return { newValue: formattedValue, newCursor: cursorPosition };
     }
   }
+
   return null;
 };
 
@@ -140,7 +145,7 @@ const JoinInput = <T extends FieldValues>({
             const currentCursor = e.target.selectionStart;
 
             if (inputType === 'date') {
-              const backspaceResult = handleSpecialBackspace(
+              const backspaceResult = getBackspaceAfterDotResult(
                 previousValueRef.current,
                 currentValue,
                 previousCursorRef.current,
