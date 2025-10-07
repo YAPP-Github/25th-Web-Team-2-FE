@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useLayoutEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
@@ -187,8 +187,8 @@ const JoinInput = <T extends FieldValues>({
     inputRef.current?.focus();
   };
 
-  // 커서 위치 복원을 위한 useLayoutEffect
-  useLayoutEffect(() => {
+  // '.' 을 지웠을 때 커서 위치 조정을 위한 useEffect
+  useEffect(() => {
     if (pendingCursorPosition !== null && inputRef.current?.setSelectionRange) {
       inputRef.current.setSelectionRange(pendingCursorPosition, pendingCursorPosition);
       setPendingCursorPosition(null);
