@@ -67,20 +67,7 @@ const JoinInput = <T extends FieldValues>({
   const previousValueRef = useRef('');
   const previousCursorRef = useRef<number | null>(null);
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>, onBlur: () => void) => {
-    if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
-      return;
-    }
-    onBlur();
-    setIsFocused(false);
-  };
-
-  const handleReset = (onChange: (value: string) => void) => {
-    onChange('');
-    inputRef.current?.focus();
-  };
-
-  // '.' 을 지웠을 때 커서 위치 조정을 위한 useEffect
+  // 온점을 지웠을 때 커서 위치 조정을 위한 useEffect
   useEffect(() => {
     if (pendingCursorPosition !== null && inputRef.current?.setSelectionRange) {
       inputRef.current.setSelectionRange(pendingCursorPosition, pendingCursorPosition);
@@ -102,6 +89,19 @@ const JoinInput = <T extends FieldValues>({
         rules={rules}
         defaultValue={value}
         render={({ field, fieldState }) => {
+          const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+            if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
+              return;
+            }
+            field.onBlur();
+            setIsFocused(false);
+          };
+
+          const handleReset = () => {
+            field.onChange('');
+            inputRef.current?.focus();
+          };
+
           const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
             if (inputType === 'date') {
               previousValueRef.current = field.value || '';
@@ -170,7 +170,7 @@ const JoinInput = <T extends FieldValues>({
                   onChange={handleChange}
                   onKeyDown={handleKeyDown}
                   onFocus={() => setIsFocused(true)}
-                  onBlur={(e) => handleBlur(e, field.onBlur)}
+                  onBlur={handleBlur}
                   inputMode={inputType === 'date' ? 'decimal' : 'text'}
                 />
                 {isFocused && field.value && !disabled && (
@@ -179,7 +179,7 @@ const JoinInput = <T extends FieldValues>({
                     ref={resetButtonRef}
                     onMouseDown={(e) => {
                       e.preventDefault(); // blur 방지
-                      handleReset(field.onChange);
+                      handleReset();
                     }}
                   >
                     <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
