@@ -141,6 +141,7 @@ const JoinInput = <T extends FieldValues>({
                 onFocus={() => setIsFocused(true)}
                 onBlur={(e) => handleBlur(e, field.onBlur)}
                 onKeyDown={onKeyDown}
+                inputMode={inputType === 'date' ? 'decimal' : 'text'}
               />
               {isFocused && field.value && !disabled && (
                 <button
