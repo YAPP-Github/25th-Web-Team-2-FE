@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
@@ -19,30 +19,116 @@ import {
 
 import Icon from '@/components/Icon';
 
-const formatDateInput = (inputType: string, value: string) => {
-  if (inputType !== 'date') return value;
+const formatDateInput = (
+  inputType: string,
+  value: string,
+  selectionStart: number | null = null,
+) => {
+  if (inputType !== 'date') {
+    return { formattedValue: value, cursorPosition: selectionStart ?? value.length };
+  }
 
+  // 숫자만 추출
   const numbers = value.replace(/\D/g, '');
-  const UNIT = { start: 0, year: 4, month: 6, total: 8 };
 
-  if (numbers.length <= UNIT.year) {
-    if (numbers.length === UNIT.year && value.includes('.')) return value;
+  // 최대 8자리까지만 허용 (YYYYMMDD)
+  const limitedNumbers = numbers.slice(0, 8);
 
-    return numbers;
+  let formattedValue = '';
+  let cursorPosition = selectionStart ?? value.length;
+
+  // 포맷팅 적용
+  if (limitedNumbers.length <= 4) {
+    // YYYY
+    formattedValue = limitedNumbers;
+  } else if (limitedNumbers.length <= 6) {
+    // YYYY.MM
+    const year = limitedNumbers.slice(0, 4);
+    const month = limitedNumbers.slice(4);
+    formattedValue = `${year}.${month}`;
+  } else {
+    // YYYY.MM.DD
+    const year = limitedNumbers.slice(0, 4);
+    const month = limitedNumbers.slice(4, 6);
+    const day = limitedNumbers.slice(6);
+    formattedValue = `${year}.${month}.${day}`;
   }
 
-  if (numbers.length <= UNIT.month) {
-    if (numbers.length === UNIT.month && value.includes('.')) return value;
+  // 커서 위치 계산
+  if (selectionStart !== null) {
+    // 현재 커서 위치까지의 숫자 개수 계산
+    const numbersBeforeCursor = value.slice(0, selectionStart).replace(/\D/g, '').length;
 
-    const year = numbers.substring(UNIT.start, UNIT.year);
-    const month = numbers.substring(UNIT.year, UNIT.month);
-    return `${year}.${month}`;
+    // 새로운 포맷된 값에서 해당 숫자 위치 찾기
+    let newCursorPosition = 0;
+    let numberCount = 0;
+
+    for (let i = 0; i < formattedValue.length; i++) {
+      if (/\d/.test(formattedValue[i])) {
+        numberCount++;
+        if (numberCount === numbersBeforeCursor) {
+          newCursorPosition = i + 1;
+          break;
+        }
+      }
+      if (numberCount < numbersBeforeCursor) {
+        newCursorPosition = i + 1;
+      }
+    }
+
+    // 만약 모든 숫자를 다 센 경우, 마지막 위치로
+    if (numberCount < numbersBeforeCursor) {
+      newCursorPosition = formattedValue.length;
+    }
+
+    cursorPosition = newCursorPosition;
+  } else {
+    cursorPosition = formattedValue.length;
   }
 
-  const year = numbers.substring(UNIT.start, UNIT.year);
-  const month = numbers.substring(UNIT.year, UNIT.month);
-  const day = numbers.substring(UNIT.month, UNIT.total);
-  return `${year}.${month}.${day}`;
+  return { formattedValue, cursorPosition };
+};
+
+const handleDateBackspace = (
+  value: string,
+  selectionStart: number | null,
+  selectionEnd: number | null,
+): { newValue: string; newCursorPosition: number } | null => {
+  // 날짜 입력이 아니거나 커서 위치가 없으면 기본 동작
+  if (!selectionStart || selectionStart !== selectionEnd) {
+    return null;
+  }
+
+  // 온점 바로 뒤에 커서가 있는지 확인
+  const charBeforeCursor = value[selectionStart - 1];
+  if (charBeforeCursor !== '.') {
+    return null;
+  }
+
+  // 온점 앞의 숫자를 찾아서 삭제
+  let newValue = value;
+  const deletePosition = selectionStart - 2; // 온점 앞 위치
+
+  // 온점 앞에 숫자가 있는지 확인하고 삭제
+  if (deletePosition >= 0 && /\d/.test(newValue[deletePosition])) {
+    newValue = newValue.slice(0, deletePosition) + newValue.slice(deletePosition + 1);
+
+    // 삭제 후 포맷팅 적용
+    const { formattedValue } = formatDateInput('date', newValue, deletePosition);
+
+    // 새로운 커서 위치 계산 (삭제된 숫자 위치)
+    let newCursorPosition = deletePosition;
+
+    // 포맷팅으로 인해 온점이 사라졌을 수 있으므로 조정
+    if (formattedValue.length < value.length - 1) {
+      // 온점이 사라진 경우, 커서를 해당 위치로
+      newCursorPosition = Math.min(deletePosition, formattedValue.length);
+    }
+
+    return { newValue: formattedValue, newCursorPosition };
+  }
+
+  return null;
 };
 
 interface JoinInputProps<T extends FieldValues> {
@@ -86,6 +172,7 @@ const JoinInput = <T extends FieldValues>({
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [pendingCursorPosition, setPendingCursorPosition] = useState<number | null>(null);
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>, onBlur: () => void) => {
     if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
@@ -99,6 +186,14 @@ const JoinInput = <T extends FieldValues>({
     onChange('');
     inputRef.current?.focus();
   };
+
+  // 커서 위치 복원을 위한 useLayoutEffect
+  useLayoutEffect(() => {
+    if (pendingCursorPosition !== null && inputRef.current?.setSelectionRange) {
+      inputRef.current.setSelectionRange(pendingCursorPosition, pendingCursorPosition);
+      setPendingCursorPosition(null);
+    }
+  }, [pendingCursorPosition]);
 
   return (
     <div className={inputContainer}>
@@ -135,12 +230,42 @@ const JoinInput = <T extends FieldValues>({
                 style={{ width: '100%' }}
                 className={`${joinInput} ${className ?? ''}`}
                 onChange={(e) => {
-                  const formattedValue = formatDateInput(inputType, e.target.value);
+                  const { formattedValue, cursorPosition } = formatDateInput(
+                    inputType,
+                    e.target.value,
+                    e.target.selectionStart,
+                  );
                   field.onChange(formattedValue);
+
+                  // 커서 위치 복원 (useLayoutEffect를 통해)
+                  if (inputType === 'date') {
+                    setPendingCursorPosition(cursorPosition);
+                  }
                 }}
                 onFocus={() => setIsFocused(true)}
                 onBlur={(e) => handleBlur(e, field.onBlur)}
-                onKeyDown={onKeyDown}
+                onKeyDown={(e) => {
+                  // 날짜 입력에서 백스페이스 특별 처리
+                  if (inputType === 'date' && e.key === 'Backspace') {
+                    const result = handleDateBackspace(
+                      field.value || '',
+                      e.currentTarget.selectionStart,
+                      e.currentTarget.selectionEnd,
+                    );
+
+                    if (result) {
+                      e.preventDefault();
+                      field.onChange(result.newValue);
+
+                      // 커서 위치 복원 (useLayoutEffect를 통해)
+                      setPendingCursorPosition(result.newCursorPosition);
+                      return;
+                    }
+                  }
+
+                  // 기존 onKeyDown 핸들러 호출
+                  onKeyDown?.(e);
+                }}
                 inputMode={inputType === 'date' ? 'decimal' : 'text'}
               />
               {isFocused && field.value && !disabled && (
