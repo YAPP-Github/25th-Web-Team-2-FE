@@ -1,8 +1,8 @@
 import { InfiniteData } from '@tanstack/react-query';
 
 import EmptyPostCard from './EmptyPostCard/EmptyPostCard';
-import { experimentPostLayout } from './ExperimentPost.css';
 import ExperimentPostCard from './ExperimentPostCard/ExperimentPostCard';
+import { experimentPostLayout } from './ExperimentPostCardList.css';
 
 import { ExperimentPostResponse } from '@/apis/post';
 
@@ -10,7 +10,7 @@ interface ExperimentPostProps {
   postListData?: InfiniteData<ExperimentPostResponse, unknown> | undefined;
 }
 
-const ExperimentPost = ({ postListData }: ExperimentPostProps) => {
+const ExperimentPostCardList = ({ postListData }: ExperimentPostProps) => {
   if (postListData?.pages[0].content.length === 0) {
     return <EmptyPostCard />;
   }
@@ -26,4 +26,4 @@ const ExperimentPost = ({ postListData }: ExperimentPostProps) => {
   );
 };
 
-export default ExperimentPost;
+export default ExperimentPostCardList;

@@ -26,17 +26,21 @@ export const textEllipsis = styleVariants({
 export const postCardLayout = style({
   position: 'relative',
   display: 'grid',
-  gap: '1.6rem',
-  gridTemplateRows: 'auto 1fr auto',
+  gridTemplateRows: 'auto 0.8rem auto 1.6rem 1fr 1.6rem auto',
+  gridTemplateColumns: '1fr auto',
   gridTemplateAreas: `
-    "header"
-    "content"
-    "footer"
+    "location views"
+    ". ."
+    "title title"
+    ". ."
+    "content content"
+    ". ."
+    "details ."
   `,
+
   height: '20rem',
   padding: '1.6rem 2rem',
   borderRadius: '1.2rem',
-
   backgroundColor: colors.field01,
 
   selectors: {
@@ -47,6 +51,18 @@ export const postCardLayout = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
+      gridTemplateRows: 'auto 0.2rem auto 1.6rem 1fr 1.6rem auto',
+      gridTemplateColumns: '1fr auto',
+      gridTemplateAreas: `
+        "title title"
+        ". ."
+        "location ."
+        ". ."
+        "content content"
+        ". ."
+        "details views"
+      `,
+
       height: 'auto',
       padding: '1.6rem',
 
@@ -67,45 +83,10 @@ export const postCardLayout = style({
   },
 });
 
-export const postHeader = style({
-  gridArea: 'header',
-  display: 'grid',
-  gap: '0.8rem',
-  gridTemplateRows: 'auto auto',
-  gridTemplateAreas: `
-    "location-views"
-    "title"
-  `,
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      gap: '0.2rem',
-      gridTemplateAreas: `
-        "title"
-        "location"
-      `,
-    },
-  },
-});
-
-export const postInfoContainer = style({
-  gridArea: 'location-views',
-  display: 'grid',
-  gridTemplateColumns: '1fr auto',
-  alignItems: 'center',
-  gap: '1rem',
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      gridArea: 'location',
-      gridTemplateColumns: '1fr',
-    },
-  },
-});
-
 export const postLocation = style([
   textEllipsis.singleLine,
   {
+    gridArea: 'location',
     ...fonts.label.medium.R13,
     color: colors.text03,
 
@@ -117,14 +98,15 @@ export const postLocation = style([
   },
 ]);
 
-export const postViewWrapperDesktop = style({
+export const postViewsContainer = style({
+  gridArea: 'views',
   display: 'flex',
   alignItems: 'center',
   gap: '0.4rem',
 
   '@media': {
     'screen and (max-width: 767px)': {
-      display: 'none',
+      alignSelf: 'end',
     },
   },
 });
@@ -149,25 +131,6 @@ export const postTitle = style([
   },
 ]);
 
-export const postFooter = style({
-  gridArea: 'footer',
-  display: 'grid',
-
-  // 데스크톱: 보상/일시
-  gridTemplateColumns: '1fr',
-  gridTemplateAreas: `"details"`,
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      // 모바일: 보상/일시 + 조회수
-      gridTemplateColumns: '1fr auto',
-      gridTemplateAreas: `"details views"`,
-      alignItems: 'end',
-      gap: '1rem',
-    },
-  },
-});
-
 export const postDetailsContainer = style({
   gridArea: 'details',
   display: 'flex',
@@ -177,19 +140,6 @@ export const postDetailsContainer = style({
   '@media': {
     'screen and (max-width: 767px)': {
       gap: '0.3rem',
-    },
-  },
-});
-
-export const postViewWrapperMobile = style({
-  gridArea: 'views',
-  display: 'none',
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.4rem',
     },
   },
 });

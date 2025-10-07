@@ -2,7 +2,7 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getServerSession } from 'next-auth';
 
 import Banner from './components/Banner/Banner';
-import ExperimentPostContainer from './components/ExperimentPostContainer/ExperimentPostContainer';
+import ExperimentPostSection from './components/ExperimentPostSection/ExperimentPostSection';
 import { calculateAgeFromBirthDate } from './home.utils';
 
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
@@ -85,7 +85,7 @@ export default async function Home({ searchParams }: HomePageProps) {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <DefaultLayout>
         <Banner />
-        <ExperimentPostContainer
+        <ExperimentPostSection
           initialPosts={initialPosts}
           initialGender={hasQueryParams ? undefined : initialGender}
           initialAge={hasQueryParams ? undefined : initialAge}
