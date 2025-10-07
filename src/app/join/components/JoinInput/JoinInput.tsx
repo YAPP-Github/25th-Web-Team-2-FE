@@ -16,38 +16,9 @@ import {
   inputLabel,
   infoContainer,
 } from './JoinInput.css';
-import { formatBirthdate, formatDateInput } from './JoinInput.utils';
+import { formatDateInput, getBackspaceAfterDotResult } from './JoinInput.utils';
 
 import Icon from '@/components/Icon';
-
-// 온점 뒤 백스페이스 처리 함수
-const getBackspaceAfterDotResult = (
-  previousValue: string,
-  currentValue: string,
-  previousCursor: number | null,
-) => {
-  if (!previousValue || currentValue.length >= previousValue.length) {
-    return null;
-  }
-
-  // 온점 뒤에서 발생한 백스페이스 입력한 경우
-  if (previousCursor && previousValue[previousCursor - 1] === '.') {
-    const numbers = previousValue.replace(/\D/g, '');
-    const digitsBeforeDot = previousValue.slice(0, previousCursor - 1).replace(/\D/g, '').length;
-
-    if (digitsBeforeDot > 0) {
-      // 온점 바로 앞 숫자 제거
-      const newNumbers = numbers.slice(0, digitsBeforeDot - 1) + numbers.slice(digitsBeforeDot);
-
-      const formattedValue = formatBirthdate(newNumbers);
-      const cursorPosition = formatBirthdate(newNumbers.slice(0, digitsBeforeDot - 1)).length;
-
-      return { newValue: formattedValue, newCursor: cursorPosition };
-    }
-  }
-
-  return null;
-};
 
 interface JoinInputProps<T extends FieldValues> {
   name: Path<T>;
