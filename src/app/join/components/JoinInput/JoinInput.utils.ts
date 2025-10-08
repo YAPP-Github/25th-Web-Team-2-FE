@@ -54,9 +54,10 @@ export const formatDateInput = (
   const formattedValue = formatBirthdate(numbers);
 
   // 커서 위치 계산
-  const cursorPosition = cursorPos
-    ? formatBirthdate(value.slice(0, cursorPos).replace(/\D/g, '')).length
-    : formattedValue.length;
+  const cursorPosition =
+    cursorPos !== null
+      ? formatBirthdate(value.slice(0, cursorPos).replace(/\D/g, '')).length
+      : formattedValue.length;
 
   return { formattedValue, cursorPosition };
 };
