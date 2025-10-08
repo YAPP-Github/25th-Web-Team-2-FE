@@ -67,7 +67,7 @@ const JoinInput = <T extends FieldValues>({
   const previousValueRef = useRef('');
   const previousCursorRef = useRef<number | null>(null);
 
-  // 온점을 지웠을 때 커서 위치 조정을 위한 useEffect
+  // 커서를 앞으로 옮겨 지웠을 때 커서 위치 복원을 위한 로직
   useEffect(() => {
     if (pendingCursorPosition !== null && inputRef.current?.setSelectionRange) {
       inputRef.current.setSelectionRange(pendingCursorPosition, pendingCursorPosition);
