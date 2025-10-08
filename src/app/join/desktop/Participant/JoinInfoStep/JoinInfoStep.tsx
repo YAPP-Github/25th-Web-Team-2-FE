@@ -79,7 +79,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
           control={control}
           label="생년월일"
           required
-          placeholder="YYYY.MM.DD"
+          placeholder="YYYY. MM. DD"
           tip="나중에 수정할 수 없어요"
           isTip={false}
           inputType="date"

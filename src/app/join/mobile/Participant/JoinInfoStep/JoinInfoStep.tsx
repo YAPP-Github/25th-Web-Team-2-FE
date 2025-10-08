@@ -63,6 +63,7 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
           required
           inputPropRef={setInputRef('birthDate')}
           onKeyDown={handleKeyDown('birthDate')}
+          inputType="date"
         />
 
         {/* 성별 */}
