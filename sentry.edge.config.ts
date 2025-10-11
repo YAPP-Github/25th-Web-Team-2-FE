@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/nextjs';
 
-const isProductionDomain = process.env.VERCEL_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
 
-if (isProductionDomain) {
+if (isProduction) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     tracesSampleRate: 1,
