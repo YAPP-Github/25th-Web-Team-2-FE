@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
 import {
@@ -16,34 +16,9 @@ import {
   inputLabel,
   infoContainer,
 } from './JoinInput.css';
+import { formatDateInput, getBackspaceAfterDotResult } from './JoinInput.utils';
 
 import Icon from '@/components/Icon';
-
-const formatDateInput = (inputType: string, value: string) => {
-  if (inputType !== 'date') return value;
-
-  const numbers = value.replace(/\D/g, '');
-  const UNIT = { start: 0, year: 4, month: 6, total: 8 };
-
-  if (numbers.length <= UNIT.year) {
-    if (numbers.length === UNIT.year && value.includes('.')) return value;
-
-    return numbers;
-  }
-
-  if (numbers.length <= UNIT.month) {
-    if (numbers.length === UNIT.month && value.includes('.')) return value;
-
-    const year = numbers.substring(UNIT.start, UNIT.year);
-    const month = numbers.substring(UNIT.year, UNIT.month);
-    return `${year}.${month}`;
-  }
-
-  const year = numbers.substring(UNIT.start, UNIT.year);
-  const month = numbers.substring(UNIT.year, UNIT.month);
-  const day = numbers.substring(UNIT.month, UNIT.total);
-  return `${year}.${month}.${day}`;
-};
 
 interface JoinInputProps<T extends FieldValues> {
   name: Path<T>;
@@ -59,8 +34,13 @@ interface JoinInputProps<T extends FieldValues> {
   isTip?: boolean;
   inputType?: 'text' | 'date';
   className?: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  inputPropRef?:
+    | React.MutableRefObject<HTMLInputElement | null>
+    | ((el: HTMLInputElement | null) => void);
 }
 
+// NOTE: forwardRef 사용하면 제네릭이 원하는대로 정의할 수 없어 inputPropRef로 관리
 const JoinInput = <T extends FieldValues>({
   name,
   control,
@@ -75,23 +55,25 @@ const JoinInput = <T extends FieldValues>({
   isTip = true,
   inputType = 'text',
   className,
+  onKeyDown,
+  inputPropRef,
 }: JoinInputProps<T>) => {
   const [isFocused, setIsFocused] = useState(false);
   const resetButtonRef = useRef<HTMLButtonElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [pendingCursorPosition, setPendingCursorPosition] = useState<number | null>(null);
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>, onBlur: () => void) => {
-    if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
-      return;
+  // 백스페이스 감지를 위한 이전 상태 추적
+  const previousValueRef = useRef('');
+  const previousCursorRef = useRef<number | null>(null);
+
+  // 커서를 앞으로 옮겨 지웠을 때 커서 위치 복원을 위한 로직
+  useEffect(() => {
+    if (pendingCursorPosition !== null && inputRef.current?.setSelectionRange) {
+      inputRef.current.setSelectionRange(pendingCursorPosition, pendingCursorPosition);
+      setPendingCursorPosition(null);
     }
-    onBlur();
-    setIsFocused(false);
-  };
-
-  const handleReset = (onChange: (value: string) => void) => {
-    onChange('');
-    inputRef.current?.focus();
-  };
+  }, [pendingCursorPosition]);
 
   return (
     <div className={inputContainer}>
@@ -106,64 +88,131 @@ const JoinInput = <T extends FieldValues>({
         control={control}
         rules={rules}
         defaultValue={value}
-        render={({ field, fieldState }) => (
-          <>
-            <div className={inputWrapper}>
-              <input
-                {...field}
-                id={name}
-                ref={inputRef}
-                placeholder={placeholder}
-                disabled={disabled}
-                maxLength={maxLength}
-                aria-invalid={fieldState.invalid ? true : false}
-                style={{ width: '100%' }}
-                className={className ? className : joinInput}
-                onChange={(e) => {
-                  const formattedValue = formatDateInput(inputType, e.target.value);
-                  field.onChange(formattedValue);
-                }}
-                onFocus={() => setIsFocused(true)}
-                onBlur={(e) => handleBlur(e, field.onBlur)}
-              />
-              {isFocused && field.value && !disabled && (
-                <button className={inputResetButton} ref={resetButtonRef}>
-                  <Icon
-                    icon="CloseRound"
-                    width={22}
-                    height={22}
-                    onClick={() => handleReset(field.onChange)}
-                    cursor="pointer"
-                  />
-                </button>
-              )}
-            </div>
-            <div className={infoContainer}>
-              {/* 왼쪽: 에러 메시지 또는 헬퍼 텍스트 */}
-              <div>
-                {fieldState.error ? (
-                  <span className={errorMessage}>{fieldState.error.message}</span>
-                ) : (
-                  tip && (
-                    <div className={tipWrapper}>
-                      {isTip && <span className={tipAlert}>Tip</span>}
-                      <span>{tip}</span>
-                    </div>
-                  )
-                )}
-              </div>
+        render={({ field, fieldState }) => {
+          const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+            if (resetButtonRef.current && resetButtonRef.current.contains(e.relatedTarget)) {
+              return;
+            }
+            field.onBlur();
+            setIsFocused(false);
+          };
 
-              {/* 오른쪽: 카운트 */}
-              <div>
-                {maxLength && (
-                  <span className={textCount}>
-                    {field.value?.length || 0}/{maxLength}
-                  </span>
+          const handleReset = () => {
+            field.onChange('');
+            inputRef.current?.focus();
+          };
+
+          const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (inputType === 'date') {
+              previousValueRef.current = field.value || '';
+              previousCursorRef.current = e.currentTarget.selectionStart;
+            }
+
+            onKeyDown?.(e);
+          };
+
+          const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const currentValue = e.target.value;
+            const currentCursor = e.target.selectionStart;
+
+            if (inputType === 'date') {
+              const backspaceResult = getBackspaceAfterDotResult(
+                previousValueRef.current,
+                currentValue,
+                previousCursorRef.current,
+              );
+
+              if (backspaceResult) {
+                field.onChange(backspaceResult.newValue);
+                setPendingCursorPosition(backspaceResult.newCursor);
+                previousValueRef.current = backspaceResult.newValue;
+                previousCursorRef.current = backspaceResult.newCursor;
+                return;
+              }
+            }
+
+            // 일반적인 포맷팅 처리
+            const { formattedValue, cursorPosition } = formatDateInput(
+              inputType,
+              currentValue,
+              currentCursor,
+            );
+            field.onChange(formattedValue);
+
+            if (inputType === 'date') {
+              setPendingCursorPosition(cursorPosition);
+              previousValueRef.current = formattedValue;
+              previousCursorRef.current = cursorPosition;
+            }
+          };
+
+          return (
+            <>
+              <div className={inputWrapper}>
+                <input
+                  {...field}
+                  id={name}
+                  ref={(el) => {
+                    field.ref(el);
+                    inputRef.current = el;
+                    if (typeof inputPropRef === 'function') {
+                      inputPropRef(el);
+                    } else if (inputPropRef) {
+                      inputPropRef.current = el;
+                    }
+                  }}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  maxLength={maxLength}
+                  aria-invalid={fieldState.invalid ? true : false}
+                  style={{ width: '100%' }}
+                  className={`${joinInput} ${className ?? ''}`}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyDown}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={handleBlur}
+                  inputMode={inputType === 'date' ? 'decimal' : 'text'}
+                />
+                {isFocused && field.value && !disabled && (
+                  <button
+                    className={inputResetButton}
+                    ref={resetButtonRef}
+                    onMouseDown={(e) => {
+                      e.preventDefault(); // blur 방지
+                      handleReset();
+                    }}
+                  >
+                    <Icon icon="CloseRound" width={22} height={22} cursor="pointer" />
+                  </button>
                 )}
               </div>
-            </div>
-          </>
-        )}
+              <div className={infoContainer}>
+                {/* 왼쪽: 에러 메시지 또는 헬퍼 텍스트 */}
+                <div>
+                  {fieldState.error ? (
+                    <span className={errorMessage}>{fieldState.error.message}</span>
+                  ) : (
+                    tip && (
+                      <div className={tipWrapper}>
+                        {isTip && <span className={tipAlert}>Tip</span>}
+                        <span>{tip}</span>
+                      </div>
+                    )
+                  )}
+                </div>
+
+                {/* 오른쪽: 카운트 */}
+                <div>
+                  {maxLength && (
+                    <span className={textCount}>
+                      {field.value?.length || 0}/{maxLength}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </>
+          );
+        }}
       />
     </div>
   );

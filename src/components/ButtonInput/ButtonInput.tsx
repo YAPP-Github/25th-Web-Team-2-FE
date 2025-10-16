@@ -28,6 +28,7 @@ interface ButtonInputProps<T extends FieldValues> {
   isTip?: boolean;
   isButtonHidden?: boolean;
   placeholder?: string;
+  autoFocus?: boolean;
 }
 
 const ButtonInput = <T extends FieldValues>({
@@ -42,9 +43,11 @@ const ButtonInput = <T extends FieldValues>({
   isTip = false,
   isButtonHidden = false,
   placeholder = '이메일 입력',
+  autoFocus = false,
 }: ButtonInputProps<T>) => {
   const { trigger } = useFormContext<T>();
   const validateButtonRef = useRef<HTMLButtonElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [_, startTransition] = useTransition();
 
   return (
@@ -78,18 +81,29 @@ const ButtonInput = <T extends FieldValues>({
             field.onBlur();
           };
 
+          const handleClick = () => {
+            onClick(); // 중복 확인 로직 실행
+            inputRef.current?.blur(); //실제 DOM 포커스 해제하여 가상키보드 닫기
+            field.onBlur(); // 모바일에서 버튼 클릭 시 인풋 포커스 해제하여 가상키보드 닫기
+          };
+
           return (
             <>
               <div className={inputWrapper}>
                 <input
                   {...field}
                   id={name}
+                  ref={(el) => {
+                    field.ref(el);
+                    inputRef.current = el;
+                  }}
                   style={{ width: '100%' }}
-                  className={className ? className : joinInput}
+                  className={`${joinInput} ${className ?? ''}`}
                   placeholder={placeholder}
-                  aria-invalid={fieldState.invalid ? true : false}
+                  aria-invalid={fieldState.invalid}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  autoFocus={autoFocus}
                 />
 
                 {!isButtonHidden && (
@@ -97,7 +111,7 @@ const ButtonInput = <T extends FieldValues>({
                     type="button"
                     className={confirmButton}
                     disabled={isButtonDisabled || isLoading}
-                    onClick={onClick}
+                    onClick={handleClick}
                     onMouseDown={(e) => e.preventDefault()}
                     ref={validateButtonRef}
                   >

@@ -13,6 +13,7 @@ import ParticipationGuideBottomSheet from '../ParticipationGuideBottomSheet/Part
 
 import Button from '@/components/Button/Button';
 import useOverlay from '@/hooks/useOverlay';
+import { trackEvent } from '@/lib/mixpanelClient';
 
 const ExperimentPostMobileContentWrapper = ({
   postDetailData,
@@ -24,6 +25,11 @@ const ExperimentPostMobileContentWrapper = ({
   const { open, close } = useOverlay();
 
   const handleOpenBottomSheet = () => {
+    trackEvent('ApplyMethod Interaction', {
+      action: 'Click ApplyMethod Modal',
+      device: 'mobile',
+    });
+
     open(
       () => <ParticipationGuideBottomSheet onConfirm={close} applyMethodData={applyMethodData} />,
       {

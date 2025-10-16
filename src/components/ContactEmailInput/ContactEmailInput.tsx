@@ -14,6 +14,7 @@ interface ContactEmailInputProps<T extends FieldValues> {
   required?: boolean;
   onSuccess?: () => void;
   joinedUser?: boolean;
+  autoFocus?: boolean;
 }
 
 const ContactEmailInput = <T extends FieldValues>({
@@ -25,6 +26,7 @@ const ContactEmailInput = <T extends FieldValues>({
   required = false,
   joinedUser = false,
   onSuccess,
+  autoFocus = false,
 }: ContactEmailInputProps<T>) => {
   const toast = useToast();
   const { control, getValues, setValue } = useFormContext<T>();
@@ -64,6 +66,7 @@ const ContactEmailInput = <T extends FieldValues>({
       isButtonHidden={isVerified}
       tip={helperText}
       isTip={isTip}
+      autoFocus={autoFocus}
     />
   );
 };

@@ -7,7 +7,10 @@ import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
+import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+
+const inputOrder = ['name', 'univName', 'major', 'labInfo'];
 
 interface JoinInfoStepProps {
   onSubmit: () => void;
@@ -15,6 +18,7 @@ interface JoinInfoStepProps {
 
 const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
+  const { handleKeyDown, setInputRef } = useFocusNavigation(inputOrder);
 
   return (
     <main className={mainContentLayout}>
@@ -31,6 +35,8 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
           label="이름"
           required
           placeholder="이름(실명) 입력"
+          inputPropRef={setInputRef('name')}
+          onKeyDown={handleKeyDown('name')}
         />
 
         {/* 학교명 */}
@@ -40,6 +46,8 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
           label="학교명"
           required
           placeholder="학교명 입력"
+          inputPropRef={setInputRef('univName')}
+          onKeyDown={handleKeyDown('univName')}
         />
 
         {/* 전공명 */}
@@ -49,6 +57,8 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
           label="전공명"
           required
           placeholder="전공명 입력"
+          inputPropRef={setInputRef('major')}
+          onKeyDown={handleKeyDown('major')}
         />
 
         {/* 소속 연구실 정보 */}
@@ -58,6 +68,8 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
           label="소속 연구실 정보"
           placeholder="연구실 정보 입력"
           maxLength={100}
+          inputPropRef={setInputRef('labInfo')}
+          onKeyDown={handleKeyDown('labInfo')}
         />
       </div>
 
