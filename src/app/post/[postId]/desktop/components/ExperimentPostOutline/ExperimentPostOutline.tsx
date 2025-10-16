@@ -135,6 +135,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
             onClick={() => {
               trackEvent('ApplyMethod Interaction', {
                 action: 'Click ApplyMethod Modal',
+                device: 'desktop',
               });
               setIsModalOpen(true);
             }}
