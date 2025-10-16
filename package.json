@@ -31,6 +31,7 @@
     "@vanilla-extract/dynamic": "^2.1.2",
     "@vanilla-extract/next-plugin": "^2.4.8",
     "@vanilla-extract/recipes": "^0.5.5",
+    "@vercel/speed-insights": "^1.2.0",
     "date-fns": "^4.1.0",
     "jira-prepare-commit-msg": "^1.7.2",
     "next": "14.2.25",

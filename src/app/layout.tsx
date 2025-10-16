@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 
@@ -65,6 +66,7 @@ export default async function RootLayout({
     <html lang="ko" className={pretendard.className}>
       <body suppressHydrationWarning={true}>
         <Providers session={session}>{children}</Providers>
+        <SpeedInsights />
       </body>
     </html>
   );
