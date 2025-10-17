@@ -2,7 +2,7 @@ import FilterContainer from './FilterContainer/FilterContainer';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import { calculateAgeFromBirthDate } from '@/app/home/home.utils';
-import { getInitialParticipantInfo } from '@/app/home/server/getInitialParticipantInfo';
+import { fetchParticipantInfo } from '@/app/home/server/fetchParticipantInfo';
 
 interface FilterSectionProps {
   searchParams: {
@@ -11,7 +11,7 @@ interface FilterSectionProps {
 }
 
 const FilterSection = async ({ searchParams }: FilterSectionProps) => {
-  const initialParticipantInfo = await getInitialParticipantInfo();
+  const initialParticipantInfo = await fetchParticipantInfo();
   const hasQueryParams = Object.keys(searchParams).length > 0;
 
   const initialGender = initialParticipantInfo ? initialParticipantInfo.gender : undefined;
