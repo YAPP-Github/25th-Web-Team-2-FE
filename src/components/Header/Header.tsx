@@ -1,4 +1,4 @@
-'use client';
+import { Suspense } from 'react';
 
 import { headerLayout, image } from './Header.css';
 import Logo from '../Logo/Logo';
@@ -8,7 +8,9 @@ const Header = () => {
   return (
     <nav className={headerLayout}>
       <Logo className={image} width={100} height={30} />
-      <RightHeader />
+      <Suspense>
+        <RightHeader />
+      </Suspense>
     </nav>
   );
 };
