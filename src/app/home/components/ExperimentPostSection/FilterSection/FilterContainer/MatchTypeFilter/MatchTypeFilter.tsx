@@ -1,3 +1,5 @@
+'use client';
+
 import * as Select from '@radix-ui/react-select';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
@@ -8,16 +10,17 @@ import { triggerWrapper, contentContainer, selectItem } from './MatchTypeFilter.
 import { ExperimentPostListFilters } from '@/apis/post';
 import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
 import { getFilterColors, getMatchTypeLabel } from '@/app/home/home.utils';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
 import { MatchType } from '@/app/join/JoinPage.types';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 
 interface MatchTypeFilterProps {
   filters: ExperimentPostListFilters;
-  onChange: (value: MatchType) => void;
 }
 
-const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
+const MatchTypeFilter = ({ filters }: MatchTypeFilterProps) => {
+  const { handleFilterChange } = useURLFilters();
   const { open, close } = useOverlay();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -29,7 +32,7 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
       () => (
         <MatchTypeBottomSheet
           initialValue={filters.matchType}
-          onChange={onChange}
+          onChange={(value) => handleFilterChange({ matchType: value })}
           onClose={close}
         />
       ),
@@ -40,7 +43,7 @@ const MatchTypeFilter = ({ filters, onChange }: MatchTypeFilterProps) => {
   return (
     <Select.Root
       value={filters.matchType ? filters.matchType : ''}
-      onValueChange={onChange}
+      onValueChange={(value) => handleFilterChange({ matchType: value as MatchType })}
       onOpenChange={(open) => setIsOpen(open)}
     >
       <Select.Trigger

@@ -1,19 +1,28 @@
+'use client';
+
 import AreaFilter from './AreaFilter/AreaFilter';
 import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
 import { filterContainerLayout, resetFilterButton, verticalLine } from './FilterContainer.css';
 import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
 import { ExperimentPostListFilters } from '@/apis/post';
+import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
+import useUserInfo from '@/app/home/hooks/useUserInfo';
 import Icon from '@/components/Icon';
 
 interface FilterContainerProps {
   initialGender?: ExperimentPostListFilters['gender'];
   initialAge?: ExperimentPostListFilters['age'];
+  searchParams: {
+    [k in keyof ExperimentPostListFilters]?: string;
+  };
 }
 
-const FilterContainer = ({ initialGender, initialAge }: FilterContainerProps) => {
-  const { filters, handleFilterChange, handleResetFilter } = useURLFilters();
+const FilterContainer = ({ initialGender, initialAge, searchParams }: FilterContainerProps) => {
+  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+  const { filters, handleResetFilter } = useURLFilters();
+  useParticipantAutoFilter({ userInfo, isUserInfoLoading, searchParams });
 
   const isFiltered =
     initialGender ||
@@ -37,20 +46,16 @@ const FilterContainer = ({ initialGender, initialAge }: FilterContainerProps) =>
       )}
 
       {/* 진행 방식 필터링 */}
-      <MatchTypeFilter
-        filters={filters}
-        onChange={(matchType) => handleFilterChange({ matchType })}
-      />
+      <MatchTypeFilter filters={filters} />
 
       {/* 모집 대상 필터링 */}
       <ContactTargetFilter
-        onChange={handleFilterChange}
         filterGender={initialGender ?? filters.gender}
         filterAge={initialAge ?? filters.age}
       />
 
       {/* 지역 필터링 */}
-      <AreaFilter filters={filters} onChange={handleFilterChange} />
+      <AreaFilter filters={filters} />
     </div>
   );
 };

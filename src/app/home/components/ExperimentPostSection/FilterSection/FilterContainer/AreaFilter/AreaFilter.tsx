@@ -10,16 +10,18 @@ import AreaFilterContent from './components/AreaFilterContent/AreaFilterContent'
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import { getFilterColors, getRegionFilterText } from '@/app/home/home.utils';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 import { ExperimentPostListFilterParams } from '@/types/filter';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
-  onChange: (filters: ExperimentPostListFilterParams) => void;
+  // handleFilterChange: (filters: ExperimentPostListFilterParams) => void;
 }
 
-const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
+const AreaFilter = ({ filters }: AreaFilterProps) => {
+  const { handleFilterChange } = useURLFilters();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { open, close } = useOverlay();
 
@@ -32,7 +34,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
         <AreaFilterBottomSheet
           initialRegion={filters.region}
           initialAreas={filters.areas}
-          onChange={onChange}
+          onChange={handleFilterChange}
           onClose={close}
         />
       ),
@@ -55,7 +57,7 @@ const AreaFilter = ({ filters, onChange }: AreaFilterProps) => {
           <AreaFilterContent
             initialRegion={filters.region}
             initialAreas={filters.areas}
-            onChange={onChange}
+            onChange={handleFilterChange}
             onClose={() => setIsFilterOpen(false)}
           />
         </Popover.Content>
