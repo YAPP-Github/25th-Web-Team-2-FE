@@ -19,8 +19,7 @@ describe('useParticipantAutoFilter', () => {
     it('참여자가 빈 URL로 접근 시 자동 필터링이 적용된다.', () => {
       const { result, rerender } = renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: mockParticipant,
-          isUserInfoLoading: false,
+          participantInfo: mockParticipant,
         }),
       );
 
@@ -37,8 +36,7 @@ describe('useParticipantAutoFilter', () => {
     it('참여자가 필터 초기화 시 자동 필터링이 적용되지 않는다.', () => {
       renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: mockParticipant,
-          isUserInfoLoading: false,
+          participantInfo: mockParticipant,
         }),
       );
 
@@ -58,8 +56,7 @@ describe('useParticipantAutoFilter', () => {
     it('연구자는 자동 필터링이 적용되지 않는다.', () => {
       const { result } = renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: mockResearcher,
-          isUserInfoLoading: false,
+          participantInfo: mockParticipant,
         }),
       );
 
@@ -70,8 +67,7 @@ describe('useParticipantAutoFilter', () => {
     it('비로그인 유저는 자동 필터링이 적용되지 않는다.', () => {
       const { result } = renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: undefined,
-          isUserInfoLoading: false,
+          participantInfo: undefined,
         }),
       );
 
