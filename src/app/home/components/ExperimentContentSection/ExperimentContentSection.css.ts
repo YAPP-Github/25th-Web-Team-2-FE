@@ -1,7 +1,16 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
+
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const postContainerLayout = style({
   display: 'grid',
@@ -86,6 +95,7 @@ export const totalPostCountWrapper = style({
   gridArea: 'count',
   display: 'flex',
   alignItems: 'center',
+  animation: `${fadeIn} 0.2s ease-out`,
 
   '@media': {
     'screen and (max-width: 767px)': {
