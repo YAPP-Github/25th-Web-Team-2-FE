@@ -6,7 +6,7 @@ import {
   horizontalLineMobile,
   filterWrapper,
   totalPostCountWrapper,
-  postListContainer,
+  postListWrapper,
 } from './ExperimentContentSection.css';
 import ExperimentPostSection from '../ExperimentPostSection/ExperimentPostSection';
 import ExperimentPostTotalCount from '../ExperimentPostTotalCount/ExperimentPostTotalCount';
@@ -48,7 +48,7 @@ const ExperimentContentSection = ({ searchParams }: ExperimentContentSectionProp
       </div>
 
       {/* 공고 목록 */}
-      <div className={postListContainer}>
+      <div className={postListWrapper}>
         <Suspense fallback={<PostListSkeleton />}>
           <ExperimentPostSection searchParams={searchParams} />
         </Suspense>

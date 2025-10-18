@@ -74,6 +74,10 @@ export const filterWrapper = style({
     'screen and (max-width: 767px)': {
       padding: '1.6rem',
       overflowX: 'auto',
+
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
     },
   },
 });
@@ -91,6 +95,6 @@ export const totalPostCountWrapper = style({
   },
 });
 
-export const postListContainer = style({
+export const postListWrapper = style({
   gridArea: 'posts',
 });
