@@ -17,7 +17,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const expected = '진행 방식';
 
     // Given & When
-    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} />);
 
     // Then
     expect(screen.getByText(expected)).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const expected = '비대면';
 
     // Given & When
-    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} />);
 
     // Then
     expect(screen.getByText(expected)).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     const user = userEvent.setup();
     const filters = { recruitStatus: 'ALL' } as const;
     const defaultText = '진행 방식';
-    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
+    customRender(<MatchTypeFilter filters={filters} />);
 
     // When
     await user.click(screen.getByText(defaultText));
@@ -48,23 +48,5 @@ describe('MatchTypeFilter 컴포넌트', () => {
     expect(screen.getByText('전체')).toBeInTheDocument();
     expect(screen.getByText('대면')).toBeInTheDocument();
     expect(screen.getByText('비대면')).toBeInTheDocument();
-  });
-
-  it('진행 방식 필터링 클릭하고 드롭다운의 비대면 옵션을 클릭하면, 필터링으로 비대면 옵션이 선택된다.', async () => {
-    // Given
-    const user = userEvent.setup();
-    const filters = { recruitStatus: 'ALL' } as const;
-    const defaultText = '진행 방식';
-    const targetOptionText = '비대면';
-    const expected = 'ONLINE';
-    customRender(<MatchTypeFilter filters={filters} onChange={mockOnChange} />);
-
-    // When
-    await user.click(screen.getByText(defaultText));
-    await user.click(screen.getByText(targetOptionText));
-
-    // // Then
-    expect(mockOnChange).toHaveBeenCalledWith(expected);
-    expect(mockOnChange).toHaveBeenCalledTimes(1);
   });
 });

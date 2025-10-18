@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CustomError, NetworkError, UnhandledError } from './error';
+import { AuthError, CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
 import { getDefaultHeader, isAuthError } from './utils';
 
@@ -79,7 +79,16 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
             url,
           });
 
-          throw new CustomError({ code: apiError.code, status: response.status });
+          switch (apiError.code) {
+            case 'AU0001':
+            case 'AU0002':
+            case 'AU0003':
+            case 'AU0004':
+            case 'AU0005':
+              throw new AuthError({ code: apiError.code, status: response.status });
+            default:
+              throw new CustomError({ code: apiError.code, status: response.status });
+          }
         }
 
         return await response.json();
@@ -89,7 +98,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           throw new NetworkError();
         }
 
-        if (error instanceof CustomError) {
+        if (error instanceof CustomError || error instanceof AuthError) {
           throw error;
         }
 

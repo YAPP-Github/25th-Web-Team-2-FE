@@ -2,22 +2,17 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { calculateAgeFromBirthDate, filterParticipantInfo } from '../home.utils';
+import { calculateAgeFromBirthDate } from '../home.utils';
 import useQueryParams from './useQueryParams';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { ParticipantResponse } from '@/apis/login';
 
 interface UseParticipantAutoFilterProps {
-  userInfo?: ParticipantResponse | ResearcherResponse;
-  isUserInfoLoading: boolean;
+  participantInfo?: ParticipantResponse | null;
 }
 
-export const useParticipantAutoFilter = ({
-  userInfo,
-  isUserInfoLoading,
-}: UseParticipantAutoFilterProps) => {
+export const useParticipantAutoFilter = ({ participantInfo }: UseParticipantAutoFilterProps) => {
   const { searchParams, updateURLParams } = useQueryParams();
-  const participantInfo = filterParticipantInfo(userInfo);
   const [isAutoFilled, setIsAutoFilled] = useState(false);
   const hasAutoFilledRef = useRef(false);
 
@@ -42,11 +37,11 @@ export const useParticipantAutoFilter = ({
 
   // 참여자가 아닐 때 처리
   useEffect(() => {
-    if (!isUserInfoLoading && !participantInfo && !hasAutoFilledRef.current) {
+    if (!participantInfo && !hasAutoFilledRef.current) {
       setIsAutoFilled(true);
       hasAutoFilledRef.current = true;
     }
-  }, [isUserInfoLoading, participantInfo]);
+  }, [participantInfo]);
 
   return { isAutoFilled };
 };

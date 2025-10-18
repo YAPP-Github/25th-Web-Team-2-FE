@@ -1,11 +1,22 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
+
+// FilterSection이 로드될 때 fade-in 애니메이션
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const filterContainerLayout = style({
   display: 'flex',
   gap: '0.8rem',
   height: '3.2rem',
+  animation: `${fadeIn} 0.2s ease-out`,
 });
 
 export const resetFilterButton = style({

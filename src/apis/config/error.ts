@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from './constants';
-import { ErrorCode } from './types';
+import { AuthErrorCode, ErrorCode } from './types';
 
 export const SERVER_ERROR_STATUS = 500;
 export const NETWORK_ERROR_STATUS = 5001;
@@ -11,12 +11,29 @@ interface CustomErrorParams {
   message?: string;
 }
 
+interface AuthErrorParams extends Omit<CustomErrorParams, 'code'> {
+  code: AuthErrorCode;
+}
+
 export class CustomError extends Error {
   code: ErrorCode;
   status: number;
   message: string;
 
   constructor({ code, status, message }: CustomErrorParams) {
+    super();
+    this.code = code;
+    this.status = status;
+    this.message = message || ERROR_MESSAGES[code];
+  }
+}
+
+export class AuthError extends Error {
+  code: AuthErrorCode;
+  status: number;
+  message: string;
+
+  constructor({ code, status, message }: AuthErrorParams) {
     super();
     this.code = code;
     this.status = status;

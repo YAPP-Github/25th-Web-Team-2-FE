@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useParticipantAutoFilter } from '../useParticipantAutoFilter';
 import useQueryParams from '../useQueryParams';
 
-import { mockParticipant, mockResearcher } from '@/tests/mocks/userData';
+import { mockParticipant } from '@/tests/mocks/userData';
 import { mockSearchParams } from '@/tests/setup';
 
 describe('useParticipantAutoFilter', () => {
@@ -19,8 +19,7 @@ describe('useParticipantAutoFilter', () => {
     it('참여자가 빈 URL로 접근 시 자동 필터링이 적용된다.', () => {
       const { result, rerender } = renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: mockParticipant,
-          isUserInfoLoading: false,
+          participantInfo: mockParticipant,
         }),
       );
 
@@ -37,8 +36,7 @@ describe('useParticipantAutoFilter', () => {
     it('참여자가 필터 초기화 시 자동 필터링이 적용되지 않는다.', () => {
       renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: mockParticipant,
-          isUserInfoLoading: false,
+          participantInfo: mockParticipant,
         }),
       );
 
@@ -55,23 +53,10 @@ describe('useParticipantAutoFilter', () => {
   });
 
   describe('참여자가 아닌 경우', () => {
-    it('연구자는 자동 필터링이 적용되지 않는다.', () => {
-      const { result } = renderHook(() =>
-        useParticipantAutoFilter({
-          userInfo: mockResearcher,
-          isUserInfoLoading: false,
-        }),
-      );
-
-      expect(mockSearchParams.toString()).toBe('');
-      expect(result.current.isAutoFilled).toBe(true);
-    });
-
     it('비로그인 유저는 자동 필터링이 적용되지 않는다.', () => {
       const { result } = renderHook(() =>
         useParticipantAutoFilter({
-          userInfo: undefined,
-          isUserInfoLoading: false,
+          participantInfo: undefined,
         }),
       );
 

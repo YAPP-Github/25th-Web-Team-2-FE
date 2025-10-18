@@ -1,4 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { keyframes, style, styleVariants } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
@@ -23,6 +23,15 @@ export const textEllipsis = styleVariants({
   },
 });
 
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
+
 export const postCardLayout = style({
   position: 'relative',
   display: 'grid',
@@ -42,6 +51,7 @@ export const postCardLayout = style({
   padding: '1.6rem 2rem',
   borderRadius: '1.2rem',
   backgroundColor: colors.field01,
+  animation: `${fadeIn} 0.2s ease-out`,
 
   selectors: {
     '&:hover': {

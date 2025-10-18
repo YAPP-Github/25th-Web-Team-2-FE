@@ -1,7 +1,16 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
+
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0.3,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const postContainerLayout = style({
   display: 'grid',
@@ -74,24 +83,10 @@ export const filterWrapper = style({
     'screen and (max-width: 767px)': {
       padding: '1.6rem',
       overflowX: 'auto',
-    },
-  },
-});
 
-export const recruitCheckLabel = style({
-  ...fonts.label.large.SB14,
-  color: colors.text06,
-});
-
-export const recruitCheckWrapper = style({
-  gridArea: 'checkbox',
-  display: 'flex',
-  alignItems: 'center',
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      padding: '0.4rem 1.6rem',
-      justifyContent: 'flex-end',
+      '::-webkit-scrollbar': {
+        display: 'none',
+      },
     },
   },
 });
@@ -100,6 +95,7 @@ export const totalPostCountWrapper = style({
   gridArea: 'count',
   display: 'flex',
   alignItems: 'center',
+  animation: `${fadeIn} 0.2s ease-out`,
 
   '@media': {
     'screen and (max-width: 767px)': {
@@ -109,11 +105,6 @@ export const totalPostCountWrapper = style({
   },
 });
 
-export const totalPostCount = style({
-  ...fonts.label.large.R14,
-  color: colors.text03,
-});
-
-export const postListContainer = style({
+export const postListWrapper = style({
   gridArea: 'posts',
 });

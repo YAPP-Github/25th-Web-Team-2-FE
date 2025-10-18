@@ -5,18 +5,22 @@ import { queryKey } from '@/constants/queryKey';
 
 const POST_PER_PAGE = 15;
 
-const useExperimentPostListQuery = (
-  filters: ExperimentPostListFilters,
-  isLoading: boolean,
-  initialData?: ExperimentPostResponse,
-) => {
-  const isFilters = Object.keys(filters).length > 0;
+interface UseExperimentPostListQueryParams {
+  filters: ExperimentPostListFilters;
+  enabled: boolean;
+  initialData?: ExperimentPostResponse;
+}
 
+const useExperimentPostListQuery = ({
+  filters,
+  enabled,
+  initialData,
+}: UseExperimentPostListQueryParams) => {
   return useInfiniteQuery({
     queryKey: queryKey.post.filter(filters),
     queryFn: ({ pageParam }) =>
       fetchPostList({ ...filters, page: pageParam, count: POST_PER_PAGE }),
-    enabled: isFilters && !isLoading,
+    enabled,
     placeholderData: keepPreviousData,
     initialPageParam: 1,
     // 초기 데이터가 있으면 첫 페이지 데이터로 사용

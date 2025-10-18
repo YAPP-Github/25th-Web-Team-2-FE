@@ -9,6 +9,7 @@ export const headerLayout = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '2rem 0',
+  height: '7.4rem',
 
   '@media': {
     'screen and (max-width: 767px)': {
