@@ -6,23 +6,16 @@ import { filterContainerLayout, resetFilterButton, verticalLine } from './Filter
 import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
 import Icon from '@/components/Icon';
 
 interface FilterContainerProps {
   initialGender?: ExperimentPostListFilters['gender'];
   initialAge?: ExperimentPostListFilters['age'];
-  searchParams: {
-    [k in keyof ExperimentPostListFilters]?: string;
-  };
 }
 
-const FilterContainer = ({ initialGender, initialAge, searchParams }: FilterContainerProps) => {
-  const { userInfo, isLoading: isUserInfoLoading } = useUserInfo();
+const FilterContainer = ({ initialGender, initialAge }: FilterContainerProps) => {
   const { filters, handleResetFilter } = useURLFilters();
-  useParticipantAutoFilter({ userInfo, isUserInfoLoading, searchParams });
 
   const isFiltered =
     initialGender ||

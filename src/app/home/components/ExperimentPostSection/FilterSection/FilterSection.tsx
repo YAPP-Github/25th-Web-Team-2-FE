@@ -23,7 +23,6 @@ const FilterSection = async ({ searchParams }: FilterSectionProps) => {
     <FilterContainer
       initialGender={hasQueryParams ? undefined : initialGender}
       initialAge={hasQueryParams ? undefined : initialAge}
-      searchParams={searchParams}
     />
   );
 };
