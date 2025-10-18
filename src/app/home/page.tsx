@@ -1,5 +1,5 @@
 import Banner from './components/Banner/Banner';
-import ExperimentContentSection from './components/ExperimentPostSection/ExperimentContentSection';
+import ExperimentContentSection from './components/ExperimentContentSection/ExperimentContentSection';
 
 import type { ExperimentPostListFilters } from '@/apis/post';
 import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';

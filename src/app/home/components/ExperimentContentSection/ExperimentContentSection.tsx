@@ -1,17 +1,17 @@
 import { Suspense } from 'react';
 
-import ExperimentPostSection from './ExperimentPostSection';
 import {
-  filterWrapper,
-  horizontalLineMobile,
   postContainerLayout,
   postContainerTitleDesktop,
+  horizontalLineMobile,
+  filterWrapper,
   totalPostCountWrapper,
   postListContainer,
-} from './ExperimentPostSection.css';
-import ExperimentPostTotalCount from './ExperimentPostTotalCount/ExperimentPostTotalCount';
-import FilterSection from './FilterSection/FilterSection';
-import RecruitStatusCheckbox from './RecruitStatusCheckbox/RecruitStatusCheckbox';
+} from './ExperimentContentSection.css';
+import ExperimentPostSection from '../ExperimentPostSection/ExperimentPostSection';
+import ExperimentPostTotalCount from '../ExperimentPostTotalCount/ExperimentPostTotalCount';
+import FilterSection from '../FilterSection/FilterSection';
+import RecruitStatusCheckbox from '../RecruitStatusCheckbox/RecruitStatusCheckbox';
 
 import { ExperimentPostListFilters } from '@/apis/post';
 import FilterSkeleton from '@/components/Skeleton/FilterSkeleton/FilterSkeleton';
