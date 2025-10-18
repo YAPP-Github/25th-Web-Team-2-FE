@@ -78,24 +78,6 @@ export const filterWrapper = style({
   },
 });
 
-export const recruitCheckLabel = style({
-  ...fonts.label.large.SB14,
-  color: colors.text06,
-});
-
-export const recruitCheckWrapper = style({
-  gridArea: 'checkbox',
-  display: 'flex',
-  alignItems: 'center',
-
-  '@media': {
-    'screen and (max-width: 767px)': {
-      padding: '0.4rem 1.6rem',
-      justifyContent: 'flex-end',
-    },
-  },
-});
-
 export const totalPostCountWrapper = style({
   gridArea: 'count',
   display: 'flex',
@@ -107,11 +89,6 @@ export const totalPostCountWrapper = style({
       justifyContent: 'flex-start',
     },
   },
-});
-
-export const totalPostCount = style({
-  ...fonts.label.large.R14,
-  color: colors.text03,
 });
 
 export const postListContainer = style({
