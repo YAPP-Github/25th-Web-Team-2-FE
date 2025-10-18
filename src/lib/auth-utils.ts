@@ -52,7 +52,7 @@ export const logout = async () => {
   await signOut({ callbackUrl: '/' });
 };
 
-export const isUnauthorizedUser = (session: Session | null) => {
+export const isUnauthorizedUser = (session?: Session | null) => {
   return Boolean(session?.isTempUser) && session?.accessToken === 'temp-token';
 };
 

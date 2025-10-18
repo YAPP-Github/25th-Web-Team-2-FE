@@ -1,4 +1,4 @@
-import { getServerSession } from 'next-auth';
+import { getServerSession, Session } from 'next-auth';
 
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
 import { ParticipantResponse } from '@/apis/login';
@@ -7,8 +7,8 @@ import { API_URL } from '@/constants/url';
 import { authOptions } from '@/lib/auth-utils';
 import { isUnauthorizedUser } from '@/lib/auth-utils';
 
-export const fetchParticipantInfo = async () => {
-  const session = await getServerSession(authOptions);
+export const fetchParticipantInfo = async (internalSession?: Session | null) => {
+  const session = internalSession ?? (await getServerSession(authOptions));
   const fetchClient = createSSRFetchClient(session?.accessToken);
 
   const participantInfo =
