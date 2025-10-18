@@ -13,11 +13,9 @@ import { getFilterColors, getRegionFilterText } from '@/app/home/home.utils';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
-import { ExperimentPostListFilterParams } from '@/types/filter';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;
-  // handleFilterChange: (filters: ExperimentPostListFilterParams) => void;
 }
 
 const AreaFilter = ({ filters }: AreaFilterProps) => {

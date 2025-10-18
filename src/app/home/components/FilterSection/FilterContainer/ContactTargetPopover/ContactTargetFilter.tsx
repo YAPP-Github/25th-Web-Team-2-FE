@@ -13,7 +13,6 @@ import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.uti
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
-import { ExperimentPostListFilterParams } from '@/types/filter';
 
 interface ContactTargetFilterProps {
   filterGender?: GenderFilterValue;
