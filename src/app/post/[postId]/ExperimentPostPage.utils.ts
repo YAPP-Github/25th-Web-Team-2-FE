@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { GENDER_TYPE, GenderType } from './ExperimentPostPage.types';
+import { GENDER_TYPE, GenderType, MATCH_TYPE } from './ExperimentPostPage.types';
 
 import { durationMinutesOptions } from '@/app/upload/upload.constants';
 import { convertToWebpUrl } from '@/app/upload/upload.utils';
@@ -97,6 +97,39 @@ const replaceImageListWithWebp = async (originalImages: string[]): Promise<strin
   );
 };
 
+// 조건별 실험 장소 렌더링
+const getAddressDisplay = (
+  matchType: string,
+  address: {
+    region: string | null;
+    area: string | null;
+    isOnCampus: boolean;
+    place: string | null;
+    detailedAddress: string | null;
+  },
+) => {
+  // 1. 비대면 실험일 때
+  if (matchType === MATCH_TYPE.ONLINE) return '본문 참고';
+
+  // 2. 지역 정보 없을 때
+  if (!address.region || !address.area) return '본문 참고';
+
+  //  지역 + 지역구 조합
+  const baseAddress = `${getRegionLabel(address.region)} ${getAreaLabel(
+    address.region,
+    address.area,
+  )}`;
+
+  // 3. 교내 실험 (place 필수, detailedAddress는 옵셔널)
+  if (address.isOnCampus) {
+    const detail = address.detailedAddress ? ` ${address.detailedAddress}` : '';
+    return `${baseAddress} ${address.place ?? ''}${detail}`;
+  }
+
+  // 4. 교외 실험 (detailedAddress 필수, place 필드 없음)
+  return `${baseAddress} ${address.detailedAddress ?? ''}`;
+};
+
 export {
   formattedContentText,
   getGenderLabel,
@@ -108,4 +141,5 @@ export {
   formatDate,
   checkImageExists,
   replaceImageListWithWebp,
+  getAddressDisplay,
 };

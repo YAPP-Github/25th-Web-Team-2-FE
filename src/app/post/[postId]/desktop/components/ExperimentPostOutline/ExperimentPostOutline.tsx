@@ -14,14 +14,13 @@ import {
   dynamicSpacing,
   divider,
 } from './ExperimentPostOutline.css';
-import { GENDER_TYPE, MATCH_TYPE } from '../../../ExperimentPostPage.types';
+import { GENDER_TYPE } from '../../../ExperimentPostPage.types';
 import {
   getGenderLabel,
   getDurationLabel,
-  getRegionLabel,
-  getAreaLabel,
   getMatchTypeText,
   formatDate,
+  getAddressDisplay,
 } from '../../../ExperimentPostPage.utils';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
@@ -39,30 +38,6 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!applyMethodData) return null;
-
-  // 조건별 실험 장소 렌더링
-  const getAddressDisplay = () => {
-    // 1. 비대면일때
-    if (summary.matchType === MATCH_TYPE.ONLINE) return '본문 참고';
-
-    // 2. 지역 정보가 없을 때
-    if (!address.region || !address.area) return '본문 참고';
-
-    // 지역명 + 지역구 조합
-    const baseAddress = `${getRegionLabel(address.region)} ${getAreaLabel(
-      address.region,
-      address.area,
-    )}`;
-
-    // 교내 실험인 경우: place는 필수, detailedAddress는 옵셔널
-    if (address.isOnCampus) {
-      const detail = address.detailedAddress ? ` ${address.detailedAddress}` : '';
-      return `${baseAddress} ${address.place}${detail}`;
-    }
-
-    // 교외 실험인 경우: detailedAddress 필수, place 필드 없음.
-    return `${baseAddress} ${address.detailedAddress}`;
-  };
 
   return (
     <div className={postOutlineLayout}>
@@ -129,7 +104,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
             <tr>
               <th>실험 장소</th>
               <td>
-                <p>{getAddressDisplay()}</p>
+                <p>{getAddressDisplay(summary.matchType, address)}</p>
               </td>
             </tr>
 
