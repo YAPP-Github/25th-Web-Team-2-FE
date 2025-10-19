@@ -40,6 +40,30 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
 
   if (!applyMethodData) return null;
 
+  // 조건별 실험 장소 렌더링
+  const getAddressDisplay = () => {
+    // 1. 비대면일때
+    if (summary.matchType === MATCH_TYPE.ONLINE) return '본문 참고';
+
+    // 2. 지역 정보가 없을 때
+    if (!address.region || !address.area) return '본문 참고';
+
+    // 지역명 + 지역구 조합
+    const baseAddress = `${getRegionLabel(address.region)} ${getAreaLabel(
+      address.region,
+      address.area,
+    )}`;
+
+    // 교내 실험인 경우: place는 필수, detailedAddress는 옵셔널
+    if (address.isOnCampus) {
+      const detail = address.detailedAddress ? ` ${address.detailedAddress}` : '';
+      return `${baseAddress} ${address.place}${detail}`;
+    }
+
+    // 교외 실험인 경우: detailedAddress 필수, place 필드 없음.
+    return `${baseAddress} ${address.detailedAddress}`;
+  };
+
   return (
     <div className={postOutlineLayout}>
       <h3 className={postOutlineTitle}>실험 개요</h3>
@@ -105,16 +129,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
             <tr>
               <th>실험 장소</th>
               <td>
-                <p>
-                  {summary.matchType === MATCH_TYPE.ONLINE
-                    ? '비대면'
-                    : address.place && address.region && address.area
-                    ? `${getRegionLabel(address.region)} ${getAreaLabel(
-                        address.region,
-                        address.area,
-                      )} ${address.place} ${address.detailedAddress}`
-                    : '본문 참고'}
-                </p>
+                <p>{getAddressDisplay()}</p>
               </td>
             </tr>
 
