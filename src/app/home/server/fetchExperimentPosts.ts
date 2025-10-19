@@ -23,7 +23,7 @@ export const fetchExperimentPosts = async ({ searchParams }: FetchExperimentPost
   const fetchClient = createSSRFetchClient(session?.accessToken);
   const hasQueryParams = Object.keys(searchParams).length > 0;
 
-  const participantInfo = await fetchParticipantInfo(session);
+  const participantInfo = await fetchParticipantInfo();
 
   const initialGender = participantInfo ? participantInfo.gender : undefined;
   const initialAge = participantInfo
