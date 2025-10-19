@@ -5,14 +5,13 @@ import {
   postSummaryContent,
   postSummaryLayout,
 } from './ExperimentPostSummary.css';
-import { GENDER_TYPE, MATCH_TYPE } from '../../../ExperimentPostPage.types';
+import { GENDER_TYPE } from '../../../ExperimentPostPage.types';
 import {
   getGenderLabel,
   getMatchTypeText,
   getDurationLabel,
-  getRegionLabel,
-  getAreaLabel,
   formatDate,
+  getAddressDisplay,
 } from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 
@@ -80,16 +79,7 @@ const ExperimentPostSummary = ({
           <tr>
             <th>실험 장소</th>
             <td>
-              <p>
-                {summary.matchType === MATCH_TYPE.ONLINE
-                  ? '비대면'
-                  : address.place && address.region && address.area
-                  ? `${getRegionLabel(address.region)} ${getAreaLabel(
-                      address.region,
-                      address.area,
-                    )} ${address.place} ${address.detailedAddress}`
-                  : '본문 참고'}
-              </p>
+              <p>{getAddressDisplay(summary.matchType, address)}</p>
             </td>
           </tr>
 
