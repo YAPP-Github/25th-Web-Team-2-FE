@@ -11,7 +11,7 @@ import { ExperimentPostListFilterParams } from '@/types/filter';
 
 const INVALID_FILTER_MESSAGE = '필터 조건이 올바르지 않습니다. 다시 적용해주세요.';
 
-export const useURLFilters = () => {
+const useURLFilters = () => {
   const { searchParams, updateURLParams } = useQueryParams();
   const toast = useToast();
 
