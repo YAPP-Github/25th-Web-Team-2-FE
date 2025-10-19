@@ -8,6 +8,16 @@ export const customRadioGroup = style({
   display: 'flex',
   flexFlow: 'row nowrap',
   gap: '0.8rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      maxWidth: '45.2rem',
+      width: '100%',
+      flexWrap: 'wrap',
+      justifyContent: 'start',
+      margin: '0 auto',
+    },
+  },
 });
 
 export const customRadioButton = recipe({

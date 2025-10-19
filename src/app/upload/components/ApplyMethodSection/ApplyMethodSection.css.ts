@@ -28,13 +28,24 @@ export const targetConditionLayout = style({
 
 export const targetGroupContainer = style({
   display: 'flex',
-  flexFlow: 'row nowrap',
+
   justifyContent: 'space-between',
+  alignItems: 'flex-start',
+
+  flexDirection: 'row',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      flexDirection: 'column',
+      gap: '1.2rem',
+    },
+  },
 });
 
 export const ageInputContainer = recipe({
   base: {
-    width: '45.2rem',
+    maxWidth: '45.2rem',
+    width: '100%',
     height: '4.8rem',
     display: 'flex',
     alignItems: 'center',
@@ -63,8 +74,8 @@ export const textStyle = style({
 
 export const alarmAgreeContainer = style({
   width: 'fit-content',
-  height: '3.4rem',
-  padding: '0 1rem',
+  minHeight: '3.4rem',
+  padding: '0.2rem 1rem',
   backgroundColor: colors.field02,
   borderRadius: '0.8rem',
   display: 'flex',

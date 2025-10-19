@@ -93,6 +93,7 @@ export const addImageContainer = recipe({
 
     height: '3.2rem',
     display: 'flex',
+    whiteSpace: 'nowrap',
     flexFlow: 'row nowrap',
     gap: '0.6rem',
     alignItems: 'center',
