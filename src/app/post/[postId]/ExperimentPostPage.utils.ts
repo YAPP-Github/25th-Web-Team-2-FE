@@ -122,12 +122,13 @@ const getAddressDisplay = (
 
   // 3. 교내 실험 (place 필수, detailedAddress는 옵셔널)
   if (address.isOnCampus) {
-    const detail = address.detailedAddress ? ` ${address.detailedAddress}` : '';
-    return `${baseAddress} ${address.place ?? ''}${detail}`;
+    const parts = [baseAddress, address.place, address.detailedAddress].filter(Boolean);
+    return parts.join(' ');
   }
 
   // 4. 교외 실험 (detailedAddress 필수, place 필드 없음)
-  return `${baseAddress} ${address.detailedAddress ?? ''}`;
+  const parts = [baseAddress, address.detailedAddress].filter(Boolean);
+  return parts.join(' ');
 };
 
 export {

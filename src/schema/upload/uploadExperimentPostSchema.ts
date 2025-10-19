@@ -58,8 +58,8 @@ const UploadExperimentPostSchema = ({
     area: z.string().min(1, '').nullable(),
     // 상세 주소
     detailedAddress: isOnCampus // 교내실험이면 옵셔널, 교내실험이 아니라면 필수값
-      ? z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' })
-      : z.string().min(1, '').max(70, { message: '최대 70자 이하로 입력해 주세요' }).nullable(),
+      ? z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' }).optional()
+      : z.string().min(1, '').max(70, { message: '최대 70자 이하로 입력해 주세요' }),
 
     // 보상
     reward: z
