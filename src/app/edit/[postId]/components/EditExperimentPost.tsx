@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, useWatch } from 'react-hook-form';
 
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
@@ -53,14 +53,14 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     });
 
   const isUserInputDirty = form.formState.isDirty;
+  const isOnCampusValue = useWatch({ name: 'isOnCampus', control: form.control });
 
   const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
     useLeaveConfirmModal({ isUserInputDirty });
 
   useEffect(() => {
-    const formIsOnCampus = form.getValues('isOnCampus');
-    setIsOnCampus(formIsOnCampus);
-  }, [form, isUserInputDirty]);
+    setIsOnCampus(isOnCampusValue);
+  }, [isOnCampusValue, isUserInputDirty]);
 
   useEffect(() => {
     if (originExperimentError) {
