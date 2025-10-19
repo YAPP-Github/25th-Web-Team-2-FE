@@ -12,6 +12,8 @@ import {
 import Icon from '../Icon';
 import AutoCompleteDropdown from './components/AutoCompleteDropdown/AutoCompleteDropdown';
 
+import { textInput } from '@/app/upload/components/InputForm/InputForm.css';
+
 interface UnivAutoCompleteInputProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
@@ -34,7 +36,7 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
   const [showDropdown, setShowDropdown] = useState(false);
 
   // 리셋 후 인풋 포커스 유지
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // 리셋 버튼 클릭 시 blur 방지
   const resetButtonRef = useRef<HTMLButtonElement>(null);
@@ -65,6 +67,13 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
           inputRef.current?.focus();
         };
 
+        // 에러 스타일
+        const inputStyleClass = [
+          textInput.default,
+          inputClassName ?? joinInput,
+          fieldState.invalid ? textInput.error : '',
+        ].join(' ');
+
         return (
           <div className={inputContainer}>
             {label && (
@@ -79,9 +88,12 @@ const UnivAutoCompleteInput = <T extends FieldValues>({
                 {...field}
                 id={name}
                 value={field.value ?? ''}
-                ref={inputRef}
+                ref={(el) => {
+                  field.ref(el);
+                  inputRef.current = el;
+                }}
                 placeholder={placeholder}
-                className={inputClassName ?? joinInput}
+                className={inputStyleClass}
                 aria-invalid={fieldState.invalid ? true : false}
                 style={{ width: '100%' }}
                 onFocus={() => setShowDropdown(true)}

@@ -237,6 +237,7 @@ const OutlineSection = ({
             <div className={disabledInput}>비대면</div>
           ) : (
             <div className={uploadInputContainer}>
+              {/* 교내실험 - 학교 선택 */}
               {isOnCampus && (
                 <UnivAutoCompleteInput<UploadExperimentPostSchemaType>
                   name="place"
