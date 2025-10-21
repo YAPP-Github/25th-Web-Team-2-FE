@@ -90,6 +90,7 @@ const transformOriginFormData = (
     images: experiment.imageList,
   },
   alarmAgree: experiment.alarmAgree,
+  isOnCampus: experiment.address.isOnCampus,
 });
 
 const uploadImages = async (

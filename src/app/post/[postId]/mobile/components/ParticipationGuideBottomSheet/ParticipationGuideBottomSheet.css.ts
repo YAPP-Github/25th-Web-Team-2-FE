@@ -14,6 +14,9 @@ export const bottomSheetTitle = style({
   color: colors.text06,
 
   marginBottom: '1.2rem',
+
+  width: '100%',
+  overflowWrap: 'break-word',
 });
 
 export const contactInfoRowContainer = style({

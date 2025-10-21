@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FormProvider } from 'react-hook-form';
+import { FormProvider, useWatch } from 'react-hook-form';
 
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
@@ -31,12 +31,12 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   const [addLink, setAddLink] = useState<boolean>(false);
   const [addContact, setAddContact] = useState<boolean>(false);
+  const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
 
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
-
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { form, handleSubmit, isLoading, applyMethodData, isRecruitStatus, originExperimentError } =
@@ -45,6 +45,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
       postId: params.postId,
       addLink,
       addContact,
+      isOnCampus,
       setOpenAlertModal: setOpenSubmitAlertDialog,
       images,
       setImages,
@@ -52,9 +53,14 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     });
 
   const isUserInputDirty = form.formState.isDirty;
+  const isOnCampusValue = useWatch({ name: 'isOnCampus', control: form.control });
 
   const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
     useLeaveConfirmModal({ isUserInputDirty });
+
+  useEffect(() => {
+    setIsOnCampus(isOnCampusValue);
+  }, [isOnCampusValue, isUserInputDirty]);
 
   useEffect(() => {
     if (originExperimentError) {
@@ -101,6 +107,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
             experimentDateChecked={experimentDateChecked}
             durationChecked={durationChecked}
             isRecruitStatus={isRecruitStatus}
+            setIsOnCampus={setIsOnCampus}
           />
           <ApplyMethodSection
             addLink={addLink}

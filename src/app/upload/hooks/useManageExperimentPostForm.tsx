@@ -26,6 +26,7 @@ interface useUploadExperimentPostProps {
   postId?: string;
   addLink: boolean;
   addContact: boolean;
+  isOnCampus: boolean;
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
@@ -37,6 +38,7 @@ const useManageExperimentPostForm = ({
   postId,
   addLink,
   addContact,
+  isOnCampus,
   setOpenAlertModal,
   images,
   setImages,
@@ -74,7 +76,7 @@ const useManageExperimentPostForm = ({
   const form = useForm<UploadExperimentPostSchemaType>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
+    resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact, isOnCampus })),
     defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
 
@@ -105,7 +107,10 @@ const useManageExperimentPostForm = ({
       imageListInfo: {
         images: updatedImages as string[],
       },
-      place: data.matchType === MATCH_TYPE.ONLINE || data.place === '' ? null : data.place,
+      place:
+        data.matchType === MATCH_TYPE.ONLINE || !isOnCampus || data.place === ''
+          ? null
+          : data.place,
     };
 
     if (isEdit && postId) {

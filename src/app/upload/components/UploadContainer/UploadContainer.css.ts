@@ -15,11 +15,23 @@ export const uploadLayout = style({
 
 export const headerTitle = style({
   ...fonts.title.large.SB24,
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      marginLeft: '2.8rem',
+    },
+  },
 });
 
 export const headerSubTitle = style({
   ...fonts.label.large.R14,
   color: colors.text03,
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      marginLeft: '2.8rem',
+    },
+  },
 });
 
 export const uploadFormSectionTitle = style({
