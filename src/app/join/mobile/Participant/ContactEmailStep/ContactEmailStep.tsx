@@ -49,6 +49,7 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
         contactEmailField="contactEmail"
         verifiedEmailField="verifiedContactEmail"
         onSuccess={openServiceAgreeBottomSheet}
+        autoFocus
       />
       <NextButton onNext={onNext} openServiceAgreeBottomSheet={openServiceAgreeBottomSheet} />
     </main>

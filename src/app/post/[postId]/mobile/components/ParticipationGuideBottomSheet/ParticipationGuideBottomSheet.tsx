@@ -20,13 +20,14 @@ const ParticipationGuideBottomSheet = ({
   applyMethodData,
 }: ParticipationGuideBottomSheetProps) => {
   const toast = useToast();
-  const handleCopyContent = (text: string) => {
+  const handleCopyContent = (text: string, type: 'link' | 'contactInfo') => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
         toast.open({ message: '복사되었어요' });
+
         trackEvent('ApplyMethod Interaction', {
-          action: 'Link Copied',
+          action: type === 'link' ? 'Link Copied' : 'ContactInfo Copied',
         });
       })
       .catch(() => {
@@ -79,7 +80,7 @@ const ParticipationGuideBottomSheet = ({
                 cursor="pointer"
                 color={colors.text04}
                 onClick={() =>
-                  applyMethodData.formUrl && handleCopyContent(applyMethodData.formUrl)
+                  applyMethodData.formUrl && handleCopyContent(applyMethodData.formUrl, 'link')
                 }
               />
             </div>
@@ -99,7 +100,8 @@ const ParticipationGuideBottomSheet = ({
                 cursor="pointer"
                 color={colors.text04}
                 onClick={() =>
-                  applyMethodData.phoneNum && handleCopyContent(applyMethodData.phoneNum)
+                  applyMethodData.phoneNum &&
+                  handleCopyContent(applyMethodData.phoneNum, 'contactInfo')
                 }
               />
             </div>

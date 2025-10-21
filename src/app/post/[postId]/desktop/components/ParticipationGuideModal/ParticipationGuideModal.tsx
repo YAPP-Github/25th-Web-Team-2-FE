@@ -32,13 +32,13 @@ const ParticipationGuideModal = ({
 }: ParticipationGuideModalProps) => {
   const toast = useToast();
 
-  const handleCopyContent = (text: string) => {
+  const handleCopyContent = (text: string, type: 'link' | 'contactInfo') => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
         toast.open({ message: '복사되었어요', duration: 1500 });
         trackEvent('ApplyMethod Interaction', {
-          action: 'Link Copied',
+          action: type === 'link' ? 'Link Copied' : 'ContactInfo Copied',
         });
       })
       .catch(() => {
@@ -108,7 +108,8 @@ const ParticipationGuideModal = ({
                       height={16}
                       cursor="pointer"
                       onClick={() =>
-                        applyMethodData.formUrl && handleCopyContent(applyMethodData.formUrl)
+                        applyMethodData.formUrl &&
+                        handleCopyContent(applyMethodData.formUrl, 'link')
                       }
                     />
                   </div>
@@ -127,7 +128,8 @@ const ParticipationGuideModal = ({
                       height={16}
                       cursor="pointer"
                       onClick={() =>
-                        applyMethodData.phoneNum && handleCopyContent(applyMethodData.phoneNum)
+                        applyMethodData.phoneNum &&
+                        handleCopyContent(applyMethodData.phoneNum, 'contactInfo')
                       }
                     />
                   </div>

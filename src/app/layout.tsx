@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 
@@ -48,6 +49,10 @@ export const metadata: Metadata = {
       'naver-site-verification': '30b0a9ec0a357ce934c3c90cf68aedd57b8ad2fd',
     },
   },
+  formatDetection: {
+    telephone: false,
+    email: false,
+  },
 };
 
 export default async function RootLayout({
@@ -61,6 +66,7 @@ export default async function RootLayout({
     <html lang="ko" className={pretendard.className}>
       <body suppressHydrationWarning={true}>
         <Providers session={session}>{children}</Providers>
+        <SpeedInsights />
       </body>
     </html>
   );

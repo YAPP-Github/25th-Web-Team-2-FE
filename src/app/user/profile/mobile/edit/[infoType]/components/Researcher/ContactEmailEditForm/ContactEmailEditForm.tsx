@@ -39,6 +39,7 @@ const ContactEmailEditForm = ({ userInfo }: ContactEmailEditFormProps) => {
           contactEmailField="contactEmail"
           verifiedEmailField="verifiedContactEmail"
           joinedUser
+          autoFocus
         />
         <SaveButton<ResearcherUpdateSchemaType>
           onSave={onSubmit}
