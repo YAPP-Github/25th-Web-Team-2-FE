@@ -40,6 +40,8 @@ export const participationModalTitle = style({
   color: colors.text06,
   marginTop: '1.2rem',
   marginRight: '1.2rem',
+
+  overflowWrap: 'break-word',
 });
 
 export const contactInfoRowContainer = style({

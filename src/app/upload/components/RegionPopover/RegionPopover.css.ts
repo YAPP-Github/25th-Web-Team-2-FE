@@ -5,7 +5,8 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const regionPopoverContainer = style({
-  width: '45.2rem',
+  maxWidth: '45.2rem',
+  width: '100%',
   borderRadius: '1.2rem',
   outline: 'none',
   border: `0.1rem solid ${colors.line01}`,

@@ -11,6 +11,16 @@ export const outlineFormLayout = style({
   gridColumnGap: '3.2rem',
   gridRowGap: '2.8rem',
   margin: '0 auto',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      display: 'flex',
+      flexDirection: 'column',
+      rowGap: '2.4rem',
+      gridTemplateColumns: 'none',
+      gridTemplateRows: 'none',
+    },
+  },
 });
 
 export const radioGroup = style({

@@ -22,4 +22,11 @@ export const ageInput = style({
   '::placeholder': {
     color: colors.text02,
   },
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      maxWidth: '17.2rem',
+      width: '100%',
+    },
+  },
 });

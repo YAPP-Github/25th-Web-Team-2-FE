@@ -26,7 +26,7 @@ export interface ExperimentPostData {
   place?: string | null;
   region?: string | null;
   area?: string | null;
-  detailedAddress?: string;
+  detailedAddress?: string | null;
   reward: string;
   title: string;
   content: string;

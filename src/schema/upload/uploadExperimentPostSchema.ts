@@ -7,8 +7,13 @@ export type UploadExperimentPostSchemaType = z.infer<ReturnType<typeof UploadExp
 interface UploadExperimentPostSchemaProps {
   addLink: boolean;
   addContact: boolean;
+  isOnCampus: boolean;
 }
-const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPostSchemaProps) => {
+const UploadExperimentPostSchema = ({
+  addLink,
+  addContact,
+  isOnCampus,
+}: UploadExperimentPostSchemaProps) => {
   return z.object({
     // 실험 시작 날짜
     startDate: z.union([z.string(), z.null()]),
@@ -45,14 +50,17 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
       .string()
       .min(5, { message: '최소 5자 이상으로 입력해 주세요' })
       .max(150, { message: '최대 150자 이하로 입력해 주세요' }),
-    // 장소
-    place: z.string().min(1, '').nullable(),
+    // 학교명
+    place: isOnCampus ? z.string().min(1, '') : z.string().nullable(),
     // 지역
     region: z.string().min(1, '').nullable(),
     // 지역구
     area: z.string().min(1, '').nullable(),
     // 상세 주소
-    detailedAddress: z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' }),
+    detailedAddress: isOnCampus // 교내실험이면 옵셔널, 교내실험이 아니라면 필수값
+      ? z.string().max(70, { message: '최대 70자 이하로 입력해 주세요' }).optional()
+      : z.string().min(1, '').max(70, { message: '최대 70자 이하로 입력해 주세요' }),
+
     // 보상
     reward: z
       .string({ message: '최소 1자 이상으로 입력해 주세요' })
@@ -108,6 +116,8 @@ const UploadExperimentPostSchema = ({ addLink, addContact }: UploadExperimentPos
     }),
 
     alarmAgree: z.boolean().default(false), // 알람 동의
+
+    isOnCampus: z.boolean().default(true), // 교내 실험 여부
   });
 };
 

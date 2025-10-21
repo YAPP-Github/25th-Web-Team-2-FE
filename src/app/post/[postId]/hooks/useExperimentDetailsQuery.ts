@@ -30,6 +30,7 @@ interface Address {
   region: string | null;
   area: string | null;
   detailedAddress: string;
+  isOnCampus: boolean;
 }
 
 export interface UseQueryExperimentDetailsAPIResponse {
