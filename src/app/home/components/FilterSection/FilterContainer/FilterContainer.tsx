@@ -1,3 +1,5 @@
+'use client';
+
 import AreaFilter from './AreaFilter/AreaFilter';
 import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
 import { filterContainerLayout, resetFilterButton, verticalLine } from './FilterContainer.css';
@@ -13,7 +15,7 @@ interface FilterContainerProps {
 }
 
 const FilterContainer = ({ initialGender, initialAge }: FilterContainerProps) => {
-  const { filters, handleFilterChange, handleResetFilter } = useURLFilters();
+  const { filters, handleResetFilter } = useURLFilters();
 
   const isFiltered =
     initialGender ||
@@ -37,20 +39,16 @@ const FilterContainer = ({ initialGender, initialAge }: FilterContainerProps) =>
       )}
 
       {/* 진행 방식 필터링 */}
-      <MatchTypeFilter
-        filters={filters}
-        onChange={(matchType) => handleFilterChange({ matchType })}
-      />
+      <MatchTypeFilter filters={filters} />
 
       {/* 모집 대상 필터링 */}
       <ContactTargetFilter
-        onChange={handleFilterChange}
         filterGender={initialGender ?? filters.gender}
         filterAge={initialAge ?? filters.age}
       />
 
       {/* 지역 필터링 */}
-      <AreaFilter filters={filters} onChange={handleFilterChange} />
+      <AreaFilter filters={filters} />
     </div>
   );
 };

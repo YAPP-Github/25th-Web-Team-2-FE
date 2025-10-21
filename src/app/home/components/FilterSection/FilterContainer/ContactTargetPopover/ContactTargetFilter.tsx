@@ -10,17 +10,17 @@ import { popoverContent, popoverTrigger } from './ContactTargetFilter.css';
 
 import { GenderFilterValue } from '@/app/home/home.types';
 import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
+import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
-import { ExperimentPostListFilterParams } from '@/types/filter';
 
 interface ContactTargetFilterProps {
-  onChange: (filters: ExperimentPostListFilterParams) => void;
   filterGender?: GenderFilterValue;
   filterAge?: number;
 }
 
-const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTargetFilterProps) => {
+const ContactTargetFilter = ({ filterGender, filterAge }: ContactTargetFilterProps) => {
+  const { handleFilterChange } = useURLFilters();
   const { open, close } = useOverlay();
   const [isOpen, setIsOpen] = useState(false);
   const isSelected = Boolean(filterAge) || Boolean(filterGender);
@@ -32,7 +32,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
         <ContactTargetBottomSheet
           initialGender={filterGender || null}
           initialAge={filterAge?.toString() || ''}
-          onChange={onChange}
+          onChange={handleFilterChange}
           onClose={close}
         />
       ),
@@ -55,7 +55,7 @@ const ContactTargetFilter = ({ onChange, filterGender, filterAge }: ContactTarge
           <ContactTargetContent
             initialGender={filterGender}
             initialAge={filterAge}
-            onChange={onChange}
+            onChange={handleFilterChange}
             onClose={() => setIsOpen(false)}
           />
         </Popover.Content>

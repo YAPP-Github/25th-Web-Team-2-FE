@@ -50,7 +50,7 @@ export default withSentryConfig(withVanillaExtract(nextConfig), {
   silent: !process.env.CI,
 
   // 소스맵 확장 (빌드 시간 증가)
-  widenClientFileUpload: true,
+  widenClientFileUpload: isProd,
 
   // ad-blocker 방지를 위해 사용 (서버 비용 증가 시 제거)
   tunnelRoute: isProd,
