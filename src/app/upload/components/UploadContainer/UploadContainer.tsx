@@ -1,5 +1,6 @@
 'use client';
 
+import * as Toast from '@radix-ui/react-toast';
 import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
@@ -16,11 +17,18 @@ import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 
+import {
+  copyToastLayout,
+  copyToastTitle,
+  copyToastViewport,
+} from '@/app/post/[postId]/desktop/components/ParticipationGuideModal/ParticipationGuideModal.css';
+import Icon from '@/components/Icon';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
 
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 
@@ -29,17 +37,21 @@ const UploadContainer = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
 
   const [images, setImages] = useState<(File | string)[]>([]);
+  const [successToast, setSuccessToast] = useState(false);
 
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { form, handleSubmit } = useManageExperimentPostForm({
+  const { form, handleSubmit, extractKeywordsFromContent } = useManageExperimentPostForm({
     addLink,
     addContact,
     setOpenAlertModal,
     images,
     isEdit: false,
+    setSuccessToast,
     setErrorMessage,
+    setAddLink,
+    setAddContact,
   });
 
   // 자동 입력 필드 제외 isDirty 체크
@@ -63,6 +75,21 @@ const UploadContainer = () => {
         <div className={uploadContentLayout}>
           {/* 실험 설명 */}
           <DescriptionSection images={images} setImages={setImages} />
+
+          <button
+            style={{
+              ...fonts.title.medium.M20,
+              background: colors.lineTinted,
+              color: colors.field01,
+              padding: '0.8rem 1.2rem',
+              borderRadius: '0.8rem',
+              marginTop: '2rem',
+              height: '4.8rem',
+            }}
+            onClick={extractKeywordsFromContent}
+          >
+            키워드 추출 테스트
+          </button>
 
           {/* 실험 개요 */}
           <OutlineSection />
@@ -101,6 +128,22 @@ const UploadContainer = () => {
           setOpenAlertModal(false);
         }}
       />
+
+      {/* 공고 등록 성공 시 successToast */}
+      <Toast.Provider swipeDirection="right">
+        <Toast.Root
+          className={copyToastLayout}
+          open={successToast}
+          onOpenChange={setSuccessToast}
+          duration={1000}
+        >
+          <Toast.Title className={copyToastTitle}>
+            <Icon icon="CheckRound" color={colors.primaryMint} width={24} height={24} />
+            <p>공고가 등록되었어요!</p>
+          </Toast.Title>
+        </Toast.Root>
+        <Toast.Viewport className={copyToastViewport} />
+      </Toast.Provider>
 
       {/* 공고 등록 중 이탈 시 confirmModal */}
       <ConfirmModal

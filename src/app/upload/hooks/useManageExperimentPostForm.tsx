@@ -8,6 +8,7 @@ import { convertLabelToValue, transformOriginFormData, uploadImages } from '../u
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
+import useExtractKeywordsMutation from './useExtractKeywords';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
@@ -15,8 +16,6 @@ import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { queryKey } from '@/constants/queryKey';
-import { useToast } from '@/hooks/useToast';
-import { stopRecording } from '@/lib/mixpanelClient';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
@@ -27,9 +26,13 @@ interface useUploadExperimentPostProps {
   addLink: boolean;
   addContact: boolean;
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
+  setSuccessToast: Dispatch<SetStateAction<boolean>>;
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
   setErrorMessage: Dispatch<SetStateAction<string>>;
+
+  setAddLink: Dispatch<SetStateAction<boolean>>;
+  setAddContact: Dispatch<SetStateAction<boolean>>;
 }
 
 const useManageExperimentPostForm = ({
@@ -38,17 +41,20 @@ const useManageExperimentPostForm = ({
   addLink,
   addContact,
   setOpenAlertModal,
+  setSuccessToast,
   images,
   setImages,
   setErrorMessage,
+  setAddLink,
+  setAddContact,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
-  const toast = useToast();
   const queryClient = useQueryClient();
 
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
   const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
+  const { mutateAsync: extractKeywords } = useExtractKeywordsMutation();
 
   // 기존 공고 데이터 불러오기
   const {
@@ -77,7 +83,6 @@ const useManageExperimentPostForm = ({
     resolver: zodResolver(UploadExperimentPostSchema({ addLink, addContact })),
     defaultValues: EXPERIMENT_POST_DEFAULT_VALUES,
   });
-
   useEffect(() => {
     if (!setErrorMessage) return;
     if (originExperimentError) {
@@ -93,6 +98,56 @@ const useManageExperimentPostForm = ({
       form.reset(originFormData);
     }
   }, [isEdit, originFormData, form, setImages]);
+
+  /* 키워드 추출 */
+  console.log('form >> ', form.getValues());
+
+  const extractKeywordsFromContent = async () => {
+    try {
+      const content = form.getValues('content');
+      const response = await extractKeywords(content);
+      const keywords = response.experimentPostKeywords;
+
+      //  단일 필드
+      if (keywords.reward) {
+        form.setValue('reward', keywords.reward);
+      }
+      if (keywords.matchType) {
+        form.setValue('matchType', keywords.matchType);
+      }
+      if (keywords.timeRequired) {
+        form.setValue('timeRequired', keywords.timeRequired);
+      }
+      if (keywords.count) {
+        form.setValue('count', keywords.count);
+      }
+
+      //  중첩된 필드: applyMethod
+      if (keywords.applyMethod) {
+        form.setValue('applyMethodInfo.content', keywords.applyMethod.content);
+        if (keywords.applyMethod.isFormUrl && keywords.applyMethod.formUrl) {
+          setAddLink(true);
+          form.setValue('applyMethodInfo.formUrl', keywords.applyMethod.formUrl);
+        }
+        if (keywords.applyMethod.isPhoneNum && keywords.applyMethod.phoneNum) {
+          setAddContact(true);
+          form.setValue('applyMethodInfo.phoneNum', keywords.applyMethod.phoneNum);
+        }
+      }
+
+      //  중첩된 필드: targetGroup
+      if (keywords.targetGroup) {
+        form.setValue('targetGroupInfo.startAge', keywords.targetGroup.startAge);
+        form.setValue('targetGroupInfo.endAge', keywords.targetGroup.endAge);
+        form.setValue('targetGroupInfo.genderType', keywords.targetGroup.genderType);
+        if (keywords.targetGroup.otherCondition) {
+          form.setValue('targetGroupInfo.otherCondition', keywords.targetGroup.otherCondition);
+        }
+      }
+    } catch (error) {
+      console.error('키워드 추출 실패:', error);
+    }
+  };
 
   const handleSubmit = async (data: UploadExperimentPostSchemaType) => {
     /* 이미지 먼저 등록 */
@@ -113,16 +168,17 @@ const useManageExperimentPostForm = ({
         { postId, data: updatedData },
         {
           onSuccess: async () => {
-            toast.open({ message: '공고가 수정되었어요!', duration: 1000 });
-            await revalidateExperimentPosts(postId);
+            setSuccessToast(true);
 
-            // 다시 공고 수정 페이지로 이동했을 때 기존 데이터 남지 않도록 캐시 무효화
-            await queryClient.invalidateQueries({
-              queryKey: queryKey.originExperimentPost(postId),
-              refetchType: 'active',
-            });
-            await queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) });
-            router.push(`/post/${postId}`);
+            await Promise.allSettled([
+              queryClient.invalidateQueries({ queryKey: queryKey.experimentPostDetail(postId) }),
+              queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) }),
+              revalidateExperimentPosts(),
+            ]);
+
+            setTimeout(() => {
+              router.push(`/post/${postId}`);
+            }, 1000);
             form.reset();
           },
           onError: (error) => {
@@ -135,9 +191,11 @@ const useManageExperimentPostForm = ({
     } else {
       uploadExperimentPost(updatedData, {
         onSuccess: async (response) => {
-          toast.open({ message: '공고가 등록되었어요!', duration: 1000 });
+          setSuccessToast(true);
           await revalidateExperimentPosts();
-          router.push(`/post/${response.postInfo.experimentPostId}`);
+          setTimeout(() => {
+            router.push(`/post/${response.postInfo.experimentPostId}`);
+          }, 1000);
           form.reset();
         },
         onError: (error) => {
@@ -147,8 +205,6 @@ const useManageExperimentPostForm = ({
         },
       });
     }
-
-    stopRecording();
   };
 
   return {
@@ -161,6 +217,9 @@ const useManageExperimentPostForm = ({
     originExperimentError,
 
     originFormData,
+
+    //
+    extractKeywordsFromContent,
   };
 };
 
