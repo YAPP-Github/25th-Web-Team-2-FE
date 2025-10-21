@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { desktopRightHeader, uploadButton } from './DesktopLoginHeader.css';
