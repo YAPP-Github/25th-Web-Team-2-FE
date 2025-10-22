@@ -1,0 +1,98 @@
+import { style } from '@vanilla-extract/css';
+import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
+import { recipe } from '@vanilla-extract/recipes';
+
+export const progressBarContainer = style({
+  padding: '27px 80px',
+});
+
+export const progressBarInner = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '1.8rem',
+});
+
+export const stepContainer = recipe({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.8rem',
+  },
+  variants: {
+    isLast: {
+      true: {
+        alignItems: 'center',
+      },
+      false: {
+        flex: 1,
+      },
+    },
+  },
+});
+
+export const stepIconAndLine = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '1.2rem',
+});
+
+export const stepIcon = style({
+  width: '3.2rem',
+  height: '3.2rem',
+  borderRadius: '0.8rem',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  transition: 'all 0.3s ease',
+});
+
+export const stepIconActive = style({
+  backgroundColor: colors.primaryMint,
+});
+
+export const stepIconCompleted = style({
+  backgroundColor: colors.primaryMint,
+});
+
+export const stepIconInactive = style({
+  backgroundColor: colors.field06,
+});
+
+export const stepIconText = style({
+  color: colors.text01,
+  ...fonts.title.small.SB18,
+});
+
+export const progressLineContainer = style({
+  height: '0.3rem',
+  backgroundColor: colors.field04,
+  borderRadius: '0.6rem',
+  overflow: 'hidden',
+  flex: 1, // 남은 공간을 동일하게 분배
+  minWidth: '4rem', // 최소 너비 보장
+});
+
+export const progressLineFill = style({
+  height: '100%',
+  backgroundColor: colors.primaryMint,
+  borderRadius: '0.6rem',
+  transition: 'width 1s ease',
+});
+
+export const stepLabel = recipe({
+  base: {
+    ...fonts.body.small.SB15,
+  },
+  variants: {
+    completed: {
+      true: {
+        color: colors.textPrimary,
+      },
+      false: {
+        color: colors.text02,
+      },
+    },
+  },
+});
