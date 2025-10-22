@@ -1,12 +1,9 @@
-import React from 'react';
 import {
   progressBarContainer,
   progressBarInner,
   stepContainer,
   stepIconAndLine,
-  stepIcon,
   stepIconActive,
-  stepIconCompleted,
   stepIconInactive,
   stepIconText,
   progressLineContainer,
@@ -14,71 +11,61 @@ import {
   stepLabel,
 } from './ProgressBarSection.css';
 import useFunnel from '@/app/join/hooks/useFunnel';
+import Icon from '@/components/Icon';
+import { colors } from '@/styles/colors';
+import { UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 
-const STEPS = [
-  { id: 1, label: '공고 입력' },
-  { id: 2, label: '실험 개요 확인' },
-  { id: 3, label: '모집 대상 및 방법 확인' },
-  { id: 4, label: '완료' },
-] as const;
+const labelMapper = {
+  description: '공고 입력',
+  outline: '실험 개요 확인',
+  applyMethod: '모집 대생 및 방법 확인',
+  success: '완료',
+} as const;
 
-const getStepIconClass = (stepId: number, currentStepIdx: number) => {
-  if (stepId < currentStepIdx) {
-    return stepIconCompleted;
+const getProgressLineWidth = (targetIdx: number, currentStepIdx: number) => {
+  if (targetIdx < currentStepIdx) {
+    return '100%'; // 완료된 스텝: 100%
   }
-  if (stepId === currentStepIdx) {
-    return stepIconActive;
+  if (targetIdx === currentStepIdx) {
+    return '50%'; // 현재 스텝: 50%
   }
-  return stepIconInactive;
-};
-
-const getProgressLineWidth = (stepId: number, currentStepIdx: number) => {
-  if (stepId < currentStepIdx) {
-    return '100%';
-  }
-  if (stepId === currentStepIdx) {
-    return '50%';
-  }
-  return '0%';
-};
-
-const getStepContent = (stepId: number, currentStepIdx: number) => {
-  if (stepId < currentStepIdx) {
-    return '✓';
-  }
-  return stepId.toString();
+  return '0%'; // 미래 스텝: 0%
 };
 
 const ProgressBarSection = () => {
-  const { currentStepIdx } = useFunnel();
+  const { currentStepIdx, steps } = useFunnel<typeof UPLOAD_STEP_LIST>();
   const currentStep = currentStepIdx + 1;
+
   return (
     <div className={progressBarContainer}>
       <div className={progressBarInner}>
-        {STEPS.map((step, index) => {
-          const isLastStep = index === STEPS.length - 1;
+        {steps.map((step, idx) => {
+          const isLastStep = idx === steps.length - 1;
+          const number = idx + 1;
+          const isProgressed = number <= currentStep;
+          const isCompleted = number < currentStep;
 
           return (
-            <React.Fragment key={step.id}>
-              <div className={stepContainer({ isLast: isLastStep })}>
-                <div className={stepIconAndLine}>
-                  <div className={`${stepIcon} ${getStepIconClass(step.id, currentStep)}`}>
-                    <span className={stepIconText}>{getStepContent(step.id, currentStep)}</span>
-                  </div>
-
-                  {/* 프로그래스 라인 (마지막 단계 제외) */}
-                  {!isLastStep && (
-                    <div className={progressLineContainer}>
-                      <div
-                        className={progressLineFill}
-                        style={{ width: getProgressLineWidth(step.id, currentStep) }}
-                      />
-                    </div>
-                  )}
+            <div key={step} className={stepContainer({ isLast: isLastStep })}>
+              <div className={stepIconAndLine}>
+                <div className={isProgressed ? stepIconActive : stepIconInactive}>
+                  <span className={stepIconText}>
+                    {isCompleted ? <Icon icon="Check" color={colors.icon01} /> : number}
+                  </span>
                 </div>
-                <div className={stepLabel({ completed: step.id <= currentStep })}>{step.label}</div>
+
+                {/* 프로그래스 라인 (마지막 단계 제외) */}
+                {!isLastStep && (
+                  <div className={progressLineContainer}>
+                    <div
+                      className={progressLineFill}
+                      style={{ width: getProgressLineWidth(number, currentStep) }}
+                    />
+                  </div>
+                )}
               </div>
-            </React.Fragment>
+              <div className={stepLabel({ isProgressed })}>{labelMapper[step]}</div>
+            </div>
           );
         })}
       </div>

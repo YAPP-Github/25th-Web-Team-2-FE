@@ -48,17 +48,19 @@ export const stepIcon = style({
   transition: 'all 0.3s ease',
 });
 
-export const stepIconActive = style({
-  backgroundColor: colors.primaryMint,
-});
+export const stepIconActive = style([
+  stepIcon,
+  {
+    backgroundColor: colors.primaryMint,
+  },
+]);
 
-export const stepIconCompleted = style({
-  backgroundColor: colors.primaryMint,
-});
-
-export const stepIconInactive = style({
-  backgroundColor: colors.field06,
-});
+export const stepIconInactive = style([
+  stepIcon,
+  {
+    backgroundColor: colors.field06,
+  },
+]);
 
 export const stepIconText = style({
   color: colors.text01,
@@ -71,14 +73,14 @@ export const progressLineContainer = style({
   borderRadius: '0.6rem',
   overflow: 'hidden',
   flex: 1, // 남은 공간을 동일하게 분배
-  minWidth: '4rem', // 최소 너비 보장
+  minWidth: '4rem',
 });
 
 export const progressLineFill = style({
   height: '100%',
   backgroundColor: colors.primaryMint,
   borderRadius: '0.6rem',
-  transition: 'width 1s ease',
+  transition: 'width 0.5s linear',
 });
 
 export const stepLabel = recipe({
@@ -86,7 +88,7 @@ export const stepLabel = recipe({
     ...fonts.body.small.SB15,
   },
   variants: {
-    completed: {
+    isProgressed: {
       true: {
         color: colors.textPrimary,
       },
