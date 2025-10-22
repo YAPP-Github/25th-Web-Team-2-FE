@@ -7,6 +7,7 @@ import {
   outlineFormLayout,
   uploadInputContainer,
   uploadSelectInputContainer,
+  outlineSectionLayout,
 } from './OutlineSection.css';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
@@ -20,12 +21,7 @@ import { textInput } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
-import {
-  headingIcon,
-  label,
-  uploadFormSectionTitle,
-  uploadSectionLayout,
-} from '../UploadContainer/UploadContainer.css';
+import { headingIcon, label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
 import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
@@ -88,7 +84,7 @@ const OutlineSection = ({
   const isOnCampus = useWatch({ name: 'isOnCampus', control });
 
   return (
-    <div className={uploadSectionLayout}>
+    <div className={outlineSectionLayout}>
       <h3 className={uploadFormSectionTitle}>
         <span className={headingIcon}>2</span>실험의 개요를 알려주세요{' '}
         <span style={{ color: `${colors.textAlert}` }}>*</span>

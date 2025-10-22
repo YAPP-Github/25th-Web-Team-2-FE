@@ -24,6 +24,7 @@ import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import useFunnel from '@/app/join/hooks/useFunnel';
 
 interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
@@ -40,6 +41,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
     getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
+  const { currentStepIdx } = useFunnel();
 
   const toast = useToast();
   const contentError = errors.content;
@@ -136,6 +138,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                   id="content"
                   className={descriptionTextarea({
                     photoGridHeight: images.length > 0 ? 'withPhotos' : 'withoutPhotos',
+                    stretch: currentStepIdx > 0,
                   })}
                   placeholder="본문을 입력해 주세요"
                 />

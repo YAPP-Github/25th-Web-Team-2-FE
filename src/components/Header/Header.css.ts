@@ -8,7 +8,7 @@ export const headerLayout = style({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '2rem 0',
+  padding: '2rem 15rem',
   height: '7.4rem',
 
   '@media': {

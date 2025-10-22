@@ -2,6 +2,30 @@ import { style, styleVariants } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
+import { STEP } from '@/app/join/JoinPage.constants';
+import { recipe } from '@vanilla-extract/recipes';
+
+export const uploadContainerLayout = recipe({
+  base: {
+    margin: '0 auto',
+  },
+  variants: {
+    step: {
+      [STEP.description]: {
+        width: '100rem',
+      },
+      [STEP.outline]: {
+        width: '121.4rem',
+      },
+      [STEP.applyMethod]: {
+        width: '121.4rem',
+      },
+      [STEP.success]: {
+        width: '100rem',
+      },
+    },
+  },
+});
 
 export const uploadLayout = style({
   display: 'flex',
@@ -80,15 +104,6 @@ export const buttonVariants = styleVariants({
     borderRadius: '1.2rem',
     padding: '0.8rem 1.6rem',
   },
-});
-
-export const outlineFormLayout = style({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gridTemplateRows: '10.2rem 10.2rem 21.4rem',
-  gridColumnGap: '3.2rem',
-  gridRowGap: '2.8rem',
-  margin: '0 auto',
 });
 
 export const ReferToDetailsContainer = style({
