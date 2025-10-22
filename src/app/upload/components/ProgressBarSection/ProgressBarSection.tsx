@@ -18,7 +18,7 @@ import { UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 const labelMapper = {
   description: '공고 입력',
   outline: '실험 개요 확인',
-  applyMethod: '모집 대생 및 방법 확인',
+  applyMethod: '모집 대상 및 방법 확인',
   success: '완료',
 } as const;
 
