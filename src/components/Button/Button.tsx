@@ -39,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={{ width, height }}
         {...props}
       >
-        {isLoading ? <Spinner /> : children}
+        {isLoading ? <Spinner width={24} height={24} /> : children}
       </button>
     );
   },
