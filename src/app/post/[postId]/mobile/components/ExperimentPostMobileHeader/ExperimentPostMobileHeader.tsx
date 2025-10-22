@@ -6,7 +6,7 @@ import React from 'react';
 import { experimentPostMobileHeaderLayout } from './ExperimentPostMobileHeader.css';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 
-import RightHeader from '@/components/Header/RightHeader/RightHeader';
+import RightHeaderClient from '@/components/Header/RightHeader/components/RightHeader.client';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 
@@ -40,7 +40,7 @@ const ExperimentPostMobileHeader = ({
           <Icon icon="MenuDots" width={24} height={24} />
         </button>
       ) : (
-        <RightHeader />
+        <RightHeaderClient />
       )}
     </div>
   );
