@@ -3,24 +3,19 @@
 import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import {
-  buttonVariants,
-  buttonContainer,
-  uploadContentLayout,
-  uploadLayout,
-  headerTitle,
-  headerSubTitle,
-} from './UploadContainer.css';
+import { buttonContainer, uploadContentLayout, uploadLayout } from './UploadContainer.css';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
-import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
-import OutlineSection from '../OutlineSection/OutlineSection';
+import ProgressBarSection from '../ProgressBarSection/ProgressBarSection';
 
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import useFunnel from '@/app/join/hooks/useFunnel';
+import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
+import Button from '@/components/Button/Button';
 
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 
@@ -51,47 +46,50 @@ const UploadContainer = () => {
     );
   }, [form.formState.dirtyFields]);
 
-  const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
-    useLeaveConfirmModal({ isUserInputDirty });
+  const { isLeaveConfirmModalOpen, handleCancelLeave, handleConfirmLeave } = useLeaveConfirmModal({
+    isUserInputDirty,
+  });
+
+  const { Funnel, currentStepIdx, Step, FunnelProvider, goToNext, goToPrev } =
+    useFunnel(UPLOAD_STEP_LIST);
 
   return (
     <FormProvider {...form}>
-      <div className={uploadLayout}>
-        <div>
-          <h2 className={headerTitle}>실험에 대한 정보를 입력해 주세요</h2>
-          <p className={headerSubTitle}>구체적일수록 참여자 매칭 확률이 높아져요</p>
+      <FunnelProvider>
+        <ProgressBarSection />
+        <div className={uploadLayout}>
+          <Funnel>
+            {/* 실험 설명 */}
+            <Step name={STEP.description}>
+              <div className={uploadContentLayout}>
+                <DescriptionSection images={images} setImages={setImages} />
+              </div>
+            </Step>
+            {/* 실험 개요 */}
+            <Step name={STEP.outline}>
+              <div className={uploadContentLayout}>outline</div>
+            </Step>
+            {/* 실험 참여 방법 */}
+            <Step name={STEP.applyMethod}>
+              <div className={uploadContentLayout}>applyMethod</div>
+            </Step>
+            <Step name={STEP.success}>
+              <div className={uploadContentLayout}>success</div>
+            </Step>
+          </Funnel>
+          {/* 버튼 */}
+          <div className={buttonContainer}>
+            {currentStepIdx > 0 && (
+              <Button variant="neutral" size="small" width="8.4rem" onClick={goToPrev}>
+                이전으로
+              </Button>
+            )}
+            <Button variant="primary" size="small" width="20rem" onClick={goToNext}>
+              다음으로
+            </Button>
+          </div>
         </div>
-
-        <div className={uploadContentLayout}>
-          {/* 실험 설명 */}
-          <DescriptionSection images={images} setImages={setImages} />
-
-          {/* 실험 개요 */}
-          <OutlineSection setIsOnCampus={setIsOnCampus} />
-
-          {/* 실험 참여 방법 */}
-          <ApplyMethodSection
-            addLink={addLink}
-            setAddLink={setAddLink}
-            addContact={addContact}
-            setAddContact={setAddContact}
-          />
-        </div>
-
-        {/* 버튼 */}
-        <div className={buttonContainer}>
-          <button
-            className={buttonVariants.active}
-            onClick={() => handleBackClick({ goHome: false })}
-          >
-            이전으로
-          </button>
-
-          <button className={buttonVariants.upload} onClick={handleSubmit} type="submit">
-            {form.formState.isSubmitting ? '공고 등록 중' : '공고 등록하기'}
-          </button>
-        </div>
-      </div>
+      </FunnelProvider>
 
       {/* 공고 등록 실패 시 alert Modal */}
       <AlertModal

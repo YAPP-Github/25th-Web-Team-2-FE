@@ -59,7 +59,7 @@ export const uploadSectionLayout = style({
 export const buttonContainer = style({
   ...fonts.body.normal.B16,
   width: '100%',
-  height: '4rem',
+  height: '4.8rem',
   display: 'flex',
   flexFlow: 'row nowrap',
   alignItems: 'center',
