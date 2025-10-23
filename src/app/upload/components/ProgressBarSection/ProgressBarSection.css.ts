@@ -4,7 +4,9 @@ import { fonts } from '@/styles/fonts.css';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const progressBarContainer = style({
-  padding: '27px 80px',
+  width: '100rem',
+  margin: '0 auto',
+  padding: '2.7rem 8rem',
 });
 
 export const progressBarInner = style({
