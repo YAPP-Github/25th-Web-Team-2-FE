@@ -36,7 +36,7 @@ const UploadContainer = () => {
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { form, handleSubmit } = useManageExperimentPostForm({
+  const { form, handleSubmit, extractKeywordsFromContent } = useManageExperimentPostForm({
     addLink,
     addContact,
     isOnCampus,
@@ -44,6 +44,8 @@ const UploadContainer = () => {
     images,
     isEdit: false,
     setErrorMessage,
+    setAddLink,
+    setAddContact,
   });
 
   // 자동 입력 필드 제외 isDirty 체크
@@ -76,7 +78,11 @@ const UploadContainer = () => {
               {/* 실험 개요 */}
               <Step name={STEP.outline}>
                 <div style={{ display: 'flex', gap: '1.6rem' }}>
-                  <DescriptionSection images={images} setImages={setImages} />
+                  <DescriptionSection
+                    images={images}
+                    setImages={setImages}
+                    extractKeywordsFromContent={extractKeywordsFromContent}
+                  />
                   <OutlineSection setIsOnCampus={setIsOnCampus} />
                 </div>
               </Step>

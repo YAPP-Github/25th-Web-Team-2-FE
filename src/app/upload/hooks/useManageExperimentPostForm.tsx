@@ -20,6 +20,7 @@ import { stopRecording } from '@/lib/mixpanelClient';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
+import useExtractKeywordsMutation from './useExtractKeywords';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;
@@ -31,6 +32,8 @@ interface useUploadExperimentPostProps {
   images: (File | string)[];
   setImages?: Dispatch<SetStateAction<(File | string)[]>>;
   setErrorMessage: Dispatch<SetStateAction<string>>;
+  setAddLink: Dispatch<SetStateAction<boolean>>;
+  setAddContact: Dispatch<SetStateAction<boolean>>;
 }
 
 const useManageExperimentPostForm = ({
@@ -43,6 +46,8 @@ const useManageExperimentPostForm = ({
   images,
   setImages,
   setErrorMessage,
+  setAddLink,
+  setAddContact,
 }: useUploadExperimentPostProps) => {
   const router = useRouter();
   const toast = useToast();
@@ -51,6 +56,7 @@ const useManageExperimentPostForm = ({
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
   const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
+  const { mutateAsync: extractKeywords } = useExtractKeywordsMutation();
 
   // 기존 공고 데이터 불러오기
   const {
@@ -156,6 +162,53 @@ const useManageExperimentPostForm = ({
     stopRecording();
   };
 
+  const extractKeywordsFromContent = async () => {
+    try {
+      const content = form.getValues('content');
+      const response = await extractKeywords(content);
+      const keywords = response.experimentPostKeywords;
+
+      //  단일 필드
+      if (keywords.reward) {
+        form.setValue('reward', keywords.reward);
+      }
+      if (keywords.matchType) {
+        form.setValue('matchType', keywords.matchType);
+      }
+      if (keywords.timeRequired) {
+        form.setValue('timeRequired', keywords.timeRequired);
+      }
+      if (keywords.count) {
+        form.setValue('count', keywords.count);
+      }
+
+      //  중첩된 필드: applyMethod
+      if (keywords.applyMethod) {
+        form.setValue('applyMethodInfo.content', keywords.applyMethod.content);
+        if (keywords.applyMethod.isFormUrl && keywords.applyMethod.formUrl) {
+          setAddLink(true);
+          form.setValue('applyMethodInfo.formUrl', keywords.applyMethod.formUrl);
+        }
+        if (keywords.applyMethod.isPhoneNum && keywords.applyMethod.phoneNum) {
+          setAddContact(true);
+          form.setValue('applyMethodInfo.phoneNum', keywords.applyMethod.phoneNum);
+        }
+      }
+
+      //  중첩된 필드: targetGroup
+      if (keywords.targetGroup) {
+        form.setValue('targetGroupInfo.startAge', keywords.targetGroup.startAge);
+        form.setValue('targetGroupInfo.endAge', keywords.targetGroup.endAge);
+        form.setValue('targetGroupInfo.genderType', keywords.targetGroup.genderType);
+        if (keywords.targetGroup.otherCondition) {
+          form.setValue('targetGroupInfo.otherCondition', keywords.targetGroup.otherCondition);
+        }
+      }
+    } catch (error) {
+      console.error('키워드 추출 실패:', error);
+    }
+  };
+
   return {
     form,
     handleSubmit: form.handleSubmit(handleSubmit),
@@ -166,6 +219,7 @@ const useManageExperimentPostForm = ({
     originExperimentError,
 
     originFormData,
+    extractKeywordsFromContent,
   };
 };
 
