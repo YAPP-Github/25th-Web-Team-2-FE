@@ -25,23 +25,30 @@ import { useToast } from '@/hooks/useToast';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 import useFunnel from '@/app/join/hooks/useFunnel';
+import ExtractKeywordButton from '../ExtractKeywordButton/ExtractKeywordButton';
+import { STEP } from '@/app/join/JoinPage.constants';
 
 interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
   setImages: (images: (string | File)[]) => void;
+  extractKeywordsFromContent?: () => Promise<void>;
 }
 
 const MAX_PHOTOS = 3;
 const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
-const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
+const DescriptionSection = ({
+  images,
+  setImages,
+  extractKeywordsFromContent,
+}: DescriptionSectionProps) => {
   const {
     control,
     setValue,
     getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
-  const { currentStepIdx } = useFunnel();
+  const { currentStepIdx, step } = useFunnel();
 
   const toast = useToast();
   const contentError = errors.content;
@@ -206,6 +213,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
               <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
+          {step === STEP.outline && <ExtractKeywordButton onClick={extractKeywordsFromContent} />}
 
           {/* 에러 메시지  */}
           {errors.content?.message && (
