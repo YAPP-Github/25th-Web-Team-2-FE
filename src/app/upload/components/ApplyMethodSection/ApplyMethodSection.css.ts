@@ -48,7 +48,6 @@ export const targetGroupContainer = style({
 
 export const ageInputContainer = recipe({
   base: {
-    maxWidth: '45.2rem',
     width: '100%',
     height: '4.8rem',
     display: 'flex',

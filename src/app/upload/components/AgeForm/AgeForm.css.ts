@@ -13,7 +13,7 @@ export const ageFormContainer = style({
 
 export const ageInput = style({
   ...fonts.label.large.R14,
-  width: '17.2rem',
+  width: '100%',
   height: '2.2rem',
   textAlign: 'center',
   border: 'none',
@@ -25,7 +25,6 @@ export const ageInput = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
-      maxWidth: '17.2rem',
       width: '100%',
     },
   },

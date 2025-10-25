@@ -10,7 +10,6 @@ export const textInputContainer = styleVariants({
 
     position: 'relative',
     width: '100%',
-    maxWidth: '45rem',
   },
   full: {
     display: 'flex',
@@ -18,7 +17,6 @@ export const textInputContainer = styleVariants({
 
     position: 'relative',
     width: '100%',
-    maxWidth: '93.6rem',
   },
 });
 
@@ -45,9 +43,6 @@ export const textInput = styleVariants({
     ':focus': {
       borderColor: colors.textAlert,
     },
-  },
-  limited: {
-    maxWidth: '45rem',
   },
 });
 
