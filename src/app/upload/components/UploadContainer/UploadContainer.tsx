@@ -36,17 +36,18 @@ const UploadContainer = () => {
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { form, handleSubmit, extractKeywordsFromContent } = useManageExperimentPostForm({
-    addLink,
-    addContact,
-    isOnCampus,
-    setOpenAlertModal,
-    images,
-    isEdit: false,
-    setErrorMessage,
-    setAddLink,
-    setAddContact,
-  });
+  const { form, handleSubmit, extractKeywordsFromContent, isExtracting } =
+    useManageExperimentPostForm({
+      addLink,
+      addContact,
+      isOnCampus,
+      setOpenAlertModal,
+      images,
+      isEdit: false,
+      setErrorMessage,
+      setAddLink,
+      setAddContact,
+    });
 
   // 자동 입력 필드 제외 isDirty 체크
   const isUserInputDirty = useMemo(() => {
@@ -82,6 +83,7 @@ const UploadContainer = () => {
                     images={images}
                     setImages={setImages}
                     extractKeywordsFromContent={extractKeywordsFromContent}
+                    isLoading={isExtracting}
                   />
                   <OutlineSection setIsOnCampus={setIsOnCampus} />
                 </div>

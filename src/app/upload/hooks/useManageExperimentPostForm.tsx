@@ -56,7 +56,7 @@ const useManageExperimentPostForm = ({
   const { mutateAsync: uploadImageMutation } = useUploadImagesMutation();
   const { mutateAsync: uploadExperimentPost } = useUploadExperimentPostMutation();
   const { mutateAsync: editExperimentPost } = useEditExperimentPostMutation();
-  const { mutateAsync: extractKeywords } = useExtractKeywordsMutation();
+  const { mutateAsync: extractKeywords, isPending: isExtracting } = useExtractKeywordsMutation();
 
   // 기존 공고 데이터 불러오기
   const {
@@ -220,6 +220,7 @@ const useManageExperimentPostForm = ({
 
     originFormData,
     extractKeywordsFromContent,
+    isExtracting,
   };
 };
 
