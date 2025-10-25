@@ -60,7 +60,7 @@ const UploadContainer = () => {
     isUserInputDirty,
   });
 
-  const { Funnel, currentStepIdx, steps, Step, step, FunnelProvider, goToNext, goToPrev } =
+  const { Funnel, currentStepIdx, Step, step, FunnelProvider, goToNext, goToPrev, isSubmitStep } =
     useFunnel(UPLOAD_STEP_LIST);
 
   return (
@@ -111,8 +111,13 @@ const UploadContainer = () => {
                   이전으로
                 </Button>
               )}
-              <Button variant="primary" size="small" width="20rem" onClick={goToNext}>
-                {currentStepIdx === steps.length - 2 ? '공고 등록하기' : '다음으로'}
+              <Button
+                variant="primary"
+                size="small"
+                width="20rem"
+                onClick={isSubmitStep ? handleSubmit : goToNext}
+              >
+                {isSubmitStep ? '공고 등록하기' : '다음으로'}
               </Button>
             </div>
           </div>

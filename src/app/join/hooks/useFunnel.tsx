@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { createContext, ReactElement, ReactNode, useContext, useMemo, useCallback } from 'react';
 
 import { StepType } from '../JoinPage.types';
+import { STEP } from '../JoinPage.constants';
 
 const DEFAULT_STEP = 'email';
 
@@ -39,6 +40,7 @@ interface FunnelState<T extends Steps = Steps> {
   goToPrev: () => void;
   goToNext: () => void;
   goToFirstStep: () => void;
+  isSubmitStep: boolean;
 }
 
 /**
@@ -58,6 +60,7 @@ const FunnelContext = createContext<FunnelState | null>(null);
  * @returns step: currentStep
  * @returns steps: 모든 step 배열
  * @returns currentStepIdx: 현재 단계 idx
+ * @returns isSubmitStep: 제출 가능한 step인지 여부 (success가 마지막 step인 경우 마지막 전 step에서 제출 가능)
  */
 const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
   const router = useRouter();
@@ -76,7 +79,12 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
 
   const totalSteps = targetSteps?.length ?? 0;
   const progress = totalSteps > 0 ? Math.round(((currentStepIdx + 1) / (totalSteps - 1)) * 100) : 0;
-  const isLast = currentStepIdx === (Array.isArray(targetSteps) ? targetSteps.length - 1 : 0);
+  const isLast = currentStepIdx === (Array.isArray(targetSteps) ? totalSteps - 1 : 0);
+
+  const isSubmitStep =
+    steps?.at(-1) === STEP.success
+      ? currentStepIdx === totalSteps - 2
+      : currentStepIdx === totalSteps - 1;
 
   const setStep = useCallback(
     (step: Steps[number]) => {
@@ -120,6 +128,7 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
         goToPrev,
         goToNext,
         goToFirstStep,
+        isSubmitStep,
       };
 
       return <FunnelContext.Provider value={contextValue}>{children}</FunnelContext.Provider>;
@@ -164,6 +173,7 @@ const useFunnel = <T extends Steps>(steps?: T): UseFunnelReturn<T> => {
     goToPrev,
     goToNext,
     goToFirstStep,
+    isSubmitStep,
   } as const;
 };
 

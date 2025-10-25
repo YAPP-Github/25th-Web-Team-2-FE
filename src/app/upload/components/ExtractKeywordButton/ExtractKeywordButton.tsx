@@ -13,7 +13,7 @@ const ExtractKeywordButton = ({ onClick, isLoading }: ExtractKeywordButtonProps)
   return (
     <button className={extractKeywordButtonWrapper} onClick={onClick} disabled={isLoading}>
       {isLoading ? (
-        <Spinner width={20} height={20} color={colors.field01} />
+        <Spinner width={22} height={22} color={colors.field01} />
       ) : (
         <div className={extractKeywordButtonInner}>
           <Icon icon="Stars" width={20} height={20} />
