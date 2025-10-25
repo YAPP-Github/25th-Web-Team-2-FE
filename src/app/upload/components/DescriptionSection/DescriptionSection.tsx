@@ -32,6 +32,7 @@ interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
   setImages: (images: (string | File)[]) => void;
   extractKeywordsFromContent?: () => Promise<void>;
+  isLoading?: boolean;
 }
 
 const MAX_PHOTOS = 3;
@@ -41,6 +42,7 @@ const DescriptionSection = ({
   images,
   setImages,
   extractKeywordsFromContent,
+  isLoading,
 }: DescriptionSectionProps) => {
   const {
     control,
@@ -114,8 +116,7 @@ const DescriptionSection = ({
     <>
       <div className={descriptionSectionLayout}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>1</span>어떤 실험인가요?{' '}
-          <span style={{ color: colors.textAlert }}>*</span>
+          어떤 실험인가요?&nbsp;<span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
         <div className={descriptionFormLayout}>
@@ -213,7 +214,9 @@ const DescriptionSection = ({
               <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
-          {step === STEP.outline && <ExtractKeywordButton onClick={extractKeywordsFromContent} />}
+          {step === STEP.outline && (
+            <ExtractKeywordButton onClick={extractKeywordsFromContent} isLoading={isLoading} />
+          )}
 
           {/* 에러 메시지  */}
           {errors.content?.message && (

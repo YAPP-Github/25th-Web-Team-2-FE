@@ -86,8 +86,7 @@ const OutlineSection = ({
   return (
     <div className={outlineSectionLayout}>
       <h3 className={uploadFormSectionTitle}>
-        <span className={headingIcon}>2</span>실험의 개요를 알려주세요{' '}
-        <span style={{ color: `${colors.textAlert}` }}>*</span>
+        실험의 개요를 알려주세요&nbsp;<span style={{ color: `${colors.textAlert}` }}>*</span>
       </h3>
 
       <div className={outlineFormLayout}>
@@ -182,26 +181,6 @@ const OutlineSection = ({
           />
         </div>
 
-        {/* 참여 보상 */}
-        <div>
-          <label className={label} htmlFor="reward">
-            참여 보상
-          </label>
-          <Controller
-            name="reward"
-            control={control}
-            render={({ field, fieldState }) => (
-              <InputForm
-                id="reward"
-                field={field}
-                error={fieldState.error}
-                placeholder="예) 현금 10,000원"
-                type="text"
-              />
-            )}
-          />
-        </div>
-
         {/* 실험 장소 */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'row nowrap' }}>
@@ -240,7 +219,7 @@ const OutlineSection = ({
                   control={control}
                   required
                   placeholder="학교명 검색"
-                  inputClassName={`${textInput.default} ${textInput.limited}`}
+                  inputClassName={textInput.default}
                 />
               )}
 
@@ -283,6 +262,26 @@ const OutlineSection = ({
               />
             </div>
           )}
+        </div>
+
+        {/* 참여 보상 */}
+        <div>
+          <label className={label} htmlFor="reward">
+            참여 보상
+          </label>
+          <Controller
+            name="reward"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputForm
+                id="reward"
+                field={field}
+                error={fieldState.error}
+                placeholder="예) 현금 10,000원"
+                type="text"
+              />
+            )}
+          />
         </div>
 
         {/* 소요 시간 */}

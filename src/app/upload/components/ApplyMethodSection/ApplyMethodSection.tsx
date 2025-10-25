@@ -59,8 +59,7 @@ const ApplyMethodSection = ({
       {/* 실험 참여 방법 */}
       <div className={applyMethodContainer}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>3</span>어떤 방법으로 신청을 받을까요?{' '}
-          <span style={{ color: colors.textAlert }}>*</span>
+          어떤 방법으로 신청을 받을까요?&nbsp;<span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
         <div className={applyMethodContentLayout}>
@@ -138,8 +137,7 @@ const ApplyMethodSection = ({
 
       {/* 모집 조건 */}
       <h3 className={uploadFormSectionTitle}>
-        <span className={headingIcon}>4</span>어떤 사람들을 모집하나요?{' '}
-        <span style={{ color: colors.textAlert }}>*</span>
+        어떤 사람들을 모집하나요?&nbsp;<span style={{ color: colors.textAlert }}>*</span>
       </h3>
       <div className={targetConditionLayout}>
         <div className={targetGroupContainer}>
