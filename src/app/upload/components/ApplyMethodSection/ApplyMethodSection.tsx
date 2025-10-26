@@ -21,7 +21,7 @@ import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import TextAreaForm from '../TextAreaForm/TextAreaForm';
-import { headingIcon, label } from '../UploadContainer/UploadContainer.css';
+import { label } from '../UploadContainer/UploadContainer.css';
 
 import { GENDER_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';

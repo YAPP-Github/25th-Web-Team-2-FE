@@ -8,6 +8,7 @@ import { convertLabelToValue, transformOriginFormData, uploadImages } from '../u
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
+import useExtractKeywordsMutation from './useExtractKeywords';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
@@ -20,7 +21,6 @@ import { stopRecording } from '@/lib/mixpanelClient';
 import UploadExperimentPostSchema, {
   UploadExperimentPostSchemaType,
 } from '@/schema/upload/uploadExperimentPostSchema';
-import useExtractKeywordsMutation from './useExtractKeywords';
 
 interface useUploadExperimentPostProps {
   isEdit: boolean;

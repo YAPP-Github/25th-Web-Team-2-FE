@@ -21,7 +21,7 @@ import { textInput } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
-import { headingIcon, label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
+import { label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
 import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';

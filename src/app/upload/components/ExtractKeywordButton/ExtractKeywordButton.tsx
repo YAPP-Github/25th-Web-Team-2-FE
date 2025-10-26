@@ -1,5 +1,6 @@
-import Icon from '@/components/Icon';
 import { extractKeywordButtonInner, extractKeywordButtonWrapper } from './ExtractKeywordButton.css';
+
+import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
 import { colors } from '@/styles/colors';
 

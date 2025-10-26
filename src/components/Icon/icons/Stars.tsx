@@ -1,5 +1,6 @@
-import { colors } from '@/styles/colors';
 import { SVGProps } from 'react';
+
+import { colors } from '@/styles/colors';
 
 function Stars(props: SVGProps<SVGSVGElement>) {
   return (

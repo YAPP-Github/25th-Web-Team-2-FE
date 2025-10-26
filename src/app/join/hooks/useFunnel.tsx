@@ -3,8 +3,8 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createContext, ReactElement, ReactNode, useContext, useMemo, useCallback } from 'react';
 
-import { StepType } from '../JoinPage.types';
 import { STEP } from '../JoinPage.constants';
+import { StepType } from '../JoinPage.types';
 
 const DEFAULT_STEP = 'email';
 
