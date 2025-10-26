@@ -26,7 +26,7 @@ const useMatchType = ({ setIsOnCampus }: UseMatchTypeProps) => {
       setValue('region', null);
       setValue('area', null);
       setValue('place', null);
-      setValue('detailedAddress', '');
+      setValue('detailedAddress', null);
       setValue('isOnCampus', false);
       setIsOnCampus?.(false);
     } else {
