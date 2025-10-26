@@ -65,3 +65,4 @@ export { default as Check } from './Check';
 export { default as Profile } from './Profile';
 export { default as AllMenu } from './AllMenu';
 export { default as Stars } from './Stars';
+export { default as TwinkleStars } from './TwinkleStars';
