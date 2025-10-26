@@ -48,7 +48,7 @@ const OutlineSection = ({
   useUserResearcherInfo();
 
   // 진행 방식 선택 로직
-  const { selectedMatchType, handleMatchTypeChange } = useMatchType();
+  const { selectedMatchType, handleMatchTypeChange } = useMatchType({ setIsOnCampus });
 
   // 지역 선택 로직
   const {
@@ -187,25 +187,27 @@ const OutlineSection = ({
             <label className={label} htmlFor="place">
               실험 장소
             </label>
-            <div>
-              <Controller
-                name="isOnCampus"
-                control={control}
-                render={({ field }) => (
-                  <CheckboxWithIcon
-                    checked={field.value}
-                    onChange={() => {
-                      const newValue = !field.value;
-                      field.onChange(newValue);
-                      setIsOnCampus?.(newValue);
-                    }}
-                    label="교내 실험"
-                    align="left"
-                    size="large"
-                  />
-                )}
-              />
-            </div>
+            {selectedMatchType !== MATCH_TYPE.ONLINE && (
+              <div>
+                <Controller
+                  name="isOnCampus"
+                  control={control}
+                  render={({ field }) => (
+                    <CheckboxWithIcon
+                      checked={field.value}
+                      onChange={() => {
+                        const newValue = !field.value;
+                        field.onChange(newValue);
+                        setIsOnCampus?.(newValue);
+                      }}
+                      label="교내 실험"
+                      align="left"
+                      size="large"
+                    />
+                  )}
+                />
+              </div>
+            )}
           </div>
 
           {selectedMatchType === MATCH_TYPE.ONLINE ? (
