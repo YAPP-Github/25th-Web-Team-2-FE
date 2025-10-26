@@ -52,7 +52,7 @@ const OutlineSection = ({
   useUserResearcherInfo();
 
   // 진행 방식 선택 로직
-  const { selectedMatchType, handleMatchTypeChange } = useMatchType();
+  const { selectedMatchType, handleMatchTypeChange } = useMatchType({ setIsOnCampus });
 
   // 지역 선택 로직
   const {
