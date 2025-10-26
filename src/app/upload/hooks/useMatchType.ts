@@ -1,11 +1,16 @@
 import { usePathname } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
-const useMatchType = () => {
+interface UseMatchTypeProps {
+  setIsOnCampus?: Dispatch<SetStateAction<boolean>>;
+}
+
+const useMatchType = ({ setIsOnCampus }: UseMatchTypeProps) => {
   const pathname = usePathname();
   const isEdit = pathname.startsWith('/edit');
   const { control, setValue } = useFormContext();
@@ -21,7 +26,9 @@ const useMatchType = () => {
       setValue('region', null);
       setValue('area', null);
       setValue('place', null);
-      setValue('detailedAddress', '');
+      setValue('detailedAddress', null);
+      setValue('isOnCampus', false);
+      setIsOnCampus?.(false);
     } else {
       setValue('region', '');
       setValue('area', '');
