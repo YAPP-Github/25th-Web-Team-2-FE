@@ -45,5 +45,7 @@ export const config = {
     '/user/profile/:path*',
     '/user/leave/:path*',
     '/post/:path*',
+    '/upload/:path*',
+    '/edit/:path*',
   ],
 };
