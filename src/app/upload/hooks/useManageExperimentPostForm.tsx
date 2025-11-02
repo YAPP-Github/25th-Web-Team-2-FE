@@ -205,6 +205,8 @@ const useManageExperimentPostForm = ({
         }
       }
     } catch (error) {
+      // TODO: 키워드 추출 실패 시 에러 처리
+      // eslint-disable-next-line no-console
       console.error('키워드 추출 실패:', error);
     }
   };
