@@ -20,9 +20,10 @@ const ExtractKeywordButton = ({ onClick, isPending }: ExtractKeywordButtonProps)
   });
 
   const isButtonLoading = isPending || isLoading;
+  const isButtonDisabled = isLoading || data?.remainingCount === 0;
 
   return (
-    <button className={extractKeywordButtonWrapper} onClick={onClick} disabled={isLoading}>
+    <button className={extractKeywordButtonWrapper} onClick={onClick} disabled={isButtonDisabled}>
       {isButtonLoading ? (
         <Spinner width={22} height={22} color={colors.field01} />
       ) : (
