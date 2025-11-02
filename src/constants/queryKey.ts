@@ -37,4 +37,5 @@ export const queryKey = {
       [...queryKey.myPosts.all, 'infinite', count, order] as const,
   },
   univSearch: (query: string) => ['univSearch', query] as const,
+  extractKeywordsLimit: ['extractKeywordsLimit'] as const,
 };

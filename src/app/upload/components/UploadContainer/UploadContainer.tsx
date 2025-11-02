@@ -83,7 +83,7 @@ const UploadContainer = () => {
                   <OutlineSection
                     setIsOnCampus={setIsOnCampus}
                     extractKeywordsFromContent={extractKeywordsFromContent}
-                    isLoading={isExtracting}
+                    isPending={isExtracting}
                   />
                 </div>
               </Step>

@@ -37,7 +37,7 @@ interface OutlineSectionProps {
   isRecruitStatus?: boolean;
   setIsOnCampus?: Dispatch<SetStateAction<boolean>>;
   extractKeywordsFromContent?: () => Promise<void>;
-  isLoading?: boolean;
+  isPending?: boolean;
 }
 
 const OutlineSection = ({
@@ -46,7 +46,7 @@ const OutlineSection = ({
   isRecruitStatus = true,
   setIsOnCampus,
   extractKeywordsFromContent,
-  isLoading,
+  isPending,
 }: OutlineSectionProps) => {
   const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -96,7 +96,7 @@ const OutlineSection = ({
           <h3>실험의 개요를 알려주세요&nbsp;</h3>
           <span style={{ color: `${colors.textAlert}` }}>*</span>
         </div>
-        <ExtractKeywordButton onClick={extractKeywordsFromContent} isLoading={isLoading} />
+        <ExtractKeywordButton onClick={extractKeywordsFromContent} isPending={isPending} />
       </div>
       <div className={outlineFormLayout}>
         {/* 연구 책임자 */}

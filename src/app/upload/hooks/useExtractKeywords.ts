@@ -1,8 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import { GenderType, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 
 export interface ExtractKeywordResponse {
@@ -46,6 +47,7 @@ export interface ApplyMethodKeyword {
 }
 
 const useExtractKeywordsMutation = () => {
+  const queryClient = useQueryClient();
   const mutationKey = API_URL.extractKeywords;
   const mutationFn = async (text: string) =>
     await fetchClient.post<ExtractKeywordResponse>(mutationKey, {
@@ -55,6 +57,9 @@ const useExtractKeywordsMutation = () => {
   return useMutation<ExtractKeywordResponse, CustomError, string>({
     mutationKey: [mutationKey],
     mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKey.extractKeywordsLimit });
+    },
   });
 };
 
