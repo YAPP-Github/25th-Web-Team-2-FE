@@ -79,7 +79,11 @@ const UploadContainer = () => {
               {/* 실험 개요 */}
               <Step name={STEP.outline}>
                 <div style={{ display: 'flex', gap: '1.6rem' }}>
-                  <DescriptionSection images={images} setImages={setImages} />
+                  <DescriptionSection
+                    images={images}
+                    setImages={setImages}
+                    isLoading={isExtracting}
+                  />
                   <OutlineSection
                     setIsOnCampus={setIsOnCampus}
                     extractKeywordsFromContent={extractKeywordsFromContent}
