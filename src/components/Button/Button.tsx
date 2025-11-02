@@ -4,7 +4,7 @@ import { buttonRecipe } from './Button.css';
 import Spinner from '../Spinner/Spinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: 'primary' | 'secondary' | 'dark';
+  variant: 'primary' | 'secondary' | 'dark' | 'neutral';
   size: 'small' | 'medium';
   children: React.ReactNode;
   width?: CSSProperties['width'];
@@ -39,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={{ width, height }}
         {...props}
       >
-        {isLoading ? <Spinner /> : children}
+        {isLoading ? <Spinner width={24} height={24} /> : children}
       </button>
     );
   },

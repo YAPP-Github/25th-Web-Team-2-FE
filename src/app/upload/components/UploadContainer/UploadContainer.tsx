@@ -4,18 +4,20 @@ import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import {
-  buttonVariants,
   buttonContainer,
   uploadContentLayout,
   uploadLayout,
-  headerTitle,
-  headerSubTitle,
+  uploadContainerLayout,
 } from './UploadContainer.css';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
+import ProgressBarSection from '../ProgressBarSection/ProgressBarSection';
 
+import useFunnel from '@/app/join/hooks/useFunnel';
+import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
+import Button from '@/components/Button/Button';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
@@ -34,15 +36,18 @@ const UploadContainer = () => {
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { form, handleSubmit } = useManageExperimentPostForm({
-    addLink,
-    addContact,
-    isOnCampus,
-    setOpenAlertModal,
-    images,
-    isEdit: false,
-    setErrorMessage,
-  });
+  const { form, handleSubmit, extractKeywordsFromContent, isExtracting } =
+    useManageExperimentPostForm({
+      addLink,
+      addContact,
+      isOnCampus,
+      setOpenAlertModal,
+      images,
+      isEdit: false,
+      setErrorMessage,
+      setAddLink,
+      setAddContact,
+    });
 
   // 자동 입력 필드 제외 isDirty 체크
   const isUserInputDirty = useMemo(() => {
@@ -51,75 +56,101 @@ const UploadContainer = () => {
     );
   }, [form.formState.dirtyFields]);
 
-  const { isLeaveConfirmModalOpen, handleBackClick, handleCancelLeave, handleConfirmLeave } =
-    useLeaveConfirmModal({ isUserInputDirty });
+  const { isLeaveConfirmModalOpen, handleCancelLeave, handleConfirmLeave } = useLeaveConfirmModal({
+    isUserInputDirty,
+  });
+
+  const { Funnel, currentStepIdx, Step, step, FunnelProvider, goToNext, goToPrev, isSubmitStep } =
+    useFunnel(UPLOAD_STEP_LIST);
 
   return (
-    <FormProvider {...form}>
-      <div className={uploadLayout}>
-        <div>
-          <h2 className={headerTitle}>실험에 대한 정보를 입력해 주세요</h2>
-          <p className={headerSubTitle}>구체적일수록 참여자 매칭 확률이 높아져요</p>
-        </div>
+    <section className={uploadContainerLayout({ step })}>
+      <FormProvider {...form}>
+        <FunnelProvider>
+          <ProgressBarSection />
+          <div className={uploadLayout}>
+            <Funnel>
+              {/* 실험 설명 */}
+              <Step name={STEP.description}>
+                <div className={uploadContentLayout}>
+                  <DescriptionSection images={images} setImages={setImages} />
+                </div>
+              </Step>
+              {/* 실험 개요 */}
+              <Step name={STEP.outline}>
+                <div style={{ display: 'flex', gap: '1.6rem' }}>
+                  <DescriptionSection
+                    images={images}
+                    setImages={setImages}
+                    isLoading={isExtracting}
+                  />
+                  <OutlineSection
+                    setIsOnCampus={setIsOnCampus}
+                    extractKeywordsFromContent={extractKeywordsFromContent}
+                    isPending={isExtracting}
+                  />
+                </div>
+              </Step>
+              {/* 실험 참여 방법 */}
+              <Step name={STEP.applyMethod}>
+                <div style={{ display: 'flex', gap: '1.6rem' }}>
+                  <DescriptionSection images={images} setImages={setImages} />
+                  <ApplyMethodSection
+                    addLink={addLink}
+                    setAddLink={setAddLink}
+                    addContact={addContact}
+                    setAddContact={setAddContact}
+                  />
+                </div>
+              </Step>
+            </Funnel>
+            {/* 버튼 */}
+            <div className={buttonContainer}>
+              {currentStepIdx > 0 && (
+                <Button variant="neutral" size="small" width="8.4rem" onClick={goToPrev}>
+                  이전으로
+                </Button>
+              )}
+              <Button
+                variant="primary"
+                size="small"
+                width="20rem"
+                onClick={isSubmitStep ? handleSubmit : goToNext}
+              >
+                {isSubmitStep ? '공고 등록하기' : '다음으로'}
+              </Button>
+            </div>
+          </div>
+        </FunnelProvider>
 
-        <div className={uploadContentLayout}>
-          {/* 실험 설명 */}
-          <DescriptionSection images={images} setImages={setImages} />
+        {/* 공고 등록 실패 시 alert Modal */}
+        <AlertModal
+          title="공고 등록에 실패했어요"
+          description={errorMessage ?? '시간을 두고 다시 시도해 주세요'}
+          open={openAlertModal}
+          onOpenChange={setOpenAlertModal}
+          handleCloseModal={() => {
+            setOpenAlertModal(false);
+          }}
+        />
 
-          {/* 실험 개요 */}
-          <OutlineSection setIsOnCampus={setIsOnCampus} />
-
-          {/* 실험 참여 방법 */}
-          <ApplyMethodSection
-            addLink={addLink}
-            setAddLink={setAddLink}
-            addContact={addContact}
-            setAddContact={setAddContact}
-          />
-        </div>
-
-        {/* 버튼 */}
-        <div className={buttonContainer}>
-          <button
-            className={buttonVariants.active}
-            onClick={() => handleBackClick({ goHome: false })}
-          >
-            이전으로
-          </button>
-
-          <button className={buttonVariants.upload} onClick={handleSubmit} type="submit">
-            {form.formState.isSubmitting ? '공고 등록 중' : '공고 등록하기'}
-          </button>
-        </div>
-      </div>
-
-      {/* 공고 등록 실패 시 alert Modal */}
-      <AlertModal
-        title="공고 등록에 실패했어요"
-        description={errorMessage ?? '시간을 두고 다시 시도해 주세요'}
-        open={openAlertModal}
-        onOpenChange={setOpenAlertModal}
-        handleCloseModal={() => {
-          setOpenAlertModal(false);
-        }}
-      />
-
-      {/* 공고 등록 중 이탈 시 confirmModal */}
-      <ConfirmModal
-        isOpen={isLeaveConfirmModalOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            handleCancelLeave();
-          }
-        }}
-        confirmTitle="페이지에서 나가시겠어요?"
-        descriptionText="입력한 내용은 따로 저장되지 않아요"
-        cancelText="취소"
-        confirmText="나가기"
-        confirmButtonColor={colors.field09}
-        onConfirm={() => handleConfirmLeave({ goHome: false })}
-      />
-    </FormProvider>
+        {/* 공고 등록 중 이탈 시 confirmModal */}
+        <ConfirmModal
+          isOpen={isLeaveConfirmModalOpen}
+          onOpenChange={(open) => {
+            if (!open) {
+              handleCancelLeave();
+            }
+          }}
+          confirmTitle="페이지에서 나가시겠어요?"
+          descriptionText="입력한 내용은 따로 저장되지 않아요"
+          cancelText="취소"
+          confirmText="나가기"
+          confirmButtonColor={colors.field09}
+          onConfirm={() => handleConfirmLeave({ goHome: false })}
+        />
+      </FormProvider>
+    </section>
   );
 };
 

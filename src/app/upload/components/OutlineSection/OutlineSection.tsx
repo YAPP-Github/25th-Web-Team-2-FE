@@ -7,6 +7,8 @@ import {
   outlineFormLayout,
   uploadInputContainer,
   uploadSelectInputContainer,
+  outlineSectionLayout,
+  uploadFormSectionHeader,
 } from './OutlineSection.css';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
@@ -15,17 +17,13 @@ import useRegionSelect from '../../hooks/useRegionSelect';
 import useUserResearcherInfo from '../../hooks/useUserResearcherInfo';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import ExtractKeywordButton from '../ExtractKeywordButton/ExtractKeywordButton';
 import InputForm from '../InputForm/InputForm';
 import { textInput } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
-import {
-  headingIcon,
-  label,
-  uploadFormSectionTitle,
-  uploadSectionLayout,
-} from '../UploadContainer/UploadContainer.css';
+import { label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
 import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
@@ -38,6 +36,8 @@ interface OutlineSectionProps {
   durationChecked?: boolean;
   isRecruitStatus?: boolean;
   setIsOnCampus?: Dispatch<SetStateAction<boolean>>;
+  extractKeywordsFromContent?: () => Promise<void>;
+  isPending?: boolean;
 }
 
 const OutlineSection = ({
@@ -45,6 +45,8 @@ const OutlineSection = ({
   durationChecked = false,
   isRecruitStatus = true,
   setIsOnCampus,
+  extractKeywordsFromContent,
+  isPending,
 }: OutlineSectionProps) => {
   const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -88,12 +90,14 @@ const OutlineSection = ({
   const isOnCampus = useWatch({ name: 'isOnCampus', control });
 
   return (
-    <div className={uploadSectionLayout}>
-      <h3 className={uploadFormSectionTitle}>
-        <span className={headingIcon}>2</span>실험의 개요를 알려주세요{' '}
-        <span style={{ color: `${colors.textAlert}` }}>*</span>
-      </h3>
-
+    <div className={outlineSectionLayout}>
+      <div className={uploadFormSectionHeader}>
+        <div className={uploadFormSectionTitle}>
+          <h3>실험의 개요를 알려주세요&nbsp;</h3>
+          <span style={{ color: `${colors.textAlert}` }}>*</span>
+        </div>
+        <ExtractKeywordButton onClick={extractKeywordsFromContent} isPending={isPending} />
+      </div>
       <div className={outlineFormLayout}>
         {/* 연구 책임자 */}
         <div>
@@ -186,26 +190,6 @@ const OutlineSection = ({
           />
         </div>
 
-        {/* 참여 보상 */}
-        <div>
-          <label className={label} htmlFor="reward">
-            참여 보상
-          </label>
-          <Controller
-            name="reward"
-            control={control}
-            render={({ field, fieldState }) => (
-              <InputForm
-                id="reward"
-                field={field}
-                error={fieldState.error}
-                placeholder="예) 현금 10,000원"
-                type="text"
-              />
-            )}
-          />
-        </div>
-
         {/* 실험 장소 */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', flexFlow: 'row nowrap' }}>
@@ -246,7 +230,7 @@ const OutlineSection = ({
                   control={control}
                   required
                   placeholder="학교명 검색"
-                  inputClassName={`${textInput.default} ${textInput.limited}`}
+                  inputClassName={textInput.default}
                 />
               )}
 
@@ -289,6 +273,26 @@ const OutlineSection = ({
               />
             </div>
           )}
+        </div>
+
+        {/* 참여 보상 */}
+        <div>
+          <label className={label} htmlFor="reward">
+            참여 보상
+          </label>
+          <Controller
+            name="reward"
+            control={control}
+            render={({ field, fieldState }) => (
+              <InputForm
+                id="reward"
+                field={field}
+                error={fieldState.error}
+                placeholder="예) 현금 10,000원"
+                type="text"
+              />
+            )}
+          />
         </div>
 
         {/* 소요 시간 */}
