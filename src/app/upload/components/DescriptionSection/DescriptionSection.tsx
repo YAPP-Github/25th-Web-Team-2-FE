@@ -17,12 +17,10 @@ import {
   uploadFormSectionTitle,
   uploadImagesContainer,
 } from './DescriptionSection.css';
-import ExtractKeywordButton from '../ExtractKeywordButton/ExtractKeywordButton';
 import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
-import { STEP } from '@/app/join/JoinPage.constants';
 import Icon from '@/components/Icon';
 import { dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
 import { useToast } from '@/hooks/useToast';
@@ -40,19 +38,14 @@ interface DescriptionSectionProps {
 const MAX_PHOTOS = 3;
 const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
-const DescriptionSection = ({
-  images,
-  setImages,
-  extractKeywordsFromContent,
-  isLoading,
-}: DescriptionSectionProps) => {
+const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSectionProps) => {
   const {
     control,
     setValue,
     getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
-  const { currentStepIdx, step } = useFunnel();
+  const { currentStepIdx } = useFunnel();
 
   const toast = useToast();
   const contentError = errors.content;
@@ -216,9 +209,6 @@ const DescriptionSection = ({
               <p className={fileInfoText}>jpg, png 최대 3장까지 첨부할 수 있어요</p>
             </div>
           </div>
-          {step === STEP.outline && (
-            <ExtractKeywordButton onClick={extractKeywordsFromContent} isLoading={isLoading} />
-          )}
 
           {/* 에러 메시지  */}
           {errors.content?.message && (

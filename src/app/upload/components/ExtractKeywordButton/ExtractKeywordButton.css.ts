@@ -6,10 +6,18 @@ import { fonts } from '@/styles/fonts.css';
 export const extractKeywordButtonWrapper = style({
   ...fonts.label.large.SB14,
   color: colors.field01,
-  padding: '1rem',
-  borderRadius: '0.8rem',
+  width: '18rem',
+  padding: '0.6rem 1.2rem',
+  borderRadius: '1.2rem',
   background: 'linear-gradient(to right, #3EBBC4, #D768E2)',
-  marginTop: '1.2rem',
+
+  selectors: {
+    '&:disabled': {
+      color: colors.text01,
+      background: colors.field06,
+      cursor: 'not-allowed',
+    },
+  },
 });
 
 export const extractKeywordButtonInner = style({

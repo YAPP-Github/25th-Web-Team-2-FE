@@ -79,13 +79,12 @@ const UploadContainer = () => {
               {/* 실험 개요 */}
               <Step name={STEP.outline}>
                 <div style={{ display: 'flex', gap: '1.6rem' }}>
-                  <DescriptionSection
-                    images={images}
-                    setImages={setImages}
+                  <DescriptionSection images={images} setImages={setImages} />
+                  <OutlineSection
+                    setIsOnCampus={setIsOnCampus}
                     extractKeywordsFromContent={extractKeywordsFromContent}
                     isLoading={isExtracting}
                   />
-                  <OutlineSection setIsOnCampus={setIsOnCampus} />
                 </div>
               </Step>
               {/* 실험 참여 방법 */}
@@ -99,9 +98,6 @@ const UploadContainer = () => {
                     setAddContact={setAddContact}
                   />
                 </div>
-              </Step>
-              <Step name={STEP.success}>
-                <div className={uploadContentLayout}>success</div>
               </Step>
             </Funnel>
             {/* 버튼 */}

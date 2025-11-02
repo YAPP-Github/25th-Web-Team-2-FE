@@ -8,6 +8,7 @@ import {
   uploadInputContainer,
   uploadSelectInputContainer,
   outlineSectionLayout,
+  uploadFormSectionHeader,
 } from './OutlineSection.css';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
@@ -16,6 +17,7 @@ import useRegionSelect from '../../hooks/useRegionSelect';
 import useUserResearcherInfo from '../../hooks/useUserResearcherInfo';
 import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
+import ExtractKeywordButton from '../ExtractKeywordButton/ExtractKeywordButton';
 import InputForm from '../InputForm/InputForm';
 import { textInput } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
@@ -34,6 +36,8 @@ interface OutlineSectionProps {
   durationChecked?: boolean;
   isRecruitStatus?: boolean;
   setIsOnCampus?: Dispatch<SetStateAction<boolean>>;
+  extractKeywordsFromContent?: () => Promise<void>;
+  isLoading?: boolean;
 }
 
 const OutlineSection = ({
@@ -41,6 +45,8 @@ const OutlineSection = ({
   durationChecked = false,
   isRecruitStatus = true,
   setIsOnCampus,
+  extractKeywordsFromContent,
+  isLoading,
 }: OutlineSectionProps) => {
   const { control, setValue } = useFormContext<UploadExperimentPostSchemaType>();
 
@@ -85,10 +91,13 @@ const OutlineSection = ({
 
   return (
     <div className={outlineSectionLayout}>
-      <h3 className={uploadFormSectionTitle}>
-        실험의 개요를 알려주세요&nbsp;<span style={{ color: `${colors.textAlert}` }}>*</span>
-      </h3>
-
+      <div className={uploadFormSectionHeader}>
+        <div className={uploadFormSectionTitle}>
+          <h3>실험의 개요를 알려주세요&nbsp;</h3>
+          <span style={{ color: `${colors.textAlert}` }}>*</span>
+        </div>
+        <ExtractKeywordButton onClick={extractKeywordsFromContent} isLoading={isLoading} />
+      </div>
       <div className={outlineFormLayout}>
         {/* 연구 책임자 */}
         <div>

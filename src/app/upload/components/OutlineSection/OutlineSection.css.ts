@@ -11,6 +11,13 @@ export const outlineSectionLayout = style({
   flex: 1,
 });
 
+export const uploadFormSectionHeader = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '1.6rem',
+});
+
 export const outlineFormLayout = style({
   display: 'grid',
   gridTemplateColumns: '1fr',

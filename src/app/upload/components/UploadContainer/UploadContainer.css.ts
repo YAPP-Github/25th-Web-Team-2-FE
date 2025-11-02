@@ -61,10 +61,8 @@ export const headerSubTitle = style({
 export const uploadFormSectionTitle = style({
   ...fonts.title.small.SB18,
   display: 'flex',
-  flexFlow: 'row nowrap',
+  flexWrap: 'nowrap',
   alignItems: 'center',
-  gap: '0.8rem',
-  marginBottom: '2rem',
 });
 
 export const uploadContentLayout = style({
