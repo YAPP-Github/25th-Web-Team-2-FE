@@ -6,6 +6,7 @@ import { fetchExtractKeywordsLimit } from '@/apis/post';
 import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
 import { queryKey } from '@/constants/queryKey';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
 
 interface ExtractKeywordButtonProps {
@@ -22,8 +23,19 @@ const ExtractKeywordButton = ({ onClick, isPending }: ExtractKeywordButtonProps)
   const isButtonLoading = isPending || isLoading;
   const isButtonDisabled = isLoading || data?.remainingCount === 0;
 
+  const handleClick = () => {
+    onClick?.();
+    trackEvent('Button Click', {
+      action: 'AI Extract Keywords',
+    });
+  };
+
   return (
-    <button className={extractKeywordButtonWrapper} onClick={onClick} disabled={isButtonDisabled}>
+    <button
+      className={extractKeywordButtonWrapper}
+      onClick={handleClick}
+      disabled={isButtonDisabled}
+    >
       {isButtonLoading ? (
         <Spinner width={22} height={22} color={colors.field01} />
       ) : (
