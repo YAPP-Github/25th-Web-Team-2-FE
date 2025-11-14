@@ -18,6 +18,8 @@ import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import { PATH } from '@/constants/path';
 import { isMobile } from '@/utils/deviceType';
 
+const IS_PROMOTION_POPUP_VIEWED = 'IS_PROMOTION_POPUP_VIEWED';
+
 interface PostCardListContainerProps {
   initialPosts: ExperimentPostResponse;
   participantInfo: ParticipantResponse | null;
@@ -44,8 +46,9 @@ const ExperimentPostCardListContainer = ({
   const hasPost = postListData && postListData.pages[0].content.length > 0;
 
   useEffect(() => {
-    if (isResearcher && !localStorage.getItem('IS_PROMOTION_POPUP_VIEWED')) {
-      localStorage.setItem('IS_PROMOTION_POPUP_VIEWED', 'true');
+    // NOTE: localStorage 사용처가 더 생기면 추상화 고려 (+ key 관리)
+    if (isResearcher && localStorage.getItem(IS_PROMOTION_POPUP_VIEWED) === null) {
+      localStorage.setItem(IS_PROMOTION_POPUP_VIEWED, 'true');
       setShowPromotionPopup(true);
     }
   }, [isResearcher]);
