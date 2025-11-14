@@ -38,9 +38,9 @@ const ExperimentPostCardListContainer = ({
     isFetchingNextPage,
   } = useExperimentPostListQuery({ filters, enabled: isAutoFilled, initialData: initialPosts });
   const { isResearcher } = useUserInfo();
-  const [showPromotionPopup, setShowPromotionPopup] = useState(false);
   const router = useRouter();
 
+  const [showPromotionPopup, setShowPromotionPopup] = useState(false);
   const observerRef = useRef<HTMLDivElement>(null);
 
   const hasPost = postListData && postListData.pages[0].content.length > 0;
