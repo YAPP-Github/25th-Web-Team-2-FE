@@ -31,8 +31,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const isEdit = pathname.startsWith('/edit');
   const router = useRouter();
 
-  const [addLink, setAddLink] = useState<boolean>(false);
-  const [addContact, setAddContact] = useState<boolean>(false);
   const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
 
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
@@ -48,15 +46,11 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     useManageExperimentPostForm({
       isEdit,
       postId: params.postId,
-      addLink,
-      addContact,
       isOnCampus,
       setOpenAlertModal: setOpenSubmitAlertDialog,
       images,
       setImages,
       setErrorMessage,
-      setAddLink,
-      setAddContact,
     });
 
   const isUserInputDirty = form.formState.isDirty;
@@ -84,9 +78,13 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   useEffect(() => {
     if (applyMethodData) {
-      setAddLink(!!applyMethodData.formUrl);
-      setAddContact(!!applyMethodData.phoneNum);
+      form.reset({
+        ...form.getValues(),
+        addLink: !!applyMethodData.formUrl,
+        addContact: !!applyMethodData.phoneNum,
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applyMethodData]);
 
   const experimentDateChecked =
@@ -130,12 +128,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
               <Step name={STEP.applyMethod}>
                 <div style={{ display: 'flex', gap: '1.6rem' }}>
                   <DescriptionSection images={images} setImages={setImages} />
-                  <ApplyMethodSection
-                    addLink={addLink}
-                    setAddLink={setAddLink}
-                    addContact={addContact}
-                    setAddContact={setAddContact}
-                  />
+                  <ApplyMethodSection />
                 </div>
               </Step>
             </Funnel>

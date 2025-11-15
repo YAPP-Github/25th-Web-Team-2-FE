@@ -27,8 +27,6 @@ import { colors } from '@/styles/colors';
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 
 const UploadContainer = () => {
-  const [addLink, setAddLink] = useState<boolean>(false);
-  const [addContact, setAddContact] = useState<boolean>(false);
   const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
 
   const [images, setImages] = useState<(File | string)[]>([]);
@@ -38,15 +36,10 @@ const UploadContainer = () => {
 
   const { form, handleSubmit, extractKeywordsFromContent, isExtracting } =
     useManageExperimentPostForm({
-      addLink,
-      addContact,
       isOnCampus,
       setOpenAlertModal,
       images,
-      isEdit: false,
       setErrorMessage,
-      setAddLink,
-      setAddContact,
     });
 
   // 자동 입력 필드 제외 isDirty 체크
@@ -95,12 +88,7 @@ const UploadContainer = () => {
               <Step name={STEP.applyMethod}>
                 <div style={{ display: 'flex', gap: '1.6rem' }}>
                   <DescriptionSection images={images} setImages={setImages} />
-                  <ApplyMethodSection
-                    addLink={addLink}
-                    setAddLink={setAddLink}
-                    addContact={addContact}
-                    setAddContact={setAddContact}
-                  />
+                  <ApplyMethodSection />
                 </div>
               </Step>
             </Funnel>
