@@ -83,4 +83,6 @@ export const EXPERIMENT_POST_DEFAULT_VALUES = {
   },
   alarmAgree: false,
   isOnCampus: true,
+  addLink: false,
+  addContact: false,
 };

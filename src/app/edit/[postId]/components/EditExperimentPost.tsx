@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FormProvider, useWatch } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
@@ -31,10 +31,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const isEdit = pathname.startsWith('/edit');
   const router = useRouter();
 
-  const [addLink, setAddLink] = useState<boolean>(false);
-  const [addContact, setAddContact] = useState<boolean>(false);
-  const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
-
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
 
@@ -48,27 +44,17 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     useManageExperimentPostForm({
       isEdit,
       postId: params.postId,
-      addLink,
-      addContact,
-      isOnCampus,
       setOpenAlertModal: setOpenSubmitAlertDialog,
       images,
       setImages,
       setErrorMessage,
-      setAddLink,
-      setAddContact,
     });
 
   const isUserInputDirty = form.formState.isDirty;
-  const isOnCampusValue = useWatch({ name: 'isOnCampus', control: form.control });
 
   const { isLeaveConfirmModalOpen, handleCancelLeave, handleConfirmLeave } = useLeaveConfirmModal({
     isUserInputDirty,
   });
-
-  useEffect(() => {
-    setIsOnCampus(isOnCampusValue);
-  }, [isOnCampusValue, isUserInputDirty]);
 
   useEffect(() => {
     if (originExperimentError) {
@@ -84,9 +70,13 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
 
   useEffect(() => {
     if (applyMethodData) {
-      setAddLink(!!applyMethodData.formUrl);
-      setAddContact(!!applyMethodData.phoneNum);
+      form.reset({
+        ...form.getValues(),
+        addLink: !!applyMethodData.formUrl,
+        addContact: !!applyMethodData.phoneNum,
+      });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applyMethodData]);
 
   const experimentDateChecked =
@@ -122,7 +112,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
                     experimentDateChecked={experimentDateChecked}
                     durationChecked={durationChecked}
                     isRecruitStatus={isRecruitStatus}
-                    setIsOnCampus={setIsOnCampus}
                   />
                 </div>
               </Step>
@@ -130,12 +119,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
               <Step name={STEP.applyMethod}>
                 <div style={{ display: 'flex', gap: '1.6rem' }}>
                   <DescriptionSection images={images} setImages={setImages} />
-                  <ApplyMethodSection
-                    addLink={addLink}
-                    setAddLink={setAddLink}
-                    addContact={addContact}
-                    setAddContact={setAddContact}
-                  />
+                  <ApplyMethodSection />
                 </div>
               </Step>
             </Funnel>
