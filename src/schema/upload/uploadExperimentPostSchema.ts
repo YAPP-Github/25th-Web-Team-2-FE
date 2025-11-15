@@ -155,7 +155,7 @@ const validateSchema = <T extends z.ZodSchema>(
       }
     }
 
-    // 비대면 X + 교내 실험이 아닐 때 detailedAddress가 필수값
+    // 대면 실험 포함 + 교내 실험이 아닐 때 detailedAddress가 필수값
     if (data.matchType !== MATCH_TYPE.ONLINE && !data.isOnCampus) {
       if (!data.detailedAddress || data.detailedAddress.trim().length === 0) {
         ctx.addIssue({
