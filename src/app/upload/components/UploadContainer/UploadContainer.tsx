@@ -27,8 +27,6 @@ import { colors } from '@/styles/colors';
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 
 const UploadContainer = () => {
-  const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
-
   const [images, setImages] = useState<(File | string)[]>([]);
 
   const [openAlertModal, setOpenAlertModal] = useState(false);
@@ -36,7 +34,6 @@ const UploadContainer = () => {
 
   const { form, handleSubmit, extractKeywordsFromContent, isExtracting } =
     useManageExperimentPostForm({
-      isOnCampus,
       setOpenAlertModal,
       images,
       setErrorMessage,
@@ -78,7 +75,6 @@ const UploadContainer = () => {
                     isLoading={isExtracting}
                   />
                   <OutlineSection
-                    setIsOnCampus={setIsOnCampus}
                     extractKeywordsFromContent={extractKeywordsFromContent}
                     isPending={isExtracting}
                   />

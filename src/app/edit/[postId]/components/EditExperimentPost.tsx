@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FormProvider, useWatch } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
@@ -31,8 +31,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const isEdit = pathname.startsWith('/edit');
   const router = useRouter();
 
-  const [isOnCampus, setIsOnCampus] = useState<boolean>(true);
-
   const [openSubmitAlertDialog, setOpenSubmitAlertDialog] = useState<boolean>(false);
   const [openUpdateAlertModal, setOpenUpdateAlertModal] = useState<boolean>(false);
 
@@ -46,7 +44,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     useManageExperimentPostForm({
       isEdit,
       postId: params.postId,
-      isOnCampus,
       setOpenAlertModal: setOpenSubmitAlertDialog,
       images,
       setImages,
@@ -54,15 +51,10 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
     });
 
   const isUserInputDirty = form.formState.isDirty;
-  const isOnCampusValue = useWatch({ name: 'isOnCampus', control: form.control });
 
   const { isLeaveConfirmModalOpen, handleCancelLeave, handleConfirmLeave } = useLeaveConfirmModal({
     isUserInputDirty,
   });
-
-  useEffect(() => {
-    setIsOnCampus(isOnCampusValue);
-  }, [isOnCampusValue, isUserInputDirty]);
 
   useEffect(() => {
     if (originExperimentError) {
@@ -120,7 +112,6 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
                     experimentDateChecked={experimentDateChecked}
                     durationChecked={durationChecked}
                     isRecruitStatus={isRecruitStatus}
-                    setIsOnCampus={setIsOnCampus}
                   />
                 </div>
               </Step>

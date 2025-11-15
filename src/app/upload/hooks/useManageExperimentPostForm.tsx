@@ -25,7 +25,6 @@ import {
 } from '@/schema/upload/uploadExperimentPostSchema';
 
 interface useUploadExperimentPostProps {
-  isOnCampus: boolean;
   images: (File | string)[];
   setOpenAlertModal: Dispatch<SetStateAction<boolean>>;
   setErrorMessage: Dispatch<SetStateAction<string>>;
@@ -35,7 +34,6 @@ interface useUploadExperimentPostProps {
 }
 
 const useManageExperimentPostForm = ({
-  isOnCampus,
   images,
   setOpenAlertModal,
   setErrorMessage,
@@ -108,7 +106,7 @@ const useManageExperimentPostForm = ({
       area: data.area ? convertLabelToValue(data.area) : null,
       imageListInfo: { images: updatedImages },
       place:
-        data.matchType === MATCH_TYPE.ONLINE || !isOnCampus || data.place === ''
+        data.matchType === MATCH_TYPE.ONLINE || !submitData.isOnCampus || data.place === ''
           ? null
           : data.place,
     };

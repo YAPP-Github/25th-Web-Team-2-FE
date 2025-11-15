@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import {
@@ -35,7 +34,6 @@ interface OutlineSectionProps {
   experimentDateChecked?: boolean;
   durationChecked?: boolean;
   isRecruitStatus?: boolean;
-  setIsOnCampus?: Dispatch<SetStateAction<boolean>>;
   extractKeywordsFromContent?: () => Promise<void>;
   isPending?: boolean;
 }
@@ -44,7 +42,6 @@ const OutlineSection = ({
   experimentDateChecked = false,
   durationChecked = false,
   isRecruitStatus = true,
-  setIsOnCampus,
   extractKeywordsFromContent,
   isPending,
 }: OutlineSectionProps) => {
@@ -54,7 +51,7 @@ const OutlineSection = ({
   useUserResearcherInfo();
 
   // 진행 방식 선택 로직
-  const { selectedMatchType, handleMatchTypeChange } = useMatchType({ setIsOnCampus });
+  const { selectedMatchType, handleMatchTypeChange } = useMatchType();
 
   // 지역 선택 로직
   const {
@@ -205,9 +202,9 @@ const OutlineSection = ({
                     <CheckboxWithIcon
                       checked={field.value}
                       onChange={() => {
-                        const newValue = !field.value;
-                        field.onChange(newValue);
-                        setIsOnCampus?.(newValue);
+                        setValue('isOnCampus', !field.value, {
+                          shouldValidate: true,
+                        });
                       }}
                       label="교내 실험"
                       align="left"
