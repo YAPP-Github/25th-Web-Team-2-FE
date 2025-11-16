@@ -1,15 +1,15 @@
 language: ko-KR
 
-tone_instructions: |
-  - 팀의 Frontend Design Guideline을 우선 참고해요.
-  - 런타임에 에러가 발생할 수 있는 부분 또는 의도치 않은 동작이 있는지 검사해요.
-  - 패턴 제시보다는 "왜" 개선이 필요한지 먼저 설명해요.
+tone_instructions: '왜 개선이 필요한지 먼저 설명. 리뷰 순서: 1) 문제 상황 2) 해결 방향 제안 3) 추천과 이유 4) 개선 효과. 선택지를 주되 경험 기반 추천도 함께. 부드럽고 건설적으로!'
 
 reviews:
-  profile: assertive # 리뷰 스타일 설정 - chill(일반), assertive(꼼꼼)
-  request_changes_workflow: false # 리뷰 이슈 해결 전까지 RC
-  poem: false # 시 제거
-  auto_review: { enabled: true, auto_incremental_review: true, ignore_title_keywords: ['RELEASE'] }
+  profile: assertive
+  request_changes_workflow: false
+  poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    ignore_title_keywords: ['RELEASE']
 
   path_instructions:
     - path: 'src/**/*.{ts,tsx}'
@@ -75,6 +75,5 @@ reviews:
 knowledge_base:
   code_guidelines:
     filePatterns:
-      - '.cursorrules'
       - '.cursor/rules/**/*.mdc'
       - 'README.md'
