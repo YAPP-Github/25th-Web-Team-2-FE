@@ -15,10 +15,10 @@ import { useSlide } from './hooks/useSlide';
 import { useTouchSlide } from './hooks/useTouchSlide';
 import { SLIDE_SPEED } from '../../home.constants';
 
-import MobileBanner from '@/assets/images/mobileSurveyBanner.webp';
 import MobileBannerSecond from '@/assets/images/mobileBannerAI.webp';
-import WebBanner from '@/assets/images/webSurveyBanner.webp';
+import MobileBanner from '@/assets/images/mobileSurveyBanner.webp';
 import WebBannerSecond from '@/assets/images/webBannerAI.webp';
+import WebBanner from '@/assets/images/webSurveyBanner.webp';
 import Icon from '@/components/Icon';
 
 const SURVEY_URL = 'https://gradmeet.co.kr/post/0NF84Z489GFJE?utm_source=banner';

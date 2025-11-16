@@ -14,10 +14,10 @@ import {
   promotionModalContent,
 } from './PromotionModal.css';
 
-import { a11yHidden } from '@/styles/a11y.css';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 import Button from '@/components/Button/Button';
+import Icon from '@/components/Icon';
+import { a11yHidden } from '@/styles/a11y.css';
+import { colors } from '@/styles/colors';
 
 interface PromotionModalProps {
   open: boolean;

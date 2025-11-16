@@ -3,21 +3,21 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-import firstPromotionBanner from '@/assets/images/firstPromotionBanner.webp';
-import secondPromotionBanner from '@/assets/images/secondPromotionBanner.webp';
-import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
 import ExperimentPostCardList from './ExperimentPostCardList/ExperimentPostCardList';
 import { postCardContainer } from './ExperimentPostCardListContainer.css';
 import ExperimentPostContainerLayout from './ExperimentPostContainerLayout/ExperimentPostContainerLayout';
 
 import { ParticipantResponse } from '@/apis/login';
 import { ExperimentPostResponse } from '@/apis/post';
+import PromotionModal from '@/app/home/components/PromotionModal/PromotionModal';
 import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
 import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import firstPromotionBanner from '@/assets/images/firstPromotionBanner.webp';
+import secondPromotionBanner from '@/assets/images/secondPromotionBanner.webp';
+import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
-import PromotionModal from '@/app/home/components/PromotionModal/PromotionModal';
 import { PATH } from '@/constants/path';
 import { isMobile } from '@/utils/deviceType';
 
