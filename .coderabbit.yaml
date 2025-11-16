@@ -12,7 +12,6 @@ reviews:
   auto_review: { enabled: true, auto_incremental_review: true, ignore_title_keywords: ['RELEASE'] }
 
   path_instructions:
-    # 1. TypeScript/React 파일 - 핵심 규칙 검사
     - path: 'src/**/*.{ts,tsx}'
       instructions: |
         다음 항목들을 우선적으로 검사해주세요:
@@ -37,18 +36,18 @@ reviews:
 
         **프로젝트 규칙**
         - 'let' 사용을 최소화했는가? (const/메서드 체이닝 선호)
-        - TypeScript interface 사용했는가? (type 대신)
-        - Zod 스키마로 검증했는가?
         - React Query 사용했는가? (데이터 페칭)
-        - 에러 핸들링이 우선 고려되었는가?
+        - 에러 핸들링이 고려되었는가?
 
-    # 2. API/Hook 파일
+    - path: 'src/**/*.tsx'
+      instructions: |
+        - Props가 5개 이상인가? (컴포지션 고려)
+        - 조건부 렌더링이 복잡한가? (별도 컴포넌트로 분리 제안)
+        - useEffect를 최소화했는가? (파생 상태 사용)
+        - 컴포넌트가 단일 책임을 가지는가?
+
     - path: 'src/**/*.ts'
       instructions: |
-        - 반환 타입이 명확하고 일관적인가?
-        - 에러 핸들링이 충분한가?
-        - 로깅/추적 가능성이 있는가?
-
         **Query 함수 (`*Query`, `useXXXQuery`)**
         - queryKey가 명확하고 캐싱 전략이 적절한가?
         - staleTime, gcTime 설정이 필요한가?
@@ -64,24 +63,13 @@ reviews:
 
         **주의 사항**
         - useQuery/useMutation을 직접 컴포넌트에서 사용하지 않았는가? (커스텀 훅으로 래핑했는가?)
-        - API 응답이 Zod로 검증되었는가?
         - 토큰/인증 헤더가 올바르게 설정되었는가?
 
-    # 3. 스키마 파일
     - path: 'src/schema/**/*.ts'
       instructions: |
         - Zod 스키마 메시지는 사용자 친화적인가?
         - 모든 필드에 적절한 검증이 있는가?
         - 에러 메시지가 명확한가?
-        - i18next와 연동되었는가? (상수 참조)
-
-    # 4. 컴포넌트 파일
-    - path: 'src/**/*.tsx'
-      instructions: |
-        - Props가 5개 이상인가? (컴포지션 고려)
-        - 조건부 렌더링이 복잡한가? (별도 컴포넌트로 분리 제안)
-        - useEffect를 최소화했는가? (파생 상태 사용)
-        - 컴포넌트가 단일 책임을 가지는가?
 
 # 지식 기반 설정
 knowledge_base:
