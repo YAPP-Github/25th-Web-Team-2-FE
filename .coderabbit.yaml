@@ -2,7 +2,7 @@ language: ko-KR
 
 tone_instructions: |
   - 팀의 Frontend Design Guideline을 우선 참고해요.
-  - 코드 가독성, 예측 가능성, 응집도, 결합도를 중심으로 리뷰해요.
+  - 런타임에 에러가 발생할 수 있는 부분 또는 의도치 않은 동작이 있는지 검사해요.
   - 패턴 제시보다는 "왜" 개선이 필요한지 먼저 설명해요.
 
 reviews:
