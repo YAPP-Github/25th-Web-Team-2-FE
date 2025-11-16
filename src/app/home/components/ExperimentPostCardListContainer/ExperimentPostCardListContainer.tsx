@@ -3,6 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+import firstPromotionBanner from '@/assets/images/firstPromotionBanner.webp';
+import secondPromotionBanner from '@/assets/images/secondPromotionBanner.webp';
+import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
 import ExperimentPostCardList from './ExperimentPostCardList/ExperimentPostCardList';
 import { postCardContainer } from './ExperimentPostCardListContainer.css';
 import ExperimentPostContainerLayout from './ExperimentPostContainerLayout/ExperimentPostContainerLayout';
@@ -14,11 +17,12 @@ import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter'
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
-import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import PromotionModal from '@/app/home/components/PromotionModal/PromotionModal';
 import { PATH } from '@/constants/path';
 import { isMobile } from '@/utils/deviceType';
 
 const IS_PROMOTION_POPUP_VIEWED = 'IS_PROMOTION_POPUP_VIEWED';
+const PROMOTION_IMAGES = [firstPromotionBanner, secondPromotionBanner, thirdPromotionBanner];
 
 interface PostCardListContainerProps {
   initialPosts: ExperimentPostResponse;
@@ -44,6 +48,15 @@ const ExperimentPostCardListContainer = ({
   const observerRef = useRef<HTMLDivElement>(null);
 
   const hasPost = postListData && postListData.pages[0].content.length > 0;
+
+  const handleConfirmPromotionPopup = () => {
+    setShowPromotionPopup(false);
+    router.push(PATH.upload);
+  };
+
+  const handleClosePromotionPopup = () => {
+    setShowPromotionPopup(false);
+  };
 
   useEffect(() => {
     // NOTE: localStorage 사용처가 더 생기면 추상화 고려 (+ key 관리)
@@ -71,17 +84,14 @@ const ExperimentPostCardListContainer = ({
           </div>
         </ExperimentPostContainerLayout>
       </IntersectionObserverScroll>
-      <ConfirmModal
-        isOpen={showPromotionPopup}
+      <PromotionModal
+        open={showPromotionPopup}
         onOpenChange={setShowPromotionPopup}
-        confirmTitle="AI 자동입력 오픈"
-        descriptionText="공고를 읽고 입력칸을 자동으로 채워드려요"
-        cancelText="닫기"
-        confirmText="등록하기"
-        onConfirm={() => {
-          setShowPromotionPopup(false);
-          router.push(PATH.upload);
-        }}
+        onConfirm={handleConfirmPromotionPopup}
+        onClose={handleClosePromotionPopup}
+        images={PROMOTION_IMAGES}
+        title="공고 등록 가이드"
+        buttonText="빠르게 공고 등록하러 가기"
       />
     </>
   );
