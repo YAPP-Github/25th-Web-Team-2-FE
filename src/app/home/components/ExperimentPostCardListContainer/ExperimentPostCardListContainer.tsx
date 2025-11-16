@@ -20,6 +20,7 @@ import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import { PATH } from '@/constants/path';
 import { isMobile } from '@/utils/deviceType';
+import { trackEvent } from '@/lib/mixpanelClient';
 
 const IS_PROMOTION_POPUP_VIEWED = 'IS_PROMOTION_POPUP_VIEWED';
 const PROMOTION_IMAGES = [firstPromotionBanner, secondPromotionBanner, thirdPromotionBanner];
@@ -63,6 +64,9 @@ const ExperimentPostCardListContainer = ({
     if (isResearcher && localStorage.getItem(IS_PROMOTION_POPUP_VIEWED) === null) {
       localStorage.setItem(IS_PROMOTION_POPUP_VIEWED, 'true');
       setShowPromotionPopup(true);
+      trackEvent('AI Extract Keywords Modal', {
+        action: 'View',
+      });
     }
   }, [isResearcher]);
 

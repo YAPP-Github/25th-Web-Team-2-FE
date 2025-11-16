@@ -18,6 +18,7 @@ import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 import { a11yHidden } from '@/styles/a11y.css';
 import { colors } from '@/styles/colors';
+import { trackEvent } from '@/lib/mixpanelClient';
 
 interface PromotionModalProps {
   open: boolean;
@@ -39,6 +40,13 @@ const PromotionModal = ({
   buttonText = '빠르게 공고 등록하러 가기',
 }: PromotionModalProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleConfirm = () => {
+    onConfirm();
+    trackEvent('AI Extract Keywords Modal', {
+      action: 'Conversion Click',
+    });
+  };
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -81,7 +89,7 @@ const PromotionModal = ({
             <Button
               variant="primary"
               size="medium"
-              onClick={onConfirm}
+              onClick={handleConfirm}
               style={{ padding: '1.6rem 0' }}
             >
               {buttonText}

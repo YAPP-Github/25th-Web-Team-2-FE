@@ -8,6 +8,7 @@ import Spinner from '@/components/Spinner/Spinner';
 import { queryKey } from '@/constants/queryKey';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
+import { PATH } from '@/constants/path';
 
 interface ExtractKeywordButtonProps {
   onClick?: () => Promise<void>;
@@ -25,8 +26,9 @@ const ExtractKeywordButton = ({ onClick, isPending }: ExtractKeywordButtonProps)
 
   const handleClick = () => {
     onClick?.();
-    trackEvent('Button Click', {
-      action: 'AI Extract Keywords',
+    trackEvent('AI Extract Keywords', {
+      action: 'Click',
+      path: PATH.upload,
     });
   };
 
