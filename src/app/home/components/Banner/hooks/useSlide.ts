@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { BANNER_LENGTH, SLIDE_SPEED } from '@/app/home/home.constants';
+import { SLIDE_SPEED } from '@/app/home/home.constants';
 
 const AUTO_SLIDE_INTERVAL = 5000;
 
-export const useSlide = () => {
+interface UseSlideProps {
+  bannerLength: number;
+}
+
+export const useSlide = ({ bannerLength }: UseSlideProps) => {
   const [bannerIdx, setBannerIdx] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const slideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -20,13 +24,13 @@ export const useSlide = () => {
 
   const handleClickPrev = () => {
     resetAutoSlide();
-    const prevIndex = bannerIdx === 0 ? BANNER_LENGTH - 1 : bannerIdx - 1;
+    const prevIndex = bannerIdx === 0 ? bannerLength - 1 : bannerIdx - 1;
     moveSlide(prevIndex);
   };
 
   const handleClickNext = () => {
     resetAutoSlide();
-    const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
+    const nextIndex = (bannerIdx + 1) % bannerLength;
     moveSlide(nextIndex);
   };
 
@@ -36,7 +40,7 @@ export const useSlide = () => {
     }
 
     slideTimerRef.current = setInterval(() => {
-      const nextIndex = (bannerIdx + 1) % BANNER_LENGTH;
+      const nextIndex = (bannerIdx + 1) % bannerLength;
       moveSlide(nextIndex);
     }, AUTO_SLIDE_INTERVAL);
   }, [bannerIdx]);
