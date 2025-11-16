@@ -1,0 +1,79 @@
+language: ko-KR
+
+tone_instructions: '왜 개선이 필요한지 먼저 설명. 리뷰 순서: 1) 문제 상황 2) 해결 방향 제안 3) 추천과 이유 4) 개선 효과. 선택지를 주되 경험 기반 추천도 함께. 부드럽고 건설적으로!'
+
+reviews:
+  profile: assertive
+  request_changes_workflow: false
+  poem: false
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    ignore_title_keywords: ['RELEASE']
+
+  path_instructions:
+    - path: 'src/**/*.{ts,tsx}'
+      instructions: |
+        다음 항목들을 우선적으로 검사해주세요:
+
+        **Readability (가독성)**
+        - 매직 넘버는 명명된 상수로 변경했는가? (예: 300ms → ANIMATION_DELAY_MS)
+        - 복잡한 삼항연산자는 if문 또는 switch문으로 처리하거나 컴포넌트를 분리했는가?
+        - 복잡한 조건은 의미 있는 변수명을 가지는가? (예: isValidEmail, hasRequiredRole)
+        - 구현 디테일이 추상화되어 있는가? (복잡한 로직 → 별도 컴포넌트/훅)
+
+        **Predictability (예측 가능성)**
+        - 유사한 함수/훅들의 반환 타입이 일관적인가?
+        - 함수명이 실제 동작을 명확히 나타내는가?
+        - 숨겨진 사이드 이펙트가 있는가? (SRP 위반)
+
+        **Coupling (결합도)**
+        - Props drilling이 과도하지 않은가? (5개 이상 props는 컴포지션 검토)
+        - 상태 관리 범위가 너무 넓지 않은가? (필요한 상태만 선택)
+
+        **Cohesion (응집도)**
+        - 파일이 도메인/기능별로 잘 구성되어 있는가?
+
+        **프로젝트 규칙**
+        - 'let' 사용을 최소화했는가? (const/메서드 체이닝 선호)
+        - React Query 사용했는가? (데이터 페칭)
+        - 에러 핸들링이 고려되었는가?
+
+    - path: 'src/**/*.tsx'
+      instructions: |
+        - Props가 5개 이상인가? (컴포지션 고려)
+        - 조건부 렌더링이 복잡한가? (별도 컴포넌트로 분리 제안)
+        - useEffect를 최소화했는가? (파생 상태 사용)
+        - 컴포넌트가 단일 책임을 가지는가?
+
+    - path: 'src/**/*.ts'
+      instructions: |
+        **Query 함수 (`*Query`, `useXXXQuery`)**
+        - queryKey가 명확하고 캐싱 전략이 적절한가?
+        - staleTime, gcTime 설정이 필요한가?
+        - 데이터 변환 로직이 필요한가?
+        - 의존성 배열이 정확한가?
+
+        **Mutation 함수 (`*Mutation`, `useXXXMutation`)**
+        - onSuccess, onError 핸들러가 제대로 정의되었는가?
+        - 낙관적 업데이트(optimisticData)가 필요한가?
+        - invalidateQueries로 관련 쿼리를 무효화하는가?
+        - 에러 발생 시 롤백 로직이 있는가?
+        - 로딩/성공/에러 상태를 어떻게 처리하는가?
+
+        **주의 사항**
+        - useQuery/useMutation을 직접 컴포넌트에서 사용하지 않았는가? (커스텀 훅으로 래핑했는가?)
+        - 토큰/인증 헤더가 올바르게 설정되었는가?
+
+    - path: 'src/schema/**/*.ts'
+      instructions: |
+        - Zod 스키마 메시지는 사용자 친화적인가?
+        - 모든 필드에 적절한 검증이 있는가?
+        - 에러 메시지가 명확한가?
+
+# 지식 기반 설정
+knowledge_base:
+  code_guidelines:
+    filePatterns:
+      - '.cursor/rules/**/*.mdc'
+      - 'README.md'
