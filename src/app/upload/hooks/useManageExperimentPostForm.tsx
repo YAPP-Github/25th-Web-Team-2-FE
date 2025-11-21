@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
@@ -157,6 +158,14 @@ const useManageExperimentPostForm = ({
   const handleSubmitError = () => {
     setErrorMessage('입력 정보를 확인해 주세요');
     setOpenAlertModal(true);
+    Sentry.withScope((scope) => {
+      scope.setLevel('info');
+      scope.setTag('zod', 'formInvalidError');
+      scope.setExtra('errors', form.formState.errors);
+      scope.setExtra('data', form.getValues());
+
+      Sentry.captureException(new Error('공고 유효성 검증에 실패했어요.'));
+    });
   };
 
   const extractKeywordsFromContent = async () => {
