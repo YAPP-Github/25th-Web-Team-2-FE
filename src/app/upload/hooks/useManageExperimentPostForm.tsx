@@ -16,9 +16,10 @@ import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExp
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
+import { PATH } from '@/constants/path';
 import { queryKey } from '@/constants/queryKey';
 import { useToast } from '@/hooks/useToast';
-import { stopRecording } from '@/lib/mixpanelClient';
+import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import {
   UploadExperimentPostSchema,
   UploadExperimentPostSchemaType,
@@ -149,6 +150,10 @@ const useManageExperimentPostForm = ({
           setErrorMessage(errorMessage);
           setOpenAlertModal(true);
         },
+      });
+      trackEvent('Post Upload', {
+        action: 'Upload Click',
+        path: PATH.upload,
       });
     }
 

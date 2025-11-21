@@ -6,7 +6,8 @@ import { desktopRightHeader, uploadButton } from './DesktopLoginHeader.css';
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { startRecording } from '@/lib/mixpanelClient';
+import { PATH } from '@/constants/path';
+import { startRecording, trackEvent } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
 interface DesktopLoginHeaderProps {
@@ -15,6 +16,10 @@ interface DesktopLoginHeaderProps {
 
 const DesktopLoginHeader = ({ userInfo }: DesktopLoginHeaderProps) => {
   const goToUpload = () => {
+    trackEvent('Post Upload', {
+      action: 'Navigation Click',
+      path: PATH.upload,
+    });
     startRecording();
   };
 
