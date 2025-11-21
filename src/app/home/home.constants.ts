@@ -351,5 +351,4 @@ export const MATCH_TYPE_OPTIONS = [
 ] as const;
 
 // Banner
-export const BANNER_LENGTH = 4;
 export const SLIDE_SPEED = 1.2;
