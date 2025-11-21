@@ -58,3 +58,21 @@ export const indicator = style({
   cursor: 'pointer',
   transition: 'background-color 200ms',
 });
+
+export const navigationButton = style({
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transition: 'opacity 0.2s',
+});
+
+export const navigationLeftButton = style({
+  left: '0.8rem',
+});
+
+export const navigationRightButton = style({
+  right: '0.8rem',
+});

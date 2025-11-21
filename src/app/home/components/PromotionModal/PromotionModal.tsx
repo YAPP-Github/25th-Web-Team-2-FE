@@ -11,14 +11,17 @@ import {
   indicator,
   indicatorContainer,
   modalContainer,
+  navigationButton,
+  navigationLeftButton,
+  navigationRightButton,
   promotionModalContent,
 } from './PromotionModal.css';
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { a11yHidden } from '@/styles/a11y.css';
 import { colors } from '@/styles/colors';
-import { trackEvent } from '@/lib/mixpanelClient';
 
 interface PromotionModalProps {
   open: boolean;
@@ -70,6 +73,23 @@ const PromotionModal = ({
                 alt={`프로모션 이미지 ${currentImageIndex + 1}`}
                 style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
               />
+              {currentImageIndex > 0 && (
+                <button
+                  className={`${navigationButton} ${navigationLeftButton}`}
+                  onClick={() => setCurrentImageIndex(currentImageIndex - 1)}
+                >
+                  <Icon icon="ChevronSquare" rotate={-90} cursor="pointer" color={'#ffffff1a'} />
+                </button>
+              )}
+
+              {currentImageIndex < images.length - 1 && (
+                <button
+                  className={`${navigationButton} ${navigationRightButton}`}
+                  onClick={() => setCurrentImageIndex(currentImageIndex + 1)}
+                >
+                  <Icon icon="ChevronSquare" rotate={90} cursor="pointer" color={'#ffffff1a'} />
+                </button>
+              )}
             </div>
 
             <div className={indicatorContainer}>
