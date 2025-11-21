@@ -5,10 +5,10 @@ import { extractKeywordButtonInner, extractKeywordButtonWrapper } from './Extrac
 import { fetchExtractKeywordsLimit } from '@/apis/post';
 import Icon from '@/components/Icon';
 import Spinner from '@/components/Spinner/Spinner';
+import { PATH } from '@/constants/path';
 import { queryKey } from '@/constants/queryKey';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
-import { PATH } from '@/constants/path';
 
 interface ExtractKeywordButtonProps {
   onClick?: () => Promise<void>;

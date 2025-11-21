@@ -19,8 +19,8 @@ import secondPromotionBanner from '@/assets/images/secondPromotionBanner.webp';
 import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import { PATH } from '@/constants/path';
-import { isMobile } from '@/utils/deviceType';
 import { trackEvent } from '@/lib/mixpanelClient';
+import { isMobile } from '@/utils/deviceType';
 
 const IS_PROMOTION_POPUP_VIEWED = 'IS_PROMOTION_POPUP_VIEWED';
 const PROMOTION_IMAGES = [firstPromotionBanner, secondPromotionBanner, thirdPromotionBanner];

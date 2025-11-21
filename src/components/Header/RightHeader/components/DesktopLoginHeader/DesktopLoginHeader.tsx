@@ -6,9 +6,9 @@ import { desktopRightHeader, uploadButton } from './DesktopLoginHeader.css';
 import HeaderMenu from '../HeaderMenu/HeaderMenu';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { PATH } from '@/constants/path';
 import { startRecording, trackEvent } from '@/lib/mixpanelClient';
 import { isResearcherInfo } from '@/utils/typeGuard';
-import { PATH } from '@/constants/path';
 
 interface DesktopLoginHeaderProps {
   userInfo: ParticipantResponse | ResearcherResponse;
