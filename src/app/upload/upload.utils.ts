@@ -91,6 +91,8 @@ const transformOriginFormData = (
   },
   alarmAgree: experiment.alarmAgree,
   isOnCampus: experiment.address.isOnCampus,
+  addLink: !!applyMethod.formUrl,
+  addContact: !!applyMethod.phoneNum,
 });
 
 const uploadImages = async (
