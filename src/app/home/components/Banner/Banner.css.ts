@@ -1,4 +1,5 @@
 import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const bannerLayout = style({
   position: 'relative',
@@ -56,7 +57,19 @@ export const navigationRight = style({
 });
 
 export const bannerImage = style({
+  maxHeight: '8rem',
   borderRadius: '1.2rem',
+
+  '@media': {
+    'screen and (max-width: 767px)': {
+      maxWidth: '60rem',
+      maxHeight: '7rem',
+    },
+    'screen and (max-width: 480px)': {
+      maxWidth: '48rem',
+      transform: 'scale(0.8)',
+    },
+  },
 });
 
 export const slideCircleContainer = style({
@@ -68,4 +81,38 @@ export const slideCircle = style({
   borderRadius: '50%',
   width: '0.6rem',
   height: '0.6rem',
+});
+
+export const bannerWrapper = recipe({
+  base: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '1.2rem',
+    flex: '0 0 100%',
+    overflow: 'hidden',
+  },
+  variants: {
+    backgroundColor: {
+      '#141421': {
+        backgroundColor: '#141421',
+      },
+      '#1F0012': {
+        backgroundColor: '#1F0012',
+      },
+    },
+  },
+});
+
+export const bannerLink = style({
+  display: 'block',
+  borderRadius: '1.2rem',
+  overflow: 'hidden',
+});
+
+export const bannerImageContainer = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0 1.6rem',
+  overflow: 'hidden',
 });

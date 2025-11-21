@@ -6,7 +6,10 @@ import Link from 'next/link';
 import {
   bannerCarousel,
   bannerImage,
+  bannerImageContainer,
   bannerLayout,
+  bannerLink,
+  bannerWrapper,
   carouselContainer,
   navigationLeft,
   navigationRight,
@@ -29,11 +32,13 @@ const BannerMap = [
     mobileSrc: MobileBanner,
     alt: '참여자 언제 다 모을지 고민이라면 공고를 올리고 가까운 참여자에게 실험을 알려보세요',
     url: SURVEY_URL,
+    backgroundColor: '#141421' as const,
   },
   {
     webSrc: WebBannerSecond,
     mobileSrc: MobileBannerSecond,
     alt: 'AI 자동 입력이 새로 나왔어요. 본문만 작성하면 AI로 공고등록 1분 컷.',
+    backgroundColor: '#1F0012' as const,
   },
 ];
 
@@ -66,7 +71,6 @@ const Banner = () => {
           {BannerMap.map((banner, idx) => {
             const imageContent = (
               <Image
-                key={idx}
                 src={banner.webSrc}
                 alt={banner.alt}
                 className={bannerImage}
@@ -76,10 +80,21 @@ const Banner = () => {
               />
             );
 
+            const hasUrl = !!banner.url;
+
             return (
-              <picture key={idx} style={{ display: 'block', flex: '0 0 100%' }}>
+              <picture
+                key={idx}
+                className={bannerWrapper({ backgroundColor: banner.backgroundColor })}
+              >
                 <source media="(max-width: 767px)" srcSet={banner.mobileSrc.src} />
-                {banner.url ? <Link href={banner.url}>{imageContent}</Link> : imageContent}
+                {hasUrl ? (
+                  <Link href={banner.url} className={bannerLink}>
+                    <div className={bannerImageContainer}>{imageContent}</div>
+                  </Link>
+                ) : (
+                  <div className={bannerImageContainer}>{imageContent}</div>
+                )}
               </picture>
             );
           })}
