@@ -1,6 +1,5 @@
 import { usePathname } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import {
   addContactInfoContainer,
@@ -27,25 +26,16 @@ import { GENDER_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
-interface ApplyMethodSectionProps {
-  addLink: boolean;
-  setAddLink: Dispatch<SetStateAction<boolean>>;
-  addContact: boolean;
-  setAddContact: Dispatch<SetStateAction<boolean>>;
-}
-
 const TEXTAREA_HEIGHT = 98;
 
-const ApplyMethodSection = ({
-  addLink,
-  setAddLink,
-  addContact,
-  setAddContact,
-}: ApplyMethodSectionProps) => {
+const ApplyMethodSection = () => {
   const pathname = usePathname();
   const isEdit = pathname.startsWith('/edit');
 
   const { control, setValue, formState } = useFormContext<UploadExperimentPostSchemaType>();
+
+  const addLink = useWatch({ control, name: 'addLink' });
+  const addContact = useWatch({ control, name: 'addContact' });
 
   const ageError = !!(
     formState.errors?.targetGroupInfo?.startAge || formState.errors?.targetGroupInfo?.endAge
@@ -82,7 +72,7 @@ const ApplyMethodSection = ({
             <CheckboxWithIcon
               checked={addLink}
               onChange={() => {
-                setAddLink((prev) => !prev);
+                setValue('addLink', !addLink);
                 setValue('applyMethodInfo.formUrl', null);
               }}
               label="링크를 추가할게요"
@@ -110,7 +100,7 @@ const ApplyMethodSection = ({
             <CheckboxWithIcon
               checked={addContact}
               onChange={() => {
-                setAddContact((prev) => !prev);
+                setValue('addContact', !addContact);
                 setValue('applyMethodInfo.phoneNum', null);
               }}
               label="연락처를 추가할게요"

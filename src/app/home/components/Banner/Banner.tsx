@@ -20,8 +20,8 @@ import { SLIDE_SPEED } from '../../home.constants';
 
 import MobileBannerSecond from '@/assets/images/mobileBannerAI.webp';
 import MobileBanner from '@/assets/images/mobileSurveyBanner.webp';
+import WebBannerSecond from '@/assets/images/webBannerAI.webp';
 import WebBanner from '@/assets/images/webSurveyBanner.webp';
-import WebBannerSecond from '@/assets/images/webSurveyBanner.webp';
 import Icon from '@/components/Icon';
 
 const SURVEY_URL = 'https://gradmeet.co.kr/post/0NF84Z489GFJE?utm_source=banner';
@@ -44,12 +44,13 @@ const BannerMap = [
 
 const Banner = () => {
   const { bannerIdx, carouselRef, resetAutoSlide, moveSlide, handleClickPrev, handleClickNext } =
-    useSlide();
+    useSlide({ bannerLength: BannerMap.length });
 
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSlide({
     currentIdx: bannerIdx,
     resetAutoSlide,
     moveSlide,
+    totalLength: BannerMap.length,
   });
 
   return (
