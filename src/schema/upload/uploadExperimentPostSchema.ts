@@ -41,7 +41,7 @@ const UploadExperimentPostFormSchema = () => {
       .max(150, { message: '최대 150자 이하로 입력해 주세요' }),
 
     // 학교명
-    place: z.string().min(1, '').nullable(),
+    place: z.string().nullable(),
 
     // 지역
     region: z.string().min(1, '').nullable(),
