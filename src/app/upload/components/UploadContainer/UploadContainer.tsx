@@ -27,6 +27,26 @@ import { colors } from '@/styles/colors';
 
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 
+const VALIDATION_FIELDS_BY_STEP = {
+  [STEP.description]: ['title', 'content'],
+
+  [STEP.outline]: [
+    'leadResearcher',
+    'startDate',
+    'endDate',
+    'matchType',
+    'place',
+    'region',
+    'area',
+    'detailedAddress',
+    'reward',
+    'count',
+    'timeRequired',
+  ],
+
+  [STEP.applyMethod]: ['applyMethodInfo', 'targetGroupInfo'],
+} as const;
+
 const UploadContainer = () => {
   const [images, setImages] = useState<(File | string)[]>([]);
 
@@ -54,11 +74,21 @@ const UploadContainer = () => {
   const { Funnel, currentStepIdx, Step, step, FunnelProvider, goToNext, goToPrev, isSubmitStep } =
     useFunnel(UPLOAD_STEP_LIST);
 
+  const handleNext = async () => {
+    const isValid = await form.trigger(
+      VALIDATION_FIELDS_BY_STEP[step as keyof typeof VALIDATION_FIELDS_BY_STEP],
+    );
+
+    if (isValid) {
+      goToNext();
+    }
+  };
+
   return (
     <section className={uploadContainerLayout({ step })}>
       <FormProvider {...form}>
         <FunnelProvider>
-          <FunnelStepGuard isDirty={isUserInputDirty}>
+          <FunnelStepGuard isDirty={form.formState.isDirty}>
             <ProgressBarSection />
             <div className={uploadLayout}>
               <Funnel>
@@ -101,7 +131,7 @@ const UploadContainer = () => {
                   variant="primary"
                   size="small"
                   width="20rem"
-                  onClick={isSubmitStep ? handleSubmit : goToNext}
+                  onClick={isSubmitStep ? handleSubmit : handleNext}
                 >
                   {isSubmitStep ? '공고 등록하기' : '다음으로'}
                 </Button>
