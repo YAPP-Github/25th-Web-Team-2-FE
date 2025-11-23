@@ -8,11 +8,12 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
-import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
+import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
 import useExtractKeywordsMutation from './useExtractKeywords';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
+import { STEP } from '@/app/join/JoinPage.constants';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
@@ -221,6 +222,13 @@ const useManageExperimentPostForm = ({
           form.setValue('targetGroupInfo.otherCondition', keywords.targetGroup.otherCondition);
         }
       }
+
+      // NOTE: AI 입력 후 다른 인풋 입력을 사용자가 놓치지 않도록 유효성 검증을 수행해요.
+      // AI 키워드 추출 버튼이 다른 스텝으로 이동하면 수정 필요해요.
+      form.trigger([
+        ...VALIDATION_FIELDS_BY_STEP[STEP.outline],
+        ...VALIDATION_FIELDS_BY_STEP[STEP.applyMethod],
+      ]);
     } catch (error) {
       toast.error({ message: '키워드 추출에 실패했어요.' });
       Sentry.withScope((scope) => {
