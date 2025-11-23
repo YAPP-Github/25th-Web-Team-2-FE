@@ -19,6 +19,7 @@ import {
   uploadContainerLayout,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
+import { VALIDATION_FIELDS_BY_STEP } from '@/app/upload/upload.constants';
 import Button from '@/components/Button/Button';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
@@ -55,6 +56,16 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const { isLeaveConfirmModalOpen, handleCancelLeave, handleConfirmLeave } = useLeaveConfirmModal({
     isUserInputDirty,
   });
+
+  const handleNext = async () => {
+    const isValid = await form.trigger(
+      VALIDATION_FIELDS_BY_STEP[step as keyof typeof VALIDATION_FIELDS_BY_STEP],
+    );
+
+    if (isValid) {
+      goToNext();
+    }
+  };
 
   useEffect(() => {
     if (originExperimentError) {
@@ -134,7 +145,7 @@ const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
                 variant={isSubmitStep ? 'dark' : 'primary'}
                 size="small"
                 width="20rem"
-                onClick={isSubmitStep ? handleSubmit : goToNext}
+                onClick={isSubmitStep ? handleSubmit : handleNext}
               >
                 {isSubmitStep
                   ? form.formState.isSubmitting

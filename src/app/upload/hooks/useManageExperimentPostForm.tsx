@@ -3,16 +3,17 @@ import * as Sentry from '@sentry/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 
 import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
-import { EXPERIMENT_POST_DEFAULT_VALUES } from '../upload.constants';
+import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
 import useExtractKeywordsMutation from './useExtractKeywords';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
+import { STEP } from '@/app/join/JoinPage.constants';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
@@ -160,13 +161,11 @@ const useManageExperimentPostForm = ({
     stopRecording();
   };
 
-  const handleSubmitError = () => {
-    setErrorMessage('입력 정보를 확인해 주세요');
-    setOpenAlertModal(true);
+  const handleSubmitError = (errors: FieldErrors) => {
     Sentry.withScope((scope) => {
       scope.setLevel('info');
       scope.setTag('zod', 'formInvalidError');
-      scope.setExtra('errors', form.formState.errors);
+      scope.setExtra('errors', errors);
       scope.setExtra('data', form.getValues());
 
       Sentry.captureException(new Error('공고 유효성 검증에 실패했어요.'));
@@ -185,6 +184,14 @@ const useManageExperimentPostForm = ({
       }
       if (keywords.matchType) {
         form.setValue('matchType', keywords.matchType);
+
+        if (keywords.matchType === MATCH_TYPE.ONLINE) {
+          form.setValue('region', null);
+          form.setValue('area', null);
+          form.setValue('place', null);
+          form.setValue('detailedAddress', null);
+          form.setValue('isOnCampus', false);
+        }
       }
       if (keywords.timeRequired) {
         form.setValue('timeRequired', keywords.timeRequired);
@@ -215,10 +222,21 @@ const useManageExperimentPostForm = ({
           form.setValue('targetGroupInfo.otherCondition', keywords.targetGroup.otherCondition);
         }
       }
+
+      // NOTE: AI 입력 후 다른 인풋 입력을 사용자가 놓치지 않도록 유효성 검증을 수행해요.
+      // AI 키워드 추출 버튼이 다른 스텝으로 이동하면 수정 필요해요.
+      form.trigger([
+        ...VALIDATION_FIELDS_BY_STEP[STEP.outline],
+        ...VALIDATION_FIELDS_BY_STEP[STEP.applyMethod],
+      ]);
     } catch (error) {
-      // TODO: 키워드 추출 실패 시 에러 처리
-      // eslint-disable-next-line no-console
-      console.error('키워드 추출 실패:', error);
+      toast.error({ message: '키워드 추출에 실패했어요.' });
+      Sentry.withScope((scope) => {
+        scope.setLevel('error');
+        scope.setTag('ai', 'keywordExtractionError');
+        scope.setExtra('error', error);
+        Sentry.captureException(new Error('키워드 추출에 실패했어요.'));
+      });
     }
   };
 
