@@ -5,7 +5,6 @@ import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
 export const regionPopoverContainer = style({
-  maxWidth: '45.2rem',
   width: '100%',
   borderRadius: '1.2rem',
   outline: 'none',
@@ -27,7 +26,6 @@ export const uploadInputField = recipe({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    maxWidth: '45.2rem',
     height: '4.8rem',
     padding: '0.8rem 1.6rem',
     borderRadius: '1.2rem',

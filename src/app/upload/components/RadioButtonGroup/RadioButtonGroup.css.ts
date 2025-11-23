@@ -11,7 +11,6 @@ export const customRadioGroup = style({
 
   '@media': {
     'screen and (max-width: 767px)': {
-      maxWidth: '45.2rem',
       width: '100%',
       flexWrap: 'wrap',
       justifyContent: 'start',
@@ -22,6 +21,7 @@ export const customRadioGroup = style({
 
 export const customRadioButton = recipe({
   base: {
+    flexGrow: 1,
     ...fonts.label.large.M14,
     width: '14.533rem',
     height: '4.8rem',

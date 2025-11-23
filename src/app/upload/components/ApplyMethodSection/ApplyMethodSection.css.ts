@@ -4,6 +4,13 @@ import { recipe } from '@vanilla-extract/recipes';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
+export const applyMethodSectionLayout = style({
+  backgroundColor: colors.field01,
+  borderRadius: '1.2rem',
+  padding: '2.8rem',
+  flex: 1,
+});
+
 export const applyMethodContainer = style({
   marginBottom: '4.8rem',
 });
@@ -28,11 +35,8 @@ export const targetConditionLayout = style({
 
 export const targetGroupContainer = style({
   display: 'flex',
-
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-
-  flexDirection: 'row',
+  flexDirection: 'column',
+  gap: '3.2rem',
 
   '@media': {
     'screen and (max-width: 767px)': {
@@ -44,7 +48,6 @@ export const targetGroupContainer = style({
 
 export const ageInputContainer = recipe({
   base: {
-    maxWidth: '45.2rem',
     width: '100%',
     height: '4.8rem',
     display: 'flex',

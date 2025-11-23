@@ -1,3 +1,5 @@
+import { STEP } from '../join/JoinPage.constants';
+
 export const countSelectOptions = [
   {
     label: '1회',
@@ -83,4 +85,26 @@ export const EXPERIMENT_POST_DEFAULT_VALUES = {
   },
   alarmAgree: false,
   isOnCampus: true,
+  addLink: false,
+  addContact: false,
 };
+
+export const VALIDATION_FIELDS_BY_STEP = {
+  [STEP.description]: ['title', 'content'],
+
+  [STEP.outline]: [
+    'leadResearcher',
+    'startDate',
+    'endDate',
+    'matchType',
+    'place',
+    'region',
+    'area',
+    'detailedAddress',
+    'reward',
+    'count',
+    'timeRequired',
+  ],
+
+  [STEP.applyMethod]: ['applyMethodInfo', 'targetGroupInfo'],
+} as const;

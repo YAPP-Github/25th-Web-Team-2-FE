@@ -4,12 +4,24 @@ import { recipe } from '@vanilla-extract/recipes';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 
+export const outlineSectionLayout = style({
+  backgroundColor: colors.field01,
+  borderRadius: '1.2rem',
+  padding: '2.8rem',
+  flex: 1,
+});
+
+export const uploadFormSectionHeader = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '1.6rem',
+});
+
 export const outlineFormLayout = style({
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gridTemplateRows: '10.2rem 10.2rem auto',
-  gridColumnGap: '3.2rem',
-  gridRowGap: '2.8rem',
+  gridTemplateColumns: '1fr',
+  gridRowGap: '3.2rem',
   margin: '0 auto',
 
   '@media': {
@@ -86,7 +98,6 @@ globalStyle(`${uploadSelectInputContainer} > *:nth-child(1)`, {
 export const disabledInput = style({
   ...fonts.label.large.R14,
   width: '100%',
-  maxWidth: '45.2rem',
   height: '4.8rem',
   padding: '1.6rem',
   borderRadius: '1.2rem',

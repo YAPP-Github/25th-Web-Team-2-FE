@@ -8,6 +8,10 @@ export const descriptionSectionLayout = style({
   backgroundColor: colors.field01,
   borderRadius: '1.2rem',
   padding: '2.8rem 2.8rem',
+
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
 });
 
 export const descriptionFormLayout = style({
@@ -15,10 +19,14 @@ export const descriptionFormLayout = style({
   display: 'flex',
   flexFlow: 'column nowrap',
   gap: '1.2rem',
+  flex: 1,
 });
 
 export const descriptionContentContainer = recipe({
   base: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
     maxWidth: '93.6rem',
     width: '100%',
     border: `0.1rem solid ${colors.line01}`,
@@ -63,6 +71,11 @@ export const descriptionTextarea = recipe({
       },
       withoutPhotos: {
         height: '24rem',
+      },
+    },
+    stretch: {
+      true: {
+        flex: 1,
       },
     },
   },

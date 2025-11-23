@@ -17,7 +17,6 @@ export const datePickerFieldContainer = style({
 export const datePickerField = recipe({
   base: {
     width: '100%',
-    maxWidth: ' 45.2rem',
     height: '4.8rem',
     display: 'flex',
     alignItems: 'center',
