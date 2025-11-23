@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/nextjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 
 import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
@@ -160,13 +160,13 @@ const useManageExperimentPostForm = ({
     stopRecording();
   };
 
-  const handleSubmitError = () => {
+  const handleSubmitError = (errors: FieldErrors) => {
     setErrorMessage('입력 정보를 확인해 주세요');
     setOpenAlertModal(true);
     Sentry.withScope((scope) => {
       scope.setLevel('info');
       scope.setTag('zod', 'formInvalidError');
-      scope.setExtra('errors', form.formState.errors);
+      scope.setExtra('errors', errors);
       scope.setExtra('data', form.getValues());
 
       Sentry.captureException(new Error('공고 유효성 검증에 실패했어요.'));
@@ -185,6 +185,14 @@ const useManageExperimentPostForm = ({
       }
       if (keywords.matchType) {
         form.setValue('matchType', keywords.matchType);
+
+        if (keywords.matchType === MATCH_TYPE.ONLINE) {
+          form.setValue('region', null);
+          form.setValue('area', null);
+          form.setValue('place', null);
+          form.setValue('detailedAddress', null);
+          form.setValue('isOnCampus', false);
+        }
       }
       if (keywords.timeRequired) {
         form.setValue('timeRequired', keywords.timeRequired);
@@ -216,9 +224,13 @@ const useManageExperimentPostForm = ({
         }
       }
     } catch (error) {
-      // TODO: 키워드 추출 실패 시 에러 처리
-      // eslint-disable-next-line no-console
-      console.error('키워드 추출 실패:', error);
+      toast.error({ message: '키워드 추출에 실패했어요.' });
+      Sentry.withScope((scope) => {
+        scope.setLevel('error');
+        scope.setTag('ai', 'keywordExtractionError');
+        scope.setExtra('error', error);
+        Sentry.captureException(new Error('키워드 추출에 실패했어요.'));
+      });
     }
   };
 
