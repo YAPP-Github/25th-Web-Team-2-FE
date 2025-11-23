@@ -10,6 +10,7 @@ import {
   uploadContainerLayout,
 } from './UploadContainer.css';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
+import { VALIDATION_FIELDS_BY_STEP } from '../../upload.constants';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
@@ -26,26 +27,6 @@ import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperiment
 import { colors } from '@/styles/colors';
 
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
-
-const VALIDATION_FIELDS_BY_STEP = {
-  [STEP.description]: ['title', 'content'],
-
-  [STEP.outline]: [
-    'leadResearcher',
-    'startDate',
-    'endDate',
-    'matchType',
-    'place',
-    'region',
-    'area',
-    'detailedAddress',
-    'reward',
-    'count',
-    'timeRequired',
-  ],
-
-  [STEP.applyMethod]: ['applyMethodInfo', 'targetGroupInfo'],
-} as const;
 
 const UploadContainer = () => {
   const [images, setImages] = useState<(File | string)[]>([]);
