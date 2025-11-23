@@ -15,6 +15,7 @@ import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
 import ProgressBarSection from '../ProgressBarSection/ProgressBarSection';
 
+import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 import Button from '@/components/Button/Button';
@@ -57,54 +58,56 @@ const UploadContainer = () => {
     <section className={uploadContainerLayout({ step })}>
       <FormProvider {...form}>
         <FunnelProvider>
-          <ProgressBarSection />
-          <div className={uploadLayout}>
-            <Funnel>
-              {/* 실험 설명 */}
-              <Step name={STEP.description}>
-                <div className={uploadContentLayout}>
-                  <DescriptionSection images={images} setImages={setImages} />
-                </div>
-              </Step>
-              {/* 실험 개요 */}
-              <Step name={STEP.outline}>
-                <div style={{ display: 'flex', gap: '1.6rem' }}>
-                  <DescriptionSection
-                    images={images}
-                    setImages={setImages}
-                    isLoading={isExtracting}
-                  />
-                  <OutlineSection
-                    extractKeywordsFromContent={extractKeywordsFromContent}
-                    isPending={isExtracting}
-                  />
-                </div>
-              </Step>
-              {/* 실험 참여 방법 */}
-              <Step name={STEP.applyMethod}>
-                <div style={{ display: 'flex', gap: '1.6rem' }}>
-                  <DescriptionSection images={images} setImages={setImages} />
-                  <ApplyMethodSection />
-                </div>
-              </Step>
-            </Funnel>
-            {/* 버튼 */}
-            <div className={buttonContainer}>
-              {currentStepIdx > 0 && (
-                <Button variant="neutral" size="small" width="8.4rem" onClick={goToPrev}>
-                  이전으로
+          <FunnelStepGuard isDirty={isUserInputDirty}>
+            <ProgressBarSection />
+            <div className={uploadLayout}>
+              <Funnel>
+                {/* 실험 설명 */}
+                <Step name={STEP.description}>
+                  <div className={uploadContentLayout}>
+                    <DescriptionSection images={images} setImages={setImages} />
+                  </div>
+                </Step>
+                {/* 실험 개요 */}
+                <Step name={STEP.outline}>
+                  <div style={{ display: 'flex', gap: '1.6rem' }}>
+                    <DescriptionSection
+                      images={images}
+                      setImages={setImages}
+                      isLoading={isExtracting}
+                    />
+                    <OutlineSection
+                      extractKeywordsFromContent={extractKeywordsFromContent}
+                      isPending={isExtracting}
+                    />
+                  </div>
+                </Step>
+                {/* 실험 참여 방법 */}
+                <Step name={STEP.applyMethod}>
+                  <div style={{ display: 'flex', gap: '1.6rem' }}>
+                    <DescriptionSection images={images} setImages={setImages} />
+                    <ApplyMethodSection />
+                  </div>
+                </Step>
+              </Funnel>
+              {/* 버튼 */}
+              <div className={buttonContainer}>
+                {currentStepIdx > 0 && (
+                  <Button variant="neutral" size="small" width="8.4rem" onClick={goToPrev}>
+                    이전으로
+                  </Button>
+                )}
+                <Button
+                  variant="primary"
+                  size="small"
+                  width="20rem"
+                  onClick={isSubmitStep ? handleSubmit : goToNext}
+                >
+                  {isSubmitStep ? '공고 등록하기' : '다음으로'}
                 </Button>
-              )}
-              <Button
-                variant="primary"
-                size="small"
-                width="20rem"
-                onClick={isSubmitStep ? handleSubmit : goToNext}
-              >
-                {isSubmitStep ? '공고 등록하기' : '다음으로'}
-              </Button>
+              </div>
             </div>
-          </div>
+          </FunnelStepGuard>
         </FunnelProvider>
 
         {/* 공고 등록 실패 시 alert Modal */}
