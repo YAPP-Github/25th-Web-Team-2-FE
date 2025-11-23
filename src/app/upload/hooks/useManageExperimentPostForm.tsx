@@ -161,8 +161,6 @@ const useManageExperimentPostForm = ({
   };
 
   const handleSubmitError = (errors: FieldErrors) => {
-    setErrorMessage('입력 정보를 확인해 주세요');
-    setOpenAlertModal(true);
     Sentry.withScope((scope) => {
       scope.setLevel('info');
       scope.setTag('zod', 'formInvalidError');
