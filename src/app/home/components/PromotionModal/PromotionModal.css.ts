@@ -25,7 +25,7 @@ export const promotionModalContent = style({
 export const modalContainer = style({
   borderRadius: '1.6rem',
   padding: '2.4rem',
-  maxWidth: '80%',
+  maxWidth: '37rem',
   maxHeight: '80vh',
   display: 'flex',
   flexDirection: 'column',
