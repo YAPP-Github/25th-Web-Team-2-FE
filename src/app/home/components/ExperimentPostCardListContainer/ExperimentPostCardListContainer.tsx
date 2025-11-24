@@ -20,7 +20,7 @@ import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import { PATH } from '@/constants/path';
 import { trackEvent } from '@/lib/mixpanelClient';
-import { isMobile } from '@/utils/deviceType';
+import { isDesktop, isMobile } from '@/utils/deviceType';
 
 const IS_PROMOTION_POPUP_VIEWED = 'IS_PROMOTION_POPUP_VIEWED';
 const PROMOTION_IMAGES = [firstPromotionBanner, secondPromotionBanner, thirdPromotionBanner];
@@ -61,7 +61,7 @@ const ExperimentPostCardListContainer = ({
 
   useEffect(() => {
     // NOTE: localStorage 사용처가 더 생기면 추상화 고려 (+ key 관리)
-    if (isResearcher && localStorage.getItem(IS_PROMOTION_POPUP_VIEWED) === null) {
+    if (isResearcher && isDesktop() && localStorage.getItem(IS_PROMOTION_POPUP_VIEWED) === null) {
       localStorage.setItem(IS_PROMOTION_POPUP_VIEWED, 'true');
       setShowPromotionPopup(true);
       trackEvent('AI Extract Keywords Modal', {
