@@ -201,6 +201,9 @@ export const postDate = style([
   {
     ...fonts.label.medium.M13,
     color: colors.text04,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.8rem',
 
     '@media': {
       'screen and (max-width: 767px)': {
