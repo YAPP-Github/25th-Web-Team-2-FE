@@ -14,7 +14,7 @@ import {
   postViewsContainer,
 } from './ExperimentPostCard.css';
 
-import { formatPostDuration } from '@/app/home/home.utils';
+import { formatExperimentTimeRequired } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import { startRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
@@ -62,9 +62,9 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
               <span className={postReward}>{reward}</span>
             </div>
             <div className={postRewardContainer}>
-              <span className={announceText}>일시</span>
+              <span className={announceText}>시간</span>
               <div className={postDate}>
-                {formatPostDuration({ timeRequired, count }).map((text, index) => (
+                {formatExperimentTimeRequired({ timeRequired, count }).map((text, index) => (
                   <span key={index}>{text}</span>
                 ))}
               </div>

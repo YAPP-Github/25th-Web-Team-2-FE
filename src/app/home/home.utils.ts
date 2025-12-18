@@ -145,24 +145,27 @@ const TIME_REQUIRED_MAP: Record<TimeRequired, string> = {
   ABOUT_4H: '4시간',
 };
 
-export const formatPostDuration = ({
+export const formatExperimentTimeRequired = ({
   timeRequired,
   count,
 }: {
   timeRequired: TimeRequired | null;
   count: number | null;
 }): string[] => {
-  if (count && count === 1 && timeRequired) {
-    return [TIME_REQUIRED_MAP[timeRequired]];
+  const DEFAULT_TEXT = '본문 참고';
+  const SEPARATOR = '|';
+
+  if (!count) {
+    return [DEFAULT_TEXT];
   }
 
   if (!timeRequired) {
-    return ['본문 참고', '|', `${count}회`];
+    return [DEFAULT_TEXT, SEPARATOR, `${count}회`];
   }
 
-  if (count && count >= 2 && timeRequired) {
-    return [TIME_REQUIRED_MAP[timeRequired], '|', `${count}회`];
+  if (count === 1) {
+    return [TIME_REQUIRED_MAP[timeRequired]];
   }
 
-  return ['본문 참고'];
+  return [TIME_REQUIRED_MAP[timeRequired], SEPARATOR, `${count}회`];
 };
