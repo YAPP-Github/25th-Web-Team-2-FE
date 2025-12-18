@@ -1,3 +1,5 @@
+import { TIME_REQUIRED } from '@/constants/config';
+
 export interface ExperimentPost {
   postInfo: ExperimentPostInfo;
   recruitStatus: boolean;
@@ -13,4 +15,8 @@ export interface ExperimentPostInfo {
     startDate: string | null;
     endDate: string | null;
   };
+  timeRequired: TimeRequired | null;
+  count: number | null;
 }
+
+export type TimeRequired = (typeof TIME_REQUIRED)[number];

@@ -1,4 +1,4 @@
-import { keyframes, style, styleVariants } from '@vanilla-extract/css';
+import { globalStyle, keyframes, style, styleVariants } from '@vanilla-extract/css';
 
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
@@ -201,6 +201,7 @@ export const postDate = style([
   {
     ...fonts.label.medium.M13,
     color: colors.text04,
+    WebkitBoxAlign: 'center',
 
     '@media': {
       'screen and (max-width: 767px)': {
@@ -210,3 +211,7 @@ export const postDate = style([
     },
   },
 ]);
+
+globalStyle(`${postDate} > span:not(:last-child)`, {
+  marginRight: '0.8rem',
+});

@@ -14,7 +14,7 @@ import {
   postViewsContainer,
 } from './ExperimentPostCard.css';
 
-import { formatPostDate } from '@/app/home/home.utils';
+import { formatExperimentTimeRequired } from '@/app/home/home.utils';
 import Icon from '@/components/Icon';
 import { startRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
@@ -26,7 +26,7 @@ interface ExperimentPostCardProps {
 
 const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
   const {
-    postInfo: { experimentPostId, place, views, title, reward, durationInfo },
+    postInfo: { experimentPostId, place, views, title, reward, timeRequired, count },
     recruitStatus,
   } = experimentPost;
 
@@ -62,13 +62,12 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
               <span className={postReward}>{reward}</span>
             </div>
             <div className={postRewardContainer}>
-              <span className={announceText}>일시</span>
-              <span className={postDate}>
-                {formatPostDate({
-                  startDate: durationInfo.startDate,
-                  endDate: durationInfo.endDate,
-                })}
-              </span>
+              <span className={announceText}>시간</span>
+              <div className={postDate}>
+                {formatExperimentTimeRequired({ timeRequired, count }).map((text, index) => (
+                  <span key={index}>{text}</span>
+                ))}
+              </div>
             </div>
           </div>
         ) : (
