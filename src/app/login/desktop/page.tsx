@@ -12,6 +12,10 @@ import LoginCard from './LoginCard/LoginCard';
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
 
+// SSG 설정
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export default function LoginDesktopPage() {
   const SLOGAN = '작은 연결로 시작되는 큰 발견\n그라밋이 도울게요';
 
