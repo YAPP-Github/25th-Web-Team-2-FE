@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { GENDER_TYPE, MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { TIME_REQUIRED } from '@/constants/config';
 
 const UploadExperimentPostFormSchema = () => {
   return z.object({
@@ -20,19 +21,7 @@ const UploadExperimentPostFormSchema = () => {
     ),
 
     // 소요 시간
-    timeRequired: z
-      .enum([
-        'LESS_30M',
-        'ABOUT_30M',
-        'ABOUT_1H',
-        'ABOUT_1H30M',
-        'ABOUT_2H',
-        'ABOUT_2H30M',
-        'ABOUT_3H',
-        'ABOUT_3H30M',
-        'ABOUT_4H',
-      ])
-      .nullable(),
+    timeRequired: z.enum(TIME_REQUIRED).nullable(),
 
     // 연구 책임자
     leadResearcher: z
