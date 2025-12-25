@@ -33,6 +33,8 @@ jobs:
 
       - name: 빌드
         run: pnpm build
+        env:
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
   test:
     runs-on: ubuntu-latest
