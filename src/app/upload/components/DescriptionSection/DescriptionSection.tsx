@@ -1,3 +1,4 @@
+import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import { ChangeEvent, DragEvent, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -18,28 +19,33 @@ import {
 } from './DescriptionSection.css';
 import InputForm from '../InputForm/InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
-import { headingIcon } from '../UploadContainer/UploadContainer.css';
 
+import useFunnel from '@/app/join/hooks/useFunnel';
 import Icon from '@/components/Icon';
+import { dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
 import { useToast } from '@/hooks/useToast';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import { fonts } from '@/styles/fonts.css';
 
 interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
   setImages: (images: (string | File)[]) => void;
+  extractKeywordsFromContent?: () => Promise<void>;
+  isLoading?: boolean;
 }
 
 const MAX_PHOTOS = 3;
 const VALID_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
-const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
+const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSectionProps) => {
   const {
     control,
     setValue,
     getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
+  const { currentStepIdx } = useFunnel();
 
   const toast = useToast();
   const contentError = errors.content;
@@ -105,8 +111,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
     <>
       <div className={descriptionSectionLayout}>
         <h3 className={uploadFormSectionTitle}>
-          <span className={headingIcon}>1</span>어떤 실험인가요?{' '}
-          <span style={{ color: colors.textAlert }}>*</span>
+          어떤 실험인가요?&nbsp;<span style={{ color: colors.textAlert }}>*</span>
         </h3>
 
         <div className={descriptionFormLayout}>
@@ -136,6 +141,7 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
                   id="content"
                   className={descriptionTextarea({
                     photoGridHeight: images.length > 0 ? 'withPhotos' : 'withoutPhotos',
+                    stretch: currentStepIdx > 0,
                   })}
                   placeholder="본문을 입력해 주세요"
                 />
@@ -212,6 +218,56 @@ const DescriptionSection = ({ images, setImages }: DescriptionSectionProps) => {
           )}
         </div>
       </div>
+
+      <Dialog.Root open={isLoading ?? false}>
+        <Dialog.Overlay className={dialogOverlay} />
+        <Dialog.Content
+          style={{
+            width: '32rem',
+            backgroundColor: colors.field01,
+            borderRadius: '1.2rem',
+            padding: '3.2rem',
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+            zIndex: 100,
+            textAlign: 'center',
+          }}
+        >
+          <Dialog.Title>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2rem',
+              }}
+            >
+              <Icon icon="TwinkleStars" width={48} height={48} />
+              <span
+                style={{
+                  ...fonts.title.medium.SB20,
+                  color: colors.text06,
+                }}
+              >
+                AI 자동 입력중이에요
+              </span>
+            </div>
+          </Dialog.Title>
+          <Dialog.Description
+            style={{
+              whiteSpace: 'pre-wrap',
+              ...fonts.body.small.M15,
+              color: colors.text06,
+              marginTop: '0.8rem',
+            }}
+          >
+            {`공고를 읽고 입력칸을 자동으로 채워드려요\n가끔 실수할 수 있으니, 꼭 확인해 주세요`}
+          </Dialog.Description>
+        </Dialog.Content>
+      </Dialog.Root>
     </>
   );
 };

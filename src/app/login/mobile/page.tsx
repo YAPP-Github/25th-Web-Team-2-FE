@@ -9,6 +9,10 @@ import { mobileLoginCardContainer } from './MobileLoginPage.css';
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';
 
+// SSG 설정
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export default function MobileLoginPage() {
   return (
     <div className={mobileLoginPageLayout}>
