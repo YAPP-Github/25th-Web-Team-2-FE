@@ -1,9 +1,11 @@
 'use client';
 
-import Image from 'next/image';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
+import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 
 import {
+  bannerBgVar,
   bannerCarousel,
   bannerImage,
   bannerImageContainer,
@@ -18,25 +20,38 @@ import { useSlide } from './hooks/useSlide';
 import { useTouchSlide } from './hooks/useTouchSlide';
 import { SLIDE_SPEED } from '../../home.constants';
 
-import MobileBannerSecond from '@/assets/images/mobileBannerAI.webp';
-import MobileBanner from '@/assets/images/mobileSurveyBanner.webp';
-import WebBannerSecond from '@/assets/images/webBannerAI.webp';
-import WebBanner from '@/assets/images/webSurveyBanner.webp';
+import MobileBanner from '@/assets/images/firstMobileBanner.webp';
+import MobileAIBanner from '@/assets/images/mobileBannerAI.webp';
+import MobileBannerSecond from '@/assets/images/secondMobileBanner.webp';
+import WebBanner from '@/assets/images/webBanner.png';
+import WebBannerSecond from '@/assets/images/webBanner2.png';
+import WebAIBanner from '@/assets/images/webBannerAI.webp';
 import Icon from '@/components/Icon';
 
-const SURVEY_URL = 'https://gradmeet.co.kr/post/0NF84Z489GFJE?utm_source=banner';
+type BannerType = {
+  webSrc: StaticImageData;
+  mobileSrc: StaticImageData;
+  alt: string;
+  backgroundColor: string;
+  url?: string;
+};
 
-const BannerMap = [
+const BannerMap: BannerType[] = [
   {
     webSrc: WebBanner,
     mobileSrc: MobileBanner,
     alt: '참여자 언제 다 모을지 고민이라면 공고를 올리고 가까운 참여자에게 실험을 알려보세요',
-    url: SURVEY_URL,
     backgroundColor: '#141421' as const,
   },
   {
     webSrc: WebBannerSecond,
     mobileSrc: MobileBannerSecond,
+    alt: '공강 시간에 부담 없이 용돈 버는 방법. 학교 근처 실험에 참여하고 보상을 받아보세요',
+    backgroundColor: '#141421' as const,
+  },
+  {
+    webSrc: WebAIBanner,
+    mobileSrc: MobileAIBanner,
     alt: 'AI 자동 입력이 새로 나왔어요. 본문만 작성하면 AI로 공고등록 1분 컷.',
     backgroundColor: '#1F0012' as const,
   },
@@ -80,15 +95,14 @@ const Banner = () => {
               />
             );
 
-            const hasUrl = !!banner.url;
-
             return (
               <picture
                 key={idx}
-                className={bannerWrapper({ backgroundColor: banner.backgroundColor })}
+                className={bannerWrapper}
+                style={assignInlineVars({ [bannerBgVar]: banner.backgroundColor })}
               >
                 <source media="(max-width: 767px)" srcSet={banner.mobileSrc.src} />
-                {hasUrl ? (
+                {banner.url ? (
                   <Link href={banner.url} className={bannerLink}>
                     <div className={bannerImageContainer}>{imageContent}</div>
                   </Link>
