@@ -1,5 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { createVar, style } from '@vanilla-extract/css';
+
+export const bannerBgVar = createVar();
 
 export const bannerLayout = style({
   position: 'relative',
@@ -83,24 +84,13 @@ export const slideCircle = style({
   height: '0.6rem',
 });
 
-export const bannerWrapper = recipe({
-  base: {
-    width: '100%',
-    height: '100%',
-    borderRadius: '1.2rem',
-    flex: '0 0 100%',
-    overflow: 'hidden',
-  },
-  variants: {
-    backgroundColor: {
-      '#141421': {
-        backgroundColor: '#141421',
-      },
-      '#1F0012': {
-        backgroundColor: '#1F0012',
-      },
-    },
-  },
+export const bannerWrapper = style({
+  width: '100%',
+  height: '100%',
+  borderRadius: '1.2rem',
+  flex: '0 0 100%',
+  overflow: 'hidden',
+  backgroundColor: bannerBgVar,
 });
 
 export const bannerLink = style({
