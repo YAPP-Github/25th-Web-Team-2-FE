@@ -45,8 +45,20 @@ export const STEP = {
   univEmail: 'univEmail',
   info: 'info',
   additionalInfo: 'additionalInfo',
+
+  description: 'description',
+  outline: 'outline',
+  applyMethod: 'applyMethod',
+
   success: 'success',
 } as const;
+
+export const UPLOAD_STEP_LIST = [
+  STEP.description,
+  STEP.outline,
+  STEP.applyMethod,
+  STEP.success,
+] as const;
 
 export const DESKTOP_PARTICIPANT_JOIN_STEP_LIST = [STEP.email, STEP.info, STEP.success] as const;
 export const DESKTOP_RESEARCHER_JOIN_STEP_LIST = [STEP.email, STEP.info, STEP.success] as const;

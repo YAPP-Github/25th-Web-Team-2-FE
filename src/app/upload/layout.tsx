@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
+import UploadFunnelLayout from '@/components/layout/UploadFunnelLayout/UploadFunnelLayout';
 
 export const metadata: Metadata = {
   title: '그라밋 | 실험 공고 등록',
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 function UploadLayout({ children }: { children: React.ReactNode }) {
-  return <DefaultLayout>{children}</DefaultLayout>;
+  return <UploadFunnelLayout>{children}</UploadFunnelLayout>;
 }
 
 export default UploadLayout;

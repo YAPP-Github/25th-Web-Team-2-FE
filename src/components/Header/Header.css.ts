@@ -10,9 +10,12 @@ export const headerLayout = style({
   alignItems: 'center',
   padding: '2rem 0',
   height: '7.4rem',
+  width: '100rem',
+  margin: '0 auto',
 
   '@media': {
     'screen and (max-width: 767px)': {
+      width: '100%',
       height: '5.4rem',
       padding: '1rem 1.6rem',
     },

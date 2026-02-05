@@ -46,6 +46,13 @@ export interface ExperimentPostListFilters {
   count?: number;
 }
 
+export interface ExtractKeywordsLimitResponse {
+  count: number;
+  limit: number;
+  remainingCount: number;
+  resetsAt: string;
+}
+
 export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = getQueryParamsToString({ ...params });
   return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams), {
@@ -55,4 +62,8 @@ export const fetchPostList = async (params: ExperimentPostListFilters) => {
 
 export const fetchPostCount = async <T>(region?: string | null) => {
   return await fetchClient.get<T>(API_URL.postArea(region), { requireAuth: false });
+};
+
+export const fetchExtractKeywordsLimit = async () => {
+  return await fetchClient.get<ExtractKeywordsLimitResponse>(API_URL.extractKeywordsLimit);
 };

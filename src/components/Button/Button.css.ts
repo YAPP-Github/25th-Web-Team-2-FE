@@ -39,6 +39,10 @@ export const buttonRecipe = recipe({
         backgroundColor: colors.field09,
         color: colors.text01,
       },
+      neutral: {
+        backgroundColor: colors.field04,
+        color: colors.text06,
+      },
     },
     size: {
       small: {

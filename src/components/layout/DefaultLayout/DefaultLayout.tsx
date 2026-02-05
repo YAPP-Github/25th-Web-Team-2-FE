@@ -16,8 +16,8 @@ const BackToTopButton = dynamic(
 const DefaultLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className={defaultLayoutContainer}>
+      <Header />
       <div className={defaultLayout}>
-        <Header />
         {children}
         <Footer />
         <BackToTopButton />

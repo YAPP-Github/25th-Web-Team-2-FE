@@ -1,23 +1,21 @@
 import { useRef, useState } from 'react';
 
-import { BANNER_LENGTH } from '@/app/home/home.constants';
-
 const SLIDE_THRESHOLD = 50;
 
 interface UseTouchSlideProps {
   currentIdx: number;
   moveSlide: (idx: number) => void;
+  totalLength: number;
   resetAutoSlide?: () => void;
   loop?: boolean;
-  totalLength?: number;
 }
 
 export const useTouchSlide = ({
   currentIdx,
-  resetAutoSlide,
   moveSlide,
+  totalLength,
+  resetAutoSlide,
   loop = true,
-  totalLength = BANNER_LENGTH,
 }: UseTouchSlideProps) => {
   const [translateX, setTranslateX] = useState(0);
   const startTouchRef = useRef<number | null>(null);

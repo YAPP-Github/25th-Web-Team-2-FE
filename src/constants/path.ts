@@ -4,4 +4,5 @@ export const PATH = {
   edit: '/user/profile/mobile/edit',
   leave: '/user/leave',
   editProfile: (infoType: string) => `/user/profile/mobile/edit/${infoType}`,
+  upload: '/upload',
 } as const;
