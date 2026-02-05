@@ -1,5 +1,6 @@
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { getServerSession } from 'next-auth';
 
 import pretendard from '@/fonts/local-font';
@@ -64,6 +65,13 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={pretendard.className}>
+      <head>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}`}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body suppressHydrationWarning={true}>
         <Providers session={session}>{children}</Providers>
         <SpeedInsights />
