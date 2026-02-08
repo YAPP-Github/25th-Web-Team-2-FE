@@ -6,10 +6,10 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 
 import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
+import useExtractKeywordsMutation from './useExtractKeywords';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
-import useExtractKeywordsMutation from './useExtractKeywords';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
@@ -128,6 +128,7 @@ const useManageExperimentPostForm = ({
               refetchType: 'active',
             });
             await queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) });
+            await queryClient.invalidateQueries({ queryKey: queryKey.post.all });
             router.push(`/post/${postId}`);
             form.reset();
           },
