@@ -241,7 +241,7 @@ const useManageExperimentPostForm = ({
         scope.setLevel('error');
         scope.setTag('ai', 'keywordExtractionError');
         scope.setContext('keywordExtractionError', {
-          error: JSON.parse(JSON.stringify(error)),
+          error,
         });
 
         Sentry.captureException(new Error('키워드 추출에 실패했어요.'));

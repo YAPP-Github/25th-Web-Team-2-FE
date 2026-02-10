@@ -31,7 +31,7 @@ export const logAPIError = ({ error, level, httpStatus, url }: LogAPIErrorProps)
     scope.setTag('httpStatus', httpStatus.toString());
     scope.setTag('endpoint', url);
     scope.setContext('apiError', {
-      error: JSON.parse(JSON.stringify(error)),
+      error,
     });
 
     Sentry.captureException(new Error(error.message));
@@ -46,7 +46,7 @@ export const logNetworkError = ({ error, url }: LogNetworkErrorProps) => {
     scope.setTag('api', 'networkError');
     scope.setTag('endpoint', url);
     scope.setContext('networkError', {
-      error: JSON.parse(JSON.stringify(error)),
+      error,
     });
 
     Sentry.captureException(new Error('네트워크가 불안정해요. 다시 시도해주세요!'));
@@ -61,7 +61,7 @@ export const logUnhandledError = ({ error, url }: LogUnhandledErrorProps) => {
     scope.setTag('api', 'unhandledError');
     scope.setTag('endpoint', url);
     scope.setContext('unhandledError', {
-      error: JSON.parse(JSON.stringify(error)),
+      error,
     });
 
     Sentry.captureException(new Error('예기치 못한 에러가 발생했어요. 관리자에게 문의 바랍니다.'));
