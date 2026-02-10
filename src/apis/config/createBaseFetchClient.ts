@@ -72,10 +72,9 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           }
 
           logAPIError({
+            error: apiError,
             level: response.status >= SERVER_STATUS_CODE ? 'error' : 'warning',
-            errorCode: apiError.code,
             httpStatus: response.status,
-            errorMessage: apiError.message,
             url,
           });
 
@@ -94,7 +93,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
         return await response.json();
       } catch (error) {
         if (typeof window !== 'undefined' && !navigator.onLine) {
-          logNetworkError({ url });
+          logNetworkError({ error: error as Error, url });
           throw new NetworkError();
         }
 
@@ -102,7 +101,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           throw error;
         }
 
-        logUnhandledError({ url });
+        logUnhandledError({ error: error as Error, url });
         throw new UnhandledError();
       }
     },

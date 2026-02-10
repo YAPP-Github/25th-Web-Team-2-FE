@@ -169,6 +169,11 @@ const useManageExperimentPostForm = ({
       scope.setExtra('errors', errors);
       scope.setExtra('data', form.getValues());
 
+      scope.setContext('validationErrors', {
+        errors: JSON.parse(JSON.stringify(errors)),
+        formData: JSON.parse(JSON.stringify(form.getValues())),
+      });
+
       Sentry.captureException(new Error('공고 유효성 검증에 실패했어요.'));
     });
   };
@@ -235,7 +240,10 @@ const useManageExperimentPostForm = ({
       Sentry.withScope((scope) => {
         scope.setLevel('error');
         scope.setTag('ai', 'keywordExtractionError');
-        scope.setExtra('error', error);
+        scope.setContext('keywordExtractionError', {
+          error: JSON.parse(JSON.stringify(error)),
+        });
+
         Sentry.captureException(new Error('키워드 추출에 실패했어요.'));
       });
     }
