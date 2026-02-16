@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { calculateAgeFromBirthDate } from '../../home.utils';
 import { useParticipantAutoFilter } from '../useParticipantAutoFilter';
 import useQueryParams from '../useQueryParams';
 
@@ -23,9 +24,11 @@ describe('useParticipantAutoFilter', () => {
         }),
       );
 
+      const expectedAge = calculateAgeFromBirthDate(mockParticipant.birthDate);
+
       expect(mockSearchParams.get('recruitStatus')).toBe('ALL');
       expect(mockSearchParams.get('gender')).toBe('MALE');
-      expect(mockSearchParams.get('age')).toBe('25');
+      expect(mockSearchParams.get('age')).toBe(expectedAge.toString());
       expect(result.current.isAutoFilled).toBe(false);
 
       rerender();
