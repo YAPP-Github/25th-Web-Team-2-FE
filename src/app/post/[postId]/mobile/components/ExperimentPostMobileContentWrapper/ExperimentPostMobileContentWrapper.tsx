@@ -48,7 +48,7 @@ const ExperimentPostMobileContentWrapper = ({
         <div className={fixedBottomButtonLayout}>
           {postDetailData.recruitStatus ? (
             <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
-              참여 방법 확인하기
+              참여하기
             </Button>
           ) : (
             <Button

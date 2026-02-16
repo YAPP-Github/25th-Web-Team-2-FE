@@ -6,10 +6,10 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 
 import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
+import useExtractKeywordsMutation from './useExtractKeywords';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
 import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
-import useExtractKeywordsMutation from './useExtractKeywords';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
@@ -128,6 +128,7 @@ const useManageExperimentPostForm = ({
               refetchType: 'active',
             });
             await queryClient.invalidateQueries({ queryKey: queryKey.applyMethod(postId) });
+            await queryClient.invalidateQueries({ queryKey: queryKey.post.all });
             router.push(`/post/${postId}`);
             form.reset();
           },
@@ -167,6 +168,11 @@ const useManageExperimentPostForm = ({
       scope.setTag('zod', 'formInvalidError');
       scope.setExtra('errors', errors);
       scope.setExtra('data', form.getValues());
+
+      scope.setContext('validationErrors', {
+        errors: JSON.parse(JSON.stringify(errors)),
+        formData: JSON.parse(JSON.stringify(form.getValues())),
+      });
 
       Sentry.captureException(new Error('공고 유효성 검증에 실패했어요.'));
     });
@@ -234,7 +240,10 @@ const useManageExperimentPostForm = ({
       Sentry.withScope((scope) => {
         scope.setLevel('error');
         scope.setTag('ai', 'keywordExtractionError');
-        scope.setExtra('error', error);
+        scope.setContext('keywordExtractionError', {
+          error,
+        });
+
         Sentry.captureException(new Error('키워드 추출에 실패했어요.'));
       });
     }

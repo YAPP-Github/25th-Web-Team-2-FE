@@ -130,7 +130,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               setIsModalOpen(true);
             }}
           >
-            참여 방법 확인하기
+            참여하기
           </button>
         ) : (
           <button className={checkButton({ disabled: true })} disabled>
