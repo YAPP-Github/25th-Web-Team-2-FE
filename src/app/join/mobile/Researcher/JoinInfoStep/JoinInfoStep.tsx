@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { joinContentContainer } from './JoinInfoStep.css';
@@ -8,6 +9,8 @@ import JoinButton from '@/app/join/components/JoinButton/JoinButton';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const inputOrder = ['name', 'univName', 'major', 'labInfo'];
@@ -19,6 +22,10 @@ interface JoinInfoStepProps {
 const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
   const { handleKeyDown, setInputRef } = useFocusNavigation(inputOrder);
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'mobile', step: 3 });
+  }, []);
 
   return (
     <main className={mainContentLayout}>

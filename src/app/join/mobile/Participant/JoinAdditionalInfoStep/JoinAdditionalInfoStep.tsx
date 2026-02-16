@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import MatchConsentConfirmModal from '../../components/MatchConsentConfirmModal/MatchConsentConfirmModal';
@@ -20,7 +20,8 @@ import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoSt
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { MatchType } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
-import { stopRecording } from '@/lib/mixpanelClient';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
+import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinAdditionalInfoStepProps {
@@ -49,6 +50,10 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
 
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_PARTICIPANT_STEP, { device: 'mobile', step: 3 });
+  }, []);
 
   const handleClickJoin = () => {
     stopRecording();

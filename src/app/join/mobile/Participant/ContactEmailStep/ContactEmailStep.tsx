@@ -1,13 +1,16 @@
+import { useEffect } from 'react';
 import { FormProvider, useFormContext } from 'react-hook-form';
 
+import NextButton from './NextButton/NextButton';
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { mainContentLayout } from '../../page.css';
-import NextButton from './NextButton/NextButton';
 
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import EmailBadge from '@/components/EmailBadge/EmailBadge';
 import useOverlay from '@/hooks/useOverlay';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { LoginProvider } from '@/types/user';
 
@@ -33,6 +36,10 @@ const ContactEmailStep = ({ onNext, provider, oauthEmail }: ContactEmailStepProp
       </FormProvider>
     ));
   };
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_PARTICIPANT_STEP, { device: 'mobile', step: 1 });
+  }, []);
 
   if (!provider) {
     return null;

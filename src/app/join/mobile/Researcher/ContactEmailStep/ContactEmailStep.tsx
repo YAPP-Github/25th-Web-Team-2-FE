@@ -1,9 +1,13 @@
+import { useEffect } from 'react';
+
 import TitleSection from '../../components/TitleSection/TitleSection';
 import { mainContentLayout } from '../../page.css';
 import NextButton from './NextButton/NextButton';
 
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import EmailBadge from '@/components/EmailBadge/EmailBadge';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 import { LoginProvider } from '@/types/user';
 
@@ -14,6 +18,10 @@ interface ContactEmailStepProps {
 }
 
 const ContactEmailStep = ({ provider, oauthEmail, onNext }: ContactEmailStepProps) => {
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'mobile', step: 1 });
+  }, []);
+
   if (!provider) {
     return null;
   }
