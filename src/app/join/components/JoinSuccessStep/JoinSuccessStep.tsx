@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import {
   homeLink,
@@ -14,9 +14,23 @@ import {
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import JoinSuccess from '@/assets/images/joinSuccess.svg';
 import Logo from '@/assets/images/logo.svg';
+import { PAGEVIEW_SIGNUP_COMPLETE } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
+import { getDeviceType } from '@/utils/deviceType';
 
 const JoinSuccessStep = () => {
   const { userInfo } = useUserInfo();
+  const hasTrackedRef = useRef(false);
+
+  useEffect(() => {
+    if (userInfo && !hasTrackedRef.current) {
+      trackEvent(PAGEVIEW_SIGNUP_COMPLETE, {
+        role: userInfo.memberInfo.role.toLowerCase(),
+        device: getDeviceType(),
+      });
+      hasTrackedRef.current = true;
+    }
+  }, [userInfo]);
 
   return (
     <div className={joinSuccessLayout}>

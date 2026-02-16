@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { joinInputContainer } from './JoinInfoStep.css';
@@ -9,6 +10,8 @@ import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoSt
 import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
 import { Gender } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 const inputOrder = ['name', 'birthDate'];
@@ -32,6 +35,10 @@ const JoinInfoStep = ({ onNext }: JoinInfoStepProps) => {
 
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_PARTICIPANT_STEP, { device: 'mobile', step: 2 });
+  }, []);
 
   return (
     <main className={mainContentLayout}>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import {
@@ -17,7 +18,8 @@ import JoinInput from '../../../components/JoinInput/JoinInput';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { Gender, MatchType } from '@/app/join/JoinPage.types';
-import { stopRecording } from '@/lib/mixpanelClient';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
+import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinInfoStepProps {
@@ -40,6 +42,10 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   });
 
   const isAllFilled = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_PARTICIPANT_STEP, { device: 'desktop', step: 2 });
+  }, []);
 
   const handleClickJoin = () => {
     stopRecording();

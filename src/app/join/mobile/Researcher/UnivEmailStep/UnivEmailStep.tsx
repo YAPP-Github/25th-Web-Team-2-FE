@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FormProvider, useFormContext } from 'react-hook-form';
 
 import NextButton from './NextButton';
@@ -7,6 +8,8 @@ import { mainContentLayout } from '../../page.css';
 import UnivEmailInputContainer from '../UnivEmailInputContainer/UnivEmailInputContainer';
 
 import useOverlay from '@/hooks/useOverlay';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface UnivEmailStepProps {
@@ -29,6 +32,10 @@ const UnivEmailStep = ({ onNext }: UnivEmailStepProps) => {
       </FormProvider>
     ));
   };
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'mobile', step: 2 });
+  }, []);
 
   return (
     <main className={mainContentLayout}>

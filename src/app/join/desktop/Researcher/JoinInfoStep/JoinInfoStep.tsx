@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import JoinButton from '@/app/join/components/JoinButton/JoinButton';
@@ -7,6 +8,8 @@ import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import JoinTextarea from '@/app/join/components/JoinTextarea/JoinTextarea';
 import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
 import UnivAutoCompleteInput from '@/components/UnivAutoCompleteInput/UnivAutoCompleteInput';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
@@ -15,6 +18,10 @@ interface JoinInfoStepProps {
 
 const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'desktop', step: 2 });
+  }, []);
 
   return (
     <section className={joinForm}>
