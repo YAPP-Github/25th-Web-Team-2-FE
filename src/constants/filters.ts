@@ -1,3 +1,5 @@
+export const DEFAULT_RECRUIT_STATUS = 'OPEN' as const;
+
 export const REGIONS = [
   'SEOUL',
   'GYEONGGI',

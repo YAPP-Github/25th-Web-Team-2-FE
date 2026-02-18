@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import MatchTypeFilter from './MatchTypeFilter';
 
+import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 import { customRender } from '@/tests/test-utils';
 
 describe('MatchTypeFilter 컴포넌트', () => {
@@ -13,7 +14,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
     mockOnChange.mockClear();
   });
   it('필터가 선택되지 않았을 때 기본 텍스트를 표시한다', () => {
-    const filters = { recruitStatus: 'ALL' } as const;
+    const filters = { recruitStatus: DEFAULT_RECRUIT_STATUS } as const;
     const expected = '진행 방식';
 
     // Given & When
@@ -24,7 +25,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
   });
 
   it('필터가 선택되지 않았을 때 기본 텍스트를 표시한다', () => {
-    const filters = { recruitStatus: 'ALL', matchType: 'ONLINE' } as const;
+    const filters = { recruitStatus: DEFAULT_RECRUIT_STATUS, matchType: 'ONLINE' } as const;
     const expected = '비대면';
 
     // Given & When
@@ -37,7 +38,7 @@ describe('MatchTypeFilter 컴포넌트', () => {
   it('사용자가 진행 방식 필터링을 클릭하면 드롭다운의 진행 방식 옵션이 노출된다.', async () => {
     // Given
     const user = userEvent.setup();
-    const filters = { recruitStatus: 'ALL' } as const;
+    const filters = { recruitStatus: DEFAULT_RECRUIT_STATUS } as const;
     const defaultText = '진행 방식';
     customRender(<MatchTypeFilter filters={filters} />);
 

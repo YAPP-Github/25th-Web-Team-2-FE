@@ -5,6 +5,7 @@ import { useCallback, useMemo } from 'react';
 import useQueryParams from './useQueryParams';
 
 import { ExperimentPostListFilters } from '@/apis/post';
+import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 import { useToast } from '@/hooks/useToast';
 import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 import { ExperimentPostListFilterParams } from '@/types/filter';
@@ -21,18 +22,18 @@ const useURLFilters = () => {
 
     if (!parsedFilters.success) {
       toast.error({ message: INVALID_FILTER_MESSAGE });
-      const newParams = new URLSearchParams({ recruitStatus: 'ALL' });
+      const newParams = new URLSearchParams({ recruitStatus: DEFAULT_RECRUIT_STATUS });
       updateURLParams(newParams);
 
       return {
-        recruitStatus: 'ALL',
+        recruitStatus: DEFAULT_RECRUIT_STATUS,
       };
     }
 
     return parsedFilters.data;
   }, [searchParams, updateURLParams, toast]);
 
-  const isRecruiting = filters.recruitStatus === 'OPEN';
+  const isRecruiting = filters.recruitStatus === DEFAULT_RECRUIT_STATUS;
 
   const handleFilterChange = useCallback(
     (filters: ExperimentPostListFilterParams) => {
@@ -53,11 +54,11 @@ const useURLFilters = () => {
   );
 
   const handleToggleRecruitStatus = () => {
-    handleFilterChange({ recruitStatus: isRecruiting ? 'ALL' : 'OPEN' });
+    handleFilterChange({ recruitStatus: isRecruiting ? 'ALL' : DEFAULT_RECRUIT_STATUS });
   };
 
   const handleResetFilter = useCallback(() => {
-    const newParams = new URLSearchParams({ recruitStatus: 'ALL' });
+    const newParams = new URLSearchParams({ recruitStatus: DEFAULT_RECRUIT_STATUS });
     updateURLParams(newParams);
   }, [updateURLParams]);
 

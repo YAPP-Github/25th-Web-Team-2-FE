@@ -1,5 +1,6 @@
 import type { ExperimentPostListFilters } from '@/apis/post';
 import { Role } from '@/types/user';
+import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 
 export const queryKey = {
   post: {
@@ -7,7 +8,7 @@ export const queryKey = {
     filter: (filters: ExperimentPostListFilters = {}) =>
       [
         ...queryKey.post.all,
-        filters.recruitStatus ?? 'ALL',
+        filters.recruitStatus ?? DEFAULT_RECRUIT_STATUS,
         filters.gender ?? null,
         filters.age ?? null,
         filters.region ?? null,

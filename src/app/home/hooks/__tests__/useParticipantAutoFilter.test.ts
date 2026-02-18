@@ -5,6 +5,7 @@ import { calculateAgeFromBirthDate } from '../../home.utils';
 import { useParticipantAutoFilter } from '../useParticipantAutoFilter';
 import useQueryParams from '../useQueryParams';
 
+import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 import { mockParticipant } from '@/tests/mocks/userData';
 import { mockSearchParams } from '@/tests/setup';
 
@@ -26,7 +27,7 @@ describe('useParticipantAutoFilter', () => {
 
       const expectedAge = calculateAgeFromBirthDate(mockParticipant.birthDate);
 
-      expect(mockSearchParams.get('recruitStatus')).toBe('ALL');
+      expect(mockSearchParams.get('recruitStatus')).toBe(DEFAULT_RECRUIT_STATUS);
       expect(mockSearchParams.get('gender')).toBe('MALE');
       expect(mockSearchParams.get('age')).toBe(expectedAge.toString());
       expect(result.current.isAutoFilled).toBe(false);
@@ -46,10 +47,10 @@ describe('useParticipantAutoFilter', () => {
       const { updateURLParams } = useQueryParams();
       const mockUpdateURLParams = updateURLParams as ReturnType<typeof vi.fn>;
       const resetParams = new URLSearchParams();
-      resetParams.set('recruitStatus', 'ALL');
+      resetParams.set('recruitStatus', DEFAULT_RECRUIT_STATUS);
       mockUpdateURLParams(resetParams);
 
-      expect(mockSearchParams.get('recruitStatus')).toBe('ALL');
+      expect(mockSearchParams.get('recruitStatus')).toBe(DEFAULT_RECRUIT_STATUS);
       expect(mockSearchParams.has('gender')).toBe(false);
       expect(mockSearchParams.has('age')).toBe(false);
     });

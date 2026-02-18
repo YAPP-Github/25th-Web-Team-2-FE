@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { REGIONS, AREAS } from '@/constants/filters';
+import { DEFAULT_RECRUIT_STATUS, REGIONS, AREAS } from '@/constants/filters';
 
 export type URLFilterSchemaType = z.infer<ReturnType<typeof URLFilterSchema>>;
 
@@ -15,5 +15,5 @@ export const URLFilterSchema = () =>
       .pipe(z.array(z.enum(AREAS)))
       .optional(),
     matchType: z.enum(['ONLINE', 'OFFLINE', 'ALL']).optional(),
-    recruitStatus: z.enum(['ALL', 'OPEN']).default('ALL'),
+    recruitStatus: z.enum(['ALL', 'OPEN']).default(DEFAULT_RECRUIT_STATUS),
   });
