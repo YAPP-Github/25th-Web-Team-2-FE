@@ -59,6 +59,7 @@
     "express": "^4.21.2",
     "husky": "^9.1.7",
     "jira-prepare-commit-msg": "^1.7.2",
+    "lint-staged": "^15.4.3",
     "jsdom": "^26.1.0",
     "mixpanel-browser": "^2.68.0",
     "msw": "^2.7.0",
@@ -74,5 +75,8 @@
     "messagePattern": "[$J] $M",
     "allowEmptyCommitMessage": false,
     "ignoredBranchesPattern": "^(main|develop)$"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "next lint --fix --file"
   }
 }
