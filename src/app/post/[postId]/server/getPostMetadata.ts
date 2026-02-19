@@ -1,6 +1,7 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 import { fetchExperimentPost } from './fetchExperimentPost';
+import { getDurationLabel } from '../ExperimentPostPage.utils';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
 
 const DEFAULT_METADATA: Metadata = {
@@ -47,7 +48,7 @@ const formatDescription = (title: string, postDetailData: UseQueryExperimentDeta
   }
 
   if (summary.timeRequired) {
-    descriptionParts.push(`소요 시간: ${summary.timeRequired}`);
+    descriptionParts.push(`소요 시간: ${getDurationLabel(summary.timeRequired)}`);
   }
 
   return descriptionParts.length > 0
