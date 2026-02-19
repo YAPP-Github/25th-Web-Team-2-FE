@@ -1,11 +1,10 @@
-import { Metadata } from 'next';
+import { getPostMetadata } from '../server/getPostMetadata';
 
 import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout/MobilePostDetailLayout';
 
-export const metadata: Metadata = {
-  title: '그라밋 | 공고 조회',
-  description: '그라밋 | 실험 공고 조회',
-};
+export async function generateMetadata({ params }: { params: { postId: string } }) {
+  return getPostMetadata(params.postId);
+}
 
 function MobilePostLayout({ children }: { children: React.ReactNode }) {
   return <MobilePostDetailLayout>{children}</MobilePostDetailLayout>;
