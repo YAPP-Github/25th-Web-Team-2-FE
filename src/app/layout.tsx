@@ -23,13 +23,21 @@ export const metadata: Metadata = {
     siteName: '그라밋',
     type: 'website',
     locale: 'ko_KR',
-    images: DEFAULT_OG_IMAGE_URL,
+    images: {
+      url: DEFAULT_OG_IMAGE_URL,
+      width: 100,
+      height: 100,
+    },
   },
   twitter: {
     card: 'summary_large_image',
     title: '그라밋',
     description: '대학원생 연구자가 대학생 참여자를 모집하여 실험을 진행할 수 있도록 돕는 플랫폼',
-    images: DEFAULT_OG_IMAGE_URL,
+    images: {
+      url: DEFAULT_OG_IMAGE_URL,
+      width: 100,
+      height: 100,
+    },
   },
   keywords: [
     '그라밋',

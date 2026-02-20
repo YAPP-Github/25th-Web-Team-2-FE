@@ -81,13 +81,23 @@ export const getPostMetadata = async (postId: string): Promise<Metadata> => {
       openGraph: {
         title: pageTitle,
         description,
-        images: imageUrl,
+        images: {
+          url: imageUrl,
+          width: 100,
+          height: 100,
+          alt: pageTitle,
+        },
       },
       twitter: {
         card: 'summary_large_image',
         title: pageTitle,
         description,
-        images: imageUrl,
+        images: {
+          url: imageUrl,
+          width: 100,
+          height: 100,
+          alt: pageTitle,
+        },
       },
     };
   } catch {
