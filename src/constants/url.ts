@@ -39,3 +39,5 @@ export const MOCK_API_URL = {
   me: '/v1/members/participants/me',
   refresh: '/v1/auth/refresh',
 };
+
+export const DEFAULT_OG_IMAGE_URL = '/og-image.png';

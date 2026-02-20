@@ -4,9 +4,20 @@ import { fetchExperimentPost } from './fetchExperimentPost';
 import { getDurationLabel } from '../ExperimentPostPage.utils';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
 
+import { DEFAULT_OG_IMAGE_URL } from '@/constants/url';
+
 const DEFAULT_METADATA: Metadata = {
   title: '그라밋 | 공고 조회',
   description: '그라밋 | 실험 공고 조회',
+};
+
+const getOgImageUrl = (postDetailData: UseQueryExperimentDetailsAPIResponse) => {
+  const firstImgUrl = postDetailData.imageList?.[0];
+  if (firstImgUrl && (firstImgUrl.startsWith('http://') || firstImgUrl.startsWith('https://'))) {
+    return firstImgUrl;
+  }
+
+  return DEFAULT_OG_IMAGE_URL;
 };
 
 const formatDate = (date: string) => {
@@ -56,12 +67,13 @@ const formatDescription = (title: string, postDetailData: UseQueryExperimentDeta
     : `${title} | 그라밋 실험 공고`;
 };
 
-export async function getPostMetadata(postId: string): Promise<Metadata> {
+export const getPostMetadata = async (postId: string): Promise<Metadata> => {
   try {
     const { postDetailData } = await fetchExperimentPost(postId);
     const { title } = postDetailData;
     const pageTitle = `${title} | 그라밋`;
     const description = formatDescription(title, postDetailData);
+    const imageUrl = getOgImageUrl(postDetailData);
 
     return {
       title: pageTitle,
@@ -69,14 +81,16 @@ export async function getPostMetadata(postId: string): Promise<Metadata> {
       openGraph: {
         title: pageTitle,
         description,
+        images: imageUrl,
       },
       twitter: {
         card: 'summary_large_image',
         title: pageTitle,
         description,
+        images: imageUrl,
       },
     };
   } catch {
     return DEFAULT_METADATA;
   }
-}
+};
