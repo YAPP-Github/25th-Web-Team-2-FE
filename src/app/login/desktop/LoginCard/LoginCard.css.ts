@@ -35,6 +35,7 @@ export const buttonContainer = style({
 });
 
 export const loginButton = style({
+  position: 'relative',
   ...fonts.label.large.R14,
   backgroundColor: colors.field01,
   color: colors.text06,
@@ -43,5 +44,21 @@ export const loginButton = style({
   justifyContent: 'center',
   gap: '0.4rem',
   padding: '0.8rem',
+  borderRadius: '0.8rem',
+});
+
+export const loginButtonRecent = style({
+  outline: `1px solid ${colors.primaryMint}`,
+  outlineOffset: '-1px',
+});
+
+export const recentLoginBadge = style({
+  ...fonts.label.small.SB12,
+  position: 'absolute',
+  top: '-0.8rem',
+  right: '0.8rem',
+  color: colors.text01,
+  backgroundColor: colors.primaryMint,
+  padding: '0.4rem 0.6rem',
   borderRadius: '0.8rem',
 });

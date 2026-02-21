@@ -6,6 +6,7 @@ import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
 import { LoginResponse, naverLogin, NaverLoginParams } from '@/apis/login';
 import { loginWithCredentials } from '@/lib/auth-utils';
+import { localStorageManager, STORAGE_KEYS } from '@/lib/localStorageManager';
 import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
 
 interface UseNaverLoginMutationProps {
@@ -37,6 +38,10 @@ const useNaverLoginMutation = ({
 
         identifyUser(memberInfo.oauthEmail);
         setUserProperties({ email: memberInfo.oauthEmail, role: memberInfo.role });
+        localStorageManager.set(STORAGE_KEYS.lastLogin, {
+          role: memberInfo.role,
+          provider: memberInfo.provider,
+        });
 
         onSuccessLogin();
         return;

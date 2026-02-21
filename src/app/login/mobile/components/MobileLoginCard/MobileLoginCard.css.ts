@@ -38,11 +38,38 @@ export const buttonContainer = style({
 });
 
 export const loginButton = style({
+  position: 'relative',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   gap: '0.4rem',
   padding: '1rem 2.8rem',
+});
+
+const loginButtonRecentBase = style({
+  outline: `1px solid ${colors.primaryMint}`,
+  outlineOffset: '-1px',
+});
+
+export const loginButtonRecentNaver = style([
+  loginButtonRecentBase,
+  { borderRadius: '0.8rem 0 0 0.8rem' },
+]);
+
+export const loginButtonRecentGoogle = style([
+  loginButtonRecentBase,
+  { borderRadius: '0 0.8rem 0.8rem 0' },
+]);
+
+export const recentLoginBadge = style({
+  position: 'absolute',
+  top: '-0.8rem',
+  right: '0.8rem',
+  ...fonts.label.small.SB12,
+  color: colors.text01,
+  backgroundColor: colors.primaryMint,
+  padding: '0.4rem 0.6rem',
+  borderRadius: '0.8rem',
 });
 
 export const loginButtonText = style({

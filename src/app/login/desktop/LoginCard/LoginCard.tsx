@@ -3,26 +3,27 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import {
   badge,
   buttonContainer,
   cardTitleContainer,
   loginButton,
+  loginButtonRecent,
   loginCardLayout,
+  recentLoginBadge,
 } from './LoginCard.css';
 import { descriptionWrapper } from '../../LoginPage.css';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
 import { ROLE } from '@/constants/config';
-import {
-  CLICK_LOGIN_PARTICIPANT,
-  CLICK_LOGIN_RESEARCHER,
-} from '@/lib/mixpanel/signupEvents';
+import { localStorageManager, STORAGE_KEYS } from '@/lib/localStorageManager';
+import { CLICK_LOGIN_PARTICIPANT, CLICK_LOGIN_RESEARCHER } from '@/lib/mixpanel/signupEvents';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';
-import { Role } from '@/types/user';
+import { LoginProvider, Role } from '@/types/user';
 
 const roleMapper = {
   RESEARCHER: '연구자',
@@ -32,7 +33,7 @@ const roleMapper = {
 const PROVIDER = {
   google: 'GOOGLE',
   naver: 'NAVER',
-};
+} as const;
 
 interface LoginCardProps {
   role: Role;
@@ -41,10 +42,14 @@ interface LoginCardProps {
 
 const LoginCard = ({ role, description }: LoginCardProps) => {
   const router = useRouter();
+  const [lastProvider, setLastProvider] = useState<LoginProvider | null>(null);
+
+  const isRecentGoogle = lastProvider === PROVIDER.google;
+  const isRecentNaver = lastProvider === PROVIDER.naver;
 
   const goToLoginGoogle = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: 'google' });
+    trackEvent(eventName, { provider: PROVIDER.google });
 
     const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${role}|${PROVIDER.google}`;
     router.push(googleOauthURL);
@@ -52,11 +57,16 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
 
   const goToLoginNaver = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: 'naver' });
+    trackEvent(eventName, { provider: PROVIDER.naver });
 
     const naverOauthURL = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${role}|${PROVIDER.naver}`;
     router.push(naverOauthURL);
   };
+
+  useEffect(() => {
+    const data = localStorageManager.get(STORAGE_KEYS.lastLogin);
+    if (data && data.role === role) setLastProvider(data.provider);
+  }, [role]);
 
   return (
     <div className={loginCardLayout}>
@@ -80,11 +90,23 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
         </div>
       </div>
       <div className={buttonContainer}>
-        <button className={loginButton} onClick={goToLoginNaver}>
+        <button
+          className={[loginButton, isRecentNaver ? loginButtonRecent : '']
+            .filter(Boolean)
+            .join(' ')}
+          onClick={goToLoginNaver}
+        >
+          {isRecentNaver && <span className={recentLoginBadge}>최근 로그인</span>}
           <Image src={Naver} alt="네이버" width={24} height={24} />
           <span>네이버 계정으로 로그인</span>
         </button>
-        <button className={loginButton} onClick={goToLoginGoogle}>
+        <button
+          className={[loginButton, isRecentGoogle ? loginButtonRecent : '']
+            .filter(Boolean)
+            .join(' ')}
+          onClick={goToLoginGoogle}
+        >
+          {isRecentGoogle && <span className={recentLoginBadge}>최근 로그인</span>}
           <Image src={Google} alt="구글" width={24} height={24} />
           <span>구글 계정으로 로그인</span>
         </button>
