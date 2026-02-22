@@ -87,7 +87,6 @@ export const getPostMetadata = async (postId: string): Promise<Metadata> => {
         },
       },
       twitter: {
-        card: 'summary',
         title: pageTitle,
         description,
         images: {
