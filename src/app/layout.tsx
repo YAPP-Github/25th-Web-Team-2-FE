@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: '그라밋',
     description: '대학원생 연구자가 대학생 참여자를 모집하여 실험을 진행할 수 있도록 돕는 플랫폼',
     images: {
