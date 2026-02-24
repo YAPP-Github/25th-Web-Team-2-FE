@@ -51,7 +51,7 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
   const goToLoginGoogle = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
     trackEvent(eventName, { provider: PROVIDER.google });
-    localStorageManager.set(STORAGE_KEYS.lastLogin, { role, provider: PROVIDER.google });
+
     const googleOauthURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${role}|${PROVIDER.google}`;
     router.push(googleOauthURL);
   };
