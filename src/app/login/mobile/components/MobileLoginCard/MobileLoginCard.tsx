@@ -1,5 +1,6 @@
 'use client';
 
+import * as Tooltip from '@radix-ui/react-tooltip';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -7,17 +8,16 @@ import { useEffect, useState } from 'react';
 import {
   buttonContainer,
   loginButton,
-  loginButtonRecentGoogle,
-  loginButtonRecentNaver,
   loginButtonText,
   mobileLoginCard,
-  recentLoginBadge,
+  recentLoginTooltipContent,
   subTitleText,
   titleContainer,
   titleText,
   verticalLine,
 } from './MobileLoginCard.css';
 
+import ArrowTooltip from '@/app/join/components/AreaTooltip/ArrowTooltip';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
 import { ROLE } from '@/constants/config';
@@ -75,29 +75,71 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
       </div>
 
       <div className={buttonContainer}>
-        <Link href={naverLoginUrl} onClick={handleNaverClick}>
-          <div
-            className={[loginButton, isRecentNaver ? loginButtonRecentNaver : '']
-              .filter(Boolean)
-              .join(' ')}
-          >
-            {isRecentNaver && <span className={recentLoginBadge}>최근 로그인</span>}
-            <Image src={Naver} alt="naver" width={24} height={24} />
-            <span className={loginButtonText}>네이버 로그인</span>
-          </div>
-        </Link>
-        <div className={verticalLine} />
-        <Link href={googleLoginUrl} onClick={handleGoogleClick}>
-          <div
-            className={[loginButton, isRecentGoogle ? loginButtonRecentGoogle : '']
-              .filter(Boolean)
-              .join(' ')}
-          >
-            {isRecentGoogle && <span className={recentLoginBadge}>최근 로그인</span>}
-            <Image src={Google} alt="google" width={24} height={24} />
-            <span className={loginButtonText}>구글 로그인</span>
-          </div>
-        </Link>
+        <Tooltip.Provider delayDuration={0}>
+          <Link href={naverLoginUrl} onClick={handleNaverClick}>
+            <Tooltip.Root open={isRecentNaver}>
+              <Tooltip.Trigger asChild>
+                <div className={loginButton}>
+                  <Image src={Naver} alt="naver" width={24} height={24} />
+                  <span className={loginButtonText}>네이버 로그인</span>
+                </div>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className={recentLoginTooltipContent}
+                  side="bottom"
+                  sideOffset={2}
+                  align="end"
+                  alignOffset={36}
+                >
+                  최근 로그인
+                  <Tooltip.Arrow asChild>
+                    <ArrowTooltip
+                      style={{
+                        transform: 'rotate(180deg)',
+                        position: 'relative',
+                        top: '-1.5px',
+                        left: 40,
+                      }}
+                    />
+                  </Tooltip.Arrow>
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Link>
+          <div className={verticalLine} />
+          <Link href={googleLoginUrl} onClick={handleGoogleClick}>
+            <Tooltip.Root open={isRecentGoogle}>
+              <Tooltip.Trigger asChild>
+                <div className={loginButton}>
+                  <Image src={Google} alt="google" width={24} height={24} />
+                  <span className={loginButtonText}>구글 로그인</span>
+                </div>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className={recentLoginTooltipContent}
+                  side="bottom"
+                  sideOffset={2}
+                  align="end"
+                  alignOffset={28}
+                >
+                  최근 로그인
+                  <Tooltip.Arrow asChild>
+                    <ArrowTooltip
+                      style={{
+                        transform: 'rotate(180deg)',
+                        position: 'relative',
+                        top: '-1.5px',
+                        left: 32,
+                      }}
+                    />
+                  </Tooltip.Arrow>
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Link>
+        </Tooltip.Provider>
       </div>
     </div>
   );
