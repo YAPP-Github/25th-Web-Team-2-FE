@@ -52,14 +52,12 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
 
   const handleNaverClick = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: 'naver' });
-    localStorageManager.set(STORAGE_KEYS.lastLogin, { role, provider: PROVIDER.naver });
+    trackEvent(eventName, { provider: PROVIDER.naver });
   };
 
   const handleGoogleClick = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: 'google' });
-    localStorageManager.set(STORAGE_KEYS.lastLogin, { role, provider: PROVIDER.google });
+    trackEvent(eventName, { provider: PROVIDER.google });
   };
 
   useEffect(() => {
@@ -78,19 +76,18 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
         <Tooltip.Provider delayDuration={0}>
           <Link href={naverLoginUrl} onClick={handleNaverClick}>
             <Tooltip.Root open={isRecentNaver}>
-              <Tooltip.Trigger asChild>
-                <div className={loginButton}>
+              <div className={loginButton}>
+                <Tooltip.Trigger asChild>
                   <Image src={Naver} alt="naver" width={24} height={24} />
-                  <span className={loginButtonText}>네이버 로그인</span>
-                </div>
-              </Tooltip.Trigger>
+                </Tooltip.Trigger>
+                <span className={loginButtonText}>네이버 로그인</span>
+              </div>
               <Tooltip.Portal>
                 <Tooltip.Content
                   className={recentLoginTooltipContent}
                   side="bottom"
-                  sideOffset={2}
-                  align="end"
-                  alignOffset={36}
+                  sideOffset={8}
+                  align="start"
                 >
                   최근 로그인
                   <Tooltip.Arrow asChild>
@@ -99,7 +96,6 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
                         transform: 'rotate(180deg)',
                         position: 'relative',
                         top: '-1.5px',
-                        left: 40,
                       }}
                     />
                   </Tooltip.Arrow>
@@ -110,19 +106,18 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
           <div className={verticalLine} />
           <Link href={googleLoginUrl} onClick={handleGoogleClick}>
             <Tooltip.Root open={isRecentGoogle}>
-              <Tooltip.Trigger asChild>
-                <div className={loginButton}>
+              <div className={loginButton}>
+                <Tooltip.Trigger asChild>
                   <Image src={Google} alt="google" width={24} height={24} />
-                  <span className={loginButtonText}>구글 로그인</span>
-                </div>
-              </Tooltip.Trigger>
+                </Tooltip.Trigger>
+                <span className={loginButtonText}>구글 로그인</span>
+              </div>
               <Tooltip.Portal>
                 <Tooltip.Content
                   className={recentLoginTooltipContent}
                   side="bottom"
-                  sideOffset={2}
-                  align="end"
-                  alignOffset={28}
+                  sideOffset={8}
+                  align="start"
                 >
                   최근 로그인
                   <Tooltip.Arrow asChild>
@@ -131,7 +126,6 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
                         transform: 'rotate(180deg)',
                         position: 'relative',
                         top: '-1.5px',
-                        left: 32,
                       }}
                     />
                   </Tooltip.Arrow>

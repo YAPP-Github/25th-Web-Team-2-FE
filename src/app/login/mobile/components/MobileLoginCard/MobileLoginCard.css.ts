@@ -53,6 +53,7 @@ export const recentLoginTooltipContent = style({
   padding: '0.8rem 1.6rem',
   borderRadius: '0.6rem',
   border: `0.15rem solid ${colors.line01}`,
+  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.3)',
 });
 
 export const loginButtonText = style({
