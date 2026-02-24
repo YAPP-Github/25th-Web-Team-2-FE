@@ -1,28 +1,30 @@
 'use client';
 
+import * as Tooltip from '@radix-ui/react-tooltip';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import {
   buttonContainer,
   loginButton,
   loginButtonText,
   mobileLoginCard,
+  recentLoginTooltipContent,
   subTitleText,
   titleContainer,
   titleText,
   verticalLine,
 } from './MobileLoginCard.css';
 
+import ArrowTooltip from '@/app/join/components/AreaTooltip/ArrowTooltip';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
 import { ROLE } from '@/constants/config';
-import {
-  CLICK_LOGIN_PARTICIPANT,
-  CLICK_LOGIN_RESEARCHER,
-} from '@/lib/mixpanel/signupEvents';
+import { localStorageManager, STORAGE_KEYS } from '@/lib/localStorageManager';
+import { CLICK_LOGIN_PARTICIPANT, CLICK_LOGIN_RESEARCHER } from '@/lib/mixpanel/signupEvents';
 import { trackEvent } from '@/lib/mixpanelClient';
-import { Role } from '@/types/user';
+import { LoginProvider, Role } from '@/types/user';
 
 const roleMapper = {
   RESEARCHER: '연구자',
@@ -32,7 +34,7 @@ const roleMapper = {
 const PROVIDER = {
   google: 'GOOGLE',
   naver: 'NAVER',
-};
+} as const;
 
 interface MobileLoginCardProps {
   role: Role;
@@ -40,18 +42,28 @@ interface MobileLoginCardProps {
 }
 
 const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
+  const [lastProvider, setLastProvider] = useState<LoginProvider | null>(null);
+
+  const isRecentGoogle = lastProvider === PROVIDER.google;
+  const isRecentNaver = lastProvider === PROVIDER.naver;
+
   const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${role}|${PROVIDER.google}`;
   const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${role}|${PROVIDER.naver}`;
 
   const handleNaverClick = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: 'naver' });
+    trackEvent(eventName, { provider: PROVIDER.naver });
   };
 
   const handleGoogleClick = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: 'google' });
+    trackEvent(eventName, { provider: PROVIDER.google });
   };
+
+  useEffect(() => {
+    const data = localStorageManager.get(STORAGE_KEYS.lastLogin);
+    if (data?.role === role) setLastProvider(data.provider);
+  }, [role]);
 
   return (
     <div className={mobileLoginCard}>
@@ -61,19 +73,67 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
       </div>
 
       <div className={buttonContainer}>
-        <Link href={naverLoginUrl} onClick={handleNaverClick}>
-          <div className={loginButton}>
-            <Image src={Naver} alt="naver" width={24} height={24} />
-            <span className={loginButtonText}>네이버 로그인</span>
-          </div>
-        </Link>
-        <div className={verticalLine} />
-        <Link href={googleLoginUrl} onClick={handleGoogleClick}>
-          <div className={loginButton}>
-            <Image src={Google} alt="google" width={24} height={24} />
-            <span className={loginButtonText}>구글 로그인</span>
-          </div>
-        </Link>
+        <Tooltip.Provider delayDuration={0}>
+          <Link href={naverLoginUrl} onClick={handleNaverClick}>
+            <Tooltip.Root open={isRecentNaver}>
+              <div className={loginButton}>
+                <Tooltip.Trigger asChild>
+                  <Image src={Naver} alt="naver" width={24} height={24} />
+                </Tooltip.Trigger>
+                <span className={loginButtonText}>네이버 로그인</span>
+              </div>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className={recentLoginTooltipContent}
+                  side="bottom"
+                  sideOffset={8}
+                  align="start"
+                >
+                  최근 로그인
+                  <Tooltip.Arrow asChild>
+                    <ArrowTooltip
+                      style={{
+                        transform: 'rotate(180deg)',
+                        position: 'relative',
+                        top: '-1.5px',
+                      }}
+                    />
+                  </Tooltip.Arrow>
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Link>
+          <div className={verticalLine} />
+          <Link href={googleLoginUrl} onClick={handleGoogleClick}>
+            <Tooltip.Root open={isRecentGoogle}>
+              <div className={loginButton}>
+                <Tooltip.Trigger asChild>
+                  <Image src={Google} alt="google" width={24} height={24} />
+                </Tooltip.Trigger>
+                <span className={loginButtonText}>구글 로그인</span>
+              </div>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  className={recentLoginTooltipContent}
+                  side="bottom"
+                  sideOffset={8}
+                  align="start"
+                >
+                  최근 로그인
+                  <Tooltip.Arrow asChild>
+                    <ArrowTooltip
+                      style={{
+                        transform: 'rotate(180deg)',
+                        position: 'relative',
+                        top: '-1.5px',
+                      }}
+                    />
+                  </Tooltip.Arrow>
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Link>
+        </Tooltip.Provider>
       </div>
     </div>
   );

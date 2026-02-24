@@ -46,6 +46,7 @@ const AreaTooltip = () => {
             학교 소재지 등 자주 가는 지역을 추가로 입력할 수 있어요
             <Tooltip.Arrow asChild>
               <ArrowTooltip
+                fill="white"
                 style={{ transform: 'rotate(180deg)', position: 'relative', top: '-1.5px' }}
               />
             </Tooltip.Arrow>

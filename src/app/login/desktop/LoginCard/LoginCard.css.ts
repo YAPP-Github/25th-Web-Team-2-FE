@@ -35,6 +35,7 @@ export const buttonContainer = style({
 });
 
 export const loginButton = style({
+  position: 'relative',
   ...fonts.label.large.R14,
   backgroundColor: colors.field01,
   color: colors.text06,
@@ -44,4 +45,14 @@ export const loginButton = style({
   gap: '0.4rem',
   padding: '0.8rem',
   borderRadius: '0.8rem',
+});
+
+export const recentLoginTooltipContent = style({
+  ...fonts.label.medium.M13,
+  color: colors.text05,
+  backgroundColor: colors.field01,
+  padding: '0.8rem 1.6rem',
+  borderRadius: '0.6rem',
+  border: `0.15rem solid ${colors.line01}`,
+  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.3)',
 });
