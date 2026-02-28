@@ -45,9 +45,6 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
   const router = useRouter();
   const [lastProvider, setLastProvider] = useState<LoginProvider | null>(null);
 
-  const isRecentGoogle = lastProvider === PROVIDER.google;
-  const isRecentNaver = lastProvider === PROVIDER.naver;
-
   const goToLoginGoogle = () => {
     const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
     trackEvent(eventName, { provider: PROVIDER.google });
@@ -92,7 +89,7 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
       </div>
       <div className={buttonContainer}>
         <Tooltip.Provider delayDuration={0}>
-          <Tooltip.Root open={isRecentNaver}>
+          <Tooltip.Root open={lastProvider === PROVIDER.naver}>
             <button className={loginButton} onClick={goToLoginNaver}>
               <Tooltip.Trigger asChild>
                 <Image src={Naver} alt="네이버" width={24} height={24} />
@@ -120,7 +117,7 @@ const LoginCard = ({ role, description }: LoginCardProps) => {
             </Tooltip.Portal>
           </Tooltip.Root>
 
-          <Tooltip.Root open={isRecentGoogle}>
+          <Tooltip.Root open={lastProvider === PROVIDER.google}>
             <button className={loginButton} onClick={goToLoginGoogle}>
               <Tooltip.Trigger asChild>
                 <Image src={Google} alt="구글" width={24} height={24} />
