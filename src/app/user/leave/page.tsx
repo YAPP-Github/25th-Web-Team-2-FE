@@ -2,11 +2,11 @@
 
 import { useReducer } from 'react';
 
-import LeaveAgreeCheckContainer from './components/LeaveAgreeCheckContainer/LeaveAgreeCheckContainer';
-import LeaveButtonContainer from './components/LeaveButtonContainer/LeaveButtonContainer';
-import LeaveHeader from './components/LeaveHeader/LeaveHeader';
-import LeaveMessageContainer from './components/LeaveMessageContainer/LeaveMessageContainer';
-import LeaveReasonForm from './components/LeaveReasonForm/LeaveReasonForm';
+import LeaveAgreeCheckContainer from './components/LeaveAgreeCheckContainer';
+import LeaveButtonContainer from './components/LeaveButtonContainer';
+import LeaveHeader from './components/LeaveHeader';
+import LeaveMessageContainer from './components/LeaveMessageContainer';
+import LeaveReasonForm from './components/LeaveReasonForm';
 import useLeaveForm from './hooks/useLeaveForm';
 import {
   alertTextWrapper,

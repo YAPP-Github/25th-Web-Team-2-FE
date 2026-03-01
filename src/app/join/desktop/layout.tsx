@@ -1,6 +1,6 @@
 import { desktopJoinPageLayout } from '../JoinPage.css';
 
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/Footer';
 
 export default function DesktopJoinLayout({ children }: { children: React.ReactNode }) {
   return (

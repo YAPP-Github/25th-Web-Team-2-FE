@@ -5,12 +5,12 @@ import { FormProvider } from 'react-hook-form';
 
 import { Researcher } from '.';
 
-import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
-import JoinSuccessStep from '@/app/join/components/JoinSuccessStep/JoinSuccessStep';
+import FunnelStepGuard from '@/app/join/components/FunnelStepGuard';
+import JoinSuccessStep from '@/app/join/components/JoinSuccessStep';
 import { MOBILE_RESEARCHER_JOIN_STEP_LIST } from '@/app/join/constants/steps';
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { useResearcherJoin } from '@/app/join/hooks/useResearcherJoin';
-import MobileFunnelLayout from '@/app/join/mobile/components/MobileFunnelLayout/MobileFunnelLayout';
+import MobileFunnelLayout from '@/app/join/mobile/components/MobileFunnelLayout';
 import { STEP } from '@/constants/steps';
 import { LoginProvider } from '@/types/user';
 

@@ -32,7 +32,7 @@
  ┃ ┣ 📂 example                # 페이지를 정의한 폴더 (폴더 이름이 각 라우트와 대응)
  ┃ ┃ ┣ 📂 components           # 해당 페이지에서만 사용하는 컴포넌트
  ┃ ┃ ┃ ┣ 📂 ExampleComponent
- ┃ ┃ ┃ ┃ ┣ 📜 ExampleComponent.tsx
+ ┃ ┃ ┃ ┃ ┣ 📜 index.tsx                 # 엔트리 (import 시 폴더명만 사용)
  ┃ ┃ ┃ ┃ ┗ 📜 ExampleComponent.css.ts   # Vanilla Extract 스타일
  ┃ ┃ ┣ 📂 hooks                # 해당 페이지 전용 커스텀 훅
  ┃ ┃ ┣ 📂 utils                # 해당 페이지 전용 유틸 (파일 단위 분리)

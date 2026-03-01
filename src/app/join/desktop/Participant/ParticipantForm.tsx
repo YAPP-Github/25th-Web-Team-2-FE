@@ -5,10 +5,10 @@ import { FormProvider } from 'react-hook-form';
 
 import { Participant } from '.';
 
-import FunnelLayout from '@/app/join/components/FunnelLayout/FunnelLayout';
-import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
-import { JoinLayout } from '@/app/join/components/JoinLayout/JoinLayout';
-import JoinSuccessStep from '@/app/join/components/JoinSuccessStep/JoinSuccessStep';
+import FunnelLayout from '@/app/join/components/FunnelLayout';
+import FunnelStepGuard from '@/app/join/components/FunnelStepGuard';
+import { JoinLayout } from '@/app/join/components/JoinLayout';
+import JoinSuccessStep from '@/app/join/components/JoinSuccessStep';
 import { DESKTOP_PARTICIPANT_JOIN_STEP_LIST } from '@/app/join/constants/steps';
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { useParticipantJoin } from '@/app/join/hooks/useParticipantJoin';

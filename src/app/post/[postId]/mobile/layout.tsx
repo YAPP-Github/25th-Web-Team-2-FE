@@ -1,6 +1,6 @@
 import { getPostMetadata } from '../server/getPostMetadata';
 
-import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout/MobilePostDetailLayout';
+import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout';
 
 export async function generateMetadata({ params }: { params: { postId: string } }) {
   return getPostMetadata(params.postId);

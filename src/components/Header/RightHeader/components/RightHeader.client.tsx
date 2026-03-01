@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 
+import DesktopLoginHeader from './DesktopLoginHeader';
+import MobileLoginHeader from './MobileLoginHeader';
 import { buttonContainer, loginButton } from '../../Header.css';
-import DesktopLoginHeader from './DesktopLoginHeader/DesktopLoginHeader';
-import MobileLoginHeader from './MobileLoginHeader/MobileLoginHeader';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 

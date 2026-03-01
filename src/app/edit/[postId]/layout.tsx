@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import UploadFunnelLayout from '@/components/layout/UploadFunnelLayout/UploadFunnelLayout';
+import UploadFunnelLayout from '@/components/layout/UploadFunnelLayout';
 
 export const metadata: Metadata = {
   title: '그라밋 | 공고 수정',

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-import LoginError from '../components/LoginError/LoginError';
+import LoginError from '../components/LoginError';
 import { mobileLoginLayout } from '../LoginPage.css';
 
 export const metadata: Metadata = {

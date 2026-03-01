@@ -3,7 +3,7 @@ import { useWatch } from 'react-hook-form';
 import useFormParticipantUserInfo from '../../../hooks/useFormParticipantUserInfo';
 
 import { ParticipantResponse } from '@/apis/login';
-import Toggle from '@/components/Toggle/Toggle';
+import Toggle from '@/components/Toggle';
 
 interface ParticipantAdConsentToggleProps {
   userInfo: ParticipantResponse;

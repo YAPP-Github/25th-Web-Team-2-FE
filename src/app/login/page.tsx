@@ -1,6 +1,6 @@
 import { loginRedirectLayout } from './LoginPage.css';
 
-import Spinner from '@/components/Spinner/Spinner';
+import Spinner from '@/components/Spinner';
 
 export default function LoginPage() {
   return (

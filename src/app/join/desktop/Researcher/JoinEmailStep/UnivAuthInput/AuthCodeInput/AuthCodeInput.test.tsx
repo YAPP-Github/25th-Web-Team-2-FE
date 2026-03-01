@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import AuthCodeInput from './AuthCodeInput';
+import AuthCodeInput from '.';
 
 import { ResearcherJoinSchema } from '@/schema/join/ResearcherJoinSchema';
 import { renderWithForm } from '@/tests/test-utils';

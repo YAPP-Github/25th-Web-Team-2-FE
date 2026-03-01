@@ -4,8 +4,8 @@ import * as Popover from '@radix-ui/react-popover';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
-import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBottomSheet';
-import ContactTargetContent from './ContactTargetContent/ContactTargetContent';
+import ContactTargetBottomSheet from './ContactTargetBottomSheet';
+import ContactTargetContent from './ContactTargetContent';
 import { popoverContent, popoverTrigger } from './ContactTargetFilter.css';
 
 import useURLFilters from '@/app/home/hooks/useURLFilters';

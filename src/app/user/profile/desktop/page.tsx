@@ -1,9 +1,9 @@
 'use client';
 
 import { joinLayout } from '../ProfilePage.css';
-import ParticipantUserInfo from './components/ParticipantUserInfo/ParticipantUserInfo';
-import ResearcherUserInfo from './components/ResearcherUserInfo/ResearcherUserInfo';
-import UserInfoHeader from './components/UserInfoHeader/UserInfoHeader';
+import ParticipantUserInfo from './components/ParticipantUserInfo';
+import ResearcherUserInfo from './components/ResearcherUserInfo';
+import UserInfoHeader from './components/UserInfoHeader';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
 import { isParticipantInfo } from '@/utils/typeGuard';

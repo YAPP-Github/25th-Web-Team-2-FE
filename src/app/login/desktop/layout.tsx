@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
-import LoginError from '../components/LoginError/LoginError';
+import LoginError from '../components/LoginError';
 import { contentLayout, loginLayout } from '../LoginPage.css';
 
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: '그라밋 | 로그인',

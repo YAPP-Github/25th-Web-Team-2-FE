@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
-import UnivAuthInput from './UnivAuthInput';
+import UnivAuthInput from '.';
 
 import { ResearcherJoinSchema } from '@/schema/join/ResearcherJoinSchema';
 import { renderWithForm } from '@/tests/test-utils';
