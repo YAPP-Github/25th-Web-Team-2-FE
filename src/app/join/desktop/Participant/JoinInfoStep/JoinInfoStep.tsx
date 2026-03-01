@@ -15,7 +15,7 @@ import RadioButtonGroupContainer from './RadioButtonGroupContainer/RadioButtonGr
 import AreaTooltip from '../../../components/AreaTooltip/AreaTooltip';
 import JoinInput from '../../../components/JoinInput/JoinInput';
 
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/constants/region';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';

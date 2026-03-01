@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
-import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
 import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
 import ApplyMethodSection from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
@@ -24,6 +23,7 @@ import Button from '@/components/Button/Button';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
 import Spinner from '@/components/Spinner/Spinner';
+import { STEP, UPLOAD_STEP_LIST } from '@/constants/steps';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 

@@ -1,4 +1,4 @@
-import { STEP } from '@/app/join/JoinPage.constants';
+import { STEP } from '@/constants/steps';
 
 export const VALIDATION_FIELDS_BY_STEP = {
   [STEP.description]: ['title', 'content'],

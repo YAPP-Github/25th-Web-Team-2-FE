@@ -16,12 +16,12 @@ import { uploadImages } from '../utils/uploadImages';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
-import { STEP } from '@/app/join/JoinPage.constants';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { MATCH_TYPE } from '@/constants/filters';
 import { PATH } from '@/constants/path';
 import { queryKey } from '@/constants/queryKey';
+import { STEP } from '@/constants/steps';
 import { useToast } from '@/hooks/useToast';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import {

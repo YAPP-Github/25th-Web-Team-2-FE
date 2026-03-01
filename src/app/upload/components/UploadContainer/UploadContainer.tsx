@@ -18,10 +18,10 @@ import ProgressBarSection from '../ProgressBarSection/ProgressBarSection';
 
 import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
 import useFunnel from '@/app/join/hooks/useFunnel';
-import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 import Button from '@/components/Button/Button';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import { STEP, UPLOAD_STEP_LIST } from '@/constants/steps';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
