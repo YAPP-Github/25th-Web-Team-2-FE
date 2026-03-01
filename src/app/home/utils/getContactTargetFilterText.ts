@@ -1,4 +1,4 @@
-import { GenderFilterValue } from '../home.types';
+import { GenderFilterValue } from '../types/gender';
 
 export const getContactTargetFilterText = (age?: number, gender?: GenderFilterValue) => {
   const genderLabelMapper = { MALE: '남성', FEMALE: '여성', ALL: '전체' };

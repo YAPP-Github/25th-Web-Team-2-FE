@@ -8,8 +8,8 @@ import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBo
 import ContactTargetContent from './ContactTargetContent/ContactTargetContent';
 import { popoverContent, popoverTrigger } from './ContactTargetFilter.css';
 
-import { GenderFilterValue } from '@/app/home/home.types';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
+import { GenderFilterValue } from '@/app/home/types/gender';
 import { getContactTargetFilterText } from '@/app/home/utils/getContactTargetFilterText';
 import { getFilterColors } from '@/app/home/utils/getFilterColors';
 import Icon from '@/components/Icon';
