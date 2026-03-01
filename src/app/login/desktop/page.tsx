@@ -7,7 +7,7 @@ import {
   sloganWrapper,
   loginCardContainer,
 } from '../LoginPage.css';
-import LoginCard from './LoginCard/LoginCard';
+import LoginCard from './LoginCard';
 
 import Logo from '@/assets/images/logo.svg';
 import { ROLE } from '@/constants/config';

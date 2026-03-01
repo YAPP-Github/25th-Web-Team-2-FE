@@ -1,7 +1,7 @@
 import { FieldValues, Path, useFormContext, useFormState } from 'react-hook-form';
 
 import { bottomButtonLayout } from '@/app/join/mobile/page.css';
-import Button from '@/components/Button/Button';
+import Button from '@/components/Button';
 
 interface SaveButtonProps<T extends FieldValues> {
   onSave: () => void;

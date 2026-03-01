@@ -1,5 +1,5 @@
 import { fetchExperimentPost } from '../server/fetchExperimentPost';
-import ExperimentPostMobileContainer from './components/ExperimentPostMobileContainer/ExperimentPostMobileContainer';
+import ExperimentPostMobileContainer from './components/ExperimentPostMobileContainer';
 
 interface MobilePageProps {
   params: { postId: string };

@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { commonStatusLayout, commonStatusText } from '../common-status.css';
 import { experimentPostMobileHeaderLayout } from './components/ExperimentPostMobileHeader/ExperimentPostMobileHeader.css';
 
-import RightHeader from '@/components/Header/RightHeader/RightHeader';
+import RightHeader from '@/components/Header/RightHeader';
 import Icon from '@/components/Icon';
-import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout/MobilePostDetailLayout';
+import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout';
 import { colors } from '@/styles/colors';
 
 export default function MobilePostDetailError() {

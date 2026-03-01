@@ -3,8 +3,8 @@
 import { signOut } from 'next-auth/react';
 
 import { AuthError } from '@/apis/config/error';
-import Button from '@/components/Button/Button';
-import Footer from '@/components/Footer/Footer';
+import Button from '@/components/Button';
+import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import {
   defaultLayout,

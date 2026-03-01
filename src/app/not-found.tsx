@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { goToHomeButton, h2, notFoundContent, notFoundLayout } from './not-found.css';
 
 import NotFoundImage from '@/assets/images/notFound.svg';
-import DefaultLayout from '@/components/layout/DefaultLayout/DefaultLayout';
+import DefaultLayout from '@/components/layout/DefaultLayout';
 
 export default function NotFound() {
   return (

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { sloganContainer, loginCardContainer } from '../LoginPage.css';
-import MobileLoginCard from './components/MobileLoginCard/MobileLoginCard';
+import MobileLoginCard from './components/MobileLoginCard';
 import { mobileLoginPageLayout } from './MobileLoginPage.css';
 import { mobileLoginCardContainer } from './MobileLoginPage.css';
 

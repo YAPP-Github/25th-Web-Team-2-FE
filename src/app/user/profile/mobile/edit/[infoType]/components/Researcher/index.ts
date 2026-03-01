@@ -1,6 +1,6 @@
-import ContactEmailEditForm from './ContactEmailEditForm/ContactEmailEditForm';
-import NameEditForm from './NameEditForm/NameEditForm';
-import UnivInfoEditForm from './UnivInfoEditForm/UnivInfoEditForm';
+import ContactEmailEditForm from './ContactEmailEditForm';
+import NameEditForm from './NameEditForm';
+import UnivInfoEditForm from './UnivInfoEditForm';
 
 export const Researcher = {
   ContactEmail: ContactEmailEditForm,

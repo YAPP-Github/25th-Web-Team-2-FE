@@ -1,4 +1,4 @@
-import UploadContainer from './components/UploadContainer/UploadContainer';
+import UploadContainer from './components/UploadContainer';
 
 function UploadPage() {
   return <UploadContainer />;

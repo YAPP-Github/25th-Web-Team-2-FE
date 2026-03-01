@@ -1,0 +1,48 @@
+import { useEffect } from 'react';
+
+import NextButton from './NextButton';
+import TitleSection from '../../components/TitleSection';
+import { mainContentLayout } from '../../page.css';
+
+import ContactEmailInput from '@/components/ContactEmailInput';
+import EmailBadge from '@/components/EmailBadge';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
+import { trackEvent } from '@/lib/mixpanelClient';
+import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import { LoginProvider } from '@/types/user';
+
+interface ContactEmailStepProps {
+  provider?: LoginProvider;
+  oauthEmail?: string;
+  onNext: () => void;
+}
+
+const ContactEmailStep = ({ provider, oauthEmail, onNext }: ContactEmailStepProps) => {
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'mobile', step: 1 });
+  }, []);
+
+  if (!provider) {
+    return null;
+  }
+
+  return (
+    <main className={mainContentLayout}>
+      <TitleSection
+        title="연락 받을 이메일을 입력해 주세요"
+        description="로그인 아이디와 달라도 괜찮아요"
+        emailBadge={<EmailBadge provider={provider} oauthEmail={oauthEmail} />}
+      />
+
+      <ContactEmailInput<ResearcherJoinSchemaType>
+        contactEmailField="contactEmail"
+        verifiedEmailField="verifiedContactEmail"
+        onSuccess={onNext}
+        autoFocus
+      />
+      <NextButton onNext={onNext} />
+    </main>
+  );
+};
+
+export default ContactEmailStep;

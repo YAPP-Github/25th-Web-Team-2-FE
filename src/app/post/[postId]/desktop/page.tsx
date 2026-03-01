@@ -1,5 +1,5 @@
 import { fetchExperimentPost } from '../server/fetchExperimentPost';
-import ExperimentPostContainer from './components/ExperimentPostContainer/ExperimentPostContainer';
+import ExperimentPostContainer from './components/ExperimentPostContainer';
 
 interface DesktopPageProps {
   params: { postId: string };
