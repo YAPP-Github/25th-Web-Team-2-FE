@@ -5,11 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 import {
-  HIDE_MODAL_COOKIE_KEYS,
-  modalMenuRouteMap,
-  modalTitleMap,
-} from './mobileNotReadyModal.constants';
-import {
   mobileNotReadyModalButtonContainer,
   mobileNotReadyModalCloseButton,
   mobileNotReadyModalContent,
@@ -19,13 +14,24 @@ import {
   mobileNotReadyModalTitle,
   notReadyButton,
 } from './MobileNotReadyModal.css';
+import { NotReadyMenu } from './types/menu';
 
 import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
 import Icon from '@/components/Icon';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
 import { setHideModalCookie } from '@/lib/cookies';
 
-export type NotReadyMenu = 'upload' | 'edit';
-export interface NotReadyModalProps {
+const modalTitleMap = {
+  upload: '모바일 버전 글쓰기 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
+  edit: '모바일 버전 공고 수정 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',
+};
+
+const modalMenuRouteMap = (id?: string) => ({
+  upload: '/upload',
+  edit: `/edit/${id}`,
+});
+
+interface NotReadyModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   menu: NotReadyMenu;
@@ -34,7 +40,7 @@ export interface NotReadyModalProps {
 
 const MobileNotReadyModal = ({ menu, isOpen, onOpenChange, editPostId }: NotReadyModalProps) => {
   const { postId } = useParams();
-  const normalizedPostId = Array.isArray(postId) ? postId[0] : postId ?? editPostId;
+  const normalizedPostId = Array.isArray(postId) ? postId[0] : (postId ?? editPostId);
 
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>

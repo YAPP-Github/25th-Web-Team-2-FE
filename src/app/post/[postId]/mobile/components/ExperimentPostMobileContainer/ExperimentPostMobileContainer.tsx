@@ -12,8 +12,8 @@ import PostMenuBottomSheet from '../PostMenuBottomSheet/PostMenuBottomSheet';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
 import useOverlay from '@/hooks/useOverlay';
 import { useToast } from '@/hooks/useToast';
 import { getHideModalCookie } from '@/lib/cookies';
