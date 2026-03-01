@@ -1,5 +1,5 @@
 import { postMenuBottomSheetLayout, postMenuButton } from './PostMenuBottomSheet.css';
-import { PostDetailBottomSheetProps } from '../../../ExperimentPostPage.types';
+import { PostDetailBottomSheetProps } from '../../../types/modal';
 
 const PostMenuBottomSheet = ({
   onConfirm,

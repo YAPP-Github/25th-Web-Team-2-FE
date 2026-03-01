@@ -17,7 +17,7 @@ import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExpe
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
 import { STEP } from '@/app/join/JoinPage.constants';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
-import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { MATCH_TYPE } from '@/app/post/[postId]/constants/matchType';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { PATH } from '@/constants/path';
 import { queryKey } from '@/constants/queryKey';

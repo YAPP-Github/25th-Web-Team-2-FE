@@ -10,8 +10,8 @@ import {
   applyMethodContainer,
 } from './ParticipationGuideModal.css';
 import { closeButton, dialogOverlay } from '../../../ExperimentPostPage.css';
-import { CommonModalProps } from '../../../ExperimentPostPage.types';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
+import { CommonModalProps } from '../../../types/modal';
 
 import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';

@@ -22,7 +22,7 @@ import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import TextAreaForm from '../TextAreaForm/TextAreaForm';
 import { label } from '../UploadContainer/UploadContainer.css';
 
-import { GENDER_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { GENDER_TYPE } from '@/app/post/[postId]/constants/gender';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 

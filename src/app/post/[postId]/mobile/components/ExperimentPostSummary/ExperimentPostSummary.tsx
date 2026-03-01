@@ -5,7 +5,7 @@ import {
   postSummaryContent,
   postSummaryLayout,
 } from './ExperimentPostSummary.css';
-import { GENDER_TYPE } from '../../../ExperimentPostPage.types';
+import { GENDER_TYPE } from '../../../constants/gender';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import { formatDate } from '../../../utils/formatDate';
 import { getAddressDisplay } from '../../../utils/getAddressDisplay';

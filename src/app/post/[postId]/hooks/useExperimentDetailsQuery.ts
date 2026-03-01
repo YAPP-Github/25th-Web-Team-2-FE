@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { GenderType, MatchType } from '../ExperimentPostPage.types';
+import { GenderType } from '../types/gender';
+import { MatchType } from '../types/matchType';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';

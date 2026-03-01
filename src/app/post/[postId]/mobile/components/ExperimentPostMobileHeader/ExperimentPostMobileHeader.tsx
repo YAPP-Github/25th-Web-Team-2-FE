@@ -14,7 +14,7 @@ const ExperimentPostMobileHeader = ({
   onOpenMenuBottomSheet,
   postDetailData,
 }: {
-  onOpenMenuBottomSheet: VoidFunction;
+  onOpenMenuBottomSheet: () => void;
   postDetailData: UseQueryExperimentDetailsAPIResponse;
 }) => {
   const router = useRouter();

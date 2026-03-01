@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import { GENDER_TYPE, MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { GENDER_TYPE } from '@/app/post/[postId]/constants/gender';
+import { MATCH_TYPE } from '@/app/post/[postId]/constants/matchType';
 import { TIME_REQUIRED } from '@/constants/config';
 
 const UploadExperimentPostFormSchema = () => {

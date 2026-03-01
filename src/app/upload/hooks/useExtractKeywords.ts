@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
-import { GenderType, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { GenderType } from '@/app/post/[postId]/types/gender';
+import { MatchType } from '@/app/post/[postId]/types/matchType';
 import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
 

@@ -1,6 +1,6 @@
-import { MATCH_TYPE } from '../ExperimentPostPage.types';
 import { getAreaLabel } from './getAreaLabel';
 import { getRegionLabel } from './getRegionLabel';
+import { MATCH_TYPE } from '../constants/matchType';
 
 export const getAddressDisplay = (
   matchType: string,

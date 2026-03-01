@@ -1,4 +1,5 @@
-import { GENDER_TYPE, GenderType } from '../ExperimentPostPage.types';
+import { GENDER_TYPE } from '../constants/gender';
+import { GenderType } from '../types/gender';
 
 export const getGenderLabel = (gender: GenderType): string => {
   switch (gender) {

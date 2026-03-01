@@ -14,7 +14,7 @@ import {
   dynamicSpacing,
   divider,
 } from './ExperimentPostOutline.css';
-import { GENDER_TYPE } from '../../../ExperimentPostPage.types';
+import { GENDER_TYPE } from '../../../constants/gender';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import { formatDate } from '../../../utils/formatDate';
