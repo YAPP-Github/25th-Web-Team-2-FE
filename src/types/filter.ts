@@ -9,3 +9,8 @@ export type ExperimentPostListFilterParams = {
 };
 
 export type MatchType = (typeof MATCH_TYPE)[keyof typeof MATCH_TYPE];
+
+export interface FilterOption {
+  label: string;
+  value: string;
+}

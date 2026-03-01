@@ -8,7 +8,6 @@ import TitleSection from '../../components/TitleSection/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 
 import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/constants/region';
 import {
   filterTitle,
   filterTitleWrapper,
@@ -19,6 +18,7 @@ import {
 import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import Button from '@/components/Button/Button';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';

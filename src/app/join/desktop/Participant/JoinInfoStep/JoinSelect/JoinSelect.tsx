@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 import { triggerWrapper, selectContent, selectList, selectItem } from './JoinSelect.css';
 
-import { FilterOption } from '@/app/join/types/filters';
 import Icon from '@/components/Icon';
+import { FilterOption } from '@/types/filter';
 
 interface JoinSelectProps {
   placeholder: string;
