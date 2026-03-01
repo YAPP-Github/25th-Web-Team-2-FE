@@ -4,7 +4,7 @@ import { ValidateContactEmailParams } from './user';
 import { API_URL } from '@/constants/url';
 import { ParticipantJoinSubmitSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { ResearcherJoinSubmitSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { Role } from '@/types/user';
+import { LoginProvider, Role } from '@/types/user';
 
 export interface UnivAuthCodeResponse {
   isSuccess: boolean;
@@ -29,7 +29,7 @@ interface Member {
   memberId: number;
   name: string;
   oauthEmail: string;
-  provider: 'GOOGLE' | 'NAVER';
+  provider: LoginProvider;
   contactEmail: string;
   role: Role;
 }
