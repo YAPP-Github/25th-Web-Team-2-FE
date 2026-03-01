@@ -1,5 +1,5 @@
-import { Participant } from './components/Participant';
-import { Researcher } from './components/Researcher';
+import { Participant } from '../components/Participant';
+import { Researcher } from '../components/Researcher';
 
 export const PARTICIPANT_EDIT_COMPONENT_MAP = {
   'participant-contact-email': Participant.ContactEmail,

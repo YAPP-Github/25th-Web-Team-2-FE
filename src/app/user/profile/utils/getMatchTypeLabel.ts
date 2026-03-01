@@ -1,4 +1,4 @@
-import { MATCH_TYPE_MAP } from '../ProfilePage.constants';
+import { MATCH_TYPE_MAP } from '../constants/matchTypeMap';
 
 import type { ParticipantResponse } from '@/apis/login';
 
