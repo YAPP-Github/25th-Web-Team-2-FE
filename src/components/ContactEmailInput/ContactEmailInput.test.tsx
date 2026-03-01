@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
-import ContactEmailInput from './ContactEmailInput';
+import ContactEmailInput from '.';
 
 import type { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 import { renderWithForm } from '@/tests/test-utils';
