@@ -1,13 +1,13 @@
-import { GENDER_TYPE } from '../constants/gender';
-import { GenderType } from '../types/gender';
+import { GENDER } from '@/constants/user';
+import { Gender } from '@/types/user';
 
-export const getGenderLabel = (gender: GenderType): string => {
+export const getGenderLabel = (gender: Gender): string => {
   switch (gender) {
-    case GENDER_TYPE.MALE:
+    case GENDER.MALE:
       return '남성';
-    case GENDER_TYPE.FEMALE:
+    case GENDER.FEMALE:
       return '여성';
-    case GENDER_TYPE.ALL:
+    case GENDER.ALL:
       return '무관';
     default:
       return '무관';
