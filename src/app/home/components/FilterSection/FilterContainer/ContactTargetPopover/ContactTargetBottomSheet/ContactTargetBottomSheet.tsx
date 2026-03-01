@@ -16,16 +16,16 @@ import {
 } from './ContactTargetBottomSheet.css';
 
 import { GENDER_OPTIONS } from '@/app/home/constants/filter';
-import { GenderFilterValue } from '@/app/home/types/gender';
 import Button from '@/components/Button/Button';
 import { ExperimentPostListFilterParams } from '@/types/filter';
+import { Gender } from '@/types/user';
 
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetBottomSheetProps {
   onChange: (filters: ExperimentPostListFilterParams) => void;
   onClose: () => void;
-  initialGender: GenderFilterValue | null;
+  initialGender: Gender | null;
   initialAge: string | null;
 }
 
@@ -35,7 +35,7 @@ const ContactTargetBottomSheet = ({
   initialGender,
   initialAge,
 }: ContactTargetBottomSheetProps) => {
-  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(initialGender);
+  const [filteredGender, setFilteredGender] = useState<Gender | null>(initialGender);
   const [filteredAge, setFilteredAge] = useState<string | null>(initialAge);
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {

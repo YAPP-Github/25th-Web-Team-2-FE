@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { GENDER_TYPE } from '@/app/post/[postId]/constants/gender';
 import { TIME_REQUIRED } from '@/constants/config';
 import { MATCH_TYPE } from '@/constants/filters';
+import { GENDER } from '@/constants/user';
 
 const UploadExperimentPostFormSchema = () => {
   return z.object({
@@ -91,7 +91,7 @@ const UploadExperimentPostFormSchema = () => {
         .min(0, { message: '0세 이상이어야 합니다' })
         .max(100, { message: '100세 이하로 입력해주세요' }),
 
-      genderType: z.enum([GENDER_TYPE.MALE, GENDER_TYPE.FEMALE, GENDER_TYPE.ALL]),
+      genderType: z.enum([GENDER.MALE, GENDER.FEMALE, GENDER.ALL]),
 
       otherCondition: z.string().max(300, '최대 300자 이하로 입력해 주세요').optional(), // 기타조건
     }),

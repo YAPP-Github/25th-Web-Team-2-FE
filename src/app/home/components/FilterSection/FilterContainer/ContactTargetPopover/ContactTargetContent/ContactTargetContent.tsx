@@ -17,13 +17,13 @@ import {
 } from './ContactTargetContent.css';
 
 import { GENDER_OPTIONS } from '@/app/home/constants/filter';
-import { GenderFilterValue } from '@/app/home/types/gender';
 import { ExperimentPostListFilterParams } from '@/types/filter';
+import { Gender } from '@/types/user';
 
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetContentProps {
-  initialGender?: GenderFilterValue;
+  initialGender?: Gender;
   initialAge?: number;
   onChange: (filters: ExperimentPostListFilterParams) => void;
   onClose: () => void;
@@ -35,9 +35,7 @@ const ContactTargetContent = ({
   onChange,
   onClose,
 }: ContactTargetContentProps) => {
-  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(
-    initialGender || null,
-  );
+  const [filteredGender, setFilteredGender] = useState<Gender | null>(initialGender || null);
   const [filteredAge, setFilteredAge] = useState<string | null>(initialAge?.toString() || null);
 
   const handleChangeFilteredAge = (e: ChangeEvent<HTMLInputElement>) => {

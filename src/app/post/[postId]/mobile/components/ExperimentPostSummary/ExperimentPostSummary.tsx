@@ -5,13 +5,14 @@ import {
   postSummaryContent,
   postSummaryLayout,
 } from './ExperimentPostSummary.css';
-import { GENDER_TYPE } from '../../../constants/gender';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import { formatDate } from '../../../utils/formatDate';
 import { getAddressDisplay } from '../../../utils/getAddressDisplay';
 import { getDurationLabel } from '../../../utils/getDurationLabel';
 import { getGenderLabel } from '../../../utils/getGenderLabel';
 import { getMatchTypeText } from '../../../utils/getMatchTypeText';
+
+import { GENDER } from '@/constants/user';
 
 const ExperimentPostSummary = ({
   postDetailData,
@@ -29,7 +30,7 @@ const ExperimentPostSummary = ({
             <td>
               <p>
                 만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
-                {targetGroup.genderType === GENDER_TYPE.ALL
+                {targetGroup.genderType === GENDER.ALL
                   ? '성별 무관'
                   : getGenderLabel(targetGroup.genderType)}
               </p>

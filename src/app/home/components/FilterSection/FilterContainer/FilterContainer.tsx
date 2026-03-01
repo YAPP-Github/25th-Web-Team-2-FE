@@ -8,9 +8,10 @@ import MatchTypeFilter from './MatchTypeFilter/MatchTypeFilter';
 import { ExperimentPostListFilters } from '@/apis/post';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import Icon from '@/components/Icon';
+import { Gender } from '@/types/user';
 
 interface FilterContainerProps {
-  initialGender?: ExperimentPostListFilters['gender'];
+  initialGender?: Gender;
   initialAge?: ExperimentPostListFilters['age'];
 }
 

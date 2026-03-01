@@ -14,7 +14,6 @@ import {
   dynamicSpacing,
   divider,
 } from './ExperimentPostOutline.css';
-import { GENDER_TYPE } from '../../../constants/gender';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import { formatDate } from '../../../utils/formatDate';
@@ -24,6 +23,7 @@ import { getGenderLabel } from '../../../utils/getGenderLabel';
 import { getMatchTypeText } from '../../../utils/getMatchTypeText';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
+import { GENDER } from '@/constants/user';
 import { trackEvent } from '@/lib/mixpanelClient';
 
 interface ExperimentPostOutlineProps {
@@ -48,7 +48,7 @@ const ExperimentPostOutline = ({ postDetailData, applyMethodData }: ExperimentPo
               <td>
                 <p>
                   만 {targetGroup.startAge} ~ {targetGroup.endAge}세,{' '}
-                  {targetGroup.genderType === GENDER_TYPE.ALL
+                  {targetGroup.genderType === GENDER.ALL
                     ? '성별 무관'
                     : getGenderLabel(targetGroup.genderType)}
                 </p>
