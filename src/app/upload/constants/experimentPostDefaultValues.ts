@@ -1,0 +1,33 @@
+export const EXPERIMENT_POST_DEFAULT_VALUES = {
+  leadResearcher: '',
+  startDate: undefined,
+  endDate: undefined,
+  matchType: undefined,
+  reward: '',
+  place: '',
+  detailedAddress: '',
+  region: undefined,
+  area: undefined,
+  count: undefined,
+  timeRequired: undefined,
+  title: '',
+  content: '',
+  applyMethodInfo: {
+    content: '',
+    formUrl: null,
+    phoneNum: null,
+  },
+  targetGroupInfo: {
+    startAge: undefined,
+    endAge: undefined,
+    genderType: undefined,
+    otherCondition: '',
+  },
+  imageListInfo: {
+    images: [],
+  },
+  alarmAgree: false,
+  isOnCampus: true,
+  addLink: false,
+  addContact: false,
+};

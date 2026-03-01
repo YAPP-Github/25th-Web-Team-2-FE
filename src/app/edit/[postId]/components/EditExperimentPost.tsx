@@ -18,8 +18,8 @@ import {
   uploadContentLayout,
   uploadContainerLayout,
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
+import { VALIDATION_FIELDS_BY_STEP } from '@/app/upload/constants/validationFieldsByStep';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
-import { VALIDATION_FIELDS_BY_STEP } from '@/app/upload/upload.constants';
 import Button from '@/components/Button/Button';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';

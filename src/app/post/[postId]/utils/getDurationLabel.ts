@@ -1,4 +1,4 @@
-import { durationMinutesOptions } from '@/app/upload/upload.constants';
+import { durationMinutesOptions } from '@/app/upload/constants/durationMinutesOptions';
 
 export const getDurationLabel = (value: string): string => {
   const foundOption = durationMinutesOptions.find((option) => option.value === value);

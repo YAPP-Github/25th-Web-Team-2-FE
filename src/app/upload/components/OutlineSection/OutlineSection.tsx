@@ -9,12 +9,13 @@ import {
   outlineSectionLayout,
   uploadFormSectionHeader,
 } from './OutlineSection.css';
+import { countSelectOptions } from '../../constants/countSelectOptions';
+import { durationMinutesOptions } from '../../constants/durationMinutesOptions';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
 import useMatchType from '../../hooks/useMatchType';
 import useRegionSelect from '../../hooks/useRegionSelect';
 import useUserResearcherInfo from '../../hooks/useUserResearcherInfo';
-import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import ExtractKeywordButton from '../ExtractKeywordButton/ExtractKeywordButton';
 import InputForm from '../InputForm/InputForm';

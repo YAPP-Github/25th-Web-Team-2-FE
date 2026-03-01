@@ -9,8 +9,8 @@ import {
   uploadLayout,
   uploadContainerLayout,
 } from './UploadContainer.css';
+import { VALIDATION_FIELDS_BY_STEP } from '../../constants/validationFieldsByStep';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
-import { VALIDATION_FIELDS_BY_STEP } from '../../upload.constants';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
