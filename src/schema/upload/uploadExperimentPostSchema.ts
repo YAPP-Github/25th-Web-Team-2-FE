@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 import { GENDER_TYPE } from '@/app/post/[postId]/constants/gender';
-import { MATCH_TYPE } from '@/app/post/[postId]/constants/matchType';
 import { TIME_REQUIRED } from '@/constants/config';
+import { MATCH_TYPE } from '@/constants/filters';
 
 const UploadExperimentPostFormSchema = () => {
   return z.object({

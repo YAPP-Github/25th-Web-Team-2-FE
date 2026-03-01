@@ -12,9 +12,9 @@ import { MATCH_TYPE_OPTIONS } from '@/app/home/constants/filter';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import { getFilterColors } from '@/app/home/utils/getFilterColors';
 import { getMatchTypeLabel } from '@/app/home/utils/getMatchTypeLabel';
-import { MatchType } from '@/app/join/JoinPage.types';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
+import { MatchType } from '@/types/filter';
 
 interface MatchTypeFilterProps {
   filters: ExperimentPostListFilters;

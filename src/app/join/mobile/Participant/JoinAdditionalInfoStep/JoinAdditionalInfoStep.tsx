@@ -18,11 +18,11 @@ import {
 import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
-import { MatchType } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { MatchType } from '@/types/filter';
 
 interface JoinAdditionalInfoStepProps {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;

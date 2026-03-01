@@ -8,7 +8,7 @@ import SaveButton from '../../SaveButton';
 
 import { ParticipantResponse } from '@/apis/login';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
-import { MatchType } from '@/app/join/JoinPage.types';
+import { MatchType } from '@/types/filter';
 
 interface MatchTypeEditFormProps {
   userInfo: ParticipantResponse;

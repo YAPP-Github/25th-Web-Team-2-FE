@@ -2,8 +2,8 @@ import { convertValueToLabel } from './regionLabelValue';
 
 import { UseApplyMethodQueryResponse } from '@/app/post/[postId]/hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '@/app/post/[postId]/hooks/useExperimentDetailsQuery';
-import { MatchType } from '@/app/post/[postId]/types/matchType';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
+import { MatchType } from '@/types/filter';
 
 export const transformOriginFormData = (
   experiment: UseQueryExperimentDetailsAPIResponse,

@@ -25,12 +25,12 @@ import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
 import { label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
-import { MATCH_TYPE } from '@/app/post/[postId]/constants/matchType';
-import { MatchType } from '@/app/post/[postId]/types/matchType';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import UnivAutoCompleteInput from '@/components/UnivAutoCompleteInput/UnivAutoCompleteInput';
+import { MATCH_TYPE } from '@/constants/filters';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import { MatchType } from '@/types/filter';
 
 interface OutlineSectionProps {
   experimentDateChecked?: boolean;

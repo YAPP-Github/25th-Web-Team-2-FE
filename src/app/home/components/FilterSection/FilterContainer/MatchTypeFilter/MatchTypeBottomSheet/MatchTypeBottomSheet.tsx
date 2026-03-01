@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { matchOptionItem, matchOptionList } from './MatchTypeBottomSheet.css';
 
 import { MATCH_TYPE_OPTIONS } from '@/app/home/constants/filter';
-import { MatchType } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
+import { MatchType } from '@/types/filter';
 
 interface MatchTypeBottomSheetProps {
   onChange: (value: MatchType) => void;

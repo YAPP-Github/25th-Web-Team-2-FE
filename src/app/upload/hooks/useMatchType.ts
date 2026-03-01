@@ -2,8 +2,8 @@ import { usePathname } from 'next/navigation';
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { MATCH_TYPE } from '@/app/post/[postId]/constants/matchType';
-import { MatchType } from '@/app/post/[postId]/types/matchType';
+import { MATCH_TYPE } from '@/constants/filters';
+import { MatchType } from '@/types/filter';
 import { isResearcherInfo } from '@/utils/typeGuard';
 
 const useMatchType = () => {
