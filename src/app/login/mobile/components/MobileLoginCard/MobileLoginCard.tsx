@@ -15,11 +15,10 @@ import {
 } from './MobileLoginCard.css';
 import LastLoginTooltip from '../../../components/LastLoginTooltip/LastLoginTooltip';
 
+import { getOAuthLoginConfig } from '@/app/login/LoginPage.utils';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
-import { ROLE } from '@/constants/config';
-import { CLICK_LOGIN_PARTICIPANT, CLICK_LOGIN_RESEARCHER } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
+import { LOGIN_PROVIDER } from '@/constants/config';
 import { Role } from '@/types/user';
 
 const roleMapper = {
@@ -27,29 +26,14 @@ const roleMapper = {
   PARTICIPANT: '참여자',
 };
 
-const PROVIDER = {
-  google: 'GOOGLE',
-  naver: 'NAVER',
-} as const;
-
 interface MobileLoginCardProps {
   role: Role;
   description: string;
 }
 
 const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
-  const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email&state=${role}|${PROVIDER.google}`;
-  const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}&response_type=code&redirect_uri=${process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI}&state=${process.env.NEXT_PUBLIC_NAVER_STATE}|${role}|${PROVIDER.naver}`;
-
-  const handleNaverClick = () => {
-    const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: PROVIDER.naver });
-  };
-
-  const handleGoogleClick = () => {
-    const eventName = role === ROLE.researcher ? CLICK_LOGIN_RESEARCHER : CLICK_LOGIN_PARTICIPANT;
-    trackEvent(eventName, { provider: PROVIDER.google });
-  };
+  const { googleOauthUrl, naverOauthUrl, handleGoogleLogin, handleNaverLogin } =
+    getOAuthLoginConfig(role);
 
   return (
     <div className={mobileLoginCard}>
@@ -59,8 +43,8 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
       </div>
 
       <div className={buttonContainer}>
-        <LastLoginTooltip role={role} provider={PROVIDER.naver} side="bottom">
-          <Link href={naverLoginUrl} onClick={handleNaverClick}>
+        <LastLoginTooltip role={role} provider={LOGIN_PROVIDER.naver} side="bottom">
+          <Link href={naverOauthUrl} onClick={handleNaverLogin}>
             <div className={loginButton}>
               <LastLoginTooltip.Trigger>
                 <Image src={Naver} alt="naver" width={24} height={24} />
@@ -70,8 +54,8 @@ const MobileLoginCard = ({ role, description }: MobileLoginCardProps) => {
           </Link>
         </LastLoginTooltip>
         <div className={verticalLine} />
-        <LastLoginTooltip role={role} provider={PROVIDER.google} side="bottom">
-          <Link href={googleLoginUrl} onClick={handleGoogleClick}>
+        <LastLoginTooltip role={role} provider={LOGIN_PROVIDER.google} side="bottom">
+          <Link href={googleOauthUrl} onClick={handleGoogleLogin}>
             <div className={loginButton}>
               <LastLoginTooltip.Trigger>
                 <Image src={Google} alt="google" width={24} height={24} />
