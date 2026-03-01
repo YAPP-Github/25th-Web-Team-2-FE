@@ -13,7 +13,7 @@ import {
 } from './LoginCard.css';
 import LastLoginTooltip from '../../components/LastLoginTooltip/LastLoginTooltip';
 import { descriptionWrapper } from '../../LoginPage.css';
-import { getOAuthLoginConfig } from '../../LoginPage.utils';
+import { getOAuthLoginConfig } from '../../utils/getOAuthLoginConfig';
 
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';

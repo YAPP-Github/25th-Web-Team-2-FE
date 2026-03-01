@@ -6,14 +6,12 @@ import {
   postSummaryLayout,
 } from './ExperimentPostSummary.css';
 import { GENDER_TYPE } from '../../../ExperimentPostPage.types';
-import {
-  getGenderLabel,
-  getMatchTypeText,
-  getDurationLabel,
-  formatDate,
-  getAddressDisplay,
-} from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import { formatDate } from '../../../utils/formatDate';
+import { getAddressDisplay } from '../../../utils/getAddressDisplay';
+import { getDurationLabel } from '../../../utils/getDurationLabel';
+import { getGenderLabel } from '../../../utils/getGenderLabel';
+import { getMatchTypeText } from '../../../utils/getMatchTypeText';
 
 const ExperimentPostSummary = ({
   postDetailData,

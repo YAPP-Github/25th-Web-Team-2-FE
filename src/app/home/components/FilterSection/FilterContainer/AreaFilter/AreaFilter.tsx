@@ -9,8 +9,9 @@ import AreaFilterBottomSheet from './components/AreaFilterBottomSheet/AreaFilter
 import AreaFilterContent from './components/AreaFilterContent/AreaFilterContent';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import { getFilterColors, getRegionFilterText } from '@/app/home/home.utils';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
+import { getFilterColors } from '@/app/home/utils/getFilterColors';
+import { getRegionFilterText } from '@/app/home/utils/getRegionFilterText';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
 

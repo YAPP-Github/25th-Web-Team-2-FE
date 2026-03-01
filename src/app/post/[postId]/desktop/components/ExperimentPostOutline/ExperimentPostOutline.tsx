@@ -15,15 +15,13 @@ import {
   divider,
 } from './ExperimentPostOutline.css';
 import { GENDER_TYPE } from '../../../ExperimentPostPage.types';
-import {
-  getGenderLabel,
-  getDurationLabel,
-  getMatchTypeText,
-  formatDate,
-  getAddressDisplay,
-} from '../../../ExperimentPostPage.utils';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import { formatDate } from '../../../utils/formatDate';
+import { getAddressDisplay } from '../../../utils/getAddressDisplay';
+import { getDurationLabel } from '../../../utils/getDurationLabel';
+import { getGenderLabel } from '../../../utils/getGenderLabel';
+import { getMatchTypeText } from '../../../utils/getMatchTypeText';
 import ParticipationGuideModal from '../ParticipationGuideModal/ParticipationGuideModal';
 
 import { trackEvent } from '@/lib/mixpanelClient';

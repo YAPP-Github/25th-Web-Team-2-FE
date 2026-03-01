@@ -10,12 +10,10 @@ import {
   postMobileDetailContentWrapper,
   singleImageWrapper,
 } from './ExperimentPostMobileDetailContent.css';
-import {
-  formattedContentText,
-  isValidImageUrl,
-  replaceImageListWithWebp,
-} from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import { formattedContentText } from '../../../utils/formattedContentText';
+import { isValidImageUrl } from '../../../utils/isValidImageUrl';
+import { replaceImageListWithWebp } from '../../../utils/replaceImageListWithWebp';
 import ExperimentImageViewer from '../ExperimentImageViewer/ExperimentImageViewer';
 
 import Icon from '@/components/Icon';

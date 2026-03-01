@@ -14,7 +14,7 @@ import {
   postViewsContainer,
 } from './ExperimentPostCard.css';
 
-import { formatExperimentTimeRequired } from '@/app/home/home.utils';
+import { formatExperimentTimeRequired } from '@/app/home/utils/formatExperimentTimeRequired';
 import Icon from '@/components/Icon';
 import { startRecording } from '@/lib/mixpanelClient';
 import { colors } from '@/styles/colors';

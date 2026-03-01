@@ -16,12 +16,10 @@ import {
   modalOverlay,
   closeButton,
 } from './ExperimentPostDetailContent.css';
-import {
-  formattedContentText,
-  isValidImageUrl,
-  replaceImageListWithWebp,
-} from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import { formattedContentText } from '../../../utils/formattedContentText';
+import { isValidImageUrl } from '../../../utils/isValidImageUrl';
+import { replaceImageListWithWebp } from '../../../utils/replaceImageListWithWebp';
 
 import Icon from '@/components/Icon';
 import { a11yHidden } from '@/styles/a11y.css';

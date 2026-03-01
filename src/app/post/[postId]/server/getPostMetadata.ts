@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 import { fetchExperimentPost } from './fetchExperimentPost';
-import { getDurationLabel } from '../ExperimentPostPage.utils';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
+import { getDurationLabel } from '../utils/getDurationLabel';
 
 import { DEFAULT_OG_IMAGE_URL } from '@/constants/url';
 

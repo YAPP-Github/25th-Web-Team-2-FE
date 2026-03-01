@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { calculateAgeFromBirthDate } from '../../home.utils';
+import { calculateAgeFromBirthDate } from '../../utils/calculateAgeFromBirthDate';
 import { useParticipantAutoFilter } from '../useParticipantAutoFilter';
 import useQueryParams from '../useQueryParams';
 

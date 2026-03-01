@@ -1,11 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-  calculateAgeFromBirthDate,
-  formatPostDate,
-  getContactTargetFilterText,
-  getRegionFilterText,
-} from './home.utils';
+import { calculateAgeFromBirthDate } from './utils/calculateAgeFromBirthDate';
+import { formatPostDate } from './utils/formatPostDate';
+import { getContactTargetFilterText } from './utils/getContactTargetFilterText';
+import { getRegionFilterText } from './utils/getRegionFilterText';
 
 import { AreaType } from '@/types/filter';
 

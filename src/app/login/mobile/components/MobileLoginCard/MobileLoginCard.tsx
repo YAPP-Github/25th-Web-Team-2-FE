@@ -15,7 +15,7 @@ import {
 } from './MobileLoginCard.css';
 import LastLoginTooltip from '../../../components/LastLoginTooltip/LastLoginTooltip';
 
-import { getOAuthLoginConfig } from '@/app/login/LoginPage.utils';
+import { getOAuthLoginConfig } from '@/app/login/utils/getOAuthLoginConfig';
 import Google from '@/assets/images/google.svg';
 import Naver from '@/assets/images/naver.svg';
 import { LOGIN_PROVIDER } from '@/constants/config';

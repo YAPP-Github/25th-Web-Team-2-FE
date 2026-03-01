@@ -15,7 +15,7 @@ import { errorMessage, univInputWrapper } from '../UnivAuthInput.css';
 
 import { joinInput } from '@/app/join/components/JoinInput/JoinInput.css';
 import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';
-import { formatAuthTimer } from '@/app/join/JoinPage.utils';
+import { formatAuthTimer } from '@/app/join/utils/formatAuthTimer';
 import { useToast } from '@/hooks/useToast';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 

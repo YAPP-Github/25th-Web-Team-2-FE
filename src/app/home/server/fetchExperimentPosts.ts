@@ -2,8 +2,8 @@ import 'server-only';
 
 import { getServerSession } from 'next-auth';
 
-import { calculateAgeFromBirthDate } from '../home.utils';
 import { fetchParticipantInfo } from './fetchParticipantInfo';
+import { calculateAgeFromBirthDate } from '../utils/calculateAgeFromBirthDate';
 
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
 import { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';

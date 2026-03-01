@@ -13,8 +13,8 @@ import {
   viewsContainer,
 } from './ExperimentPostInfo.css';
 import revalidateExperimentPosts from '../../../actions';
-import { formatDate } from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import { formatDate } from '../../../utils/formatDate';
 import DeleteConfirmModal from '../DeleteConfirmModal/DeleteConfirmModal';
 
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';

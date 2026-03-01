@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 
-import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
+import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
 import useExtractKeywordsMutation from './useExtractKeywords';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
-import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
+import { convertLabelToValue } from '../utils/regionLabelValue';
+import { transformOriginFormData } from '../utils/transformOriginFormData';
+import { uploadImages } from '../utils/uploadImages';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';

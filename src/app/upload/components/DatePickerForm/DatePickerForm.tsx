@@ -14,7 +14,7 @@ import {
   popoverLayout,
   datepickerCustomClass,
 } from './DatePickerForm.css';
-import { formatRange } from '../../upload.utils';
+import { formatRange } from '../../utils/formatRange';
 
 import Icon from '@/components/Icon';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
