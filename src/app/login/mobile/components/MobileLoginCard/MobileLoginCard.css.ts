@@ -46,16 +46,6 @@ export const loginButton = style({
   padding: '1rem 2.8rem',
 });
 
-export const recentLoginTooltipContent = style({
-  ...fonts.label.medium.M13,
-  color: colors.text05,
-  backgroundColor: colors.field01,
-  padding: '0.8rem 1.6rem',
-  borderRadius: '0.6rem',
-  border: `0.15rem solid ${colors.line01}`,
-  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.3)',
-});
-
 export const loginButtonText = style({
   ...fonts.label.large.M14,
   color: colors.text06,
