@@ -1,5 +1,4 @@
-import { AREA_MAPPER, REGION_MAPPER } from '../home.constants';
-
+import { AREA_MAPPER, REGION_MAPPER } from '@/constants/filters';
 import { AreaType, RegionType } from '@/types/filter';
 
 export const getRegionFilterText = (region?: RegionType | null, areas?: AreaType[]) => {

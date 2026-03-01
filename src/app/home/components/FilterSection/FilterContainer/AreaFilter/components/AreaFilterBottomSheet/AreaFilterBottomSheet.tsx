@@ -11,7 +11,7 @@ import {
 import AreaContainer from '../AreaContainer/AreaContainer';
 import RegionContainer from '../RegionContainer/RegionContainer';
 
-import { AREA_ALL } from '@/app/home/home.constants';
+import { AREA_ALL } from '@/app/home/constants/area';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import { AreaAll } from '@/app/home/types/area';

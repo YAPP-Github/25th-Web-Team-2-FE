@@ -1,0 +1,17 @@
+export const AREA_ALL = [
+  'SEOUL_ALL',
+  'GYEONGGI_ALL',
+  'INCHEON_ALL',
+  'GANGWON_ALL',
+  'DAEJEON_ALL',
+  'CHUNGNAM_ALL',
+  'CHUNGBUK_ALL',
+  'GYEONGNAM_ALL',
+  'GYEONGBUK_ALL',
+  'JEONNAM_ALL',
+  'JEONBUK_ALL',
+  'DAEGU_ALL',
+  'GWANGJU_ALL',
+  'BUSAN_ALL',
+  'ULSAN_ALL',
+] as const;

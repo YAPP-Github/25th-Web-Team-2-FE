@@ -13,8 +13,8 @@ import {
 import { areaCount, areaName } from '../../AreaFilter.css';
 
 import { ExperimentPostArea } from '@/apis/post';
-import { AREA_MAPPER } from '@/app/home/home.constants';
 import Icon from '@/components/Icon';
+import { AREA_MAPPER } from '@/constants/filters';
 import { colors } from '@/styles/colors';
 import { AreaType } from '@/types/filter';
 

@@ -18,7 +18,7 @@ import {
 } from './Banner.css';
 import { useSlide } from './hooks/useSlide';
 import { useTouchSlide } from './hooks/useTouchSlide';
-import { SLIDE_SPEED } from '../../home.constants';
+import { SLIDE_SPEED } from '../../constants/banner';
 
 import MobileBanner from '@/assets/images/firstMobileBanner.webp';
 import MobileAIBanner from '@/assets/images/mobileBannerAI.webp';

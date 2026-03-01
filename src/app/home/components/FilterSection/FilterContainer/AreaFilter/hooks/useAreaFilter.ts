@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { AREA_ALL } from '@/app/home/home.constants';
+import { AREA_ALL } from '@/app/home/constants/area';
 import { AreaAll } from '@/app/home/types/area';
 import { AREAS } from '@/constants/filters';
 import { RegionType, AreaType } from '@/types/filter';

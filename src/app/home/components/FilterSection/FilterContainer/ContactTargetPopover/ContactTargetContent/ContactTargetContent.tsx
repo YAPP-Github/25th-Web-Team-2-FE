@@ -16,7 +16,7 @@ import {
   genderButtonGroup,
 } from './ContactTargetContent.css';
 
-import { GENDER } from '@/app/home/home.constants';
+import { GENDER } from '@/app/home/constants/filter';
 import { GenderFilterValue } from '@/app/home/types/gender';
 import { ExperimentPostListFilterParams } from '@/types/filter';
 

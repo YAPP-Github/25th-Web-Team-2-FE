@@ -1,4 +1,4 @@
-import { GENDER } from '../home.constants';
+import { GENDER } from '../constants/filter';
 
 export type GenderValue = (typeof GENDER)[number]['value'];
 

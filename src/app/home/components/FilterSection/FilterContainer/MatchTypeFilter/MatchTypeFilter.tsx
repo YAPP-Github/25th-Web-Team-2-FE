@@ -8,7 +8,7 @@ import MatchTypeBottomSheet from './MatchTypeBottomSheet/MatchTypeBottomSheet';
 import { triggerWrapper, contentContainer, selectItem } from './MatchTypeFilter.css';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
+import { MATCH_TYPE_OPTIONS } from '@/app/home/constants/filter';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
 import { getFilterColors } from '@/app/home/utils/getFilterColors';
 import { getMatchTypeLabel } from '@/app/home/utils/getMatchTypeLabel';

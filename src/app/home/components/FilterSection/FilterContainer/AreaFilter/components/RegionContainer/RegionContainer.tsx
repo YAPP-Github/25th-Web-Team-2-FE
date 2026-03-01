@@ -2,7 +2,7 @@ import { areaButtonRecipe, regionContainer, selectedRegionName } from './RegionC
 import { areaCount, areaName } from '../../AreaFilter.css';
 
 import { ExperimentPostRegion } from '@/apis/post';
-import { REGION_MAPPER } from '@/app/home/home.constants';
+import { REGION_MAPPER } from '@/constants/filters';
 import { RegionType } from '@/types/filter';
 
 interface RegionContainerProps {

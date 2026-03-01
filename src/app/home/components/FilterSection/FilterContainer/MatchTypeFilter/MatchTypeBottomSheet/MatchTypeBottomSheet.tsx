@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { matchOptionItem, matchOptionList } from './MatchTypeBottomSheet.css';
 
-import { MATCH_TYPE_OPTIONS } from '@/app/home/home.constants';
+import { MATCH_TYPE_OPTIONS } from '@/app/home/constants/filter';
 import { MatchType } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';
