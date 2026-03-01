@@ -1,4 +1,4 @@
-import { FilterOption } from './JoinPage.types';
+import { FilterOption } from './types/filters';
 
 import { ROLE } from '@/constants/config';
 import { UPLOAD_REGION } from '@/constants/uploadRegion';

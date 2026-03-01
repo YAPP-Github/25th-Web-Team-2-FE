@@ -9,7 +9,7 @@ import {
 } from './AddressSelect.css';
 
 import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
-import { FilterOption } from '@/app/join/JoinPage.types';
+import { FilterOption } from '@/app/join/types/filters';
 
 interface AddressSelectProps<T extends FieldValues> {
   title: string;
