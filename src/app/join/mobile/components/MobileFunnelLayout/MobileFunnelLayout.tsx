@@ -5,7 +5,7 @@ import { PropsWithChildren, useEffect } from 'react';
 import JoinHeader from '../JoinHeader/JoinHeader';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
-import { STEP } from '@/app/join/JoinPage.constants';
+import { STEP } from '@/constants/steps';
 import { startRecording } from '@/lib/mixpanelClient';
 
 interface MobileFunnelLayoutProps {

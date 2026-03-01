@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';
-import { GenderType, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import { queryKey } from '@/constants/queryKey';
 import { API_URL } from '@/constants/url';
+import { MatchType } from '@/types/filter';
+import { Gender } from '@/types/user';
 
 export interface ExperimentPostData {
   startDate?: string | null;
@@ -41,7 +42,7 @@ export interface ExperimentPostData {
   targetGroupInfo: {
     startAge: number;
     endAge: number;
-    genderType: GenderType;
+    genderType: Gender;
     otherCondition?: string;
   };
   alarmAgree: boolean;

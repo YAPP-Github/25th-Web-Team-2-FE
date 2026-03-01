@@ -11,10 +11,10 @@ import {
 import AreaContainer from '../AreaContainer/AreaContainer';
 import RegionContainer from '../RegionContainer/RegionContainer';
 
-import { AREA_ALL } from '@/app/home/home.constants';
-import { AreaAll } from '@/app/home/home.types';
+import { AREA_ALL } from '@/app/home/constants/area';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
+import { AreaAll } from '@/app/home/types/area';
 import Button from '@/components/Button/Button';
 import { AreaType, RegionType } from '@/types/filter';
 
@@ -43,10 +43,13 @@ const AreaFilterBottomSheet = ({
 }: AreaFilterBottomSheetProps) => {
   const [selectedRegion, setSelectedRegion] = useState<RegionType | null>(initialRegion ?? null);
   const [selectedAreas, setSelectedAreas] = useState<Record<string, boolean>>(() =>
-    [...(initialAreas ?? [])].reduce((acc, area) => {
-      acc[area] = true;
-      return acc;
-    }, {} as Record<string, boolean>),
+    [...(initialAreas ?? [])].reduce(
+      (acc, area) => {
+        acc[area] = true;
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    ),
   );
 
   const { data: experimentPostRegion } = usePostRegionCountQuery(selectedRegion);

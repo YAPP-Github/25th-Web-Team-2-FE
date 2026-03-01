@@ -9,12 +9,13 @@ import {
   outlineSectionLayout,
   uploadFormSectionHeader,
 } from './OutlineSection.css';
+import { countSelectOptions } from '../../constants/countSelectOptions';
+import { durationMinutesOptions } from '../../constants/durationMinutesOptions';
 import { useExperimentDate } from '../../hooks/useExperimentDate';
 import { useExperimentDuration } from '../../hooks/useExperimentDuration';
 import useMatchType from '../../hooks/useMatchType';
 import useRegionSelect from '../../hooks/useRegionSelect';
 import useUserResearcherInfo from '../../hooks/useUserResearcherInfo';
-import { countSelectOptions, durationMinutesOptions } from '../../upload.constants';
 import CheckboxWithIcon from '../CheckboxWithIcon/CheckboxWithIcon';
 import ExtractKeywordButton from '../ExtractKeywordButton/ExtractKeywordButton';
 import InputForm from '../InputForm/InputForm';
@@ -24,11 +25,12 @@ import RegionPopover from '../RegionPopover/RegionPopover';
 import SelectForm from '../SelectForm/SelectForm';
 import { label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
-import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
 import DatePickerForm from '@/app/upload/components/DatePickerForm/DatePickerForm';
 import UnivAutoCompleteInput from '@/components/UnivAutoCompleteInput/UnivAutoCompleteInput';
+import { MATCH_TYPE } from '@/constants/filters';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
+import { MatchType } from '@/types/filter';
 
 interface OutlineSectionProps {
   experimentDateChecked?: boolean;

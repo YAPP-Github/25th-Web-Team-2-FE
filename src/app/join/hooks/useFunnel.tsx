@@ -3,8 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createContext, ReactElement, ReactNode, useContext, useMemo, useCallback } from 'react';
 
-import { STEP } from '../JoinPage.constants';
-import { StepType } from '../JoinPage.types';
+import { STEP } from '@/constants/steps';
 
 const DEFAULT_STEP = 'email';
 
@@ -12,6 +11,8 @@ const DEFAULT_STEP = 'email';
  * Types & Interfaces
  */
 type NonEmptyArray<T> = [T, ...T[]];
+
+type StepType = (typeof STEP)[keyof typeof STEP];
 
 type Steps = Readonly<NonEmptyArray<StepType>>;
 

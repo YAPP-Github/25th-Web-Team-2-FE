@@ -5,20 +5,23 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 
-import { convertLabelToValue, transformOriginFormData, uploadImages } from '../upload.utils';
 import useExtractKeywordsMutation from './useExtractKeywords';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
-import { EXPERIMENT_POST_DEFAULT_VALUES, VALIDATION_FIELDS_BY_STEP } from '../upload.constants';
+import { EXPERIMENT_POST_DEFAULT_VALUES } from '../constants/experimentPostDefaultValues';
+import { VALIDATION_FIELDS_BY_STEP } from '../constants/validationFieldsByStep';
+import { convertLabelToValue } from '../utils/regionLabelValue';
+import { transformOriginFormData } from '../utils/transformOriginFormData';
+import { uploadImages } from '../utils/uploadImages';
 
 import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
 import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
-import { STEP } from '@/app/join/JoinPage.constants';
 import revalidateExperimentPosts from '@/app/post/[postId]/actions';
-import { MATCH_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
 import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
+import { MATCH_TYPE } from '@/constants/filters';
 import { PATH } from '@/constants/path';
 import { queryKey } from '@/constants/queryKey';
+import { STEP } from '@/constants/steps';
 import { useToast } from '@/hooks/useToast';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import {

@@ -15,17 +15,17 @@ import {
   contactTargetBottomSheetContainer,
 } from './ContactTargetBottomSheet.css';
 
-import { GENDER } from '@/app/home/home.constants';
-import { GenderFilterValue } from '@/app/home/home.types';
+import { GENDER_OPTIONS } from '@/app/home/constants/filter';
 import Button from '@/components/Button/Button';
 import { ExperimentPostListFilterParams } from '@/types/filter';
+import { Gender } from '@/types/user';
 
 const AGE_MAX_LENGTH = 3;
 
 interface ContactTargetBottomSheetProps {
   onChange: (filters: ExperimentPostListFilterParams) => void;
   onClose: () => void;
-  initialGender: GenderFilterValue | null;
+  initialGender: Gender | null;
   initialAge: string | null;
 }
 
@@ -35,7 +35,7 @@ const ContactTargetBottomSheet = ({
   initialGender,
   initialAge,
 }: ContactTargetBottomSheetProps) => {
-  const [filteredGender, setFilteredGender] = useState<GenderFilterValue | null>(initialGender);
+  const [filteredGender, setFilteredGender] = useState<Gender | null>(initialGender);
   const [filteredAge, setFilteredAge] = useState<string | null>(initialAge);
 
   const handleChangeAge = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +65,7 @@ const ContactTargetBottomSheet = ({
       <div className={genderSelectWrapper}>
         <span className={label}>성별</span>
         <div className={genderButtonGroup}>
-          {GENDER.map((option) => (
+          {GENDER_OPTIONS.map((option) => (
             <button
               key={option.value}
               className={`${genderButton} ${option.value === filteredGender ? 'active' : ''}`}

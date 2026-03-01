@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 
 import { fetchExperimentPost } from './fetchExperimentPost';
-import { getDurationLabel } from '../ExperimentPostPage.utils';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
+import { getDurationLabel } from '../utils/getDurationLabel';
 
+import { MATCH_TYPE } from '@/constants/filters';
 import { DEFAULT_OG_IMAGE_URL } from '@/constants/url';
+import { GENDER } from '@/constants/user';
 
 const DEFAULT_METADATA: Metadata = {
   title: '그라밋 | 공고 조회',
@@ -39,9 +41,9 @@ const formatDescription = (title: string, postDetailData: UseQueryExperimentDeta
   if (targetGroup.startAge != null && targetGroup.endAge != null) {
     targetParts.push(`만 ${targetGroup.startAge} ~ ${targetGroup.endAge}세`);
   }
-  if (targetGroup.genderType === 'MALE') {
+  if (targetGroup.genderType === GENDER.MALE) {
     targetParts.push('남성');
-  } else if (targetGroup.genderType === 'FEMALE') {
+  } else if (targetGroup.genderType === GENDER.FEMALE) {
     targetParts.push('여성');
   }
   if (targetParts.length > 0) {
@@ -52,9 +54,9 @@ const formatDescription = (title: string, postDetailData: UseQueryExperimentDeta
     descriptionParts.push(`참여 보상: ${summary.reward}`);
   }
 
-  if (summary.matchType === 'OFFLINE') {
+  if (summary.matchType === MATCH_TYPE.OFFLINE) {
     descriptionParts.push('진행 방식: 대면');
-  } else if (summary.matchType === 'ONLINE') {
+  } else if (summary.matchType === MATCH_TYPE.ONLINE) {
     descriptionParts.push('진행 방식: 비대면');
   }
 

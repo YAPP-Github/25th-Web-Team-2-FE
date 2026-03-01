@@ -1,8 +1,9 @@
 import { fetchClient } from './config/fetchClient';
 
 import { API_URL } from '@/constants/url';
-import { AreaType, RegionType } from '@/types/filter';
+import { AreaType, MatchType, RegionType } from '@/types/filter';
 import { ExperimentPost } from '@/types/post';
+import { Gender } from '@/types/user';
 import { getQueryParamsToString } from '@/utils/getQueryParamsString';
 
 export interface ExperimentPostResponse {
@@ -37,8 +38,8 @@ export interface ExperimentPostArea {
 
 export interface ExperimentPostListFilters {
   recruitStatus?: 'ALL' | 'OPEN';
-  matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
-  gender?: 'MALE' | 'FEMALE' | 'ALL';
+  matchType?: MatchType;
+  gender?: Gender;
   age?: number;
   region?: RegionType;
   areas?: AreaType[];

@@ -16,7 +16,7 @@ import SaveButton from '../../SaveButton';
 import { ParticipantResponse } from '@/apis/login';
 import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect/JoinSelect';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
 
 interface AddressEditFormProps {
   userInfo: ParticipantResponse;

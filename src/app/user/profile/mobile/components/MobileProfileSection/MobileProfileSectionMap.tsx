@@ -3,8 +3,8 @@ import ResearcherAdConsentToggle from '../AdConsentToggle/ResearcherAdConsentTog
 import MatchConsentToggle from '../MatchConsentToggle/MatchConsentToggle';
 
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { AREA_MAPPER, REGION_MAPPER } from '@/app/home/home.constants';
-import { getMatchTypeLabel } from '@/app/user/profile/ProfilePage.utils';
+import { getMatchTypeLabel } from '@/app/user/profile/utils/getMatchTypeLabel';
+import { AREA_MAPPER, REGION_MAPPER } from '@/constants/filters';
 import { AreaType, RegionType } from '@/types/filter';
 
 export const MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP = [

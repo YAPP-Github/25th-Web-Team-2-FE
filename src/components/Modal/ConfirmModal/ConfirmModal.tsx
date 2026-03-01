@@ -20,7 +20,7 @@ interface ConfirmModalProps {
   confirmTitle: string;
   cancelText: string;
   confirmText: string;
-  onConfirm: VoidFunction;
+  onConfirm: () => void;
   descriptionText?: string;
   descriptionTextColor?: string;
   confirmButtonColor?: string;

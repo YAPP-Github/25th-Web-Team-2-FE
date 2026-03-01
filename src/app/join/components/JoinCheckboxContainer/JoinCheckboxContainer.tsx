@@ -10,7 +10,7 @@ import {
   PRIVACY_TEXT,
   RECOMMEND_ALERT_TEXT,
   SERVICE_TERM_TEXT,
-} from '../../JoinPage.constants';
+} from '../../constants/policy';
 
 const JoinCheckboxContainer = () => {
   const { control, setValue } = useFormContext();

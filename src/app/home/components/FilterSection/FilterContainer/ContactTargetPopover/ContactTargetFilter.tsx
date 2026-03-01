@@ -8,14 +8,15 @@ import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBo
 import ContactTargetContent from './ContactTargetContent/ContactTargetContent';
 import { popoverContent, popoverTrigger } from './ContactTargetFilter.css';
 
-import { GenderFilterValue } from '@/app/home/home.types';
-import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
 import useURLFilters from '@/app/home/hooks/useURLFilters';
+import { getContactTargetFilterText } from '@/app/home/utils/getContactTargetFilterText';
+import { getFilterColors } from '@/app/home/utils/getFilterColors';
 import Icon from '@/components/Icon';
 import useOverlay from '@/hooks/useOverlay';
+import { Gender } from '@/types/user';
 
 interface ContactTargetFilterProps {
-  filterGender?: GenderFilterValue;
+  filterGender?: Gender;
   filterAge?: number;
 }
 

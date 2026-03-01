@@ -22,7 +22,7 @@ import RadioButtonGroup from '../RadioButtonGroup/RadioButtonGroup';
 import TextAreaForm from '../TextAreaForm/TextAreaForm';
 import { label } from '../UploadContainer/UploadContainer.css';
 
-import { GENDER_TYPE } from '@/app/post/[postId]/ExperimentPostPage.types';
+import { GENDER } from '@/constants/user';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
 
@@ -167,9 +167,9 @@ const ApplyMethodSection = () => {
                 <RadioButtonGroup
                   field={field}
                   options={[
-                    { value: GENDER_TYPE.MALE, label: '남성' },
-                    { value: GENDER_TYPE.FEMALE, label: '여성' },
-                    { value: GENDER_TYPE.ALL, label: '무관' },
+                    { value: GENDER.MALE, label: '남성' },
+                    { value: GENDER.FEMALE, label: '여성' },
+                    { value: GENDER.ALL, label: '무관' },
                   ]}
                   onChange={(value) => field.onChange(value)}
                   isError={!!fieldState.error}

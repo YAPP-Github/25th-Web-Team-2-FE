@@ -7,10 +7,11 @@ import { Researcher } from '.';
 
 import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
 import JoinSuccessStep from '@/app/join/components/JoinSuccessStep/JoinSuccessStep';
+import { MOBILE_RESEARCHER_JOIN_STEP_LIST } from '@/app/join/constants/steps';
 import useFunnel from '@/app/join/hooks/useFunnel';
 import { useResearcherJoin } from '@/app/join/hooks/useResearcherJoin';
-import { MOBILE_RESEARCHER_JOIN_STEP_LIST, STEP } from '@/app/join/JoinPage.constants';
 import MobileFunnelLayout from '@/app/join/mobile/components/MobileFunnelLayout/MobileFunnelLayout';
+import { STEP } from '@/constants/steps';
 import { LoginProvider } from '@/types/user';
 
 const ResearcherForm = () => {

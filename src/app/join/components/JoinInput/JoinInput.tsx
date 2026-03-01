@@ -16,7 +16,8 @@ import {
   inputLabel,
   infoContainer,
 } from './JoinInput.css';
-import { formatDateInput, getBackspaceAfterDotResult } from './JoinInput.utils';
+import { formatDateInput } from './utils/formatDateInput';
+import { getBackspaceAfterDotResult } from './utils/getBackspaceAfterDotResult';
 
 import Icon from '@/components/Icon';
 

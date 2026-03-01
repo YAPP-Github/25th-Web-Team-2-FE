@@ -1,8 +1,8 @@
 import * as Toast from '@radix-ui/react-toast';
 
-import { TOAST_CONFIG_MAP } from './Toasts.constants';
+import { TOAST_CONFIG_MAP } from './constants/toast';
 import { toastLayout, toastTitle, toastViewport } from './Toasts.css';
-import { ToastItem } from './Toasts.types';
+import { ToastItem } from './types/toast';
 
 import Icon from '@/components/Icon';
 

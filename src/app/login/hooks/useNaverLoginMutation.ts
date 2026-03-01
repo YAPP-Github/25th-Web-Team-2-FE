@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { getAuthErrorMessage } from '../LoginPage.utils';
+import { getAuthErrorMessage } from '../utils/getAuthErrorMessage';
 
 import { CustomError } from '@/apis/config/error';
 import { fetchClient } from '@/apis/config/fetchClient';

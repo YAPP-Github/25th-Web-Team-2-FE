@@ -8,7 +8,7 @@ import type {
   ToastContextType,
   ToastItem,
   ToastParams,
-} from '@/components/Toast/Toasts.types';
+} from '@/components/Toast/types/toast';
 
 export const ToastContext = createContext<ToastContextType | null>(null);
 

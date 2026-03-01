@@ -3,10 +3,10 @@
 import { PropsWithChildren, useEffect } from 'react';
 
 import useFunnel from '../../hooks/useFunnel';
-import { STEP } from '../../JoinPage.constants';
 import { joinLayout } from '../../JoinPage.css';
 import { JoinLayout } from '../JoinLayout/JoinLayout';
 
+import { STEP } from '@/constants/steps';
 import { startRecording } from '@/lib/mixpanelClient';
 
 interface FunnelLayoutProps {

@@ -20,7 +20,7 @@ import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuer
 import Icon from '@/components/Icon';
 import IntersectionObserverScroll from '@/components/IntersectionObserverScroll/IntersectionObserverScroll';
 import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
 import useOverlay from '@/hooks/useOverlay';
 import { useToast } from '@/hooks/useToast';
 import { getHideModalCookie } from '@/lib/cookies';

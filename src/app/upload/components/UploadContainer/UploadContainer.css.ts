@@ -1,7 +1,7 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { STEP } from '@/app/join/JoinPage.constants';
+import { STEP } from '@/constants/steps';
 import { colors } from '@/styles/colors';
 import { fonts } from '@/styles/fonts.css';
 

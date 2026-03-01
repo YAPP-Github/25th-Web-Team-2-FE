@@ -15,14 +15,14 @@ import AreaTooltip from '@/app/join/components/AreaTooltip/AreaTooltip';
 import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox/JoinCheckbox';
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
-import { MatchType } from '@/app/join/JoinPage.types';
 import AddressSelect from '@/components/AddressSelect/AddressSelect';
 import ContactEmailInput from '@/components/ContactEmailInput/ContactEmailInput';
 import Icon from '@/components/Icon';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
 import { useToast } from '@/hooks/useToast';
 import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 import { colors } from '@/styles/colors';
+import { MatchType } from '@/types/filter';
 
 // TODO: useFormParticipantUserInfo로 묶어서 내보내는 게 아니라
 // 각 컴포넌트에서 필요한 데이터만 FormContext에서 가져오는 방식으로 개선

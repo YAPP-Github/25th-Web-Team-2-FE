@@ -12,8 +12,8 @@ import {
 } from './ProgressBarSection.css';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
-import { UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 import Icon from '@/components/Icon';
+import { UPLOAD_STEP_LIST } from '@/constants/steps';
 import { colors } from '@/styles/colors';
 
 const labelMapper = {

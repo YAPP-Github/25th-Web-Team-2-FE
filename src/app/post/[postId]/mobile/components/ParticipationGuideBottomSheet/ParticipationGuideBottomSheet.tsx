@@ -7,7 +7,7 @@ import {
   contactInfoTitle,
   warningMessage,
 } from './ParticipationGuideBottomSheet.css';
-import { ParticipationGuideBottomSheetProps } from '../../../ExperimentPostPage.types';
+import { ParticipationGuideBottomSheetProps } from '../../../types/modal';
 
 import Button from '@/components/Button/Button';
 import Icon from '@/components/Icon';

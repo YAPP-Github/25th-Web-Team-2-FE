@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { calculateAgeFromBirthDate } from '../home.utils';
 import useQueryParams from './useQueryParams';
+import { calculateAgeFromBirthDate } from '../utils/calculateAgeFromBirthDate';
 
 import { ParticipantResponse } from '@/apis/login';
 import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';

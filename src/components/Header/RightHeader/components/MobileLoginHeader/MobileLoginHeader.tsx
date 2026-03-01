@@ -7,10 +7,9 @@ import { mobileRightHeader } from './MobileLoginHeader.css';
 import MypageBottomSheet from './MypageBottomSheet/MypageBottomSheet';
 
 import Icon from '@/components/Icon';
-import MobileNotReadyModal, {
-  NotReadyMenu,
-} from '@/components/MobileNotReadyModal/MobileNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/components/MobileNotReadyModal/mobileNotReadyModal.constants';
+import MobileNotReadyModal from '@/components/MobileNotReadyModal/MobileNotReadyModal';
+import { NotReadyMenu } from '@/components/MobileNotReadyModal/types/menu';
+import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
 import useOverlay from '@/hooks/useOverlay';
 import { getHideModalCookie } from '@/lib/cookies';
 

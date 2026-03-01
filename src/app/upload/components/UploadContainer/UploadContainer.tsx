@@ -9,8 +9,8 @@ import {
   uploadLayout,
   uploadContainerLayout,
 } from './UploadContainer.css';
+import { VALIDATION_FIELDS_BY_STEP } from '../../constants/validationFieldsByStep';
 import useManageExperimentPostForm from '../../hooks/useManageExperimentPostForm';
-import { VALIDATION_FIELDS_BY_STEP } from '../../upload.constants';
 import ApplyMethodSection from '../ApplyMethodSection/ApplyMethodSection';
 import DescriptionSection from '../DescriptionSection/DescriptionSection';
 import OutlineSection from '../OutlineSection/OutlineSection';
@@ -18,10 +18,10 @@ import ProgressBarSection from '../ProgressBarSection/ProgressBarSection';
 
 import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
 import useFunnel from '@/app/join/hooks/useFunnel';
-import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
 import Button from '@/components/Button/Button';
 import AlertModal from '@/components/Modal/AlertModal/AlertModal';
 import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
+import { STEP, UPLOAD_STEP_LIST } from '@/constants/steps';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';
