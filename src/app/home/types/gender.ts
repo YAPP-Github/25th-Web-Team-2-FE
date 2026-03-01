@@ -1,5 +1,3 @@
-import { GENDER } from '../constants/filter';
+import { Gender } from '@/types/user';
 
-export type GenderValue = (typeof GENDER)[number]['value'];
-
-export type GenderFilterValue = (typeof GENDER)[number]['value'] | 'ALL';
+export type GenderFilterValue = Gender;

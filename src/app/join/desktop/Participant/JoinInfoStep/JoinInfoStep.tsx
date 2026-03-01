@@ -17,10 +17,11 @@ import JoinInput from '../../../components/JoinInput/JoinInput';
 
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/app/join/JoinPage.constants';
 import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
-import { Gender, MatchType } from '@/app/join/JoinPage.types';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { MatchType } from '@/types/filter';
+import { Gender } from '@/types/user';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;

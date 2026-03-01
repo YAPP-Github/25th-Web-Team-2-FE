@@ -15,7 +15,7 @@ import {
   contactTargetBottomSheetContainer,
 } from './ContactTargetBottomSheet.css';
 
-import { GENDER } from '@/app/home/constants/filter';
+import { GENDER_OPTIONS } from '@/app/home/constants/filter';
 import { GenderFilterValue } from '@/app/home/types/gender';
 import Button from '@/components/Button/Button';
 import { ExperimentPostListFilterParams } from '@/types/filter';
@@ -65,7 +65,7 @@ const ContactTargetBottomSheet = ({
       <div className={genderSelectWrapper}>
         <span className={label}>성별</span>
         <div className={genderButtonGroup}>
-          {GENDER.map((option) => (
+          {GENDER_OPTIONS.map((option) => (
             <button
               key={option.value}
               className={`${genderButton} ${option.value === filteredGender ? 'active' : ''}`}

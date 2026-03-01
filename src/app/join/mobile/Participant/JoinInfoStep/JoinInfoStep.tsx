@@ -8,11 +8,11 @@ import { bottomButtonLayout, emailInput, mainContentLayout } from '../../page.cs
 import JoinInput from '@/app/join/components/JoinInput/JoinInput';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer/RadioButtonGroupContainer';
 import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
-import { Gender } from '@/app/join/JoinPage.types';
 import Button from '@/components/Button/Button';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
+import { Gender } from '@/types/user';
 
 const inputOrder = ['name', 'birthDate'];
 

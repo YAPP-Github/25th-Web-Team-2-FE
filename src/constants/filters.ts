@@ -1,5 +1,11 @@
 import { AreaType, RegionType } from '@/types/filter';
 
+export const MATCH_TYPE = {
+  ONLINE: 'ONLINE',
+  OFFLINE: 'OFFLINE',
+  ALL: 'ALL',
+} as const;
+
 export const DEFAULT_RECRUIT_STATUS = 'OPEN' as const;
 
 export const REGIONS = [
