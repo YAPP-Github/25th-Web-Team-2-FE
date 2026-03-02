@@ -4,13 +4,14 @@ import * as Select from '@radix-ui/react-select';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { contentContainer, selectItem, triggerWrapper } from './HeaderMenu.css';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import Icon from '@/components/Icon';
-import { logout } from '@/lib/auth-utils';
-import { logoutUser } from '@/lib/mixpanelClient';
-import { isResearcherInfo } from '@/utils/typeGuard';
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
+import Icon from '@components/Icon';
+import { logout } from '@lib/auth-utils';
+import { logoutUser } from '@lib/mixpanelClient';
+import { isResearcherInfo } from '@utils/typeGuard';
+
+import { contentContainer, selectItem, triggerWrapper } from './HeaderMenu.css';
 
 interface HeaderMenuProps {
   userInfo: ParticipantResponse | ResearcherResponse;

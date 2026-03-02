@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
+import { textInput } from '@upload/components/InputForm/InputForm.css';
+
 import {
   inputContainer,
   inputLabel,
@@ -12,7 +14,6 @@ import {
 import Icon from '../Icon';
 import AutoCompleteDropdown from './components/AutoCompleteDropdown';
 
-import { textInput } from '@/app/upload/components/InputForm/InputForm.css';
 
 interface UnivAutoCompleteInputProps<T extends FieldValues> {
   name: Path<T>;

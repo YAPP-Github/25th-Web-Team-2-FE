@@ -1,5 +1,7 @@
 import { ControllerRenderProps, FieldError } from 'react-hook-form';
 
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+
 import {
   formMessage,
   textCounter,
@@ -8,7 +10,6 @@ import {
   textSubMessageLayout,
 } from '../InputForm/InputForm.css';
 
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 
 interface TextAreaFormProps {
   id: string;

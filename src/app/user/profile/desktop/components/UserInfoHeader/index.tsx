@@ -1,5 +1,10 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
+
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
+import { colors } from '@styles/colors';
+import { isParticipantInfo } from '@utils/typeGuard';
+
 import {
   badge,
   emailWrapper,
@@ -10,10 +15,6 @@ import {
   titleContainer,
   verticalLine,
 } from './UserInfoHeader.css';
-
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { colors } from '@/styles/colors';
-import { isParticipantInfo } from '@/utils/typeGuard';
 
 const GENDER_LABEL = {
   MALE: '남성',

@@ -1,7 +1,8 @@
+import { convertToWebpUrl } from '@upload/utils/convertToWebpUrl';
+
 import { checkImageExists } from './checkImageExists';
 import { isValidImageUrl } from './isValidImageUrl';
 
-import { convertToWebpUrl } from '@/app/upload/utils/convertToWebpUrl';
 
 export const replaceImageListWithWebp = async (
   originalImages: string[],

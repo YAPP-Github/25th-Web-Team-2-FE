@@ -2,11 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import { ParticipantResponse } from '@apis/login';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+
 import useQueryParams from './useQueryParams';
 import { calculateAgeFromBirthDate } from '../utils/calculateAgeFromBirthDate';
 
-import { ParticipantResponse } from '@/apis/login';
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 
 interface UseParticipantAutoFilterProps {
   participantInfo?: ParticipantResponse | null;

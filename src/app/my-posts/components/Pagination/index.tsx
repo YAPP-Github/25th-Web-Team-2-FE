@@ -1,6 +1,11 @@
 // 'use client';
 import * as React from 'react';
 
+
+import Icon from '@components/Icon';
+import { a11yHidden } from '@styles/a11y.css';
+import { colors } from '@styles/colors';
+
 import {
   pagination,
   paginationContent,
@@ -11,10 +16,6 @@ import {
   paginationNext,
   paginationEllipsis,
 } from './Pagination.css';
-
-import Icon from '@/components/Icon';
-import { a11yHidden } from '@/styles/a11y.css';
-import { colors } from '@/styles/colors';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav

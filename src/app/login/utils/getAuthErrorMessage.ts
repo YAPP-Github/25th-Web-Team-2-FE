@@ -1,5 +1,5 @@
-import { ERROR_MESSAGES } from '@/apis/config/constants';
-import { CustomError } from '@/apis/config/error';
+import { ERROR_MESSAGES } from '@apis/config/constants';
+import { CustomError } from '@apis/config/error';
 
 const existAccountRoleMapper: Record<string, string> = {
   RESEARCHER: '참여자',

@@ -1,6 +1,17 @@
 import Link from 'next/link';
 import { Controller, FormProvider, useWatch } from 'react-hook-form';
 
+
+import { ResearcherResponse } from '@apis/login';
+import ContactEmailInput from '@components/ContactEmailInput';
+import Icon from '@components/Icon';
+import { useToast } from '@hooks/useToast';
+import JoinCheckbox from '@join/components/JoinCheckboxContainer/JoinCheckbox';
+import JoinInput from '@join/components/JoinInput';
+import JoinTextarea from '@join/components/JoinTextarea';
+import { ResearcherUpdateSchemaType } from '@schema/profile/ResearcherUpdateSchema';
+import { colors } from '@styles/colors';
+
 import {
   leaveButton,
   updateButton,
@@ -9,16 +20,6 @@ import {
   termContainer,
 } from './ResearcherUserInfo.css';
 import useFormResearcherUserInfo from '../../../hooks/useFormResearcherUserInfo';
-
-import { ResearcherResponse } from '@/apis/login';
-import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox';
-import JoinInput from '@/app/join/components/JoinInput';
-import JoinTextarea from '@/app/join/components/JoinTextarea';
-import ContactEmailInput from '@/components/ContactEmailInput';
-import Icon from '@/components/Icon';
-import { useToast } from '@/hooks/useToast';
-import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
-import { colors } from '@/styles/colors';
 
 const ResearcherUserInfo = ({ userInfo }: { userInfo: ResearcherResponse }) => {
   const { form, handleSubmit, isLoading } = useFormResearcherUserInfo({

@@ -1,5 +1,12 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { MatchType } from '@/types/filter';
+import UnivAutoCompleteInput from '@components/UnivAutoCompleteInput';
+import { MATCH_TYPE } from '@constants/filters';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+import { colors } from '@styles/colors';
+import DatePickerForm from '@upload/components/DatePickerForm';
+
 import {
   disabledInput,
   isEndDatePastText,
@@ -25,12 +32,6 @@ import RegionPopover from '../RegionPopover';
 import SelectForm from '../SelectForm';
 import { label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
-import DatePickerForm from '@/app/upload/components/DatePickerForm';
-import UnivAutoCompleteInput from '@/components/UnivAutoCompleteInput';
-import { MATCH_TYPE } from '@/constants/filters';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
-import { MatchType } from '@/types/filter';
 
 interface OutlineSectionProps {
   experimentDateChecked?: boolean;

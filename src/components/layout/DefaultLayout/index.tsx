@@ -1,13 +1,14 @@
 import dynamic from 'next/dynamic';
 import { PropsWithChildren } from 'react';
 
+
+import Footer from '@components/Footer';
+import Header from '@components/Header';
+
 import { defaultLayout, defaultLayoutContainer } from './DefaultLayout.css';
 
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-
 const BackToTopButton = dynamic(
-  () => import('@/components/Button/BackToTopButton'),
+  () => import('@common/Button/BackToTopButton'),
   {
     ssr: false,
   },

@@ -3,12 +3,13 @@
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { useEffect, useState } from 'react';
 
+
+import Icon from '@components/Icon';
+import { ONE_SECOND } from '@constants/time';
+import { isMobile } from '@utils/deviceType';
+
 import { tooltipContent } from './AreaTooltip.css';
 import ArrowTooltip from './ArrowTooltip';
-
-import Icon from '@/components/Icon';
-import { ONE_SECOND } from '@/constants/time';
-import { isMobile } from '@/utils/deviceType';
 
 const AreaTooltip = () => {
   const [open, setOpen] = useState(false);

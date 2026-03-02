@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 
-import { desktopRightHeader, uploadButton } from './DesktopLoginHeader.css';
-import HeaderMenu from '../HeaderMenu';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { PATH } from '@/constants/path';
-import { startRecording, trackEvent } from '@/lib/mixpanelClient';
-import { isResearcherInfo } from '@/utils/typeGuard';
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
+import { PATH } from '@constants/path';
+import { startRecording, trackEvent } from '@lib/mixpanelClient';
+import { isResearcherInfo } from '@utils/typeGuard';
+
+import HeaderMenu from '../HeaderMenu';
+import { desktopRightHeader, uploadButton } from './DesktopLoginHeader.css';
 
 interface DesktopLoginHeaderProps {
   userInfo: ParticipantResponse | ResearcherResponse;

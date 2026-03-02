@@ -1,6 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
 
+
+import Button from '@common/Button';
+import Icon from '@components/Icon';
+import {
+  CLICK_MODAL_MATCHING_OPT_IN_AGREE,
+  CLICK_MODAL_MATCHING_OPT_IN_SKIP,
+  VIEW_MODAL_MATCHING_OPT_IN,
+} from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+
 import {
   dialogOverlay,
   modalContent,
@@ -10,15 +20,6 @@ import {
   modalTitleContainer,
   modalButtonContainer,
 } from './MatchConsentConfirmModal.css';
-
-import Button from '@/components/Button';
-import Icon from '@/components/Icon';
-import {
-  CLICK_MODAL_MATCHING_OPT_IN_AGREE,
-  CLICK_MODAL_MATCHING_OPT_IN_SKIP,
-  VIEW_MODAL_MATCHING_OPT_IN,
-} from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
 
 interface MatchConsentConfirmModalProps {
   open: boolean;

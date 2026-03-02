@@ -1,11 +1,12 @@
 'use client';
 
-import { recruitCheckLabel, recruitCheckWrapper } from './RecruitStatusCheckbox.css';
 
-import useURLFilters from '@/app/home/hooks/useURLFilters';
-import JoinCheckbox from '@/app/join/components/JoinCheckboxContainer/JoinCheckbox';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
+import Icon from '@components/Icon';
+import useURLFilters from '@home/hooks/useURLFilters';
+import JoinCheckbox from '@join/components/JoinCheckboxContainer/JoinCheckbox';
+import { colors } from '@styles/colors';
+
+import { recruitCheckLabel, recruitCheckWrapper } from './RecruitStatusCheckbox.css';
 
 const RecruitStatusCheckbox = () => {
   const { isRecruiting, handleToggleRecruitStatus } = useURLFilters();

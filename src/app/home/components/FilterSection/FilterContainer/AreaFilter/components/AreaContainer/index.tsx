@@ -1,5 +1,11 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 
+import { AreaType } from '@/types/filter';
+import { ExperimentPostArea } from '@apis/post';
+import Icon from '@components/Icon';
+import { AREA_MAPPER } from '@constants/filters';
+import { colors } from '@styles/colors';
+
 import {
   areaOpacity,
   checkbox,
@@ -11,12 +17,6 @@ import {
   subAreaListContainer,
 } from './AreaContainer.css';
 import { areaCount, areaName } from '../../AreaFilter.css';
-
-import { ExperimentPostArea } from '@/apis/post';
-import Icon from '@/components/Icon';
-import { AREA_MAPPER } from '@/constants/filters';
-import { colors } from '@/styles/colors';
-import { AreaType } from '@/types/filter';
 
 const PLACEHOLDER_TEXT = '지역을 먼저\n선택해 주세요';
 

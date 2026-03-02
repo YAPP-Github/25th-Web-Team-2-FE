@@ -1,3 +1,6 @@
+import Icon from '@components/Icon';
+import { useDebounce } from '@hooks/useDebounce';
+
 import {
   autoCompleteCustomItem,
   autoCompleteDropdown,
@@ -10,8 +13,6 @@ import {
 } from './AutoCompleteDropdown.css';
 import { useSearchUnivNamesQuery } from '../../hooks/useSearchUnivNamesQuery';
 
-import Icon from '@/components/Icon';
-import { useDebounce } from '@/hooks/useDebounce';
 
 interface AutoCompleteDropdownProps {
   showDropdown: boolean;

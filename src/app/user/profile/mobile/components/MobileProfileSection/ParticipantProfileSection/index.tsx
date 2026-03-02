@@ -1,8 +1,9 @@
+import { ParticipantResponse } from '@apis/login';
+
 import { profileSectionLayout } from './ParticipantProfileSection.css';
 import { MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP } from '../MobileProfileSectionMap';
 import ProfileItem from '../ProfileItem';
 
-import { ParticipantResponse } from '@/apis/login';
 
 interface ParticipantProfileSectionProps {
   userInfo: ParticipantResponse;

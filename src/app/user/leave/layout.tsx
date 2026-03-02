@@ -1,8 +1,9 @@
-import { leavePageLayout } from './LeavePage.css';
 
-import Footer from '@/components/Footer';
-import BackHeader from '@/components/Header/BackHeader';
-import UserLayout from '@/components/layout/UserLayout';
+import Footer from '@components/Footer';
+import BackHeader from '@components/Header/BackHeader';
+import UserLayout from '@components/layout/UserLayout';
+
+import { leavePageLayout } from './LeavePage.css';
 
 function LeaveLayout({ children }: { children: React.ReactNode }) {
   return (

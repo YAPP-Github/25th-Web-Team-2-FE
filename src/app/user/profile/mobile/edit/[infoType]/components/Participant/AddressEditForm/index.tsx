@@ -2,6 +2,11 @@
 
 import { FormProvider, useWatch } from 'react-hook-form';
 
+import { ParticipantResponse } from '@apis/login';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@constants/joinRegion';
+import AreaTooltip from '@join/components/AreaTooltip';
+import JoinSelect from '@join/desktop/Participant/JoinInfoStep/JoinSelect';
+
 import {
   filterTitle,
   filterTitleWrapper,
@@ -13,10 +18,6 @@ import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipant
 import EditFormLayout from '../../EditFormLayout';
 import SaveButton from '../../SaveButton';
 
-import { ParticipantResponse } from '@/apis/login';
-import AreaTooltip from '@/app/join/components/AreaTooltip';
-import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
 
 interface AddressEditFormProps {
   userInfo: ParticipantResponse;

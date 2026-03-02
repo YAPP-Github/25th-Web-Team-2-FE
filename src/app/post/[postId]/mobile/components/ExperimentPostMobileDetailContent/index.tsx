@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import Icon from '@components/Icon';
+
 import {
   imageContainer,
   singleImageItem,
@@ -16,7 +18,6 @@ import { isValidImageUrl } from '../../../utils/isValidImageUrl';
 import { replaceImageListWithWebp } from '../../../utils/replaceImageListWithWebp';
 import ExperimentImageViewer from '../ExperimentImageViewer';
 
-import Icon from '@/components/Icon';
 
 const ExperimentPostMobileDetailContent = ({
   postDetailData,

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { validateJoinContactEmail } from '@/apis/login';
+import { validateJoinContactEmail } from '@apis/login';
 
 const useCheckValidJoinEmailMutation = () => {
   return useMutation({

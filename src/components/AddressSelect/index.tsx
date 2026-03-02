@@ -1,5 +1,8 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
+import { FilterOption } from '@/types/filter';
+import JoinSelect from '@join/desktop/Participant/JoinInfoStep/JoinSelect';
+
 import {
   areaFilterContainer,
   areaFilterWrapper,
@@ -7,9 +10,6 @@ import {
   filterTitleWrapper,
   requiredStar,
 } from './AddressSelect.css';
-
-import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect';
-import { FilterOption } from '@/types/filter';
 
 interface AddressSelectProps<T extends FieldValues> {
   title: string;

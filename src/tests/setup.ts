@@ -36,7 +36,7 @@ Object.defineProperty(Element.prototype, 'scrollIntoView', {
 const mockSearchParams = new URLSearchParams();
 
 // useQueryParams 모킹
-vi.mock('@/app/home/hooks/useQueryParams', () => ({
+vi.mock('@home/hooks/useQueryParams', () => ({
   default: () => ({
     searchParams: new URLSearchParams(mockSearchParams),
     updateURLParams: vi.fn((newParams: URLSearchParams) => {

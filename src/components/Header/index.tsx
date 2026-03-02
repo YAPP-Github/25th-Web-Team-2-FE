@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
 
+import Logo from '@common/Logo';
+
 import { headerLayout, image } from './Header.css';
-import Logo from '../Logo';
 import RightHeader from './RightHeader';
+
 
 const Header = () => {
   return (

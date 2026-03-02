@@ -1,9 +1,10 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { bottomButtonLayout } from '../../page.css';
 
-import Button from '@/components/Button';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import Button from '@common/Button';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
+import { bottomButtonLayout } from '../../page.css';
 
 interface NextButtonProps {
   onNext: () => void;

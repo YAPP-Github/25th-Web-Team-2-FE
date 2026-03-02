@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { goToHomeButton, h2, notFoundContent, notFoundLayout } from './not-found.css';
 
-import NotFoundImage from '@/assets/images/notFound.svg';
-import DefaultLayout from '@/components/layout/DefaultLayout';
+import NotFoundImage from '@assets/images/notFound.svg';
+import DefaultLayout from '@components/layout/DefaultLayout';
+
+import { goToHomeButton, h2, notFoundContent, notFoundLayout } from './not-found.css';
 
 export default function NotFound() {
   return (

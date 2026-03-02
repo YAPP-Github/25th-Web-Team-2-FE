@@ -1,10 +1,11 @@
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import { experimentPostInfoLayout, postSubInfo, postTitle } from './ExperimentPostInfo.css';
 import { viewsContainer } from '../../../desktop/components/ExperimentPostInfo/ExperimentPostInfo.css';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import { formatDate } from '../../../utils/formatDate';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 const ExperimentPostInfo = ({
   postDetailData,

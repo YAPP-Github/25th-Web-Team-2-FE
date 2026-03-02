@@ -3,6 +3,13 @@
 import { ChangeEvent, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { useToast } from '@hooks/useToast';
+import { joinInput } from '@join/components/JoinInput/JoinInput.css';
+import useVerifyUnivAuthCodeMutation from '@join/hooks/useVerifyUnivAuthCodeMutation';
+import { formatAuthTimer } from '@join/utils/formatAuthTimer';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
+import { errorMessage, univInputWrapper } from '../UnivAuthInput.css';
 import {
   authInputLayout,
   authTimerWrapper,
@@ -11,13 +18,6 @@ import {
   authTimerText,
   inputFooter,
 } from './AuthCodeInput.css';
-import { errorMessage, univInputWrapper } from '../UnivAuthInput.css';
-
-import { joinInput } from '@/app/join/components/JoinInput/JoinInput.css';
-import useVerifyUnivAuthCodeMutation from '@/app/join/hooks/useVerifyUnivAuthCodeMutation';
-import { formatAuthTimer } from '@/app/join/utils/formatAuthTimer';
-import { useToast } from '@/hooks/useToast';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const AUTH_CODE_VALID_LENGTH = 6;
 

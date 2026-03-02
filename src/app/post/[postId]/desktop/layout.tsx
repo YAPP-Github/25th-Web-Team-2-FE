@@ -1,6 +1,7 @@
+import DefaultLayout from '@components/layout/DefaultLayout';
+
 import { getPostMetadata } from '../server/getPostMetadata';
 
-import DefaultLayout from '@/components/layout/DefaultLayout';
 
 export async function generateMetadata({ params }: { params: { postId: string } }) {
   return getPostMetadata(params.postId);

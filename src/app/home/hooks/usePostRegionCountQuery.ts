@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchPostCount, PostRegionResponse } from '@/apis/post';
-import { queryKey } from '@/constants/queryKey';
+import { fetchPostCount, PostRegionResponse } from '@apis/post';
+import { queryKey } from '@constants/queryKey';
 
 const usePostRegionCountQuery = (region: string | null) => {
   return useQuery({

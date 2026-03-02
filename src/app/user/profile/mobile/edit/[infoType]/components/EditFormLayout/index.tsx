@@ -3,12 +3,13 @@
 import { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { mainContentLayout } from './EditFormLayout.css';
 
-import TitleSection from '@/app/join/mobile/components/TitleSection';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
-import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
-import { colors } from '@/styles/colors';
+import ConfirmModal from '@common/Modal/ConfirmModal';
+import useLeaveConfirmModal from '@hooks/useLeaveConfirmModal';
+import TitleSection from '@join/mobile/components/TitleSection';
+import { colors } from '@styles/colors';
+
+import { mainContentLayout } from './EditFormLayout.css';
 
 interface EditFormLayoutProps {
   title: string;

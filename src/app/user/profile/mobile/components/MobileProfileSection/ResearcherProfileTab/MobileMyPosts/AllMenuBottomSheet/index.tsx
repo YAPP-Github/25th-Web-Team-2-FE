@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMenuBottomSheet.css';
 
-import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
-import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
-import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
-import Toggle from '@/components/Toggle';
-import { colors } from '@/styles/colors';
+import ConfirmModal from '@common/Modal/ConfirmModal';
+import Toggle from '@common/Toggle';
+import useDeleteExperimentPostMutation from '@my-posts/hooks/useDeleteExperimentPostMutation';
+import useMyPostsInfiniteQuery from '@my-posts/hooks/useMyPostsInfiniteQuery';
+import useUpdateRecruitStatusInfiniteMutation from '@my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
+import { colors } from '@styles/colors';
+
+import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMenuBottomSheet.css';
 
 const PAGE_SIZE = 10;
 

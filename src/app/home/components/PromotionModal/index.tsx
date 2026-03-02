@@ -4,6 +4,13 @@ import * as Dialog from '@radix-ui/react-dialog';
 import Image, { type StaticImageData } from 'next/image';
 import { useState } from 'react';
 
+
+import Button from '@common/Button';
+import Icon from '@components/Icon';
+import { trackEvent } from '@lib/mixpanelClient';
+import { a11yHidden } from '@styles/a11y.css';
+import { colors } from '@styles/colors';
+
 import {
   closeButtonContainer,
   dialogOverlay,
@@ -16,12 +23,6 @@ import {
   navigationRightButton,
   promotionModalContent,
 } from './PromotionModal.css';
-
-import Button from '@/components/Button';
-import Icon from '@/components/Icon';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { a11yHidden } from '@/styles/a11y.css';
-import { colors } from '@/styles/colors';
 
 interface PromotionModalProps {
   open: boolean;

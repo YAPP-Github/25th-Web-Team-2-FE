@@ -1,3 +1,10 @@
+
+import Button from '@common/Button';
+import Icon from '@components/Icon';
+import { useToast } from '@hooks/useToast';
+import { trackEvent } from '@lib/mixpanelClient';
+import { colors } from '@styles/colors';
+
 import {
   participationGuideBottomSheetLayout,
   bottomSheetTitle,
@@ -8,12 +15,6 @@ import {
   warningMessage,
 } from './ParticipationGuideBottomSheet.css';
 import { ParticipationGuideBottomSheetProps } from '../../../types/modal';
-
-import Button from '@/components/Button';
-import Icon from '@/components/Icon';
-import { useToast } from '@/hooks/useToast';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { colors } from '@/styles/colors';
 
 const ParticipationGuideBottomSheet = ({
   onConfirm,

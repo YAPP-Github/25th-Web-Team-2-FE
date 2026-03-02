@@ -1,6 +1,7 @@
+import { FilterOption } from '@/types/filter';
+
 import { UPLOAD_REGION } from './uploadRegion';
 
-import { FilterOption } from '@/types/filter';
 
 export const JOIN_REGION = [
   { label: '서울특별시', value: 'SEOUL' },

@@ -1,5 +1,8 @@
 'use client';
 
+import useUserInfo from '@home/hooks/useUserInfo';
+import { isParticipantInfo, isResearcherInfo } from '@utils/typeGuard';
+
 import {
   isParticipantParams,
   isResearcherParams,
@@ -8,8 +11,6 @@ import {
 } from './constants/componentMap';
 import { ParticipantParams, ResearcherParams } from './types/params';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { isParticipantInfo, isResearcherInfo } from '@/utils/typeGuard';
 
 interface PageProps {
   params: {

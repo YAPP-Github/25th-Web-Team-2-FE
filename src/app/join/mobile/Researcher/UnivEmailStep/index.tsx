@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { FormProvider, useFormContext } from 'react-hook-form';
 
+import useOverlay from '@hooks/useOverlay';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import NextButton from './NextButton';
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection';
 import { mainContentLayout } from '../../page.css';
 import UnivEmailInputContainer from '../UnivEmailInputContainer';
 
-import useOverlay from '@/hooks/useOverlay';
-import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface UnivEmailStepProps {
   onNext: () => void;

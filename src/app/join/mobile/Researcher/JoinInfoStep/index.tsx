@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+
+import JoinButton from '@join/components/JoinButton';
+import JoinInput from '@join/components/JoinInput';
+import JoinTextarea from '@join/components/JoinTextarea';
+import { useFocusNavigation } from '@join/hooks/useFocusNavigation';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import { joinContentContainer } from './JoinInfoStep.css';
 import TitleSection from '../../components/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
-
-import JoinButton from '@/app/join/components/JoinButton';
-import JoinInput from '@/app/join/components/JoinInput';
-import JoinTextarea from '@/app/join/components/JoinTextarea';
-import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
-import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const inputOrder = ['name', 'univName', 'major', 'labInfo'];
 

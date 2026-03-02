@@ -2,14 +2,14 @@
 
 import { FormProvider, useWatch } from 'react-hook-form';
 
+import { ParticipantResponse } from '@apis/login';
+import ContactEmailInput from '@components/ContactEmailInput';
+import EmailBadge from '@components/EmailBadge';
+import { ParticipantUpdateSchemaType } from '@schema/profile/ParticipantUpdateSchema';
+
 import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipantProfileEdit';
 import EditFormLayout from '../../EditFormLayout';
 import SaveButton from '../../SaveButton';
-
-import { ParticipantResponse } from '@/apis/login';
-import ContactEmailInput from '@/components/ContactEmailInput';
-import EmailBadge from '@/components/EmailBadge';
-import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 
 interface ContactEmailEditFormProps {
   userInfo: ParticipantResponse;

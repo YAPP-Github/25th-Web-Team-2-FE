@@ -4,6 +4,12 @@ import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+
+import Icon from '@components/Icon';
+import { useTouchSlide } from '@home/components/Banner/hooks/useTouchSlide';
+import { a11yHidden } from '@styles/a11y.css';
+import { colors } from '@styles/colors';
+
 import {
   viewerOverlay,
   slideContainer,
@@ -13,11 +19,6 @@ import {
   imageViewerHeader,
   pageCurrent,
 } from './ExperimentImageViewer.css';
-
-import { useTouchSlide } from '@/app/home/components/Banner/hooks/useTouchSlide';
-import Icon from '@/components/Icon';
-import { a11yHidden } from '@/styles/a11y.css';
-import { colors } from '@/styles/colors';
 
 interface Props {
   images: string[];

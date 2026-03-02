@@ -2,12 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 
+import { PATH } from '@constants/path';
+import useUserInfo from '@home/hooks/useUserInfo';
+import { isParticipantInfo } from '@utils/typeGuard';
+
 import ParticipantProfileSection from './ParticipantProfileSection';
 import ResearcherProfileTab from './ResearcherProfileTab';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { PATH } from '@/constants/path';
-import { isParticipantInfo } from '@/utils/typeGuard';
 
 interface MobileProfileSectionProps {
   defaultTab?: string;

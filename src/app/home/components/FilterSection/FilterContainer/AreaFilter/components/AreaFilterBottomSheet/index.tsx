@@ -1,5 +1,12 @@
 import { useState } from 'react';
 
+import { AreaType, RegionType } from '@/types/filter';
+import Button from '@common/Button';
+import { AREA_ALL } from '@home/constants/area';
+import usePostAreaCountQuery from '@home/hooks/usePostAreaCountQuery';
+import usePostRegionCountQuery from '@home/hooks/usePostRegionCountQuery';
+import { AreaAll } from '@home/types/area';
+
 import {
   areaFilterBottomSheetContainer,
   contentWrapper,
@@ -10,13 +17,6 @@ import {
 } from './AreaFilterBottomSheet.css';
 import AreaContainer from '../AreaContainer';
 import RegionContainer from '../RegionContainer';
-
-import { AREA_ALL } from '@/app/home/constants/area';
-import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
-import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
-import { AreaAll } from '@/app/home/types/area';
-import Button from '@/components/Button';
-import { AreaType, RegionType } from '@/types/filter';
 
 const MAX_SELECTED_AREAS = 5;
 

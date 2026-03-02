@@ -1,11 +1,12 @@
+import { AreaType, RegionType } from '@/types/filter';
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
+import { AREA_MAPPER, REGION_MAPPER } from '@constants/filters';
+import { getMatchTypeLabel } from '@user/profile/utils/getMatchTypeLabel';
+
 import ParticipantAdConsentToggle from '../AdConsentToggle/ParticipantAdConsentToggle';
 import ResearcherAdConsentToggle from '../AdConsentToggle/ResearcherAdConsentToggle';
 import MatchConsentToggle from '../MatchConsentToggle';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { getMatchTypeLabel } from '@/app/user/profile/utils/getMatchTypeLabel';
-import { AREA_MAPPER, REGION_MAPPER } from '@/constants/filters';
-import { AreaType, RegionType } from '@/types/filter';
 
 export const MOBILE_PARTICIPANT_PROFILE_FIELDS_MAP = [
   {

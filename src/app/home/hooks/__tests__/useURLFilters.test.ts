@@ -1,11 +1,12 @@
 import { renderHook, act } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useURLFilters from '../useURLFilters';
 
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 import { mockSearchParams } from '@/tests/setup';
 import { customWrapper } from '@/tests/test-utils';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+
+import useURLFilters from '../useURLFilters';
 
 describe('useURLFilters', () => {
   beforeEach(() => {

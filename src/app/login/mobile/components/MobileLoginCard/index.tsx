@@ -3,6 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Role } from '@/types/user';
+import Google from '@assets/images/google.svg';
+import Naver from '@assets/images/naver.svg';
+import { LOGIN_PROVIDER } from '@constants/config';
+import { getOAuthLoginConfig } from '@login/utils/getOAuthLoginConfig';
+
 import {
   buttonContainer,
   loginButton,
@@ -15,11 +21,6 @@ import {
 } from './MobileLoginCard.css';
 import LastLoginTooltip from '../../../components/LastLoginTooltip';
 
-import { getOAuthLoginConfig } from '@/app/login/utils/getOAuthLoginConfig';
-import Google from '@/assets/images/google.svg';
-import Naver from '@/assets/images/naver.svg';
-import { LOGIN_PROVIDER } from '@/constants/config';
-import { Role } from '@/types/user';
 
 const roleMapper = {
   RESEARCHER: '연구자',

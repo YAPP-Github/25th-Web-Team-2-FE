@@ -1,5 +1,5 @@
-import { GENDER } from '@/constants/user';
 import { Gender } from '@/types/user';
+import { GENDER } from '@constants/user';
 
 export const getGenderLabel = (gender: Gender): string => {
   switch (gender) {

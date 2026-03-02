@@ -3,10 +3,11 @@
 import * as Select from '@radix-ui/react-select';
 import { useState } from 'react';
 
+import { FilterOption } from '@/types/filter';
+import Icon from '@components/Icon';
+
 import { triggerWrapper, selectContent, selectList, selectItem } from './JoinSelect.css';
 
-import Icon from '@/components/Icon';
-import { FilterOption } from '@/types/filter';
 
 interface JoinSelectProps {
   placeholder: string;

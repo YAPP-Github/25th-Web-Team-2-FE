@@ -1,9 +1,10 @@
 import { ChangeEvent } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+
 import { ageInput, ageFormContainer } from './AgeForm.css';
 
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 
 interface AgeFormProps {
   id: string;

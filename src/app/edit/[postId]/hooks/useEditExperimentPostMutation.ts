@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { CustomError } from '@/apis/config/error';
-import { fetchClient } from '@/apis/config/fetchClient';
+import { CustomError } from '@apis/config/error';
+import { fetchClient } from '@apis/config/fetchClient';
+import { queryKey } from '@constants/queryKey';
+import { API_URL } from '@constants/url';
 import {
   ExperimentPostData,
   UploadedPostInfo,
-} from '@/app/upload/hooks/useUploadExperimentPostMutation';
-import { queryKey } from '@/constants/queryKey';
-import { API_URL } from '@/constants/url';
+} from '@upload/hooks/useUploadExperimentPostMutation';
 
 export interface UseEditExperimentPostMutationResponse {
   postInfo: UploadedPostInfo;

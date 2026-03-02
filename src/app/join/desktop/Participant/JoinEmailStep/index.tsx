@@ -3,15 +3,16 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+
+import ContactEmailInput from '@components/ContactEmailInput';
+import { joinContentContainer, joinForm } from '@join/JoinPage.css';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import NextButton from './NextButton';
 import JoinCheckboxContainer from '../../../components/JoinCheckboxContainer';
 import JoinInput from '../../../components/JoinInput';
-
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
-import ContactEmailInput from '@/components/ContactEmailInput';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface JoinEmailStepProps {
   onNext: () => void;

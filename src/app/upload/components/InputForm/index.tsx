@@ -1,6 +1,8 @@
 import React from 'react';
 import { ControllerRenderProps, FieldError } from 'react-hook-form';
 
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+
 import {
   textInputContainer,
   textInput,
@@ -9,7 +11,6 @@ import {
   formMessage,
 } from './InputForm.css';
 
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 
 interface InputFormProps {
   id: string;

@@ -3,11 +3,12 @@
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { PropsWithChildren, ReactNode, useEffect, useState } from 'react';
 
+import { LoginProvider, Role } from '@/types/user';
+import ArrowTooltip from '@join/components/AreaTooltip/ArrowTooltip';
+import { localStorageManager, STORAGE_KEYS } from '@lib/localStorageManager';
+
 import { recentLoginTooltipContent } from './LastLoginTooltip.css';
 
-import ArrowTooltip from '@/app/join/components/AreaTooltip/ArrowTooltip';
-import { localStorageManager, STORAGE_KEYS } from '@/lib/localStorageManager';
-import { LoginProvider, Role } from '@/types/user';
 
 interface LastLoginTooltipProps {
   role: Role;

@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { CONTACT_URL, NOTICE_URL, TERMS_URL } from '@constants/externalUrl';
+
 import { buttonContainer, footerLayout, textContainer, verticalLine } from './Footer.css';
 
-import { CONTACT_URL, NOTICE_URL, TERMS_URL } from '@/constants/externalUrl';
 
 const Footer = () => {
   return (

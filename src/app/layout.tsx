@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { getServerSession } from 'next-auth';
 
-import { DEFAULT_OG_IMAGE_URL } from '@/constants/url';
 import pretendard from '@/fonts/local-font';
-import '@/styles/reset.css';
-import '@/styles/global.css';
-import { authOptions } from '@/lib/auth-utils';
 import Providers from '@/providers/Providers';
+import { DEFAULT_OG_IMAGE_URL } from '@constants/url';
+import { authOptions } from '@lib/auth-utils';
+
+import '@styles/reset.css';
+import '@styles/global.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gradmeet.co.kr'),

@@ -3,25 +3,26 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+
+import { ParticipantResponse } from '@apis/login';
+import { ExperimentPostResponse } from '@apis/post';
+import firstPromotionBanner from '@assets/images/firstPromotionBanner.webp';
+import secondPromotionBanner from '@assets/images/secondPromotionBanner.webp';
+import thirdPromotionBanner from '@assets/images/thirdPromotionBanner.webp';
+import IntersectionObserverScroll from '@common/IntersectionObserverScroll';
+import { PATH } from '@constants/path';
+import PromotionModal from '@home/components/PromotionModal';
+import useExperimentPostListQuery from '@home/hooks/useExperimentPostListQuery';
+import useParticipantAutoFilter from '@home/hooks/useParticipantAutoFilter';
+import useURLFilters from '@home/hooks/useURLFilters';
+import useUserInfo from '@home/hooks/useUserInfo';
+import { localStorageManager, STORAGE_KEYS } from '@lib/localStorageManager';
+import { trackEvent } from '@lib/mixpanelClient';
+import { isDesktop, isMobile } from '@utils/deviceType';
+
 import ExperimentPostCardList from './ExperimentPostCardList';
 import { postCardContainer } from './ExperimentPostCardListContainer.css';
 import ExperimentPostContainerLayout from './ExperimentPostContainerLayout';
-
-import { ParticipantResponse } from '@/apis/login';
-import { ExperimentPostResponse } from '@/apis/post';
-import PromotionModal from '@/app/home/components/PromotionModal';
-import useExperimentPostListQuery from '@/app/home/hooks/useExperimentPostListQuery';
-import useParticipantAutoFilter from '@/app/home/hooks/useParticipantAutoFilter';
-import useURLFilters from '@/app/home/hooks/useURLFilters';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import firstPromotionBanner from '@/assets/images/firstPromotionBanner.webp';
-import secondPromotionBanner from '@/assets/images/secondPromotionBanner.webp';
-import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
-import IntersectionObserverScroll from '@/components/IntersectionObserverScroll';
-import { PATH } from '@/constants/path';
-import { localStorageManager, STORAGE_KEYS } from '@/lib/localStorageManager';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { isDesktop, isMobile } from '@/utils/deviceType';
 
 const PROMOTION_IMAGES = [firstPromotionBanner, secondPromotionBanner, thirdPromotionBanner];
 

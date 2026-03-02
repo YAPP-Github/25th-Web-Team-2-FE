@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
+import { AreaType } from '@/types/filter';
+
 import { getRegionFilterText } from '../utils/getRegionFilterText';
 
-import { AreaType } from '@/types/filter';
 
 describe('getRegionFilterText - 지역 filter 텍스트 유틸 함수', () => {
   it('지역만 있고 세부 지역이 없는 경우 지역명만 반환한다.', () => {

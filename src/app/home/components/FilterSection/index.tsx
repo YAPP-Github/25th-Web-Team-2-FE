@@ -1,8 +1,9 @@
-import FilterContainer from './FilterContainer';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import { fetchParticipantInfo } from '@/app/home/server/fetchParticipantInfo';
-import { calculateAgeFromBirthDate } from '@/app/home/utils/calculateAgeFromBirthDate';
+import { ExperimentPostListFilters } from '@apis/post';
+import { fetchParticipantInfo } from '@home/server/fetchParticipantInfo';
+import { calculateAgeFromBirthDate } from '@home/utils/calculateAgeFromBirthDate';
+
+import FilterContainer from './FilterContainer';
 
 interface FilterSectionProps {
   searchParams: {

@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 
+import { MATCH_TYPE } from '@constants/filters';
+import { DEFAULT_OG_IMAGE_URL } from '@constants/url';
+import { GENDER } from '@constants/user';
+
 import { fetchExperimentPost } from './fetchExperimentPost';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
 import { getDurationLabel } from '../utils/getDurationLabel';
 
-import { MATCH_TYPE } from '@/constants/filters';
-import { DEFAULT_OG_IMAGE_URL } from '@/constants/url';
-import { GENDER } from '@/constants/user';
 
 const DEFAULT_METADATA: Metadata = {
   title: '그라밋 | 공고 조회',

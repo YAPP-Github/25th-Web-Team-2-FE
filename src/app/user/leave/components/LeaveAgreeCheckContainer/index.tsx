@@ -1,7 +1,8 @@
-import { confirmCheckText, confirmCheckWrapper } from './LeaveAgreeCheckContainer.css';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
+import { confirmCheckText, confirmCheckWrapper } from './LeaveAgreeCheckContainer.css';
 
 interface LeaveAgreeCheckContainerProps {
   isAgree: boolean;

@@ -3,22 +3,23 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+
+import ConfirmModal from '@common/Modal/ConfirmModal';
+import MobileNotReadyModal from '@components/MobileNotReadyModal';
+import { HIDE_MODAL_COOKIE_KEYS } from '@constants/cookie';
+import useOverlay from '@hooks/useOverlay';
+import { useToast } from '@hooks/useToast';
+import { getHideModalCookie } from '@lib/cookies';
+import { stopRecording } from '@lib/mixpanelClient';
+import useDeleteExperimentPostMutation from '@my-posts/hooks/useDeleteExperimentPostMutation';
+import { colors } from '@styles/colors';
+
 import revalidateExperimentPosts from '../../../actions';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostMobileContentWrapper from '../ExperimentPostMobileContentWrapper';
 import ExperimentPostMobileHeader from '../ExperimentPostMobileHeader';
 import PostMenuBottomSheet from '../PostMenuBottomSheet';
-
-import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
-import MobileNotReadyModal from '@/components/MobileNotReadyModal';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
-import useOverlay from '@/hooks/useOverlay';
-import { useToast } from '@/hooks/useToast';
-import { getHideModalCookie } from '@/lib/cookies';
-import { stopRecording } from '@/lib/mixpanelClient';
-import { colors } from '@/styles/colors';
 
 interface ExperimentPostMobileContainerProps {
   postId: string;

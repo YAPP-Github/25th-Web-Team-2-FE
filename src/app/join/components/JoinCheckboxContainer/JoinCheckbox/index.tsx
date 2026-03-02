@@ -1,3 +1,7 @@
+
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import {
   checkboxLayout,
   checkboxWrapper,
@@ -9,9 +13,6 @@ import {
   tipAlert,
   subLabelText,
 } from './JoinCheckbox.css';
-
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 interface JoinCheckboxProps {
   label: string;

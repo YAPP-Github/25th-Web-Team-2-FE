@@ -1,8 +1,9 @@
-import ExperimentPostCardListContainer from '../ExperimentPostCardListContainer';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import { fetchExperimentPosts } from '@/app/home/server/fetchExperimentPosts';
-import { fetchParticipantInfo } from '@/app/home/server/fetchParticipantInfo';
+import { ExperimentPostListFilters } from '@apis/post';
+import { fetchExperimentPosts } from '@home/server/fetchExperimentPosts';
+import { fetchParticipantInfo } from '@home/server/fetchParticipantInfo';
+
+import ExperimentPostCardListContainer from '../ExperimentPostCardListContainer';
 
 interface ExperimentPostSectionProps {
   searchParams: {

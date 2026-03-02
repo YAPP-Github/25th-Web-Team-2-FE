@@ -1,12 +1,13 @@
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import React from 'react';
 
+import Icon from '@components/Icon';
+import useFunnel from '@join/hooks/useFunnel';
+import { colors } from '@styles/colors';
+
 import { progressBarFill } from './JoinHeader.css';
 import { headerTitle, headerWrapper, progressBar } from '../../page.css';
 
-import useFunnel from '@/app/join/hooks/useFunnel';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 interface JoinHeaderProps {
   title: string;

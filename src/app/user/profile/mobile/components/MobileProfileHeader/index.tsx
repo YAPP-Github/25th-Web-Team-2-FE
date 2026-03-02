@@ -2,12 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 
+
+import Icon from '@components/Icon';
+import useOverlay from '@hooks/useOverlay';
+import { colors } from '@styles/colors';
+
 import { headerTitle, mobileProfileHeaderWrapper } from './MobileProfileHeader.css';
 import ProfileBottomSheet from './ProfileBottomSheet';
-
-import Icon from '@/components/Icon';
-import useOverlay from '@/hooks/useOverlay';
-import { colors } from '@/styles/colors';
 
 const MobileProfileHeader = () => {
   const router = useRouter();

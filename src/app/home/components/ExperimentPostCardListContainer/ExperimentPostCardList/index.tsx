@@ -1,10 +1,11 @@
 import { InfiniteData } from '@tanstack/react-query';
 
+import { ExperimentPostResponse } from '@apis/post';
+
 import EmptyPostCard from './EmptyPostCard';
 import ExperimentPostCard from './ExperimentPostCard';
 import { experimentPostLayout } from './ExperimentPostCardList.css';
 
-import { ExperimentPostResponse } from '@/apis/post';
 
 interface ExperimentPostProps {
   postListData?: InfiniteData<ExperimentPostResponse, unknown> | undefined;

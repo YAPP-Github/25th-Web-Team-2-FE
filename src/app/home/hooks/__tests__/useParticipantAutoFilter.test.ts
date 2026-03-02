@@ -1,13 +1,14 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { mockParticipant } from '@/tests/mocks/userData';
+import { mockSearchParams } from '@/tests/setup';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+
 import { calculateAgeFromBirthDate } from '../../utils/calculateAgeFromBirthDate';
 import { useParticipantAutoFilter } from '../useParticipantAutoFilter';
 import useQueryParams from '../useQueryParams';
 
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
-import { mockParticipant } from '@/tests/mocks/userData';
-import { mockSearchParams } from '@/tests/setup';
 
 describe('useParticipantAutoFilter', () => {
   beforeEach(() => {

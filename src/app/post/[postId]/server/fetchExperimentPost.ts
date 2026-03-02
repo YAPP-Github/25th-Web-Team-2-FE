@@ -3,12 +3,13 @@ import 'server-only';
 import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 
+
+import { createSSRFetchClient } from '@apis/config/fetchClient';
+import { API_URL } from '@constants/url';
+import { authOptions } from '@lib/auth-utils';
+
 import type { UseApplyMethodQueryResponse } from '../hooks/useApplyMethodQuery';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
-
-import { createSSRFetchClient } from '@/apis/config/fetchClient';
-import { API_URL } from '@/constants/url';
-import { authOptions } from '@/lib/auth-utils';
 
 interface ApiError {
   status?: number;

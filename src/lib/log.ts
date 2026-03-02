@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 
-import { APIErrorResponse } from '@/apis/config/types';
+import { APIErrorResponse } from '@apis/config/types';
 
 interface LogAPIErrorProps {
   error: APIErrorResponse;

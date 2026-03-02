@@ -1,5 +1,5 @@
-import { LOGIN_PROVIDER, ROLE } from '@/constants/config';
-import { GENDER } from '@/constants/user';
+import { LOGIN_PROVIDER, ROLE } from '@constants/config';
+import { GENDER } from '@constants/user';
 
 export type Role = (typeof ROLE)[keyof typeof ROLE];
 

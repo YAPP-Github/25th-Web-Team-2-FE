@@ -1,5 +1,10 @@
 import { Suspense } from 'react';
 
+import { ExperimentPostListFilters } from '@apis/post';
+import FilterSkeleton from '@common/Skeleton/FilterSkeleton';
+import PostListSkeleton from '@common/Skeleton/PostListSkeleton';
+import TotalCountSkeleton from '@common/Skeleton/TotalCountSkeleton';
+
 import {
   postContainerLayout,
   postContainerTitleDesktop,
@@ -13,10 +18,6 @@ import ExperimentPostTotalCount from '../ExperimentPostTotalCount';
 import FilterSection from '../FilterSection';
 import RecruitStatusCheckbox from '../RecruitStatusCheckbox';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import FilterSkeleton from '@/components/Skeleton/FilterSkeleton';
-import PostListSkeleton from '@/components/Skeleton/PostListSkeleton';
-import TotalCountSkeleton from '@/components/Skeleton/TotalCountSkeleton';
 
 interface ExperimentContentSectionProps {
   searchParams: {

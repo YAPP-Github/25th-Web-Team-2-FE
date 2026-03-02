@@ -5,6 +5,22 @@ import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 
+import { MATCH_TYPE } from '@constants/filters';
+import { PATH } from '@constants/path';
+import { queryKey } from '@constants/queryKey';
+import { STEP } from '@constants/steps';
+import useEditExperimentPostMutation from '@edit/[postId]/hooks/useEditExperimentPostMutation';
+import useOriginExperimentPostQuery from '@edit/[postId]/hooks/useOriginExperimentPostQuery';
+import { useToast } from '@hooks/useToast';
+import { stopRecording, trackEvent } from '@lib/mixpanelClient';
+import revalidateExperimentPosts from '@post/[postId]/actions';
+import useApplyMethodQuery from '@post/[postId]/hooks/useApplyMethodQuery';
+import {
+  UploadExperimentPostSchema,
+  UploadExperimentPostSchemaType,
+  UploadExperimentPostSubmitSchema,
+} from '@schema/upload/uploadExperimentPostSchema';
+
 import useExtractKeywordsMutation from './useExtractKeywords';
 import useUploadExperimentPostMutation from './useUploadExperimentPostMutation';
 import useUploadImagesMutation from './useUploadImagesMutation';
@@ -13,22 +29,6 @@ import { VALIDATION_FIELDS_BY_STEP } from '../constants/validationFieldsByStep';
 import { convertLabelToValue } from '../utils/regionLabelValue';
 import { transformOriginFormData } from '../utils/transformOriginFormData';
 import { uploadImages } from '../utils/uploadImages';
-
-import useEditExperimentPostMutation from '@/app/edit/[postId]/hooks/useEditExperimentPostMutation';
-import useOriginExperimentPostQuery from '@/app/edit/[postId]/hooks/useOriginExperimentPostQuery';
-import revalidateExperimentPosts from '@/app/post/[postId]/actions';
-import useApplyMethodQuery from '@/app/post/[postId]/hooks/useApplyMethodQuery';
-import { MATCH_TYPE } from '@/constants/filters';
-import { PATH } from '@/constants/path';
-import { queryKey } from '@/constants/queryKey';
-import { STEP } from '@/constants/steps';
-import { useToast } from '@/hooks/useToast';
-import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
-import {
-  UploadExperimentPostSchema,
-  UploadExperimentPostSchemaType,
-  UploadExperimentPostSubmitSchema,
-} from '@/schema/upload/uploadExperimentPostSchema';
 
 interface useUploadExperimentPostProps {
   images: (File | string)[];

@@ -1,12 +1,13 @@
 import { getServerSession } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
+import { authOptions, loginWithCredentials } from '@lib/auth-utils';
+
 import { createBaseFetchClient, FetchProps, RequestProps } from './createBaseFetchClient';
 import { CustomError } from './error';
 import { AuthErrorCode } from './types';
 import { updateAccessToken } from '../login';
 
-import { authOptions, loginWithCredentials } from '@/lib/auth-utils';
 
 export const isAuthError = (code: string) => {
   return (

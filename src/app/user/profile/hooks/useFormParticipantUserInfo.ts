@@ -1,14 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
 
-import useUpdateParticipantInfoMutation from './useUpdateParticipantInfoMutation';
 
-import { ParticipantResponse } from '@/apis/login';
+import { ParticipantResponse } from '@apis/login';
 import {
   ParticipantUpdateSchema,
   ParticipantUpdateSchemaType,
   ParticipantUpdateSubmitSchema,
-} from '@/schema/profile/ParticipantUpdateSchema';
+} from '@schema/profile/ParticipantUpdateSchema';
+
+import useUpdateParticipantInfoMutation from './useUpdateParticipantInfoMutation';
 
 interface UseFormParticipantUserInfoProps {
   userInfo: ParticipantResponse;

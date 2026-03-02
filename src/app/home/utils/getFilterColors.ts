@@ -1,4 +1,4 @@
-import { colors } from '@/styles/colors';
+import { colors } from '@styles/colors';
 
 export const getFilterColors = (isSelected: boolean) => {
   if (isSelected) {

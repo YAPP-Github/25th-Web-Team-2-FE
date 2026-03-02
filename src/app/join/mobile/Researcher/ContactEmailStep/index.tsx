@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 
+import { LoginProvider } from '@/types/user';
+import ContactEmailInput from '@components/ContactEmailInput';
+import EmailBadge from '@components/EmailBadge';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import NextButton from './NextButton';
 import TitleSection from '../../components/TitleSection';
 import { mainContentLayout } from '../../page.css';
-
-import ContactEmailInput from '@/components/ContactEmailInput';
-import EmailBadge from '@/components/EmailBadge';
-import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { LoginProvider } from '@/types/user';
 
 interface ContactEmailStepProps {
   provider?: LoginProvider;

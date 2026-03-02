@@ -2,13 +2,14 @@
 
 import { FormProvider } from 'react-hook-form';
 
+import { ParticipantResponse } from '@apis/login';
+import JoinInput from '@join/components/JoinInput';
+import { ParticipantUpdateSchemaType } from '@schema/profile/ParticipantUpdateSchema';
+
 import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipantProfileEdit';
 import EditFormLayout from '../../EditFormLayout';
 import SaveButton from '../../SaveButton';
 
-import { ParticipantResponse } from '@/apis/login';
-import JoinInput from '@/app/join/components/JoinInput';
-import { ParticipantUpdateSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
 
 interface NameEditFormProps {
   userInfo: ParticipantResponse;

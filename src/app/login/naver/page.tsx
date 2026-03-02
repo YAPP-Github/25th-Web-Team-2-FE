@@ -3,10 +3,11 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
+import { joinWithCredentials } from '@lib/auth-utils';
+
 import { emptyLayout } from './NaverLoginPage.css';
 import useNaverLoginMutation from '../hooks/useNaverLoginMutation';
 
-import { joinWithCredentials } from '@/lib/auth-utils';
 
 export default function NaverLoginPage() {
   const router = useRouter();

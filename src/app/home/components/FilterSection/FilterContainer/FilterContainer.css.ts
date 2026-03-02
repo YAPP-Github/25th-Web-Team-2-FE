@@ -1,6 +1,6 @@
 import { keyframes, style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
+import { colors } from '@styles/colors';
 
 // FilterSection이 로드될 때 fade-in 애니메이션
 const fadeIn = keyframes({

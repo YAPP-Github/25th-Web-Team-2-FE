@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import { GENDER } from '@constants/user';
+import { trackEvent } from '@lib/mixpanelClient';
+
 import {
   checkButton,
   postOutlineContent,
@@ -22,9 +25,6 @@ import { getDurationLabel } from '../../../utils/getDurationLabel';
 import { getGenderLabel } from '../../../utils/getGenderLabel';
 import { getMatchTypeText } from '../../../utils/getMatchTypeText';
 import ParticipationGuideModal from '../ParticipationGuideModal';
-
-import { GENDER } from '@/constants/user';
-import { trackEvent } from '@/lib/mixpanelClient';
 
 interface ExperimentPostOutlineProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;

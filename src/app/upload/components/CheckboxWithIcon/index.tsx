@@ -1,7 +1,8 @@
-import { checkboxLayout, checkboxContainer } from './CheckboxWithIcon.css';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
+import { checkboxLayout, checkboxContainer } from './CheckboxWithIcon.css';
 
 interface CheckboxWithIconProps {
   checked: boolean;

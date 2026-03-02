@@ -3,13 +3,14 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
+import { renderWithForm } from '@/tests/test-utils';
+import { ResearcherJoinSchema } from '@schema/join/ResearcherJoinSchema';
+
 import AuthCodeInput from '.';
 
-import { ResearcherJoinSchema } from '@/schema/join/ResearcherJoinSchema';
-import { renderWithForm } from '@/tests/test-utils';
 
 const mockVerifyAuthCodeMutate = vi.fn();
-vi.mock('@/app/join/hooks/useVerifyUnivAuthCodeMutation', () => ({
+vi.mock('@join/hooks/useVerifyUnivAuthCodeMutation', () => ({
   default: () => ({
     mutate: mockVerifyAuthCodeMutate,
   }),

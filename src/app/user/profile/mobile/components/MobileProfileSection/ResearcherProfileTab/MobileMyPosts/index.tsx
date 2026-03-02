@@ -2,6 +2,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
+
+import IntersectionObserverScroll from '@common/IntersectionObserverScroll';
+import Icon from '@components/Icon';
+import MobileNotReadyModal from '@components/MobileNotReadyModal';
+import { HIDE_MODAL_COOKIE_KEYS } from '@constants/cookie';
+import useOverlay from '@hooks/useOverlay';
+import { useToast } from '@hooks/useToast';
+import { getHideModalCookie } from '@lib/cookies';
+import useMyPostsInfiniteQuery from '@my-posts/hooks/useMyPostsInfiniteQuery';
+import { colors } from '@styles/colors';
+import { isMobile } from '@utils/deviceType';
+
 import AllMenuBottomSheet from './AllMenuBottomSheet';
 import EmptyMyPosts from './EmptyMyPosts';
 import {
@@ -15,17 +27,6 @@ import {
   recruitStatusBadge,
   viewsArea,
 } from './MobileMyPosts.css';
-
-import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
-import Icon from '@/components/Icon';
-import IntersectionObserverScroll from '@/components/IntersectionObserverScroll';
-import MobileNotReadyModal from '@/components/MobileNotReadyModal';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
-import useOverlay from '@/hooks/useOverlay';
-import { useToast } from '@/hooks/useToast';
-import { getHideModalCookie } from '@/lib/cookies';
-import { colors } from '@/styles/colors';
-import { isMobile } from '@/utils/deviceType';
 
 // NOTE: Toast를 바텀시트 내부에서 띄우면 페이지에 보이지 않는 문제로 인해 상위에서 주입
 const MobileMyPosts = () => {

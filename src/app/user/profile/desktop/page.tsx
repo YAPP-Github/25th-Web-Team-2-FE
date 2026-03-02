@@ -1,12 +1,13 @@
 'use client';
 
+import useUserInfo from '@home/hooks/useUserInfo';
+import { isParticipantInfo } from '@utils/typeGuard';
+
 import { joinLayout } from '../ProfilePage.css';
 import ParticipantUserInfo from './components/ParticipantUserInfo';
 import ResearcherUserInfo from './components/ResearcherUserInfo';
 import UserInfoHeader from './components/UserInfoHeader';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { isParticipantInfo } from '@/utils/typeGuard';
 
 const ProfilePage = () => {
   const { userInfo } = useUserInfo();
