@@ -6,7 +6,7 @@ import { useFormContext } from 'react-hook-form';
 import { mainContentLayout } from './EditFormLayout.css';
 
 import TitleSection from '@/app/join/mobile/components/TitleSection';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 

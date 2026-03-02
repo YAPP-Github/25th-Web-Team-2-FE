@@ -17,8 +17,8 @@ import {
 } from './MobileMyPosts.css';
 
 import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
+import IntersectionObserverScroll from '@/components/common/IntersectionObserverScroll';
 import Icon from '@/components/Icon';
-import IntersectionObserverScroll from '@/components/IntersectionObserverScroll';
 import MobileNotReadyModal from '@/components/MobileNotReadyModal';
 import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
 import useOverlay from '@/hooks/useOverlay';

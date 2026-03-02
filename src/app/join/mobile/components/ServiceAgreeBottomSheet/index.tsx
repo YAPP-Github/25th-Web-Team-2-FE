@@ -16,7 +16,7 @@ import {
   serviceAgreeContainer,
 } from '../../page.css';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface ServiceAgreeBottomSheetProps {

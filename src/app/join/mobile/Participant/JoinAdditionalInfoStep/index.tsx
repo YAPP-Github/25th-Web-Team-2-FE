@@ -17,7 +17,7 @@ import { bottomButtonLayout, mainContentLayout } from '../../page.css';
 import AreaTooltip from '@/app/join/components/AreaTooltip';
 import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@/lib/mixpanelClient';

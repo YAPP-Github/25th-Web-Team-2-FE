@@ -12,8 +12,8 @@ import {
 } from './PostActionsPopover.css';
 import useDeleteExperimentPostMutation from '../../hooks/useDeleteExperimentPostMutation';
 
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
 import Icon from '@/components/Icon';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
 import { useToast } from '@/hooks/useToast';
 import { colors } from '@/styles/colors';
 

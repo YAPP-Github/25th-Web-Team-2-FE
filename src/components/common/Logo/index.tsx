@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import LogoImage from '../../assets/images/logo.svg';
+import LogoImage from '../../../assets/images/logo.svg';
 
 interface LogoProps {
   width?: number;

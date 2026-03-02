@@ -2,7 +2,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 
 import { bottomButtonLayout } from '../../../page.css';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 interface NextButtonProps {

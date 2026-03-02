@@ -3,7 +3,7 @@
 import { signOut } from 'next-auth/react';
 
 import { AuthError } from '@/apis/config/error';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import Footer from '@/components/Footer';
 import Icon from '@/components/Icon';
 import {

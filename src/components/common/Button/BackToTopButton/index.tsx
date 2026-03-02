@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 
 import { backToTopButton } from './BackToTopButton.css';
-import Icon from '../../Icon';
+
+import Icon from '@/components/Icon';
 
 /**
  * 페이지 최상단 이동 버튼

@@ -14,9 +14,9 @@ import FilterSection from '../FilterSection';
 import RecruitStatusCheckbox from '../RecruitStatusCheckbox';
 
 import { ExperimentPostListFilters } from '@/apis/post';
-import FilterSkeleton from '@/components/Skeleton/FilterSkeleton';
-import PostListSkeleton from '@/components/Skeleton/PostListSkeleton';
-import TotalCountSkeleton from '@/components/Skeleton/TotalCountSkeleton';
+import FilterSkeleton from '@/components/common/Skeleton/FilterSkeleton';
+import PostListSkeleton from '@/components/common/Skeleton/PostListSkeleton';
+import TotalCountSkeleton from '@/components/common/Skeleton/TotalCountSkeleton';
 
 interface ExperimentContentSectionProps {
   searchParams: {

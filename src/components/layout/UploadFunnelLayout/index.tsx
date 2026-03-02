@@ -1,6 +1,6 @@
 import { uploadFunnelLayout } from './UploadFunnelLayout.css';
 
-import BackToTopButton from '@/components/Button/BackToTopButton';
+import BackToTopButton from '@/components/common/Button/BackToTopButton';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { defaultLayoutContainer } from '@/components/layout/DefaultLayout/DefaultLayout.css';

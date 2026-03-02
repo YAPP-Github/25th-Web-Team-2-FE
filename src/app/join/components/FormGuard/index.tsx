@@ -3,7 +3,7 @@
 import { PropsWithChildren } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import ConfirmModal from '@/components/Modal/ConfirmModal';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';
 

@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 
 const BackToTopButton = dynamic(
-  () => import('@/components/Button/BackToTopButton'),
+  () => import('@/components/common/Button/BackToTopButton'),
   {
     ssr: false,
   },

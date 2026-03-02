@@ -21,8 +21,8 @@ import InputForm from '../InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 
 import useFunnel from '@/app/join/hooks/useFunnel';
+import { dialogOverlay } from '@/components/common/Modal/ConfirmModal/ConfirmModal.css';
 import Icon from '@/components/Icon';
-import { dialogOverlay } from '@/components/Modal/ConfirmModal/ConfirmModal.css';
 import { useToast } from '@/hooks/useToast';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { colors } from '@/styles/colors';

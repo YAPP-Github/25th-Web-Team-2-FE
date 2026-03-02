@@ -5,8 +5,8 @@ import { deleteButton, divider, listBottomSheetLayout, listItem } from './AllMen
 import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
 import useMyPostsInfiniteQuery from '@/app/my-posts/hooks/useMyPostsInfiniteQuery';
 import useUpdateRecruitStatusInfiniteMutation from '@/app/my-posts/hooks/useUpdateRecruitStatusInfiniteMutation';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
-import Toggle from '@/components/Toggle';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
+import Toggle from '@/components/common/Toggle';
 import { colors } from '@/styles/colors';
 
 const PAGE_SIZE = 10;

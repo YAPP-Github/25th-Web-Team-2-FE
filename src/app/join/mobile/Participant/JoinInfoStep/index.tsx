@@ -8,7 +8,7 @@ import { bottomButtonLayout, emailInput, mainContentLayout } from '../../page.cs
 import JoinInput from '@/app/join/components/JoinInput';
 import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
 import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';

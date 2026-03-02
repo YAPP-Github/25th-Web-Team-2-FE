@@ -18,9 +18,9 @@ import ProgressBarSection from '../ProgressBarSection';
 
 import FunnelStepGuard from '@/app/join/components/FunnelStepGuard';
 import useFunnel from '@/app/join/hooks/useFunnel';
-import Button from '@/components/Button';
-import AlertModal from '@/components/Modal/AlertModal';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
+import Button from '@/components/common/Button';
+import AlertModal from '@/components/common/Modal/AlertModal';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
 import { STEP, UPLOAD_STEP_LIST } from '@/constants/steps';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';

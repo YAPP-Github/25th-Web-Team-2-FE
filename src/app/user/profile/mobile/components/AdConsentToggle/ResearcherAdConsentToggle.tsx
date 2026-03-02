@@ -3,7 +3,7 @@ import { useWatch } from 'react-hook-form';
 import useFormResearcherUserInfo from '../../../hooks/useFormResearcherUserInfo';
 
 import { ResearcherResponse } from '@/apis/login';
-import Toggle from '@/components/Toggle';
+import Toggle from '@/components/common/Toggle';
 
 interface ResearcherAdConsentToggleProps {
   userInfo: ResearcherResponse;

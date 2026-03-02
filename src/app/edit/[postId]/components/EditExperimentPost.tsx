@@ -19,10 +19,10 @@ import {
 } from '@/app/upload/components/UploadContainer/UploadContainer.css';
 import { VALIDATION_FIELDS_BY_STEP } from '@/app/upload/constants/validationFieldsByStep';
 import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
-import Button from '@/components/Button';
-import AlertModal from '@/components/Modal/AlertModal';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
-import Spinner from '@/components/Spinner';
+import Button from '@/components/common/Button';
+import AlertModal from '@/components/common/Modal/AlertModal';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
+import Spinner from '@/components/common/Spinner';
 import { STEP, UPLOAD_STEP_LIST } from '@/constants/steps';
 import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
 import { colors } from '@/styles/colors';

@@ -1,8 +1,9 @@
 import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
+import ButtonInput from './ButtonInput';
+
 import useCheckValidJoinEmailMutation from '@/app/join/hooks/useCheckValidJoinEmailMutation';
 import useCheckValidProfileEmailMutation from '@/app/join/hooks/useCheckValidProfileEmailMutation';
-import ButtonInput from '@/components/ButtonInput';
 import { useToast } from '@/hooks/useToast';
 
 interface ContactEmailInputProps<T extends FieldValues> {

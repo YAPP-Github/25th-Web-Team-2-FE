@@ -1,4 +1,4 @@
-import ConfirmModal from '@/components/Modal/ConfirmModal';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
 
 interface DeleteConfirmModalProps {
   isOpen: boolean;

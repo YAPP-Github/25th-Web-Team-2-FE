@@ -11,7 +11,7 @@ import ExperimentPostInfo from '../ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs';
 import ParticipationGuideBottomSheet from '../ParticipationGuideBottomSheet';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import useOverlay from '@/hooks/useOverlay';
 import { trackEvent } from '@/lib/mixpanelClient';
 

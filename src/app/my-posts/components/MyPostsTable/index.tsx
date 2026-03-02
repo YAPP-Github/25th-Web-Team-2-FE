@@ -44,10 +44,10 @@ import PostActionsPopover from '../PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table';
 
 import useUserInfo from '@/app/home/hooks/useUserInfo';
+import ConfirmModal from '@/components/common/Modal/ConfirmModal';
+import Spinner from '@/components/common/Spinner';
 import { contactButton } from '@/components/Header/Header.css';
 import Icon from '@/components/Icon';
-import ConfirmModal from '@/components/Modal/ConfirmModal';
-import Spinner from '@/components/Spinner';
 
 interface MyPostsTableProps {
   myPostAPIResponse: UseQueryResult<UseMyPostsQueryResponse>;

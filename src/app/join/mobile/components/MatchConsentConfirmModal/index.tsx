@@ -11,7 +11,7 @@ import {
   modalButtonContainer,
 } from './MatchConsentConfirmModal.css';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import Icon from '@/components/Icon';
 import {
   CLICK_MODAL_MATCHING_OPT_IN_AGREE,

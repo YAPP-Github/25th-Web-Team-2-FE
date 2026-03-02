@@ -13,8 +13,8 @@ import {
   sheet,
   sheetContainer,
 } from './BottomSheet.css';
-import Icon from '../Icon';
 
+import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 import { HeaderMode } from '@/types/bottomSheet';
 

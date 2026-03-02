@@ -16,7 +16,7 @@ import {
 } from './ContactTargetBottomSheet.css';
 
 import { GENDER_OPTIONS } from '@/app/home/constants/filter';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { ExperimentPostListFilterParams } from '@/types/filter';
 import { Gender } from '@/types/user';
 

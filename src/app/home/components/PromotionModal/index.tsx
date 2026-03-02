@@ -17,7 +17,7 @@ import {
   promotionModalContent,
 } from './PromotionModal.css';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import Icon from '@/components/Icon';
 import { trackEvent } from '@/lib/mixpanelClient';
 import { a11yHidden } from '@/styles/a11y.css';

@@ -1,6 +1,6 @@
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface NextButtonProps {

@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { extractKeywordButtonInner, extractKeywordButtonWrapper } from './ExtractKeywordButton.css';
 
 import { fetchExtractKeywordsLimit } from '@/apis/post';
+import Spinner from '@/components/common/Spinner';
 import Icon from '@/components/Icon';
-import Spinner from '@/components/Spinner';
 import { PATH } from '@/constants/path';
 import { queryKey } from '@/constants/queryKey';
 import { trackEvent } from '@/lib/mixpanelClient';

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { matchOptionItem, matchOptionList } from './MatchTypeBottomSheet.css';
 
 import { MATCH_TYPE_OPTIONS } from '@/app/home/constants/filter';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import Icon from '@/components/Icon';
 import { colors } from '@/styles/colors';
 import { MatchType } from '@/types/filter';

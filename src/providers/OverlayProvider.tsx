@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { createContext, PropsWithChildren, useCallback, useEffect, useMemo, useState } from 'react';
 
-import BottomSheet from '@/components/BottomSheet';
+import BottomSheet from '@/components/common/BottomSheet';
 import { HeaderMode } from '@/types/bottomSheet';
 
 interface OverlayProps {

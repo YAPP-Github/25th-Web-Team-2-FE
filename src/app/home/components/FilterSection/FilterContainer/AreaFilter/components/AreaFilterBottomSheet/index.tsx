@@ -15,7 +15,7 @@ import { AREA_ALL } from '@/app/home/constants/area';
 import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
 import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
 import { AreaAll } from '@/app/home/types/area';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { AreaType, RegionType } from '@/types/filter';
 
 const MAX_SELECTED_AREAS = 5;

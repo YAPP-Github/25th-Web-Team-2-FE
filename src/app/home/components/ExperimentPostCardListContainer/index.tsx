@@ -17,7 +17,7 @@ import useUserInfo from '@/app/home/hooks/useUserInfo';
 import firstPromotionBanner from '@/assets/images/firstPromotionBanner.webp';
 import secondPromotionBanner from '@/assets/images/secondPromotionBanner.webp';
 import thirdPromotionBanner from '@/assets/images/thirdPromotionBanner.webp';
-import IntersectionObserverScroll from '@/components/IntersectionObserverScroll';
+import IntersectionObserverScroll from '@/components/common/IntersectionObserverScroll';
 import { PATH } from '@/constants/path';
 import { localStorageManager, STORAGE_KEYS } from '@/lib/localStorageManager';
 import { trackEvent } from '@/lib/mixpanelClient';

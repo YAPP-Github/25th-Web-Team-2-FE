@@ -9,7 +9,7 @@ import {
 } from './ParticipationGuideBottomSheet.css';
 import { ParticipationGuideBottomSheetProps } from '../../../types/modal';
 
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import Icon from '@/components/Icon';
 import { useToast } from '@/hooks/useToast';
 import { trackEvent } from '@/lib/mixpanelClient';

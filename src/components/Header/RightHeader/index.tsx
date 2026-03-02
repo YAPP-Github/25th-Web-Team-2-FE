@@ -6,7 +6,7 @@ import MobileLoginHeader from './components/MobileLoginHeader';
 
 import { createSSRFetchClient } from '@/apis/config/fetchClient';
 import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import LoginButton from '@/components/Button/LoginButton';
+import LoginButton from '@/components/common/Button/LoginButton';
 import { ROLE } from '@/constants/config';
 import { API_URL } from '@/constants/url';
 import { authOptions, isUnauthorizedUser } from '@/lib/auth-utils';
