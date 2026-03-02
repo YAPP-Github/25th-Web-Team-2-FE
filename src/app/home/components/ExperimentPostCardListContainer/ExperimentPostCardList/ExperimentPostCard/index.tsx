@@ -1,5 +1,11 @@
 import Link from 'next/link';
 
+import { ExperimentPost } from '@/types/post';
+import Icon from '@components/Icon';
+import { formatExperimentTimeRequired } from '@home/utils/formatExperimentTimeRequired';
+import { startRecording } from '@lib/mixpanelClient';
+import { colors } from '@styles/colors';
+
 import {
   announceText,
   contactedPostTag,
@@ -13,12 +19,6 @@ import {
   postDetailsContainer,
   postViewsContainer,
 } from './ExperimentPostCard.css';
-
-import { formatExperimentTimeRequired } from '@/app/home/utils/formatExperimentTimeRequired';
-import Icon from '@/components/Icon';
-import { startRecording } from '@/lib/mixpanelClient';
-import { colors } from '@/styles/colors';
-import { ExperimentPost } from '@/types/post';
 
 interface ExperimentPostCardProps {
   experimentPost: ExperimentPost;

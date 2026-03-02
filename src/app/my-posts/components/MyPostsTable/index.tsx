@@ -14,6 +14,12 @@ import {
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useState } from 'react';
 
+import ConfirmModal from '@common/Modal/ConfirmModal';
+import Spinner from '@common/Spinner';
+import { contactButton } from '@components/Header/Header.css';
+import Icon from '@components/Icon';
+import useUserInfo from '@home/hooks/useUserInfo';
+
 import {
   container,
   headerBar,
@@ -43,11 +49,6 @@ import {
 import PostActionsPopover from '../PostActionsPopover';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../Table';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import ConfirmModal from '@/components/common/Modal/ConfirmModal';
-import Spinner from '@/components/common/Spinner';
-import { contactButton } from '@/components/Header/Header.css';
-import Icon from '@/components/Icon';
 
 interface MyPostsTableProps {
   myPostAPIResponse: UseQueryResult<UseMyPostsQueryResponse>;

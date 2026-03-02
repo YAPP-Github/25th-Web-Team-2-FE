@@ -1,10 +1,11 @@
 import * as Dialog from '@radix-ui/react-dialog';
 
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import { alertModalContent, alertModalDescription, alertModalTitle } from './AlertModal.css';
 import { closeButton, dialogOverlay } from '../ConfirmModal/ConfirmModal.css';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 interface AlertModalProps {
   open: boolean;

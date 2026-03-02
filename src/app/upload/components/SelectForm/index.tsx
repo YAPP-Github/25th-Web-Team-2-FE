@@ -2,6 +2,11 @@ import * as Select from '@radix-ui/react-select';
 import React, { useState } from 'react';
 import { ControllerRenderProps, FieldError, useFormContext } from 'react-hook-form';
 
+
+import Icon from '@components/Icon';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+import { colors } from '@styles/colors';
+
 import {
   formMessage,
   selectContent,
@@ -9,10 +14,6 @@ import {
   selectItem,
   selectTrigger,
 } from './SelectForm.css';
-
-import Icon from '@/components/Icon';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
 
 interface SelectFormProps {
   field: ControllerRenderProps<UploadExperimentPostSchemaType, 'count' | 'timeRequired'>;

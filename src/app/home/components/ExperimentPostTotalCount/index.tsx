@@ -1,7 +1,8 @@
-import { totalPostCount } from './ExperimentPostTotalCount.css';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import { fetchExperimentPosts } from '@/app/home/server/fetchExperimentPosts';
+import { ExperimentPostListFilters } from '@apis/post';
+import { fetchExperimentPosts } from '@home/server/fetchExperimentPosts';
+
+import { totalPostCount } from './ExperimentPostTotalCount.css';
 
 interface ExperimentPostTotalCountProps {
   searchParams: {

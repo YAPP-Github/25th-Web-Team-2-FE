@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
+import { MatchType } from '@/types/filter';
+import Button from '@common/Button';
+import Icon from '@components/Icon';
+import { MATCH_TYPE_OPTIONS } from '@home/constants/filter';
+import { colors } from '@styles/colors';
+
 import { matchOptionItem, matchOptionList } from './MatchTypeBottomSheet.css';
 
-import { MATCH_TYPE_OPTIONS } from '@/app/home/constants/filter';
-import Button from '@/components/common/Button';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
-import { MatchType } from '@/types/filter';
 
 interface MatchTypeBottomSheetProps {
   onChange: (value: MatchType) => void;

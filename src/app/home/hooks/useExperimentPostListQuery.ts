@@ -1,7 +1,7 @@
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 
-import { fetchPostList, ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
-import { queryKey } from '@/constants/queryKey';
+import { fetchPostList, ExperimentPostListFilters, ExperimentPostResponse } from '@apis/post';
+import { queryKey } from '@constants/queryKey';
 
 const POST_PER_PAGE = 15;
 

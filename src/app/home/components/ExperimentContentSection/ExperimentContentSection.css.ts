@@ -1,7 +1,7 @@
 import { keyframes, style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 const fadeIn = keyframes({
   '0%': {

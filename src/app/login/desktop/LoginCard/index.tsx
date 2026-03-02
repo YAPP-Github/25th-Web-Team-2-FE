@@ -4,6 +4,12 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { Role } from '@/types/user';
+import Google from '@assets/images/google.svg';
+import Naver from '@assets/images/naver.svg';
+import { LOGIN_PROVIDER, ROLE } from '@constants/config';
+import { colors } from '@styles/colors';
+
 import {
   badge,
   buttonContainer,
@@ -15,11 +21,6 @@ import LastLoginTooltip from '../../components/LastLoginTooltip';
 import { descriptionWrapper } from '../../LoginPage.css';
 import { getOAuthLoginConfig } from '../../utils/getOAuthLoginConfig';
 
-import Google from '@/assets/images/google.svg';
-import Naver from '@/assets/images/naver.svg';
-import { LOGIN_PROVIDER, ROLE } from '@/constants/config';
-import { colors } from '@/styles/colors';
-import { Role } from '@/types/user';
 
 const roleMapper = {
   RESEARCHER: '연구자',

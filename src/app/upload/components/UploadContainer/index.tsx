@@ -3,6 +3,16 @@
 import React, { useMemo, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
+import Button from '@common/Button';
+import AlertModal from '@common/Modal/AlertModal';
+import ConfirmModal from '@common/Modal/ConfirmModal';
+import { STEP, UPLOAD_STEP_LIST } from '@constants/steps';
+import useLeaveConfirmModal from '@hooks/useLeaveConfirmModal';
+import FunnelStepGuard from '@join/components/FunnelStepGuard';
+import useFunnel from '@join/hooks/useFunnel';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+import { colors } from '@styles/colors';
+
 import {
   buttonContainer,
   uploadContentLayout,
@@ -16,15 +26,6 @@ import DescriptionSection from '../DescriptionSection';
 import OutlineSection from '../OutlineSection';
 import ProgressBarSection from '../ProgressBarSection';
 
-import FunnelStepGuard from '@/app/join/components/FunnelStepGuard';
-import useFunnel from '@/app/join/hooks/useFunnel';
-import Button from '@/components/common/Button';
-import AlertModal from '@/components/common/Modal/AlertModal';
-import ConfirmModal from '@/components/common/Modal/ConfirmModal';
-import { STEP, UPLOAD_STEP_LIST } from '@/constants/steps';
-import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
 
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 

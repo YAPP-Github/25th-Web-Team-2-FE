@@ -1,6 +1,6 @@
 import { style, keyframes } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
+import { colors } from '@styles/colors';
 
 const skeletonAnimation = keyframes({
   '0%': {

@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
+import { PATH } from '@constants/path';
+
 import { loginButton } from './LoginButton.css';
 
-import { PATH } from '@/constants/path';
 
 const LoginButton = () => {
   return (

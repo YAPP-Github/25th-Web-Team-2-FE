@@ -3,12 +3,13 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+
+import RightHeaderClient from '@components/Header/RightHeader/components/RightHeader.client';
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import { experimentPostMobileHeaderLayout } from './ExperimentPostMobileHeader.css';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
-
-import RightHeaderClient from '@/components/Header/RightHeader/components/RightHeader.client';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 const ExperimentPostMobileHeader = ({
   onOpenMenuBottomSheet,

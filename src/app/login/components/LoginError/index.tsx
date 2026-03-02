@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { PropsWithChildren, useEffect } from 'react';
 
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@hooks/useToast';
 
 const LoginError = ({ children }: PropsWithChildren) => {
   const queryClient = useQueryClient();

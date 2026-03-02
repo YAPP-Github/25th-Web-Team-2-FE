@@ -2,14 +2,15 @@
 
 import { FormProvider, useWatch } from 'react-hook-form';
 
+
+import { ResearcherResponse } from '@apis/login';
+import ContactEmailInput from '@components/ContactEmailInput';
+import EmailBadge from '@components/EmailBadge';
+import { ResearcherUpdateSchemaType } from '@schema/profile/ResearcherUpdateSchema';
+
 import { useFormResearcherProfileEdit } from '../../../hooks/useFormResearcherProfileEdit';
 import EditFormLayout from '../../EditFormLayout';
 import SaveButton from '../../SaveButton';
-
-import { ResearcherResponse } from '@/apis/login';
-import ContactEmailInput from '@/components/ContactEmailInput';
-import EmailBadge from '@/components/EmailBadge';
-import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 interface ContactEmailEditFormProps {
   userInfo: ResearcherResponse;

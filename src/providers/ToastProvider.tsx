@@ -2,13 +2,13 @@
 
 import { createContext, PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
-import Toasts from '@/components/common/Toast/Toasts';
+import Toasts from '@common/Toast/Toasts';
 import type {
   AddToastParams,
   ToastContextType,
   ToastItem,
   ToastParams,
-} from '@/components/common/Toast/types/toast';
+} from '@common/Toast/types/toast';
 
 export const ToastContext = createContext<ToastContextType | null>(null);
 

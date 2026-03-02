@@ -1,6 +1,10 @@
 import { usePathname } from 'next/navigation';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { GENDER } from '@constants/user';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+import { colors } from '@styles/colors';
+
 import {
   addContactInfoContainer,
   ageInputContainer,
@@ -22,9 +26,6 @@ import RadioButtonGroup from '../RadioButtonGroup';
 import TextAreaForm from '../TextAreaForm';
 import { label } from '../UploadContainer/UploadContainer.css';
 
-import { GENDER } from '@/constants/user';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
 
 const TEXTAREA_HEIGHT = 98;
 

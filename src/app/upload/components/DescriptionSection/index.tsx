@@ -3,6 +3,16 @@ import Image from 'next/image';
 import { ChangeEvent, DragEvent, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
+
+import { dialogOverlay } from '@common/Modal/ConfirmModal/ConfirmModal.css';
+import Icon from '@components/Icon';
+import { useToast } from '@hooks/useToast';
+import useFunnel from '@join/hooks/useFunnel';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
+
+import InputForm from '../InputForm';
 import {
   addImageContainer,
   deleteButton,
@@ -17,16 +27,7 @@ import {
   uploadFormSectionTitle,
   uploadImagesContainer,
 } from './DescriptionSection.css';
-import InputForm from '../InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
-
-import useFunnel from '@/app/join/hooks/useFunnel';
-import { dialogOverlay } from '@/components/common/Modal/ConfirmModal/ConfirmModal.css';
-import Icon from '@/components/Icon';
-import { useToast } from '@/hooks/useToast';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
 
 interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)

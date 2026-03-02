@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { extractKeywordButtonInner, extractKeywordButtonWrapper } from './ExtractKeywordButton.css';
 
-import { fetchExtractKeywordsLimit } from '@/apis/post';
-import Spinner from '@/components/common/Spinner';
-import Icon from '@/components/Icon';
-import { PATH } from '@/constants/path';
-import { queryKey } from '@/constants/queryKey';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { colors } from '@/styles/colors';
+import { fetchExtractKeywordsLimit } from '@apis/post';
+import Spinner from '@common/Spinner';
+import Icon from '@components/Icon';
+import { PATH } from '@constants/path';
+import { queryKey } from '@constants/queryKey';
+import { trackEvent } from '@lib/mixpanelClient';
+import { colors } from '@styles/colors';
+
+import { extractKeywordButtonInner, extractKeywordButtonWrapper } from './ExtractKeywordButton.css';
 
 interface ExtractKeywordButtonProps {
   onClick?: () => Promise<void>;

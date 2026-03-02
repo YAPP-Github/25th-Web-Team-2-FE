@@ -1,6 +1,11 @@
 import * as Popover from '@radix-ui/react-popover';
 import { ControllerRenderProps, FieldError } from 'react-hook-form';
 
+
+import Icon from '@components/Icon';
+import { UPLOAD_REGION } from '@constants/uploadRegion';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+
 import {
   popoverContent,
   popoverLayout,
@@ -13,10 +18,6 @@ import {
   regionPopoverContainer,
   uploadInputField,
 } from './RegionPopover.css';
-
-import Icon from '@/components/Icon';
-import { UPLOAD_REGION } from '@/constants/uploadRegion';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 
 interface RegionPopoverProps {
   regionPopoverProps: {

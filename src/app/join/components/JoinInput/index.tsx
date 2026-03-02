@@ -3,6 +3,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { Control, Controller, FieldValues, Path, PathValue } from 'react-hook-form';
 
+import Icon from '@components/Icon';
+
 import {
   inputContainer,
   inputResetButton,
@@ -19,7 +21,6 @@ import {
 import { formatDateInput } from './utils/formatDateInput';
 import { getBackspaceAfterDotResult } from './utils/getBackspaceAfterDotResult';
 
-import Icon from '@/components/Icon';
 
 interface JoinInputProps<T extends FieldValues> {
   name: Path<T>;

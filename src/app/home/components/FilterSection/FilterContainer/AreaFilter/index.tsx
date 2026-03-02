@@ -4,16 +4,17 @@ import * as Popover from '@radix-ui/react-popover';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
+import { ExperimentPostListFilters } from '@apis/post';
+import Icon from '@components/Icon';
+import useURLFilters from '@home/hooks/useURLFilters';
+import { getFilterColors } from '@home/utils/getFilterColors';
+import { getRegionFilterText } from '@home/utils/getRegionFilterText';
+import useOverlay from '@hooks/useOverlay';
+
 import { triggerWrapper, regionContentContainer } from './AreaFilter.css';
 import AreaFilterBottomSheet from './components/AreaFilterBottomSheet';
 import AreaFilterContent from './components/AreaFilterContent';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import useURLFilters from '@/app/home/hooks/useURLFilters';
-import { getFilterColors } from '@/app/home/utils/getFilterColors';
-import { getRegionFilterText } from '@/app/home/utils/getRegionFilterText';
-import Icon from '@/components/Icon';
-import useOverlay from '@/hooks/useOverlay';
 
 interface AreaFilterProps {
   filters: ExperimentPostListFilters;

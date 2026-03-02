@@ -1,10 +1,11 @@
-import { fetchClient } from './config/fetchClient';
 
-import { API_URL } from '@/constants/url';
 import { AreaType, MatchType, RegionType } from '@/types/filter';
 import { ExperimentPost } from '@/types/post';
 import { Gender } from '@/types/user';
-import { getQueryParamsToString } from '@/utils/getQueryParamsString';
+import { API_URL } from '@constants/url';
+import { getQueryParamsToString } from '@utils/getQueryParamsString';
+
+import { fetchClient } from './config/fetchClient';
 
 export interface ExperimentPostResponse {
   content: ExperimentPost[];

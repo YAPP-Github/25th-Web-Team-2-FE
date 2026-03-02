@@ -1,6 +1,9 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import Button from '@common/Button';
+import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import AgreeAccordion from '../../../components/JoinCheckboxContainer/AgreeAccordion';
 import JoinCheckbox from '../../../components/JoinCheckboxContainer/JoinCheckbox';
 import Policy from '../../../components/JoinCheckboxContainer/Policy';
@@ -16,8 +19,6 @@ import {
   serviceAgreeContainer,
 } from '../../page.css';
 
-import Button from '@/components/common/Button';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
 
 interface ServiceAgreeBottomSheetProps {
   onConfirm: () => void;

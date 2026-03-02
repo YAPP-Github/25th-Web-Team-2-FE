@@ -1,5 +1,10 @@
 import React from 'react';
 
+
+import Icon from '@components/Icon';
+import AreaTooltip from '@join/components/AreaTooltip';
+import { colors } from '@styles/colors';
+
 import {
   itemLabel,
   itemLabelWrapper,
@@ -7,10 +12,6 @@ import {
   itemTitleWrapper,
   profileItemWrapper,
 } from './ProfileItem.css';
-
-import AreaTooltip from '@/app/join/components/AreaTooltip';
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 interface ProfileItemProps {
   title: string;

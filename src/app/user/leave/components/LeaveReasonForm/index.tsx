@@ -1,9 +1,10 @@
 import { Control, Controller, UseFormReset } from 'react-hook-form';
 
-import { checkFormContainer, checkFormItem } from './LeaveReasonForm.css';
 
-import JoinTextarea from '@/app/join/components/JoinTextarea';
-import { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
+import JoinTextarea from '@join/components/JoinTextarea';
+import { LeaveSchemaType } from '@schema/profile/LeaveSchema';
+
+import { checkFormContainer, checkFormItem } from './LeaveReasonForm.css';
 
 const LEAVE_REASONS = [
   { label: '연구 활동 또는 실험 참여를 중단했어요', value: 'RESEARCH_STOPPED' },

@@ -2,10 +2,11 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { customRender } from '@/tests/test-utils';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+
 import MatchTypeFilter from '.';
 
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
-import { customRender } from '@/tests/test-utils';
 
 describe('MatchTypeFilter 컴포넌트', () => {
   const mockOnChange = vi.fn();

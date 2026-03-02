@@ -3,6 +3,14 @@
 import { useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { MatchType } from '@/types/filter';
+import { Gender } from '@/types/user';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@constants/joinRegion';
+import { joinContentContainer, joinForm, nextButton } from '@join/JoinPage.css';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import { stopRecording, trackEvent } from '@lib/mixpanelClient';
+import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import {
   joinAreaFilterContainer,
   filterTitleWrapper,
@@ -15,13 +23,6 @@ import RadioButtonGroupContainer from './RadioButtonGroupContainer';
 import AreaTooltip from '../../../components/AreaTooltip';
 import JoinInput from '../../../components/JoinInput';
 
-import { joinContentContainer, joinForm, nextButton } from '@/app/join/JoinPage.css';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
-import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { MatchType } from '@/types/filter';
-import { Gender } from '@/types/user';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;

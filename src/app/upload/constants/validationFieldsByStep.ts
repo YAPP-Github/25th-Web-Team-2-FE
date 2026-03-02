@@ -1,4 +1,4 @@
-import { STEP } from '@/constants/steps';
+import { STEP } from '@constants/steps';
 
 export const VALIDATION_FIELDS_BY_STEP = {
   [STEP.description]: ['title', 'content'],

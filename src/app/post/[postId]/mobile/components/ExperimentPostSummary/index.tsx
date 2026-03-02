@@ -1,3 +1,5 @@
+import { GENDER } from '@constants/user';
+
 import {
   dynamicSpacing,
   otherConditionWrapper,
@@ -12,7 +14,6 @@ import { getDurationLabel } from '../../../utils/getDurationLabel';
 import { getGenderLabel } from '../../../utils/getGenderLabel';
 import { getMatchTypeText } from '../../../utils/getMatchTypeText';
 
-import { GENDER } from '@/constants/user';
 
 const ExperimentPostSummary = ({
   postDetailData,

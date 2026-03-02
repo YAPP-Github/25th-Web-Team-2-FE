@@ -1,7 +1,7 @@
 import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 
-import Button from '@/components/common/Button';
-import { stopRecording } from '@/lib/mixpanelClient';
+import Button from '@common/Button';
+import { stopRecording } from '@lib/mixpanelClient';
 
 interface JoinButtonProps<T extends FieldValues> {
   validationFields: Path<T>[];

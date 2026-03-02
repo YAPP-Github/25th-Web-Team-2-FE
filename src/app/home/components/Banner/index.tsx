@@ -4,6 +4,15 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 
+
+import MobileBanner from '@assets/images/firstMobileBanner.webp';
+import MobileAIBanner from '@assets/images/mobileBannerAI.webp';
+import MobileBannerSecond from '@assets/images/secondMobileBanner.webp';
+import WebBanner from '@assets/images/webBanner.png';
+import WebBannerSecond from '@assets/images/webBanner2.png';
+import WebAIBanner from '@assets/images/webBannerAI.webp';
+import Icon from '@components/Icon';
+
 import {
   bannerBgVar,
   bannerCarousel,
@@ -19,14 +28,6 @@ import {
 import { useSlide } from './hooks/useSlide';
 import { useTouchSlide } from './hooks/useTouchSlide';
 import { SLIDE_SPEED } from '../../constants/banner';
-
-import MobileBanner from '@/assets/images/firstMobileBanner.webp';
-import MobileAIBanner from '@/assets/images/mobileBannerAI.webp';
-import MobileBannerSecond from '@/assets/images/secondMobileBanner.webp';
-import WebBanner from '@/assets/images/webBanner.png';
-import WebBannerSecond from '@/assets/images/webBanner2.png';
-import WebAIBanner from '@/assets/images/webBannerAI.webp';
-import Icon from '@/components/Icon';
 
 type BannerType = {
   webSrc: StaticImageData;

@@ -2,15 +2,15 @@
 
 import { signOut } from 'next-auth/react';
 
-import { AuthError } from '@/apis/config/error';
-import Button from '@/components/common/Button';
-import Footer from '@/components/Footer';
-import Icon from '@/components/Icon';
+import { AuthError } from '@apis/config/error';
+import Button from '@common/Button';
+import Footer from '@components/Footer';
+import Icon from '@components/Icon';
 import {
   defaultLayout,
   defaultLayoutContainer,
-} from '@/components/layout/DefaultLayout/DefaultLayout.css';
-import { fonts } from '@/styles/fonts.css';
+} from '@components/layout/DefaultLayout/DefaultLayout.css';
+import { fonts } from '@styles/fonts.css';
 
 export default function HomeError(error: Error) {
   if (error instanceof AuthError) {

@@ -1,4 +1,4 @@
-import { UPLOAD_REGION } from '@/constants/uploadRegion';
+import { UPLOAD_REGION } from '@constants/uploadRegion';
 
 const labelValueMap = new Map<string, string>();
 

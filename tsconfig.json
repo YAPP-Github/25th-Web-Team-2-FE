@@ -19,7 +19,29 @@
       }
     ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+
+      // 공통 코드
+      "@common/*": ["src/components/common/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utils/*": ["src/utils/*"],
+      "@constants/*": ["src/constants/*"],
+      "@styles/*": ["src/styles/*"],
+      "@assets/*": ["src/assets/*"],
+      "@lib/*": ["src/lib/*"],
+      "@schema/*": ["src/schema/*"],
+      "@apis/*": ["src/apis/*"],
+
+      // 페이지
+      "@edit/*": ["src/app/edit/*"],
+      "@home/*": ["src/app/home/*"],
+      "@join/*": ["src/app/join/*"],
+      "@login/*": ["src/app/login/*"],
+      "@my-posts/*": ["src/app/my-posts/*"],
+      "@post/*": ["src/app/post/*"],
+      "@upload/*": ["src/app/upload/*"],
+      "@user/*": ["src/app/user/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

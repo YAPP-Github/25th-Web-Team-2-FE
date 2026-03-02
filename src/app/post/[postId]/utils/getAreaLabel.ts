@@ -1,4 +1,4 @@
-import { UPLOAD_REGION } from '@/constants/uploadRegion';
+import { UPLOAD_REGION } from '@constants/uploadRegion';
 
 export const getAreaLabel = (region: string, area: string): string => {
   const foundRegion = UPLOAD_REGION.find((regionObj) => regionObj.value === region);

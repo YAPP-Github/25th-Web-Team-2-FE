@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { CustomError } from '@/apis/config/error';
-import { fetchClient } from '@/apis/config/fetchClient';
-import { queryKey } from '@/constants/queryKey';
-import { API_URL } from '@/constants/url';
+import { CustomError } from '@apis/config/error';
+import { fetchClient } from '@apis/config/fetchClient';
+import { queryKey } from '@constants/queryKey';
+import { API_URL } from '@constants/url';
 
 interface UseApplyMethodQueryParams {
   postId: string | undefined;

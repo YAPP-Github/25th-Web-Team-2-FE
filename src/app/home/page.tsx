@@ -1,8 +1,9 @@
+import type { ExperimentPostListFilters } from '@apis/post';
+import DefaultLayout from '@components/layout/DefaultLayout';
+
 import Banner from './components/Banner';
 import ExperimentContentSection from './components/ExperimentContentSection';
 
-import type { ExperimentPostListFilters } from '@/apis/post';
-import DefaultLayout from '@/components/layout/DefaultLayout';
 
 interface HomePageProps {
   searchParams: {

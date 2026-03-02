@@ -2,13 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 
+
+import RightHeader from '@components/Header/RightHeader';
+import Icon from '@components/Icon';
+import MobilePostDetailLayout from '@components/layout/MobilePostDetailLayout';
+import { colors } from '@styles/colors';
+
 import { commonStatusLayout, commonStatusText } from '../common-status.css';
 import { experimentPostMobileHeaderLayout } from './components/ExperimentPostMobileHeader/ExperimentPostMobileHeader.css';
-
-import RightHeader from '@/components/Header/RightHeader';
-import Icon from '@/components/Icon';
-import MobilePostDetailLayout from '@/components/layout/MobilePostDetailLayout';
-import { colors } from '@/styles/colors';
 
 export default function MobilePostDetailError() {
   const router = useRouter();

@@ -2,16 +2,17 @@ import 'server-only';
 
 import { getServerSession } from 'next-auth';
 
+
+import { createSSRFetchClient } from '@apis/config/fetchClient';
+import { ExperimentPostListFilters, ExperimentPostResponse } from '@apis/post';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+import { API_URL } from '@constants/url';
+import { authOptions } from '@lib/auth-utils';
+import { URLFilterSchema } from '@schema/filter/URLFilterSchema';
+import { getQueryParamsToString } from '@utils/getQueryParamsString';
+
 import { fetchParticipantInfo } from './fetchParticipantInfo';
 import { calculateAgeFromBirthDate } from '../utils/calculateAgeFromBirthDate';
-
-import { createSSRFetchClient } from '@/apis/config/fetchClient';
-import { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
-import { API_URL } from '@/constants/url';
-import { authOptions } from '@/lib/auth-utils';
-import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
-import { getQueryParamsToString } from '@/utils/getQueryParamsString';
 
 const POST_PER_PAGE = 15;
 

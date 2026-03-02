@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import { FormProvider, useFormContext } from 'react-hook-form';
 
+import { LoginProvider } from '@/types/user';
+import ContactEmailInput from '@components/ContactEmailInput';
+import EmailBadge from '@components/EmailBadge';
+import useOverlay from '@hooks/useOverlay';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import NextButton from './NextButton';
 import ServiceAgreeBottomSheet from '../../components/ServiceAgreeBottomSheet';
 import TitleSection from '../../components/TitleSection';
 import { mainContentLayout } from '../../page.css';
-
-import ContactEmailInput from '@/components/ContactEmailInput';
-import EmailBadge from '@/components/EmailBadge';
-import useOverlay from '@/hooks/useOverlay';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { LoginProvider } from '@/types/user';
 
 interface ContactEmailStepProps {
   onNext: () => void;

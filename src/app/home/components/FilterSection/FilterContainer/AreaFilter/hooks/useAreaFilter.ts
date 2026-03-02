@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { AREA_ALL } from '@/app/home/constants/area';
-import { AreaAll } from '@/app/home/types/area';
-import { AREAS } from '@/constants/filters';
 import { RegionType, AreaType } from '@/types/filter';
+import { AREAS } from '@constants/filters';
+import { AREA_ALL } from '@home/constants/area';
+import { AreaAll } from '@home/types/area';
 
 const MAX_SELECTED_AREAS = 5;
 

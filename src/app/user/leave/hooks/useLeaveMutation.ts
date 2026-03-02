@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { leaveUser } from '@/apis/user';
+import { leaveUser } from '@apis/user';
 
 const useLeaveMutation = () => {
   return useMutation({

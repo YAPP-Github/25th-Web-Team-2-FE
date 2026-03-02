@@ -1,4 +1,4 @@
-import { TIME_REQUIRED } from '@/constants/config';
+import { TIME_REQUIRED } from '@constants/config';
 
 export interface ExperimentPost {
   postInfo: ExperimentPostInfo;

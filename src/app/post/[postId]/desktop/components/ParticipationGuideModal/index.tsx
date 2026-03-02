@@ -1,5 +1,10 @@
 import * as Dialog from '@radix-ui/react-dialog';
 
+import Icon from '@components/Icon';
+import { useToast } from '@hooks/useToast';
+import { trackEvent } from '@lib/mixpanelClient';
+import { colors } from '@styles/colors';
+
 import {
   participationGuideContent,
   participationModalTitle,
@@ -12,11 +17,6 @@ import {
 import { closeButton, dialogOverlay } from '../../../ExperimentPostPage.css';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { CommonModalProps } from '../../../types/modal';
-
-import Icon from '@/components/Icon';
-import { useToast } from '@/hooks/useToast';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { colors } from '@/styles/colors';
 
 interface ParticipationGuideModalProps extends CommonModalProps {
   applyMethodData: UseApplyMethodQueryResponse;

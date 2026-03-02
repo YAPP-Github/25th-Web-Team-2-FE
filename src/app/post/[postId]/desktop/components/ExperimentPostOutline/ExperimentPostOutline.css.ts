@@ -1,8 +1,8 @@
 import { style, globalStyle } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const postOutlineLayout = style({
   minWidth: '34rem',

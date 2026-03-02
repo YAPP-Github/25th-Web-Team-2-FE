@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { zIndex } from '@/styles/zIndex';
+import { colors } from '@styles/colors';
+import { zIndex } from '@styles/zIndex';
 
 export const backToTopButton = style({
   width: '4.8rem',

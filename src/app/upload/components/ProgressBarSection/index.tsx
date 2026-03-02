@@ -1,3 +1,9 @@
+
+import Icon from '@components/Icon';
+import { UPLOAD_STEP_LIST } from '@constants/steps';
+import useFunnel from '@join/hooks/useFunnel';
+import { colors } from '@styles/colors';
+
 import {
   progressBarContainer,
   progressBarInner,
@@ -10,11 +16,6 @@ import {
   progressLineFill,
   stepLabel,
 } from './ProgressBarSection.css';
-
-import useFunnel from '@/app/join/hooks/useFunnel';
-import Icon from '@/components/Icon';
-import { UPLOAD_STEP_LIST } from '@/constants/steps';
-import { colors } from '@/styles/colors';
 
 const labelMapper = {
   description: '공고 입력',

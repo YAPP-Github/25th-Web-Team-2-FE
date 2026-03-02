@@ -1,10 +1,11 @@
 'use client';
 
+import useUserInfo from '@home/hooks/useUserInfo';
+import { isParticipantInfo } from '@utils/typeGuard';
+
 import { userInfoHeader, userInfoContent, userName, userBadge } from './MobileUserInfoSection.css';
 import UserDetailInfo from './UserDetailInfo';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { isParticipantInfo } from '@/utils/typeGuard';
 
 const MobileUserInfoSection = () => {
   const { userInfo } = useUserInfo();

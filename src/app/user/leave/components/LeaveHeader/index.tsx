@@ -1,6 +1,7 @@
+import useUserInfo from '@home/hooks/useUserInfo';
+
 import { leaveHeaderWrapper, title, description } from './LeaveHeader.css';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
 
 const LeaveHeader = () => {
   const { userInfo } = useUserInfo();

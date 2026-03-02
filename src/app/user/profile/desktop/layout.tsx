@@ -1,8 +1,9 @@
-import { profilePageLayout } from '../ProfilePage.css';
 
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import UserLayout from '@/components/layout/UserLayout';
+import Footer from '@components/Footer';
+import Header from '@components/Header';
+import UserLayout from '@components/layout/UserLayout';
+
+import { profilePageLayout } from '../ProfilePage.css';
 
 function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (

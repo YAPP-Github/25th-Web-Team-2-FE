@@ -2,10 +2,11 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
+import { renderWithForm } from '@/tests/test-utils';
+import type { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import ContactEmailInput from '.';
 
-import type { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { renderWithForm } from '@/tests/test-utils';
 
 const mockToast = {
   open: vi.fn(),
@@ -14,11 +15,11 @@ const mockToast = {
 
 const mockCheckValidEmailMutate = vi.fn();
 
-vi.mock('@/hooks/useToast', () => ({
+vi.mock('@hooks/useToast', () => ({
   useToast: () => mockToast,
 }));
 
-vi.mock('@/app/join/hooks/useCheckValidJoinEmailMutation', () => ({
+vi.mock('@join/hooks/useCheckValidJoinEmailMutation', () => ({
   default: () => ({
     mutate: mockCheckValidEmailMutate,
   }),

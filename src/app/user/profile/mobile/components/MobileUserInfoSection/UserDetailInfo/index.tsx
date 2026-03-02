@@ -1,3 +1,7 @@
+
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
+import { isParticipantInfo } from '@utils/typeGuard';
+
 import {
   userDetails,
   verticalLine,
@@ -8,9 +12,6 @@ import {
   userIDWrapper,
   userID,
 } from './UserDetailInfo.css';
-
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import { isParticipantInfo } from '@/utils/typeGuard';
 
 const formatBirthDate = (date: string) => {
   if (!date) return '';

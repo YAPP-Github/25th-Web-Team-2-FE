@@ -1,7 +1,7 @@
 import { useFormContext, useFormState, useWatch } from 'react-hook-form';
 
-import Button from '@/components/common/Button';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import Button from '@common/Button';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
 
 interface NextButtonProps {
   onNext: () => void;

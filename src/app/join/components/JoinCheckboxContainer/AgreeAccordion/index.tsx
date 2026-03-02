@@ -2,9 +2,10 @@
 
 import * as Accordion from '@radix-ui/react-accordion';
 
+import Icon from '@components/Icon';
+
 import { accordionChevron, accordionContent, accordionTrigger } from './AgreeAccordion.css';
 
-import Icon from '@/components/Icon';
 
 interface AgreeAccordionProps {
   value: string;

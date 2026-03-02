@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Logo from '@assets/images/logo.svg';
+import { ROLE } from '@constants/config';
+
 import { sloganContainer, loginCardContainer } from '../LoginPage.css';
 import MobileLoginCard from './components/MobileLoginCard';
 import { mobileLoginPageLayout } from './MobileLoginPage.css';
 import { mobileLoginCardContainer } from './MobileLoginPage.css';
 
-import Logo from '@/assets/images/logo.svg';
-import { ROLE } from '@/constants/config';
 
 // SSG 설정
 export const dynamic = 'force-static';

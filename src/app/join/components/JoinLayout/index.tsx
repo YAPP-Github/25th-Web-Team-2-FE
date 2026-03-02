@@ -1,10 +1,11 @@
 import { PropsWithChildren } from 'react';
 
+import Logo from '@common/Logo';
+
 import { contentContainer } from '../../JoinPage.css';
 import FormGuard from '../FormGuard';
 import JoinTitleSection from '../JoinTitleSection';
 
-import Logo from '@/components/common/Logo';
 
 interface JoinLayoutTitleProps {
   title: string;

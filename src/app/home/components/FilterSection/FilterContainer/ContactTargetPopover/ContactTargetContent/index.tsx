@@ -2,6 +2,11 @@
 
 import { ChangeEvent, useState } from 'react';
 
+
+import { ExperimentPostListFilterParams } from '@/types/filter';
+import { Gender } from '@/types/user';
+import { GENDER_OPTIONS } from '@home/constants/filter';
+
 import {
   genderSelectWrapper,
   ageSelectWrapper,
@@ -15,10 +20,6 @@ import {
   genderButton,
   genderButtonGroup,
 } from './ContactTargetContent.css';
-
-import { GENDER_OPTIONS } from '@/app/home/constants/filter';
-import { ExperimentPostListFilterParams } from '@/types/filter';
-import { Gender } from '@/types/user';
 
 const AGE_MAX_LENGTH = 3;
 

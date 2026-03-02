@@ -4,6 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
+
+import NotReadyMobile from '@assets/images/notReadyMobile.svg';
+import Icon from '@components/Icon';
+import { HIDE_MODAL_COOKIE_KEYS } from '@constants/cookie';
+import { setHideModalCookie } from '@lib/cookies';
+
 import {
   mobileNotReadyModalButtonContainer,
   mobileNotReadyModalCloseButton,
@@ -15,11 +21,6 @@ import {
   notReadyButton,
 } from './MobileNotReadyModal.css';
 import { NotReadyMenu } from './types/menu';
-
-import NotReadyMobile from '@/assets/images/notReadyMobile.svg';
-import Icon from '@/components/Icon';
-import { HIDE_MODAL_COOKIE_KEYS } from '@/constants/cookie';
-import { setHideModalCookie } from '@/lib/cookies';
 
 const modalTitleMap = {
   upload: '모바일 버전 글쓰기 화면은 준비 중이에요\nPC에서 더 편리하게 이용하실 수 있어요',

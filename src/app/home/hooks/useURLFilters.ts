@@ -2,13 +2,13 @@
 
 import { useCallback, useMemo } from 'react';
 
-import useQueryParams from './useQueryParams';
-
-import { ExperimentPostListFilters } from '@/apis/post';
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
-import { useToast } from '@/hooks/useToast';
-import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
 import { ExperimentPostListFilterParams } from '@/types/filter';
+import { ExperimentPostListFilters } from '@apis/post';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+import { useToast } from '@hooks/useToast';
+import { URLFilterSchema } from '@schema/filter/URLFilterSchema';
+
+import useQueryParams from './useQueryParams';
 
 const INVALID_FILTER_MESSAGE = '필터 조건이 올바르지 않습니다. 다시 적용해주세요.';
 

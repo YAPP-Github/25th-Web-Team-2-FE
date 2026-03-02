@@ -1,6 +1,7 @@
+import Icon from '@components/Icon';
+
 import { spinner } from './Spinner.css';
 
-import Icon from '@/components/Icon';
 
 interface SpinnerProps {
   width?: number;

@@ -1,9 +1,9 @@
-import { convertValueToLabel } from './regionLabelValue';
-
-import { UseApplyMethodQueryResponse } from '@/app/post/[postId]/hooks/useApplyMethodQuery';
-import { UseQueryExperimentDetailsAPIResponse } from '@/app/post/[postId]/hooks/useExperimentDetailsQuery';
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 import { MatchType } from '@/types/filter';
+import { UseApplyMethodQueryResponse } from '@post/[postId]/hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '@post/[postId]/hooks/useExperimentDetailsQuery';
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+
+import { convertValueToLabel } from './regionLabelValue';
 
 export const transformOriginFormData = (
   experiment: UseQueryExperimentDetailsAPIResponse,

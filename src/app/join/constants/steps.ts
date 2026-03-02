@@ -1,4 +1,4 @@
-import { STEP } from '@/constants/steps';
+import { STEP } from '@constants/steps';
 
 export const DESKTOP_PARTICIPANT_JOIN_STEP_LIST = [STEP.email, STEP.info, STEP.success] as const;
 export const DESKTOP_RESEARCHER_JOIN_STEP_LIST = [STEP.email, STEP.info, STEP.success] as const;

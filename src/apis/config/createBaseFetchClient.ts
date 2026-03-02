@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { logAPIError, logNetworkError, logUnhandledError } from '@lib/log';
+
 import { AuthError, CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
 import { getDefaultHeader, isAuthError } from './utils';
 
-import { logAPIError, logNetworkError, logUnhandledError } from '@/lib/log';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const SERVER_STATUS_CODE = 500;

@@ -2,13 +2,14 @@
 
 import { FormProvider } from 'react-hook-form';
 
+import { MatchType } from '@/types/filter';
+import { ParticipantResponse } from '@apis/login';
+import RadioButtonGroupContainer from '@join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
+
 import { useFormParticipantProfileEdit } from '../../../hooks/useFormParticipantProfileEdit';
 import EditFormLayout from '../../EditFormLayout';
 import SaveButton from '../../SaveButton';
 
-import { ParticipantResponse } from '@/apis/login';
-import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
-import { MatchType } from '@/types/filter';
 
 interface MatchTypeEditFormProps {
   userInfo: ParticipantResponse;

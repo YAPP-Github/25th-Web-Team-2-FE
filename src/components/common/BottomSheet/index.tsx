@@ -2,6 +2,10 @@ import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { HeaderMode } from '@/types/bottomSheet';
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import {
   backdrop,
   contentContainer,
@@ -14,9 +18,6 @@ import {
   sheetContainer,
 } from './BottomSheet.css';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
-import { HeaderMode } from '@/types/bottomSheet';
 
 const CLOSE_THRESHOLD = 30;
 

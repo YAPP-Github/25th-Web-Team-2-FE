@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react';
 
-import useFunnel from '@/app/join/hooks/useFunnel';
+import useFunnel from '@join/hooks/useFunnel';
 
 interface FunnelStepGuardProps {
   isDirty: boolean;

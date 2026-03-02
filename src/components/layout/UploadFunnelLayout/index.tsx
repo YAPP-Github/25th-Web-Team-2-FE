@@ -1,9 +1,10 @@
-import { uploadFunnelLayout } from './UploadFunnelLayout.css';
 
-import BackToTopButton from '@/components/common/Button/BackToTopButton';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { defaultLayoutContainer } from '@/components/layout/DefaultLayout/DefaultLayout.css';
+import BackToTopButton from '@common/Button/BackToTopButton';
+import Footer from '@components/Footer';
+import Header from '@components/Header';
+import { defaultLayoutContainer } from '@components/layout/DefaultLayout/DefaultLayout.css';
+
+import { uploadFunnelLayout } from './UploadFunnelLayout.css';
 
 const UploadFunnelLayout = ({ children }: { children: React.ReactNode }) => {
   return (

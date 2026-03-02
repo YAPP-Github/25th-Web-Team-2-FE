@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
 
+import Icon from '@components/Icon';
+
 import {
   allPostsViewedContainer,
   allPostsViewedContentContainer,
@@ -10,7 +12,6 @@ import {
   watchMoreButton,
 } from './ExperimentPostContainerLayout.css';
 
-import Icon from '@/components/Icon';
 
 interface ExperimentPostAdditionalLayoutProps {
   children: React.ReactNode;

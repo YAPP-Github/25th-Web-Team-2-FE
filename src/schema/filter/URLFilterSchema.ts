@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { DEFAULT_RECRUIT_STATUS, REGIONS, AREAS } from '@/constants/filters';
-import { GENDER } from '@/constants/user';
+import { DEFAULT_RECRUIT_STATUS, REGIONS, AREAS } from '@constants/filters';
+import { GENDER } from '@constants/user';
 
 export type URLFilterSchemaType = z.infer<ReturnType<typeof URLFilterSchema>>;
 

@@ -1,9 +1,9 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
-import { zIndex } from '@/styles/zIndex';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
+import { zIndex } from '@styles/zIndex';
 
 export const confirmContent = recipe({
   base: {

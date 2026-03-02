@@ -2,6 +2,8 @@
 
 import { useReducer } from 'react';
 
+import Icon from '@components/Icon';
+
 import LeaveAgreeCheckContainer from './components/LeaveAgreeCheckContainer';
 import LeaveButtonContainer from './components/LeaveButtonContainer';
 import LeaveHeader from './components/LeaveHeader';
@@ -15,7 +17,6 @@ import {
   leaveReasonContainer,
 } from './LeavePage.css';
 
-import Icon from '@/components/Icon';
 
 const LeavePage = () => {
   const { control, reset, handleSubmit, isValidLeave, isLoading } = useLeaveForm();

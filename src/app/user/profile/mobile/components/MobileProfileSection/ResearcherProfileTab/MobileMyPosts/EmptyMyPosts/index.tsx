@@ -1,12 +1,13 @@
+
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import {
   emptyContents,
   emptyDescription,
   emptyMyPostsLayout,
   emptyTitle,
 } from './EmptyMyPosts.css';
-
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 const EmptyMyPosts = () => {
   return (

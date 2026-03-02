@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 
-import { ROLE } from '@/constants/config';
+import { ROLE } from '@constants/config';
 
 interface ServiceAgreeCheck {
   isTermOfService: boolean;

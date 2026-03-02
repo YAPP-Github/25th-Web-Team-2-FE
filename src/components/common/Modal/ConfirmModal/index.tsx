@@ -1,5 +1,9 @@
 import * as Dialog from '@radix-ui/react-dialog';
 
+
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
 import {
   confirmButtonContainer,
   cancelButton,
@@ -10,9 +14,6 @@ import {
   dialogOverlay,
   closeButton,
 } from './ConfirmModal.css';
-
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
 
 interface ConfirmModalProps {
   isOpen: boolean;

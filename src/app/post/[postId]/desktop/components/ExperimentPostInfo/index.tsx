@@ -4,6 +4,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import Icon from '@components/Icon';
+import { useToast } from '@hooks/useToast';
+import { stopRecording } from '@lib/mixpanelClient';
+import useDeleteExperimentPostMutation from '@my-posts/hooks/useDeleteExperimentPostMutation';
+import { colors } from '@styles/colors';
+
 import {
   buttonStyles,
   postHeaderContainer,
@@ -17,11 +23,6 @@ import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperime
 import { formatDate } from '../../../utils/formatDate';
 import DeleteConfirmModal from '../DeleteConfirmModal';
 
-import useDeleteExperimentPostMutation from '@/app/my-posts/hooks/useDeleteExperimentPostMutation';
-import Icon from '@/components/Icon';
-import { useToast } from '@/hooks/useToast';
-import { stopRecording } from '@/lib/mixpanelClient';
-import { colors } from '@/styles/colors';
 
 interface ExperimentPostInfoProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;

@@ -1,11 +1,12 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import { useRouter } from 'next/navigation';
 
+import { ResearcherResponse } from '@apis/login';
+
 import MobileMyPosts from './MobileMyPosts';
 import ResearcherProfileSection from './ResearcherProfileSection';
 import { tabContent, tabList, tabsRoot, tabTrigger } from './ResearcherProfileTab.css';
 
-import { ResearcherResponse } from '@/apis/login';
 
 interface ResearcherProfileTabProps {
   userInfo: ResearcherResponse;

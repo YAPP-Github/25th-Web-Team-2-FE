@@ -4,6 +4,10 @@ import * as Dialog from '@radix-ui/react-dialog';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import Icon from '@components/Icon';
+import { a11yHidden } from '@styles/a11y.css';
+import { colors } from '@styles/colors';
+
 import {
   postDetailContentLayout,
   postDetailContentWrapper,
@@ -21,9 +25,6 @@ import { formattedContentText } from '../../../utils/formattedContentText';
 import { isValidImageUrl } from '../../../utils/isValidImageUrl';
 import { replaceImageListWithWebp } from '../../../utils/replaceImageListWithWebp';
 
-import Icon from '@/components/Icon';
-import { a11yHidden } from '@/styles/a11y.css';
-import { colors } from '@/styles/colors';
 
 interface ExperimentPostDetailContentProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;

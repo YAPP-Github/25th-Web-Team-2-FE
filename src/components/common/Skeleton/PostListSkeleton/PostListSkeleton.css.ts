@@ -1,6 +1,6 @@
 import { style, keyframes } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
+import { colors } from '@styles/colors';
 
 // FilterSkeleton과 동일한 애니메이션 사용
 const skeletonAnimation = keyframes({

@@ -3,17 +3,17 @@
 import { useSession } from 'next-auth/react';
 import { FormProvider } from 'react-hook-form';
 
-import { Researcher } from '.';
-
-import FunnelLayout from '@/app/join/components/FunnelLayout';
-import FunnelStepGuard from '@/app/join/components/FunnelStepGuard';
-import { JoinLayout } from '@/app/join/components/JoinLayout';
-import JoinSuccessStep from '@/app/join/components/JoinSuccessStep';
-import { DESKTOP_RESEARCHER_JOIN_STEP_LIST } from '@/app/join/constants/steps';
-import useFunnel from '@/app/join/hooks/useFunnel';
-import { useResearcherJoin } from '@/app/join/hooks/useResearcherJoin';
-import { STEP } from '@/constants/steps';
 import { LoginProvider } from '@/types/user';
+import { STEP } from '@constants/steps';
+import FunnelLayout from '@join/components/FunnelLayout';
+import FunnelStepGuard from '@join/components/FunnelStepGuard';
+import { JoinLayout } from '@join/components/JoinLayout';
+import JoinSuccessStep from '@join/components/JoinSuccessStep';
+import { DESKTOP_RESEARCHER_JOIN_STEP_LIST } from '@join/constants/steps';
+import useFunnel from '@join/hooks/useFunnel';
+import { useResearcherJoin } from '@join/hooks/useResearcherJoin';
+
+import { Researcher } from '.';
 
 const ResearcherForm = () => {
   const { FunnelProvider, Funnel, Step, setStep } = useFunnel(DESKTOP_RESEARCHER_JOIN_STEP_LIST);

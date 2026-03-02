@@ -1,3 +1,7 @@
+
+import Button from '@common/Button';
+import Icon from '@components/Icon';
+
 import {
   buttonContainer,
   footerButton,
@@ -5,9 +9,6 @@ import {
   infoText,
   infoTextContainer,
 } from './FooterButtonContainer.css';
-
-import Button from '@/components/common/Button';
-import Icon from '@/components/Icon';
 
 interface FooterButtonContainerProps {
   handleReset: () => void;

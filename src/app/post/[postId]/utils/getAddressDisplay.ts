@@ -1,7 +1,8 @@
+import { MATCH_TYPE } from '@constants/filters';
+
 import { getAreaLabel } from './getAreaLabel';
 import { getRegionLabel } from './getRegionLabel';
 
-import { MATCH_TYPE } from '@/constants/filters';
 
 export const getAddressDisplay = (
   matchType: string,

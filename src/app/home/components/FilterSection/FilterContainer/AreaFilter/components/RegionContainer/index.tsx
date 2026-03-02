@@ -1,9 +1,10 @@
+import { RegionType } from '@/types/filter';
+import { ExperimentPostRegion } from '@apis/post';
+import { REGION_MAPPER } from '@constants/filters';
+
 import { areaButtonRecipe, regionContainer, selectedRegionName } from './RegionContainer.css';
 import { areaCount, areaName } from '../../AreaFilter.css';
 
-import { ExperimentPostRegion } from '@/apis/post';
-import { REGION_MAPPER } from '@/constants/filters';
-import { RegionType } from '@/types/filter';
 
 interface RegionContainerProps {
   selectedRegion: string | null;

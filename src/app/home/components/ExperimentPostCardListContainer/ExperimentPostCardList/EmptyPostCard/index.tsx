@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Icon from '@components/Icon';
+
 import {
   emptyListContent,
   emptyListTitle,
@@ -7,7 +9,6 @@ import {
   emptyPostCardLayout,
 } from './EmptyPostCard.css';
 
-import Icon from '@/components/Icon';
 
 const EmptyPostCard = () => {
   return (

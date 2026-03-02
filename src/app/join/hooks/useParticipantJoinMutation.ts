@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { fetchClient } from '@/apis/config/fetchClient';
-import { joinParticipant } from '@/apis/login';
-import { loginWithCredentials } from '@/lib/auth-utils';
+import { fetchClient } from '@apis/config/fetchClient';
+import { joinParticipant } from '@apis/login';
+import { loginWithCredentials } from '@lib/auth-utils';
 
 const useParticipantJoinMutation = () => {
   return useMutation({

@@ -1,14 +1,15 @@
 'use client';
 
+import { Gender } from '@/types/user';
+import { ExperimentPostListFilters } from '@apis/post';
+import Icon from '@components/Icon';
+import useURLFilters from '@home/hooks/useURLFilters';
+
 import AreaFilter from './AreaFilter';
 import ContactTargetFilter from './ContactTargetPopover/ContactTargetFilter';
 import { filterContainerLayout, resetFilterButton, verticalLine } from './FilterContainer.css';
 import MatchTypeFilter from './MatchTypeFilter';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import useURLFilters from '@/app/home/hooks/useURLFilters';
-import Icon from '@/components/Icon';
-import { Gender } from '@/types/user';
 
 interface FilterContainerProps {
   initialGender?: Gender;

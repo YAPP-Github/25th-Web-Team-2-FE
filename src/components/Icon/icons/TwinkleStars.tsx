@@ -1,6 +1,7 @@
+import { colors } from '@styles/colors';
+
 import { CustomSVGProps } from '..';
 
-import { colors } from '@/styles/colors';
 
 function TwinkleStars(props: CustomSVGProps) {
   return (

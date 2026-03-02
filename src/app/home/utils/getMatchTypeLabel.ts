@@ -1,4 +1,4 @@
-import { MATCH_TYPE } from '@/constants/filters';
+import { MATCH_TYPE } from '@constants/filters';
 
 export const getMatchTypeLabel = (matchType?: string) => {
   if (matchType === MATCH_TYPE.ALL) {

@@ -1,10 +1,11 @@
 import * as Toast from '@radix-ui/react-toast';
 
+import Icon from '@components/Icon';
+
 import { TOAST_CONFIG_MAP } from './constants/toast';
 import { toastLayout, toastTitle, toastViewport } from './Toasts.css';
 import { ToastItem } from './types/toast';
 
-import Icon from '@/components/Icon';
 
 interface ToastUIProps {
   toasts: ToastItem[];

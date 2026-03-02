@@ -2,6 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 
+
+import JoinSuccess from '@assets/images/joinSuccess.svg';
+import Logo from '@assets/images/logo.svg';
+import useUserInfo from '@home/hooks/useUserInfo';
+import { PAGEVIEW_SIGNUP_COMPLETE } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { getDeviceType } from '@utils/deviceType';
+
 import {
   homeLink,
   image,
@@ -10,13 +18,6 @@ import {
   joinTitleContainer,
   title,
 } from './JoinSuccessStep.css';
-
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import JoinSuccess from '@/assets/images/joinSuccess.svg';
-import Logo from '@/assets/images/logo.svg';
-import { PAGEVIEW_SIGNUP_COMPLETE } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { getDeviceType } from '@/utils/deviceType';
 
 const JoinSuccessStep = () => {
   const { userInfo } = useUserInfo();

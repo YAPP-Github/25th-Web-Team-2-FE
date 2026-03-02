@@ -3,14 +3,14 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import JoinButton from '@/app/join/components/JoinButton';
-import JoinInput from '@/app/join/components/JoinInput';
-import JoinTextarea from '@/app/join/components/JoinTextarea';
-import { joinContentContainer, joinForm } from '@/app/join/JoinPage.css';
-import UnivAutoCompleteInput from '@/components/UnivAutoCompleteInput';
-import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
+import UnivAutoCompleteInput from '@components/UnivAutoCompleteInput';
+import JoinButton from '@join/components/JoinButton';
+import JoinInput from '@join/components/JoinInput';
+import JoinTextarea from '@join/components/JoinTextarea';
+import { joinContentContainer, joinForm } from '@join/JoinPage.css';
+import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;

@@ -1,15 +1,16 @@
 'use client';
 
+import { AreaType, ExperimentPostListFilterParams } from '@/types/filter';
+import { ExperimentPostListFilters } from '@apis/post';
+import usePostAreaCountQuery from '@home/hooks/usePostAreaCountQuery';
+import usePostRegionCountQuery from '@home/hooks/usePostRegionCountQuery';
+
 import { contentWrapper, verticalLine } from './AreaFilterContent.css';
 import useAreaFilter from '../../hooks/useAreaFilter';
 import AreaContainer from '../AreaContainer';
 import FooterButtonContainer from '../FooterButtonContainer';
 import RegionContainer from '../RegionContainer';
 
-import { ExperimentPostListFilters } from '@/apis/post';
-import usePostAreaCountQuery from '@/app/home/hooks/usePostAreaCountQuery';
-import usePostRegionCountQuery from '@/app/home/hooks/usePostRegionCountQuery';
-import { AreaType, ExperimentPostListFilterParams } from '@/types/filter';
 
 interface AreaFilterContentProps {
   initialRegion?: ExperimentPostListFilters['region'];

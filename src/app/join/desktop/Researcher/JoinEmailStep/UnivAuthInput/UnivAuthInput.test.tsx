@@ -3,10 +3,11 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
+import { renderWithForm } from '@/tests/test-utils';
+import { ResearcherJoinSchema } from '@schema/join/ResearcherJoinSchema';
+
 import UnivAuthInput from '.';
 
-import { ResearcherJoinSchema } from '@/schema/join/ResearcherJoinSchema';
-import { renderWithForm } from '@/tests/test-utils';
 
 const REQUEST_COUNT = 1;
 
@@ -16,11 +17,11 @@ const mockToast = {
   error: vi.fn(),
 };
 
-vi.mock('@/hooks/useToast', () => ({
+vi.mock('@hooks/useToast', () => ({
   useToast: () => mockToast,
 }));
 
-vi.mock('@/app/join/hooks/useSendUnivAuthCodeMutation', () => ({
+vi.mock('@join/hooks/useSendUnivAuthCodeMutation', () => ({
   default: () => ({
     mutate: mockSendUnivAuthCodeMutate,
   }),

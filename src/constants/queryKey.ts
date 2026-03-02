@@ -1,6 +1,6 @@
-import type { ExperimentPostListFilters } from '@/apis/post';
-import { DEFAULT_RECRUIT_STATUS } from '@/constants/filters';
 import { Role } from '@/types/user';
+import type { ExperimentPostListFilters } from '@apis/post';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
 
 export const queryKey = {
   post: {

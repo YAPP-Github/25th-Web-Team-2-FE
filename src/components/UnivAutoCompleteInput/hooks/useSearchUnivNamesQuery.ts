@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { searchUnivNames } from '@/apis/login';
-import { queryKey } from '@/constants/queryKey';
+import { searchUnivNames } from '@apis/login';
+import { queryKey } from '@constants/queryKey';
 
 export const useSearchUnivNamesQuery = (query: string) => {
   return useQuery({

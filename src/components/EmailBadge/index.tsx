@@ -1,10 +1,11 @@
 import Image from 'next/image';
 
+import { LoginProvider } from '@/types/user';
+import Google from '@assets/images/google.svg';
+import Naver from '@assets/images/naver.svg';
+
 import { emailWrapper, email } from './EmailBadge.css';
 
-import Google from '@/assets/images/google.svg';
-import Naver from '@/assets/images/naver.svg';
-import { LoginProvider } from '@/types/user';
 
 const logoMap = {
   NAVER: Naver,

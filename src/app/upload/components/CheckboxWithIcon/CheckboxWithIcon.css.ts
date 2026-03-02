@@ -1,7 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const checkboxContainer = recipe({
   base: {

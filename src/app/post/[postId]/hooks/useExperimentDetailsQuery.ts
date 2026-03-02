@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { CustomError } from '@/apis/config/error';
-import { fetchClient } from '@/apis/config/fetchClient';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { queryKey } from '@/constants/queryKey';
-import { API_URL } from '@/constants/url';
 import { MatchType } from '@/types/filter';
 import { Gender } from '@/types/user';
+import { CustomError } from '@apis/config/error';
+import { fetchClient } from '@apis/config/fetchClient';
+import { queryKey } from '@constants/queryKey';
+import { API_URL } from '@constants/url';
+import useUserInfo from '@home/hooks/useUserInfo';
 
 interface TargetGroup {
   startAge: number | null;

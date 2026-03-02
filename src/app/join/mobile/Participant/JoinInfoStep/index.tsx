@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
+import { Gender } from '@/types/user';
+import Button from '@common/Button';
+import JoinInput from '@join/components/JoinInput';
+import RadioButtonGroupContainer from '@join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
+import { useFocusNavigation } from '@join/hooks/useFocusNavigation';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import { joinInputContainer } from './JoinInfoStep.css';
 import TitleSection from '../../components/TitleSection';
 import { bottomButtonLayout, emailInput, mainContentLayout } from '../../page.css';
-
-import JoinInput from '@/app/join/components/JoinInput';
-import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
-import { useFocusNavigation } from '@/app/join/hooks/useFocusNavigation';
-import Button from '@/components/common/Button';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
-import { trackEvent } from '@/lib/mixpanelClient';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { Gender } from '@/types/user';
 
 const inputOrder = ['name', 'birthDate'];
 

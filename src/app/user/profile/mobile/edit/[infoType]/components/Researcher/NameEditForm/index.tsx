@@ -2,13 +2,14 @@
 
 import { FormProvider } from 'react-hook-form';
 
+import { ResearcherResponse } from '@apis/login';
+import JoinInput from '@join/components/JoinInput';
+import { ResearcherUpdateSchemaType } from '@schema/profile/ResearcherUpdateSchema';
+
 import { useFormResearcherProfileEdit } from '../../../hooks/useFormResearcherProfileEdit';
 import EditFormLayout from '../../EditFormLayout';
 import SaveButton from '../../SaveButton';
 
-import { ResearcherResponse } from '@/apis/login';
-import JoinInput from '@/app/join/components/JoinInput';
-import { ResearcherUpdateSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 interface NameEditFormProps {
   userInfo: ResearcherResponse;

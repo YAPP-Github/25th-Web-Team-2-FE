@@ -2,12 +2,13 @@
 
 import { PropsWithChildren, useEffect } from 'react';
 
+import { STEP } from '@constants/steps';
+import { startRecording } from '@lib/mixpanelClient';
+
 import useFunnel from '../../hooks/useFunnel';
 import { joinLayout } from '../../JoinPage.css';
 import { JoinLayout } from '../JoinLayout';
 
-import { STEP } from '@/constants/steps';
-import { startRecording } from '@/lib/mixpanelClient';
 
 interface FunnelLayoutProps {
   title: string;

@@ -1,6 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+
+import JoinSuccess from '@assets/images/joinSuccess.svg';
+import Logo from '@assets/images/logo.svg';
+
 import {
   homeLink,
   image,
@@ -9,9 +13,6 @@ import {
   subTitle,
   title,
 } from './success.css';
-
-import JoinSuccess from '@/assets/images/joinSuccess.svg';
-import Logo from '@/assets/images/logo.svg';
 
 const LeaveSuccessPage = () => {
   return (

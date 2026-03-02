@@ -3,23 +3,24 @@
 import { useState, useTransition } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+
+import { useToast } from '@hooks/useToast';
+import AuthCodeInput from '@join/desktop/Researcher/JoinEmailStep/UnivAuthInput/AuthCodeInput';
+import {
+  editButton,
+  univAuthButton,
+  univInputWrapper,
+} from '@join/desktop/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
+import useAuthCodeTimer from '@join/hooks/useAuthCodeTimer';
+import useSendUnivAuthCodeMutation from '@join/hooks/useSendUnivAuthCodeMutation';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import {
   errorMessage,
   inputContainer,
   joinInput,
   univEmailInputContainer,
 } from './UnivEmailInputContainer.css';
-
-import AuthCodeInput from '@/app/join/desktop/Researcher/JoinEmailStep/UnivAuthInput/AuthCodeInput';
-import {
-  editButton,
-  univAuthButton,
-  univInputWrapper,
-} from '@/app/join/desktop/Researcher/JoinEmailStep/UnivAuthInput/UnivAuthInput.css';
-import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
-import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
-import { useToast } from '@/hooks/useToast';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const getButtonText = ({ isLoading, canEdit }: { isLoading: boolean; canEdit: boolean }) => {
   if (isLoading) return '전송 중...';

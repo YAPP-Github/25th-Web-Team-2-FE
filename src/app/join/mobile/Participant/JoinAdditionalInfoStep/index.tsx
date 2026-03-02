@@ -3,6 +3,16 @@
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { MatchType } from '@/types/filter';
+import Button from '@common/Button';
+import { JOIN_REGION, JOIN_SUB_REGION } from '@constants/joinRegion';
+import AreaTooltip from '@join/components/AreaTooltip';
+import JoinSelect from '@join/desktop/Participant/JoinInfoStep/JoinSelect';
+import RadioButtonGroupContainer from '@join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
+import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import { stopRecording, trackEvent } from '@lib/mixpanelClient';
+import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
+
 import {
   filterTitle,
   filterTitleWrapper,
@@ -13,16 +23,6 @@ import {
 import MatchConsentConfirmModal from '../../components/MatchConsentConfirmModal';
 import TitleSection from '../../components/TitleSection';
 import { bottomButtonLayout, mainContentLayout } from '../../page.css';
-
-import AreaTooltip from '@/app/join/components/AreaTooltip';
-import JoinSelect from '@/app/join/desktop/Participant/JoinInfoStep/JoinSelect';
-import RadioButtonGroupContainer from '@/app/join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
-import Button from '@/components/common/Button';
-import { JOIN_REGION, JOIN_SUB_REGION } from '@/constants/joinRegion';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@/lib/mixpanel/signupEvents';
-import { stopRecording, trackEvent } from '@/lib/mixpanelClient';
-import { ParticipantJoinSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { MatchType } from '@/types/filter';
 
 interface JoinAdditionalInfoStepProps {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;

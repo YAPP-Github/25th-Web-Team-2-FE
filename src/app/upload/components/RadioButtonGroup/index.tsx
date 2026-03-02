@@ -1,8 +1,9 @@
 import { ControllerRenderProps } from 'react-hook-form';
 
+import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+
 import { customRadioGroup, customRadioButton } from './RadioButtonGroup.css';
 
-import { UploadExperimentPostSchemaType } from '@/schema/upload/uploadExperimentPostSchema';
 
 interface RadioButtonGroupProps<T extends string> {
   field: ControllerRenderProps<

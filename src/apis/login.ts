@@ -1,11 +1,12 @@
+import { MatchType } from '@/types/filter';
+import { Gender, LoginProvider, Role } from '@/types/user';
+import { API_URL } from '@constants/url';
+import { ParticipantJoinSubmitSchemaType } from '@schema/join/ParticipantJoinSchema';
+import { ResearcherJoinSubmitSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import { fetchClient, noRetryFetchClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
-import { API_URL } from '@/constants/url';
-import { ParticipantJoinSubmitSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { ResearcherJoinSubmitSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { MatchType } from '@/types/filter';
-import { Gender, LoginProvider, Role } from '@/types/user';
 
 export interface UnivAuthCodeResponse {
   isSuccess: boolean;

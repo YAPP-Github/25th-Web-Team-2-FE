@@ -3,6 +3,11 @@
 import { useState, useTransition } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { useToast } from '@hooks/useToast';
+import useAuthCodeTimer from '@join/hooks/useAuthCodeTimer';
+import useSendUnivAuthCodeMutation from '@join/hooks/useSendUnivAuthCodeMutation';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import AuthCodeInput from './AuthCodeInput';
 import {
   univInputWrapper,
@@ -17,10 +22,6 @@ import {
   joinInput,
 } from '../../../../components/JoinInput/JoinInput.css';
 
-import useAuthCodeTimer from '@/app/join/hooks/useAuthCodeTimer';
-import useSendUnivAuthCodeMutation from '@/app/join/hooks/useSendUnivAuthCodeMutation';
-import { useToast } from '@/hooks/useToast';
-import { ResearcherJoinSchemaType } from '@/schema/join/ResearcherJoinSchema';
 
 const getButtonText = (isLoading: boolean, isAuthenticated: boolean) => {
   if (isLoading) return '전송 중...';
