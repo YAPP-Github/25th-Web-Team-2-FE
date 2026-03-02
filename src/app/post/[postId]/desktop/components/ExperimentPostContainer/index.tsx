@@ -1,9 +1,10 @@
-import { postContentLayout } from './ExperimentPostContainer.css';
+import { postContentLayout, postContentWrapper } from './ExperimentPostContainer.css';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostDetailContent from '../ExperimentPostDetailContent';
 import ExperimentPostInfo from '../ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline';
+import OtherPostsSection from '../OtherPostsSection';
 
 interface ExperimentPostContainerProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
@@ -18,7 +19,11 @@ const ExperimentPostContainer = ({
     <>
       <ExperimentPostInfo postDetailData={postDetailData} />
       <div className={postContentLayout}>
-        <ExperimentPostDetailContent postDetailData={postDetailData} />
+        <div className={postContentWrapper}>
+          <ExperimentPostDetailContent postDetailData={postDetailData} />
+          <OtherPostsSection />
+        </div>
+
         <ExperimentPostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />
       </div>
     </>
