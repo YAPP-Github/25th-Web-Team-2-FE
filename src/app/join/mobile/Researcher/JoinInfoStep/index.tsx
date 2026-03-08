@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-
+import { ROLE } from '@/constants/config';
 import JoinButton from '@join/components/JoinButton';
 import JoinInput from '@join/components/JoinInput';
 import JoinTextarea from '@join/components/JoinTextarea';
 import { useFocusNavigation } from '@join/hooks/useFocusNavigation';
-import { PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
+import { CLICK_SIGNUP_COMPLETE, PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
 import { trackEvent } from '@lib/mixpanelClient';
 import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
 
@@ -23,6 +23,11 @@ interface JoinInfoStepProps {
 const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
   const { control } = useFormContext<ResearcherJoinSchemaType>();
   const { handleKeyDown, setInputRef } = useFocusNavigation(inputOrder);
+
+  const handleClickJoin = () => {
+    trackEvent(CLICK_SIGNUP_COMPLETE, { role: ROLE.researcher, device: 'mobile' });
+    onSubmit();
+  };
 
   useEffect(() => {
     trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'mobile', step: 3 });
@@ -84,7 +89,7 @@ const JoinInfoStep = ({ onSubmit }: JoinInfoStepProps) => {
       {/* 회원가입 버튼 */}
       <div className={bottomButtonLayout}>
         <JoinButton<ResearcherJoinSchemaType>
-          onSubmit={onSubmit}
+          onSubmit={handleClickJoin}
           validationFields={['name', 'univName', 'major']}
           height="5.6rem"
         />
