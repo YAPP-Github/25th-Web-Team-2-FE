@@ -3,11 +3,15 @@
 import { useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { ROLE } from '@/constants/config';
 import { MatchType } from '@/types/filter';
 import { Gender } from '@/types/user';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@constants/joinRegion';
 import { joinContentContainer, joinForm, nextButton } from '@join/JoinPage.css';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import {
+  CLICK_SIGNUP_COMPLETE,
+  PAGEVIEW_SIGNUP_PARTICIPANT_STEP,
+} from '@lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
 
@@ -22,7 +26,6 @@ import JoinSelect from './JoinSelect';
 import RadioButtonGroupContainer from './RadioButtonGroupContainer';
 import AreaTooltip from '../../../components/AreaTooltip';
 import JoinInput from '../../../components/JoinInput';
-
 
 interface JoinInfoStepProps {
   handleSubmit: () => void;
@@ -50,6 +53,7 @@ const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
   }, []);
 
   const handleClickJoin = () => {
+    trackEvent(CLICK_SIGNUP_COMPLETE, { role: ROLE.participant, device: 'desktop' });
     stopRecording();
     handleSubmit();
   };

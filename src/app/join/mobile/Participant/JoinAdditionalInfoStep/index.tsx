@@ -3,13 +3,17 @@
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import { ROLE } from '@/constants/config';
 import { MatchType } from '@/types/filter';
 import Button from '@common/Button';
 import { JOIN_REGION, JOIN_SUB_REGION } from '@constants/joinRegion';
 import AreaTooltip from '@join/components/AreaTooltip';
 import JoinSelect from '@join/desktop/Participant/JoinInfoStep/JoinSelect';
 import RadioButtonGroupContainer from '@join/desktop/Participant/JoinInfoStep/RadioButtonGroupContainer';
-import { PAGEVIEW_SIGNUP_PARTICIPANT_STEP } from '@lib/mixpanel/signupEvents';
+import {
+  CLICK_SIGNUP_COMPLETE,
+  PAGEVIEW_SIGNUP_PARTICIPANT_STEP,
+} from '@lib/mixpanel/signupEvents';
 import { stopRecording, trackEvent } from '@lib/mixpanelClient';
 import { ParticipantJoinSchemaType } from '@schema/join/ParticipantJoinSchema';
 
@@ -51,11 +55,8 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
   const isValid = values.every((value) => (value ?? '').trim() !== '' && value !== undefined);
   const isError = Object.keys(errors).length > 0;
 
-  useEffect(() => {
-    trackEvent(PAGEVIEW_SIGNUP_PARTICIPANT_STEP, { device: 'mobile', step: 3 });
-  }, []);
-
   const handleClickJoin = () => {
+    trackEvent(CLICK_SIGNUP_COMPLETE, { role: ROLE.participant, device: 'mobile' });
     stopRecording();
     onSubmit();
   };
@@ -64,6 +65,10 @@ const JoinAdditionalInfoStep = ({ onSubmit }: JoinAdditionalInfoStepProps) => {
     setValue('matchConsent', true);
     handleClickJoin();
   };
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_PARTICIPANT_STEP, { device: 'mobile', step: 3 });
+  }, []);
 
   return (
     <main className={mainContentLayout}>

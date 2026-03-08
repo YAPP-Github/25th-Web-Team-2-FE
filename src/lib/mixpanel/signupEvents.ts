@@ -12,6 +12,7 @@ export const PAGEVIEW_SIGNUP_PARTICIPANT_STEP = 'pageview_signup_participant_ste
 
 // 회원가입 완료 페이지
 export const PAGEVIEW_SIGNUP_COMPLETE = 'pageview_signup_complete';
+export const CLICK_SIGNUP_COMPLETE = 'click_signup_complete';
 
 // 알림 동의 모달 (참여자만)
 export const VIEW_MODAL_MATCHING_OPT_IN = 'view_modal_matching_opt_in';
