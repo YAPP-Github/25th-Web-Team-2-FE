@@ -17,6 +17,16 @@ export const fixedBottomButtonLayout = style({
   right: '1.6rem',
 });
 
+export const fullDivider = style({
+  height: '2rem',
+  marginInline: '-1.6rem',
+  backgroundColor: colors.field02,
+});
+
+export const otherPostsSectionWrapper = style({
+  padding: '2rem 0',
+});
+
 export const buttonGradientBackground = style({
   position: 'fixed',
   bottom: 0,

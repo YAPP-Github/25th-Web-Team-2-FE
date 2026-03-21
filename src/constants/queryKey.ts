@@ -15,6 +15,7 @@ export const queryKey = {
         filters.areas ?? null,
         filters.matchType ?? null,
       ] as const,
+    otherPosts: (postId: string) => ['otherPosts', postId] as const,
   },
   userInfo: (role?: Role) => ['userInfo', role ?? null] as const,
   postRegion: (region: string | null) => ['postRegion', region] as const,

@@ -19,3 +19,8 @@ export const cardList = style({
   gridTemplateColumns: '1fr 1fr',
   gap: '1.2rem',
 });
+
+export const mobileCardList = style({
+  display: 'grid',
+  gap: '1.2rem',
+});

@@ -21,7 +21,7 @@ const ExperimentPostContainer = ({
       <div className={postContentLayout}>
         <div className={postContentWrapper}>
           <ExperimentPostDetailContent postDetailData={postDetailData} />
-          <OtherPostsSection />
+          <OtherPostsSection postId={postDetailData.experimentPostId} />
         </div>
 
         <ExperimentPostOutline postDetailData={postDetailData} applyMethodData={applyMethodData} />

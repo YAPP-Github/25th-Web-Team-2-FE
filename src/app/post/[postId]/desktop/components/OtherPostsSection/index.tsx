@@ -1,44 +1,33 @@
-import type { ExperimentPost } from '@/types/post';
+'use client';
+
 import ExperimentPostCard from '@home/components/ExperimentPostCardListContainer/ExperimentPostCardList/ExperimentPostCard';
 
-import { otherPostsTitle, cardList, otherPostsLayout } from './OtherPostsSection.css';
+import { otherPostsTitle, cardList, mobileCardList, otherPostsLayout } from './OtherPostsSection.css';
+import { useFetchOtherExperimentPostsQuery } from '../../../hooks/useFetchOtherExperimentPostsQuery';
 
-const OTHER_POSTS: ExperimentPost[] = [
-  {
-    postInfo: {
-      experimentPostId: 1,
-      title: '(율전) 1월 fMRI-EEG 실험',
-      views: 100000,
-      place: '건국대학교 글로컬캠퍼스',
-      reward: '30분당 15,000원',
-      durationInfo: { startDate: '2025-01-31', endDate: '2025-02-08' },
-      timeRequired: 'ABOUT_30M',
-      count: 1,
-    },
-    recruitStatus: true,
-  },
-  {
-    postInfo: {
-      experimentPostId: 2,
-      title: '강남 삼성서울병원 연구 참여자 (3개월 간 참여)',
-      views: 100000,
-      place: '성균관대학교 자연과학캠퍼스',
-      reward: '세전 55만 원+갤럭시워치6 클래식 (참여율에 따라 지급)',
-      durationInfo: { startDate: null, endDate: null },
-      timeRequired: null,
-      count: null,
-    },
-    recruitStatus: true,
-  },
-];
+interface OtherPostsSectionProps {
+  postId: string;
+  isMobile?: boolean;
+}
 
-const OtherPostsSection = () => {
+const OtherPostsSection = ({ postId, isMobile = false }: OtherPostsSectionProps) => {
+  const { data: otherPosts } = useFetchOtherExperimentPostsQuery(postId);
+
+  if (!otherPosts) return null;
+
   return (
     <div className={otherPostsLayout}>
       <h2 className={otherPostsTitle}>다른 공고도 둘러보기</h2>
-      <ul className={cardList}>
-        {OTHER_POSTS.map((post) => (
-          <ExperimentPostCard key={post.postInfo.experimentPostId} experimentPost={post} />
+      <ul className={isMobile ? mobileCardList : cardList}>
+        {otherPosts.map((post) => (
+          <ExperimentPostCard
+            key={post.experimentPostId}
+            hideViews={isMobile}
+            experimentPost={{
+              postInfo: post,
+              recruitStatus: true,
+            }}
+          />
         ))}
       </ul>
     </div>

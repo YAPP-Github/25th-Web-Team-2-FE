@@ -24,9 +24,10 @@ import {
 
 interface ExperimentPostCardProps {
   experimentPost: ExperimentPost;
+  hideViews?: boolean;
 }
 
-const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
+const ExperimentPostCard = ({ experimentPost, hideViews = false }: ExperimentPostCardProps) => {
   const {
     postInfo: { experimentPostId, place, views, title, reward, timeRequired, count },
     recruitStatus,
@@ -48,10 +49,12 @@ const ExperimentPostCard = ({ experimentPost }: ExperimentPostCardProps) => {
         <span className={postLocation}>{place ? place : '비대면'}</span>
 
         {/* views */}
-        <div className={postViewsContainer}>
-          <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
-          <span className={postViews}>{views}</span>
-        </div>
+        {!hideViews && (
+          <div className={postViewsContainer}>
+            <Icon icon="Eye" width={18} height={18} color={colors.icon02} />
+            <span className={postViews}>{views}</span>
+          </div>
+        )}
 
         {/* title */}
         <h3 className={postTitle}>{title}</h3>

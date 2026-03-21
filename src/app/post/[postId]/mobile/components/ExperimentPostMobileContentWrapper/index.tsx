@@ -8,13 +8,15 @@ import {
   buttonGradientBackground,
   experimentPostMobileContentWrapperLayout,
   fixedBottomButtonLayout,
+  fullDivider,
+  otherPostsSectionWrapper,
 } from './ExperimentPostMobileContentWrapper.css';
+import OtherPostsSection from '../../../desktop/components/OtherPostsSection';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo';
 import ExperimentPostTabs from '../ExperimentPostTabs';
 import ParticipationGuideBottomSheet from '../ParticipationGuideBottomSheet';
-
 
 const ExperimentPostMobileContentWrapper = ({
   postDetailData,
@@ -44,6 +46,10 @@ const ExperimentPostMobileContentWrapper = ({
     <div className={experimentPostMobileContentWrapperLayout}>
       <ExperimentPostInfo postDetailData={postDetailData} />
       <ExperimentPostTabs postDetailData={postDetailData} />
+      <div className={fullDivider} />
+      <div className={otherPostsSectionWrapper}>
+        <OtherPostsSection postId={postDetailData.experimentPostId} isMobile />
+      </div>
 
       <div className={buttonGradientBackground}>
         <div className={fixedBottomButtonLayout}>

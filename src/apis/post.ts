@@ -1,4 +1,3 @@
-
 import { AreaType, MatchType, RegionType } from '@/types/filter';
 import { ExperimentPost } from '@/types/post';
 import { Gender } from '@/types/user';
@@ -55,6 +54,10 @@ export interface ExtractKeywordsLimitResponse {
   resetsAt: string;
 }
 
+export interface OtherPostsResponse {
+  relatedPosts: Array<ExperimentPost['postInfo']>;
+}
+
 export const fetchPostList = async (params: ExperimentPostListFilters) => {
   const queryParams = getQueryParamsToString({ ...params });
   return await fetchClient.get<ExperimentPostResponse>(API_URL.postList(queryParams), {
@@ -68,4 +71,8 @@ export const fetchPostCount = async <T>(region?: string | null) => {
 
 export const fetchExtractKeywordsLimit = async () => {
   return await fetchClient.get<ExtractKeywordsLimitResponse>(API_URL.extractKeywordsLimit);
+};
+
+export const fetchOtherPosts = async (postId: string) => {
+  return await fetchClient.get<OtherPostsResponse>(API_URL.otherPosts(postId));
 };
