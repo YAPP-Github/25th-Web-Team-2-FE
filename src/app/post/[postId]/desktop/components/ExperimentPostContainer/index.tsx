@@ -1,10 +1,10 @@
 import { postContentLayout, postContentWrapper } from './ExperimentPostContainer.css';
+import OtherPostsSection from '../../../components/OtherPostsSection';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostDetailContent from '../ExperimentPostDetailContent';
 import ExperimentPostInfo from '../ExperimentPostInfo';
 import ExperimentPostOutline from '../ExperimentPostOutline';
-import OtherPostsSection from '../OtherPostsSection';
 
 interface ExperimentPostContainerProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;

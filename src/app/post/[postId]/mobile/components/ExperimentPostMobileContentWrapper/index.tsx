@@ -11,7 +11,7 @@ import {
   fullDivider,
   otherPostsSectionWrapper,
 } from './ExperimentPostMobileContentWrapper.css';
-import OtherPostsSection from '../../../desktop/components/OtherPostsSection';
+import OtherPostsSection from '../../../components/OtherPostsSection';
 import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 import ExperimentPostInfo from '../ExperimentPostInfo';

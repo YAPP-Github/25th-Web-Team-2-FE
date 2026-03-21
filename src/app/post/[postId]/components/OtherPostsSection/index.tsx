@@ -2,8 +2,13 @@
 
 import ExperimentPostCard from '@home/components/ExperimentPostCardListContainer/ExperimentPostCardList/ExperimentPostCard';
 
-import { otherPostsTitle, cardList, mobileCardList, otherPostsLayout } from './OtherPostsSection.css';
-import { useFetchOtherExperimentPostsQuery } from '../../../hooks/useFetchOtherExperimentPostsQuery';
+import {
+  otherPostsTitle,
+  cardList,
+  mobileCardList,
+  otherPostsLayout,
+} from './OtherPostsSection.css';
+import { useFetchOtherExperimentPostsQuery } from '../../hooks/useFetchOtherExperimentPostsQuery';
 
 interface OtherPostsSectionProps {
   postId: string;
