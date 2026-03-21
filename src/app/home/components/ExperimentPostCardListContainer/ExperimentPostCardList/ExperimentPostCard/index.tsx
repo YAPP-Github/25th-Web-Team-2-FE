@@ -25,15 +25,21 @@ import {
 interface ExperimentPostCardProps {
   experimentPost: ExperimentPost;
   hideViews?: boolean;
+  onClickPost?: () => void;
 }
 
-const ExperimentPostCard = ({ experimentPost, hideViews = false }: ExperimentPostCardProps) => {
+const ExperimentPostCard = ({
+  experimentPost,
+  hideViews = false,
+  onClickPost,
+}: ExperimentPostCardProps) => {
   const {
     postInfo: { experimentPostId, place, views, title, reward, timeRequired, count },
     recruitStatus,
   } = experimentPost;
 
   const goToPost = () => {
+    onClickPost?.();
     startRecording();
   };
 

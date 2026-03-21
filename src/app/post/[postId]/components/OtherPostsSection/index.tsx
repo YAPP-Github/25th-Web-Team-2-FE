@@ -1,6 +1,8 @@
 'use client';
 
 import ExperimentPostCard from '@home/components/ExperimentPostCardListContainer/ExperimentPostCardList/ExperimentPostCard';
+import { CLICK_MORE_EXPERIMENT_POST } from '@lib/mixpanel/postEvents';
+import { trackEvent } from '@lib/mixpanelClient';
 
 import {
   otherPostsTitle,
@@ -27,10 +29,13 @@ const OtherPostsSection = ({ postId, isMobile = false }: OtherPostsSectionProps)
         {otherPosts.map((post) => (
           <ExperimentPostCard
             key={post.experimentPostId}
-            hideViews={isMobile}
             experimentPost={{
               postInfo: post,
               recruitStatus: true,
+            }}
+            hideViews={isMobile}
+            onClickPost={() => {
+              trackEvent(CLICK_MORE_EXPERIMENT_POST, { device: isMobile ? 'mobile' : 'desktop' });
             }}
           />
         ))}
