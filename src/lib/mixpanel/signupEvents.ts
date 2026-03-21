@@ -1,7 +1,3 @@
-/**
- * 회원가입 퍼널 이벤트명 상수
- */
-
 // 로그인 클릭
 export const CLICK_LOGIN_RESEARCHER = 'click_login_researcher';
 export const CLICK_LOGIN_PARTICIPANT = 'click_login_participant';

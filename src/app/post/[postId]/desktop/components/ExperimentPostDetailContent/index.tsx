@@ -25,7 +25,6 @@ import { formattedContentText } from '../../../utils/formattedContentText';
 import { isValidImageUrl } from '../../../utils/isValidImageUrl';
 import { replaceImageListWithWebp } from '../../../utils/replaceImageListWithWebp';
 
-
 interface ExperimentPostDetailContentProps {
   postDetailData: UseQueryExperimentDetailsAPIResponse;
 }
@@ -53,7 +52,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
   }, [imageList]);
 
   return (
-    <div className={postDetailContentLayout}>
+    <section className={postDetailContentLayout}>
       <h3>실험 안내</h3>
       {/* 본문 내용 */}
       <div className={postDetailContentWrapper}>{formattedContentText(content || '')}</div>
@@ -140,7 +139,7 @@ const ExperimentPostDetailContent = ({ postDetailData }: ExperimentPostDetailCon
           )}
         </Dialog.Content>
       </Dialog.Root>
-    </div>
+    </section>
   );
 };
 
