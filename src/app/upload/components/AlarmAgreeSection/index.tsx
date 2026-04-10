@@ -30,11 +30,10 @@ export const AlarmAgreeSection = ({ control, isEdit = false }: AlarmAgreeSection
     control,
   });
 
-  const place = useWatch({ control, name: 'place' });
-  const startDate = useWatch({ control, name: 'startDate' });
-  const endDate = useWatch({ control, name: 'endDate' });
-  const reward = useWatch({ control, name: 'reward' });
-  const title = useWatch({ control, name: 'title' });
+  const [place, startDate, endDate, reward, title] = useWatch({
+    control,
+    name: ['place', 'startDate', 'endDate', 'reward', 'title'],
+  });
 
   return (
     <section className={alarmAgreeSection}>
