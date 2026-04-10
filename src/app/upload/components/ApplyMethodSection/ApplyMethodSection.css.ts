@@ -75,21 +75,6 @@ export const textStyle = style({
   color: colors.text06,
 });
 
-export const alarmAgreeContainer = style({
-  width: 'fit-content',
-  minHeight: '3.4rem',
-  padding: '0.2rem 1rem',
-  backgroundColor: colors.field02,
-  borderRadius: '0.8rem',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  cursor: 'pointer',
-  transition: 'background-color 0.2s ease-in-out',
-
-  marginTop: '2.3rem',
-});
-
 export const uploadFormSectionTitle = style({
   ...fonts.title.small.SB18,
   display: 'flex',
