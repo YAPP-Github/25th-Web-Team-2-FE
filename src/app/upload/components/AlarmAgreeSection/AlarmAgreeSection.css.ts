@@ -86,4 +86,9 @@ export const rewardText = style({
 
 export const alarmPreviewTitle = style({
   ...fonts.body.normal.M16,
+  display: '-webkit-box',
+  WebkitLineClamp: 1,
+  WebkitBoxOrient: 'vertical',
+  overflow: 'hidden',
+  wordBreak: 'break-word',
 });
