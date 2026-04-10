@@ -27,7 +27,7 @@ export const EXPERIMENT_POST_DEFAULT_VALUES = {
   imageListInfo: {
     images: [],
   },
-  alarmAgree: false,
+  alarmAgree: true,
   isOnCampus: true,
   addLink: false,
   addContact: false,
