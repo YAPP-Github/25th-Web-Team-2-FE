@@ -44,7 +44,7 @@ export const alarmPreviewWrapper = recipe({
 export const alarmPreviewCard = style({
   margin: '0 auto',
   borderRadius: '1.2rem 1.2rem 0 0',
-  background: '#ECEFF1',
+  background: colors.field03,
   padding: '20px 20px 0px 20px',
 });
 
