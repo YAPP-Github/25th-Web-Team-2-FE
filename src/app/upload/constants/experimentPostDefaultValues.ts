@@ -2,6 +2,7 @@ export const EXPERIMENT_POST_DEFAULT_VALUES = {
   leadResearcher: '',
   startDate: undefined,
   endDate: undefined,
+  experimentType: undefined,
   matchType: undefined,
   reward: '',
   place: '',

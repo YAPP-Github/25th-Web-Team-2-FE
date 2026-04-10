@@ -32,7 +32,6 @@ import RegionPopover from '../RegionPopover';
 import SelectForm from '../SelectForm';
 import { label, uploadFormSectionTitle } from '../UploadContainer/UploadContainer.css';
 
-
 interface OutlineSectionProps {
   experimentDateChecked?: boolean;
   durationChecked?: boolean;

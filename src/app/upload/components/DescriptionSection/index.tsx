@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { ChangeEvent, DragEvent, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-
 import { dialogOverlay } from '@common/Modal/ConfirmModal/ConfirmModal.css';
 import Icon from '@components/Icon';
 import { useToast } from '@hooks/useToast';
@@ -20,6 +19,8 @@ import {
   descriptionFormLayout,
   descriptionSectionLayout,
   descriptionTextarea,
+  experimentType,
+  experimentTypeWrapper,
   fileInfoText,
   photoContainer,
   photoGrid,
@@ -27,7 +28,15 @@ import {
   uploadFormSectionTitle,
   uploadImagesContainer,
 } from './DescriptionSection.css';
+import {
+  EXPERIMENT_TYPE,
+  EXPERIMENT_TYPE_OPTIONS,
+  EXPERIMENT_TYPE_UI_SCHEMA,
+  ExperimentType,
+} from '../../constants/experimentType';
+import useMatchType from '../../hooks/useMatchType';
 import { formMessage } from '../InputForm/InputForm.css';
+import RadioButtonGroup from '../RadioButtonGroup';
 
 interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
@@ -47,6 +56,7 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
   const { currentStepIdx } = useFunnel();
+  const { handleMatchTypeChange } = useMatchType();
 
   const toast = useToast();
   const contentError = errors.content;
@@ -106,6 +116,32 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
     updatedImages.splice(targetIndex, 0, movedImage);
 
     setImages(updatedImages);
+  };
+
+  const handleChangeExperimentType = (value: ExperimentType) => {
+    setValue('experimentType', value, { shouldValidate: true, shouldDirty: true });
+
+    const experimentTypeSchema = EXPERIMENT_TYPE_UI_SCHEMA[value];
+
+    if (experimentTypeSchema.matchType) {
+      handleMatchTypeChange(experimentTypeSchema.matchType);
+    }
+
+    if (experimentTypeSchema.count !== undefined) {
+      setValue('count', experimentTypeSchema.count, { shouldValidate: true, shouldDirty: true });
+    }
+
+    if (experimentTypeSchema.timeRequired !== undefined || value !== EXPERIMENT_TYPE.OTHER) {
+      setValue('timeRequired', experimentTypeSchema.timeRequired ?? null, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    }
+
+    if (experimentTypeSchema.useDateReference !== undefined) {
+      setValue('startDate', null, { shouldValidate: true, shouldDirty: true });
+      setValue('endDate', null, { shouldValidate: true, shouldDirty: true });
+    }
   };
 
   return (
@@ -217,6 +253,32 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
               {errors.content.message}
             </p>
           )}
+        </div>
+
+        <div>
+          <h3 className={uploadFormSectionTitle}>
+            실험 유형&nbsp;<span style={{ color: colors.textAlert }}>*</span>
+          </h3>
+          <Controller
+            name="experimentType"
+            control={control}
+            render={({ field, fieldState }) => (
+              <RadioButtonGroup
+                field={field}
+                options={EXPERIMENT_TYPE_OPTIONS}
+                onChange={(value) => {
+                  if (!value) return;
+                  handleChangeExperimentType(value as ExperimentType);
+                }}
+                isError={!!fieldState.error}
+              />
+            )}
+          />
+          <div className={experimentTypeWrapper}>
+            <span className={experimentType}>
+              연구 유형을 선택하면 다음 단계에서 기본 입력값이 자동으로 채워져요
+            </span>
+          </div>
         </div>
       </div>
 

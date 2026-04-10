@@ -4,11 +4,10 @@ import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentP
 
 import { customRadioGroup, customRadioButton } from './RadioButtonGroup.css';
 
-
 interface RadioButtonGroupProps<T extends string> {
   field: ControllerRenderProps<
     UploadExperimentPostSchemaType,
-    'matchType' | 'targetGroupInfo.genderType'
+    'experimentType' | 'matchType' | 'targetGroupInfo.genderType'
   >;
   options: { value: string; label: string }[];
   isError?: boolean;

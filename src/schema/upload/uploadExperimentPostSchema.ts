@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { TIME_REQUIRED } from '@constants/config';
 import { MATCH_TYPE } from '@constants/filters';
 import { GENDER } from '@constants/user';
+import { EXPERIMENT_TYPE } from '@upload/constants/experimentType';
 
 const UploadExperimentPostFormSchema = () => {
   return z.object({
@@ -14,6 +15,14 @@ const UploadExperimentPostFormSchema = () => {
 
     // 진행 방식
     matchType: z.enum([MATCH_TYPE.OFFLINE, MATCH_TYPE.ONLINE, MATCH_TYPE.ALL]),
+
+    // 실험 유형
+    experimentType: z.enum([
+      EXPERIMENT_TYPE.ONLINE_SURVEY,
+      EXPERIMENT_TYPE.ONLINE_EXPERIMENT,
+      EXPERIMENT_TYPE.OFFLINE_EXPERIMENT,
+      EXPERIMENT_TYPE.OTHER,
+    ]),
 
     // 실험 횟수
     count: z.preprocess(
@@ -167,6 +176,7 @@ export const UploadExperimentPostSubmitSchema = () => {
     UploadExperimentPostFormSchema().omit({
       addLink: true,
       addContact: true,
+      experimentType: true,
     }),
   );
 };
@@ -177,5 +187,5 @@ export type UploadExperimentPostSchemaType = z.infer<
 
 export type UploadExperimentPostSubmitSchemaType = Omit<
   UploadExperimentPostSchemaType,
-  'addLink' | 'addContact'
+  'addLink' | 'addContact' | 'experimentType'
 >;
