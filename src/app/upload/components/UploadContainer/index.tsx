@@ -26,7 +26,6 @@ import DescriptionSection from '../DescriptionSection';
 import OutlineSection from '../OutlineSection';
 import ProgressBarSection from '../ProgressBarSection';
 
-
 const AUTO_INPUT_FIELDS: (keyof UploadExperimentPostSchemaType)[] = ['leadResearcher', 'place'];
 
 const UploadContainer = () => {
@@ -66,6 +65,9 @@ const UploadContainer = () => {
     }
   };
 
+  const experimentDateChecked =
+    form.getValues('startDate') === null && form.getValues('endDate') === null;
+
   return (
     <section className={uploadContainerLayout({ step })}>
       <FormProvider {...form}>
@@ -89,6 +91,7 @@ const UploadContainer = () => {
                       isLoading={isExtracting}
                     />
                     <OutlineSection
+                      experimentDateChecked={experimentDateChecked}
                       extractKeywordsFromContent={extractKeywordsFromContent}
                       isPending={isExtracting}
                     />

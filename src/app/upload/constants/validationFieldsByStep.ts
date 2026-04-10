@@ -5,7 +5,6 @@ export const VALIDATION_FIELDS_BY_STEP = {
 
   [STEP.outline]: [
     'leadResearcher',
-    'experimentType',
     'startDate',
     'endDate',
     'matchType',

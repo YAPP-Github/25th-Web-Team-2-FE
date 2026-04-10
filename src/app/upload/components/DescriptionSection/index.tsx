@@ -119,7 +119,7 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
   };
 
   const handleChangeExperimentType = (value: ExperimentType) => {
-    setValue('experimentType', value, { shouldValidate: true, shouldDirty: true });
+    setValue('experimentType', value, { shouldDirty: true });
 
     const experimentTypeSchema = EXPERIMENT_TYPE_UI_SCHEMA[value];
 
@@ -128,19 +128,19 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
     }
 
     if (experimentTypeSchema.count !== undefined) {
-      setValue('count', experimentTypeSchema.count, { shouldValidate: true, shouldDirty: true });
+      setValue('count', experimentTypeSchema.count, { shouldDirty: true });
     }
 
     if (experimentTypeSchema.timeRequired !== undefined || value !== EXPERIMENT_TYPE.OTHER) {
-      setValue('timeRequired', experimentTypeSchema.timeRequired ?? null, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
+      setValue('timeRequired', experimentTypeSchema.timeRequired ?? null, { shouldDirty: true });
     }
 
-    if (experimentTypeSchema.useDateReference !== undefined) {
-      setValue('startDate', null, { shouldValidate: true, shouldDirty: true });
-      setValue('endDate', null, { shouldValidate: true, shouldDirty: true });
+    if (experimentTypeSchema.useDateReference === true) {
+      setValue('startDate', null, { shouldDirty: true });
+      setValue('endDate', null, { shouldDirty: true });
+    } else {
+      setValue('startDate', '', { shouldDirty: true });
+      setValue('endDate', '', { shouldDirty: true });
     }
   };
 
@@ -256,9 +256,7 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
         </div>
 
         <div>
-          <h3 className={uploadFormSectionTitle}>
-            실험 유형&nbsp;<span style={{ color: colors.textAlert }}>*</span>
-          </h3>
+          <h3 className={uploadFormSectionTitle}>실험 유형</h3>
           <Controller
             name="experimentType"
             control={control}
