@@ -53,6 +53,7 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
   const {
     control,
     setValue,
+    resetField,
     getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
@@ -122,26 +123,41 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
   const handleChangeExperimentType = (value: ExperimentType) => {
     setValue('experimentType', value, { shouldDirty: true });
 
-    const experimentTypeSchema = EXPERIMENT_TYPE_UI_SCHEMA[value];
-
-    if (experimentTypeSchema.matchType) {
-      handleMatchTypeChange(experimentTypeSchema.matchType);
-    }
-
-    if (experimentTypeSchema.count !== undefined) {
-      setValue('count', experimentTypeSchema.count, { shouldDirty: true });
-    }
-
-    if (experimentTypeSchema.timeRequired !== undefined || value !== EXPERIMENT_TYPE.OTHER) {
-      setValue('timeRequired', experimentTypeSchema.timeRequired ?? null, { shouldDirty: true });
-    }
-
-    if (experimentTypeSchema.useDateReference === true) {
-      setValue('startDate', null, { shouldDirty: true });
-      setValue('endDate', null, { shouldDirty: true });
-    } else {
-      setValue('startDate', '', { shouldDirty: true });
-      setValue('endDate', '', { shouldDirty: true });
+    switch (value) {
+      case EXPERIMENT_TYPE.ONLINE_SURVEY: {
+        const preset = EXPERIMENT_TYPE_UI_SCHEMA[value];
+        handleMatchTypeChange(preset.matchType);
+        setValue('count', preset.count, { shouldDirty: true });
+        setValue('timeRequired', preset.timeRequired, { shouldDirty: true });
+        setValue('startDate', null, { shouldDirty: true });
+        setValue('endDate', null, { shouldDirty: true });
+        break;
+      }
+      case EXPERIMENT_TYPE.ONLINE_EXPERIMENT: {
+        const preset = EXPERIMENT_TYPE_UI_SCHEMA[value];
+        handleMatchTypeChange(preset.matchType);
+        setValue('count', preset.count, { shouldDirty: true });
+        setValue('timeRequired', preset.timeRequired, { shouldDirty: true });
+        resetField('startDate');
+        resetField('endDate');
+        break;
+      }
+      case EXPERIMENT_TYPE.OFFLINE_EXPERIMENT: {
+        const preset = EXPERIMENT_TYPE_UI_SCHEMA[value];
+        handleMatchTypeChange(preset.matchType);
+        setValue('count', preset.count, { shouldDirty: true });
+        setValue('timeRequired', preset.timeRequired, { shouldDirty: true });
+        resetField('startDate');
+        resetField('endDate');
+        break;
+      }
+      case EXPERIMENT_TYPE.OTHER:
+        resetField('matchType');
+        resetField('count');
+        resetField('timeRequired');
+        resetField('startDate');
+        resetField('endDate');
+        break;
     }
   };
 

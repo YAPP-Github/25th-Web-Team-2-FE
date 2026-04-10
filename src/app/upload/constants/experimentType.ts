@@ -1,4 +1,4 @@
-import { TIME_REQUIRED } from '@constants/config';
+import { TimeRequired } from '@/types/post';
 import { MATCH_TYPE } from '@constants/filters';
 
 export const EXPERIMENT_TYPE = {
@@ -10,11 +10,34 @@ export const EXPERIMENT_TYPE = {
 
 export type ExperimentType = (typeof EXPERIMENT_TYPE)[keyof typeof EXPERIMENT_TYPE];
 
-type ExperimentTypeAutoInput = {
-  matchType?: (typeof MATCH_TYPE)[keyof typeof MATCH_TYPE];
-  count?: number;
-  timeRequired?: (typeof TIME_REQUIRED)[number] | undefined;
-  useDateReference?: boolean;
+type ExperimentPresetMap = {
+  [EXPERIMENT_TYPE.ONLINE_SURVEY]: {
+    matchType: typeof MATCH_TYPE.ONLINE;
+    count: number;
+    timeRequired: TimeRequired;
+    useDateReference: true;
+  };
+
+  [EXPERIMENT_TYPE.ONLINE_EXPERIMENT]: {
+    matchType: typeof MATCH_TYPE.ONLINE;
+    count: number;
+    useDateReference: false;
+    timeRequired: null;
+  };
+
+  [EXPERIMENT_TYPE.OFFLINE_EXPERIMENT]: {
+    matchType: typeof MATCH_TYPE.OFFLINE;
+    count: number;
+    useDateReference: false;
+    timeRequired: null;
+  };
+
+  [EXPERIMENT_TYPE.OTHER]: {
+    matchType?: never;
+    count?: never;
+    timeRequired: null;
+    useDateReference?: never;
+  };
 };
 
 export const EXPERIMENT_TYPE_OPTIONS: { value: ExperimentType; label: string }[] = [
@@ -24,7 +47,7 @@ export const EXPERIMENT_TYPE_OPTIONS: { value: ExperimentType; label: string }[]
   { value: EXPERIMENT_TYPE.OTHER, label: '기타' },
 ];
 
-export const EXPERIMENT_TYPE_UI_SCHEMA: Record<ExperimentType, ExperimentTypeAutoInput> = {
+export const EXPERIMENT_TYPE_UI_SCHEMA = {
   [EXPERIMENT_TYPE.ONLINE_SURVEY]: {
     matchType: MATCH_TYPE.ONLINE,
     count: 1,
@@ -34,14 +57,19 @@ export const EXPERIMENT_TYPE_UI_SCHEMA: Record<ExperimentType, ExperimentTypeAut
   [EXPERIMENT_TYPE.ONLINE_EXPERIMENT]: {
     matchType: MATCH_TYPE.ONLINE,
     count: 1,
-    timeRequired: undefined,
+    timeRequired: null,
     useDateReference: false,
   },
   [EXPERIMENT_TYPE.OFFLINE_EXPERIMENT]: {
     matchType: MATCH_TYPE.OFFLINE,
     count: 1,
-    timeRequired: undefined,
+    timeRequired: null,
     useDateReference: false,
   },
-  [EXPERIMENT_TYPE.OTHER]: {},
-};
+  [EXPERIMENT_TYPE.OTHER]: {
+    matchType: undefined,
+    count: undefined,
+    timeRequired: null,
+    useDateReference: undefined,
+  },
+} as const satisfies ExperimentPresetMap;
