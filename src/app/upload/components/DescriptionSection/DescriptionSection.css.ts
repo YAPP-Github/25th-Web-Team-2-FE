@@ -20,7 +20,6 @@ export const descriptionFormLayout = style({
   flexFlow: 'column nowrap',
   gap: '1.2rem',
   flex: 1,
-  marginBottom: '3.6rem',
 });
 
 export const descriptionContentContainer = recipe({
@@ -190,11 +189,15 @@ export const uploadFormSectionTitle = style({
   marginBottom: '1.2rem',
 });
 
-export const experimentTypeWrapper = style({
+export const experimentTypeContainer = style({
+  marginTop: '3.6rem',
+});
+
+export const experimentTypeHelperTextWrapper = style({
   marginTop: '0.8rem',
 });
 
-export const experimentType = style({
+export const experimentTypeHelperText = style({
   ...fonts.label.large.R14,
   color: colors.text02,
 });

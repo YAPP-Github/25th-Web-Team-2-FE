@@ -19,8 +19,9 @@ import {
   descriptionFormLayout,
   descriptionSectionLayout,
   descriptionTextarea,
-  experimentType,
-  experimentTypeWrapper,
+  experimentTypeContainer,
+  experimentTypeHelperText,
+  experimentTypeHelperTextWrapper,
   fileInfoText,
   photoContainer,
   photoGrid,
@@ -255,29 +256,31 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
           )}
         </div>
 
-        <div>
-          <h3 className={uploadFormSectionTitle}>실험 유형</h3>
-          <Controller
-            name="experimentType"
-            control={control}
-            render={({ field, fieldState }) => (
-              <RadioButtonGroup
-                field={field}
-                options={EXPERIMENT_TYPE_OPTIONS}
-                onChange={(value) => {
-                  if (!value) return;
-                  handleChangeExperimentType(value as ExperimentType);
-                }}
-                isError={!!fieldState.error}
-              />
-            )}
-          />
-          <div className={experimentTypeWrapper}>
-            <span className={experimentType}>
-              연구 유형을 선택하면 다음 단계에서 기본 입력값이 자동으로 채워져요
-            </span>
+        {currentStepIdx === 0 && (
+          <div className={experimentTypeContainer}>
+            <h3 className={uploadFormSectionTitle}>실험 유형</h3>
+            <Controller
+              name="experimentType"
+              control={control}
+              render={({ field, fieldState }) => (
+                <RadioButtonGroup
+                  field={field}
+                  options={EXPERIMENT_TYPE_OPTIONS}
+                  onChange={(value) => {
+                    if (!value) return;
+                    handleChangeExperimentType(value as ExperimentType);
+                  }}
+                  isError={!!fieldState.error}
+                />
+              )}
+            />
+            <div className={experimentTypeHelperTextWrapper}>
+              <span className={experimentTypeHelperText}>
+                연구 유형을 선택하면 다음 단계에서 기본 입력값이 자동으로 채워져요
+              </span>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <Dialog.Root open={isLoading ?? false}>
