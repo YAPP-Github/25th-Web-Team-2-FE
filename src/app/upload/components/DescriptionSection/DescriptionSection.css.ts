@@ -186,5 +186,18 @@ export const uploadFormSectionTitle = style({
   flexFlow: 'row nowrap',
   alignItems: 'center',
   gap: '0.8rem',
-  marginBottom: '2rem',
+  marginBottom: '1.2rem',
+});
+
+export const experimentTypeContainer = style({
+  marginTop: '3.6rem',
+});
+
+export const experimentTypeHelperTextWrapper = style({
+  marginTop: '0.8rem',
+});
+
+export const experimentTypeHelperText = style({
+  ...fonts.label.large.R14,
+  color: colors.text02,
 });

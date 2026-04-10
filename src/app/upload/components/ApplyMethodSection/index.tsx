@@ -8,7 +8,6 @@ import { colors } from '@styles/colors';
 import {
   addContactInfoContainer,
   ageInputContainer,
-  alarmAgreeContainer,
   applyMethodContainer,
   applyMethodContentLayout,
   applyMethodSectionLayout,
@@ -19,13 +18,13 @@ import {
   uploadFormSectionTitle,
 } from './ApplyMethodSection.css';
 import AgeForm from '../AgeForm';
+import { AlarmAgreeSection } from '../AlarmAgreeSection';
 import CheckboxWithIcon from '../CheckboxWithIcon';
 import InputForm from '../InputForm';
 import { formMessage } from '../InputForm/InputForm.css';
 import RadioButtonGroup from '../RadioButtonGroup';
 import TextAreaForm from '../TextAreaForm';
 import { label } from '../UploadContainer/UploadContainer.css';
-
 
 const TEXTAREA_HEIGHT = 98;
 
@@ -204,23 +203,8 @@ const ApplyMethodSection = () => {
       </div>
 
       {/* 공고 알림 */}
-      <div className={alarmAgreeContainer}>
-        <Controller
-          name="alarmAgree"
-          control={control}
-          render={({ field }) => (
-            <CheckboxWithIcon
-              checked={field.value}
-              onChange={() => field.onChange(!field.value)}
-              label="조건에 부합하는 참여자에게 해당 공고를 알릴까요?"
-              align="left"
-              size="large"
-              boldStyle
-              disabled={isEdit}
-            />
-          )}
-        />
-      </div>
+      <AlarmAgreeSection control={control} isEdit={isEdit} />
+
       {isEdit && (
         <p className={disabledAlarmAgreeText}>등록된 공고는 공고 알림 여부를 수정할 수 없어요</p>
       )}

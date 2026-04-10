@@ -2,8 +2,33 @@ import { MatchType } from '@/types/filter';
 import { UseApplyMethodQueryResponse } from '@post/[postId]/hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '@post/[postId]/hooks/useExperimentDetailsQuery';
 import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
+import { EXPERIMENT_TYPE } from '@upload/constants/experimentType';
 
 import { convertValueToLabel } from './regionLabelValue';
+
+const getDefaultExperimentType = (
+  experiment: UseQueryExperimentDetailsAPIResponse,
+): UploadExperimentPostSchemaType['experimentType'] => {
+  if (
+    experiment.summary.matchType === 'ONLINE' &&
+    experiment.summary.count === 1 &&
+    experiment.summary.timeRequired === 'LESS_30M' &&
+    !experiment.summary.startDate &&
+    !experiment.summary.endDate
+  ) {
+    return EXPERIMENT_TYPE.ONLINE_SURVEY;
+  }
+
+  if (experiment.summary.matchType === 'ONLINE') {
+    return EXPERIMENT_TYPE.ONLINE_EXPERIMENT;
+  }
+
+  if (experiment.summary.matchType === 'OFFLINE') {
+    return EXPERIMENT_TYPE.OFFLINE_EXPERIMENT;
+  }
+
+  return EXPERIMENT_TYPE.OTHER;
+};
 
 export const transformOriginFormData = (
   experiment: UseQueryExperimentDetailsAPIResponse,
@@ -12,6 +37,7 @@ export const transformOriginFormData = (
   leadResearcher: experiment.summary.leadResearcher,
   startDate: experiment.summary.startDate,
   endDate: experiment.summary.endDate,
+  experimentType: getDefaultExperimentType(experiment),
   matchType: experiment.summary.matchType as MatchType,
   reward: experiment.summary.reward,
   place: experiment.address.place,

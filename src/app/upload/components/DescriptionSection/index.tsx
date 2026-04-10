@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { ChangeEvent, DragEvent, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-
 import { dialogOverlay } from '@common/Modal/ConfirmModal/ConfirmModal.css';
 import Icon from '@components/Icon';
 import { useToast } from '@hooks/useToast';
@@ -20,6 +19,9 @@ import {
   descriptionFormLayout,
   descriptionSectionLayout,
   descriptionTextarea,
+  experimentTypeContainer,
+  experimentTypeHelperText,
+  experimentTypeHelperTextWrapper,
   fileInfoText,
   photoContainer,
   photoGrid,
@@ -27,7 +29,15 @@ import {
   uploadFormSectionTitle,
   uploadImagesContainer,
 } from './DescriptionSection.css';
+import {
+  EXPERIMENT_TYPE,
+  EXPERIMENT_TYPE_OPTIONS,
+  EXPERIMENT_TYPE_UI_SCHEMA,
+  ExperimentType,
+} from '../../constants/experimentType';
+import useMatchType from '../../hooks/useMatchType';
 import { formMessage } from '../InputForm/InputForm.css';
+import RadioButtonGroup from '../RadioButtonGroup';
 
 interface DescriptionSectionProps {
   images: (string | File)[]; // 기존 이미지 (URL) + 새로 추가된 이미지 (File)
@@ -43,10 +53,12 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
   const {
     control,
     setValue,
+    resetField,
     getValues,
     formState: { errors },
   } = useFormContext<UploadExperimentPostSchemaType>();
   const { currentStepIdx } = useFunnel();
+  const { handleMatchTypeChange } = useMatchType();
 
   const toast = useToast();
   const contentError = errors.content;
@@ -106,6 +118,47 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
     updatedImages.splice(targetIndex, 0, movedImage);
 
     setImages(updatedImages);
+  };
+
+  const handleChangeExperimentType = (value: ExperimentType) => {
+    setValue('experimentType', value, { shouldDirty: true });
+
+    switch (value) {
+      case EXPERIMENT_TYPE.ONLINE_SURVEY: {
+        const preset = EXPERIMENT_TYPE_UI_SCHEMA[value];
+        handleMatchTypeChange(preset.matchType);
+        setValue('count', preset.count, { shouldDirty: true });
+        setValue('timeRequired', preset.timeRequired, { shouldDirty: true });
+        setValue('startDate', null, { shouldDirty: true });
+        setValue('endDate', null, { shouldDirty: true });
+        break;
+      }
+      case EXPERIMENT_TYPE.ONLINE_EXPERIMENT: {
+        const preset = EXPERIMENT_TYPE_UI_SCHEMA[value];
+        handleMatchTypeChange(preset.matchType);
+        setValue('count', preset.count, { shouldDirty: true });
+        setValue('timeRequired', preset.timeRequired, { shouldDirty: true });
+        resetField('startDate');
+        resetField('endDate');
+        break;
+      }
+      case EXPERIMENT_TYPE.OFFLINE_EXPERIMENT: {
+        const preset = EXPERIMENT_TYPE_UI_SCHEMA[value];
+        handleMatchTypeChange(preset.matchType);
+        setValue('count', preset.count, { shouldDirty: true });
+        setValue('timeRequired', preset.timeRequired, { shouldDirty: true });
+        resetField('startDate');
+        resetField('endDate');
+        break;
+      }
+      case EXPERIMENT_TYPE.OTHER:
+        resetField('matchType');
+        resetField('count');
+        resetField('timeRequired');
+        resetField('startDate');
+        resetField('endDate');
+        break;
+    }
   };
 
   return (
@@ -218,6 +271,32 @@ const DescriptionSection = ({ images, setImages, isLoading }: DescriptionSection
             </p>
           )}
         </div>
+
+        {currentStepIdx === 0 && (
+          <div className={experimentTypeContainer}>
+            <h3 className={uploadFormSectionTitle}>실험 유형</h3>
+            <Controller
+              name="experimentType"
+              control={control}
+              render={({ field, fieldState }) => (
+                <RadioButtonGroup
+                  field={field}
+                  options={EXPERIMENT_TYPE_OPTIONS}
+                  onChange={(value) => {
+                    if (!value) return;
+                    handleChangeExperimentType(value as ExperimentType);
+                  }}
+                  isError={!!fieldState.error}
+                />
+              )}
+            />
+            <div className={experimentTypeHelperTextWrapper}>
+              <span className={experimentTypeHelperText}>
+                연구 유형을 선택하면 다음 단계에서 기본 입력값이 자동으로 채워져요
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       <Dialog.Root open={isLoading ?? false}>
