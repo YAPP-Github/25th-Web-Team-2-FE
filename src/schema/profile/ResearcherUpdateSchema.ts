@@ -1,3 +1,4 @@
+import { VALID_EMAIL_TLDS } from '@/constants/config';
 import { z } from 'zod';
 
 export type ResearcherUpdateSchemaType = z.infer<ReturnType<typeof ResearcherUpdateSchema>>;
@@ -11,7 +12,18 @@ const requiredFields = {
     .string({
       required_error: '연락 받을 이메일을 입력해주세요',
     })
-    .email({ message: '이메일 형식이 올바르지 않아요' }),
+    .email({ message: '이메일 형식이 올바르지 않아요' })
+    .refine(
+      (email) => {
+        const domain = email.split('@')?.[1];
+        const tld = domain?.split('.')?.pop();
+
+        return !!tld && VALID_EMAIL_TLDS.includes(tld);
+      },
+      {
+        message: '이메일을 다시 한번 확인해주세요.',
+      },
+    ),
 
   // 이름: 필수. 2자 이상 10자 이하. 한글, 영문만 입력.
   name: z
