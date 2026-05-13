@@ -1,11 +1,9 @@
 'use client';
 
-import { PropsWithChildren, useEffect } from 'react';
-
+import { PropsWithChildren } from 'react';
 
 import { STEP } from '@constants/steps';
 import useFunnel from '@join/hooks/useFunnel';
-import { startRecording } from '@lib/mixpanelClient';
 
 import JoinHeader from '../JoinHeader';
 
@@ -15,10 +13,6 @@ interface MobileFunnelLayoutProps {
 
 const MobileFunnelLayout = ({ children, title }: PropsWithChildren<MobileFunnelLayoutProps>) => {
   const { step } = useFunnel();
-
-  useEffect(() => {
-    startRecording();
-  }, []);
 
   if (step === STEP.success) {
     return <>{children}</>;
