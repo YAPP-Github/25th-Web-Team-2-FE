@@ -1,5 +1,6 @@
-import { VALID_EMAIL_TLDS } from '@/constants/config';
 import { z } from 'zod';
+
+import { VALID_EMAIL_TLDS } from '@/constants/config';
 
 export type ResearcherUpdateSchemaType = z.infer<ReturnType<typeof ResearcherUpdateSchema>>;
 export type ResearcherUpdateSubmitSchemaType = z.infer<
