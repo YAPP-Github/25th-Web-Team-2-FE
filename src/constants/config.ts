@@ -20,4 +20,16 @@ export const TIME_REQUIRED = [
   'ABOUT_4H',
 ] as const;
 
-export const VALID_EMAIL_TLDS = ['com', 'net', 'org', 'io', 'co', 'kr'];
+export const VALID_EMAIL_TLDS = [
+  'com',
+  'net',
+  'org',
+  'io',
+  'co',
+  'kr',
+  'ac.kr',
+  'edu',
+  'ac.uk',
+  'edu.au',
+  'ewhain.net',
+];
