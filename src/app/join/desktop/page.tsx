@@ -7,7 +7,6 @@ import { authOptions } from '@lib/auth-utils';
 import ParticipantForm from './Participant/ParticipantForm';
 import ResearcherForm from './Researcher/ResearcherForm';
 
-
 export default async function JoinPage() {
   const session = await getServerSession(authOptions);
   const role = session?.role;
