@@ -5,6 +5,7 @@ import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
 import { colors } from '@/styles/colors';
 import { AreaType, RegionType } from '@/types/filter';
 import { TimeRequired } from '@/types/post';
+import { formatExperimentCount } from '@/utils/formatExperimentCount';
 import { isParticipantInfo } from '@/utils/typeGuard';
 
 export const formatPostDate = ({
@@ -160,12 +161,12 @@ export const formatExperimentTimeRequired = ({
   }
 
   if (!timeRequired) {
-    return [DEFAULT_TEXT, SEPARATOR, `${count}회`];
+    return [DEFAULT_TEXT, SEPARATOR, formatExperimentCount(count)];
   }
 
   if (count === 1) {
     return [TIME_REQUIRED_MAP[timeRequired]];
   }
 
-  return [TIME_REQUIRED_MAP[timeRequired], SEPARATOR, `${count}회`];
+  return [TIME_REQUIRED_MAP[timeRequired], SEPARATOR, formatExperimentCount(count)];
 };

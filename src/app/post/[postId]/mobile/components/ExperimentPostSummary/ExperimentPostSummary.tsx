@@ -15,6 +15,8 @@ import {
 } from '../../../ExperimentPostPage.utils';
 import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
 
+import { formatExperimentCount } from '@/utils/formatExperimentCount';
+
 const ExperimentPostSummary = ({
   postDetailData,
 }: {
@@ -70,7 +72,7 @@ const ExperimentPostSummary = ({
           <tr>
             <th>소요 시간</th>
             <td>
-              <span className={participationCount}>{summary.count}회 참여</span>
+              <span className={participationCount}>{formatExperimentCount(summary.count)} 참여</span>
               {summary.timeRequired
                 ? `회당 ${getDurationLabel(summary.timeRequired)}`
                 : '본문 참고'}

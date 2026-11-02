@@ -38,7 +38,7 @@ export const countSelectOptions = [
     value: '9',
   },
   {
-    label: '10회',
+    label: '10회 이상',
     value: '10',
   },
 ];
