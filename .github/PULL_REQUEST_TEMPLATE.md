@@ -1,20 +1,8 @@
-## Issue Number
-<!-- #이슈번호 -->
+## 작업 배경
+<!-- 작업 맥락을 간략하게 핵심만 설명해주세요 -->
 
-## As-Is
-<!-- 문제 상황 정의 -->
+## 목표
+<!-- 해당 PR에서 해결하고자하는 문제를 명확하게 작성해주세요 -->
 
-## To-Be
-<!-- 변경 사항 -->
-
-## Check List
-
-- [ ] 테스트가 전부 통과되었나요?
-- [ ] 모든 commit이 push 되었나요?
-- [ ] merge할 branch를 확인했나요?
-- [ ] Assignee를 지정했나요?
-- [ ] Label을 지정했나요?
-
-## Test Screenshot
-
-## (Optional) Additional Description
+## 체크사항
+<!-- 로컬에서 검증한 사항을 불릿 형태로 작성해주세요. -->
