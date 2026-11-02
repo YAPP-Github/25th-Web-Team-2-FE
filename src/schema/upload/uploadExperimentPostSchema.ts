@@ -6,6 +6,14 @@ import { GENDER } from '@constants/user';
 import { EXPERIMENT_TYPE } from '@upload/constants/experimentType';
 
 const UploadExperimentPostFormSchema = () => {
+  const requiredAge = z.preprocess(
+    (value) => (value === '' || value === undefined || value === null ? undefined : value),
+    z.coerce
+      .number({ required_error: '나이를 입력해 주세요', invalid_type_error: '나이를 입력해 주세요' })
+      .min(0, { message: '0세 이상이어야 합니다' })
+      .max(100, { message: '100세 이하로 입력해주세요' }),
+  );
+
   return z.object({
     // 실험 시작 날짜
     startDate: z.union([z.string(), z.null()]),
@@ -91,14 +99,8 @@ const UploadExperimentPostFormSchema = () => {
       phoneNum: z.string().max(50, '최대 50자 이하로 입력해 주세요').nullable(),
     }),
     targetGroupInfo: z.object({
-      startAge: z.coerce
-        .number({ message: '' })
-        .min(0, { message: '0세 이상이어야 합니다' })
-        .max(100, { message: '100세 이하로 입력해주세요' }),
-      endAge: z.coerce
-        .number({ message: '' })
-        .min(0, { message: '0세 이상이어야 합니다' })
-        .max(100, { message: '100세 이하로 입력해주세요' }),
+      startAge: requiredAge,
+      endAge: requiredAge,
 
       genderType: z.enum([GENDER.MALE, GENDER.FEMALE, GENDER.ALL]),
 
@@ -121,6 +123,14 @@ const validateSchema = <T extends z.ZodSchema>(
   schema: T,
 ): z.ZodType<UploadExperimentPostSubmitSchemaType> => {
   return schema.superRefine((data: UploadExperimentPostSchemaType, ctx) => {
+    if (data.targetGroupInfo.startAge > data.targetGroupInfo.endAge) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['targetGroupInfo', 'endAge'],
+        message: '나이는 더 큰 값으로 입력해 주세요',
+      });
+    }
+
     // addLink가 true일 때 formUrl이 필수값
     if (data.addLink) {
       if (!data.applyMethodInfo.formUrl) {

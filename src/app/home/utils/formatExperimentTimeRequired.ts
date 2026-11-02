@@ -1,4 +1,5 @@
 import { TimeRequired } from '@/types/post';
+import { formatExperimentCount } from '@utils/formatExperimentCount';
 
 const TIME_REQUIRED_MAP: Record<TimeRequired, string> = {
   LESS_30M: '30분 이하',
@@ -27,12 +28,12 @@ export const formatExperimentTimeRequired = ({
   }
 
   if (!timeRequired) {
-    return [DEFAULT_TEXT, SEPARATOR, `${count}회`];
+    return [DEFAULT_TEXT, SEPARATOR, formatExperimentCount(count)];
   }
 
   if (count === 1) {
     return [TIME_REQUIRED_MAP[timeRequired]];
   }
 
-  return [TIME_REQUIRED_MAP[timeRequired], SEPARATOR, `${count}회`];
+  return [TIME_REQUIRED_MAP[timeRequired], SEPARATOR, formatExperimentCount(count)];
 };

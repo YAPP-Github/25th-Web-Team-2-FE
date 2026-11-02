@@ -54,9 +54,9 @@ const ApplyMethodSection = () => {
   const ageError = !!(
     formState.errors?.targetGroupInfo?.startAge || formState.errors?.targetGroupInfo?.endAge
   );
-  const emptyMessage =
-    formState.errors.targetGroupInfo?.startAge?.message === '' &&
-    formState.errors.targetGroupInfo?.endAge?.message === '';
+  const ageErrorMessage =
+    formState.errors.targetGroupInfo?.startAge?.message ||
+    formState.errors.targetGroupInfo?.endAge?.message;
 
   const [openFakeScheduleAlertDialog, setOpenFakeScheduleAlertDialog] = useState(false);
 
@@ -181,10 +181,9 @@ const ApplyMethodSection = () => {
                 />
                 <span className={textStyle}>세</span>
               </div>
-              {ageError && !emptyMessage && (
+              {ageError && ageErrorMessage && (
                 <p className={formMessage} role="alert" aria-live="polite">
-                  {formState.errors.targetGroupInfo?.startAge?.message ||
-                    formState.errors.targetGroupInfo?.endAge?.message}
+                  {ageErrorMessage}
                 </p>
               )}
             </div>

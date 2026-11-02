@@ -8,5 +8,5 @@ export const countSelectOptions = [
   { label: '7회', value: '7' },
   { label: '8회', value: '8' },
   { label: '9회', value: '9' },
-  { label: '10회', value: '10' },
+  { label: '10회 이상', value: '10' },
 ];

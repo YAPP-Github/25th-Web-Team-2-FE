@@ -1,3 +1,5 @@
+import type { DefaultValues } from 'react-hook-form';
+
 import { MatchType } from '@/types/filter';
 import { UseApplyMethodQueryResponse } from '@post/[postId]/hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '@post/[postId]/hooks/useExperimentDetailsQuery';
@@ -33,7 +35,7 @@ const getDefaultExperimentType = (
 export const transformOriginFormData = (
   experiment: UseQueryExperimentDetailsAPIResponse,
   applyMethod: UseApplyMethodQueryResponse,
-): UploadExperimentPostSchemaType => ({
+) => ({
   leadResearcher: experiment.summary.leadResearcher,
   startDate: experiment.summary.startDate,
   endDate: experiment.summary.endDate,
@@ -54,8 +56,8 @@ export const transformOriginFormData = (
     phoneNum: applyMethod.phoneNum,
   },
   targetGroupInfo: {
-    startAge: experiment.targetGroup.startAge ?? 0,
-    endAge: experiment.targetGroup.endAge ?? 0,
+    startAge: experiment.targetGroup.startAge ?? undefined,
+    endAge: experiment.targetGroup.endAge ?? undefined,
     genderType: experiment.targetGroup.genderType,
     otherCondition: experiment.targetGroup.otherCondition || '',
   },
@@ -66,4 +68,4 @@ export const transformOriginFormData = (
   isOnCampus: experiment.address.isOnCampus,
   addLink: !!applyMethod.formUrl,
   addContact: !!applyMethod.phoneNum,
-});
+} satisfies DefaultValues<UploadExperimentPostSchemaType>);
