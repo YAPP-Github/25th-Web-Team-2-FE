@@ -61,7 +61,7 @@ const parseDateString = (dateString: string | null) => {
 const transformOriginFormData = (
   experiment: UseQueryExperimentDetailsAPIResponse,
   applyMethod: UseApplyMethodQueryResponse,
-): UploadExperimentPostSchemaType => ({
+) => ({
   leadResearcher: experiment.summary.leadResearcher,
   startDate: experiment.summary.startDate,
   endDate: experiment.summary.endDate,
@@ -81,8 +81,8 @@ const transformOriginFormData = (
     phoneNum: applyMethod.phoneNum,
   },
   targetGroupInfo: {
-    startAge: experiment.targetGroup.startAge ?? 0,
-    endAge: experiment.targetGroup.endAge ?? 0,
+    startAge: experiment.targetGroup.startAge ?? undefined,
+    endAge: experiment.targetGroup.endAge ?? undefined,
     genderType: experiment.targetGroup.genderType,
     otherCondition: experiment.targetGroup.otherCondition || '',
   },
