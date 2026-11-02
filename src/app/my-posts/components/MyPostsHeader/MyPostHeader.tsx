@@ -1,7 +1,8 @@
-import { myPostsHeaderContainer, myPostsHeaderText, postsSorting } from './MyPostsHeader.css';
 
-import Icon from '@/components/Icon';
-import { colors } from '@/styles/colors';
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
+import { myPostsHeaderContainer, myPostsHeaderText, postsSorting } from './MyPostsHeader.css';
 
 interface MyPostsHeaderProps {
   isError: boolean;

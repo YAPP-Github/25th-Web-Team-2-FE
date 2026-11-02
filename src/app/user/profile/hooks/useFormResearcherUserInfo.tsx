@@ -1,14 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import useUpdateResearcherInfoMutation from './useUpdateResearcherInfoMutation';
 
-import { ResearcherResponse } from '@/apis/login';
+import { ResearcherResponse } from '@apis/login';
 import {
   ResearcherUpdateSchema,
   ResearcherUpdateSchemaType,
   ResearcherUpdateSubmitSchema,
-} from '@/schema/profile/ResearcherUpdateSchema';
+} from '@schema/profile/ResearcherUpdateSchema';
+
+import useUpdateResearcherInfoMutation from './useUpdateResearcherInfoMutation';
 
 interface UseFormResearcherUserInfoProps {
   userInfo: ResearcherResponse;

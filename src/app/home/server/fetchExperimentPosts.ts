@@ -1,14 +1,18 @@
+import 'server-only';
+
 import { getServerSession } from 'next-auth';
 
-import { calculateAgeFromBirthDate } from '../home.utils';
-import { fetchParticipantInfo } from './fetchParticipantInfo';
 
-import { createSSRFetchClient } from '@/apis/config/fetchClient';
-import { ExperimentPostListFilters, ExperimentPostResponse } from '@/apis/post';
-import { API_URL } from '@/constants/url';
-import { authOptions } from '@/lib/auth-utils';
-import { URLFilterSchema } from '@/schema/filter/URLFilterSchema';
-import { getQueryParamsToString } from '@/utils/getQueryParamsString';
+import { createSSRFetchClient } from '@apis/config/fetchClient';
+import { ExperimentPostListFilters, ExperimentPostResponse } from '@apis/post';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+import { API_URL } from '@constants/url';
+import { authOptions } from '@lib/auth-utils';
+import { URLFilterSchema } from '@schema/filter/URLFilterSchema';
+import { getQueryParamsToString } from '@utils/getQueryParamsString';
+
+import { fetchParticipantInfo } from './fetchParticipantInfo';
+import { calculateAgeFromBirthDate } from '../utils/calculateAgeFromBirthDate';
 
 const POST_PER_PAGE = 15;
 
@@ -38,7 +42,7 @@ export const fetchExperimentPosts = async ({ searchParams }: FetchExperimentPost
 
   const filters: ExperimentPostListFilters = parsedParamsResult.success
     ? { ...parsedParamsResult.data, count: POST_PER_PAGE }
-    : { recruitStatus: 'ALL', count: POST_PER_PAGE };
+    : { recruitStatus: DEFAULT_RECRUIT_STATUS, count: POST_PER_PAGE };
 
   const queryString = getQueryParamsToString({ ...filters });
   const initialPosts = await fetchClient.get<ExperimentPostResponse>(

@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const experimentPostMobileContentWrapperLayout = style({
   minHeight: 'calc(100dvh - 5.4rem)',
@@ -15,6 +15,16 @@ export const fixedBottomButtonLayout = style({
   bottom: '1.6rem',
   left: '1.6rem',
   right: '1.6rem',
+});
+
+export const fullDivider = style({
+  height: '2rem',
+  marginInline: '-1.6rem',
+  backgroundColor: colors.field02,
+});
+
+export const otherPostsSectionWrapper = style({
+  padding: '2rem 0',
 });
 
 export const buttonGradientBackground = style({

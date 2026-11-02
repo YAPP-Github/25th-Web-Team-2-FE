@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-import { colors } from '@/styles/colors';
+import { colors } from '@styles/colors';
 
 function Check(props: SVGProps<SVGSVGElement>) {
   return (

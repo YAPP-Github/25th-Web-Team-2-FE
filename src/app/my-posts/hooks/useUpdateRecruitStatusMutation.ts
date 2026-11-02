@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { UseMyPostsQueryResponse } from './useMyPostsQuery';
 
-import { fetchClient } from '@/apis/config/fetchClient';
-import { queryKey } from '@/constants/queryKey';
-import { API_URL } from '@/constants/url';
+import { fetchClient } from '@apis/config/fetchClient';
+import { queryKey } from '@constants/queryKey';
+import { API_URL } from '@constants/url';
+
+import { UseMyPostsQueryResponse } from './useMyPostsQuery';
 
 interface UseUpdateRecruitStatusMutationParams {
   postId: string;

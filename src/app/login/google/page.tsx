@@ -3,10 +3,11 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
 
+import { joinWithCredentials } from '@lib/auth-utils';
+
 import { emptyLayout } from './GoogleLoginPage.css';
 import useGoogleLoginMutation from '../hooks/useGoogleLoginMutation';
 
-import { joinWithCredentials } from '@/lib/auth-utils';
 
 export default function GoogleLoginPage() {
   const router = useRouter();

@@ -1,0 +1,82 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+import { ROLE } from '@/constants/config';
+import UnivAutoCompleteInput from '@components/UnivAutoCompleteInput';
+import JoinButton from '@join/components/JoinButton';
+import JoinInput from '@join/components/JoinInput';
+import JoinTextarea from '@join/components/JoinTextarea';
+import { joinContentContainer, joinForm } from '@join/JoinPage.css';
+import { CLICK_SIGNUP_COMPLETE, PAGEVIEW_SIGNUP_RESEARCHER_STEP } from '@lib/mixpanel/signupEvents';
+import { trackEvent } from '@lib/mixpanelClient';
+import { ResearcherJoinSchemaType } from '@schema/join/ResearcherJoinSchema';
+
+interface JoinInfoStepProps {
+  handleSubmit: () => void;
+}
+
+const JoinInfoStep = ({ handleSubmit }: JoinInfoStepProps) => {
+  const { control } = useFormContext<ResearcherJoinSchemaType>();
+
+  const handleClickJoin = () => {
+    trackEvent(CLICK_SIGNUP_COMPLETE, { role: ROLE.researcher, device: 'desktop' });
+    handleSubmit();
+  };
+
+  useEffect(() => {
+    trackEvent(PAGEVIEW_SIGNUP_RESEARCHER_STEP, { device: 'desktop', step: 2 });
+  }, []);
+
+  return (
+    <section className={joinForm}>
+      <div className={joinContentContainer}>
+        {/* 이름 */}
+        <JoinInput<ResearcherJoinSchemaType>
+          name="name"
+          control={control}
+          label="이름"
+          required
+          placeholder="이름(실명) 입력"
+        />
+
+        {/* 학교명 */}
+        <UnivAutoCompleteInput<ResearcherJoinSchemaType>
+          name="univName"
+          control={control}
+          label="학교명"
+          required
+          placeholder="학교명 입력"
+        />
+
+        {/* 전공명 */}
+        <JoinInput<ResearcherJoinSchemaType>
+          name="major"
+          control={control}
+          label="전공명"
+          required
+          placeholder="전공명 입력"
+        />
+
+        {/* 소속 연구실 정보 */}
+        <JoinTextarea<ResearcherJoinSchemaType>
+          name="labInfo"
+          control={control}
+          label="소속 연구실 정보"
+          placeholder="연구실 정보 입력"
+          maxLength={100}
+        />
+      </div>
+
+      {/* 회원가입 버튼 */}
+      <JoinButton<ResearcherJoinSchemaType>
+        onSubmit={handleClickJoin}
+        validationFields={['name', 'univName', 'major']}
+        width="20rem"
+      />
+    </section>
+  );
+};
+
+export default JoinInfoStep;

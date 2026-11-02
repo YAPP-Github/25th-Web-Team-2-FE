@@ -1,10 +1,11 @@
+
+import { ROLE } from '@constants/config';
+import { API_URL } from '@constants/url';
+import { ParticipantUpdateSubmitSchemaType } from '@schema/profile/ParticipantUpdateSchema';
+import { ResearcherUpdateSubmitSchemaType } from '@schema/profile/ResearcherUpdateSchema';
+
 import { fetchClient } from './config/fetchClient';
 import { ParticipantResponse, ResearcherResponse } from './login';
-
-import { ROLE } from '@/constants/config';
-import { API_URL } from '@/constants/url';
-import { ParticipantUpdateSubmitSchemaType } from '@/schema/profile/ParticipantUpdateSchema';
-import { ResearcherUpdateSubmitSchemaType } from '@/schema/profile/ResearcherUpdateSchema';
 
 export type ReasonType =
   | `RESEARCH_STOPPED`

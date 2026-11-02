@@ -3,15 +3,16 @@
 import { useSession } from 'next-auth/react';
 import { FormProvider } from 'react-hook-form';
 
-import { Participant } from '.';
-
-import FunnelStepGuard from '@/app/join/components/FunnelStepGuard/FunnelStepGuard';
-import JoinSuccessStep from '@/app/join/components/JoinSuccessStep/JoinSuccessStep';
-import useFunnel from '@/app/join/hooks/useFunnel';
-import { useParticipantJoin } from '@/app/join/hooks/useParticipantJoin';
-import { MOBILE_PARTICIPANT_JOIN_STEP_LIST, STEP } from '@/app/join/JoinPage.constants';
-import MobileFunnelLayout from '@/app/join/mobile/components/MobileFunnelLayout/MobileFunnelLayout';
 import { LoginProvider } from '@/types/user';
+import { STEP } from '@constants/steps';
+import FunnelStepGuard from '@join/components/FunnelStepGuard';
+import JoinSuccessStep from '@join/components/JoinSuccessStep';
+import { MOBILE_PARTICIPANT_JOIN_STEP_LIST } from '@join/constants/steps';
+import useFunnel from '@join/hooks/useFunnel';
+import { useParticipantJoin } from '@join/hooks/useParticipantJoin';
+import MobileFunnelLayout from '@join/mobile/components/MobileFunnelLayout';
+
+import { Participant } from '.';
 
 const ParticipantForm = () => {
   const { data: session } = useSession();

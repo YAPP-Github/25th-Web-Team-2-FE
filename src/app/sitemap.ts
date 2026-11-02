@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
-import { fetchPostList } from '@/apis/post';
 import { ExperimentPost } from '@/types/post';
+import { fetchPostList } from '@apis/post';
 
 const SITE_URL = 'https://gradmeet.co.kr';
 

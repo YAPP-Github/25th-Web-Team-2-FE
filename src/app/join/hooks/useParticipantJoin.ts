@@ -1,13 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import useParticipantJoinMutation from '../hooks/useParticipantJoinMutation';
-
 import {
   ParticipantJoinSchema,
   ParticipantJoinSchemaType,
   ParticipantJoinSubmitSchema,
-} from '@/schema/join/ParticipantJoinSchema';
+} from '@schema/join/ParticipantJoinSchema';
+
+import useParticipantJoinMutation from '../hooks/useParticipantJoinMutation';
+
 
 interface UseParticipantJoinProps {
   onSuccess: () => void;

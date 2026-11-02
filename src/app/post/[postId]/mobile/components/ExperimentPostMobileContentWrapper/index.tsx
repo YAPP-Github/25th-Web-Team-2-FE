@@ -1,0 +1,77 @@
+'use client';
+
+import Button from '@common/Button';
+import useOverlay from '@hooks/useOverlay';
+import { trackEvent } from '@lib/mixpanelClient';
+
+import {
+  buttonGradientBackground,
+  experimentPostMobileContentWrapperLayout,
+  fixedBottomButtonLayout,
+  fullDivider,
+  otherPostsSectionWrapper,
+} from './ExperimentPostMobileContentWrapper.css';
+import OtherPostsSection from '../../../components/OtherPostsSection';
+import { UseApplyMethodQueryResponse } from '../../../hooks/useApplyMethodQuery';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+import ExperimentPostInfo from '../ExperimentPostInfo';
+import ExperimentPostTabs from '../ExperimentPostTabs';
+import ParticipationGuideBottomSheet from '../ParticipationGuideBottomSheet';
+
+const ExperimentPostMobileContentWrapper = ({
+  postDetailData,
+  applyMethodData,
+}: {
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+  applyMethodData: UseApplyMethodQueryResponse;
+}) => {
+  const { open, close } = useOverlay();
+
+  const handleOpenBottomSheet = () => {
+    trackEvent('ApplyMethod Interaction', {
+      action: 'Click ApplyMethod Modal',
+      device: 'mobile',
+    });
+
+    open(
+      () => <ParticipationGuideBottomSheet onConfirm={close} applyMethodData={applyMethodData} />,
+      {
+        title: '참여 방법',
+        headerMode: 'none',
+      },
+    );
+  };
+
+  return (
+    <div className={experimentPostMobileContentWrapperLayout}>
+      <ExperimentPostInfo postDetailData={postDetailData} />
+      <ExperimentPostTabs postDetailData={postDetailData} />
+      <div className={fullDivider} />
+      <div className={otherPostsSectionWrapper}>
+        <OtherPostsSection postId={postDetailData.experimentPostId} isMobile />
+      </div>
+
+      <div className={buttonGradientBackground}>
+        <div className={fixedBottomButtonLayout}>
+          {postDetailData.recruitStatus ? (
+            <Button variant="dark" size="medium" height={'5.6rem'} onClick={handleOpenBottomSheet}>
+              참여하기
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              disabled
+              size="medium"
+              height={'5.6rem'}
+              onClick={handleOpenBottomSheet}
+            >
+              모집이 완료 되었어요
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ExperimentPostMobileContentWrapper;

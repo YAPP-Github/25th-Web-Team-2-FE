@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { logAPIError, logNetworkError, logUnhandledError } from '@lib/log';
+
 import { AuthError, CustomError, NetworkError, UnhandledError } from './error';
 import { APIErrorResponse, AuthErrorCode } from './types';
 import { getDefaultHeader, isAuthError } from './utils';
 
-import { logAPIError, logNetworkError, logUnhandledError } from '@/lib/log';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const SERVER_STATUS_CODE = 500;
@@ -72,10 +73,9 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           }
 
           logAPIError({
+            error: apiError,
             level: response.status >= SERVER_STATUS_CODE ? 'error' : 'warning',
-            errorCode: apiError.code,
             httpStatus: response.status,
-            errorMessage: apiError.message,
             url,
           });
 
@@ -94,7 +94,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
         return await response.json();
       } catch (error) {
         if (typeof window !== 'undefined' && !navigator.onLine) {
-          logNetworkError({ url });
+          logNetworkError({ error: error as Error, url });
           throw new NetworkError();
         }
 
@@ -102,7 +102,7 @@ export const createBaseFetchClient = (options: BaseFetchClientOptions = {}) => {
           throw error;
         }
 
-        logUnhandledError({ url });
+        logUnhandledError({ error: error as Error, url });
         throw new UnhandledError();
       }
     },

@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 
-import { ResearcherResponse } from '@/apis/login';
-import useFormResearcherUserInfo from '@/app/user/profile/hooks/useFormResearcherUserInfo';
-import { PATH } from '@/constants/path';
-import { useToast } from '@/hooks/useToast';
+import { ResearcherResponse } from '@apis/login';
+import { PATH } from '@constants/path';
+import { useToast } from '@hooks/useToast';
+import useFormResearcherUserInfo from '@user/profile/hooks/useFormResearcherUserInfo';
 
 const SUCCESS_UPDATE_MESSAGE = '저장되었어요';
 const ERROR_UPDATE_MESSAGE = '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.';

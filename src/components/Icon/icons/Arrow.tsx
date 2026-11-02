@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-import { colors } from '@/styles/colors';
+import { colors } from '@styles/colors';
 
 const Arrow = (props: SVGProps<SVGSVGElement>) => {
   return (

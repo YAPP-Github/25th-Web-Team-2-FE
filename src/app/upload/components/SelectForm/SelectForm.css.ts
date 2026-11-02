@@ -1,7 +1,7 @@
 import { style, styleVariants } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const selectInputContainer = style({
   display: 'flex',

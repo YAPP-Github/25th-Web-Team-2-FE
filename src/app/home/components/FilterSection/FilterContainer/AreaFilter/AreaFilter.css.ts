@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 // Popover Trigger (동적 색상은 CSS 변수로 처리)
 export const triggerWrapper = style({

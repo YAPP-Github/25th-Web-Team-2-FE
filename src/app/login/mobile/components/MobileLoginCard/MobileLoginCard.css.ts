@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const mobileLoginCard = style({
   display: 'flex',
@@ -38,6 +38,7 @@ export const buttonContainer = style({
 });
 
 export const loginButton = style({
+  position: 'relative',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

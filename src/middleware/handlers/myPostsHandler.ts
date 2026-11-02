@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { JWT } from 'next-auth/jwt';
 
+import { ROLE } from '@constants/config';
+
 import { clearAuthCookies } from '../utils';
 import { goToHome } from '../utils';
 
-import { ROLE } from '@/constants/config';
 
 export function myPostsHandler(request: NextRequest, token: JWT | null) {
   const isTempUser = token?.isTempUser === true && token?.accessToken === 'temp-token';

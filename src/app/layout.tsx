@@ -1,12 +1,14 @@
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { getServerSession } from 'next-auth';
 
 import pretendard from '@/fonts/local-font';
-import '@/styles/reset.css';
-import '@/styles/global.css';
-import { authOptions } from '@/lib/auth-utils';
 import Providers from '@/providers/Providers';
+import { DEFAULT_OG_IMAGE_URL } from '@constants/url';
+import { authOptions } from '@lib/auth-utils';
+
+import '@styles/reset.css';
+import '@styles/global.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gradmeet.co.kr'),
@@ -22,6 +24,17 @@ export const metadata: Metadata = {
     siteName: '그라밋',
     type: 'website',
     locale: 'ko_KR',
+    images: {
+      url: DEFAULT_OG_IMAGE_URL,
+    },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '그라밋',
+    description: '대학원생 연구자가 대학생 참여자를 모집하여 실험을 진행할 수 있도록 돕는 플랫폼',
+    images: {
+      url: DEFAULT_OG_IMAGE_URL,
+    },
   },
   keywords: [
     '그라밋',
@@ -64,9 +77,15 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className={pretendard.className}>
+      <head>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}`}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body suppressHydrationWarning={true}>
         <Providers session={session}>{children}</Providers>
-        <SpeedInsights />
       </body>
     </html>
   );

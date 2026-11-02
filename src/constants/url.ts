@@ -28,6 +28,7 @@ export const API_URL = {
   univSearch: (query: string) => `/v1/members/universities/search?query=${query}`,
   extractKeywords: '/v1/experiment-posts/extract-keywords',
   extractKeywordsLimit: '/v1/experiment-posts/usage-limit',
+  otherPosts: (postId: string) => `/v1/experiment-posts/${postId}/details/related`,
 };
 
 export const MOCK_API_URL = {
@@ -39,3 +40,5 @@ export const MOCK_API_URL = {
   me: '/v1/members/participants/me',
   refresh: '/v1/auth/refresh',
 };
+
+export const DEFAULT_OG_IMAGE_URL = '/og-image.png';

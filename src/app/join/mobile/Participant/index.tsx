@@ -1,6 +1,6 @@
-import ContactEmailStep from './ContactEmailStep/ContactEmailStep';
-import JoinAdditionalInfoStep from './JoinAdditionalInfoStep/JoinAdditionalInfoStep';
-import JoinInfoStep from './JoinInfoStep/JoinInfoStep';
+import ContactEmailStep from './ContactEmailStep';
+import JoinAdditionalInfoStep from './JoinAdditionalInfoStep';
+import JoinInfoStep from './JoinInfoStep';
 
 export const Participant = {
   ContactEmailStep: ContactEmailStep,

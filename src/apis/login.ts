@@ -1,10 +1,12 @@
+import { MatchType } from '@/types/filter';
+import { Gender, LoginProvider, Role } from '@/types/user';
+import { API_URL } from '@constants/url';
+import { ParticipantJoinSubmitSchemaType } from '@schema/join/ParticipantJoinSchema';
+import { ResearcherJoinSubmitSchemaType } from '@schema/join/ResearcherJoinSchema';
+
 import { fetchClient, noRetryFetchClient } from './config/fetchClient';
 import { ValidateContactEmailParams } from './user';
 
-import { API_URL } from '@/constants/url';
-import { ParticipantJoinSubmitSchemaType } from '@/schema/join/ParticipantJoinSchema';
-import { ResearcherJoinSubmitSchemaType } from '@/schema/join/ResearcherJoinSchema';
-import { Role } from '@/types/user';
 
 export interface UnivAuthCodeResponse {
   isSuccess: boolean;
@@ -29,14 +31,14 @@ interface Member {
   memberId: number;
   name: string;
   oauthEmail: string;
-  provider: 'GOOGLE' | 'NAVER';
+  provider: LoginProvider;
   contactEmail: string;
   role: Role;
 }
 
 export interface ParticipantResponse {
   memberInfo: Member;
-  gender: 'MALE' | 'FEMALE' | 'ALL';
+  gender: Gender;
   birthDate: string;
   basicAddressInfo: {
     region: string;
@@ -46,7 +48,7 @@ export interface ParticipantResponse {
     region: string;
     area: string;
   };
-  matchType: 'OFFLINE' | 'ONLINE' | 'ALL' | null;
+  matchType: MatchType | null;
   adConsent: boolean;
   matchConsent: boolean;
 }

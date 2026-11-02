@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { validateProfileContactEmail } from '@/apis/user';
+import { validateProfileContactEmail } from '@apis/user';
 
 const useCheckValidProfileEmailMutation = () => {
   return useMutation({

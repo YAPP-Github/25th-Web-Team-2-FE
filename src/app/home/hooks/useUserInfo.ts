@@ -4,11 +4,12 @@ import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useRef } from 'react';
 
+import { ROLE } from '@constants/config';
+import { isUnauthorizedUser } from '@lib/auth-utils';
+
 import useParticipantInfoQuery from './useParticipantInfoQuery';
 import useResearcherInfoQuery from './useResearcherInfoQuery';
 
-import { ROLE } from '@/constants/config';
-import { isUnauthorizedUser } from '@/lib/auth-utils';
 
 const useUserInfo = () => {
   const { data: session, status } = useSession();

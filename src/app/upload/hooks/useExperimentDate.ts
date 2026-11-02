@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { parseDateString } from '../upload.utils';
+import { parseDateString } from '../utils/parseDateString';
 
 export const useExperimentDate = (experimentDateChecked: boolean) => {
   const pathname = usePathname();
@@ -15,6 +15,7 @@ export const useExperimentDate = (experimentDateChecked: boolean) => {
 
   // 실험 종료날짜가 과거면 변경 불가능
   const watchedEndDate = useWatch({ control, name: 'endDate' });
+
   const endDate = parseDateString(watchedEndDate);
   const today = startOfDay(new Date());
   const isEndDatePast = isEdit && endDate ? isBefore(endDate, today) : false;

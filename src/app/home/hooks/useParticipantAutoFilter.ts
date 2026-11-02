@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import { calculateAgeFromBirthDate } from '../home.utils';
-import useQueryParams from './useQueryParams';
+import { ParticipantResponse } from '@apis/login';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
 
-import { ParticipantResponse } from '@/apis/login';
+import useQueryParams from './useQueryParams';
+import { calculateAgeFromBirthDate } from '../utils/calculateAgeFromBirthDate';
+
 
 interface UseParticipantAutoFilterProps {
   participantInfo?: ParticipantResponse | null;
@@ -27,7 +29,7 @@ export const useParticipantAutoFilter = ({ participantInfo }: UseParticipantAuto
     }
 
     const participantParams = new URLSearchParams();
-    participantParams.set('recruitStatus', 'ALL');
+    participantParams.set('recruitStatus', DEFAULT_RECRUIT_STATUS);
     participantParams.set('gender', participantInfo.gender);
     participantParams.set('age', calculateAgeFromBirthDate(participantInfo.birthDate).toString());
     updateURLParams(participantParams);

@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const postMobileDetailContentLayout = style({
   backgroundColor: colors.field01,

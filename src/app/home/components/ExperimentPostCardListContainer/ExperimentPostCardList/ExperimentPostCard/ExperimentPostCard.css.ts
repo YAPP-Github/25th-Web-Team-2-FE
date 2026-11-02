@@ -1,7 +1,7 @@
 import { globalStyle, keyframes, style, styleVariants } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const textEllipsis = styleVariants({
   // 한 줄 말줄임표

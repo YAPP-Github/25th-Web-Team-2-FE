@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 
-import { buttonContainer, loginButton } from '../../Header.css';
-import DesktopLoginHeader from './DesktopLoginHeader/DesktopLoginHeader';
-import MobileLoginHeader from './MobileLoginHeader/MobileLoginHeader';
+import useUserInfo from '@home/hooks/useUserInfo';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
+import DesktopLoginHeader from './DesktopLoginHeader';
+import MobileLoginHeader from './MobileLoginHeader';
+import { buttonContainer, loginButton } from '../../Header.css';
+
 
 export default function RightHeaderClient() {
   const { userInfo, isLoading, isResearcher } = useUserInfo();

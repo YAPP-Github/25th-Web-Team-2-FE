@@ -1,9 +1,9 @@
 import { useRouter } from 'next/navigation';
 
-import { ParticipantResponse } from '@/apis/login';
-import useFormParticipantUserInfo from '@/app/user/profile/hooks/useFormParticipantUserInfo';
-import { PATH } from '@/constants/path';
-import { useToast } from '@/hooks/useToast';
+import { ParticipantResponse } from '@apis/login';
+import { PATH } from '@constants/path';
+import { useToast } from '@hooks/useToast';
+import useFormParticipantUserInfo from '@user/profile/hooks/useFormParticipantUserInfo';
 
 const SUCCESS_UPDATE_MESSAGE = '저장되었어요';
 const ERROR_UPDATE_MESSAGE = '저장에 실패했어요. 잠시 후에 다시 시도해 주세요.';

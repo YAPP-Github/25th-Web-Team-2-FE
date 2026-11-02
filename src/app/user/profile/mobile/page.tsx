@@ -1,6 +1,6 @@
-import MobileProfileHeader from './components/MobileProfileHeader/MobileProfileHeader';
-import MobileProfileSection from './components/MobileProfileSection/MobileProfileSection';
-import MobileUserInfoSection from './components/MobileUserInfoSection/MobileUserInfoSection';
+import MobileProfileHeader from './components/MobileProfileHeader';
+import MobileProfileSection from './components/MobileProfileSection';
+import MobileUserInfoSection from './components/MobileUserInfoSection';
 
 interface MobileProfilePageProps {
   searchParams: {

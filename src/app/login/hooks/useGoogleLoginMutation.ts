@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { getAuthErrorMessage } from '../LoginPage.utils';
 
-import { CustomError } from '@/apis/config/error';
-import { fetchClient } from '@/apis/config/fetchClient';
-import { googleLogin, LoginResponse } from '@/apis/login';
-import { loginWithCredentials } from '@/lib/auth-utils';
-import { identifyUser, setUserProperties } from '@/lib/mixpanelClient';
+import { CustomError } from '@apis/config/error';
+import { fetchClient } from '@apis/config/fetchClient';
+import { googleLogin, LoginResponse } from '@apis/login';
+import { loginWithCredentials } from '@lib/auth-utils';
+import { localStorageManager, STORAGE_KEYS } from '@lib/localStorageManager';
+import { identifyUser, setUserProperties } from '@lib/mixpanelClient';
+
+import { getAuthErrorMessage } from '../utils/getAuthErrorMessage';
 
 interface GoogleLoginParams {
   code: string;
@@ -42,6 +44,10 @@ const useGoogleLoginMutation = ({
 
         identifyUser(memberInfo.oauthEmail);
         setUserProperties({ email: memberInfo.oauthEmail, role: memberInfo.role });
+        localStorageManager.set(STORAGE_KEYS.lastLogin, {
+          role: memberInfo.role,
+          provider: memberInfo.provider,
+        });
 
         onSuccessLogin();
         return;

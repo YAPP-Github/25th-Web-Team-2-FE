@@ -1,10 +1,12 @@
 import { renderHook, act } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useURLFilters from '../useURLFilters';
 
 import { mockSearchParams } from '@/tests/setup';
 import { customWrapper } from '@/tests/test-utils';
+import { DEFAULT_RECRUIT_STATUS } from '@constants/filters';
+
+import useURLFilters from '../useURLFilters';
 
 describe('useURLFilters', () => {
   beforeEach(() => {
@@ -21,12 +23,12 @@ describe('useURLFilters', () => {
       });
 
       expect(result.current.filters).toEqual({
-        recruitStatus: 'ALL',
+        recruitStatus: DEFAULT_RECRUIT_STATUS,
       });
     });
 
     it('쿼리 파라미터가 있을 때 파싱된 필터를 반환한다.', () => {
-      mockSearchParams.set('recruitStatus', 'OPEN');
+      mockSearchParams.set('recruitStatus', DEFAULT_RECRUIT_STATUS);
       mockSearchParams.set('gender', 'MALE');
       mockSearchParams.set('age', '25');
 
@@ -86,7 +88,7 @@ describe('useURLFilters', () => {
       rerender();
 
       expect(result.current.filters).toEqual({
-        recruitStatus: 'ALL',
+        recruitStatus: DEFAULT_RECRUIT_STATUS,
         areas: ['GEUMCHEONGU', 'NOWONGU'],
       });
     });
@@ -98,18 +100,18 @@ describe('useURLFilters', () => {
         wrapper: customWrapper,
       });
 
-      expect(result.current.filters).toEqual({ recruitStatus: 'ALL' });
+      expect(result.current.filters).toEqual({ recruitStatus: DEFAULT_RECRUIT_STATUS });
 
       act(() => {
         result.current.handleToggleRecruitStatus();
       });
 
-      expect(mockSearchParams.get('recruitStatus')).toBe('OPEN');
+      expect(mockSearchParams.get('recruitStatus')).toBe('ALL');
 
       rerender();
 
-      expect(result.current.filters).toEqual({ recruitStatus: 'OPEN' });
-      expect(result.current.isRecruiting).toBe(true);
+      expect(result.current.filters).toEqual({ recruitStatus: 'ALL' });
+      expect(result.current.isRecruiting).toBe(false);
     });
   });
 
@@ -131,12 +133,12 @@ describe('useURLFilters', () => {
 
       rerender();
 
-      expect(mockSearchParams.get('recruitStatus')).toBe('ALL');
+      expect(mockSearchParams.get('recruitStatus')).toBe(DEFAULT_RECRUIT_STATUS);
       expect(mockSearchParams.has('age')).toBe(false);
       expect(mockSearchParams.has('gender')).toBe(false);
 
       expect(result.current.filters).toEqual({
-        recruitStatus: 'ALL',
+        recruitStatus: DEFAULT_RECRUIT_STATUS,
       });
     });
   });

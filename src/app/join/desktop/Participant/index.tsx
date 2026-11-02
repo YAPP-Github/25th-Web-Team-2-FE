@@ -1,5 +1,5 @@
-import JoinEmailStep from './JoinEmailStep/JoinEmailStep';
-import JoinInfoStep from './JoinInfoStep/JoinInfoStep';
+import JoinEmailStep from './JoinEmailStep';
+import JoinInfoStep from './JoinInfoStep';
 
 export const Participant = {
   EmailStep: JoinEmailStep,

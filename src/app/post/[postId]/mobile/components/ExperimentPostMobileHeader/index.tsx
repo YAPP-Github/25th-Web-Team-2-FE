@@ -1,0 +1,50 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import React from 'react';
+
+
+import RightHeaderClient from '@components/Header/RightHeader/components/RightHeader.client';
+import Icon from '@components/Icon';
+import { colors } from '@styles/colors';
+
+import { experimentPostMobileHeaderLayout } from './ExperimentPostMobileHeader.css';
+import { UseQueryExperimentDetailsAPIResponse } from '../../../hooks/useExperimentDetailsQuery';
+
+const ExperimentPostMobileHeader = ({
+  onOpenMenuBottomSheet,
+  postDetailData,
+}: {
+  onOpenMenuBottomSheet: () => void;
+  postDetailData: UseQueryExperimentDetailsAPIResponse;
+}) => {
+  const router = useRouter();
+
+  const isAuthor = postDetailData.isAuthor ?? false;
+
+  const handleGoBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      // 공고 상세 직접 접근 시 홈으로 이동
+      router.push('/');
+    }
+  };
+
+  return (
+    <div className={experimentPostMobileHeaderLayout}>
+      <button onClick={handleGoBack} aria-label="뒤로가기">
+        <Icon icon="Arrow" width={24} height={24} color={colors.text06} />
+      </button>
+      {isAuthor ? (
+        <button onClick={onOpenMenuBottomSheet}>
+          <Icon icon="MenuDots" width={24} height={24} />
+        </button>
+      ) : (
+        <RightHeaderClient />
+      )}
+    </div>
+  );
+};
+
+export default ExperimentPostMobileHeader;

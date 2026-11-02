@@ -1,8 +1,8 @@
 import { style, globalStyle } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
-import { zIndex } from '@/styles/zIndex';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
+import { zIndex } from '@styles/zIndex';
 
 export const postDetailContentLayout = style({
   minWidth: '64.8rem',

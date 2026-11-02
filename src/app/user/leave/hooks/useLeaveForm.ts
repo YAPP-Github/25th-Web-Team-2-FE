@@ -2,9 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signOut } from 'next-auth/react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import LeaveSchema, { LeaveSchemaType } from '@schema/profile/LeaveSchema';
+
 import useLeaveMutation from './useLeaveMutation';
 
-import LeaveSchema, { LeaveSchemaType } from '@/schema/profile/LeaveSchema';
 
 const useLeaveForm = () => {
   const { control, reset, formState, handleSubmit } = useForm<LeaveSchemaType>({

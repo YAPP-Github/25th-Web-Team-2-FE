@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { zIndex } from '@/styles/zIndex';
+import { colors } from '@styles/colors';
+import { zIndex } from '@styles/zIndex';
 
 export const dialogOverlay = style({
   background: 'rgba(0, 22, 54, 0.31)',

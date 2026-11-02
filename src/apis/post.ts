@@ -1,9 +1,10 @@
-import { fetchClient } from './config/fetchClient';
-
-import { API_URL } from '@/constants/url';
-import { AreaType, RegionType } from '@/types/filter';
+import { AreaType, MatchType, RegionType } from '@/types/filter';
 import { ExperimentPost } from '@/types/post';
-import { getQueryParamsToString } from '@/utils/getQueryParamsString';
+import { Gender } from '@/types/user';
+import { API_URL } from '@constants/url';
+import { getQueryParamsToString } from '@utils/getQueryParamsString';
+
+import { fetchClient } from './config/fetchClient';
 
 export interface ExperimentPostResponse {
   content: ExperimentPost[];
@@ -37,8 +38,8 @@ export interface ExperimentPostArea {
 
 export interface ExperimentPostListFilters {
   recruitStatus?: 'ALL' | 'OPEN';
-  matchType?: 'ONLINE' | 'OFFLINE' | 'ALL';
-  gender?: 'MALE' | 'FEMALE' | 'ALL';
+  matchType?: MatchType;
+  gender?: Gender;
   age?: number;
   region?: RegionType;
   areas?: AreaType[];
@@ -51,6 +52,10 @@ export interface ExtractKeywordsLimitResponse {
   limit: number;
   remainingCount: number;
   resetsAt: string;
+}
+
+export interface OtherPostsResponse {
+  relatedPosts: Array<ExperimentPost['postInfo']>;
 }
 
 export const fetchPostList = async (params: ExperimentPostListFilters) => {
@@ -66,4 +71,8 @@ export const fetchPostCount = async <T>(region?: string | null) => {
 
 export const fetchExtractKeywordsLimit = async () => {
   return await fetchClient.get<ExtractKeywordsLimitResponse>(API_URL.extractKeywordsLimit);
+};
+
+export const fetchOtherPosts = async (postId: string) => {
+  return await fetchClient.get<OtherPostsResponse>(API_URL.otherPosts(postId));
 };

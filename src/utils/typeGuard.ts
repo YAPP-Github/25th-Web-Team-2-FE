@@ -1,4 +1,4 @@
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
 
 export const isParticipantInfo = (
   data?: ParticipantResponse | ResearcherResponse,

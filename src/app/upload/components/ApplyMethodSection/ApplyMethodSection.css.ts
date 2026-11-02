@@ -1,8 +1,9 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { zIndex } from '@/styles/zIndex';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const applyMethodSectionLayout = style({
   backgroundColor: colors.field01,
@@ -75,19 +76,11 @@ export const textStyle = style({
   color: colors.text06,
 });
 
-export const alarmAgreeContainer = style({
-  width: 'fit-content',
-  minHeight: '3.4rem',
-  padding: '0.2rem 1rem',
-  backgroundColor: colors.field02,
-  borderRadius: '0.8rem',
+export const applyMethodTitleContainer = style({
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
   alignItems: 'center',
-  cursor: 'pointer',
-  transition: 'background-color 0.2s ease-in-out',
-
-  marginTop: '2.3rem',
+  marginBottom: '2rem',
 });
 
 export const uploadFormSectionTitle = style({
@@ -96,7 +89,14 @@ export const uploadFormSectionTitle = style({
   flexFlow: 'row nowrap',
   alignItems: 'center',
   gap: '0.8rem',
-  marginBottom: '2rem',
+});
+
+export const fakeScheduleButton = style({
+  ...fonts.label.medium.SB13,
+  color: colors.primaryMint,
+  backgroundColor: colors.primaryTinted,
+  borderRadius: '0.8rem',
+  padding: '0.3rem 0.8rem',
 });
 
 export const ReferToDetailsContainer = style({
@@ -113,4 +113,24 @@ export const disabledAlarmAgreeText = style({
   ...fonts.label.small.M12,
   color: colors.text02,
   marginTop: '0.4rem',
+});
+
+export const alertModalDescription = style({
+  ...fonts.body.normal.SB16,
+  textAlign: 'center',
+  whiteSpace: 'pre-wrap',
+});
+
+export const alertModalContent = style({
+  width: '37rem',
+  backgroundColor: colors.field01,
+  borderRadius: '1.2rem',
+  padding: '3.2rem 1.6rem 1.6rem 1.6rem',
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  boxShadow: '0px 4px 16px rgba(53, 59, 61, 0.2)',
+  zIndex: zIndex.dialogContent,
+  textAlign: 'center',
 });

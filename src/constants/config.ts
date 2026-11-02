@@ -3,6 +3,11 @@ export const ROLE = {
   participant: 'PARTICIPANT',
 } as const;
 
+export const LOGIN_PROVIDER = {
+  google: 'GOOGLE',
+  naver: 'NAVER',
+} as const;
+
 export const TIME_REQUIRED = [
   'LESS_30M',
   'ABOUT_30M',
@@ -14,3 +19,17 @@ export const TIME_REQUIRED = [
   'ABOUT_3H30M',
   'ABOUT_4H',
 ] as const;
+
+export const VALID_EMAIL_TLDS = [
+  'com',
+  'net',
+  'org',
+  'io',
+  'co',
+  'kr',
+  'ac.kr',
+  'edu',
+  'ac.uk',
+  'edu.au',
+  'ewhain.net',
+];

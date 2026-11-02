@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const loginCardLayout = style({
   backgroundColor: colors.field02,
@@ -35,6 +35,7 @@ export const buttonContainer = style({
 });
 
 export const loginButton = style({
+  position: 'relative',
   ...fonts.label.large.R14,
   backgroundColor: colors.field01,
   color: colors.text06,

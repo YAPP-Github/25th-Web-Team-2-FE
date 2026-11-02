@@ -2,9 +2,9 @@ import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { ParticipantResponse, ResearcherResponse } from '@/apis/login';
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { ROLE } from '@/constants/config';
+import { ParticipantResponse, ResearcherResponse } from '@apis/login';
+import { ROLE } from '@constants/config';
+import useUserInfo from '@home/hooks/useUserInfo';
 
 const useUserResearcherInfo = () => {
   const pathname = usePathname();

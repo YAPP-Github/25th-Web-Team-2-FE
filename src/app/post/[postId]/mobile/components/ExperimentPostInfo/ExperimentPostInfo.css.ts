@@ -1,7 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const experimentPostInfoLayout = style({
   padding: '0.8rem 0',
@@ -13,9 +13,6 @@ export const experimentPostInfoLayout = style({
 
 export const postTitle = style({
   ...fonts.title.medium.B20,
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
 });
 
 export const postSubInfo = style({

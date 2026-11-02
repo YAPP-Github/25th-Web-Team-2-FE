@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { fetchClient } from '@/apis/config/fetchClient';
-import { API_URL } from '@/constants/url';
+import { fetchClient } from '@apis/config/fetchClient';
+import { API_URL } from '@constants/url';
 
 interface PresignedUrlResponse {
   preSignedUrl: string;

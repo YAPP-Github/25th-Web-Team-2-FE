@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { fetchClient } from '@/apis/config/fetchClient';
-import { queryKey } from '@/constants/queryKey';
-import { API_URL } from '@/constants/url';
+import { fetchClient } from '@apis/config/fetchClient';
+import { queryKey } from '@constants/queryKey';
+import { API_URL } from '@constants/url';
 
 interface UseDeleteExperimentPostMutationParams {
   postId: string;

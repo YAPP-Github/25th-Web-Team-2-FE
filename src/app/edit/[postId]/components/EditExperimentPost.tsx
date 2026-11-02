@@ -4,28 +4,28 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 
-import useFunnel from '@/app/join/hooks/useFunnel';
-import { STEP, UPLOAD_STEP_LIST } from '@/app/join/JoinPage.constants';
-import { emptySubTitle } from '@/app/my-posts/components/MyPostsTable/MyPostsTable.css';
-import { emptyViewLayout } from '@/app/post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
-import ApplyMethodSection from '@/app/upload/components/ApplyMethodSection/ApplyMethodSection';
-import DescriptionSection from '@/app/upload/components/DescriptionSection/DescriptionSection';
-import OutlineSection from '@/app/upload/components/OutlineSection/OutlineSection';
-import ProgressBarSection from '@/app/upload/components/ProgressBarSection/ProgressBarSection';
+import Button from '@common/Button';
+import AlertModal from '@common/Modal/AlertModal';
+import ConfirmModal from '@common/Modal/ConfirmModal';
+import Spinner from '@common/Spinner';
+import { STEP, UPLOAD_STEP_LIST } from '@constants/steps';
+import useLeaveConfirmModal from '@hooks/useLeaveConfirmModal';
+import useFunnel from '@join/hooks/useFunnel';
+import { emptySubTitle } from '@my-posts/components/MyPostsTable/MyPostsTable.css';
+import { emptyViewLayout } from '@post/[postId]/desktop/components/ExperimentPostContainer/ExperimentPostContainer.css';
+import { colors } from '@styles/colors';
+import ApplyMethodSection from '@upload/components/ApplyMethodSection';
+import DescriptionSection from '@upload/components/DescriptionSection';
+import OutlineSection from '@upload/components/OutlineSection';
+import ProgressBarSection from '@upload/components/ProgressBarSection';
 import {
   uploadLayout,
   buttonContainer,
   uploadContentLayout,
   uploadContainerLayout,
-} from '@/app/upload/components/UploadContainer/UploadContainer.css';
-import useManageExperimentPostForm from '@/app/upload/hooks/useManageExperimentPostForm';
-import { VALIDATION_FIELDS_BY_STEP } from '@/app/upload/upload.constants';
-import Button from '@/components/Button/Button';
-import AlertModal from '@/components/Modal/AlertModal/AlertModal';
-import ConfirmModal from '@/components/Modal/ConfirmModal/ConfirmModal';
-import Spinner from '@/components/Spinner/Spinner';
-import useLeaveConfirmModal from '@/hooks/useLeaveConfirmModal';
-import { colors } from '@/styles/colors';
+} from '@upload/components/UploadContainer/UploadContainer.css';
+import { VALIDATION_FIELDS_BY_STEP } from '@upload/constants/validationFieldsByStep';
+import useManageExperimentPostForm from '@upload/hooks/useManageExperimentPostForm';
 
 const EditExperimentPost = ({ params }: { params: { postId: string } }) => {
   const pathname = usePathname();

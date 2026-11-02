@@ -3,10 +3,11 @@ import { screen } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import JoinCheckboxContainer from './JoinCheckboxContainer';
-
-import { ParticipantJoinSchema } from '@/schema/join/ParticipantJoinSchema';
 import { renderWithForm } from '@/tests/test-utils';
+import { ParticipantJoinSchema } from '@schema/join/ParticipantJoinSchema';
+
+import JoinCheckboxContainer from '.';
+
 
 describe('JoinCheckboxContainer', () => {
   let user: UserEvent;

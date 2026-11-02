@@ -1,10 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { CustomError } from '@/apis/config/error';
-import { fetchClient } from '@/apis/config/fetchClient';
-import { GenderType, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
-import { queryKey } from '@/constants/queryKey';
-import { API_URL } from '@/constants/url';
+import { MatchType } from '@/types/filter';
+import { Gender } from '@/types/user';
+import { CustomError } from '@apis/config/error';
+import { fetchClient } from '@apis/config/fetchClient';
+import { queryKey } from '@constants/queryKey';
+import { API_URL } from '@constants/url';
 
 export interface ExtractKeywordResponse {
   experimentPostKeywords: ExperimentPostKeywords;
@@ -34,7 +35,7 @@ export interface ExperimentPostKeywords {
 export interface TargetGroupKeyword {
   startAge: number;
   endAge: number;
-  genderType: GenderType;
+  genderType: Gender;
   otherCondition?: string;
 }
 

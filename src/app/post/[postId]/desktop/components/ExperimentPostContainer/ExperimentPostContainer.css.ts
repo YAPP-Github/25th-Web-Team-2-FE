@@ -19,6 +19,12 @@ export const postContentLayout = style({
   },
 });
 
+export const postContentWrapper = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4rem',
+});
+
 export const emptyViewLayout = style({
   minHeight: 'calc(100dvh - 12.2rem)',
 

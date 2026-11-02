@@ -8,7 +8,7 @@ interface UseLeaveConfirmModalOptions {
 interface UseLeaveConfirmModalReturn {
   isLeaveConfirmModalOpen: boolean;
   setIsLeaveConfirmModalOpen: (open: boolean) => void;
-  handleCancelLeave: VoidFunction;
+  handleCancelLeave: () => void;
   handleBackClick: (args: { goHome: boolean }) => void;
   handleConfirmLeave: (args: { goHome: boolean }) => void;
 }

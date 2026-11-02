@@ -1,9 +1,10 @@
 import { usePathname } from 'next/navigation';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import useUserInfo from '@/app/home/hooks/useUserInfo';
-import { MATCH_TYPE, MatchType } from '@/app/post/[postId]/ExperimentPostPage.types';
-import { isResearcherInfo } from '@/utils/typeGuard';
+import { MatchType } from '@/types/filter';
+import { MATCH_TYPE } from '@constants/filters';
+import useUserInfo from '@home/hooks/useUserInfo';
+import { isResearcherInfo } from '@utils/typeGuard';
 
 const useMatchType = () => {
   const pathname = usePathname();

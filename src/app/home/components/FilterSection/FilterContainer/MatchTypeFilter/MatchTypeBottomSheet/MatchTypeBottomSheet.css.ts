@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-import { fonts } from '@/styles/fonts.css';
+import { fonts } from '@styles/fonts.css';
 
 export const matchOptionList = style({
   display: 'flex',

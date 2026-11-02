@@ -34,7 +34,7 @@ export const fetchClient = createBaseFetchClient({
  *
  * @example 서버 컴포넌트에서 사용
  * ```tsx
- * import { createSSRFetchClient } from '@/apis/config/fetchClient';
+ * import { createSSRFetchClient } from '@apis/config/fetchClient';
  * import { getServerSession } from 'next-auth/next';
  *
  * export default async function Page() {

@@ -1,4 +1,4 @@
-import MyPostsContainer from './components/MyPostsContainer/MyPostsContainer';
+import MyPostsContainer from './components/MyPostsContainer';
 
 function MyPosts() {
   return <MyPostsContainer />;

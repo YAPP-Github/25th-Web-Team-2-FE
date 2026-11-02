@@ -1,6 +1,6 @@
-import ContactEmailStep from './ContactEmailStep/ContactEmailStep';
-import JoinInfoStep from './JoinInfoStep/JoinInfoStep';
-import UnivEmailStep from './UnivEmailStep/UnivEmailStep';
+import ContactEmailStep from './ContactEmailStep';
+import JoinInfoStep from './JoinInfoStep';
+import UnivEmailStep from './UnivEmailStep';
 
 export const Researcher = {
   ContactEmailStep: ContactEmailStep,

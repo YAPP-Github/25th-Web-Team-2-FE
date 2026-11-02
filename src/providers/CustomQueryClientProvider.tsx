@@ -2,8 +2,8 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Session } from 'next-auth';
 
-import { fetchClient } from '@/apis/config/fetchClient';
-import { getQueryClient } from '@/lib/getQueryClient';
+import { fetchClient } from '@apis/config/fetchClient';
+import { getQueryClient } from '@lib/getQueryClient';
 
 const CustomQueryClientProvider = ({
   children,

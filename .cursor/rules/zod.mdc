@@ -1,5 +1,5 @@
 ---
-alwaysApply: true
+alwaysApply: false
 ---
 
 You are an expert developer proficient in TypeScript, React and Next.js, Zod, TanStack React Query

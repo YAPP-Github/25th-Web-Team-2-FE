@@ -4,18 +4,20 @@ import * as Popover from '@radix-ui/react-popover';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
 import { useState } from 'react';
 
-import ContactTargetBottomSheet from './ContactTargetBottomSheet/ContactTargetBottomSheet';
-import ContactTargetContent from './ContactTargetContent/ContactTargetContent';
+import { Gender } from '@/types/user';
+import Icon from '@components/Icon';
+import useURLFilters from '@home/hooks/useURLFilters';
+import { getContactTargetFilterText } from '@home/utils/getContactTargetFilterText';
+import { getFilterColors } from '@home/utils/getFilterColors';
+import useOverlay from '@hooks/useOverlay';
+
+import ContactTargetBottomSheet from './ContactTargetBottomSheet';
+import ContactTargetContent from './ContactTargetContent';
 import { popoverContent, popoverTrigger } from './ContactTargetFilter.css';
 
-import { GenderFilterValue } from '@/app/home/home.types';
-import { getContactTargetFilterText, getFilterColors } from '@/app/home/home.utils';
-import useURLFilters from '@/app/home/hooks/useURLFilters';
-import Icon from '@/components/Icon';
-import useOverlay from '@/hooks/useOverlay';
 
 interface ContactTargetFilterProps {
-  filterGender?: GenderFilterValue;
+  filterGender?: Gender;
   filterAge?: number;
 }
 

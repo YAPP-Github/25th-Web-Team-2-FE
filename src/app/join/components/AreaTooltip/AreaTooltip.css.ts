@@ -1,7 +1,7 @@
 import { style, keyframes } from '@vanilla-extract/css';
 
-import { colors } from '@/styles/colors';
-import { fonts } from '@/styles/fonts.css';
+import { colors } from '@styles/colors';
+import { fonts } from '@styles/fonts.css';
 
 export const slideDownAndFade = keyframes({
   from: { opacity: 0, transform: 'translateY(-2px)' },

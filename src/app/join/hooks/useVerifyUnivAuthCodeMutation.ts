@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { verifyUnivAuthCode } from '@/apis/login';
+import { verifyUnivAuthCode } from '@apis/login';
 
 interface VerifyParams {
   univEmail: string;

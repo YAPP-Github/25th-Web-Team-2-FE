@@ -3,10 +3,11 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import NextButton from './NextButton';
-
-import { ResearcherJoinSchema } from '@/schema/join/ResearcherJoinSchema';
 import { renderWithForm } from '@/tests/test-utils';
+import { ResearcherJoinSchema } from '@schema/join/ResearcherJoinSchema';
+
+import NextButton from '.';
+
 
 const validValues = {
   oauthEmail: 'oauth@email.com',

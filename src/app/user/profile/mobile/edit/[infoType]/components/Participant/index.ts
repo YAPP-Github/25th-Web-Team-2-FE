@@ -1,7 +1,7 @@
-import AddressEditForm from './AddressEditForm/AddressEditForm';
-import ContactEmailEditForm from './ContactEmailEditForm/ContactEmailEditForm';
-import MatchTypeEditForm from './MatchTypeEditForm/MatchTypeEditForm';
-import NameEditForm from './NameEditForm/NameEditForm';
+import AddressEditForm from './AddressEditForm';
+import ContactEmailEditForm from './ContactEmailEditForm';
+import MatchTypeEditForm from './MatchTypeEditForm';
+import NameEditForm from './NameEditForm';
 
 export const Participant = {
   ContactEmail: ContactEmailEditForm,
