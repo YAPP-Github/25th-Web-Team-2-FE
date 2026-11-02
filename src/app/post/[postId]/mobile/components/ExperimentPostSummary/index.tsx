@@ -1,4 +1,5 @@
 import { GENDER } from '@constants/user';
+import { formatExperimentCount } from '@utils/formatExperimentCount';
 
 import {
   dynamicSpacing,
@@ -13,8 +14,6 @@ import { getAddressDisplay } from '../../../utils/getAddressDisplay';
 import { getDurationLabel } from '../../../utils/getDurationLabel';
 import { getGenderLabel } from '../../../utils/getGenderLabel';
 import { getMatchTypeText } from '../../../utils/getMatchTypeText';
-
-import { formatExperimentCount } from '@utils/formatExperimentCount';
 
 const ExperimentPostSummary = ({
   postDetailData,

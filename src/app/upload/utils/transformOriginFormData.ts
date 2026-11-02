@@ -1,9 +1,10 @@
+import type { DefaultValues } from 'react-hook-form';
+
 import { MatchType } from '@/types/filter';
 import { UseApplyMethodQueryResponse } from '@post/[postId]/hooks/useApplyMethodQuery';
 import { UseQueryExperimentDetailsAPIResponse } from '@post/[postId]/hooks/useExperimentDetailsQuery';
 import { UploadExperimentPostSchemaType } from '@schema/upload/uploadExperimentPostSchema';
 import { EXPERIMENT_TYPE } from '@upload/constants/experimentType';
-import type { DefaultValues } from 'react-hook-form';
 
 import { convertValueToLabel } from './regionLabelValue';
 
