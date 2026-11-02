@@ -1,19 +1,19 @@
 ---
 name: commit
-description: Create clear, logically grouped Git commits for completed repository changes when asked to commit or save work.
+description: 커밋 또는 작업 저장 요청을 받았을 때 완료된 변경을 목적별로 나누어 명확한 Git 커밋을 생성합니다.
 ---
 
-# Commit changes
+# 변경사항 커밋하기
 
-Use this skill when the user asks to commit changes, or explicitly invokes `/commit`.
+사용자가 커밋이나 작업 저장을 요청하거나 `/commit`을 직접 호출하면 이 스킬을 사용합니다.
 
-1. Inspect `git status` and the diff before staging. Identify which changes belong to the requested work and leave unrelated user changes untouched.
-2. Group changes by purpose. Make separate commits when changes represent distinct user-visible or technical outcomes; keep tightly coupled implementation and its necessary UI handling together.
-3. Stage only the files or hunks for the intended commit. Do not use `git add -A` when unrelated changes may be present.
-4. Write a concise commit subject that describes the change. Prefer Korean when the surrounding conversation is Korean. Do not claim tests passed unless they were run and passed.
-5. Create the commit and verify the resulting commit list and worktree status.
-6. Do not push or create a pull request unless the user also asks for it.
+1. 스테이징 전에 `git status`와 diff를 확인합니다. 요청된 작업에 포함되는 변경만 골라내고, 무관한 사용자 변경은 그대로 둡니다.
+2. 변경을 목적별로 묶습니다. 사용자에게 보이는 결과나 기술적 목적이 다르면 커밋을 나누고, 서로 밀접한 구현과 필요한 UI 처리는 함께 커밋합니다.
+3. 해당 커밋에 포함할 파일이나 hunk만 스테이징합니다. 무관한 변경이 있을 수 있으면 `git add -A`를 사용하지 않습니다.
+4. 변경 내용을 설명하는 짧은 커밋 제목을 작성합니다. 테스트를 실행해 통과한 경우에만 통과했다고 기록합니다.
+5. 커밋을 만든 뒤 커밋 목록과 worktree 상태를 확인합니다.
+6. 사용자가 함께 요청하지 않았다면 push하거나 PR을 만들지 않습니다.
 
-If a commit hook changes files, inspect those changes. Include them only when they are formatting or generated changes directly associated with the commit; otherwise stop and report them.
+커밋 훅이 파일을 바꾸면 변경 내용을 확인합니다. 해당 커밋과 직접 관련된 포맷 또는 생성 결과만 포함하고, 그 외 변경은 멈춰서 사용자에게 알립니다.
 
-Report the commit hashes, subjects, and any verification that was run.
+완료 후 커밋 해시와 제목, 실행한 검증을 보고합니다.

@@ -1,17 +1,17 @@
 ---
 name: pr
-description: Prepare and create a GitHub pull request for the current repository branch using the repository's pull request template.
+description: 저장소의 PR 템플릿을 따라 현재 브랜치의 GitHub Pull Request를 준비하고 생성합니다.
 ---
 
-# Create a pull request
+# Pull Request 만들기
 
-Use this skill when the user asks to create/open a PR or invokes `/pr`.
+사용자가 PR 생성을 요청하거나 `/pr`을 직접 호출하면 이 스킬을 사용합니다.
 
-1. Read `.github/PULL_REQUEST_TEMPLATE.md` from the repository. Treat its headings and order as the required PR body format. Fill every section with concise, task-specific content and remove placeholder bullets. Do not add alternate headings unless the user asks.
-2. Inspect the current branch, worktree, commits, and target branch. Use the target named by the user; otherwise use the repository's default branch. Confirm that unrelated or uncommitted changes will not be included.
-3. Summarize the branch changes against the target branch. Report the actual verification performed and any limitations accurately.
-4. Ensure the intended commits are pushed to the remote branch. Do not force-push unless the user explicitly asks or an already-authorized amend/rebase requires updating this task's own branch; use `--force-with-lease` in that case.
-5. Create the PR with `gh pr create`, using the repository template's exact section structure. Set a concise title that describes the full change. Do not assign reviewers, assignees, or labels unless requested or required by repository automation.
-6. Verify the created PR URL and base/head branches. Report the URL, title, target branch, and any checks still pending.
+1. 저장소의 `.github/PULL_REQUEST_TEMPLATE.md`를 읽습니다. 템플릿의 제목과 순서를 PR 본문 형식으로 그대로 사용합니다. 각 섹션을 이번 작업 내용으로 간결하게 채우고 예시용 문구는 제거합니다. 사용자가 요청하지 않으면 별도 제목을 추가하지 않습니다.
+2. 현재 브랜치, worktree, 커밋, 대상 브랜치를 확인합니다. 사용자가 대상 브랜치를 지정했다면 그 브랜치를 사용하고, 지정하지 않았다면 저장소 기본 브랜치를 사용합니다. 무관하거나 커밋되지 않은 변경이 PR에 포함되지 않도록 확인합니다.
+3. 대상 브랜치와 비교해 현재 브랜치의 변경 내용을 요약합니다. 실제 실행한 검증과 제한 사항을 정확히 기록합니다.
+4. PR에 넣을 커밋이 원격 브랜치에 push되어 있는지 확인합니다. 사용자가 명시적으로 요청했거나 이번 작업 브랜치의 amend/rebase를 반영해야 하는 경우가 아니면 강제 push하지 않습니다. 필요한 경우 `--force-with-lease`를 사용합니다.
+5. 저장소 템플릿의 섹션 구조를 그대로 사용해 `gh pr create`로 PR을 만듭니다. 전체 변경을 설명하는 간결한 제목을 정합니다. 사용자가 요청했거나 저장소 자동화가 요구하지 않는 한 리뷰어, 담당자, 라벨을 임의로 지정하지 않습니다.
+6. 생성된 PR URL과 base/head 브랜치를 확인합니다. URL, 제목, 대상 브랜치, 대기 중인 검사를 사용자에게 알립니다.
 
-If GitHub authentication or network access blocks PR creation, keep the branch pushed when possible and report the exact blocker. Never claim a PR exists until the create command returns its URL.
+GitHub 인증이나 네트워크 문제로 PR을 만들지 못하면 가능한 경우 브랜치를 push한 상태로 두고 정확한 장애 원인을 알립니다. 생성 명령이 URL을 반환하기 전에는 PR이 생성됐다고 말하지 않습니다.
