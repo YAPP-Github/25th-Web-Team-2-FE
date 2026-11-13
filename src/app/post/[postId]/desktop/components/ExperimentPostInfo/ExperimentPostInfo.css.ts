@@ -14,7 +14,7 @@ export const postInfoLayout = style({
   },
 });
 
-globalStyle(`${postInfoLayout} h2`, {
+globalStyle(`${postInfoLayout} h1`, {
   ...fonts.title.large.SB24,
 });
 

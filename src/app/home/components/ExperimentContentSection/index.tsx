@@ -28,7 +28,7 @@ interface ExperimentContentSectionProps {
 const ExperimentContentSection = ({ searchParams }: ExperimentContentSectionProps) => {
   return (
     <section className={postContainerLayout}>
-      <h2 className={postContainerTitleDesktop}>공고를 확인해 보세요</h2>
+      <h1 className={postContainerTitleDesktop}>공고를 확인해 보세요</h1>
       <div className={horizontalLineMobile} />
 
       {/* 필터링 */}

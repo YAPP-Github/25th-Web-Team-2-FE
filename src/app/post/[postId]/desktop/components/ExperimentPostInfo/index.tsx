@@ -67,7 +67,7 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
     <>
       <div className={postInfoLayout}>
         <div className={postHeaderContainer}>
-          <h2 className={postTitle}>{postDetailData.title}</h2>
+          <h1 className={postTitle}>{postDetailData.title}</h1>
           {postDetailData.isAuthor && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
               <Link href={`/edit/${postDetailData.experimentPostId}`}>
