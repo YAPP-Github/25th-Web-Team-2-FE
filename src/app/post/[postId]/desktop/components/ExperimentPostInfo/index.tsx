@@ -80,7 +80,11 @@ const ExperimentPostInfo = ({ postDetailData }: ExperimentPostInfoProps) => {
           )}
         </div>
         <div className={postSubInfo}>
-          <time dateTime={postDetailData.uploadDate}>{formatDate(postDetailData.uploadDate)}</time>
+          <div>
+            <time dateTime={postDetailData.uploadDate}>
+              {formatDate(postDetailData.uploadDate)}
+            </time>
+          </div>
           <div>{postDetailData.isUploaderActive ? postDetailData.uploaderName : '탈퇴한 회원'}</div>
           <div className={viewsContainer}>
             <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />

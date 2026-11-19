@@ -24,11 +24,11 @@ export const postSubInfo = style({
   alignItems: 'center',
 });
 
-globalStyle(`${postSubInfo} > *`, {
+globalStyle(`${postSubInfo} > div`, {
   position: 'relative',
 });
 
-globalStyle(`${postSubInfo} > *:not(:last-child)::after`, {
+globalStyle(`${postSubInfo} > div:not(:last-child)::after`, {
   content: '""',
   position: 'absolute',
   top: '50%',

@@ -17,7 +17,9 @@ const ExperimentPostInfo = ({
     <div className={experimentPostInfoLayout}>
       <h1 className={postTitle}>{postDetailData.title}</h1>
       <div className={postSubInfo}>
-        <time dateTime={postDetailData.uploadDate}>{formatDate(postDetailData.uploadDate)}</time>
+        <div>
+          <time dateTime={postDetailData.uploadDate}>{formatDate(postDetailData.uploadDate)}</time>
+        </div>
         <div>{postDetailData.isUploaderActive ? postDetailData.uploaderName : '탈퇴한 회원'}</div>
         <div className={viewsContainer}>
           <Icon icon="EyeTwo" width={16} height={16} color={colors.field06} />
