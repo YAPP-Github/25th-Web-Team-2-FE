@@ -5,6 +5,8 @@ import { fetchPostList } from '@apis/post';
 
 const SITE_URL = 'https://gradmeet.co.kr';
 
+export const revalidate = 3600;
+
 async function fetchAllPosts() {
   const allPosts: ExperimentPost[] = [];
   let page = 1;
@@ -40,9 +42,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     {
       url: SITE_URL,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
     },
   ] as const;
 
@@ -52,9 +51,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     (post) =>
       ({
         url: `${SITE_URL}/post/${post.postInfo.experimentPostId}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly',
-        priority: 0.7,
       } as const),
   );
 

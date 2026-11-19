@@ -16,7 +16,7 @@ const ExperimentPostInfo = ({
 
   return (
     <div className={experimentPostInfoLayout}>
-      <p className={postTitle}>{postDetailData.title}</p>
+      <h1 className={postTitle}>{postDetailData.title}</h1>
       <div className={postSubInfo}>
         <div>{formatDate(postDetailData.uploadDate)}</div>
         <div>{postDetailData.isUploaderActive ? postDetailData.uploaderName : '탈퇴한 회원'}</div>

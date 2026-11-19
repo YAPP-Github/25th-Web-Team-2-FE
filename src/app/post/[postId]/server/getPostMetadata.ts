@@ -9,10 +9,11 @@ import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimen
 import { getDurationLabel } from '../utils/getDurationLabel';
 
 
-const DEFAULT_METADATA: Metadata = {
-  title: '그라밋 | 공고 조회',
-  description: '그라밋 | 실험 공고 조회',
-};
+const DEFAULT_TITLE = '그라밋 | 공고 조회';
+const DEFAULT_DESCRIPTION = '그라밋 | 실험 공고 조회';
+const DEFAULT_METADATA: Metadata = { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION };
+
+const SITE_URL = 'https://gradmeet.co.kr';
 
 const getOgImageUrl = (postDetailData: UseQueryExperimentDetailsAPIResponse) => {
   const firstImgUrl = postDetailData.imageList?.[0];
@@ -71,17 +72,25 @@ const formatDescription = (title: string, postDetailData: UseQueryExperimentDeta
 };
 
 export const getPostMetadata = async (postId: string): Promise<Metadata> => {
+  const canonicalUrl = `${SITE_URL}/post/${encodeURIComponent(postId)}`;
+
   try {
     const { postDetailData } = await fetchExperimentPost(postId);
     const { title } = postDetailData;
     const pageTitle = `${title} | 그라밋`;
-    const description = formatDescription(title, postDetailData);
+    const recruitStatus = postDetailData.recruitStatus ? '모집 중' : '모집 종료';
+    const description = `${recruitStatus} | ${formatDescription(title, postDetailData)}`;
     const imageUrl = getOgImageUrl(postDetailData);
 
     return {
       title: pageTitle,
       description,
+      alternates: { canonical: canonicalUrl },
       openGraph: {
+        type: 'article',
+        url: canonicalUrl,
+        siteName: '그라밋',
+        locale: 'ko_KR',
         title: pageTitle,
         description,
         images: {
@@ -90,6 +99,7 @@ export const getPostMetadata = async (postId: string): Promise<Metadata> => {
         },
       },
       twitter: {
+        card: 'summary_large_image',
         title: pageTitle,
         description,
         images: {
@@ -99,6 +109,24 @@ export const getPostMetadata = async (postId: string): Promise<Metadata> => {
       },
     };
   } catch {
-    return DEFAULT_METADATA;
+    return {
+      ...DEFAULT_METADATA,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        type: 'article',
+        url: canonicalUrl,
+        siteName: '그라밋',
+        locale: 'ko_KR',
+        title: DEFAULT_TITLE,
+        description: DEFAULT_DESCRIPTION,
+        images: { url: DEFAULT_OG_IMAGE_URL },
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: DEFAULT_TITLE,
+        description: DEFAULT_DESCRIPTION,
+        images: { url: DEFAULT_OG_IMAGE_URL },
+      },
+    };
   }
 };
