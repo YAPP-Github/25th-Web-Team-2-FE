@@ -8,7 +8,6 @@ import { fetchExperimentPost } from './fetchExperimentPost';
 import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimentDetailsQuery';
 import { getDurationLabel } from '../utils/getDurationLabel';
 
-
 const DEFAULT_TITLE = '그라밋 | 공고 조회';
 const DEFAULT_DESCRIPTION = '그라밋 | 실험 공고 조회';
 const DEFAULT_METADATA: Metadata = { title: DEFAULT_TITLE, description: DEFAULT_DESCRIPTION };
@@ -71,6 +70,11 @@ const formatDescription = (title: string, postDetailData: UseQueryExperimentDeta
     : `${title} | 그라밋 실험 공고`;
 };
 
+export const buildPostDescription = (postDetailData: UseQueryExperimentDetailsAPIResponse) => {
+  const recruitStatus = postDetailData.recruitStatus ? '모집 중' : '모집 종료';
+  return `${recruitStatus} | ${formatDescription(postDetailData.title, postDetailData)}`;
+};
+
 export const getPostMetadata = async (postId: string): Promise<Metadata> => {
   const canonicalUrl = `${SITE_URL}/post/${encodeURIComponent(postId)}`;
 
@@ -78,8 +82,7 @@ export const getPostMetadata = async (postId: string): Promise<Metadata> => {
     const { postDetailData } = await fetchExperimentPost(postId);
     const { title } = postDetailData;
     const pageTitle = `${title} | 그라밋`;
-    const recruitStatus = postDetailData.recruitStatus ? '모집 중' : '모집 종료';
-    const description = `${recruitStatus} | ${formatDescription(title, postDetailData)}`;
+    const description = buildPostDescription(postDetailData);
     const imageUrl = getOgImageUrl(postDetailData);
 
     return {

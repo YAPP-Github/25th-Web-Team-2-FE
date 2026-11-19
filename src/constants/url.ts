@@ -42,3 +42,5 @@ export const MOCK_API_URL = {
 };
 
 export const DEFAULT_OG_IMAGE_URL = '/og-image.png';
+
+export const SITE_URL = 'https://gradmeet.co.kr';
