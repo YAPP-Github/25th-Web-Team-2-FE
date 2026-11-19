@@ -6,6 +6,9 @@ import type { UseQueryExperimentDetailsAPIResponse } from '../hooks/useExperimen
 
 const toAbsoluteUrl = (url: string) => (url.startsWith('http') ? url : `${SITE_URL}${url}`);
 
+// 구글은 datePublished 에 시각과 시간대가 있는 ISO 8601 값을 권장합니다. uploadDate 는 한국 시간 기준 날짜(YYYY-MM-DD)입니다.
+const toKstDateTime = (date: string) => `${date}T00:00:00+09:00`;
+
 /**
  * 공고 상세 페이지의 schema.org 구조화 데이터.
  * 참여자 모집 공고는 고용 공고가 아니므로 JobPosting 대신 Article 을 사용합니다.
@@ -26,7 +29,7 @@ export const getPostJsonLd = (postDetailData: UseQueryExperimentDetailsAPIRespon
     mainEntityOfPage: url,
     inLanguage: 'ko-KR',
     image: toAbsoluteUrl(image),
-    ...(uploadDate && { datePublished: uploadDate }),
+    ...(uploadDate && { datePublished: toKstDateTime(uploadDate) }),
     ...(isUploaderActive && uploaderName && { author: { '@type': 'Person', name: uploaderName } }),
     publisher: ORGANIZATION_REF,
     isPartOf: { '@id': WEBSITE_ID },
