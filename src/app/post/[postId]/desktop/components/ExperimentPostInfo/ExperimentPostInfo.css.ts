@@ -28,11 +28,11 @@ export const postSubInfo = style({
   position: 'relative',
 });
 
-globalStyle(`${postSubInfo} > div`, {
+globalStyle(`${postSubInfo} > *`, {
   position: 'relative',
 });
 
-globalStyle(`${postSubInfo} > div:not(:last-child)::after`, {
+globalStyle(`${postSubInfo} > *:not(:last-child)::after`, {
   content: '""',
   position: 'absolute',
   top: '50%',
