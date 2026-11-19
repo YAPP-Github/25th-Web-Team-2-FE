@@ -2,7 +2,7 @@ import 'server-only';
 
 import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-
+import { cache } from 'react';
 
 import { createSSRFetchClient } from '@apis/config/fetchClient';
 import { API_URL } from '@constants/url';
@@ -39,7 +39,7 @@ function isNotFoundError(error: ApiError): boolean {
   return status === 404 || code === 'EP0001';
 }
 
-export async function fetchExperimentPost(postId: string): Promise<FetchResult> {
+async function fetchExperimentPostUncached(postId: string): Promise<FetchResult> {
   const session = await getServerSession(authOptions);
   const accessToken = session?.accessToken;
   const fetchClient = createSSRFetchClient(accessToken);
@@ -72,3 +72,9 @@ export async function fetchExperimentPost(postId: string): Promise<FetchResult> 
     applyMethodData: applyMethodResult.value,
   };
 }
+
+/**
+ * 상세 조회 API 는 POST 라 Next.js 의 fetch 중복 제거가 적용되지 않습니다.
+ * generateMetadata·layout·page 가 한 요청 안에서 같은 공고를 한 번만 조회하도록 React cache 로 감쌉니다.
+ */
+export const fetchExperimentPost = cache(fetchExperimentPostUncached);
